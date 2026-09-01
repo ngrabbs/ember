@@ -1,0 +1,11 @@
+Version 4
+SymbolType BLOCK
+RECTANGLE Normal 80 32 -64 -32
+SYMATTR Prefix X
+SYMATTR Value ADL5602
+PIN -64 0 LEFT 8
+PINATTR PinName Rin
+PINATTR SpiceOrder 1
+PIN 80 0 RIGHT 8
+PINATTR PinName Rout
+PINATTR SpiceOrder 2

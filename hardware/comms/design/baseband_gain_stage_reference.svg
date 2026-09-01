@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="monospace" font-size="13">
+  <style>
+    .wire { stroke: #000; stroke-width: 2; fill: none; }
+    .part { stroke: #000; stroke-width: 2; fill: #fff; }
+    .lbl  { fill: #000; }
+    .net  { fill: #0055aa; font-weight: bold; }
+    .pin  { fill: #aa0000; font-size: 11px; }
+    .note { fill: #555; font-size: 11px; font-style: italic; }
+  </style>
+
+  <text x="20" y="25" font-size="16" font-weight="bold">RX Baseband Gain Stage — MCP6022 U7B (Non-Inverting, Gain = 11)</text>
+
+  <!-- +3V3 rail -->
+  <line class="wire" x1="80"  y1="60" x2="820" y2="60"/>
+  <text class="net" x="20" y="65">+3V3</text>
+
+  <!-- GND rail -->
+  <line class="wire" x1="80"  y1="540" x2="820" y2="540"/>
+  <text class="net" x="20" y="555">GND</text>
+
+  <!-- R10: +3V3 -> bias node -->
+  <line class="wire" x1="180" y1="60"  x2="180" y2="110"/>
+  <rect class="part" x="165" y="110" width="30" height="60"/>
+  <text class="lbl"  x="200" y="135">R10</text>
+  <text class="lbl"  x="200" y="150">10k</text>
+  <line class="wire" x1="180" y1="170" x2="180" y2="280"/>
+
+  <!-- R11: bias node -> GND -->
+  <rect class="part" x="165" y="280" width="30" height="60"/>
+  <text class="lbl"  x="200" y="305">R11</text>
+  <text class="lbl"  x="200" y="320">10k</text>
+  <line class="wire" x1="180" y1="340" x2="180" y2="540"/>
+
+  <!-- Bias node label -->
+  <circle cx="180" cy="230" r="4" fill="#000"/>
+  <text class="note" x="100" y="225">1.65V bias</text>
+
+  <!-- C32: bias -> GND -->
+  <line class="wire" x1="180" y1="230" x2="260" y2="230"/>
+  <line class="wire" x1="260" y1="230" x2="260" y2="400"/>
+  <line class="wire" x1="245" y1="400" x2="275" y2="400"/>
+  <line class="wire" x1="245" y1="410" x2="275" y2="410"/>
+  <text class="lbl" x="285" y="400">C32</text>
+  <text class="lbl" x="285" y="415">10µF</text>
+  <line class="wire" x1="260" y1="410" x2="260" y2="540"/>
+
+  <!-- RX_IN and C30 (AC coupling) to pin 5 (IN+) -->
+  <text class="net" x="290" y="200">RX_IN</text>
+  <line class="wire" x1="340" y1="195" x2="400" y2="195"/>
+  <line class="wire" x1="400" y1="180" x2="400" y2="210"/>
+  <line class="wire" x1="415" y1="180" x2="415" y2="210"/>
+  <text class="lbl" x="395" y="170">C30</text>
+  <text class="lbl" x="395" y="240">100nF</text>
+  <line class="wire" x1="415" y1="195" x2="480" y2="195"/>
+
+  <!-- Bias node joins pin5 input -->
+  <line class="wire" x1="180" y1="230" x2="180" y2="260"/>
+  <line class="wire" x1="180" y1="260" x2="480" y2="260"/>
+  <circle cx="480" cy="260" r="4" fill="#000"/>
+  <line class="wire" x1="480" y1="195" x2="480" y2="260"/>
+
+  <!-- Op-amp triangle U7B -->
+  <polygon class="part" points="500,160 500,320 620,240"/>
+  <text class="lbl" x="530" y="235" font-weight="bold">U7B</text>
+  <text class="lbl" x="515" y="255" font-size="11">MCP6022</text>
+  <text class="pin" x="505" y="200">5 (+)</text>
+  <text class="pin" x="505" y="305">6 (–)</text>
+
+  <!-- Pin 5 wire in -->
+  <line class="wire" x1="480" y1="195" x2="500" y2="195"/>
+  <!-- Pin 6 wire in -->
+  <line class="wire" x1="440" y1="295" x2="500" y2="295"/>
+
+  <!-- Output pin 7 -->
+  <line class="wire" x1="620" y1="240" x2="780" y2="240"/>
+  <text class="pin" x="625" y="232">7 (OUT)</text>
+  <circle cx="720" cy="240" r="4" fill="#000"/>
+  <text class="net" x="790" y="245">RX_BASEBAND</text>
+
+  <!-- Feedback R13 100k: pin7 node -> pin6 node -->
+  <line class="wire" x1="720" y1="240" x2="720" y2="420"/>
+  <rect class="part" x="705" y="420" width="30" height="60"/>
+  <text class="lbl" x="745" y="445">R13</text>
+  <text class="lbl" x="745" y="460">100k</text>
+  <line class="wire" x1="720" y1="480" x2="720" y2="510"/>
+  <line class="wire" x1="720" y1="510" x2="440" y2="510"/>
+  <line class="wire" x1="440" y1="510" x2="440" y2="295"/>
+  <circle cx="440" cy="295" r="4" fill="#000"/>
+
+  <!-- R12 10k: pin6 node -> GND -->
+  <line class="wire" x1="360" y1="295" x2="440" y2="295"/>
+  <rect class="part" x="330" y="280" width="30" height="30"/>
+  <text class="lbl" x="300" y="275">R12</text>
+  <text class="lbl" x="300" y="290">10k</text>
+  <line class="wire" x1="330" y1="295" x2="300" y2="295"/>
+  <line class="wire" x1="300" y1="295" x2="300" y2="540"/>
+
+  <!-- Pin 8 VDD bypass -->
+  <text class="pin" x="555" y="155">8 VDD</text>
+  <line class="wire" x1="560" y1="160" x2="560" y2="60"/>
+  <circle cx="560" cy="60" r="4" fill="#000"/>
+  <!-- C31 100nF from VDD rail to GND -->
+  <line class="wire" x1="660" y1="60" x2="660" y2="100"/>
+  <circle cx="660" cy="60" r="4" fill="#000"/>
+  <line class="wire" x1="645" y1="100" x2="675" y2="100"/>
+  <line class="wire" x1="645" y1="110" x2="675" y2="110"/>
+  <text class="lbl" x="685" y="100">C31</text>
+  <text class="lbl" x="685" y="115">100nF</text>
+  <line class="wire" x1="660" y1="110" x2="660" y2="540"/>
+
+  <!-- Pin 4 VSS to GND -->
+  <text class="pin" x="555" y="340">4 VSS</text>
+  <line class="wire" x1="560" y1="320" x2="560" y2="540"/>
+
+  <!-- Notes box -->
+  <rect x="20" y="440" width="250" height="90" fill="#fffbe6" stroke="#aa8800"/>
+  <text class="lbl" x="30" y="460" font-weight="bold">Gain = 1 + R13/R12</text>
+  <text class="lbl" x="30" y="478">     = 1 + 100k/10k = 11  (20.8 dB)</text>
+  <text class="note" x="30" y="498">Bias sets DC output at 1.65V so the</text>
+  <text class="note" x="30" y="513">single-supply swing is symmetric.</text>
+</svg>

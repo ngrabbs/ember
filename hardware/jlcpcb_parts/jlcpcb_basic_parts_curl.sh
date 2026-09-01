@@ -1,0 +1,16 @@
+curl 'https://jlcpcb.com/parts/in-stock-parts' \
+  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
+  -H 'accept-language: en-US,en;q=0.9' \
+  -H 'cache-control: max-age=0' \
+  -b 'languageCodeHq=en; _ga=GA1.1.1412675910.1762356496; _tt_enable_cookie=1; _ttp=01K9AA41HBJBZ60QSDXQ1SKEBP_.tt.1; _yjsu_yjad=1762356496.7b0de849-c6d3-4e5b-bcd4-b80d5c7568ec; _fwb=109m6BHNgLHg1bQx9lkgmXf.1776076233438; _fbp=fb.1.1776076237419.11030753362219312; jlc_s=A; _gcl_aw=GCL.1776287011.CjwKCAjw7vzOBhBxEiwAc7WNr3kdJn3KcYp1MNiFIkm0OBZE5eZHFz-KLI4CvchlWhQM-bOtFq2lNxoCPHkQAvD_BwE; _gcl_gs=2.1.k1$i1776287007$u224371904; JLCPCB_SESSION_ID=f83a002d-cc79-4895-8652-434a0d55fa78; _clck=niasx%5E2%5Eg5i%5E1%5E2135; iconCountryFlag=US; iconCountryExchangeRateFlag=USD; nowMoneyName=$; nowExchangeRate=1; _gcl_au=1.1.1861564386.1776076237.424740666.1777153040.1777153044; ONEKEYID=d6e07ecf-fd23-4e0f-91ec-fbdbcaf70404; jlc_session_customer_code=aSGr6mhGKTsmdqrqQpgqIw%3D%3D; XSRF-TOKEN=ef5cc2a3-32b3-422f-856d-699fbd06516a; wcs_bt=1961948:1777154614; RT="z=1&dm=jlcpcb.com&si=ead5944f-6b72-4dbf-97f5-2ea897b03087&ss=moeuz5fa&sl=1&tt=1wu&rl=1&nu=3b5wqhzp&cl=zwsv"; _uetsid=ff014fa040eb11f1941389759fc46bbc; _uetvid=0cbc1e70ba5c11f08aaacb500103abc3; _clsk=1qcdkgm%5E1777154617700%5E29%5E1%5Es.clarity.ms%2Fcollect; ttcsid_CRN218RC77U9Q4TC4VAG=1777151776482::bWRK-o7TQU5EZx4Y7kc4.5.1777154626069.1; _ga_XDWD4D52RC=GS2.1.s1777151776$o9$g1$t1777154634$j17$l0$h0; _ga_0GJG2DD1ZP=GS2.1.s1777151776$o6$g1$t1777154634$j17$l0$h0; ttcsid=1777151776482::hXuYq3c_JSmg7Duauveq.7.1777154626069.0::1.2840785.2839495::2849584.44.879.650::2869105.166.266' \
+  -H 'priority: u=0, i' \
+  -H 'referer: https://jlcpcb.com/user-center/smtPrivateLibrary/myPartsLib' \
+  -H 'sec-ch-ua: "Google Chrome";v="147", "Not.A/Brand";v="8", "Chromium";v="147"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: document' \
+  -H 'sec-fetch-mode: navigate' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-user: ?1' \
+  -H 'upgrade-insecure-requests: 1' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36'

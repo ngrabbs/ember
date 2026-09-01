@@ -1,0 +1,63 @@
+* ============================================================================
+* 437 MHz 3-pole Band-Pass Filter -- AS BUILT (comms Rev A, TX Chain sheet)
+* ----------------------------------------------------------------------------
+* Values taken from the authoritative Altium dump:
+*   hardware/Schematic PDF_[No Variations]_20260815.pdf  (TX Chain sheet)
+*
+*   Series coupling caps  C10, C11 = 10 pF  C0G 0402   (JLC C32949)
+*   Shunt resonator caps  C12, C13 = 6.8 pF C0G 0402   (JLC C88896)
+*   Shunt inductors       L2, L4   = 15 nH  5%  0402   (JLC C86059)
+*   Series coupling ind.  L3       = 15 nH  5%  0402   (JLC C86059)
+*
+* Topology:
+*   in --Rs-- C10 --+-- L3(series) --+-- C11 --out
+*                   |                |
+*               L2||C12          L4||C13
+*                   |                |
+*                  GND              GND
+*
+* This is the pre-MMIC BPF. The output BPF (C9/C19/C20/C21, L6/L7/L8) is
+* identical -- same values, so this file models both.
+*
+* REALISM: inductor loss is modeled with LTspice's Rser (series R for a
+* target Q at 437 MHz) and Cpar (parallel C for self-resonance). The
+* dominant realism term is finite Q -> insertion loss. Set Q to the real
+* C86059 value once pulled from the LCSC/vendor datasheet; Q=30 is a
+* representative 0402 15 nH placeholder. Cpar default gives SRF ~2.5 GHz.
+*
+* S21 convention: 1 V AC source behind 50 ohm into a 50 ohm load. An ideal
+* through gives V(out)=0.5 V, so mag(2*V(out))=1.0 => 0 dB. Read dB(2*V(out)).
+* ============================================================================
+
+.param Lval=15n
+* C86059 real spec: Q=8 @ 100 MHz, DCR=320 mOhm, SRF=2.5 GHz, 15 nH 0402.
+* Q@100MHz=8 => Rac(100M)=wL/Q=1.18 ohm. Assuming ~sqrt(f) skin scaling,
+* Rac(437M)~2.4 ohm => Q@437 ~ 17. Refine from the datasheet Q-vs-f curve or
+* the C86059 .s2p if you can find it. Try Q=8..20 to bracket the real loss.
+.param Q=17                                   ; estimated C86059 Q @ 437 MHz
+.param RsL={2*3.14159265*437e6*Lval/Q}        ; series R for that Q
+.param Cp=0.24p                               ; parallel C -> SRF 2.5 GHz (15 nH)
+
+Vin  in  0   AC 1
+Rs   in  n1  50                               ; 50 ohm source
+
+C10  n1  n2  10p                              ; series input coupling
+L2   n2  0   {Lval} Rser={RsL} Cpar={Cp}      ; shunt inductor (resonator 1)
+C12  n2  0   6.8p                             ; shunt cap (resonator 1)
+L3   n2  n3  {Lval} Rser={RsL} Cpar={Cp}      ; series coupling inductor
+L4   n3  0   {Lval} Rser={RsL} Cpar={Cp}      ; shunt inductor (resonator 2)
+C13  n3  0   6.8p                             ; shunt cap (resonator 2)
+C11  n3  out 10p                              ; series output coupling
+Rload out 0  50                               ; 50 ohm load
+
+.ac dec 4000 100Meg 1000Meg
+
+* --- key figures of merit (log shows these as dB) ---
+.meas AC S21_peak  MAX  mag(2*V(out))
+.meas AC f_center  WHEN mag(2*V(out))=S21_peak
+.meas AC IL_437    FIND mag(2*V(out)) AT 437Meg          ; insertion loss at 437
+.meas AC rej_fund  FIND mag(2*V(out)) AT 145.67Meg       ; fundamental reject
+.meas AC rej_2nd   FIND mag(2*V(out)) AT 291.3Meg        ; 2nd harmonic reject
+.meas AC rej_4th   FIND mag(2*V(out)) AT 582.7Meg        ; 4th harmonic reject
+
+.end
