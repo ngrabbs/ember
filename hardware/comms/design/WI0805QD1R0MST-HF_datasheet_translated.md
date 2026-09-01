@@ -1,6 +1,6 @@
 # DDY WI0805QD1R0MST-HF — Datasheet (English Translation)
 
-Translated from the original Chinese datasheet (`C18221300.pdf`),
+Translated from the original Chinese datasheet ([`C18221300.pdf`](C18221300.pdf)),
 DDY/Huizhou Deli Electronics, Rev A, dated 2022-09-27. All units are
 millimeters unless otherwise stated.
 
@@ -209,7 +209,7 @@ in any flight hardware that needs automotive-grade (AEC-Q) qualification.
 
 ## Sources
 
-- Original (Chinese): `C18221300.pdf` (DDY rev A, 2022-09-27)
+- Original (Chinese): [`C18221300.pdf`](C18221300.pdf) (DDY rev A, 2022-09-27)
 - Translated by: Claude/comms session, 2026-05-20
 - Verify all dimensions against the original PDF before committing the
   footprint. If anything below doesn't match what the PDF shows, the

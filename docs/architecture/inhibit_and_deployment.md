@@ -6,7 +6,7 @@ Define the stack's **power inhibit** and **deployment detect** strategy
 so that the RBF pin, separation switches, post-ejection timer, and
 RF/deployable enable logic are all consistent across the EPS and IHU
 boards. This is a design-notes stub — the schematic implementation
-will land in `hardware/eps/design/altium_eps_schematic_guide.md` once the
+will land in [`hardware/eps/design/altium_eps_schematic_guide.md`](../../hardware/eps/design/altium_eps_schematic_guide.md) once the
 policy below is locked.
 
 ## TL;DR breadcrumb (read this first if you forgot where we left off)
@@ -209,7 +209,7 @@ WDT jumper.
 - [ ] **CSKB pin for `DEPLOY_DETECT_FC`** — when we wire the EPS
       deployment detect net to the IHU for telemetry, which H1 pin
       does it land on? Open USER pin on H1 is probably cleanest.
-      Add to `system/interfaces/cskb_pinmap.md` when chosen. Not
+      Add to [`system/interfaces/cskb_pinmap.md`](../../system/interfaces/cskb_pinmap.md) when chosen. Not
       needed for v0.1 proto if the IHU just polls EPS over I2C for
       deployment state instead.
 - [ ] **MRAM layout for latched deployment state + T0 timestamp**
@@ -225,8 +225,8 @@ WDT jumper.
   `primary_power.kicad_sch` in the RT-IHU repo for how they wire
   their separation switches — they use a single-switch approach,
   which is less conservative than CDS recommends).
-- `hardware/ihu/design/altium_ihu_schematic.md`
+- [`hardware/ihu/design/altium_ihu_schematic.md`](../../hardware/ihu/design/altium_ihu_schematic.md)
   Section C — current WDT-disable jumper (JP1), to be re-labeled.
-- `hardware/eps/design/altium_eps_schematic_guide.md` — target location
+- [`hardware/eps/design/altium_eps_schematic_guide.md`](../../hardware/eps/design/altium_eps_schematic_guide.md) — target location
   for the new RBF + separation switch + timer block once policy
   is locked.

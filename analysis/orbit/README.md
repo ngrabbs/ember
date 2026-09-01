@@ -10,7 +10,7 @@ contact time the ground station gets to return detections.
 |---|---|
 | `exports/` | STK report exports — lighting intervals and solar incidence angles per orbit, attitude, and season |
 | `scenarios/` | Saved STK scenario files (`.sc`) so results can be regenerated |
-| `stk_power_export_guide.md` | How to produce the exports above from STK |
+| [`stk_power_export_guide.md`](stk_power_export_guide.md) | How to produce the exports above from STK |
 
 ## Orbit Modeling
 - [ ] Define initial TLE or orbital parameters (LEO, sun-synchronous preferred)
@@ -43,5 +43,5 @@ the scenario that produced them. Results to capture as they are produced:
 
 The lighting-time and solar-incidence exports in `exports/` feed the power
 budget in `analysis/power/`, which reads them directly — see
-`analysis/power/power_budget.py`. `stk_power_export_guide.md` documents the
+[`analysis/power/power_budget.py`](../power/power_budget.py). [`stk_power_export_guide.md`](stk_power_export_guide.md) documents the
 export procedure.

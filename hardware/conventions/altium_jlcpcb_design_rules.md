@@ -80,8 +80,8 @@ hand-rework headroom. Power tracks need the width for current.
 | Net class | Width | Reason |
 |---|---|---|
 | Default (digital signal, GPIO, I²C, UART, SPI) | **8 mil / 0.2 mm** | Comfortable yield, easy probing |
-| Controlled-impedance diff pair | per impedance target (see §4 in `altium_payload_layout_guide.md`) | Width and gap dictated by Z₀, not this table |
-| RF signal (comms board 50 Ω microstrip) | per stackup (typical ~0.38 mm at JLCPCB 4-layer) | See `hardware/comms/design/rf_layout_guidelines.md` |
+| Controlled-impedance diff pair | per impedance target (see §4 in [`altium_payload_layout_guide.md`](../payload_compute/design/altium_payload_layout_guide.md)) | Width and gap dictated by Z₀, not this table |
+| RF signal (comms board 50 Ω microstrip) | per stackup (typical ~0.38 mm at JLCPCB 4-layer) | See [`hardware/comms/design/rf_layout_guidelines.md`](../comms/design/rf_layout_guidelines.md) |
 
 ### 3.2 Power traces — current capacity guideline
 
@@ -154,7 +154,7 @@ and spreads the current.
 | **Plated Over Filled Via (POFV)** | Via-in-pad on QFN/BGA exposed ground pads where solder theft would otherwise be a problem | **+$3–5 per order** |
 
 The 0402 dogbone-vs-via-in-pad discussion in
-`hardware/comms/design/rf_layout_guidelines.md` covers when POFV is
+[`hardware/comms/design/rf_layout_guidelines.md`](../comms/design/rf_layout_guidelines.md) covers when POFV is
 worth the surcharge. **Short answer: not for v0.1 dev runs; yes for
 flight builds with reliability stakes.**
 
@@ -305,7 +305,7 @@ the dielectric stack is:
 | L4 (bottom) | Signal / GND pour | 0.5 oz | — | — |
 
 **Why this stackup is the project default:** see
-`hardware/comms/design/rf_layout_guidelines.md` "Use a 4-layer
+[`hardware/comms/design/rf_layout_guidelines.md`](../comms/design/rf_layout_guidelines.md) "Use a 4-layer
 stackup" section — solid L2 GND under L1 signals means you can't
 accidentally split the ground plane under your critical traces, which
 is the single biggest signal-integrity win available.
@@ -363,9 +363,9 @@ tighter rules**.
 ## 13. References
 
 - JLCPCB capabilities page: https://jlcpcb.com/capabilities/pcb-capabilities (verify current values; this doc reflects ~2026-05)
-- `hardware/conventions/net_naming.md` — net naming convention used by the Net Classes in §9
-- `hardware/comms/design/rf_layout_guidelines.md` — ground plane, via stitching, 0402 dogbone-vs-via-in-pad deep-dive
-- `hardware/payload_compute/design/altium_payload_layout_guide.md` — payload-specific diff-pair classes (DP_CSI, DP_PCIE, DP_USB) and impedance target widths
+- [`hardware/conventions/net_naming.md`](net_naming.md) — net naming convention used by the Net Classes in §9
+- [`hardware/comms/design/rf_layout_guidelines.md`](../comms/design/rf_layout_guidelines.md) — ground plane, via stitching, 0402 dogbone-vs-via-in-pad deep-dive
+- [`hardware/payload_compute/design/altium_payload_layout_guide.md`](../payload_compute/design/altium_payload_layout_guide.md) — payload-specific diff-pair classes (DP_CSI, DP_PCIE, DP_USB) and impedance target widths
 - IPC-2221 — generic PCB design standard, used for current capacity + voltage clearance lookups
 - Saturn PCB Toolkit (free) — useful for impedance, current capacity, via inductance calculations
 

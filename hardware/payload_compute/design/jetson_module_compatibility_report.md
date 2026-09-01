@@ -3,7 +3,7 @@
 ## TL;DR
 
 **A single payload carrier CAN host either module** with the
-current pinout (per `payload_carrier_pinmap.md`), provided MODULE_ID
+current pinout (per [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md)), provided MODULE_ID
 (pin 217) stays tied to GND and VDD_IN stays at 5.0 V. NVIDIA
 explicitly designed the Orin Nano as a **pin-compatible upgrade** to
 the original Jetson Nano — the Orin Nano datasheet even prints both
@@ -37,8 +37,8 @@ Stage-2 CNN, and the JetPack 4.x stack is end-of-life.
 
 | Module | Datasheet | Where to get it |
 |---|---|---|
-| Original Jetson Nano (Tegra X1, Maxwell GPU, 472 GFLOPS FP16) | DS-09366-001 v1.1 | NVIDIA Jetson Download Center — see `hardware/component_datasheets.md` |
-| Jetson Orin Nano (Tegra Orin, Ampere GPU, 40 TOPS INT8) | DS-11105-001 v1.1 | `Jetson_Orin_Nano_Series_DS-11105-001_v11.pdf`, this directory |
+| Original Jetson Nano (Tegra X1, Maxwell GPU, 472 GFLOPS FP16) | DS-09366-001 v1.1 | NVIDIA Jetson Download Center — see [`hardware/component_datasheets.md`](../../component_datasheets.md) |
+| Jetson Orin Nano (Tegra Orin, Ampere GPU, 40 TOPS INT8) | DS-11105-001 v1.1 | [`Jetson_Orin_Nano_Series_DS-11105-001_v11.pdf`](Jetson_Orin_Nano_Series_DS-11105-001_v11.pdf), this directory |
 
 The Orin Nano datasheet's SO-DIMM Pinout table (page ~50) is the
 single best reference for compatibility — it has **two columns side
@@ -138,8 +138,8 @@ If you drop a $45 Original Nano into our carrier:
 
 If you drop a $200+ Orin Nano into the same carrier:
 
-- Everything works as designed in `payload_carrier_pinmap.md` rev 0.3
-  and `altium_payload_schematic_guide.md` rev 0.1.
+- Everything works as designed in [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) rev 0.3
+  and [`altium_payload_schematic_guide.md`](altium_payload_schematic_guide.md) rev 0.1.
 
 ## 4. Compute / ML Performance Asymmetry
 
@@ -199,7 +199,7 @@ Given the cost gap ($45 vs $200+), the realistic plan is:
 ### Concrete carrier changes needed to support both modules
 
 **None.** The carrier as currently specified
-(`payload_carrier_pinmap.md` rev 0.3) is already module-agnostic
+([`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) rev 0.3) is already module-agnostic
 within these compatibility limits. Specifically:
 
 - ✅ MODULE_ID (pin 217) is tied to GND on the carrier
@@ -245,9 +245,9 @@ within these compatibility limits. Specifically:
   table is the single best resource)
 - NVIDIA Jetson Orin NX / Orin Nano Design Guide (DG-10931-001 v1.1)
   — power sequencing §6, MIPI CSI lane swap notes §10
-- `payload_carrier_pinmap.md` rev 0.3 — current carrier pin
+- [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) rev 0.3 — current carrier pin
   allocations
-- `altium_payload_schematic_guide.md` rev 0.1 — current schematic
+- [`altium_payload_schematic_guide.md`](altium_payload_schematic_guide.md) rev 0.1 — current schematic
   organisation
 
 ## 9. Revision History

@@ -14,9 +14,9 @@ bring-up validation for the RP2040-based system controller.
 
 ## Documentation Map
 
-- Architecture and rationale: `hardware/ihu/design/overview.md`
-- Electrical and logical interfaces: `hardware/ihu/design/interfaces.md`
-- Bring-up and acceptance criteria: `hardware/ihu/bringup/phase1_validation.md`
+- Architecture and rationale: [`hardware/ihu/design/overview.md`](design/overview.md)
+- Electrical and logical interfaces: [`hardware/ihu/design/interfaces.md`](design/interfaces.md)
+- Bring-up and acceptance criteria: [`hardware/ihu/bringup/phase1_validation.md`](bringup/phase1_validation.md)
 
 ## Status Summary
 

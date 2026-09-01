@@ -38,6 +38,6 @@ baseline and separates optional exploratory payload work.
 ## Reference Material
 
 - Firmware references are tracked in
-  `docs/research/firmware_references.md`.
+  [`docs/research/firmware_references.md`](../docs/research/firmware_references.md).
 - Internal Housekeeping Unit firmware roadmap is tracked in
-  `firmware/ihu/README.md`.
+  [`firmware/ihu/README.md`](ihu/README.md).

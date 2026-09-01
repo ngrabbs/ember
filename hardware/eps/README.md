@@ -17,9 +17,9 @@ distribution and finalized subsystem current budgets are still in progress.
 
 ## Documentation Map
 
-- Architecture and rationale: `hardware/eps/design/overview.md`
-- Electrical and logical interfaces: `hardware/eps/design/interfaces.md`
-- Bench bring-up and acceptance criteria: `hardware/eps/bringup/phase1_validation.md`
+- Architecture and rationale: [`hardware/eps/design/overview.md`](design/overview.md)
+- Electrical and logical interfaces: [`hardware/eps/design/interfaces.md`](design/interfaces.md)
+- Bench bring-up and acceptance criteria: [`hardware/eps/bringup/phase1_validation.md`](bringup/phase1_validation.md)
 - KiCad source: `hardware/eps/kicad/`
 - Vendor parts and reference assets: `hardware/eps/components/`
 

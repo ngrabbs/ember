@@ -155,9 +155,9 @@ so nothing under the build tree gets committed.
 
 ## Related Documents
 
-- IHU hardware architecture: `hardware/ihu/design/overview.md`
-- IHU interfaces: `hardware/ihu/design/interfaces.md`
-- IHU bring-up tests: `hardware/ihu/bringup/phase1_validation.md`
+- IHU hardware architecture: [`hardware/ihu/design/overview.md`](../../hardware/ihu/design/overview.md)
+- IHU interfaces: [`hardware/ihu/design/interfaces.md`](../../hardware/ihu/design/interfaces.md)
+- IHU bring-up tests: [`hardware/ihu/bringup/phase1_validation.md`](../../hardware/ihu/bringup/phase1_validation.md)
 - Reference port: `/workspace/MSU_Cubesat/rp2040-freertos-ihu/`
 - AMSAT RT-IHU: <https://gitlab.amsat.org/engineering/golf/rt-ihu>
   (local read-only checkout: `/workspace/AMSAT/rt-ihu/`)

@@ -640,7 +640,7 @@ Notes:
 
 ### Connectors / Mechanical
 - SMA edge-mount (1 or 2)
-- CSKB H1 + H2 stack headers (2× Samtec ESQ-126-39-G-D, per `system/interfaces/cskb_pinmap.md`)
+- CSKB H1 + H2 stack headers (2× Samtec ESQ-126-39-G-D, per [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md))
 - Optional shield cans (recommended over tripler and Si5351 sections)
 - Test points on key RF nodes (Si5351 output, tripler output, post-BPF, modulator output, MMIC output, SA612 baseband)
 

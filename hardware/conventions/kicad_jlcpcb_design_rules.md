@@ -153,7 +153,7 @@ coloring nets by class.
 | Solder mask min web/sliver (Solder Mask/Paste page) | 0.127 mm | 5 mil |
 | Solder mask expansion | 0.1 mm | 0.1 mm |
 
-Full reasoning for every number: `altium_jlcpcb_design_rules.md` §3–§7. Values
+Full reasoning for every number: [`altium_jlcpcb_design_rules.md`](altium_jlcpcb_design_rules.md) §3–§7. Values
 are identical — only the dialog location differs.
 
 ### 5.2 Pre-defined track/via sizes

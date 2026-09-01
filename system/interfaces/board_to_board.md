@@ -75,6 +75,6 @@ Exit criteria:
 
 ## Related Documents
 
-- IHU/comms details: `system/interfaces/comms_to_ihu.md`
-- Data ownership and flows: `system/interfaces/data_interfaces.md`
-- System integration execution: `system/integration/integration_plan.md`
+- IHU/comms details: [`system/interfaces/comms_to_ihu.md`](comms_to_ihu.md)
+- Data ownership and flows: [`system/interfaces/data_interfaces.md`](data_interfaces.md)
+- System integration execution: [`system/integration/integration_plan.md`](../integration/integration_plan.md)

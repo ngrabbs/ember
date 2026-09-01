@@ -31,7 +31,7 @@ on the 1U CubeSat stack. It breaks the module out to:
                         from J_TRIG)                                                       
 ```
 
-Key design decisions baked in (see `payload_carrier_pinmap.md` for the
+Key design decisions baked in (see [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) for the
 authoritative pin-by-pin allocation):
 
 1. **VDD_IN sourced from VBAT, not stack +5V.** Orin peaks at 3 A @ 5 V,
@@ -77,12 +77,12 @@ authoritative pin-by-pin allocation):
 ### Net Name Convention
 
 Use these global net names consistently across all sheets per
-`hardware/conventions/net_naming.md`. Use **power port symbols** (not
+[`hardware/conventions/net_naming.md`](../../conventions/net_naming.md). Use **power port symbols** (not
 net labels) for supply rails so they are global automatically. Stack
 rails entering on the CSKB use their canonical names (`+3V3`, `+5V`,
 `VBAT`); board-local derived rails carry a scope suffix
 (`+5V_ORIN`, `+3V3_M2`, `+1V8_MOD`). Inter-board signals use the
-canonical CSKB net names from `system/interfaces/cskb_pinmap.md`
+canonical CSKB net names from [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md)
 (`SCL_SYS`, `SDA_SYS`, `PAYLOAD_EN`, `PAYLOAD_FAULT_N`,
 `PAYLOAD_SLEEP_REQ_N`).
 
@@ -145,7 +145,7 @@ single tall symbol grouped by function (power, CSI, USB, control,
 etc.) along the symbol edges.
 
 **Pin assignments:** all 260 pins per
-`hardware/payload_compute/design/payload_carrier_pinmap.md` — that file is the
+[`hardware/payload_compute/design/payload_carrier_pinmap.md`](payload_carrier_pinmap.md) — that file is the
 authority. Do NOT re-derive pin numbers from the datasheet at the
 schematic level; copy them from the pinmap so revs stay in sync.
 
@@ -446,7 +446,7 @@ For the current build, **`74LVC2G07GW,125`** is the default
 BOM line. Reserve the `-Q100H` upgrade for the flight-cut variant.
 
 **Pull-up note for PAYLOAD_FAULT_N:** the IHU side supplies the
-pull-up on H2.47 per `cskb_pinmap.md` Rule 3, so do NOT add a
+pull-up on H2.47 per [`cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md) Rule 3, so do NOT add a
 pull-up on the payload side.
 
 **Pull-up note for MUX_RST_N_3V3:** R34 is on the **payload** side
@@ -533,7 +533,7 @@ incorrect version.**
 | 15 | SDA | `CAM_I2C_SDA` (from Sheet 1) | Master-side data |
 | 16 | VDD | `+3V3` | 3.3 V supply |
 
-Per `payload_carrier_pinmap.md` §3.4: **do NOT add pull-ups on the
+Per [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) §3.4: **do NOT add pull-ups on the
 master-side CAM_I2C bus — the Orin module already has 2.2 kΩ pull-ups
 to 3.3 V internally.** Add 4.7 kΩ pull-ups on each downstream channel
 (SC0/SD0, SC1/SD1, SC2/SD2) since the cameras don't have on-PCB
@@ -667,7 +667,7 @@ The carrier uses **stack-through** parts (signals pass through), not
 endpoint parts. Place J20 and J21 on the right edge of the sheet so
 their right-edge pins (going off-sheet) become the off-sheet ports.
 
-Pin-by-pin assignments per `cskb_pinmap.md`. Critical payload-facing
+Pin-by-pin assignments per [`cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md). Critical payload-facing
 pins for this sheet:
 
 | H-pin | CSKB net | Direction | Connect to |
@@ -874,7 +874,7 @@ separately from Digi-Key/Mouser):
 If the standoff is too short the card flexes; too tall and the
 card-edge contacts don't fully seat in the connector.
 
-**Pin assignments per `payload_carrier_pinmap.md` §9.3–§9.7.** That
+**Pin assignments per [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) §9.3–§9.7.** That
 document is the authority — copy from it. Highlights:
 
 | M.2 pin | Signal | Carrier net | Notes |
@@ -972,7 +972,7 @@ other rail — that defeats the isolation the silkscreen warning
 exists to protect. Alternative: add a test point `TP7` on
 `+5V_TEST` (gives the net a second pin AND lets you probe the
 bench host's VBUS during recovery debug — slightly useful but
-optional). **TP refdes per `payload_carrier_pinmap.md` §2.1
+optional). **TP refdes per [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) §2.1
 canonical TP allocation table.**
 
 ### Section C: Debug UART Level Shifter (Bottom-Right)
@@ -1067,7 +1067,7 @@ convention so users plug straight in.
 
 - [ ] **All IC pinout tables in this doc verified against the actual datasheet.** (Two pinout-transcription errors have been caught and fixed historically — PCA9546A in rev 0.4, TXB0104 in rev 0.5. Before placing any IC symbol, cross-check pin numbers in this guide against the manufacturer's datasheet for the exact JLCPCB part you're ordering — don't trust the table blindly.)
 - [ ] All four sheets present with the names specified in §"Altium Project Setup"
-- [ ] SO-DIMM pinout matches `payload_carrier_pinmap.md` exactly (spot-check 10 random pins)
+- [ ] SO-DIMM pinout matches [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) exactly (spot-check 10 random pins)
 - [ ] MODULE_ID (pin 217) hardwired to GND
 - [ ] All VDD_IN pins (251–260) tied together with adequate decoupling per DG-10931 §6
 - [ ] TPS62933F EN tied to `PAYLOAD_EN` (not always-on)
@@ -1082,15 +1082,15 @@ convention so users plug straight in.
 - [ ] M.2 RX side has NO AC caps on the carrier
 - [ ] FORCE_RECOVERY* default = HIGH (jumper open) via R33 (10 kΩ to +1V8_MOD)
 - [ ] Status LEDs LED1/LED2/LED3 placed at board edge with current-limiting resistors
-- [ ] Test points per `payload_carrier_pinmap.md` §2.1 canonical allocation: TP1 (SYS_RESET_N), TP2 (MOD_SLEEP_N), TP3 (CLK_32K_OUT), TP4 (PAYLOAD_FAULT_N), TP5 (DBG_UART_TX_1V8 pre-shifter), TP6 (DBG_UART_RX_1V8 pre-shifter), and **optional** TP7 (+5V_TEST diagnostic)
+- [ ] Test points per [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) §2.1 canonical allocation: TP1 (SYS_RESET_N), TP2 (MOD_SLEEP_N), TP3 (CLK_32K_OUT), TP4 (PAYLOAD_FAULT_N), TP5 (DBG_UART_TX_1V8 pre-shifter), TP6 (DBG_UART_RX_1V8 pre-shifter), and **optional** TP7 (+5V_TEST diagnostic)
 - [ ] Antenna footprints J41/J42 placed for u.FL pigtails (DNP for flight)
 - [ ] Silkscreen labels on all bench-only headers ("BOOTLOADER ONLY", "RECOVERY", "UART: GND-TX-RX")
 - [ ] ERC clean (open inputs flagged, no floating nets except documented NC)
-- [ ] Cross-reference back to `payload_carrier_pinmap.md` open items §10 to confirm all are either resolved or known
+- [ ] Cross-reference back to [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) open items §10 to confirm all are either resolved or known
 
 ## Open Items to Flag During Schematic Capture
 
-These come straight from `payload_carrier_pinmap.md` §10 — track them
+These come straight from [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) §10 — track them
 on the schematic as TODO callouts so reviewers see them:
 
 1. **Verify Pi GS Camera FFC pin 11 (PWDN) voltage** — 3.3 V or 1.8 V?
@@ -1113,8 +1113,8 @@ on the schematic as TODO callouts so reviewers see them:
 | Rev | Date | Author | Change |
 |---|---|---|---|
 | 0.1 | 2026-05-18 | NG / CC | Initial draft, 4-sheet structure: SO-DIMM+Power+Seq, Cameras, CSKB Stack, M.2+USB+UART. Components selected for parts commonality with EPS (TPS62933F buck). Flagged 74LVC2G07 V_IH issue and recommended split to two 74LVC1G07. Aligned with payload_carrier_pinmap.md rev 0.3 (M.2 Key-E added). |
-| 0.2 | 2026-05-24 | NG / CC | Net-naming conformance pass against `hardware/conventions/net_naming.md`. Renamed `+3V3_PAYLOAD` → `+3V3` (stack rail uses canonical power port). Renamed `+5V_PAYLOAD` → `+5V_ORIN` (board-local rail; suffix now describes the load — Orin module VDD_IN). Renamed `I2C_FC_SCL`/`I2C_FC_SDA` → `SCL_SYS`/`SDA_SYS` (kills stale "FC" prefix; matches cskb_pinmap canonical). Fixed wrong cross-reference in net table where `CAM_I2C_*` was incorrectly described as "Orin `I2C0_*`" — those are two different I²C buses on the Orin. Updated Net Name Convention prose to reference net_naming.md. No electrical / sheet-structure changes. |
+| 0.2 | 2026-05-24 | NG / CC | Net-naming conformance pass against [`hardware/conventions/net_naming.md`](../../conventions/net_naming.md). Renamed `+3V3_PAYLOAD` → `+3V3` (stack rail uses canonical power port). Renamed `+5V_PAYLOAD` → `+5V_ORIN` (board-local rail; suffix now describes the load — Orin module VDD_IN). Renamed `I2C_FC_SCL`/`I2C_FC_SDA` → `SCL_SYS`/`SDA_SYS` (kills stale "FC" prefix; matches cskb_pinmap canonical). Fixed wrong cross-reference in net table where `CAM_I2C_*` was incorrectly described as "Orin `I2C0_*`" — those are two different I²C buses on the Orin. Updated Net Name Convention prose to reference net_naming.md. No electrical / sheet-structure changes. |
 | 0.3 | 2026-05-24 | NG / CC | **U4 reverted to single 74LVC2G07 (was: two 74LVC1G07).** Realized during BOM selection that running the dual-channel 2G07 at **VCC = `+1V8_MOD`** (not `+3V3`) resolves the V_IH violation that originally drove the split — at VCC < 2.7 V the LVC family V_IH(min) is 0.65 × VCC = 1.17 V, comfortably below the Orin 1.8 V CMOS HIGH. Both OD outputs continue to pull up to 3.3 V through external PUs (IHU-side for `PAYLOAD_FAULT_N`, R34 on carrier for `MUX_RST_N_3V3`). Saves one IC. Rewrote §1.D with the new analysis. JLCPCB part: prefer Nexperia **74LVC2G07GW** (TSSOP-6, rework-friendly) or Diodes **74LVC2G07W6-7** (SOT-26). Resolved open item §6. |
 | 0.4 | 2026-05-24 | NG / CC | **Errata: §2.A PCA9546A pinout table was wrong** — pin numbers in the original (rev 0.1) table did not match the actual NXP `PCA9546APW,118` datasheet. Corrected pinout: pin 1 = A0, pin 2 = A1, pin 3 = RESET\*, pins 4–7 = SD0/SC0/SD1/SC1, pin 8 = VSS, pins 9–12 = SD2/SC2/SD3/SC3, pin 13 = A2, pin 14 = SCL, pin 15 = SDA, pin 16 = VDD. Net connections unchanged (channel-to-camera mapping, address straps to GND, R34 PU on RESET\* → 3.3 V) — only the pin numbers shifted. **Anyone who built the Altium symbol from the original table needs to verify and rebuild.** Also folded in two earlier doc-clarity fixes (§1.C VDD_IN-vs-+5V_ORIN clarification, §2.A PCA9546A JLCPCB BOM hint) that landed on main as `d5ecc64` without a rev bump. |
 | 0.5 | 2026-05-24 | NG / CC | **Errata: §4.C U60 TXB0104 pinout table was wrong.** Same class of error as the PCA9546A in rev 0.4 — pin numbers in the original (rev 0.1) table did not match the TI TXB0104 datasheet (SCES643). Corrected pinout: pin 1 = VCCA, pin 2 = A1, pin 3 = A2, pin 4 = A3, pin 5 = A4, pin 6 = NC, pin 7 = GND, pin 8 = OE, pin 9 = NC, pin 10 = B4, pin 11 = B3, pin 12 = B2, pin 13 = B1, pin 14 = VCCB. Net connections unchanged (Orin TX on A1↔B1, Orin RX on A2↔B2, OE tied to VCCA, channels 3/4 NC) — only pin numbers shifted. **Anyone who built the Altium symbol from the original table needs to verify and rebuild.** Added a "verify all IC pinout tables against datasheet" item at the top of the Final Checklist so the next pinout transcription error gets caught at review time, not mid-bring-up. |
-| 0.6 | 2026-05-24 | NG / CC | **Test point allocation rationalized — refdes fix.** Internal TP4 collision: Final Checklist had TP4 = PAYLOAD_FAULT_N while §4.B optional alternative also called its +5V_TEST test point TP4. Renumbered §4.B optional to **TP7** to match the canonical TP table that now lives in `payload_carrier_pinmap.md` §2.1 (TP1–TP7 assignments + status). Updated Final Checklist to reference §2.1 directly with the full list (TP1 SYS_RESET_N, TP2 MOD_SLEEP_N, TP3 CLK_32K_OUT, TP4 PAYLOAD_FAULT_N, TP5 DBG_UART_TX_1V8 pre-shifter, TP6 DBG_UART_RX_1V8 pre-shifter, optional TP7 +5V_TEST). No electrical changes. Companion change in pinmap rev 0.6. |
+| 0.6 | 2026-05-24 | NG / CC | **Test point allocation rationalized — refdes fix.** Internal TP4 collision: Final Checklist had TP4 = PAYLOAD_FAULT_N while §4.B optional alternative also called its +5V_TEST test point TP4. Renumbered §4.B optional to **TP7** to match the canonical TP table that now lives in [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) §2.1 (TP1–TP7 assignments + status). Updated Final Checklist to reference §2.1 directly with the full list (TP1 SYS_RESET_N, TP2 MOD_SLEEP_N, TP3 CLK_32K_OUT, TP4 PAYLOAD_FAULT_N, TP5 DBG_UART_TX_1V8 pre-shifter, TP6 DBG_UART_RX_1V8 pre-shifter, optional TP7 +5V_TEST). No electrical changes. Companion change in pinmap rev 0.6. |

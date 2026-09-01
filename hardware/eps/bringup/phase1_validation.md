@@ -12,10 +12,10 @@ and 2S2P LG MJ1 battery.
 
 When a test fails, switch to the diagnosis docs:
 
-- `hardware/eps/bringup/tps62933_ltspice_debug_guide.md` — TPS62933F feedback
+- [`hardware/eps/bringup/tps62933_ltspice_debug_guide.md`](tps62933_ltspice_debug_guide.md) — TPS62933F feedback
   network theory, LTSpice behavioral model, per-pin scope expectations, and a
   fault tree for "regulator has no output."
-- `hardware/eps/design/altium_eps_schematic_guide.md` — schematic source of
+- [`hardware/eps/design/altium_eps_schematic_guide.md`](../design/altium_eps_schematic_guide.md) — schematic source of
   truth (Sheet 1 = LTC4162, Sheet 2 = TPS62933F regulators).
 - `analysis/power/` — orbital power balance with the locked
   4S panel configuration (Vmp ≈ 22.3 V, Voc ≈ 27.6 V).
@@ -141,7 +141,7 @@ mid-MPP (~22 V), and below-MPP (~12 V).
 > Boards back from fab. Charger was working on an earlier build but is not
 > behaving as of __________ (date). Likely follow-on work: build a
 > charger-side fault tree mirroring the regulator one in
-> `tps62933_ltspice_debug_guide.md`.
+> [`tps62933_ltspice_debug_guide.md`](tps62933_ltspice_debug_guide.md).
 
 ```
 [Observations from this run — what failed, scope captures, I2C reads, etc.]
@@ -206,7 +206,7 @@ Fill in for both U2 (3 V3) and U3 (5 V). With `VOUT_PP` = 12 V.
 | - | VOUT (+5V) | Vref × (1 + 52.3 / 10) | _____ | _____ |
 
 > If any of the above is off, jump to the fault tree in
-> `tps62933_ltspice_debug_guide.md` Section 7 before continuing.
+> [`tps62933_ltspice_debug_guide.md`](tps62933_ltspice_debug_guide.md) Section 7 before continuing.
 
 ### Load Regulation
 

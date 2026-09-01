@@ -40,5 +40,5 @@ the current architecture baseline.
 
 ## Cross-References
 
-- EPS architecture: `hardware/eps/design/overview.md`
-- System integration interface file: `system/interfaces/power_interfaces.md`
+- EPS architecture: [`hardware/eps/design/overview.md`](overview.md)
+- System integration interface file: [`system/interfaces/power_interfaces.md`](../../../system/interfaces/power_interfaces.md)

@@ -30,10 +30,10 @@ All available through the [Jetson Download Center](https://developer.nvidia.com/
 Derived work in this repository — this is where the analysis lives, and it
 cites the documents above rather than reproducing them:
 
-- `payload_compute/design/payload_carrier_pinmap.md` — carrier pin assignment
-- `payload_compute/design/jetson_module_compatibility_report.md` — Orin Nano vs Original Nano
-- `payload_compute/design/altium_payload_schematic_guide.md`
-- `payload_compute/design/altium_payload_layout_guide.md`
+- [`payload_compute/design/payload_carrier_pinmap.md`](payload_compute/design/payload_carrier_pinmap.md) — carrier pin assignment
+- [`payload_compute/design/jetson_module_compatibility_report.md`](payload_compute/design/jetson_module_compatibility_report.md) — Orin Nano vs Original Nano
+- [`payload_compute/design/altium_payload_schematic_guide.md`](payload_compute/design/altium_payload_schematic_guide.md)
+- [`payload_compute/design/altium_payload_layout_guide.md`](payload_compute/design/altium_payload_layout_guide.md)
 
 ## Electrical Power System
 
@@ -54,7 +54,7 @@ cites the documents above rather than reproducing them:
 | Si5351A clock generator | Skyworks | Si5351 datasheet + AN619 | — |
 | PSA4-5043+ MMIC amplifier | Mini-Circuits | PSA4-5043+ datasheet | — |
 
-`comms/design/WI0805QD1R0MST-HF_datasheet_translated.md` is our own English
+[`comms/design/WI0805QD1R0MST-HF_datasheet_translated.md`](comms/design/WI0805QD1R0MST-HF_datasheet_translated.md) is our own English
 translation of the DDY original, not a vendor document.
 
 ## Housekeeping and structure

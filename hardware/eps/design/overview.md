@@ -84,6 +84,6 @@ Solar Array (SM141K10TF, 3S/3S2P eval)
 
 ## Related Documents
 
-- Interface definitions: `hardware/eps/design/interfaces.md`
-- Bring-up plan and acceptance criteria: `hardware/eps/bringup/phase1_validation.md`
-- System power interface context: `system/interfaces/power_interfaces.md`
+- Interface definitions: [`hardware/eps/design/interfaces.md`](interfaces.md)
+- Bring-up plan and acceptance criteria: [`hardware/eps/bringup/phase1_validation.md`](../bringup/phase1_validation.md)
+- System power interface context: [`system/interfaces/power_interfaces.md`](../../../system/interfaces/power_interfaces.md)

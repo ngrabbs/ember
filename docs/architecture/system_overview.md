@@ -24,7 +24,7 @@ major design assumptions.
 - SPI: IHU <-> comms high-rate deterministic data exchange
 - CAN (Iteration 2): system control-plane messaging and fault broadcast
 
-See `system/interfaces/board_to_board.md` for the detailed interconnect plan.
+See [`system/interfaces/board_to_board.md`](../../system/interfaces/board_to_board.md) for the detailed interconnect plan.
 
 ## Operational Modes
 

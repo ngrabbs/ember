@@ -8,19 +8,19 @@ carrier board's pin assignments** between the Jetson Orin Nano module
 connectors, CSKB stack interface, debug headers, power circuitry).
 
 For stack-side pin assignments (H1/H2 nets crossing module boundaries),
-the authority is `system/interfaces/cskb_pinmap.md`. This document covers
+the authority is [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md). This document covers
 **carrier-internal** wiring only.
 
 ## Reference documents
 
 | Doc | Designation | Local copy |
 |---|---|---|
-| Jetson Orin Nano Series Data Sheet | DS-11105-001 v1.1 | `hardware/payload_compute/design/Jetson_Orin_Nano_Series_DS-11105-001_v11.pdf` |
-| Jetson Orin NX/Nano Design Guide | DG-10931-001 v1.1 | `hardware/payload_compute/design/Jetson_Orin_NX_Series_and_Orin_Nano_Series_Design_Guide_DG-10931-001_v11.pdf` |
-| Jetson Orin NX/Nano Pin Function Names Guide | DA-11434-001 v1.0 | `hardware/payload_compute/design/Jetson_Orin_NX_Orin_Nano_Pin_Function_Names_Guide_DA-11434-001_v1.0.pdf` |
-| Jetson Orin Nano Devkit Carrier Spec | SP-11324-001 v1.3 | `hardware/payload_compute/design/Jetson-Orin-Nano-DevKit-Carrier-Board-Specification_SP-11324-001_v1.3.pdf` |
-| Pumpkin CSKB Datasheet | 710-00484 Rev. E | `system/interfaces/DS_CSK_MB_710-00484-E.pdf` |
-| CSKB pin map | — | `system/interfaces/cskb_pinmap.md` |
+| Jetson Orin Nano Series Data Sheet | DS-11105-001 v1.1 | [`hardware/payload_compute/design/Jetson_Orin_Nano_Series_DS-11105-001_v11.pdf`](Jetson_Orin_Nano_Series_DS-11105-001_v11.pdf) |
+| Jetson Orin NX/Nano Design Guide | DG-10931-001 v1.1 | [`hardware/payload_compute/design/Jetson_Orin_NX_Series_and_Orin_Nano_Series_Design_Guide_DG-10931-001_v11.pdf`](Jetson_Orin_NX_Series_and_Orin_Nano_Series_Design_Guide_DG-10931-001_v11.pdf) |
+| Jetson Orin NX/Nano Pin Function Names Guide | DA-11434-001 v1.0 | [`hardware/payload_compute/design/Jetson_Orin_NX_Orin_Nano_Pin_Function_Names_Guide_DA-11434-001_v1.0.pdf`](Jetson_Orin_NX_Orin_Nano_Pin_Function_Names_Guide_DA-11434-001_v1.0.pdf) |
+| Jetson Orin Nano Devkit Carrier Spec | SP-11324-001 v1.3 | [`hardware/payload_compute/design/Jetson-Orin-Nano-DevKit-Carrier-Board-Specification_SP-11324-001_v1.3.pdf`](Jetson-Orin-Nano-DevKit-Carrier-Board-Specification_SP-11324-001_v1.3.pdf) |
+| Pumpkin CSKB Datasheet | 710-00484 Rev. E | [`system/interfaces/DS_CSK_MB_710-00484-E.pdf`](../../../system/interfaces/DS_CSK_MB_710-00484-E.pdf) |
+| CSKB pin map | — | [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md) |
 
 ## Module variant assumption
 
@@ -56,7 +56,7 @@ Stack +5V rail is provisioned at ~2 A (CSKB H2.25/H2.26). Orin Nano peaks
 at ~3 A on VDD_IN in 15 W mode. Carrier therefore takes power from
 **`VBAT`** (CSKB H2.45/H2.46, 6.0–8.4 V nominal) through a local buck
 converter sized for ≥3 A @ 5.0 V output. This requires changing the
-payload column for H2.45/H2.46 in `cskb_pinmap.md` from `M` (monitor)
+payload column for H2.45/H2.46 in [`cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md) from `M` (monitor)
 to `C` (consumer) — flag for EPS conversation.
 
 Decoupling at the SO-DIMM VDD_IN pins per DG-10931 recommended values
@@ -162,7 +162,7 @@ in the schematic.
 
 Channel assignment follows the current filter plan — one on-line channel on the
 potassium doublet and two continuum references outside the O₂ A-band. See
-`docs/research/k_line_detection.md`.
+[`docs/research/k_line_detection.md`](../../../docs/research/k_line_detection.md).
 
 #### Camera #0 (750 nm continuum reference)
 
@@ -321,7 +321,7 @@ adapter can connect directly.
 ## 6. CSKB Stack Interface
 
 Signals crossing the CSKB connectors and their mapping to Orin SO-DIMM
-pins. CSKB pin numbers and net names come from `system/interfaces/cskb_pinmap.md`
+pins. CSKB pin numbers and net names come from [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md)
 and MUST match exactly — if there's a conflict, that file wins.
 
 ### 6.1 System I²C — IHU ↔ payload command channel
@@ -332,7 +332,7 @@ target with a defined register map (TBD in firmware spec). Bus runs at
 
 | CSKB pin | CSKB net | SO-DIMM pin | Module net | Notes |
 |---|---|---|---|---|
-| H1.41 | `SDA_SYS` | 187 | `SDA_SYS` (Orin `I2C0_SDA`) | Bus pull-ups already on EPS side (R4/R5, 4.7 kΩ) — do NOT add additional pull-ups on payload. Canonical net name per `system/interfaces/cskb_pinmap.md`. |
+| H1.41 | `SDA_SYS` | 187 | `SDA_SYS` (Orin `I2C0_SDA`) | Bus pull-ups already on EPS side (R4/R5, 4.7 kΩ) — do NOT add additional pull-ups on payload. Canonical net name per [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md). |
 | H1.43 | `SCL_SYS` | 185 | `SCL_SYS` (Orin `I2C0_SCL`) | |
 
 ### 6.2 Payload enable
@@ -615,6 +615,6 @@ Notable ones to call out so future revs don't think they were forgotten:
 | 0.1 | 2026-05-11 | NG / CC | Initial draft against DS-11105 v1.1 module datasheet, DG-10931 v1.1 design guide. Allocates CSI0/1/2 to 3× Pi HQ Cameras, defines USB recovery test header, debug UART, CSKB stack mapping, GPIO summary. |
 | 0.2 | 2026-05-11 | NG / CC | Camera switched from Pi HQ (IMX477) to Pi Global Shutter Camera (IMX296). Connector type 22-pin 0.5 mm → **15-pin 1.0 mm standard**. Removed CAM_MCLK / CAM_PWDN allocations (Pi cams use onboard oscillator). Trigger path: XTR on **separate solder pad** (not in FFC) — added 2-pin J_TRIG header + flying-lead harness. **No level shifter needed for trigger** (Orin 1.8V GPIO = XTR 1.8V logic). Added single 74LVC2G07 dual-channel buffer for SHUTDOWN_REQ→PAYLOAD_FAULT_N translation AND I²C mux reset. Removed coin-cell PMIC_BBAT (NC). Routed SLEEP/WAKE* (pin 240) to CSKB H2.48 (`PAYLOAD_SLEEP_REQ_N`). Reflected CSKB pinmap rev 0.3 allocations of H2.47/H2.48. |
 | 0.3 | 2026-05-18 | NG / CC | Added **M.2 2230 Key-E WiFi/BT socket** (§9) for ground-bench SSH/iperf. Validated against Realtek RTL8822CE shipped on the Orin Nano devkit (lspci bus `0001:01:00.0`). Allocates PCIE1 ×1 (pins 167/169/172/173/174/175/182/183), USB1 (pins 115/117, BT-over-USB), and PCIE_WAKE* (pin 179). Removed those pins from §7 NC list. 3.3V supplied from CSKB +3V3 through a ferrite (FB_M2). All M.2 control signals are 3.3V on the Orin side — direct connect, no level translators. Socket is bench-only; flight build leaves it empty. Updated §6.4 CSKB +3V3 budget to reflect 1.6 A peak with M.2 + cams. Added 4 new open items (§10.9–§10.12) covering AC-cap location, 3V3 headroom, antenna bulkhead, and SUSCLK provisioning for future card swaps. |
-| 0.4 | 2026-05-24 | NG / CC | Net-naming conformance pass against `hardware/conventions/net_naming.md`. Renamed `+3V3_PAYLOAD` → `+3V3` (stack rail uses canonical power port, no scope suffix). Renamed `+5V_PAYLOAD` → `+5V_ORIN` (board-local derived rail; suffix now describes purpose — the Orin module's VDD_IN — per the `+5V_TX_GATED` convention example). Renamed stack I²C carrier nets `I2C_SCL`/`I2C_SDA` → `SCL_SYS`/`SDA_SYS` to match cskb_pinmap.md canonical names. No electrical changes — net renaming only. |
+| 0.4 | 2026-05-24 | NG / CC | Net-naming conformance pass against [`hardware/conventions/net_naming.md`](../../conventions/net_naming.md). Renamed `+3V3_PAYLOAD` → `+3V3` (stack rail uses canonical power port, no scope suffix). Renamed `+5V_PAYLOAD` → `+5V_ORIN` (board-local derived rail; suffix now describes purpose — the Orin module's VDD_IN — per the `+5V_TX_GATED` convention example). Renamed stack I²C carrier nets `I2C_SCL`/`I2C_SDA` → `SCL_SYS`/`SDA_SYS` to match cskb_pinmap.md canonical names. No electrical changes — net renaming only. |
 | 0.5 | 2026-05-24 | NG / CC | **U4 buffer revisited.** Reverted from the two-74LVC1G07 split (recommended in rev 0.4 prose) back to a **single 74LVC2G07** by running it at **VCC = `+1V8_MOD`** (not `+3V3`). At VCC < 2.7 V the LVC family V_IH(min) is 0.65 × VCC = 1.17 V — accepts 1.8 V CMOS HIGH from Orin GPIO cleanly, while LVC inputs stay 5 V-tolerant so the 5 V `SHDN_REQ_N` source is fine. Both open-drain outputs are rail-agnostic and continue to pull to 3.3 V through external PUs. Updated §2, §6.5, §6.7, GPIO summary, and open item §10.13 to reflect the single-IC design. Saves one part vs the rev-0.4 prose recommendation. |
 | 0.6 | 2026-05-24 | NG / CC | **Test point allocation rationalized.** Found cross-doc collisions — the pinmap §5 had assigned TP1/TP2 to the debug UART nets, while the schematic guide had TP1=SYS_RESET_N / TP2=MOD_SLEEP_N / TP3=CLK_32K_OUT. The schematic guide also had a TP4 collision (PAYLOAD_FAULT_N in Final Checklist vs +5V_TEST in §4.B alternative note). Added a new §2.1 "Test Point Allocation (canonical)" table as single source of truth for all TP refdes. Renumbered UART TPs in §5 from TP1/TP2 → TP5/TP6 to match. Schematic guide updated in parallel: §4.B optional `+5V_TEST` TP renumbered to TP7, Final Checklist updated to reference §2.1. No electrical changes — refdes-only fix. |

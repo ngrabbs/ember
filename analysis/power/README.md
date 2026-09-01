@@ -479,7 +479,7 @@ Datasheet (AM1.5)
 
 ### Python Script
 
-The script that produces the tables above is `power_budget.py`, in this
+The script that produces the tables above is [`power_budget.py`](power_budget.py), in this
 directory. Run it from the repository root:
 
 ```bash

@@ -83,7 +83,7 @@ is high with energy spread across many harmonics and spurs.
 
 Quantitative measurement of Si5351A CLK1 output power and harmonic content
 at 145.9 MHz, in support of the SA612 → ADE-1+ mixer swap (see
-`design/rx_mixer_trade_study.md`). Confirms LO drive level exceeds the
+[`design/rx_mixer_trade_study.md`](../design/rx_mixer_trade_study.md)). Confirms LO drive level exceeds the
 +7 dBm target for the passive mixer and validates the 5-pole LO LPF
 design margin against the 3rd harmonic.
 
@@ -93,12 +93,12 @@ design margin against the 3rd harmonic.
 
 - **DUT:** Adafruit 5640 Si5351A breakout (CLK1 SMA pigtail)
 - **Controller:** Pico 2 (RP2350), CircuitPython, code at
-  `bringup/si5351_test_code.py`
+  [`bringup/si5351_test_code.py`](si5351_test_code.py)
   - CLK1 = 145.900 MHz, integer multisynth (PLL_A = 875.4 MHz / 6), drive = 8 mA
 - **Test chain:** CLK1 SMA → BECEN DC block → Nooelec 20 dB pad → TinySA Ultra
   - Pad loss characterized at -19.53 dB @ 144 MHz, -19.53 dB @ 434 MHz
     (from tool inventory pad characterization log)
-- **Procedure:** per `bringup/lo_drive_verification.md`
+- **Procedure:** per [`bringup/lo_drive_verification.md`](lo_drive_verification.md)
 
 ### Results — measured
 
@@ -191,7 +191,7 @@ bring-up.
 
 ### Files
 
-- Test code: `bringup/si5351_test_code.py`
-- Procedure: `bringup/lo_drive_verification.md`
-- Setup: `bringup/si5351a_breakout_bench_test.md`
-- Trade study (why this measurement matters): `design/rx_mixer_trade_study.md`
+- Test code: [`bringup/si5351_test_code.py`](si5351_test_code.py)
+- Procedure: [`bringup/lo_drive_verification.md`](lo_drive_verification.md)
+- Setup: [`bringup/si5351a_breakout_bench_test.md`](si5351a_breakout_bench_test.md)
+- Trade study (why this measurement matters): [`design/rx_mixer_trade_study.md`](../design/rx_mixer_trade_study.md)

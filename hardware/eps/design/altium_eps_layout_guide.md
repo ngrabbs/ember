@@ -477,8 +477,8 @@ verify before ordering.
 
 ## Related Documents
 
-- Schematic guide: `hardware/eps/design/altium_eps_schematic_guide.md`
-- EPS architecture: `hardware/eps/design/overview.md`
-- Bring-up plan: `hardware/eps/bringup/phase1_validation.md`
+- Schematic guide: [`hardware/eps/design/altium_eps_schematic_guide.md`](altium_eps_schematic_guide.md)
+- EPS architecture: [`hardware/eps/design/overview.md`](overview.md)
+- Bring-up plan: [`hardware/eps/bringup/phase1_validation.md`](../bringup/phase1_validation.md)
 - TPS62933F datasheet: TI SLUSEA4D (layout section 12, pp. 40-41)
 - LTC4162-L datasheet: pp. 48-52 (PCB layout considerations)

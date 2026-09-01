@@ -46,6 +46,6 @@ ownership expectations for each link.
 
 ## Related Documents
 
-- IHU architecture: `hardware/ihu/design/overview.md`
-- IHU-comms details: `system/interfaces/comms_to_ihu.md`
-- Global bus strategy: `system/interfaces/board_to_board.md`
+- IHU architecture: [`hardware/ihu/design/overview.md`](overview.md)
+- IHU-comms details: [`system/interfaces/comms_to_ihu.md`](../../../system/interfaces/comms_to_ihu.md)
+- Global bus strategy: [`system/interfaces/board_to_board.md`](../../../system/interfaces/board_to_board.md)

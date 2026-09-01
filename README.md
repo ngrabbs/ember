@@ -50,7 +50,7 @@ inspect.
 | Command, Telemetry and Debug Interface | Operator-facing command path, telemetry decode, and bench debug access |
 
 Boards interconnect over the Pumpkin **CubeSat Kit Bus (CSKB)** H1/H2 stack
-headers. `system/interfaces/cskb_pinmap.md` is the single source of truth for pin
+headers. [`system/interfaces/cskb_pinmap.md`](system/interfaces/cskb_pinmap.md) is the single source of truth for pin
 assignment across every board.
 
 ---
@@ -98,7 +98,7 @@ cmake .. && make -j
 ```
 
 Requires the Pico SDK (`PICO_SDK_PATH`) and `arm-none-eabi-gcc`. Full bring-up
-notes are in `firmware/ihu/README.md`.
+notes are in [`firmware/ihu/README.md`](firmware/ihu/README.md).
 
 ---
 

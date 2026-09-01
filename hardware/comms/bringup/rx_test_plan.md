@@ -2,7 +2,7 @@
 
 ## Stage 1: Si5351A CLK1 (RX LO)
 
-Completed as part of TX Stage 1. See `si5351a_bringup_log.md`.
+Completed as part of TX Stage 1. See [`si5351a_bringup_log.md`](si5351a_bringup_log.md).
 
 - [x] CLK1 outputs 145.900 MHz at expected power level
 - [x] Enable/disable control working

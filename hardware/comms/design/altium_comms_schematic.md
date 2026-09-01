@@ -1239,7 +1239,7 @@ CLK1_OUT (port) ── C24 ──┬── L13 ──┬── L14 ──┬─�
 |---|---|---|---|
 | U3 | ADE-1+ | CD636 (7.87 × 5.59 mm, 6-pad SMT) | Mini-Circuits passive diode ring, Level 7 |
 
-**ADE-1+ pin connections** (per datasheet `C2942210.pdf`):
+**ADE-1+ pin connections** (per datasheet [`C2942210.pdf`](C2942210.pdf)):
 
 | Pin | Name | Connect To |
 |---|---|---|
@@ -1842,12 +1842,12 @@ Search Manufacturer Part Search for "ESQ-126-39-G-D" or place a
 generic 2×26 pin socket symbol (0.1″ (2.54 mm) pitch) and assign the
 Samtec MPN in the component properties. **Mechanical note:** exact
 X/Y position of the H1 and H2 footprints on the PCB must match
-Pumpkin's motherboard layout (see `DS_CSK_MB_710-00484-E.pdf` page 5,
+Pumpkin's motherboard layout (see [`DS_CSK_MB_710-00484-E.pdf`](../../../system/interfaces/DS_CSK_MB_710-00484-E.pdf) page 5,
 "Simplified Mechanical Layout") before layout.
 
 #### Pin Assignment (Pumpkin CSKB H1/H2)
 
-> **Canonical reference:** `system/interfaces/cskb_pinmap.md` is the
+> **Canonical reference:** [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md) is the
 > authoritative pin map for the stack. The table below is a
 > board-local view and must match that file. Update the canonical
 > file first if anything here needs to change.
@@ -2242,14 +2242,14 @@ title block "Notes" field or as a text frame on the Top sheet.
    suppresses Si5351A square-wave harmonics. 51 Ω resistor terminates
    the IF port. **Changed from SA612 active mixer** due to SA612
    end-of-life sourcing. New architecture has ~5 dB better system NF.
-   See `rx_mixer_trade_study.md` for full rationale.
+   See [`rx_mixer_trade_study.md`](rx_mixer_trade_study.md) for full rationale.
 8. **Baseband filter:** Sallen-Key LPF, fc=3.3 kHz, -40 dB/decade.
    LTspice verified: 1200 Hz at -0.56 dB, 2200 Hz at -1.75 dB.
 9. **Gain stage:** MCP6022 non-inverting, gain=11 (20.8 dB), mid-supply
    bias at 1.65V.
 10. **CSKB connectors:** 2× Samtec ESQ-126-39-G-D (2×26, 0.1″ stackthrough),
     populated at H1 (signals) and H2 (power). Pin assignment follows
-    Pumpkin CubeSat Kit Bus per `system/interfaces/cskb_pinmap.md`
+    Pumpkin CubeSat Kit Bus per [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md)
     (datasheet Rev. E pp. 13–16). COMMS_IRQ on H1.16, SPI on
     H1.21/22/23/24, I2C on H1.41/43, +5V on H2.25/26, +3V3 on H2.27/28,
     DGND on H2.29/30/32, AGND on H2.31, VBAT on H2.45/46.
@@ -2263,16 +2263,16 @@ title block "Notes" field or as a text frame on the Top sheet.
 
 ## Related Documents
 
-- Comms overview and design rationale: `hardware/comms/design/overview.md`
-- **Project-level net naming convention:** `hardware/conventions/net_naming.md`
-- **RX mixer trade study (SA612 → ADE-1+ + PSA4 LNA):** `hardware/comms/design/rx_mixer_trade_study.md`
-- **RF layout guidelines (ground plane, via stitching, stackup):** `hardware/comms/design/rf_layout_guidelines.md`
-- Sallen-Key simulation lab: `hardware/comms/design/sallen_key_simulation_lab.md`
+- Comms overview and design rationale: [`hardware/comms/design/overview.md`](overview.md)
+- **Project-level net naming convention:** [`hardware/conventions/net_naming.md`](../../conventions/net_naming.md)
+- **RX mixer trade study (SA612 → ADE-1+ + PSA4 LNA):** [`hardware/comms/design/rx_mixer_trade_study.md`](rx_mixer_trade_study.md)
+- **RF layout guidelines (ground plane, via stitching, stackup):** [`hardware/comms/design/rf_layout_guidelines.md`](rf_layout_guidelines.md)
+- Sallen-Key simulation lab: [`hardware/comms/design/sallen_key_simulation_lab.md`](sallen_key_simulation_lab.md)
 - Sallen-Key LTspice files: `hardware/comms/design/sallen_key_ltspice_lab/`
-- Si5351A bring-up log: `hardware/comms/bringup/si5351a_bringup_log.md`
-- Tripler breadboard build guide: `hardware/comms/bringup/tripler_breadboard.md`
-- TX test plan: `hardware/comms/bringup/tx_test_plan.md`
-- RX test plan: `hardware/comms/bringup/rx_test_plan.md`
-- EPS Altium schematic guide: `hardware/eps/design/altium_eps_schematic_guide.md`
-- EPS architecture: `hardware/eps/design/overview.md`
+- Si5351A bring-up log: [`hardware/comms/bringup/si5351a_bringup_log.md`](../bringup/si5351a_bringup_log.md)
+- Tripler breadboard build guide: [`hardware/comms/bringup/tripler_breadboard.md`](../bringup/tripler_breadboard.md)
+- TX test plan: [`hardware/comms/bringup/tx_test_plan.md`](../bringup/tx_test_plan.md)
+- RX test plan: [`hardware/comms/bringup/rx_test_plan.md`](../bringup/rx_test_plan.md)
+- EPS Altium schematic guide: [`hardware/eps/design/altium_eps_schematic_guide.md`](../../eps/design/altium_eps_schematic_guide.md)
+- EPS architecture: [`hardware/eps/design/overview.md`](../../eps/design/overview.md)
 - v0.1 schematic PDF: `hardware/comms/design/satellite_comms_draft_v0.1.pdf`

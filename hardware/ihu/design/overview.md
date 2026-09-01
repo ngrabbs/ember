@@ -71,6 +71,6 @@ Subsystem Telemetry -> IHU Aggregator -> Downlink Packet Assembly -> Comms TX
 
 ## Related Documents
 
-- IHU interfaces: `hardware/ihu/design/interfaces.md`
-- IHU bring-up plan: `hardware/ihu/bringup/phase1_validation.md`
-- System interconnect plan: `system/interfaces/board_to_board.md`
+- IHU interfaces: [`hardware/ihu/design/interfaces.md`](interfaces.md)
+- IHU bring-up plan: [`hardware/ihu/bringup/phase1_validation.md`](../bringup/phase1_validation.md)
+- System interconnect plan: [`system/interfaces/board_to_board.md`](../../../system/interfaces/board_to_board.md)

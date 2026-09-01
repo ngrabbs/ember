@@ -12,7 +12,7 @@ schematic, not this file.
 
 This project uses the **Pumpkin CubeSat Kit Bus (CSKB)** as defined in the
 CubeSat Kit Motherboard Rev. E datasheet
-(`system/interfaces/DS_CSK_MB_710-00484-E.pdf`, Pumpkin P/N 710-00484,
+([`system/interfaces/DS_CSK_MB_710-00484-E.pdf`](DS_CSK_MB_710-00484-E.pdf), Pumpkin P/N 710-00484,
 doc Rev. A dated March 2012). The CSKB is delivered via **two physical
 connectors**, `H1` and `H2`, each a 2×26 0.1″ (2.54 mm) pitch socket
 (52 pins each, 104 pins total).
@@ -73,7 +73,7 @@ spacing on that interface. Flag this early during mechanical review.
 ### Mechanical alignment note
 
 X/Y position of H1 and H2 on every PCB MUST match Pumpkin's
-motherboard layout (see `DS_CSK_MB_710-00484-E.pdf` page 5,
+motherboard layout (see [`DS_CSK_MB_710-00484-E.pdf`](DS_CSK_MB_710-00484-E.pdf) page 5,
 "Simplified Mechanical Layout") so a mixed stack with any Pumpkin /
 MBM2 / iSpace board mates without rework. Verify footprint position
 and H1–H2 spacing against the Pumpkin drawing before any PCB layout.
@@ -205,14 +205,14 @@ both names refer to the same wire:
 
 ## Per-board references
 
-- `hardware/ihu/design/altium_ihu_schematic.md` — IHU Sheet 6 (Connectors & Debug)
-- `hardware/eps/design/altium_eps_schematic_guide.md` — EPS Sheet 3 (Connectors & Telemetry)
-- `hardware/comms/design/altium_comms_schematic.md` — Comms Sheet 7 (Connectors)
-- `hardware/payload_compute/design/payload_carrier_pinmap.md` — Payload carrier SO-DIMM↔CSKB pin assignments (Jetson Orin Nano)
+- [`hardware/ihu/design/altium_ihu_schematic.md`](../../hardware/ihu/design/altium_ihu_schematic.md) — IHU Sheet 6 (Connectors & Debug)
+- [`hardware/eps/design/altium_eps_schematic_guide.md`](../../hardware/eps/design/altium_eps_schematic_guide.md) — EPS Sheet 3 (Connectors & Telemetry)
+- [`hardware/comms/design/altium_comms_schematic.md`](../../hardware/comms/design/altium_comms_schematic.md) — Comms Sheet 7 (Connectors)
+- [`hardware/payload_compute/design/payload_carrier_pinmap.md`](../../hardware/payload_compute/design/payload_carrier_pinmap.md) — Payload carrier SO-DIMM↔CSKB pin assignments (Jetson Orin Nano)
 
 ## Source of truth
 
-- `system/interfaces/DS_CSK_MB_710-00484-E.pdf` — Pumpkin CubeSat Kit
+- [`system/interfaces/DS_CSK_MB_710-00484-E.pdf`](DS_CSK_MB_710-00484-E.pdf) — Pumpkin CubeSat Kit
   Motherboard Rev. E datasheet (doc Rev. A, March 2012). Pages 13–17
   hold the authoritative H1/H2 pin tables and the Samtec connector
   catalog.
@@ -223,4 +223,4 @@ both names refer to the same wire:
 |---|---|---|---|
 | 0.1 | 2026-04-15 | NG | Initial canonical pin map (based on PPM H10 numbering — WRONG, superseded) |
 | 0.2 | 2026-04-15 | NG | Rebuilt against Pumpkin datasheet Rev. E: bus renamed PC/104 → CubeSat Kit Bus (CSKB); pin numbers remapped from H10 (PPM) → H1/H2 (stack bus); connector family corrected to Samtec ESQ-126 (not ESQ-130); split into H1 signal table + H2 power table; added connector options catalog and endpoint-vs-stackthrough guidance |
-| 0.3 | 2026-05-11 | NG / CC | Payload integration: H2.45/H2.46 (`VBAT`) payload column changed `M` → `C` (Orin Nano draws from VBAT, not stack +5V — see Rule 7); allocated H2.47 (`USER6`) = `PAYLOAD_FAULT_N` and H2.48 (`USER7`) = `PAYLOAD_SLEEP_REQ_N`; added `PAYLOAD_FAULT_N` pull-up to Rule 3; added Rule 7 (payload-power exception); pointed Per-board references at `payload_carrier_pinmap.md`. |
+| 0.3 | 2026-05-11 | NG / CC | Payload integration: H2.45/H2.46 (`VBAT`) payload column changed `M` → `C` (Orin Nano draws from VBAT, not stack +5V — see Rule 7); allocated H2.47 (`USER6`) = `PAYLOAD_FAULT_N` and H2.48 (`USER7`) = `PAYLOAD_SLEEP_REQ_N`; added `PAYLOAD_FAULT_N` pull-up to Rule 3; added Rule 7 (payload-power exception); pointed Per-board references at [`payload_carrier_pinmap.md`](../../hardware/payload_compute/design/payload_carrier_pinmap.md). |

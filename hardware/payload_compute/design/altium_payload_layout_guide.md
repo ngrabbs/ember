@@ -2,7 +2,7 @@
 
 ## Scope
 
-This is the layout-side companion to `altium_payload_schematic_guide.md`.
+This is the layout-side companion to [`altium_payload_schematic_guide.md`](altium_payload_schematic_guide.md).
 The schematic guide tells you what to draw; this guide tells you how to
 turn it into a manufacturable PCB.
 
@@ -49,7 +49,7 @@ important layout job on this board.
 
 ### 1.3 Critical layout note from the schematic side — CSI P/N swaps
 
-Per `payload_carrier_pinmap.md` §3.3 and DG-10931 §10, the Orin module
+Per [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) §3.3 and DG-10931 §10, the Orin module
 has a **P/N polarity swap on `CSI0_D1` and `CSI1_D0`**. The schematic
 compensates by routing module D1_P to FFC D1_N and vice versa. **The
 swap lives in the schematic netlist, not in the layout.** When you
@@ -77,9 +77,9 @@ the trace width needed to hit each impedance target.
 
 **Stackup consistency across the project.** The comms board uses the
 same JLCPCB JLC04161H-7628 stackup — see
-`hardware/comms/design/rf_layout_guidelines.md` for the full
+[`hardware/comms/design/rf_layout_guidelines.md`](../../comms/design/rf_layout_guidelines.md) for the full
 discussion of why 4-layer with a dedicated solid L2 GND is the right
-default for every board, and `altium_comms_schematic.md`
+default for every board, and [`altium_comms_schematic.md`](../../comms/design/altium_comms_schematic.md)
 for layer-by-layer dielectric thicknesses and the Altium Layer Stack
 Manager setup.
 
@@ -484,7 +484,7 @@ frequencies you're sending down the trace (and an EMI radiator into
 the rest of the board). For our PCIe Gen2 at 5 GT/s, that's a
 ~2.5 GHz radiator. Avoid.
 
-`hardware/comms/design/rf_layout_guidelines.md` covers this at depth
+[`hardware/comms/design/rf_layout_guidelines.md`](../../comms/design/rf_layout_guidelines.md) covers this at depth
 under "The core rule" and "What NOT to do" — it's written for the
 comms RF chain but the physics is identical for high-speed digital
 diff pairs. Read those two sections before you start routing.
@@ -597,7 +597,7 @@ properly. For our board:
 | IC bypass caps (C50, C70, C100, C101, C45) | 0402 | **All dogbone** |
 | TPS62933F input cap C11 (100 nF 0402) | 0402 | Dogbone, but keep the total loop <2 mm — this is the most layout-critical cap on the board (per schematic guide §1.B note) |
 
-**Note:** the comms RF guide (`rf_layout_guidelines.md` §"Shunt
+**Note:** the comms RF guide ([`rf_layout_guidelines.md`](../../comms/design/rf_layout_guidelines.md) §"Shunt
 component grounding") covers this in much more depth, including the
 multi-via grounding rules for MMIC / LNA pads. Our payload doesn't
 have those exposed-pad RF parts, but the dogbone principle for 0402
@@ -641,10 +641,10 @@ Listed here so the doc structure is set and nothing gets forgotten.
 
 ## 8. References
 
-- `payload_carrier_pinmap.md` — canonical pin allocation; the diff-pair list in §1.1 above is sourced from here
-- `altium_payload_schematic_guide.md` — schematic-side conventions (net naming, sheet structure, component refdes)
-- `hardware/conventions/net_naming.md` — project-wide net naming convention (`_P`/`_N` suffix is required for diff pairs)
-- **`hardware/comms/design/rf_layout_guidelines.md`** — written for the comms RF chain, but the sections on **return current physics**, **never splitting the ground plane**, **via stitching at frequency-dependent spacing**, and the **0402 dogbone vs via-in-pad** discussion are directly applicable to our high-speed digital diff pairs and decoupling caps. Read it. Specifically:
+- [`payload_carrier_pinmap.md`](payload_carrier_pinmap.md) — canonical pin allocation; the diff-pair list in §1.1 above is sourced from here
+- [`altium_payload_schematic_guide.md`](altium_payload_schematic_guide.md) — schematic-side conventions (net naming, sheet structure, component refdes)
+- [`hardware/conventions/net_naming.md`](../../conventions/net_naming.md) — project-wide net naming convention (`_P`/`_N` suffix is required for diff pairs)
+- **[`hardware/comms/design/rf_layout_guidelines.md`](../../comms/design/rf_layout_guidelines.md)** — written for the comms RF chain, but the sections on **return current physics**, **never splitting the ground plane**, **via stitching at frequency-dependent spacing**, and the **0402 dogbone vs via-in-pad** discussion are directly applicable to our high-speed digital diff pairs and decoupling caps. Read it. Specifically:
   - "The core rule" (return currents and why ground splits are slot antennas) — applies verbatim to our diff pairs
   - "What NOT to do" (no split grounds, no star ground) — same physics for our digital signals
   - "Shunt component grounding" + the package-size cheat-sheet — same dogbone rule for our 0402 bypass caps
@@ -658,6 +658,6 @@ Listed here so the doc structure is set and nothing gets forgotten.
 
 | Rev | Date | Author | Change |
 |---|---|---|---|
-| 0.1 | 2026-05-24 | NG / CC | Initial draft. Focused on the differential-pair workflow (§1–§6) since that's where the user is starting layout work. Catalogs all 14 diff pairs from the schematic, gives target impedances + length-match tolerances, walks through Altium setup (schematic directives, PCB classes, design rules, interactive routing, length tuning, verification). Other layout topics (§7) stubbed for fill-in as the layout progresses. Cross-references `hardware/comms/design/rf_layout_guidelines.md` for the return-current physics + 0402 dogbone-grounding deep-dive (the RF guide's physics applies directly to our high-speed digital diff pairs and 0402 decoupling caps). Added §5.7 on decoupling/bypass cap placement (cap-then-via order, dogbone for 0402 GND-side legs) since clean rails are what feed the diff-pair signal integrity. |
+| 0.1 | 2026-05-24 | NG / CC | Initial draft. Focused on the differential-pair workflow (§1–§6) since that's where the user is starting layout work. Catalogs all 14 diff pairs from the schematic, gives target impedances + length-match tolerances, walks through Altium setup (schematic directives, PCB classes, design rules, interactive routing, length tuning, verification). Other layout topics (§7) stubbed for fill-in as the layout progresses. Cross-references [`hardware/comms/design/rf_layout_guidelines.md`](../../comms/design/rf_layout_guidelines.md) for the return-current physics + 0402 dogbone-grounding deep-dive (the RF guide's physics applies directly to our high-speed digital diff pairs and 0402 decoupling caps). Added §5.7 on decoupling/bypass cap placement (cap-then-via order, dogbone for 0402 GND-side legs) since clean rails are what feed the diff-pair signal integrity. |
 | 0.2 | 2026-05-25 | NG / CC | **Switched diff-pair width spec from hardcoded W/G to Altium Impedance Profiles.** Added new §3.2 walking through profile creation in the Layer Stack Manager (`100R_DIFF_L1`, `85R_DIFF_L1`, `90R_DIFF_L1`). Rewrote §4.1 to reference profiles by name in the design rules instead of typing W/G values — Altium's 2D field solver computes the exact widths from the actual JLCPCB-populated stackup. §2.1 demoted from "source of truth" to "sanity-check table" (if the profile's computed W differs by >20 % from these values, the stackup is misconfigured). §5.1 pre-routing checklist now includes "Impedance Profiles created". Includes a fallback note for pre-AD20 Altium users who don't have profile support. |
 | 0.3 | 2026-05-25 | NG / CC | **Fixed wrong rule path for length matching.** §4.2 originally pointed to `Routing → Differential Pairs Routing → Matched Length` — that sub-rule doesn't exist. Length matching (both intra-pair and inter-pair) lives in **`High Speed → Matched Lengths`**, with `Routing → Differential Pairs Routing` reserved for width/gap/impedance only. Restructured §4: added an intro table explaining the rules-tree split (Routing branch vs High Speed branch). Rewrote §4.2 (intra-pair) with two valid approaches — per-pair rules (verbose, always works) and per-class with Groups=Pairs (AD22+ only, cleaner). Rewrote §4.3 (inter-pair) with explicit `High Speed → Matched Lengths` path and xSignal class workflow. Added new §4.4 on rule priority (intra rules higher priority than inter so the tighter tolerance wins on the overlap). Renumbered old §4.4 Clearance to §4.5. |

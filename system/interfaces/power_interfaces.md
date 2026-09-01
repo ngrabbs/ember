@@ -19,4 +19,4 @@ Capture power rail interfaces between EPS and all dependent subsystems.
 
 ## Detailed EPS Interface Source
 
-See `hardware/eps/design/interfaces.md` for current EPS-side interface mapping.
+See [`hardware/eps/design/interfaces.md`](../../hardware/eps/design/interfaces.md) for current EPS-side interface mapping.
