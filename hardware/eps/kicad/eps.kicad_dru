@@ -1,0 +1,34 @@
+(version 1)
+
+# Custom design rules — EPS board.
+#
+# The comms board's rule enforces a 50 ohm RF trace width. This board has
+# no RF; what it has is current. These rules make DRC catch a high-current
+# rail that got routed at signal width, which is the failure this board is
+# actually exposed to.
+#
+# Board: JLCPCB 2-layer 1.6 mm FR-4, 1 oz both faces. There is no inner
+# plane — every trace is an outer trace. Widths follow IPC-2152 at 10 C
+# rise; see hardware/eps/design/trace_sizing_quickref.md.
+#
+# If the board moves to 2 oz copper these minimums can halve. Update this
+# file and the quickref together.
+
+# 3 A class: VOUT_PP, BATT_POS, VIN_CHG, SW_NODE, VBAT.
+# 1.0 mm is the IPC-2152 width for 3 A on 1 oz outer copper; 1.27 mm is
+# the class default, so the floor sits below it deliberately to leave the
+# router some freedom on short runs.
+(rule "high-current rail minimum width"
+  (condition "A.NetClass == 'PWR_HIGH'")
+  (constraint track_width (min 1.0mm) (opt 1.27mm)))
+
+# Regulated rails feeding the stack, ~1 A.
+(rule "power rail minimum width"
+  (condition "A.NetClass == 'PWR'")
+  (constraint track_width (min 0.5mm) (opt 0.5mm)))
+
+# Switching nodes carry high di/dt. Keep them clear of adjacent copper so
+# the loop stays tight and coupling stays low.
+(rule "switch node clearance"
+  (condition "A.NetClass == 'PWR_HIGH' && B.NetClass != 'PWR_HIGH'")
+  (constraint clearance (min 0.25mm)))

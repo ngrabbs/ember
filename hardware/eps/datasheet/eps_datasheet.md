@@ -54,7 +54,7 @@ title: ""
 
 - Operating temperature: **−20 °C to +60 °C** (preliminary)
 - Battery charge-disable below 0 °C via LTC4162 NTC (planned)
-- 1 oz copper, FR-4, 4-layer (controlled-impedance candidate)
+- 1 oz copper, FR-4, 2-layer
 - 6 V/m EMC margin (preliminary, TBD on full chamber sweep)
 
 ```{=latex}

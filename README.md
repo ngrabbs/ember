@@ -110,6 +110,9 @@ notes are in [`firmware/ihu/README.md`](firmware/ihu/README.md).
 Under active development. Fall semester covers design and proof of concept;
 hardware build and integration follow in spring.
 
+Open work is tracked in [`TODO.md`](TODO.md) — the current front on each
+subsystem, plus anything not owned by a checklist inside the design docs.
+
 ---
 
 ## License

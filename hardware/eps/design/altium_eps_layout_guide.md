@@ -5,66 +5,70 @@
 | Parameter | Value |
 |---|---|
 | Form factor | PCI-104 (96 mm x 90 mm) |
-| Layer count | 4 |
+| Layer count | 2 |
 | Thickness | 1.6 mm (standard) |
 | Fabricator | JLCPCB |
 | Assembly | JLCPCB SMT (top side), hand-solder THT |
-| Min trace/space | 0.15 mm / 0.15 mm (JLCPCB 4-layer standard) |
+| Min trace/space | 0.15 mm / 0.15 mm (project default; JLCPCB 2-layer allows 0.10 mm) |
 | Min drill | 0.3 mm (JLCPCB standard) |
-| Copper weight | 1 oz outer, 0.5 oz inner (JLCPCB 4-layer default) |
+| Copper weight | 1 oz both layers (2 oz available on 2-layer — see §1) |
 
 ---
 
 ## 1. Layer Stackup
 
-Use JLCPCB's standard 4-layer stackup (JLC04161H-7628):
+**This board is 2-layer.** Rev A was fabbed 2-layer and the KiCad project is
+2-layer; earlier revisions of this guide called for 4, which was never what
+got built.
 
-| Layer | Name | Purpose |
+| Layer | KiCad | Purpose |
 |---|---|---|
-| L1 (Top) | `Signal + Components` | SMD pads, signal traces, short power jumps |
-| L2 (Inner 1) | `GND` | Unbroken ground plane — this is the most important layer |
-| L3 (Inner 2) | `Power` | Power distribution: VOUT_PP, VBAT, +3V3, +5V fills |
-| L4 (Bottom) | `Signal + THT` | Battery holder pads, PCI-104 socket pads, THT jumper headers, secondary signal routing |
+| Top | `F.Cu` | SMD pads, signal traces, power routing, ground pour in the gaps |
+| Bottom | `B.Cu` | THT pads, secondary routing, and the main ground pour |
 
-### Ground Plane Rules
+JLCPCB 2-layer 1.6 mm FR-4, Dk ≈ 4.5. No `JLC04161H-*` stackup code applies —
+those are 4-layer only.
 
-- **L2 is sacred.** Do not route signals on L2. Do not split it. Do not
-  put power fills on it. The only acceptable voids are the drill hits
-  from vias and THT pads.
-- Every IC decoupling cap return via goes straight down to L2.
-- If you need to cross a signal trace over a power region on L3, that's
-  fine — L2 provides the continuous return path underneath.
+### The 2-layer consequence
 
-### Power Plane (L3) Zoning
+On a 4-layer board an inner plane gives every trace a continuous return path
+for free. **You do not have that here.** Ground is a pour on both faces, and
+every gap you cut in it — a trace crossing, a row of THT pads — is a detour
+the return current has to take. On a switching power board that detour is
+loop area, and loop area is radiated noise.
 
-Divide L3 into copper fill zones for each rail. Suggested layout:
+That makes three things non-negotiable:
 
-```
-┌──────────────────────────────────────────────────┐
-│                                                  │
-│   VOUT_PP fill          │    +3V3 fill           │
-│   (left/center,        │    (right, near        │
-│    near LTC4162         │     U2 output and      │
-│    and buck inputs)     │     PCI-104)           │
-│                         │                        │
-│─────────────────────────┼────────────────────────│
-│                         │                        │
-│   VBAT fill             │    +5V fill            │
-│   (bottom-left,        │    (right, near        │
-│    near battery         │     U3 output and      │
-│    connectors)          │     PCI-104)           │
-│                         │                        │
-└──────────────────────────────────────────────────┘
-```
+- **The bottom pour is the return path.** Keep it as unbroken as you can
+  under the switching nodes and their loops. Route bottom-side signals around
+  the power sections, not through them.
+- **Stitch the two pours together** every 5–10 mm, and densely around the
+  switchers, so top and bottom ground sit at the same potential.
+- **Never let a trace on one layer split the pour on the other** beneath a
+  power loop. If a bottom trace has to cross under the LTC4162 or a buck,
+  move it or take it around.
 
-Connect L3 fills to L1 pads via multiple vias at each IC power pin
-cluster. Use 0.3 mm drill / 0.6 mm annular ring stitching vias.
+### Copper weight — worth a decision
+
+JLCPCB offers **1 / 2 / 2.5 / 3.5 / 4.5 oz** on 2-layer (4-layer outer is
+fixed at 1 oz). With no inner planes to spread current or heat, 2 oz is worth
+pricing for this board: it halves the width needed for a given current and
+roughly doubles the copper available as a heat spreader under the regulators.
+
+Current default is **1 oz**, and the trace widths in
+[`trace_sizing_quickref.md`](trace_sizing_quickref.md) assume it. If you move
+to 2 oz, revisit them.
+
+### Power routing without a plane
+
+There is no inner plane to zone into rails — power is distributed on the top
+layer as wide traces and poured islands. See §6 for the detail.
 
 ---
 
 ## 2. Component Placement
 
-### Top Side (L1) — SMD Components, JLCPCB Assembly
+### Top Side (F.Cu) — SMD Components, JLCPCB Assembly
 
 This is where all the SMD parts go. JLCPCB assembles this side.
 
@@ -138,7 +142,7 @@ This is where all the SMD parts go. JLCPCB assembles this side.
 9. **Test points** — along board edges where a scope probe can reach
    without blocking other components.
 
-### Bottom Side (L4) — THT and Battery
+### Bottom Side (B.Cu) — THT and Battery
 
 | Component | Placement |
 |---|---|
@@ -167,7 +171,7 @@ VIN_CHG → MN1 drain-source → CLP/RS1/CLN → U1 pin 3 (VOUTA)
 ```
 
 - C2 (100 nF HF bypass at VIN) must be within 3 mm of U1 VIN pin
-  with a via to L2 GND directly at the cap's ground pad
+  with a via to the bottom ground pour directly at the cap's ground pad
 - L1 should be as close to U1 SW pins as possible
 - The SW node trace (L1 to U1) carries high dV/dt — keep it short
   and wide (0.5 mm min), but don't spread it out (area = antenna)
@@ -189,7 +193,7 @@ Rules for each TPS62933F:
 1. **C31/C41 (100 nF HF input cap)** — this cap closes the high-
    frequency loop. Place it directly at the VIN (pin 3) and GND
    (pin 4) pads. The trace from C31 pad to VIN pin should be < 2 mm.
-   Via the ground pad straight down to L2.
+   Via the ground pad straight down to the bottom ground pour.
 
 2. **Inductor (L20/L21)** — place so the pad connected to SW (pin 5)
    is as close to pin 5 as possible. A short, wide trace (0.4-0.5 mm)
@@ -198,7 +202,7 @@ Rules for each TPS62933F:
 
 3. **Output caps (C34-C36 / C44-C46)** — place at the inductor
    output pad. These filter the output ripple and close the power
-   loop. Via their ground pads to L2.
+   loop. Via their ground pads to the bottom ground pour.
 
 4. **BST cap (C32/C42, 100 nF)** — directly between BST (pin 6) and
    SW (pin 5). This is a high-frequency gate drive path. Keep the
@@ -260,8 +264,8 @@ supply testing (3.2 A charge current), the IC will warm up.
 
 - Place a grid of thermal vias (0.3 mm drill, 0.6 mm annular) under
   the exposed pad — minimum 9 vias in a 3x3 grid
-- Connect the vias to the L2 GND plane
-- On L4 (bottom), add a copper fill pad under the via grid if no
+- Connect the vias to the bottom ground pour
+- On the bottom layer, add a copper fill pad under the via grid if no
   battery holder interferes — this spreads heat to the bottom copper
 - In Altium: set the paste mask expansion to negative so solder paste
   doesn't flow down the vias (or use via-in-pad with filled/capped
@@ -272,7 +276,7 @@ supply testing (3.2 A charge current), the IC will warm up.
 
 SOT-583 has a small exposed pad on the bottom. Same approach:
 - 4 thermal vias (2x2 grid, 0.3 mm drill) under the pad
-- Connect to L2 GND
+- Connect to the bottom ground pour
 - The TPS62933F dissipates very little at the currents you'll use
   (~200-500 mA typical per rail), so this is mostly precautionary
 
@@ -287,33 +291,39 @@ connect to power nets that are already wide copper.
 
 ## 6. Copper Fills and Stitching
 
-### Top Side (L1) Fills
+### Top Side (F.Cu) Fills
 
-Pour a GND copper fill on all unused L1 area. This provides
-shielding, reduces EMI, and gives the autorouter return paths.
+Pour a `GND` fill on all unused top-side area. On a 2-layer board this is not
+just shielding — together with the bottom pour it *is* the return path.
 
-- Use the same `GND` net as L2
-- Stitch L1 GND pour to L2 with vias every 5-8 mm around the board
-  perimeter and in open areas
-- Add stitching vias around the buck converter regions (inside the
-  "thumbnail" power loop area) to create a low-impedance ground
-  connection between L1 and L2
+- Stitch the top pour to the bottom pour with vias every 5–8 mm around the
+  perimeter and across open areas
+- Stitch densely around the buck regions, inside the power-loop area, so the
+  two pours are one low-impedance ground
+- Do not leave isolated islands of pour. An unstitched island is a floating
+  antenna, not a ground
 
-### Bottom Side (L4) Fills
+### Bottom Side (B.Cu) Fills
 
-Pour GND on unused L4 area as well, stitched to L2. Leave clearance
-around battery holder pads and the PCI-104 connector field.
+The bottom pour is the primary ground. Keep it as continuous as possible,
+especially beneath the LTC4162 and both bucks.
 
-### Power Plane (L3) Fills
+- Pour `GND` across all unused bottom area
+- Leave clearance around the battery holder pads and the PCI-104 connector
+  field
+- Route bottom-side signals around the power sections. Any trace that crosses
+  under a switching loop cuts the return path and forces the current around it
 
-- Define separate polygon pours for VOUT_PP, VBAT, +3V3, +5V
-- Use net-tied vias from L1 component pads down to the appropriate
-  L3 fill for power distribution
-- Clearance between L3 fills: 0.3 mm minimum (JLCPCB standard)
-- VOUT_PP fill should extend from U1 VOUT output area to U2/U3 VIN
-  input areas — this is the main power distribution path
+### Power distribution (no inner plane)
 
----
+There is no power plane on this board. Distribute rails on the **top layer**:
+
+- Poured islands on top for `VOUT_PP` and `VBAT` — the highest-current nets —
+  sized per [`trace_sizing_quickref.md`](trace_sizing_quickref.md)
+- `VOUT_PP` runs from the U1 output area to the U2/U3 inputs; this is the
+  main distribution path and wants to be short and wide
+- `+3V3` and `+5V` fan out from their regulators as wide top-side traces
+- Keep 0.3 mm minimum between adjacent power islands
 
 ## 7. Via Strategy
 
@@ -321,8 +331,8 @@ around battery holder pads and the PCI-104 connector field.
 |---|---|---|---|
 | Standard signal | 0.3 mm | 0.6 mm | Signal routing, layer transitions |
 | Power via | 0.4 mm | 0.8 mm | Power rail connections (VOUT_PP, VBAT, +3V3, +5V) |
-| Thermal via | 0.3 mm | 0.6 mm | Under IC thermal pads, to L2 GND |
-| Stitching via | 0.3 mm | 0.6 mm | GND pour stitching, L1/L4 to L2 |
+| Thermal via | 0.3 mm | 0.6 mm | Under IC thermal pads, to the bottom ground pour |
+| Stitching via | 0.3 mm | 0.6 mm | GND pour stitching, top pour to bottom pour |
 
 For power connections carrying > 1 A, use multiple vias in parallel.
 Rule of thumb: each 0.3 mm via in 1 oz copper can carry ~0.5 A with
@@ -406,7 +416,7 @@ Set these in Altium before routing (Design > Rules):
 
 | Rule | Value | Notes |
 |---|---|---|
-| Min trace width | 0.15 mm | JLCPCB 4-layer minimum |
+| Min trace width | 0.15 mm | project default; JLCPCB 2-layer allows 0.10 mm |
 | Min clearance | 0.15 mm | Trace-to-trace, trace-to-pad |
 | Min drill size | 0.3 mm | JLCPCB standard process |
 | Min annular ring | 0.13 mm | JLCPCB minimum |
@@ -432,13 +442,13 @@ In Altium, create net class rules (Design > Rules > Routing > Width):
 Before generating Gerbers:
 
 - [ ] Run DRC — zero errors (warnings reviewed and accepted)
-- [ ] Verify all thermal pads have via grids connected to L2 GND
+- [ ] Verify all thermal pads have via grids connected to the bottom ground pour
 - [ ] Verify no signal traces cross under/over SW node traces without
       a continuous ground plane between them
 - [ ] Verify CIN HF caps (C2, C31, C41) are within 3 mm of their
       respective IC VIN pins
 - [ ] Verify FB divider resistors are within 3 mm of FB pins
-- [ ] Verify L2 GND plane has no unintended splits or slots
+- [ ] Verify the bottom ground pour has no unintended splits or slots under the power loops
 - [ ] Verify all power vias have sufficient count for current
 - [ ] Check board outline matches PCI-104 template (96 x 90 mm)
 - [ ] Check mounting hole positions match template
@@ -458,8 +468,6 @@ File > Fabrication Outputs > Gerber Files:
 | Layer | Gerber Suffix |
 |---|---|
 | Top Copper | `.GTL` |
-| Inner 1 (GND) | `.G1` |
-| Inner 2 (Power) | `.G2` |
 | Bottom Copper | `.GBL` |
 | Top Solder Mask | `.GTS` |
 | Bottom Solder Mask | `.GBS` |

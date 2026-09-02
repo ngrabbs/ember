@@ -4,6 +4,11 @@ A working reference for sizing traces on the EPS, comms, and internal housekeepi
 boards. Two physical limits set the width: **thermal** (I²R heating) and
 **voltage drop** (resistive loss). Whichever is tighter wins.
 
+> **This board is 2-layer.** Only the *outer layer* column applies to EPS —
+> both its faces are outer. The inner-layer column is kept because the comms
+> board is 4-layer and uses the same table. JLCPCB also offers 2 oz on
+> 2-layer, which halves these widths; the numbers below are 1 oz.
+
 ## Quick Lookup — 1 oz Copper, 10 °C Rise (IPC-2152)
 
 | Current | Outer layer | Inner layer |
