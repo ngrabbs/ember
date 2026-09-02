@@ -79,9 +79,9 @@ the current path.
 - **Saturn PCB Toolkit** (free, Windows) — implements IPC-2152, fastest
   for one-off lookups.
 - **KiCad** — built-in `Tools → Calculator Tools → Track Width`.
-- **Altium Designer** — `Tools → Net Antennae` doesn't size traces, but
-  the rules-driven width via `PCB Rules → Width → Min/Pref/Max` is where
-  you actually enforce this.
+- Enforcement is by **net class** — `Board Setup → Net Classes` sets the
+  width per class, and a custom rule in the board's `.kicad_dru` can put a
+  hard floor under the high-current classes.
 
 ## Reference Sizes (1 oz outer, JLCPCB stackup)
 

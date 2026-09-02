@@ -146,13 +146,21 @@ This repo covers the carrier board. Open items in
       five, folding the ground station into communications and splitting out a
       command/telemetry/debug interface. `system/` interface docs still
       describe the four-way split.
-- [ ] **Five Altium board guides remain** while board design is KiCad-only:
+- [ ] **Three Altium board guides remain**, all for boards not yet started:
       `altium_ihu_schematic.md`, `altium_payload_schematic_guide.md`,
-      `altium_payload_layout_guide.md`. Both boards are unstarted, so these
-      can convert when the boards do — there is no live contradiction. The
-      comms and EPS guides are converted and are the worked examples:
-      tool-specific content runs about 5%, clustered in note headings,
-      DRC/net-class tables, and fabrication-output paths.
+      `altium_payload_layout_guide.md`. Nothing contradicts reality yet, so
+      they can convert when those boards do. Every other doc a KiCad user
+      traverses is converted — comms and EPS guides, `net_naming.md`, the
+      design rules, RF layout, trace sizing.
+      **When converting, expect to repoint 6 inbound links** from
+      `cskb_pinmap.md`, `inhibit_and_deployment.md`,
+      `component_datasheets.md`, `payload_carrier_pinmap.md` and
+      `jetson_module_compatibility_report.md`. The comms rename needed 12
+      across 11 files.
+      The payload *layout* guide is the hardest of the three: ~40 hits, most
+      of them Altium Impedance Profiles for the PCIe/USB/CSI diff pairs,
+      which KiCad has no equivalent for. That section needs replacing, not
+      translating — see how the comms stackup section was handled.
 - [ ] `net_naming.md` worked example still cites `BFR92A` as the tripler; the
       part is `2SC3356`
 - [ ] **KiCad template project** — `jlcpcb_baseline.kicad_dru` exists, the
@@ -164,7 +172,7 @@ This repo covers the carrier board. Open items in
       wants it
 - [ ] Write `hardware/conventions/refdes_conventions.md`. [`net_naming.md`](hardware/conventions/net_naming.md)
       names it as the intended home for reference-designator convention and
-      carries interim Altium/IPC defaults until it exists.
+      carries the interim IPC defaults until it exists.
 
 ---
 

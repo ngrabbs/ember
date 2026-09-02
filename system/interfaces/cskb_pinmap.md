@@ -174,7 +174,7 @@ both names refer to the same wire:
 
 1. **New signals** that need to traverse the stack MUST pick a free H1
    or H2 pin from the Pumpkin-reserved list and be added to this table
-   before any schematic gets an Altium net label.
+   before any schematic gets a net label for it.
 2. **Board-local signals** (e.g., IHU-internal SPI to MRAM, comms RF
    nets) MUST NOT appear on any H1/H2 pin.
 3. **Pull resistors** for stack signals live on exactly one board —

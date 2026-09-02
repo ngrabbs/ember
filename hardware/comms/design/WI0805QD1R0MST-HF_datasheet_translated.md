@@ -59,7 +59,7 @@ tolerance, tin terminals, tape & reel, halogen-free.
                                   height T = 1.52 max
 ```
 
-### Land pattern (what you draw in Altium)
+### Land pattern (what you draw in the footprint editor)
 
 ```
    ←──── E ────→   ←─D─→   ←──── E ────→

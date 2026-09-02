@@ -16,13 +16,14 @@ If you're laying out a new board, read this first.
 
 ## Why this exists
 
-Altium auto-names unlabeled nets as `NetCXX_Y` (where `CXX` is a
-component reference and `Y` is a pin number). Auto-named nets:
+EDA tools auto-name unlabeled nets. KiCad produces `Net-(C40-Pad1)`;
+the Altium-imported boards in this project carry `NetC40_1` from their
+original tool. Either way, auto-named nets:
 
-- Can't be matched by wildcard rules (`RF_*` matches nothing)
+- Can't be matched by pattern (`RF_*` matches nothing)
 - Make DRC reports unreadable ("clearance violation on `NetC73_2`" —
   which net is that?)
-- Force per-net manual class assignment in the Object Class Explorer
+- Force per-net class assignment instead of one wildcard
 - Make schematic review painful for the next person
 
 A consistent prefix convention solves all of these. Set up the
@@ -90,9 +91,9 @@ THM_BUCK1_DIE           ← TPS62933F die temp sense (if used)
 
 ## Power and ground naming
 
-Use **power port symbols** for supply rails, not net labels with `PWR_`
-prefix. Power ports are global automatically and Altium handles them
-specially.
+Use **power symbols** for supply rails, not plain labels with a `PWR_`
+prefix. A power symbol is global across the whole hierarchy without
+needing a hierarchical label or sheet pin.
 
 Canonical rail names across the project:
 
@@ -151,64 +152,72 @@ reconcile them by hand.
 
 ---
 
-## How to apply the convention in Altium
+## How to apply the convention in KiCad
 
 Three mechanisms, in priority order:
 
-### 1. (Best, prospective) Net Labels — name as you draw
+### 1. (Best, prospective) Labels — name as you draw
 
-For every meaningful net, place a **Net Label** (`Place → Net Label`
-or shortcut `P, N`) on the wire and type the name following the
-prefix convention. The named net overrides Altium's `NetCXX_Y`
-auto-name.
+For every meaningful net, place a **label** (`Place → Add Label`, shortcut
+`L`) on the wire and type the name following the prefix convention. The
+label overrides the auto-generated name.
 
-Costs ~5 seconds per net at draw time. Saves you the recovery work
-discussed below.
+Costs a few seconds per net at draw time and saves the recovery work below.
 
-### 2. (Retrofit) Net Class directives — group without renaming
+Use a **hierarchical label** plus a matching sheet pin when the net has to
+cross between sheets, or a **global label** when it should be visible
+everywhere.
 
-When you've inherited a design with `NetCXX_Y` everywhere and don't
-want to rename hundreds of nets, use **Net Class directives**:
+### 2. (Retrofit) Net-class patterns — group without renaming
 
-1. **Place → Directives → Net Class**
-2. Drop the directive on a wire in the chain you want to group
-3. Set Class Name to the target (e.g., `RF`)
-4. Every electrically-connected net joins that class on compile,
-   regardless of its auto-generated name
+Inherited a design with auto-named nets everywhere? `Board Setup → Net
+Classes` assigns nets to a class by **name pattern**, so you don't have to
+rename anything to get rules applied:
 
-For grouping an entire schematic region in one shot:
-- **Place → Directives → Blanket** with a Net Class parameter
-- Draw the blanket over the region — every net inside the blanket
-  joins the class
+1. Create the class (`RF`, `PWR`, `PWR_HIGH`)
+2. In the lower pane, add a pattern and pick the class
+3. Wildcards work — `RF_*` catches every RF net in one line
 
-For typical RF boards, 3–5 blanket placements cover the entire RF
-chain.
+This is where the convention pays for itself. On a board named to the
+convention, three patterns cover everything. On one that isn't, you end up
+listing nets individually — the comms board currently carries 30 explicit
+patterns like `NetC24_1` for exactly this reason, and they collapse to two
+wildcards once the nets are renamed.
 
-### 3. (Last resort) Manual class assignment
+You can also place a **Net Class Directive** on a wire in the schematic
+(`Place → Net Class Directive`) to assign a class without touching the net
+name.
 
-In Object Class Explorer, select nets one at a time and move them
-into the target class. Always works. Slow. Save this for one-off
-edge cases.
+### 3. (Last resort) Per-net assignment
+
+Add one pattern per net in the Net Classes dialog. Always works, doesn't
+scale. Save it for edge cases. Verify membership afterwards in the **Net
+Inspector**.
 
 ---
 
 ## Recovering from an existing design with auto-named nets
 
-If you're inheriting a design with `NetC40_1` everywhere and you
-want to bring it into compliance:
+If you're inheriting a design with `NetC40_1` everywhere and want to bring
+it into compliance:
 
-1. **Don't try to rename everything at once.** Schematic rework + ECO
-   churn isn't worth it.
-2. **Apply Net Class directives in the schematic** to get classes
-   populated correctly (see mechanism #2 above) — this fixes the
-   immediate problem (rule scoping) without touching net names.
-3. **As you make new design changes**, rename the affected nets to
-   the convention by placing Net Labels. The net retains its
-   connectivity; only the name updates.
-4. **For critical-path nets** (RF traces especially), rename
-   explicitly so DRC reports and schematic reviews stay readable.
-5. **Run ECO** after any rename to push the new name to the PCB.
-   Existing copper doesn't move; only metadata changes.
+1. **Don't rename everything at once.** Schematic rework and the resulting
+   churn on the PCB isn't worth doing in one pass.
+2. **Add net-class patterns** for the auto-named nets (mechanism 2) so the
+   classes are populated and rules apply. This fixes rule scoping without
+   touching a single net name.
+3. **As you make design changes**, rename the affected nets to the
+   convention by placing labels. Connectivity is unchanged; only the name
+   updates.
+4. **For critical-path nets** — RF especially — rename explicitly so DRC
+   reports and schematic reviews stay readable.
+5. **Run `Tools → Update PCB from Schematic`** after renaming. Existing
+   copper doesn't move; only net metadata changes.
+
+> **Do not re-annotate while doing this.** Renaming *nets* is safe.
+> Re-running annotation renumbers *reference designators*, which are the
+> only link between schematic and PCB — it will unlink every footprint on
+> the board. This has already happened once on the EPS board.
 
 ---
 
@@ -216,8 +225,7 @@ want to bring it into compliance:
 
 Each board's design doc should include a short list of its
 domain-specific named nets. Examples below are illustrative, not
-exhaustive — see each board's `altium_<board>_schematic.md` for the
-full list.
+exhaustive — see each board's schematic guide for the full list.
 
 ### Comms board
 
@@ -235,8 +243,8 @@ inputs, `PWR_BATT_BUS` for the 2S battery bus,
 
 ### IHU, payload, future boards
 
-Adopt this convention from day one. Reference this document in the
-board's `altium_<board>_schematic.md`.
+Adopt this convention from day one, and reference this document in the
+board's schematic guide.
 
 ---
 
@@ -244,7 +252,7 @@ board's `altium_<board>_schematic.md`.
 
 Net naming is one piece. Reference designators (R1, C1, U1, J1, etc.)
 have their own convention. A `refdes_conventions.md` in this directory is
-the intended home for it; until it is written, follow Altium / IPC defaults:
+the intended home for it; until it is written, follow the IPC defaults:
 R = resistor, C = capacitor, L = inductor, U = IC, Q = transistor,
 D = diode, J = connector, Y = crystal/oscillator, TP = test point,
 FB = ferrite bead.
@@ -255,4 +263,4 @@ FB = ferrite bead.
 
 - [`hardware/comms/design/rf_layout_guidelines.md`](../comms/design/rf_layout_guidelines.md) — ground plane, via stitching, stackup rules (also project-relevant despite living under comms/)
 - [`system/interfaces/cskb_pinmap.md`](../../system/interfaces/cskb_pinmap.md) — canonical CSKB pin assignments
-- Each board's `altium_<board>_schematic.md` — board-specific applications of this convention
+- Each board's `schematic_guide.md` — board-specific applications of this convention

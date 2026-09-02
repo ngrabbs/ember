@@ -315,13 +315,13 @@ showstopper.
 | MMIC / LNA GND tabs | **Yes, multiple vias required** | IC datasheets specify this |
 | SMA edge-launch GND tabs | Yes, 4+ vias | Standard practice |
 
-### Practical Altium technique
+### Practical technique
 
 For **0402 BPF shunts**:
 1. Place the component
 2. Add a short trace (0.3–0.4 mm long, ~0.5 mm wide) from the GND
    pad outward
-3. Drop a via at the trace endpoint (`P, V`)
+3. Drop a via at the trace endpoint (`Place → Via`, shortcut `V` while routing)
 4. Verify via net is `GND`
 
 For **MMIC, LNA, SMA, 0805+ GND pads**:

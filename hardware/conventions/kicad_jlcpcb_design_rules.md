@@ -102,9 +102,8 @@ Two ways to get the number; use whichever, they should agree within a few µm:
 
 **A. JLCPCB online impedance calculator (recommended — their exact stackup).**
 jlcpcb.com/impedance → choose `JLC04161H-7628` → layer **L1 (top, microstrip)**
-→ target **50 Ω single-ended** → read off the width. This is exactly what the
-Altium JLCPCB plugin did internally, so it's the most faithful to what gets
-fabbed. Expected: **≈ 0.358 mm** with solder mask.
+→ target **50 Ω single-ended** → read off the width. These are the numbers JLCPCB fabs to, so this is the
+most faithful source. Expected: **≈ 0.358 mm** with solder mask.
 
 **B. KiCad built-in.** `Tools → Calculator Tools → Transmission Line` (or the
 standalone **PCB Calculator** app):
@@ -145,10 +144,9 @@ coloring nets by class.
 
 ## 5. Design rules — `Board Setup → Design Rules`
 
-### 5.1 Constraints (global minimums) — mirror the Altium §2 cheat-sheet
+### 5.1 Constraints (global minimums)
 
-| Constraint (KiCad Constraints page) | Value | Altium equiv |
-|---|---|---|
+| Constraint (KiCad Constraints page) | Value | Imperial |
 | Minimum track width | 0.2 mm | 8 mil default |
 | Minimum clearance | 0.2 mm | 8 mil |
 | Minimum via diameter | 0.6 mm | 24 mil pad |
@@ -170,10 +168,9 @@ Full reasoning for every number: §7–§12 below.
 and the power widths (0.5 / 1.27 mm) as pickable track sizes, and the standard
 via (0.6 / 0.3 mm) so you can switch on the fly while routing.
 
-### 5.3 Custom rule — enforce the 50 Ω width band (the Altium "scoped rule")
+### 5.3 Custom rule — enforce the 50 Ω width band
 KiCad's **Custom Rules** (`Board Setup → Design Rules → Custom Rules`, saved to
-`<board>.kicad_dru`) are the closest thing to Altium's scoped width rule and
-give you **DRC-flags-off-width** behavior. Add:
+`<board>.kicad_dru`) give you **DRC-flags-off-width** behaviour. Add:
 
 ```
 (version 1)
@@ -197,7 +194,7 @@ page:
 - Select the **impedance-controlled** option and specify stackup `JLC04161H-7628`.
 - Tolerance ±10 % standard (±5 % costs more).
 - Impedance **test report** ~$5–15/order: **skip for dev/v0.x runs, order for
-  flight builds** (per Altium doc §8).
+  flight builds** (§6).
 - 4-layer minimum for any controlled impedance (impossible to control on 2-layer).
 
 Order controlled impedance for the **comms board** (50 Ω microstrip) and the

@@ -119,7 +119,7 @@ Now cascade the BPF after the tripler to see harmonic selection in action.
 
 ### 2.1 Add the BPF to the tripler output
 
-Remove `R_LOAD` from Stage 1 and connect the BPF in its place. Use whatever component values you've tuned to in the BPF experiments (or start with the Altium schematic values and iterate):
+Remove `R_LOAD` from Stage 1 and connect the BPF in its place. Use whatever component values you've tuned to in the BPF experiments (or start with the schematic values and iterate):
 
 ```
 * === Stage 2: Add 437 MHz BPF after tripler ===
@@ -146,7 +146,7 @@ C11 bpf_n2 bpf_out 10p
 R_LOAD bpf_out 0 50
 ```
 
-**Important:** Use the values you've tuned in the BPF-only simulations. The starting values above (15nH/6.8pF/10pF) are from the Altium schematic and may not produce a centered passband — adjust C12/C13 and coupling caps based on your earlier BPF experiments.
+**Important:** Use the values you've tuned in the BPF-only simulations. The starting values above (15nH/6.8pF/10pF) are from the schematic and may not produce a centered passband — adjust C12/C13 and coupling caps based on your earlier BPF experiments.
 
 ### 2.2 What to inspect
 

@@ -164,7 +164,7 @@ For a 2m uplink from a typical amateur ground station:
 | PSA4-5043+ stability at VHF with 50Ω source/load | Low | Mini-Circuits publishes S-params and K-factor — both indicate unconditional stability across 50 MHz–4 GHz. Layout grounding still matters; follow app-note ground via pattern. |
 | LNA P1dB exceeded by strong out-of-band signal | Low | PSA4 P1dB(out) = +20 dBm → input P1dB ≈ -1 dBm. Antenna would need to see -1 dBm of unfiltered RF before LNA compresses. 2m BPF rejects most plausible offenders. |
 | Power budget margin shrinks | Low | LNA bias can be GPIO-controlled (load switch on +5V_LNA rail) to duty-cycle receive. RP2040 can gate it via spare GPIO. |
-| ADE-1+ footprint must be drawn in Altium (CD636 not in default libraries) | Low | Mini-Circuits publishes recommended PCB land pattern in the datasheet (this one, p.1). One-time CAD task. |
+| ADE-1+ footprint must be drawn by hand (CD636 not in the default libraries) | Low | Mini-Circuits publishes recommended PCB land pattern in the datasheet (this one, p.1). One-time CAD task. |
 
 ---
 
