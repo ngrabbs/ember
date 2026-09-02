@@ -1,0 +1,20 @@
+(version 1)
+
+# Custom design rules — comms transceiver board.
+#
+# Copied from hardware/conventions/jlcpcb_baseline.kicad_dru. Retune the
+# width band below if the fabbed stackup changes.
+#
+# See kicad_jlcpcb_design_rules.md §5.3. KiCad has no live binding between
+# the impedance profile and the stackup, so the width is computed once by
+# hand and pinned here; this rule is what makes DRC flag a trace that
+# drifts off it.
+#
+# Stackup: JLCPCB JLC04161H-7628, 4-layer 1.6 mm, L1 over a solid L2
+# ground plane. L1<->L2 prepreg 0.2104 mm, er 4.4 (Nan Ya NP-155F 7628),
+# giving 50 ohm microstrip at ~0.358 mm. Recompute with the JLCPCB
+# impedance calculator if the stackup changes.
+
+(rule "RF 50ohm microstrip width"
+  (condition "A.NetClass == 'RF'")
+  (constraint track_width (min 0.35mm) (opt 0.358mm) (max 0.37mm)))

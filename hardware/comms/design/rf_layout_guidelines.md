@@ -48,11 +48,66 @@ If forced onto 2 layers: every gap in the ground pour becomes a
 hazard, and the rule becomes "make everything you can a ground pour,
 and never let any signal cross the gaps." Much harder.
 
-> **For the comms board specifically:** the realized stackup
-> is JLCPCB JLC04161H-7628 (1.6 mm, FR4). See the **Board Stackup**
-> section in [`altium_comms_schematic.md`](altium_comms_schematic.md)
-> for the full layer thicknesses, dielectric values, 50 Ω microstrip
-> trace width (0.38 mm), and the Altium Layer Stack Manager setup.
+> **For the comms board specifically:** the realized stackup is JLCPCB
+> `JLC04161H-7628` (1.6 mm, FR4). Full layer thicknesses and dielectric
+> values are in
+> [`../../conventions/kicad_jlcpcb_design_rules.md`](../../conventions/kicad_jlcpcb_design_rules.md)
+> §2. The 50 Ω microstrip width is **0.358 mm**, confirmed against
+> jlcpcb.com/impedance (14.12 mil, L1→L2, single-ended, non-coplanar).
+
+---
+
+## Microstrip, not coplanar — and what that costs you
+
+**Decision (2026-09-02): the RF traces on this board are plain microstrip.**
+Ground below on L2, and the L1 ground pour is held *back* from RF traces.
+
+This is a real choice, not a default, because the two geometries need
+different trace widths for the same 50 Ω:
+
+| Geometry | What it is | 50 Ω width here |
+|---|---|---|
+| **Microstrip** (chosen) | Ground only below, on L2. Nothing alongside on L1. | **0.358 mm** |
+| Grounded coplanar (GCPW) | Ground below *and* poured either side on L1, at a controlled gap | narrower — depends on the gap |
+
+The trap: this document tells you elsewhere to pour ground on L1 and stitch
+it down. If that pour comes up close alongside an RF trace, the trace stops
+being microstrip and becomes GCPW whether you meant it or not — and at
+0.358 mm its impedance lands **below** 50 Ω. How far below depends entirely
+on the gap, which is why an uncontrolled pour beside RF is the worst of the
+three options.
+
+### The rule
+
+**Keep the L1 ground pour at least 3 × trace width — 1.1 mm — back from any
+RF trace.** At that distance the coplanar contribution is small enough to
+ignore and the microstrip number holds.
+
+Everywhere else on L1, pour and stitch normally; the standoff applies only
+alongside RF nets.
+
+### Enforcing it
+
+Two options, in order of preference:
+
+1. **Zone clearance.** Set the L1 ground zone's own clearance to 1.1 mm.
+   Simple, and it applies to everything the pour approaches. Slightly
+   conservative for non-RF nets, which costs nothing on a board this size.
+2. **A custom rule** in `transceiver.kicad_dru` scoped to the RF class, if
+   you want the standoff only where it matters. Test it with DRC before
+   relying on it — a malformed rule makes KiCad silently drop the whole
+   rules file.
+
+Do **not** raise the `RF` net-class clearance to 1.1 mm to achieve this. That
+would also force 1.1 mm between RF traces and the pads they connect to, which
+is unroutable through the filters and the mixer.
+
+### If you ever switch to GCPW
+
+Recompute the width on jlcpcb.com/impedance with the coplanar option and a
+chosen gap, then update **both** the `RF` net class width and the width band
+in `transceiver.kicad_dru`. They have to move together — the `.dru` rule is
+what stops a stale width from shipping.
 
 ---
 
@@ -142,10 +197,11 @@ Common bad advice you might hear:
 - **Bypass caps:** placed *between* the IC pin and a via to ground
   plane. The via goes between the cap and the IC, not on the far side
   of the cap. Shortens return loop.
-- **RF trace impedance:** all RF traces are 50 Ω microstrip
-  (controlled width on layer 1 referenced to layer 2 ground). Calculate
-  trace width from your final stackup (typical FR4, 0.2 mm dielectric
-  to layer 2: ~0.38 mm trace width for 50 Ω).
+- **RF trace impedance:** all RF traces are 50 Ω microstrip (controlled
+  width on layer 1 referenced to layer 2 ground). On this board's
+  `JLC04161H-7628` stackup — 0.2104 mm prepreg to L2, εr 4.4 — that is
+  **0.358 mm**. Keep the L1 ground pour 1.1 mm back so it stays microstrip
+  rather than becoming coplanar.
 
 ---
 

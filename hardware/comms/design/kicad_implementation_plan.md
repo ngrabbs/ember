@@ -88,12 +88,12 @@ Everything validated, in one place. Details/rationale in the log.
 
 ## Phase 0 — KiCad project setup
 
-- [ ] Confirm/repair the `transceiver` project opens clean
-- [ ] **Physical Stackup** → JLC04161H-7628 (per design-rules doc §2); solid L2 GND
-- [ ] **Design Rules → Constraints** → per design-rules doc §5.1
-- [ ] **Net Classes** → `RF` (50 Ω, 0.358 mm), `PWR`, `PWR_HIGH`; assign by pattern `RF_*` / rails
-- [ ] **Custom rule** (`transceiver.kicad_dru`) → copy `hardware/conventions/jlcpcb_baseline.kicad_dru`, then tune the band (design-rules §5.3)
-- [ ] Get 50 Ω width from JLCPCB impedance calc, set in `RF` class
+- [x] Confirm/repair the `transceiver` project opens clean
+- [x] **Physical Stackup** → JLC04161H-7628 entered and verified against jlcpcb.com/impedance; ENIG, impedance-controlled flag set. Confirm L2 is a solid unbroken GND pour under the L1 RF traces when routing
+- [x] **Design Rules → Constraints** → per design-rules doc §5.1
+- [x] **Net Classes** → `RF` (0.358 mm), `PWR` (0.5 mm), `PWR_HIGH` (1.27 mm) created and assigned. `RF_*`/`LO_*` patterns added for the rename; 30 explicit per-net patterns remain until the RF nets are renamed to the `net_naming.md` convention
+- [x] **Custom rule** (`transceiver.kicad_dru`) → copied from `hardware/conventions/jlcpcb_baseline.kicad_dru`; band still to confirm against the fabbed stackup (design-rules §5.3)
+- [ ] Confirm the 50 Ω width against the JLCPCB impedance calculator — `RF` class is set to the validated 0.358 mm in the meantime
 
 ## Phase 1 — Schematic (by sheet)
 
