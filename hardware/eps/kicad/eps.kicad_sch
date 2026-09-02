@@ -2683,8 +2683,8 @@
 		)
 	)
 	(rectangle
-		(start 233.68 154.7622)
-		(end 177.8 190.3222)
+		(start 261.62 153.67)
+		(end 205.74 189.23)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -2696,8 +2696,8 @@
 		(uuid "323bfa9a-ae7f-401a-b2dd-1667753b0b28")
 	)
 	(rectangle
-		(start 99.06 215.7222)
-		(end 15.24 261.4422)
+		(start 127 214.63)
+		(end 43.18 260.35)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -2709,8 +2709,8 @@
 		(uuid "875d594c-c52f-4708-9a5b-dd739a286fd2")
 	)
 	(rectangle
-		(start 299.72 106.5022)
-		(end 111.76 195.4022)
+		(start 327.66 105.41)
+		(end 139.7 194.31)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -2722,8 +2722,8 @@
 		(uuid "995ab9d1-05d0-49ff-9f72-715ab306c605")
 	)
 	(rectangle
-		(start 101.6 55.7022)
-		(end 15.24 109.0422)
+		(start 129.54 54.61)
+		(end 43.18 107.95)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -2735,8 +2735,8 @@
 		(uuid "b4351dc2-a994-4edd-84ee-1c5ffbf363f0")
 	)
 	(rectangle
-		(start 91.44 124.2822)
-		(end 15.24 203.0222)
+		(start 119.38 123.19)
+		(end 43.18 201.93)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -2749,7 +2749,7 @@
 	)
 	(text "Bulk Bypass at Stack Connector"
 		(exclude_from_sim no)
-		(at 177.8 154.7622 0)
+		(at 205.74 153.67 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2758,20 +2758,9 @@
 		)
 		(uuid "590cd6db-8e36-460c-8a4a-ae7bbc6f2494")
 	)
-	(text "${REVISION}"
-		(exclude_from_sim no)
-		(at 373.38 284.3022 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "71bb380c-3241-4eee-803f-3dfbff4bba08")
-	)
 	(text "Status LEDs"
 		(exclude_from_sim no)
-		(at 15.24 124.2822 0)
+		(at 43.18 123.19 0)
 		(effects
 			(font
 				(size 3.048 3.048)
@@ -2782,7 +2771,7 @@
 	)
 	(text "Test Points"
 		(exclude_from_sim no)
-		(at 15.24 215.7222 0)
+		(at 43.18 214.63 0)
 		(effects
 			(font
 				(size 3.048 3.048)
@@ -2793,7 +2782,7 @@
 	)
 	(text "CONNECTORS & TELEMETRY"
 		(exclude_from_sim no)
-		(at 7.62 27.7622 0)
+		(at 35.56 26.67 0)
 		(effects
 			(font
 				(size 3.048 3.048)
@@ -2802,31 +2791,9 @@
 		)
 		(uuid "9e2b36ca-7597-40ef-aab1-55788af4e240")
 	)
-	(text "${#}"
-		(exclude_from_sim no)
-		(at 358.14 286.8422 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right top)
-		)
-		(uuid "cf26a87f-f5bd-4ef4-bad0-4ab2c25cc2e1")
-	)
-	(text "${TITLE}"
-		(exclude_from_sim no)
-		(at 341.595 272.4672 0)
-		(effects
-			(font
-				(size 2.286 2.286)
-			)
-			(justify top)
-		)
-		(uuid "d0e27ff7-b724-4cd6-8a62-ef8a83d1fe3a")
-	)
 	(text "Battery Connector"
 		(exclude_from_sim no)
-		(at 15.24 55.7022 0)
+		(at 43.18 54.61 0)
 		(effects
 			(font
 				(size 3.048 3.048)
@@ -2837,7 +2804,7 @@
 	)
 	(text "CSKB H1 + H2 Stack Connectors"
 		(exclude_from_sim no)
-		(at 127 106.5022 0)
+		(at 154.94 105.41 0)
 		(effects
 			(font
 				(size 3.048 3.048)
@@ -2846,31 +2813,9 @@
 		)
 		(uuid "e8ad183b-adde-4d47-9889-718f5e85f44c")
 	)
-	(text "${DRAWNBY}"
-		(exclude_from_sim no)
-		(at 363.22 291.9222 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "ec7e28ac-ba62-4bd2-9a90-1023d77ce6a5")
-	)
-	(text "${##}"
-		(exclude_from_sim no)
-		(at 363.22 286.8422 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify top)
-		)
-		(uuid "ff818986-430c-474f-939f-37a95fbc9606")
-	)
 	(text_box "CSKB stack connectors: 2× Samtec ESQ-126-39-G-D (2×26, 0.1″ (2.54 mm), stackthrough headers, one each for H1 and H2). Pin assignment locked to the Pumpkin CSKB H1/H2 convention — all boards in the centisat stack (EPS, FC, comms, payload) use the same H1/H2 pin numbers for the same signal classes. The comms board is a power CONSUMER on all power pins and a SPI SLAVE to the FC. COMMS_IRQ (H1.16) is driven by the comms RP2040 as a data-ready interrupt to the FC. I2C is shared between EPS LTC4162 (0x68) and comms Si5351A (0x60) — no address conflict. See system/interfaces/cskb_pinmap.md for the full canonical pin map."
 		(exclude_from_sim no)
-		(at 226.06 109.0422 0)
+		(at 254 107.95 0)
 		(size -48.26 40.64)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
@@ -2892,7 +2837,7 @@
 	)
 	(text_box "All test points are single-pad footprints accessible from the top side.  TP7 (SW_NODE) is critical for validating switching behavior -- use a short probe lead to minimize inductance.  TP8 (GND) should be a loop-tyle test point for easy scope ground clip attachment.  For production/flight boards, test points can be reduced to TP4-TP6 (VBAT, 3V3, 5V) plus GND."
 		(exclude_from_sim no)
-		(at 96.52 218.2622 0)
+		(at 124.46 217.17 0)
 		(size -53.34 22.86)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
@@ -2914,7 +2859,7 @@
 	)
 	(text_box "LED brightness at 3.3V: I = (3.3 - 2.0) / 1k = 1.3 mA (dim but visible).  \nLED brightness at 5.0V: I = (5.0 - 2.0) / 1k = 3.0mA. \n\nFor brighter LEDs, reduce resistor to 470 Ohm.  For flight, remove LED population or use DNP (Do Not Populate) -- LEDs waste power in orbit.  Mark all LED resistors as DNP-optional in BOM."
 		(exclude_from_sim no)
-		(at 88.9 182.7022 0)
+		(at 116.84 181.61 0)
 		(size -71.12 17.78)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
@@ -2936,7 +2881,7 @@
 	)
 	(text_box "CONNECTORS & TELEMETRY — Battery interface, CSKB H1 + H2 stack connectors for inter-board power and signal distribution, status LEDs, and test points for bench validation. All subsystem power and I2C telemetry routes through the CSKB H1/H2 connectors."
 		(exclude_from_sim no)
-		(at 147.32 27.7622 0)
+		(at 175.26 26.67 0)
 		(size -139.7 12.7)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
@@ -2958,7 +2903,7 @@
 	)
 	(text_box "Battery: 2S2P LG MJ1 18650 (7000mAh total, 6.0-8.4V). J5 (JST): permanent battery holder connection.  J6 (header): bench supply input for bring-up without battery.  \n\nWARNING: Do not connect bench supply and battery simultaneously unless bench supply is set to match battery voltage.  The LTC4162 PowerPath handles source arbitration, but bench supply on VBAT bypasses the charger path."
 		(exclude_from_sim no)
-		(at 99.06 58.2422 0)
+		(at 127 57.15 0)
 		(size -50.8 27.94)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
@@ -2979,378 +2924,378 @@
 		(uuid "e9311b1d-2261-4bf7-8c34-bfd80203b671")
 	)
 	(junction
-		(at 259.08 225.8822)
+		(at 287.02 224.79)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "84f47e03-30d3-44a2-ad5d-2b9d80c83372")
 	)
 	(no_connect
-		(at 132.08 136.9822)
+		(at 160.02 135.89)
 		(uuid "0120b068-3bbc-4960-8aaf-82b4ea0cd2b5")
 	)
 	(no_connect
-		(at 251.46 136.9822)
+		(at 279.4 135.89)
 		(uuid "024c31cc-e36c-4412-b04f-d826c4097add")
 	)
 	(no_connect
-		(at 276.86 167.4622)
+		(at 304.8 166.37)
 		(uuid "092b2d2f-b48f-4485-8a48-bcda5d080748")
 	)
 	(no_connect
-		(at 276.86 116.6622)
+		(at 304.8 115.57)
 		(uuid "0a3be1ac-fa80-4198-9f2a-aed32fde724d")
 	)
 	(no_connect
-		(at 157.48 170.0022)
+		(at 185.42 168.91)
 		(uuid "0a843e3f-34fb-4c1f-b165-2acfb7817ee2")
 	)
 	(no_connect
-		(at 251.46 131.9022)
+		(at 279.4 130.81)
 		(uuid "0eb94993-dc0c-4e6d-bfe2-f7029170d322")
 	)
 	(no_connect
-		(at 132.08 162.3822)
+		(at 160.02 161.29)
 		(uuid "13333346-f1f7-4199-aa61-e4a456d38dcf")
 	)
 	(no_connect
-		(at 251.46 175.0822)
+		(at 279.4 173.99)
 		(uuid "17a26bfa-dc99-4770-91c8-09ede3351300")
 	)
 	(no_connect
-		(at 157.48 147.1422)
+		(at 185.42 146.05)
 		(uuid "1baa3cef-00a2-438b-b938-9eebb8c450c1")
 	)
 	(no_connect
-		(at 132.08 121.7422)
+		(at 160.02 120.65)
 		(uuid "2187e674-354b-4000-afe1-30b7f12057c9")
 	)
 	(no_connect
-		(at 157.48 139.5222)
+		(at 185.42 138.43)
 		(uuid "26e113cc-b943-4b91-99f3-f01b249589c5")
 	)
 	(no_connect
-		(at 251.46 157.3022)
+		(at 279.4 156.21)
 		(uuid "278c16ea-db90-431b-9bee-6d49fbd8ea46")
 	)
 	(no_connect
-		(at 251.46 164.9222)
+		(at 279.4 163.83)
 		(uuid "2a203d59-44f3-40d5-a137-de00bfa26830")
 	)
 	(no_connect
-		(at 251.46 121.7422)
+		(at 279.4 120.65)
 		(uuid "2c367898-dae3-41d3-8a13-201a02a7eb99")
 	)
 	(no_connect
-		(at 132.08 154.7622)
+		(at 160.02 153.67)
 		(uuid "2cb6e4cc-dfb0-4107-92bb-ef1bb1351a4a")
 	)
 	(no_connect
-		(at 132.08 149.6822)
+		(at 160.02 148.59)
 		(uuid "2e130f6b-1bcf-413a-a8c7-0e53d6795d20")
 	)
 	(no_connect
-		(at 276.86 131.9022)
+		(at 304.8 130.81)
 		(uuid "2e73e671-c11e-468e-88f8-afd032ae92fc")
 	)
 	(no_connect
-		(at 132.08 152.2222)
+		(at 160.02 151.13)
 		(uuid "2f2d6564-1c1a-482a-a7e9-3d9ad4f3aae4")
 	)
 	(no_connect
-		(at 132.08 172.5422)
+		(at 160.02 171.45)
 		(uuid "318aed9f-b36a-426c-b94f-fd7f91112094")
 	)
 	(no_connect
-		(at 157.48 164.9222)
+		(at 185.42 163.83)
 		(uuid "33f7bcf5-b45d-449b-a9fb-90471e351c24")
 	)
 	(no_connect
-		(at 276.86 175.0822)
+		(at 304.8 173.99)
 		(uuid "39d3a844-3f8f-40bb-823a-5e003abe7f6a")
 	)
 	(no_connect
-		(at 157.48 129.3622)
+		(at 185.42 128.27)
 		(uuid "3c41d787-5c7b-4629-a416-bb6ccf4e7a2c")
 	)
 	(no_connect
-		(at 157.48 134.4422)
+		(at 185.42 133.35)
 		(uuid "4219fcf6-9379-45a6-b3c7-721d7ad66a00")
 	)
 	(no_connect
-		(at 157.48 172.5422)
+		(at 185.42 171.45)
 		(uuid "49dffa96-6f85-46bc-bac1-11f5dfa35bf1")
 	)
 	(no_connect
-		(at 251.46 177.6222)
+		(at 279.4 176.53)
 		(uuid "4dd1dee4-5433-470c-8ac3-71717cbdb39d")
 	)
 	(no_connect
-		(at 132.08 142.0622)
+		(at 160.02 140.97)
 		(uuid "50fbd3cb-b747-47e0-8033-6a8f8d45c9fa")
 	)
 	(no_connect
-		(at 276.86 164.9222)
+		(at 304.8 163.83)
 		(uuid "530e5076-2b10-47b5-a75f-39456c4ff1e9")
 	)
 	(no_connect
-		(at 276.86 126.8222)
+		(at 304.8 125.73)
 		(uuid "57411be4-2d0e-4a2d-b8d9-cef90c53a7e3")
 	)
 	(no_connect
-		(at 251.46 126.8222)
+		(at 279.4 125.73)
 		(uuid "5784081c-41a0-4c3b-9042-ada813da8785")
 	)
 	(no_connect
-		(at 276.86 129.3622)
+		(at 304.8 128.27)
 		(uuid "58e046ec-08a5-4d69-b990-993cd258c482")
 	)
 	(no_connect
-		(at 132.08 170.0022)
+		(at 160.02 168.91)
 		(uuid "5ac2232a-d64b-42f9-99d8-36ec3a5fe20e")
 	)
 	(no_connect
-		(at 132.08 175.0822)
+		(at 160.02 173.99)
 		(uuid "5b8304bd-931f-4463-b00f-62fedb8a964e")
 	)
 	(no_connect
-		(at 157.48 144.6022)
+		(at 185.42 143.51)
 		(uuid "5d2780f7-9712-4dd3-b585-1bd1c31d93f7")
 	)
 	(no_connect
-		(at 132.08 147.1422)
+		(at 160.02 146.05)
 		(uuid "60143156-55e4-4560-bce7-559585bdfd91")
 	)
 	(no_connect
-		(at 276.86 172.5422)
+		(at 304.8 171.45)
 		(uuid "6016489c-14f7-45b3-8516-d577fb8e7d48")
 	)
 	(no_connect
-		(at 276.86 142.0622)
+		(at 304.8 140.97)
 		(uuid "608fe7c8-cbfe-425a-b8a3-8fe834290442")
 	)
 	(no_connect
-		(at 157.48 154.7622)
+		(at 185.42 153.67)
 		(uuid "62f53dfe-8eb8-4b84-84f0-34376760b88e")
 	)
 	(no_connect
-		(at 157.48 131.9022)
+		(at 185.42 130.81)
 		(uuid "63486487-8d90-43cb-8aa5-e346dae47e8f")
 	)
 	(no_connect
-		(at 251.46 167.4622)
+		(at 279.4 166.37)
 		(uuid "64f0840b-b5b3-4045-83a3-6f5faf81f28c")
 	)
 	(no_connect
-		(at 276.86 124.2822)
+		(at 304.8 123.19)
 		(uuid "6809ab0e-56e5-4cc7-8173-bd1c3e1ee5df")
 	)
 	(no_connect
-		(at 276.86 134.4422)
+		(at 304.8 133.35)
 		(uuid "68757a4b-6d77-494d-a166-dc0fa0de1bc4")
 	)
 	(no_connect
-		(at 132.08 157.3022)
+		(at 160.02 156.21)
 		(uuid "6ae980c6-f1a3-473e-88b7-fa3a3b0af233")
 	)
 	(no_connect
-		(at 276.86 159.8422)
+		(at 304.8 158.75)
 		(uuid "6c079aa3-2c88-492c-bc52-c3961cfa93a7")
 	)
 	(no_connect
-		(at 157.48 159.8422)
+		(at 185.42 158.75)
 		(uuid "6e78d7e9-17f9-4856-8efd-13478e531eab")
 	)
 	(no_connect
-		(at 251.46 172.5422)
+		(at 279.4 171.45)
 		(uuid "6eb7ffa5-ef12-4b3f-bc37-cf0fe47ad3a0")
 	)
 	(no_connect
-		(at 132.08 159.8422)
+		(at 160.02 158.75)
 		(uuid "6fc780ae-6e0a-4805-802b-1c65f26031e9")
 	)
 	(no_connect
-		(at 157.48 149.6822)
+		(at 185.42 148.59)
 		(uuid "712752b0-49af-41cd-9514-8bd450ccf542")
 	)
 	(no_connect
-		(at 132.08 124.2822)
+		(at 160.02 123.19)
 		(uuid "71591ea2-10cc-4c23-9340-67be3ad94d95")
 	)
 	(no_connect
-		(at 276.86 119.2022)
+		(at 304.8 118.11)
 		(uuid "7baaa40f-2a66-4745-b1cd-e1763b34ddb1")
 	)
 	(no_connect
-		(at 157.48 177.6222)
+		(at 185.42 176.53)
 		(uuid "81051766-a568-4eee-91ef-4c4d426601b8")
 	)
 	(no_connect
-		(at 276.86 162.3822)
+		(at 304.8 161.29)
 		(uuid "82583c3b-c7f2-4fc3-a9e8-98c79051f28e")
 	)
 	(no_connect
-		(at 251.46 114.1222)
+		(at 279.4 113.03)
 		(uuid "83a32e56-da82-4f89-81a2-ca82f04438ad")
 	)
 	(no_connect
-		(at 132.08 134.4422)
+		(at 160.02 133.35)
 		(uuid "841932dc-98b9-488d-87bf-324fd2fbff8e")
 	)
 	(no_connect
-		(at 157.48 157.3022)
+		(at 185.42 156.21)
 		(uuid "8423631f-a068-4662-b04c-4e13302966a1")
 	)
 	(no_connect
-		(at 251.46 116.6622)
+		(at 279.4 115.57)
 		(uuid "84866f7b-7d4c-4636-8975-6918cd39c853")
 	)
 	(no_connect
-		(at 157.48 124.2822)
+		(at 185.42 123.19)
 		(uuid "8aab3f01-d6cd-4949-a54b-72586d094bee")
 	)
 	(no_connect
-		(at 132.08 114.1222)
+		(at 160.02 113.03)
 		(uuid "8be7ac14-db63-4490-8d9f-d48e98f15dbd")
 	)
 	(no_connect
-		(at 276.86 157.3022)
+		(at 304.8 156.21)
 		(uuid "8ff6dc14-14ed-4da8-8773-5e0430ddc2a5")
 	)
 	(no_connect
-		(at 157.48 142.0622)
+		(at 185.42 140.97)
 		(uuid "9c92499e-74d2-4afb-abd9-e7c11fc26d26")
 	)
 	(no_connect
-		(at 157.48 167.4622)
+		(at 185.42 166.37)
 		(uuid "9fb76b72-6d52-483f-a973-3adccb1fb440")
 	)
 	(no_connect
-		(at 132.08 144.6022)
+		(at 160.02 143.51)
 		(uuid "a1de14f4-3a5e-4364-b572-8bab4a4a07ee")
 	)
 	(no_connect
-		(at 276.86 177.6222)
+		(at 304.8 176.53)
 		(uuid "a507ed73-f4fb-4182-8626-a867dfb5b194")
 	)
 	(no_connect
-		(at 276.86 139.5222)
+		(at 304.8 138.43)
 		(uuid "a656a924-5adc-404e-8c9c-f4754890b03d")
 	)
 	(no_connect
-		(at 132.08 177.6222)
+		(at 160.02 176.53)
 		(uuid "a6feb098-32bf-49c0-9a61-f0436c2c8676")
 	)
 	(no_connect
-		(at 276.86 154.7622)
+		(at 304.8 153.67)
 		(uuid "a8733138-68cd-4ad8-a98f-1a97e243203a")
 	)
 	(no_connect
-		(at 251.46 134.4422)
+		(at 279.4 133.35)
 		(uuid "ad4687d5-7621-4720-9a3c-a7a98d88e051")
 	)
 	(no_connect
-		(at 157.48 136.9822)
+		(at 185.42 135.89)
 		(uuid "b07d7f3f-fe9d-4d20-bb27-b2172362954e")
 	)
 	(no_connect
-		(at 251.46 142.0622)
+		(at 279.4 140.97)
 		(uuid "b0ad8ac2-5d3b-4a61-bc0a-0ade374d693d")
 	)
 	(no_connect
-		(at 132.08 126.8222)
+		(at 160.02 125.73)
 		(uuid "b5a9aa6c-27bb-4fb9-bba8-55729d39735a")
 	)
 	(no_connect
-		(at 251.46 119.2022)
+		(at 279.4 118.11)
 		(uuid "c7e16820-395a-481a-b81e-2a1b5a0da7c4")
 	)
 	(no_connect
-		(at 251.46 159.8422)
+		(at 279.4 158.75)
 		(uuid "ca088871-f9e8-45d6-9349-d43fa10fe3b5")
 	)
 	(no_connect
-		(at 276.86 121.7422)
+		(at 304.8 120.65)
 		(uuid "caeb67ce-b7f8-469b-9f92-a8f43cb15414")
 	)
 	(no_connect
-		(at 276.86 114.1222)
+		(at 304.8 113.03)
 		(uuid "ce3f0ed8-3667-4745-b495-c9d9542d48a2")
 	)
 	(no_connect
-		(at 132.08 129.3622)
+		(at 160.02 128.27)
 		(uuid "cead97f1-48b0-4ed3-a061-79bc41cc8e43")
 	)
 	(no_connect
-		(at 132.08 119.2022)
+		(at 160.02 118.11)
 		(uuid "d39227c0-5965-44a3-9624-1370a0aa1619")
 	)
 	(no_connect
-		(at 132.08 131.9022)
+		(at 160.02 130.81)
 		(uuid "d4ade5ed-e0ac-4595-b858-52748e891c4f")
 	)
 	(no_connect
-		(at 157.48 119.2022)
+		(at 185.42 118.11)
 		(uuid "d567e9b6-167c-4dd0-81b9-ae2ced3f2042")
 	)
 	(no_connect
-		(at 251.46 162.3822)
+		(at 279.4 161.29)
 		(uuid "dbf52f38-31cf-4b55-ae7c-099cc49879a1")
 	)
 	(no_connect
-		(at 157.48 116.6622)
+		(at 185.42 115.57)
 		(uuid "dc79e859-7b88-4110-8f8a-7eebea3be4e2")
 	)
 	(no_connect
-		(at 157.48 121.7422)
+		(at 185.42 120.65)
 		(uuid "e1008424-c343-4ab2-8375-0ca363339fae")
 	)
 	(no_connect
-		(at 157.48 114.1222)
+		(at 185.42 113.03)
 		(uuid "e318665e-8801-465e-a23b-e9b0a067b922")
 	)
 	(no_connect
-		(at 276.86 136.9822)
+		(at 304.8 135.89)
 		(uuid "e60ec896-205a-4fe9-b42a-cf8a7f071f8c")
 	)
 	(no_connect
-		(at 157.48 152.2222)
+		(at 185.42 151.13)
 		(uuid "e80dfd04-0c70-4f77-85d1-e254e85f292a")
 	)
 	(no_connect
-		(at 157.48 126.8222)
+		(at 185.42 125.73)
 		(uuid "ea6201df-bf73-4a55-be83-dcd897896a58")
 	)
 	(no_connect
-		(at 132.08 116.6622)
+		(at 160.02 115.57)
 		(uuid "ed55be8d-fca1-480d-b7bd-6db4aa1ef0b9")
 	)
 	(no_connect
-		(at 157.48 175.0822)
+		(at 185.42 173.99)
 		(uuid "ee088439-35d7-403e-9db1-4716f7cbeead")
 	)
 	(no_connect
-		(at 251.46 154.7622)
+		(at 279.4 153.67)
 		(uuid "f5847ee2-4ced-4663-acc0-0761d3471748")
 	)
 	(no_connect
-		(at 251.46 124.2822)
+		(at 279.4 123.19)
 		(uuid "f9e006ce-7ed2-40c1-a7cd-e924f2c78081")
 	)
 	(no_connect
-		(at 132.08 139.5222)
+		(at 160.02 138.43)
 		(uuid "ff24149c-c388-4aa2-a500-f5b2e1232d7c")
 	)
 	(no_connect
-		(at 251.46 129.3622)
+		(at 279.4 128.27)
 		(uuid "ff5eb260-5d72-43a0-8146-18e6863486fa")
 	)
 	(no_connect
-		(at 251.46 139.5222)
+		(at 279.4 138.43)
 		(uuid "ffe13039-3ef4-4b12-8338-99d55cfa1235")
 	)
 	(wire
 		(pts
-			(xy 185.42 170.0022) (xy 185.42 180.1622)
+			(xy 213.36 168.91) (xy 213.36 179.07)
 		)
 		(stroke
 			(width 0)
@@ -3360,7 +3305,7 @@
 	)
 	(wire
 		(pts
-			(xy 25.4 86.1822) (xy 25.4 93.8022)
+			(xy 53.34 85.09) (xy 53.34 92.71)
 		)
 		(stroke
 			(width 0)
@@ -3370,7 +3315,7 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 241.1222) (xy 17.78 241.1222)
+			(xy 60.96 240.03) (xy 45.72 240.03)
 		)
 		(stroke
 			(width 0)
@@ -3380,7 +3325,7 @@
 	)
 	(wire
 		(pts
-			(xy 185.42 162.3822) (xy 185.42 164.9222)
+			(xy 213.36 161.29) (xy 213.36 163.83)
 		)
 		(stroke
 			(width 0)
@@ -3390,7 +3335,7 @@
 	)
 	(wire
 		(pts
-			(xy 236.22 147.1422) (xy 251.46 147.1422)
+			(xy 264.16 146.05) (xy 279.4 146.05)
 		)
 		(stroke
 			(width 0)
@@ -3400,7 +3345,7 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 83.6422) (xy 17.78 83.6422)
+			(xy 60.96 82.55) (xy 45.72 82.55)
 		)
 		(stroke
 			(width 0)
@@ -3410,7 +3355,7 @@
 	)
 	(wire
 		(pts
-			(xy 233.68 225.8822) (xy 228.6 225.8822)
+			(xy 261.62 224.79) (xy 256.54 224.79)
 		)
 		(stroke
 			(width 0)
@@ -3420,7 +3365,7 @@
 	)
 	(wire
 		(pts
-			(xy 198.12 170.0022) (xy 198.12 180.1622)
+			(xy 226.06 168.91) (xy 226.06 179.07)
 		)
 		(stroke
 			(width 0)
@@ -3430,7 +3375,7 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 86.1822) (xy 25.4 86.1822)
+			(xy 60.96 85.09) (xy 53.34 85.09)
 		)
 		(stroke
 			(width 0)
@@ -3440,7 +3385,7 @@
 	)
 	(wire
 		(pts
-			(xy 27.94 170.0022) (xy 27.94 172.5422)
+			(xy 55.88 168.91) (xy 55.88 171.45)
 		)
 		(stroke
 			(width 0)
@@ -3450,7 +3395,7 @@
 	)
 	(wire
 		(pts
-			(xy 236.22 144.6022) (xy 251.46 144.6022)
+			(xy 264.16 143.51) (xy 279.4 143.51)
 		)
 		(stroke
 			(width 0)
@@ -3460,7 +3405,7 @@
 	)
 	(wire
 		(pts
-			(xy 276.86 147.1422) (xy 287.02 147.1422)
+			(xy 304.8 146.05) (xy 314.96 146.05)
 		)
 		(stroke
 			(width 0)
@@ -3470,7 +3415,7 @@
 	)
 	(wire
 		(pts
-			(xy 276.86 144.6022) (xy 287.02 144.6022)
+			(xy 304.8 143.51) (xy 314.96 143.51)
 		)
 		(stroke
 			(width 0)
@@ -3480,7 +3425,7 @@
 	)
 	(wire
 		(pts
-			(xy 259.08 225.8822) (xy 259.08 223.3422)
+			(xy 287.02 224.79) (xy 287.02 222.25)
 		)
 		(stroke
 			(width 0)
@@ -3490,7 +3435,7 @@
 	)
 	(wire
 		(pts
-			(xy 259.08 223.3422) (xy 254 223.3422)
+			(xy 287.02 222.25) (xy 281.94 222.25)
 		)
 		(stroke
 			(width 0)
@@ -3500,7 +3445,7 @@
 	)
 	(wire
 		(pts
-			(xy 236.22 170.0022) (xy 251.46 170.0022)
+			(xy 264.16 168.91) (xy 279.4 168.91)
 		)
 		(stroke
 			(width 0)
@@ -3510,7 +3455,7 @@
 	)
 	(wire
 		(pts
-			(xy 236.22 152.2222) (xy 251.46 152.2222)
+			(xy 264.16 151.13) (xy 279.4 151.13)
 		)
 		(stroke
 			(width 0)
@@ -3520,7 +3465,7 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 251.2822) (xy 17.78 251.2822)
+			(xy 60.96 250.19) (xy 45.72 250.19)
 		)
 		(stroke
 			(width 0)
@@ -3530,7 +3475,7 @@
 	)
 	(wire
 		(pts
-			(xy 259.08 225.8822) (xy 259.08 230.9622)
+			(xy 287.02 224.79) (xy 287.02 229.87)
 		)
 		(stroke
 			(width 0)
@@ -3540,7 +3485,7 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 230.9622) (xy 17.78 230.9622)
+			(xy 60.96 229.87) (xy 45.72 229.87)
 		)
 		(stroke
 			(width 0)
@@ -3550,7 +3495,7 @@
 	)
 	(wire
 		(pts
-			(xy 276.86 152.2222) (xy 287.02 152.2222)
+			(xy 304.8 151.13) (xy 314.96 151.13)
 		)
 		(stroke
 			(width 0)
@@ -3560,7 +3505,7 @@
 	)
 	(wire
 		(pts
-			(xy 228.6 225.8822) (xy 228.6 230.9622)
+			(xy 256.54 224.79) (xy 256.54 229.87)
 		)
 		(stroke
 			(width 0)
@@ -3570,7 +3515,7 @@
 	)
 	(wire
 		(pts
-			(xy 27.94 131.9022) (xy 27.94 134.4422)
+			(xy 55.88 130.81) (xy 55.88 133.35)
 		)
 		(stroke
 			(width 0)
@@ -3580,7 +3525,7 @@
 	)
 	(wire
 		(pts
-			(xy 254 225.8822) (xy 259.08 225.8822)
+			(xy 281.94 224.79) (xy 287.02 224.79)
 		)
 		(stroke
 			(width 0)
@@ -3590,7 +3535,7 @@
 	)
 	(wire
 		(pts
-			(xy 276.86 170.0022) (xy 287.02 170.0022)
+			(xy 304.8 168.91) (xy 314.96 168.91)
 		)
 		(stroke
 			(width 0)
@@ -3600,7 +3545,7 @@
 	)
 	(wire
 		(pts
-			(xy 27.94 152.2222) (xy 27.94 154.7622)
+			(xy 55.88 151.13) (xy 55.88 153.67)
 		)
 		(stroke
 			(width 0)
@@ -3610,7 +3555,7 @@
 	)
 	(wire
 		(pts
-			(xy 210.82 170.0022) (xy 210.82 180.1622)
+			(xy 238.76 168.91) (xy 238.76 179.07)
 		)
 		(stroke
 			(width 0)
@@ -3620,7 +3565,7 @@
 	)
 	(wire
 		(pts
-			(xy 236.22 149.6822) (xy 251.46 149.6822)
+			(xy 264.16 148.59) (xy 279.4 148.59)
 		)
 		(stroke
 			(width 0)
@@ -3630,7 +3575,7 @@
 	)
 	(wire
 		(pts
-			(xy 43.18 170.0022) (xy 43.18 172.5422)
+			(xy 71.12 168.91) (xy 71.12 171.45)
 		)
 		(stroke
 			(width 0)
@@ -3640,7 +3585,7 @@
 	)
 	(wire
 		(pts
-			(xy 276.86 149.6822) (xy 287.02 149.6822)
+			(xy 304.8 148.59) (xy 314.96 148.59)
 		)
 		(stroke
 			(width 0)
@@ -3650,7 +3595,7 @@
 	)
 	(wire
 		(pts
-			(xy 223.52 162.3822) (xy 223.52 164.9222)
+			(xy 251.46 161.29) (xy 251.46 163.83)
 		)
 		(stroke
 			(width 0)
@@ -3660,7 +3605,7 @@
 	)
 	(wire
 		(pts
-			(xy 43.18 131.9022) (xy 43.18 134.4422)
+			(xy 71.12 130.81) (xy 71.12 133.35)
 		)
 		(stroke
 			(width 0)
@@ -3670,7 +3615,7 @@
 	)
 	(wire
 		(pts
-			(xy 210.82 162.3822) (xy 210.82 164.9222)
+			(xy 238.76 161.29) (xy 238.76 163.83)
 		)
 		(stroke
 			(width 0)
@@ -3680,7 +3625,7 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 246.2022) (xy 17.78 246.2022)
+			(xy 60.96 245.11) (xy 45.72 245.11)
 		)
 		(stroke
 			(width 0)
@@ -3690,7 +3635,7 @@
 	)
 	(wire
 		(pts
-			(xy 220.98 223.3422) (xy 233.68 223.3422)
+			(xy 248.92 222.25) (xy 261.62 222.25)
 		)
 		(stroke
 			(width 0)
@@ -3700,7 +3645,7 @@
 	)
 	(wire
 		(pts
-			(xy 223.52 170.0022) (xy 223.52 180.1622)
+			(xy 251.46 168.91) (xy 251.46 179.07)
 		)
 		(stroke
 			(width 0)
@@ -3710,7 +3655,7 @@
 	)
 	(wire
 		(pts
-			(xy 43.18 152.2222) (xy 43.18 154.7622)
+			(xy 71.12 151.13) (xy 71.12 153.67)
 		)
 		(stroke
 			(width 0)
@@ -3720,7 +3665,7 @@
 	)
 	(wire
 		(pts
-			(xy 116.84 164.9222) (xy 132.08 164.9222)
+			(xy 144.78 163.83) (xy 160.02 163.83)
 		)
 		(stroke
 			(width 0)
@@ -3730,7 +3675,7 @@
 	)
 	(wire
 		(pts
-			(xy 116.84 167.4622) (xy 132.08 167.4622)
+			(xy 144.78 166.37) (xy 160.02 166.37)
 		)
 		(stroke
 			(width 0)
@@ -3740,7 +3685,7 @@
 	)
 	(wire
 		(pts
-			(xy 33.02 225.8822) (xy 17.78 225.8822)
+			(xy 60.96 224.79) (xy 45.72 224.79)
 		)
 		(stroke
 			(width 0)
@@ -3750,7 +3695,7 @@
 	)
 	(wire
 		(pts
-			(xy 198.12 162.3822) (xy 198.12 164.9222)
+			(xy 226.06 161.29) (xy 226.06 163.83)
 		)
 		(stroke
 			(width 0)
@@ -3759,7 +3704,7 @@
 		(uuid "fb02ef8f-6e89-40ba-b9fb-2a6f99db3bf7")
 	)
 	(label "GND"
-		(at 236.22 149.6822 0)
+		(at 264.16 148.59 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3769,7 +3714,7 @@
 		(uuid "182702fc-b5fa-4d30-a9e3-8b070ba9f58e")
 	)
 	(label "VIN_CHG"
-		(at 17.78 225.8822 0)
+		(at 45.72 224.79 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3779,7 +3724,7 @@
 		(uuid "1aa3d296-261b-41d7-9c50-2a9cbc8feb69")
 	)
 	(label "+5V"
-		(at 287.02 144.6022 0)
+		(at 314.96 143.51 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3789,7 +3734,7 @@
 		(uuid "2251ec94-fbe0-46eb-8d5a-0f8c001d103f")
 	)
 	(label "BATT_POS"
-		(at 220.98 223.3422 0)
+		(at 248.92 222.25 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3799,7 +3744,7 @@
 		(uuid "245b652b-e24d-4a2d-b1e0-cb662f19173e")
 	)
 	(label "GND"
-		(at 287.02 152.2222 0)
+		(at 314.96 151.13 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3809,7 +3754,7 @@
 		(uuid "4c0bb5af-4205-46f1-9f89-ebcfada88e93")
 	)
 	(label "+3V3"
-		(at 236.22 147.1422 0)
+		(at 264.16 146.05 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3819,7 +3764,7 @@
 		(uuid "58d412b3-0ec7-4ccd-b702-5854c63890c5")
 	)
 	(label "SW_NODE"
-		(at 17.78 251.2822 0)
+		(at 45.72 250.19 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3829,7 +3774,7 @@
 		(uuid "65f8445b-d162-4a46-a396-4e9db9e55db1")
 	)
 	(label "I2C_SDA"
-		(at 116.84 164.9222 0)
+		(at 144.78 163.83 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3839,7 +3784,7 @@
 		(uuid "746c15a1-b043-4225-97c2-cce3cc5592bd")
 	)
 	(label "VOUT_PP"
-		(at 17.78 230.9622 0)
+		(at 45.72 229.87 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3849,7 +3794,7 @@
 		(uuid "80fd787e-6962-44c1-b3e8-7f3c72efda23")
 	)
 	(label "BATT_POS"
-		(at 17.78 83.6422 0)
+		(at 45.72 82.55 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3859,7 +3804,7 @@
 		(uuid "8f4a5c66-444c-46de-928c-44866571d215")
 	)
 	(label "BATT_POS"
-		(at 287.02 170.0022 0)
+		(at 314.96 168.91 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3869,7 +3814,7 @@
 		(uuid "bdca8e86-bf5a-4d7b-9719-926783e38c58")
 	)
 	(label "GND"
-		(at 287.02 149.6822 0)
+		(at 314.96 148.59 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3879,7 +3824,7 @@
 		(uuid "d379a90a-e9d4-4b52-9d8a-6d2ba45211dc")
 	)
 	(label "I2C_SCL"
-		(at 116.84 167.4622 0)
+		(at 144.78 166.37 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3889,7 +3834,7 @@
 		(uuid "dae82ca5-ae85-4762-ac00-6dd09d83ceeb")
 	)
 	(label "+3V3"
-		(at 17.78 241.1222 0)
+		(at 45.72 240.03 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3899,7 +3844,7 @@
 		(uuid "dbf89bc1-6c2e-4fb2-b06b-17767040df68")
 	)
 	(label "+5V"
-		(at 17.78 246.2022 0)
+		(at 45.72 245.11 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3909,7 +3854,7 @@
 		(uuid "e9857c85-c4c0-468b-b1fe-914f9f5cb73f")
 	)
 	(label "+3V3"
-		(at 287.02 147.1422 0)
+		(at 314.96 146.05 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3919,7 +3864,7 @@
 		(uuid "eb270d84-68c7-4814-a5a9-74d20a4b093d")
 	)
 	(label "GND"
-		(at 236.22 152.2222 0)
+		(at 264.16 151.13 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3929,7 +3874,7 @@
 		(uuid "ec63709d-1238-4079-87d4-a0599d2a886f")
 	)
 	(label "BATT_POS"
-		(at 236.22 170.0022 0)
+		(at 264.16 168.91 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3939,7 +3884,7 @@
 		(uuid "f1199cf0-35d7-450e-8101-898a5108b94d")
 	)
 	(label "+5V"
-		(at 236.22 144.6022 0)
+		(at 264.16 143.51 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3950,7 +3895,7 @@
 	)
 	(symbol
 		(lib_id "Altium Content Vault:root_0_CN-1P-M-R2_Altium Content Vault")
-		(at 38.1 81.1022 90)
+		(at 66.04 80.01 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3960,7 +3905,7 @@
 		(dnp no)
 		(uuid "085ff3d8-d13e-48a8-b7b6-6bda0cc0786a")
 		(property "Reference" "J9"
-			(at 37.846 91.2622 90)
+			(at 65.786 90.17 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3971,7 +3916,7 @@
 			)
 		)
 		(property "Value" "68000-102HLF"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3983,7 +3928,7 @@
 			)
 		)
 		(property "Footprint" "AMPH-68000-102HLF_V"
-			(at 38.1 81.1022 0)
+			(at 66.04 80.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3994,7 +3939,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 38.1 81.1022 0)
+			(at 66.04 80.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4005,7 +3950,7 @@
 			)
 		)
 		(property "Description" "Male Header, Pitch 2.54 mm, 1 x 2 Position, Height 8.38 mm, Tail Length 2.41 mm, RoHS, Bulk"
-			(at 38.1 81.1022 0)
+			(at 66.04 80.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4016,7 +3961,7 @@
 			)
 		)
 		(property "OPERATING TEMPERATURE RANGE" "-65Cto+125C"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4028,7 +3973,7 @@
 			)
 		)
 		(property "PRODUCT CATEGORY" "Headers&WireHousings"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4040,7 +3985,7 @@
 			)
 		)
 		(property "NUMBER OF POSITIONS" "2"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4052,7 +3997,7 @@
 			)
 		)
 		(property "DATASHEET URL" "https://datasheet.ciiva.com/5149/68000-274228-5149165.pdf"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4064,7 +4009,7 @@
 			)
 		)
 		(property "INSULATION RESISTANCE" "5000MOhms"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4076,7 +4021,7 @@
 			)
 		)
 		(property "NUMBER OF POSITIONS / CONTACTS" "2"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4088,7 +4033,7 @@
 			)
 		)
 		(property "VOLTAGE RATING" "1.5kV"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4100,7 +4045,7 @@
 			)
 		)
 		(property "CONTACT GENDER" "Pin(Male)"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4112,7 +4057,7 @@
 			)
 		)
 		(property "PACKAGING" "Bulk"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4124,7 +4069,7 @@
 			)
 		)
 		(property "MOUNTING TECHNOLOGY" "ThroughHole"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4136,7 +4081,7 @@
 			)
 		)
 		(property "PRODUCT TYPE" "Headers"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4148,7 +4093,7 @@
 			)
 		)
 		(property "HOUSING MATERIAL" "Thermoplastic"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4160,7 +4105,7 @@
 			)
 		)
 		(property "CONTACT MATERIAL" "PhosphorBronze"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4172,7 +4117,7 @@
 			)
 		)
 		(property "CONTACT PLATING" "Gold/GTX"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4184,7 +4129,7 @@
 			)
 		)
 		(property "PACKAGE DESCRIPTION" "Male Header, Pitch 2.54 mm, 1 x 2 Position, Height 8.38 mm, Tail Length 2.41 mm"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4196,7 +4141,7 @@
 			)
 		)
 		(property "PACKAGE REFERENCE" "68000-102HLF"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4208,7 +4153,7 @@
 			)
 		)
 		(property "MOUNTING ANGLE" "Vertical"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4220,7 +4165,7 @@
 			)
 		)
 		(property "TYPE" "Unshrouded"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4232,7 +4177,7 @@
 			)
 		)
 		(property "FACTORY PACK QUANTITY" "100"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4244,7 +4189,7 @@
 			)
 		)
 		(property "TERMINATION STYLE" "ThroughHole"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4256,7 +4201,7 @@
 			)
 		)
 		(property "ROHS" "Details"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4268,7 +4213,7 @@
 			)
 		)
 		(property "PITCH" "2.54mm"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4280,7 +4225,7 @@
 			)
 		)
 		(property "SERIES" "68000"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4292,7 +4237,7 @@
 			)
 		)
 		(property "MOUNTING STYLE" "ThroughHole"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4304,7 +4249,7 @@
 			)
 		)
 		(property "BRAND" "FCI"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4316,7 +4261,7 @@
 			)
 		)
 		(property "FLAMMABILITY RATING" "UL94V-0"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4328,7 +4273,7 @@
 			)
 		)
 		(property "NUMBER OF ROWS" "1"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4340,7 +4285,7 @@
 			)
 		)
 		(property "CURRENT RATING" "3A"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4352,7 +4297,7 @@
 			)
 		)
 		(property "MANUFACTURER" "FCI"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4364,7 +4309,7 @@
 			)
 		)
 		(property "TERMINATION POST LENGTH" "2.41mm"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4376,7 +4321,7 @@
 			)
 		)
 		(property "MANUFACTURER URL" "http://www.amphenol.com/"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4388,7 +4333,7 @@
 			)
 		)
 		(property "DATASHEET VERSION" "Rev. F, 04/2006"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4400,7 +4345,7 @@
 			)
 		)
 		(property "MATING POST LENGTH" "5.84mm"
-			(at 32.512 81.1022 90)
+			(at 60.452 80.01 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4428,7 +4373,7 @@
 	)
 	(symbol
 		(lib_id "Nick Grabbs:root_0_CMP-001-0001-4_Nick Grabbs")
-		(at 33.02 251.2822 90)
+		(at 60.96 250.19 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4438,7 +4383,7 @@
 		(dnp no)
 		(uuid "0d3e156f-54e7-4ca5-854d-1a70e4488fa8")
 		(property "Reference" "TP5"
-			(at 35.306 250.1392 90)
+			(at 63.246 249.047 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4449,7 +4394,7 @@
 			)
 		)
 		(property "Value" "TPAD6R"
-			(at 35.306 254.9652 90)
+			(at 63.246 253.873 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4461,7 +4406,7 @@
 			)
 		)
 		(property "Footprint" "TP06R"
-			(at 33.02 251.2822 0)
+			(at 60.96 250.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4472,7 +4417,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 33.02 251.2822 0)
+			(at 60.96 250.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4483,7 +4428,7 @@
 			)
 		)
 		(property "Description" "0.6mm round"
-			(at 33.02 251.2822 0)
+			(at 60.96 250.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4494,7 +4439,7 @@
 			)
 		)
 		(property "PINS" "1"
-			(at 32.512 248.7422 90)
+			(at 60.452 247.65 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4506,7 +4451,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" ""
-			(at 32.512 248.7422 90)
+			(at 60.452 247.65 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4518,7 +4463,7 @@
 			)
 		)
 		(property "MOUNTING TECHNOLOGY" ""
-			(at 32.512 248.7422 90)
+			(at 60.452 247.65 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4530,7 +4475,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" ""
-			(at 32.512 248.7422 90)
+			(at 60.452 247.65 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4542,7 +4487,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" ""
-			(at 32.512 248.7422 90)
+			(at 60.452 247.65 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4554,7 +4499,7 @@
 			)
 		)
 		(property "ROHS COMPLIANT" ""
-			(at 32.512 248.7422 90)
+			(at 60.452 247.65 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4579,7 +4524,7 @@
 	)
 	(symbol
 		(lib_id "Altium Content Vault:root_3_8706943c75ba83719d021d2fdc84c58_Altium Content Vault")
-		(at 27.94 154.7622 0)
+		(at 55.88 153.67 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4589,7 +4534,7 @@
 		(dnp no)
 		(uuid "1fc9b0fb-28f6-4f19-9e02-82650437e650")
 		(property "Reference" "D5"
-			(at 34.036 161.3662 0)
+			(at 61.976 160.274 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4600,7 +4545,7 @@
 			)
 		)
 		(property "Value" "LTST-S270KGKT"
-			(at 33.782 163.9062 0)
+			(at 61.722 162.814 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4612,7 +4557,7 @@
 			)
 		)
 		(property "Footprint" "FP-LTST-S270KGKT-MFG"
-			(at 27.94 154.7622 0)
+			(at 55.88 153.67 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4623,7 +4568,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 27.94 154.7622 0)
+			(at 55.88 153.67 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4634,7 +4579,7 @@
 			)
 		)
 		(property "Description" "LED GREEN CLEAR CHIP SMD R/A"
-			(at 27.94 154.7622 0)
+			(at 55.88 153.67 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4645,7 +4590,7 @@
 			)
 		)
 		(property "LUMINOUS INTENSITY" "71mcd"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4657,7 +4602,7 @@
 			)
 		)
 		(property "PACKAGE QUANTITY" "1"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4669,7 +4614,7 @@
 			)
 		)
 		(property "LEAD FREE" "Lead Free"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4681,7 +4626,7 @@
 			)
 		)
 		(property "CASE CODE (IMPERIAL)" "0603"
-			(at 34.036 165.6842 0)
+			(at 61.976 164.592 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4692,7 +4637,7 @@
 			)
 		)
 		(property "LENS TRANSPARENCY" "Clear"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4704,7 +4649,7 @@
 			)
 		)
 		(property "TEST CURRENT" "20mA"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4716,7 +4661,7 @@
 			)
 		)
 		(property "WIDTH" "1.15mm"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4728,7 +4673,7 @@
 			)
 		)
 		(property "CASE CODE (METRIC)" "1608"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4740,7 +4685,7 @@
 			)
 		)
 		(property "PACKAGING" "Tape and Reel"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4752,7 +4697,7 @@
 			)
 		)
 		(property "DOMINANT WAVELENGTH" "571nm"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4764,7 +4709,7 @@
 			)
 		)
 		(property "LENS STYLE" "Diffused"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4776,7 +4721,7 @@
 			)
 		)
 		(property "FORWARD VOLTAGE" "2V"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4788,7 +4733,7 @@
 			)
 		)
 		(property "REVERSE VOLTAGE" "5V"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4800,7 +4745,7 @@
 			)
 		)
 		(property "DEPTH" "0.6mm"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4812,7 +4757,7 @@
 			)
 		)
 		(property "RADIATION HARDENING" "No"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4824,7 +4769,7 @@
 			)
 		)
 		(property "WAVELENGTH" "574nm"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4836,7 +4781,7 @@
 			)
 		)
 		(property "COLOR" "Green"
-			(at 34.036 163.3982 0)
+			(at 61.976 162.306 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4847,7 +4792,7 @@
 			)
 		)
 		(property "POWER RATING" "75mW"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4859,7 +4804,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" "85°C"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4871,7 +4816,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" "0603"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4883,7 +4828,7 @@
 			)
 		)
 		(property "VIEWING ANGLE" "130°"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4895,7 +4840,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" "-55°C"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4907,7 +4852,7 @@
 			)
 		)
 		(property "NUMBER OF ELEMENTS" "1"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4919,7 +4864,7 @@
 			)
 		)
 		(property "NUMBER OF LEDS" "1"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4931,7 +4876,7 @@
 			)
 		)
 		(property "POWER DISSIPATION" "75mW"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4943,7 +4888,7 @@
 			)
 		)
 		(property "ILLUMINATION COLOR" "Green"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4955,7 +4900,7 @@
 			)
 		)
 		(property "FORWARD CURRENT" "30mA"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4967,7 +4912,7 @@
 			)
 		)
 		(property "NUMBER OF PINS" "2"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4979,7 +4924,7 @@
 			)
 		)
 		(property "HEIGHT" "0.6mm"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4991,7 +4936,7 @@
 			)
 		)
 		(property "MOUNT" "Surface Mount"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5003,7 +4948,7 @@
 			)
 		)
 		(property "LENGTH" "1.6mm"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5015,7 +4960,7 @@
 			)
 		)
 		(property "LENS COLOR" "Colorless"
-			(at 25.146 154.2542 0)
+			(at 53.086 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5043,7 +4988,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:GND_POWER_GROUND")
-		(at 210.82 180.1622 0)
+		(at 238.76 179.07 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5052,8 +4997,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "26d46bce-98d1-4747-b6b4-989a1519996c")
-		(property "Reference" "#PWR?"
-			(at 210.82 180.1622 0)
+		(property "Reference" "#PWR011"
+			(at 238.76 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5064,7 +5009,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 210.82 186.5122 0)
+			(at 238.76 185.42 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5074,7 +5019,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 210.82 180.1622 0)
+			(at 238.76 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5084,7 +5029,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 210.82 180.1622 0)
+			(at 238.76 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5094,7 +5039,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 210.82 180.1622 0)
+			(at 238.76 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5109,7 +5054,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -5117,7 +5062,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:GND_POWER_GROUND")
-		(at 43.18 172.5422 0)
+		(at 71.12 171.45 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5126,8 +5071,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2f766bd4-3a21-481b-8162-604ff5c2c975")
-		(property "Reference" "#PWR?"
-			(at 43.18 172.5422 0)
+		(property "Reference" "#PWR05"
+			(at 71.12 171.45 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5138,7 +5083,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 43.18 178.8922 0)
+			(at 71.12 177.8 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5148,7 +5093,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 43.18 172.5422 0)
+			(at 71.12 171.45 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5158,7 +5103,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 43.18 172.5422 0)
+			(at 71.12 171.45 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5168,7 +5113,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 43.18 172.5422 0)
+			(at 71.12 171.45 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5183,7 +5128,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -5191,7 +5136,7 @@
 	)
 	(symbol
 		(lib_id "Nick Grabbs:root_0_CMP-001-0001-4_Nick Grabbs")
-		(at 33.02 230.9622 90)
+		(at 60.96 229.87 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5201,7 +5146,7 @@
 		(dnp no)
 		(uuid "31bd7ace-4ea8-4ca8-a5a1-9ce44eb51a1d")
 		(property "Reference" "TP2"
-			(at 35.306 229.8192 90)
+			(at 63.246 228.727 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5212,7 +5157,7 @@
 			)
 		)
 		(property "Value" "TPAD6R"
-			(at 35.306 234.6452 90)
+			(at 63.246 233.553 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5224,7 +5169,7 @@
 			)
 		)
 		(property "Footprint" "TP06R"
-			(at 33.02 230.9622 0)
+			(at 60.96 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5235,7 +5180,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 33.02 230.9622 0)
+			(at 60.96 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5246,7 +5191,7 @@
 			)
 		)
 		(property "Description" "0.6mm round"
-			(at 33.02 230.9622 0)
+			(at 60.96 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5257,7 +5202,7 @@
 			)
 		)
 		(property "PINS" "1"
-			(at 32.512 228.4222 90)
+			(at 60.452 227.33 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5269,7 +5214,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" ""
-			(at 32.512 228.4222 90)
+			(at 60.452 227.33 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5281,7 +5226,7 @@
 			)
 		)
 		(property "MOUNTING TECHNOLOGY" ""
-			(at 32.512 228.4222 90)
+			(at 60.452 227.33 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5293,7 +5238,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" ""
-			(at 32.512 228.4222 90)
+			(at 60.452 227.33 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5305,7 +5250,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" ""
-			(at 32.512 228.4222 90)
+			(at 60.452 227.33 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5317,7 +5262,7 @@
 			)
 		)
 		(property "ROHS COMPLIANT" ""
-			(at 32.512 228.4222 90)
+			(at 60.452 227.33 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5342,7 +5287,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:GND_POWER_GROUND")
-		(at 25.4 93.8022 0)
+		(at 53.34 92.71 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5351,8 +5296,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "35d2e2ed-f295-4910-9300-291f61468ab2")
-		(property "Reference" "#PWR?"
-			(at 25.4 93.8022 0)
+		(property "Reference" "#PWR01"
+			(at 53.34 92.71 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5363,7 +5308,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 25.4 100.1522 0)
+			(at 53.34 99.06 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5373,7 +5318,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 25.4 93.8022 0)
+			(at 53.34 92.71 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5383,7 +5328,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 25.4 93.8022 0)
+			(at 53.34 92.71 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5393,7 +5338,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 25.4 93.8022 0)
+			(at 53.34 92.71 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5408,7 +5353,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR01")
 					(unit 1)
 				)
 			)
@@ -5416,7 +5361,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:+5V_BAR")
-		(at 210.82 162.3822 180)
+		(at 238.76 161.29 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5425,8 +5370,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3798d653-6370-43d4-93d3-e80fc07caa38")
-		(property "Reference" "#PWR?"
-			(at 210.82 162.3822 0)
+		(property "Reference" "#PWR010"
+			(at 238.76 161.29 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5437,7 +5382,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 210.82 158.5722 0)
+			(at 238.76 157.48 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5447,7 +5392,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 210.82 162.3822 0)
+			(at 238.76 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5457,7 +5402,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 210.82 162.3822 0)
+			(at 238.76 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5467,7 +5412,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 210.82 162.3822 0)
+			(at 238.76 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5482,7 +5427,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR010")
 					(unit 1)
 				)
 			)
@@ -5490,7 +5435,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:+5V_BAR")
-		(at 43.18 131.9022 180)
+		(at 71.12 130.81 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5499,8 +5444,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "42ad4f86-f8d3-4839-91be-3b34fe52d531")
-		(property "Reference" "#PWR?"
-			(at 43.18 131.9022 0)
+		(property "Reference" "#PWR04"
+			(at 71.12 130.81 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5511,7 +5456,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 43.18 128.0922 0)
+			(at 71.12 127 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5521,7 +5466,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 43.18 131.9022 0)
+			(at 71.12 130.81 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5531,7 +5476,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 43.18 131.9022 0)
+			(at 71.12 130.81 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5541,7 +5486,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 43.18 131.9022 0)
+			(at 71.12 130.81 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5556,7 +5501,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -5564,7 +5509,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:GND_POWER_GROUND")
-		(at 27.94 172.5422 0)
+		(at 55.88 171.45 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5573,8 +5518,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "44636e66-2557-4983-9050-f3e752307920")
-		(property "Reference" "#PWR?"
-			(at 27.94 172.5422 0)
+		(property "Reference" "#PWR03"
+			(at 55.88 171.45 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5585,7 +5530,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 27.94 178.8922 0)
+			(at 55.88 177.8 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5595,7 +5540,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 27.94 172.5422 0)
+			(at 55.88 171.45 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5605,7 +5550,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 27.94 172.5422 0)
+			(at 55.88 171.45 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5615,7 +5560,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 27.94 172.5422 0)
+			(at 55.88 171.45 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5630,7 +5575,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -5638,7 +5583,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:GND_POWER_GROUND")
-		(at 185.42 180.1622 0)
+		(at 213.36 179.07 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5647,8 +5592,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4afd5736-82c3-4809-a487-0d7abf570a23")
-		(property "Reference" "#PWR?"
-			(at 185.42 180.1622 0)
+		(property "Reference" "#PWR07"
+			(at 213.36 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5659,7 +5604,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 185.42 186.5122 0)
+			(at 213.36 185.42 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5669,7 +5614,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 185.42 180.1622 0)
+			(at 213.36 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5679,7 +5624,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 185.42 180.1622 0)
+			(at 213.36 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5689,7 +5634,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 185.42 180.1622 0)
+			(at 213.36 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5704,7 +5649,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR07")
 					(unit 1)
 				)
 			)
@@ -5712,7 +5657,7 @@
 	)
 	(symbol
 		(lib_id "Altium Content Vault:root_0_b4654b650e69147ec39a6b967a45e02_Altium Content Vault")
-		(at 223.52 164.9222 90)
+		(at 251.46 163.83 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5722,7 +5667,7 @@
 		(dnp no)
 		(uuid "50c11d43-6232-40a2-a975-36539cd26204")
 		(property "Reference" "C32"
-			(at 224.536 171.0182 90)
+			(at 252.476 169.926 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5733,7 +5678,7 @@
 			)
 		)
 		(property "Value" "EMK105B7104KV-F"
-			(at 226.314 170.7642 90)
+			(at 254.254 169.672 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5745,7 +5690,7 @@
 			)
 		)
 		(property "Footprint" "FP-0402-L_1_0_0_05-W_0_5-MFG"
-			(at 223.52 164.9222 0)
+			(at 251.46 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5756,7 +5701,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 223.52 164.9222 0)
+			(at 251.46 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5767,7 +5712,7 @@
 			)
 		)
 		(property "Description" "Ceramic Capacitor General Use 0.1uF ±10% 16V X7R 0402"
-			(at 223.52 164.9222 0)
+			(at 251.46 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5778,7 +5723,7 @@
 			)
 		)
 		(property "HEIGHT" "550µm"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5790,7 +5735,7 @@
 			)
 		)
 		(property "HALOGEN FREE" "Halogen Free"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5802,7 +5747,7 @@
 			)
 		)
 		(property "THICKNESS" "558.8µm"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5814,7 +5759,7 @@
 			)
 		)
 		(property "MIN LENGTH" "950µm"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5826,7 +5771,7 @@
 			)
 		)
 		(property "NEXARPARTID" "7072984"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5838,7 +5783,7 @@
 			)
 		)
 		(property "DEPTH" "500µm"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5850,7 +5795,7 @@
 			)
 		)
 		(property "COMPOSITION" "Ceramic"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5862,7 +5807,7 @@
 			)
 		)
 		(property "WIDTH" "508µm"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5874,7 +5819,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" "-55°C"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5886,7 +5831,7 @@
 			)
 		)
 		(property "MIN WIDTH" "450µm"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5898,7 +5843,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" "0402"
-			(at 224.933 176.7482 90)
+			(at 252.873 175.656 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5909,7 +5854,7 @@
 			)
 		)
 		(property "NUMBER OF PINS" "2"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5921,7 +5866,7 @@
 			)
 		)
 		(property "TERMINATION" "SMD/SMT"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5933,7 +5878,7 @@
 			)
 		)
 		(property "LENGTH" "1mm"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5945,7 +5890,7 @@
 			)
 		)
 		(property "DIELECTRIC" "X7R"
-			(at 224.364 178.6322 90)
+			(at 252.304 177.54 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5956,7 +5901,7 @@
 			)
 		)
 		(property "MIN THICKNESS" "450µm"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5968,7 +5913,7 @@
 			)
 		)
 		(property "RADIATION HARDENING" "No"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5980,7 +5925,7 @@
 			)
 		)
 		(property "MAX LENGTH" "1.05mm"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5992,7 +5937,7 @@
 			)
 		)
 		(property "PACKAGING" "Digi-Reel®"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6004,7 +5949,7 @@
 			)
 		)
 		(property "MAX THICKNESS" "550µm"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6016,7 +5961,7 @@
 			)
 		)
 		(property "TOLERANCE" "10%"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6028,7 +5973,7 @@
 			)
 		)
 		(property "LEAD FREE" "Lead Free"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6040,7 +5985,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" "125°C"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6052,7 +5997,7 @@
 			)
 		)
 		(property "ROHS" "Compliant"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6064,7 +6009,7 @@
 			)
 		)
 		(property "CASE CODE (IMPERIAL)" "0402"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6076,7 +6021,7 @@
 			)
 		)
 		(property "MAX WIDTH" "550µm"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6088,7 +6033,7 @@
 			)
 		)
 		(property "CAPACITANCE" "100nF"
-			(at 224.851 174.9212 90)
+			(at 252.791 173.829 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6099,7 +6044,7 @@
 			)
 		)
 		(property "MOUNT" "Surface Mount"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6111,7 +6056,7 @@
 			)
 		)
 		(property "MATERIAL" "Ceramic"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6123,7 +6068,7 @@
 			)
 		)
 		(property "VOLTAGE RATING" "16V"
-			(at 224.871 180.8242 90)
+			(at 252.811 179.732 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6134,7 +6079,7 @@
 			)
 		)
 		(property "VOLTAGE RATING (DC)" "16V"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6146,7 +6091,7 @@
 			)
 		)
 		(property "CASE CODE (METRIC)" "1005"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6158,7 +6103,7 @@
 			)
 		)
 		(property "REACH SVHC" "Unknown"
-			(at 220.726 164.4142 90)
+			(at 248.666 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6170,7 +6115,7 @@
 			)
 		)
 		(property "LCSC PART #" "C385888"
-			(at 224.533 172.9972 90)
+			(at 252.473 171.905 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6197,7 +6142,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:GND_POWER_GROUND")
-		(at 228.6 230.9622 0)
+		(at 256.54 229.87 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6206,8 +6151,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "63be2fef-fc93-438c-ac61-2706cac88d25")
-		(property "Reference" "#PWR?"
-			(at 228.6 230.9622 0)
+		(property "Reference" "#PWR014"
+			(at 256.54 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6218,7 +6163,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 228.6 237.3122 0)
+			(at 256.54 236.22 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6228,7 +6173,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 228.6 230.9622 0)
+			(at 256.54 229.87 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6238,7 +6183,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 228.6 230.9622 0)
+			(at 256.54 229.87 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6248,7 +6193,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 228.6 230.9622 0)
+			(at 256.54 229.87 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6263,7 +6208,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -6271,7 +6216,7 @@
 	)
 	(symbol
 		(lib_id "Nick Grabbs:root_0_CMP-001-0001-4_Nick Grabbs")
-		(at 33.02 241.1222 90)
+		(at 60.96 240.03 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6281,7 +6226,7 @@
 		(dnp no)
 		(uuid "7156d9a4-4c40-4c74-8b19-9ba21d60a936")
 		(property "Reference" "TP3"
-			(at 35.306 239.9792 90)
+			(at 63.246 238.887 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6292,7 +6237,7 @@
 			)
 		)
 		(property "Value" "TPAD6R"
-			(at 35.306 244.8052 90)
+			(at 63.246 243.713 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6304,7 +6249,7 @@
 			)
 		)
 		(property "Footprint" "TP06R"
-			(at 33.02 241.1222 0)
+			(at 60.96 240.03 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6315,7 +6260,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 33.02 241.1222 0)
+			(at 60.96 240.03 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6326,7 +6271,7 @@
 			)
 		)
 		(property "Description" "0.6mm round"
-			(at 33.02 241.1222 0)
+			(at 60.96 240.03 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6337,7 +6282,7 @@
 			)
 		)
 		(property "PINS" "1"
-			(at 32.512 238.5822 90)
+			(at 60.452 237.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6349,7 +6294,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" ""
-			(at 32.512 238.5822 90)
+			(at 60.452 237.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6361,7 +6306,7 @@
 			)
 		)
 		(property "MOUNTING TECHNOLOGY" ""
-			(at 32.512 238.5822 90)
+			(at 60.452 237.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6373,7 +6318,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" ""
-			(at 32.512 238.5822 90)
+			(at 60.452 237.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6385,7 +6330,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" ""
-			(at 32.512 238.5822 90)
+			(at 60.452 237.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6397,7 +6342,7 @@
 			)
 		)
 		(property "ROHS COMPLIANT" ""
-			(at 32.512 238.5822 90)
+			(at 60.452 237.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6422,7 +6367,7 @@
 	)
 	(symbol
 		(lib_id "Nick Grabbs:root_0_CMP-001-0001-4_Nick Grabbs")
-		(at 33.02 246.2022 90)
+		(at 60.96 245.11 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6432,7 +6377,7 @@
 		(dnp no)
 		(uuid "78bfe444-ba88-419e-87ad-2bdb9a12e9d8")
 		(property "Reference" "TP4"
-			(at 35.306 245.0592 90)
+			(at 63.246 243.967 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6443,7 +6388,7 @@
 			)
 		)
 		(property "Value" "TPAD6R"
-			(at 35.306 249.8852 90)
+			(at 63.246 248.793 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6455,7 +6400,7 @@
 			)
 		)
 		(property "Footprint" "TP06R"
-			(at 33.02 246.2022 0)
+			(at 60.96 245.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6466,7 +6411,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 33.02 246.2022 0)
+			(at 60.96 245.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6477,7 +6422,7 @@
 			)
 		)
 		(property "Description" "0.6mm round"
-			(at 33.02 246.2022 0)
+			(at 60.96 245.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6488,7 +6433,7 @@
 			)
 		)
 		(property "PINS" "1"
-			(at 32.512 243.6622 90)
+			(at 60.452 242.57 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6500,7 +6445,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" ""
-			(at 32.512 243.6622 90)
+			(at 60.452 242.57 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6512,7 +6457,7 @@
 			)
 		)
 		(property "MOUNTING TECHNOLOGY" ""
-			(at 32.512 243.6622 90)
+			(at 60.452 242.57 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6524,7 +6469,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" ""
-			(at 32.512 243.6622 90)
+			(at 60.452 242.57 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6536,7 +6481,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" ""
-			(at 32.512 243.6622 90)
+			(at 60.452 242.57 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6548,7 +6493,7 @@
 			)
 		)
 		(property "ROHS COMPLIANT" ""
-			(at 32.512 243.6622 90)
+			(at 60.452 242.57 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6573,7 +6518,7 @@
 	)
 	(symbol
 		(lib_id "Altium Content Vault:root_3_1029c3af85768c4190bb7ad29bc67b5_Altium Content Vault")
-		(at 27.94 134.4422 0)
+		(at 55.88 133.35 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6583,7 +6528,7 @@
 		(dnp no)
 		(uuid "7e0d9047-8543-4c68-a953-5a9011766909")
 		(property "Reference" "R16"
-			(at 29.464 141.0462 0)
+			(at 57.404 139.954 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6594,7 +6539,7 @@
 			)
 		)
 		(property "Value" "CRGCQ0402F1K0"
-			(at 29.464 143.5862 0)
+			(at 57.404 142.494 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6606,7 +6551,7 @@
 			)
 		)
 		(property "Footprint" "FP-CRGCQ0402-IPC_C"
-			(at 27.94 134.4422 0)
+			(at 55.88 133.35 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6617,7 +6562,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 27.94 134.4422 0)
+			(at 55.88 133.35 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6628,7 +6573,7 @@
 			)
 		)
 		(property "Description" "CRGCQ0402 1KΩ 1% ±100ppm/°C 50V"
-			(at 27.94 134.4422 0)
+			(at 55.88 133.35 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6639,7 +6584,7 @@
 			)
 		)
 		(property "COMPOSITION" "Thick Film"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6651,7 +6596,7 @@
 			)
 		)
 		(property "VOLTAGE RATING" "50V"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6663,7 +6608,7 @@
 			)
 		)
 		(property "DEVICE CLASS L2" "Resistors"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6675,7 +6620,7 @@
 			)
 		)
 		(property "PACKAGE" "0402"
-			(at 29.464 145.3642 0)
+			(at 57.404 144.272 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6686,7 +6631,7 @@
 			)
 		)
 		(property "MANUFACTURER PART NUMBER" "CRGCQ0402F1K0"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6698,7 +6643,7 @@
 			)
 		)
 		(property "TEMPERATURE RANGE HIGH" "+155°C"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6710,7 +6655,7 @@
 			)
 		)
 		(property "DEVICE CLASS L3" "Chip SMD Resistors"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6722,7 +6667,7 @@
 			)
 		)
 		(property "AUTOMOTIVE" "Yes"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6734,7 +6679,7 @@
 			)
 		)
 		(property "POWER RATING" "0.0625W"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6746,7 +6691,7 @@
 			)
 		)
 		(property "ALTIUM_VALUE" "1KΩ"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6758,7 +6703,7 @@
 			)
 		)
 		(property "AMBIENT TEMPERATURE RANGE HIGH" "+70°C"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6770,7 +6715,7 @@
 			)
 		)
 		(property "TEMPERATURE RANGE LOW" "-55°C"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6782,7 +6727,7 @@
 			)
 		)
 		(property "TEMPERATURE" "-55°C to +155°C"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6794,7 +6739,7 @@
 			)
 		)
 		(property "RESISTANCE" "1KΩ"
-			(at 29.464 143.3322 0)
+			(at 57.404 142.24 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6805,7 +6750,7 @@
 			)
 		)
 		(property "DEVICE CLASS L1" "Passive Components"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6817,7 +6762,7 @@
 			)
 		)
 		(property "HEIGHT" "0.4mm"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6829,7 +6774,7 @@
 			)
 		)
 		(property "TOLERANCE" "0.01"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6841,7 +6786,7 @@
 			)
 		)
 		(property "SERIES" "CRGCQ"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6853,7 +6798,7 @@
 			)
 		)
 		(property "MANUFACTURER" "TE Connectivity"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6865,7 +6810,7 @@
 			)
 		)
 		(property "LEAD FREE" "Yes"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6877,7 +6822,7 @@
 			)
 		)
 		(property "COMPONENTLINK2URL" "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7F1773204-3%7F1%7Fpdf%7FEnglish%7FENG_DS_1773204-3_1.pdf%7F4-2176347-694"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6889,7 +6834,7 @@
 			)
 		)
 		(property "CATEGORY" "Res"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6901,7 +6846,7 @@
 			)
 		)
 		(property "OCTOPART" "https://octopart.com/crgcq0402f1k0-te+connectivity-91017946"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6913,7 +6858,7 @@
 			)
 		)
 		(property "ROHS" "TRUE"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6925,7 +6870,7 @@
 			)
 		)
 		(property "COMPONENTLINK2DESCRIPTION" "Datasheet"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6937,7 +6882,7 @@
 			)
 		)
 		(property "IPC LAND PATTERN NAME" "RESC10050X35"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6949,7 +6894,7 @@
 			)
 		)
 		(property "TEMPERATURE COEFFICIENT" "±100ppm/°C"
-			(at 26.416 133.9342 0)
+			(at 54.356 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6977,7 +6922,7 @@
 	)
 	(symbol
 		(lib_id "Altium Content Vault:root_3_1029c3af85768c4190bb7ad29bc67b5_Altium Content Vault")
-		(at 43.18 134.4422 0)
+		(at 71.12 133.35 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6987,7 +6932,7 @@
 		(dnp no)
 		(uuid "83c6c246-e4f4-4993-91ef-2a7106218e51")
 		(property "Reference" "R17"
-			(at 44.704 141.0462 0)
+			(at 72.644 139.954 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6998,7 +6943,7 @@
 			)
 		)
 		(property "Value" "CRGCQ0402F1K0"
-			(at 44.704 143.5862 0)
+			(at 72.644 142.494 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7010,7 +6955,7 @@
 			)
 		)
 		(property "Footprint" "FP-CRGCQ0402-IPC_C"
-			(at 43.18 134.4422 0)
+			(at 71.12 133.35 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7021,7 +6966,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 43.18 134.4422 0)
+			(at 71.12 133.35 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7032,7 +6977,7 @@
 			)
 		)
 		(property "Description" "CRGCQ0402 1KΩ 1% ±100ppm/°C 50V"
-			(at 43.18 134.4422 0)
+			(at 71.12 133.35 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7043,7 +6988,7 @@
 			)
 		)
 		(property "COMPOSITION" "Thick Film"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7055,7 +7000,7 @@
 			)
 		)
 		(property "VOLTAGE RATING" "50V"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7067,7 +7012,7 @@
 			)
 		)
 		(property "DEVICE CLASS L2" "Resistors"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7079,7 +7024,7 @@
 			)
 		)
 		(property "PACKAGE" "0402"
-			(at 44.704 145.3642 0)
+			(at 72.644 144.272 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7090,7 +7035,7 @@
 			)
 		)
 		(property "MANUFACTURER PART NUMBER" "CRGCQ0402F1K0"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7102,7 +7047,7 @@
 			)
 		)
 		(property "TEMPERATURE RANGE HIGH" "+155°C"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7114,7 +7059,7 @@
 			)
 		)
 		(property "DEVICE CLASS L3" "Chip SMD Resistors"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7126,7 +7071,7 @@
 			)
 		)
 		(property "AUTOMOTIVE" "Yes"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7138,7 +7083,7 @@
 			)
 		)
 		(property "POWER RATING" "0.0625W"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7150,7 +7095,7 @@
 			)
 		)
 		(property "ALTIUM_VALUE" "1KΩ"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7162,7 +7107,7 @@
 			)
 		)
 		(property "AMBIENT TEMPERATURE RANGE HIGH" "+70°C"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7174,7 +7119,7 @@
 			)
 		)
 		(property "TEMPERATURE RANGE LOW" "-55°C"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7186,7 +7131,7 @@
 			)
 		)
 		(property "TEMPERATURE" "-55°C to +155°C"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7198,7 +7143,7 @@
 			)
 		)
 		(property "RESISTANCE" "1KΩ"
-			(at 44.704 143.3322 0)
+			(at 72.644 142.24 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7209,7 +7154,7 @@
 			)
 		)
 		(property "DEVICE CLASS L1" "Passive Components"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7221,7 +7166,7 @@
 			)
 		)
 		(property "HEIGHT" "0.4mm"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7233,7 +7178,7 @@
 			)
 		)
 		(property "TOLERANCE" "0.01"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7245,7 +7190,7 @@
 			)
 		)
 		(property "SERIES" "CRGCQ"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7257,7 +7202,7 @@
 			)
 		)
 		(property "MANUFACTURER" "TE Connectivity"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7269,7 +7214,7 @@
 			)
 		)
 		(property "LEAD FREE" "Yes"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7281,7 +7226,7 @@
 			)
 		)
 		(property "COMPONENTLINK2URL" "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Data+Sheet%7F1773204-3%7F1%7Fpdf%7FEnglish%7FENG_DS_1773204-3_1.pdf%7F4-2176347-694"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7293,7 +7238,7 @@
 			)
 		)
 		(property "CATEGORY" "Res"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7305,7 +7250,7 @@
 			)
 		)
 		(property "OCTOPART" "https://octopart.com/crgcq0402f1k0-te+connectivity-91017946"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7317,7 +7262,7 @@
 			)
 		)
 		(property "ROHS" "TRUE"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7329,7 +7274,7 @@
 			)
 		)
 		(property "COMPONENTLINK2DESCRIPTION" "Datasheet"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7341,7 +7286,7 @@
 			)
 		)
 		(property "IPC LAND PATTERN NAME" "RESC10050X35"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7353,7 +7298,7 @@
 			)
 		)
 		(property "TEMPERATURE COEFFICIENT" "±100ppm/°C"
-			(at 41.656 133.9342 0)
+			(at 69.596 132.842 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7381,7 +7326,7 @@
 	)
 	(symbol
 		(lib_id "Altium Content Vault:root_3_8706943c75ba83719d021d2fdc84c58_Altium Content Vault")
-		(at 43.18 154.7622 0)
+		(at 71.12 153.67 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -7391,7 +7336,7 @@
 		(dnp no)
 		(uuid "9c472343-ad2c-47b1-a771-cd39359d4a96")
 		(property "Reference" "D6"
-			(at 49.276 161.3662 0)
+			(at 77.216 160.274 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7402,7 +7347,7 @@
 			)
 		)
 		(property "Value" "LTST-S270KGKT"
-			(at 49.022 163.9062 0)
+			(at 76.962 162.814 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7414,7 +7359,7 @@
 			)
 		)
 		(property "Footprint" "FP-LTST-S270KGKT-MFG"
-			(at 43.18 154.7622 0)
+			(at 71.12 153.67 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7425,7 +7370,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 43.18 154.7622 0)
+			(at 71.12 153.67 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7436,7 +7381,7 @@
 			)
 		)
 		(property "Description" "LED GREEN CLEAR CHIP SMD R/A"
-			(at 43.18 154.7622 0)
+			(at 71.12 153.67 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7447,7 +7392,7 @@
 			)
 		)
 		(property "LUMINOUS INTENSITY" "71mcd"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7459,7 +7404,7 @@
 			)
 		)
 		(property "PACKAGE QUANTITY" "1"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7471,7 +7416,7 @@
 			)
 		)
 		(property "LEAD FREE" "Lead Free"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7483,7 +7428,7 @@
 			)
 		)
 		(property "CASE CODE (IMPERIAL)" "0603"
-			(at 49.276 165.6842 0)
+			(at 77.216 164.592 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7494,7 +7439,7 @@
 			)
 		)
 		(property "LENS TRANSPARENCY" "Clear"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7506,7 +7451,7 @@
 			)
 		)
 		(property "TEST CURRENT" "20mA"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7518,7 +7463,7 @@
 			)
 		)
 		(property "WIDTH" "1.15mm"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7530,7 +7475,7 @@
 			)
 		)
 		(property "CASE CODE (METRIC)" "1608"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7542,7 +7487,7 @@
 			)
 		)
 		(property "PACKAGING" "Tape and Reel"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7554,7 +7499,7 @@
 			)
 		)
 		(property "DOMINANT WAVELENGTH" "571nm"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7566,7 +7511,7 @@
 			)
 		)
 		(property "LENS STYLE" "Diffused"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7578,7 +7523,7 @@
 			)
 		)
 		(property "FORWARD VOLTAGE" "2V"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7590,7 +7535,7 @@
 			)
 		)
 		(property "REVERSE VOLTAGE" "5V"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7602,7 +7547,7 @@
 			)
 		)
 		(property "DEPTH" "0.6mm"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7614,7 +7559,7 @@
 			)
 		)
 		(property "RADIATION HARDENING" "No"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7626,7 +7571,7 @@
 			)
 		)
 		(property "WAVELENGTH" "574nm"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7638,7 +7583,7 @@
 			)
 		)
 		(property "COLOR" "Green"
-			(at 49.276 163.3982 0)
+			(at 77.216 162.306 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7649,7 +7594,7 @@
 			)
 		)
 		(property "POWER RATING" "75mW"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7661,7 +7606,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" "85°C"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7673,7 +7618,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" "0603"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7685,7 +7630,7 @@
 			)
 		)
 		(property "VIEWING ANGLE" "130°"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7697,7 +7642,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" "-55°C"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7709,7 +7654,7 @@
 			)
 		)
 		(property "NUMBER OF ELEMENTS" "1"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7721,7 +7666,7 @@
 			)
 		)
 		(property "NUMBER OF LEDS" "1"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7733,7 +7678,7 @@
 			)
 		)
 		(property "POWER DISSIPATION" "75mW"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7745,7 +7690,7 @@
 			)
 		)
 		(property "ILLUMINATION COLOR" "Green"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7757,7 +7702,7 @@
 			)
 		)
 		(property "FORWARD CURRENT" "30mA"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7769,7 +7714,7 @@
 			)
 		)
 		(property "NUMBER OF PINS" "2"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7781,7 +7726,7 @@
 			)
 		)
 		(property "HEIGHT" "0.6mm"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7793,7 +7738,7 @@
 			)
 		)
 		(property "MOUNT" "Surface Mount"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7805,7 +7750,7 @@
 			)
 		)
 		(property "LENGTH" "1.6mm"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7817,7 +7762,7 @@
 			)
 		)
 		(property "LENS COLOR" "Colorless"
-			(at 40.386 154.2542 0)
+			(at 68.326 153.162 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7845,7 +7790,7 @@
 	)
 	(symbol
 		(lib_id "Nick Grabbs:root_0_ESQ-126-39-G-D_Nick Grabbs")
-		(at 144.78 147.1422 90)
+		(at 172.72 146.05 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -7855,7 +7800,7 @@
 		(dnp no)
 		(uuid "b87af8bf-7737-4d81-a6d9-e92958ed3c99")
 		(property "Reference" "H1"
-			(at 137.16 111.5822 90)
+			(at 165.1 110.49 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7866,7 +7811,7 @@
 			)
 		)
 		(property "Value" "ESQ-126-39-G-D"
-			(at 137.16 182.7022 90)
+			(at 165.1 181.61 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7877,7 +7822,7 @@
 			)
 		)
 		(property "Footprint" "SAMTEC_ESQ-126-39-G-D"
-			(at 144.78 147.1422 0)
+			(at 172.72 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7888,7 +7833,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 144.78 147.1422 0)
+			(at 172.72 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7899,7 +7844,7 @@
 			)
 		)
 		(property "Description" "52 Position Elevated Socket Connector Through Hole"
-			(at 144.78 147.1422 0)
+			(at 172.72 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7910,7 +7855,7 @@
 			)
 		)
 		(property "DESIGN ITEM ID" "ESQ-126-39-G-D"
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7922,7 +7867,7 @@
 			)
 		)
 		(property "VOLTAGE RATING" ""
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7934,7 +7879,7 @@
 			)
 		)
 		(property "MP" "ESQ-126-39-G-D"
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7946,7 +7891,7 @@
 			)
 		)
 		(property "PRICE" "None"
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7958,7 +7903,7 @@
 			)
 		)
 		(property "CONNECTOR TYPE" ""
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7970,7 +7915,7 @@
 			)
 		)
 		(property "MOUNTING TECHNOLOGY" ""
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7982,7 +7927,7 @@
 			)
 		)
 		(property "GENDER" ""
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7994,7 +7939,7 @@
 			)
 		)
 		(property "ALTIUM_VALUE" "*"
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8006,7 +7951,7 @@
 			)
 		)
 		(property "MAX CURRENT RATING" ""
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8018,7 +7963,7 @@
 			)
 		)
 		(property "ROHS COMPLIANT" ""
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8030,7 +7975,7 @@
 			)
 		)
 		(property "AVAILABILITY" "Unavailable"
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8042,7 +7987,7 @@
 			)
 		)
 		(property "COMPONENT TYPE" "Standard"
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8054,7 +7999,7 @@
 			)
 		)
 		(property "SOURCE" "SnapEDAsch.SchLib"
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8066,7 +8011,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" ""
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8078,7 +8023,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" ""
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8090,7 +8035,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" "None"
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8102,7 +8047,7 @@
 			)
 		)
 		(property "SNAPEDA_LINK" "https://www.snapeda.com/parts/ESQ-126-39-G-D/Samtec%20Inc./view-part/490181/?ref=snap"
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8114,7 +8059,7 @@
 			)
 		)
 		(property "MF" "Samtec"
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8126,7 +8071,7 @@
 			)
 		)
 		(property "PINS" "52"
-			(at 131.572 111.5822 90)
+			(at 159.512 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8304,7 +8249,7 @@
 	)
 	(symbol
 		(lib_id "Nick Grabbs:root_0_ESQ-126-39-G-D_Nick Grabbs")
-		(at 264.16 147.1422 90)
+		(at 292.1 146.05 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8314,7 +8259,7 @@
 		(dnp no)
 		(uuid "c0a3a168-8dd7-4c07-a134-faee4927f0e8")
 		(property "Reference" "H2"
-			(at 256.54 111.5822 90)
+			(at 284.48 110.49 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8325,7 +8270,7 @@
 			)
 		)
 		(property "Value" "ESQ-126-39-G-D"
-			(at 256.54 182.7022 90)
+			(at 284.48 181.61 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8336,7 +8281,7 @@
 			)
 		)
 		(property "Footprint" "SAMTEC_ESQ-126-39-G-D"
-			(at 264.16 147.1422 0)
+			(at 292.1 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8347,7 +8292,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 264.16 147.1422 0)
+			(at 292.1 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8358,7 +8303,7 @@
 			)
 		)
 		(property "Description" "52 Position Elevated Socket Connector Through Hole"
-			(at 264.16 147.1422 0)
+			(at 292.1 146.05 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8369,7 +8314,7 @@
 			)
 		)
 		(property "DESIGN ITEM ID" "ESQ-126-39-G-D"
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8381,7 +8326,7 @@
 			)
 		)
 		(property "VOLTAGE RATING" ""
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8393,7 +8338,7 @@
 			)
 		)
 		(property "MP" "ESQ-126-39-G-D"
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8405,7 +8350,7 @@
 			)
 		)
 		(property "PRICE" "None"
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8417,7 +8362,7 @@
 			)
 		)
 		(property "CONNECTOR TYPE" ""
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8429,7 +8374,7 @@
 			)
 		)
 		(property "MOUNTING TECHNOLOGY" ""
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8441,7 +8386,7 @@
 			)
 		)
 		(property "GENDER" ""
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8453,7 +8398,7 @@
 			)
 		)
 		(property "ALTIUM_VALUE" "*"
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8465,7 +8410,7 @@
 			)
 		)
 		(property "MAX CURRENT RATING" ""
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8477,7 +8422,7 @@
 			)
 		)
 		(property "ROHS COMPLIANT" ""
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8489,7 +8434,7 @@
 			)
 		)
 		(property "AVAILABILITY" "Unavailable"
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8501,7 +8446,7 @@
 			)
 		)
 		(property "COMPONENT TYPE" "Standard"
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8513,7 +8458,7 @@
 			)
 		)
 		(property "SOURCE" "SnapEDAsch.SchLib"
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8525,7 +8470,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" ""
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8537,7 +8482,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" ""
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8549,7 +8494,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" "None"
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8561,7 +8506,7 @@
 			)
 		)
 		(property "SNAPEDA_LINK" "https://www.snapeda.com/parts/ESQ-126-39-G-D/Samtec%20Inc./view-part/490181/?ref=snap"
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8573,7 +8518,7 @@
 			)
 		)
 		(property "MF" "Samtec"
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8585,7 +8530,7 @@
 			)
 		)
 		(property "PINS" "52"
-			(at 250.952 111.5822 90)
+			(at 278.892 110.49 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8763,7 +8708,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:GND_POWER_GROUND")
-		(at 259.08 230.9622 0)
+		(at 287.02 229.87 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8772,8 +8717,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c5ef360a-5a7a-4133-bbe5-8436b7b5fd5d")
-		(property "Reference" "#PWR?"
-			(at 259.08 230.9622 0)
+		(property "Reference" "#PWR015"
+			(at 287.02 229.87 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8784,7 +8729,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 259.08 237.3122 0)
+			(at 287.02 236.22 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8794,7 +8739,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 259.08 230.9622 0)
+			(at 287.02 229.87 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8804,7 +8749,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 259.08 230.9622 0)
+			(at 287.02 229.87 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8814,7 +8759,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 259.08 230.9622 0)
+			(at 287.02 229.87 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8829,7 +8774,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -8837,7 +8782,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:+3V3_BAR")
-		(at 198.12 162.3822 180)
+		(at 226.06 161.29 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8846,8 +8791,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "cdef60f4-6709-486c-a807-6bc4c5fcb6c1")
-		(property "Reference" "#PWR?"
-			(at 198.12 162.3822 0)
+		(property "Reference" "#PWR08"
+			(at 226.06 161.29 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8858,7 +8803,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 198.12 158.5722 0)
+			(at 226.06 157.48 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8868,7 +8813,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 198.12 162.3822 0)
+			(at 226.06 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8878,7 +8823,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 198.12 162.3822 0)
+			(at 226.06 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8888,7 +8833,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 198.12 162.3822 0)
+			(at 226.06 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8903,7 +8848,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR08")
 					(unit 1)
 				)
 			)
@@ -8911,7 +8856,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:+3V3_BAR")
-		(at 185.42 162.3822 180)
+		(at 213.36 161.29 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8920,8 +8865,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d7d0dc51-d1b7-42fd-befa-0288b8360629")
-		(property "Reference" "#PWR?"
-			(at 185.42 162.3822 0)
+		(property "Reference" "#PWR06"
+			(at 213.36 161.29 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8932,7 +8877,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 185.42 158.5722 0)
+			(at 213.36 157.48 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8942,7 +8887,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 185.42 162.3822 0)
+			(at 213.36 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8952,7 +8897,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 185.42 162.3822 0)
+			(at 213.36 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8962,7 +8907,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 185.42 162.3822 0)
+			(at 213.36 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8977,7 +8922,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -8985,7 +8930,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:+3V3_BAR")
-		(at 27.94 131.9022 180)
+		(at 55.88 130.81 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8994,8 +8939,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d7e38983-831b-4a51-bc39-f291616699cc")
-		(property "Reference" "#PWR?"
-			(at 27.94 131.9022 0)
+		(property "Reference" "#PWR02"
+			(at 55.88 130.81 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9006,7 +8951,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 27.94 128.0922 0)
+			(at 55.88 127 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9016,7 +8961,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 27.94 131.9022 0)
+			(at 55.88 130.81 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9026,7 +8971,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 27.94 131.9022 0)
+			(at 55.88 130.81 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9036,7 +8981,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 27.94 131.9022 0)
+			(at 55.88 130.81 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9051,7 +8996,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR02")
 					(unit 1)
 				)
 			)
@@ -9059,7 +9004,7 @@
 	)
 	(symbol
 		(lib_id "Altium Content Vault:root_0_11868f565c42a9108669ba33697ecf6_Altium Content Vault")
-		(at 185.42 164.9222 90)
+		(at 213.36 163.83 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9069,7 +9014,7 @@
 		(dnp no)
 		(uuid "d9ef8bc2-15bd-4541-a9f1-f266d967850e")
 		(property "Reference" "C29"
-			(at 185.928 171.0182 90)
+			(at 213.868 169.926 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9080,7 +9025,7 @@
 			)
 		)
 		(property "Value" "C0805C106K8PACTU"
-			(at 188.214 170.7642 90)
+			(at 216.154 169.672 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9092,7 +9037,7 @@
 			)
 		)
 		(property "Footprint" "FP-C0805C-DG-MFG"
-			(at 185.42 164.9222 0)
+			(at 213.36 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9103,7 +9048,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 185.42 164.9222 0)
+			(at 213.36 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9114,7 +9059,7 @@
 			)
 		)
 		(property "Description" "CAP CER 10UF 10V X5R 0805"
-			(at 185.42 164.9222 0)
+			(at 213.36 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9125,7 +9070,7 @@
 			)
 		)
 		(property "DEVICE CLASS L2" "Capacitors"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9137,7 +9082,7 @@
 			)
 		)
 		(property "TOLERANCE" "10%"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9149,7 +9094,7 @@
 			)
 		)
 		(property "DEVICE CLASS L1" "Passive Components"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9161,7 +9106,7 @@
 			)
 		)
 		(property "COMPONENTLINK2URL" "https://content.kemet.com/datasheets/KEM_C1006_X5R_SMD.pdf"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9173,7 +9118,7 @@
 			)
 		)
 		(property "HEIGHT" "1.4mm"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9185,7 +9130,7 @@
 			)
 		)
 		(property "LEAD FREE" "Yes"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9197,7 +9142,7 @@
 			)
 		)
 		(property "MANUFACTURER PART NUMBER" "C0805C106K8PACTU"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9209,7 +9154,7 @@
 			)
 		)
 		(property "DIGIKEY DESCRIPTION" "CAP CER 10UF 10V X5R 0805"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9221,7 +9166,7 @@
 			)
 		)
 		(property "MANUFACTURER" "Kemet"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9233,7 +9178,7 @@
 			)
 		)
 		(property "OCTOPART" "https://octopart.com/c0805c106k8pactu-kemet-98697"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9245,7 +9190,7 @@
 			)
 		)
 		(property "CAPACITANCE" "10uF"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9257,7 +9202,7 @@
 			)
 		)
 		(property "ALTIUM_VALUE" "10uF"
-			(at 186.29 174.7952 90)
+			(at 214.23 173.703 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9268,7 +9213,7 @@
 			)
 		)
 		(property "TEMPERATURE RANGE LOW" "-55°C"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9280,7 +9225,7 @@
 			)
 		)
 		(property "TEMPERATURE COEFFICIENT" "15%"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9292,7 +9237,7 @@
 			)
 		)
 		(property "TEMPERATURE" "-55°C to +85°C"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9304,7 +9249,7 @@
 			)
 		)
 		(property "AUTOMOTIVE" "No"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9316,7 +9261,7 @@
 			)
 		)
 		(property "MOUSER DESCRIPTION" "CAP CER 10UF 10V X5R 0805"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9328,7 +9273,7 @@
 			)
 		)
 		(property "IPC LAND PATTERN NAME" "CAPC200125X125"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9340,7 +9285,7 @@
 			)
 		)
 		(property "MATERIAL" "Ceramic"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9352,7 +9297,7 @@
 			)
 		)
 		(property "3DS PART NUMBER" "220-00001"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9364,7 +9309,7 @@
 			)
 		)
 		(property "TEMPERATURE RANGE HIGH" "+85°C"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9376,7 +9321,7 @@
 			)
 		)
 		(property "VOLTAGE" "10V"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9388,7 +9333,7 @@
 			)
 		)
 		(property "ROHS" "TRUE"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9400,7 +9345,7 @@
 			)
 		)
 		(property "DEVICE CLASS L3" "Ceramic Capacitors"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9412,7 +9357,7 @@
 			)
 		)
 		(property "COMPONENTLINK2DESCRIPTION" "Datasheet"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9424,7 +9369,7 @@
 			)
 		)
 		(property "VOLTAGE RATING" "10V"
-			(at 186.328 180.3842 90)
+			(at 214.268 179.292 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9435,7 +9380,7 @@
 			)
 		)
 		(property "PACKAGE" "C0805C-DG"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9447,7 +9392,7 @@
 			)
 		)
 		(property "TEMPERATURE CHARACTERISTIC" "X5R"
-			(at 185.844 178.5062 90)
+			(at 213.784 177.414 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9458,7 +9403,7 @@
 			)
 		)
 		(property "CATEGORY" "Cap"
-			(at 182.626 164.4142 90)
+			(at 210.566 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9470,7 +9415,7 @@
 			)
 		)
 		(property "CASE" "0805"
-			(at 186.336 176.6582 90)
+			(at 214.276 175.566 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9481,7 +9426,7 @@
 			)
 		)
 		(property "LCSC PART #" "C2167673"
-			(at 185.947 172.9142 90)
+			(at 213.887 171.822 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9508,7 +9453,7 @@
 	)
 	(symbol
 		(lib_id "Nick Grabbs:root_0_XT30PW-F_Nick Grabbs")
-		(at 233.68 223.3422 90)
+		(at 261.62 222.25 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9517,8 +9462,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e6b022c0-fa21-4aec-8195-8255d58a0e83")
-		(property "Reference" "J5"
-			(at 238.76 220.8022 90)
+		(property "Reference" "J10"
+			(at 266.7 219.71 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9529,7 +9474,7 @@
 			)
 		)
 		(property "Value" "XT30PW-F"
-			(at 238.76 230.9622 90)
+			(at 266.7 229.87 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9540,7 +9485,7 @@
 			)
 		)
 		(property "Footprint" "XT30PWF"
-			(at 233.68 223.3422 0)
+			(at 261.62 222.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9551,7 +9496,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 233.68 223.3422 0)
+			(at 261.62 222.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9562,7 +9507,7 @@
 			)
 		)
 		(property "Description" "Socket; DC supply; XT30; female; PIN:2; on PCBs; THT; Colour: yellow"
-			(at 233.68 223.3422 0)
+			(at 261.62 222.25 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9573,7 +9518,7 @@
 			)
 		)
 		(property "TME ELECTRONIC COMPONENTS PART NUMBER" "*"
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9585,7 +9530,7 @@
 			)
 		)
 		(property "GEOMETRY.HEIGHT" "5mm"
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9597,7 +9542,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" ""
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9609,7 +9554,7 @@
 			)
 		)
 		(property "SOURCE" "XT30PW-F.SchLib"
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9621,7 +9566,7 @@
 			)
 		)
 		(property "DATASHEET LINK" "https://www.tme.eu/Document/ce4077e36b79046da520ca73227e15de/XT30PW%20SPEC.pdf"
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9633,7 +9578,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" ""
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9645,7 +9590,7 @@
 			)
 		)
 		(property "MAX CURRENT RATING" ""
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9657,7 +9602,7 @@
 			)
 		)
 		(property "MANUFACTURER_NAME" "Amass"
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9669,7 +9614,7 @@
 			)
 		)
 		(property "ROHS COMPLIANT" ""
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9681,7 +9626,7 @@
 			)
 		)
 		(property "PINS" ""
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9693,7 +9638,7 @@
 			)
 		)
 		(property "MOUNTING TECHNOLOGY" ""
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9705,7 +9650,7 @@
 			)
 		)
 		(property "MANUFACTURER_PART_NUMBER" "XT30PW-F"
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9717,7 +9662,7 @@
 			)
 		)
 		(property "CONNECTOR TYPE" ""
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9729,7 +9674,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" ""
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9741,7 +9686,7 @@
 			)
 		)
 		(property "VOLTAGE RATING" ""
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9753,7 +9698,7 @@
 			)
 		)
 		(property "DESIGN ITEM ID" "XT30PW-F"
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9765,7 +9710,7 @@
 			)
 		)
 		(property "TME ELECTRONIC COMPONENTS PRICE/STOCK" "*"
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9777,7 +9722,7 @@
 			)
 		)
 		(property "GENDER" ""
-			(at 233.172 218.0082 90)
+			(at 261.112 216.916 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9803,7 +9748,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "J5")
+					(reference "J10")
 					(unit 1)
 				)
 			)
@@ -9811,7 +9756,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:GND_POWER_GROUND")
-		(at 198.12 180.1622 0)
+		(at 226.06 179.07 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9820,8 +9765,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ea652bdc-c615-4fdf-8e4d-e21d1c9a7bdf")
-		(property "Reference" "#PWR?"
-			(at 198.12 180.1622 0)
+		(property "Reference" "#PWR09"
+			(at 226.06 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9832,7 +9777,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 198.12 186.5122 0)
+			(at 226.06 185.42 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9842,7 +9787,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 198.12 180.1622 0)
+			(at 226.06 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9852,7 +9797,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 198.12 180.1622 0)
+			(at 226.06 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9862,7 +9807,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 198.12 180.1622 0)
+			(at 226.06 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9877,7 +9822,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR09")
 					(unit 1)
 				)
 			)
@@ -9885,7 +9830,7 @@
 	)
 	(symbol
 		(lib_id "Nick Grabbs:root_0_CMP-001-0001-4_Nick Grabbs")
-		(at 33.02 225.8822 90)
+		(at 60.96 224.79 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9895,7 +9840,7 @@
 		(dnp no)
 		(uuid "f28e11e8-c6ac-446c-bd2e-c4eb6a893eba")
 		(property "Reference" "TP1"
-			(at 35.306 224.7392 90)
+			(at 63.246 223.647 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9906,7 +9851,7 @@
 			)
 		)
 		(property "Value" "TPAD6R"
-			(at 35.306 229.5652 90)
+			(at 63.246 228.473 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9918,7 +9863,7 @@
 			)
 		)
 		(property "Footprint" "TP06R"
-			(at 33.02 225.8822 0)
+			(at 60.96 224.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9929,7 +9874,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 33.02 225.8822 0)
+			(at 60.96 224.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9940,7 +9885,7 @@
 			)
 		)
 		(property "Description" "0.6mm round"
-			(at 33.02 225.8822 0)
+			(at 60.96 224.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9951,7 +9896,7 @@
 			)
 		)
 		(property "PINS" "1"
-			(at 32.512 223.3422 90)
+			(at 60.452 222.25 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9963,7 +9908,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" ""
-			(at 32.512 223.3422 90)
+			(at 60.452 222.25 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9975,7 +9920,7 @@
 			)
 		)
 		(property "MOUNTING TECHNOLOGY" ""
-			(at 32.512 223.3422 90)
+			(at 60.452 222.25 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9987,7 +9932,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" ""
-			(at 32.512 223.3422 90)
+			(at 60.452 222.25 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9999,7 +9944,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" ""
-			(at 32.512 223.3422 90)
+			(at 60.452 222.25 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10011,7 +9956,7 @@
 			)
 		)
 		(property "ROHS COMPLIANT" ""
-			(at 32.512 223.3422 90)
+			(at 60.452 222.25 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10036,7 +9981,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:+5V_BAR")
-		(at 223.52 162.3822 180)
+		(at 251.46 161.29 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10045,8 +9990,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f429cbd8-93ad-4ca7-bb9c-0738f53ea35e")
-		(property "Reference" "#PWR?"
-			(at 223.52 162.3822 0)
+		(property "Reference" "#PWR012"
+			(at 251.46 161.29 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10057,7 +10002,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 223.52 158.5722 0)
+			(at 251.46 157.48 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10067,7 +10012,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 223.52 162.3822 0)
+			(at 251.46 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10077,7 +10022,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 223.52 162.3822 0)
+			(at 251.46 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10087,7 +10032,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 223.52 162.3822 0)
+			(at 251.46 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10102,7 +10047,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR012")
 					(unit 1)
 				)
 			)
@@ -10110,7 +10055,7 @@
 	)
 	(symbol
 		(lib_id "Altium Content Vault:root_0_11868f565c42a9108669ba33697ecf6_Altium Content Vault")
-		(at 210.82 164.9222 90)
+		(at 238.76 163.83 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10120,7 +10065,7 @@
 		(dnp no)
 		(uuid "f5bf008b-8d04-4c79-ba2f-592c5094e75c")
 		(property "Reference" "C31"
-			(at 211.328 171.0182 90)
+			(at 239.268 169.926 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10131,7 +10076,7 @@
 			)
 		)
 		(property "Value" "C0805C106K8PACTU"
-			(at 213.614 170.7642 90)
+			(at 241.554 169.672 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10143,7 +10088,7 @@
 			)
 		)
 		(property "Footprint" "FP-C0805C-DG-MFG"
-			(at 210.82 164.9222 0)
+			(at 238.76 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10154,7 +10099,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 210.82 164.9222 0)
+			(at 238.76 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10165,7 +10110,7 @@
 			)
 		)
 		(property "Description" "CAP CER 10UF 10V X5R 0805"
-			(at 210.82 164.9222 0)
+			(at 238.76 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10176,7 +10121,7 @@
 			)
 		)
 		(property "DEVICE CLASS L2" "Capacitors"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10188,7 +10133,7 @@
 			)
 		)
 		(property "TOLERANCE" "10%"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10200,7 +10145,7 @@
 			)
 		)
 		(property "DEVICE CLASS L1" "Passive Components"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10212,7 +10157,7 @@
 			)
 		)
 		(property "COMPONENTLINK2URL" "https://content.kemet.com/datasheets/KEM_C1006_X5R_SMD.pdf"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10224,7 +10169,7 @@
 			)
 		)
 		(property "HEIGHT" "1.4mm"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10236,7 +10181,7 @@
 			)
 		)
 		(property "LEAD FREE" "Yes"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10248,7 +10193,7 @@
 			)
 		)
 		(property "MANUFACTURER PART NUMBER" "C0805C106K8PACTU"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10260,7 +10205,7 @@
 			)
 		)
 		(property "DIGIKEY DESCRIPTION" "CAP CER 10UF 10V X5R 0805"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10272,7 +10217,7 @@
 			)
 		)
 		(property "MANUFACTURER" "Kemet"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10284,7 +10229,7 @@
 			)
 		)
 		(property "OCTOPART" "https://octopart.com/c0805c106k8pactu-kemet-98697"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10296,7 +10241,7 @@
 			)
 		)
 		(property "CAPACITANCE" "10uF"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10308,7 +10253,7 @@
 			)
 		)
 		(property "ALTIUM_VALUE" "10uF"
-			(at 211.705 175.0232 90)
+			(at 239.645 173.931 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10319,7 +10264,7 @@
 			)
 		)
 		(property "TEMPERATURE RANGE LOW" "-55°C"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10331,7 +10276,7 @@
 			)
 		)
 		(property "TEMPERATURE COEFFICIENT" "15%"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10343,7 +10288,7 @@
 			)
 		)
 		(property "TEMPERATURE" "-55°C to +85°C"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10355,7 +10300,7 @@
 			)
 		)
 		(property "AUTOMOTIVE" "No"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10367,7 +10312,7 @@
 			)
 		)
 		(property "MOUSER DESCRIPTION" "CAP CER 10UF 10V X5R 0805"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10379,7 +10324,7 @@
 			)
 		)
 		(property "IPC LAND PATTERN NAME" "CAPC200125X125"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10391,7 +10336,7 @@
 			)
 		)
 		(property "MATERIAL" "Ceramic"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10403,7 +10348,7 @@
 			)
 		)
 		(property "3DS PART NUMBER" "220-00001"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10415,7 +10360,7 @@
 			)
 		)
 		(property "TEMPERATURE RANGE HIGH" "+85°C"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10427,7 +10372,7 @@
 			)
 		)
 		(property "VOLTAGE" "10V"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10439,7 +10384,7 @@
 			)
 		)
 		(property "ROHS" "TRUE"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10451,7 +10396,7 @@
 			)
 		)
 		(property "DEVICE CLASS L3" "Ceramic Capacitors"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10463,7 +10408,7 @@
 			)
 		)
 		(property "COMPONENTLINK2DESCRIPTION" "Datasheet"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10475,7 +10420,7 @@
 			)
 		)
 		(property "VOLTAGE RATING" "10V"
-			(at 211.713 181.1802 90)
+			(at 239.653 180.088 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10486,7 +10431,7 @@
 			)
 		)
 		(property "PACKAGE" "C0805C-DG"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10498,7 +10443,7 @@
 			)
 		)
 		(property "TEMPERATURE CHARACTERISTIC" "X5R"
-			(at 211.316 179.0672 90)
+			(at 239.256 177.975 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10509,7 +10454,7 @@
 			)
 		)
 		(property "CATEGORY" "Cap"
-			(at 208.026 164.4142 90)
+			(at 235.966 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10521,7 +10466,7 @@
 			)
 		)
 		(property "CASE" "0805"
-			(at 211.766 177.0142 90)
+			(at 239.706 175.922 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10532,7 +10477,7 @@
 			)
 		)
 		(property "LCSC PART #" "C2167673"
-			(at 211.341 173.0582 90)
+			(at 239.281 171.966 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10559,7 +10504,7 @@
 	)
 	(symbol
 		(lib_id "eps-altium-import:GND_POWER_GROUND")
-		(at 223.52 180.1622 0)
+		(at 251.46 179.07 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10568,8 +10513,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "fa7cb8ae-49ca-4b0e-85c4-25546dde6033")
-		(property "Reference" "#PWR?"
-			(at 223.52 180.1622 0)
+		(property "Reference" "#PWR013"
+			(at 251.46 179.07 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10580,7 +10525,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 223.52 186.5122 0)
+			(at 251.46 185.42 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10590,7 +10535,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 223.52 180.1622 0)
+			(at 251.46 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10600,7 +10545,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 223.52 180.1622 0)
+			(at 251.46 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10610,7 +10555,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 223.52 180.1622 0)
+			(at 251.46 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10625,7 +10570,7 @@
 		(instances
 			(project "eps"
 				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
-					(reference "#PWR?")
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)
@@ -10633,7 +10578,7 @@
 	)
 	(symbol
 		(lib_id "Altium Content Vault:root_0_b4654b650e69147ec39a6b967a45e02_Altium Content Vault")
-		(at 198.12 164.9222 90)
+		(at 226.06 163.83 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10643,7 +10588,7 @@
 		(dnp no)
 		(uuid "fc732f99-98f8-453e-ad66-d19114edc780")
 		(property "Reference" "C30"
-			(at 199.136 171.0182 90)
+			(at 227.076 169.926 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10654,7 +10599,7 @@
 			)
 		)
 		(property "Value" "EMK105B7104KV-F"
-			(at 200.914 170.7642 90)
+			(at 228.854 169.672 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10666,7 +10611,7 @@
 			)
 		)
 		(property "Footprint" "FP-0402-L_1_0_0_05-W_0_5-MFG"
-			(at 198.12 164.9222 0)
+			(at 226.06 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10677,7 +10622,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 198.12 164.9222 0)
+			(at 226.06 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10688,7 +10633,7 @@
 			)
 		)
 		(property "Description" "Ceramic Capacitor General Use 0.1uF ±10% 16V X7R 0402"
-			(at 198.12 164.9222 0)
+			(at 226.06 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10699,7 +10644,7 @@
 			)
 		)
 		(property "HEIGHT" "550µm"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10711,7 +10656,7 @@
 			)
 		)
 		(property "HALOGEN FREE" "Halogen Free"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10723,7 +10668,7 @@
 			)
 		)
 		(property "THICKNESS" "558.8µm"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10735,7 +10680,7 @@
 			)
 		)
 		(property "MIN LENGTH" "950µm"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10747,7 +10692,7 @@
 			)
 		)
 		(property "NEXARPARTID" "7072984"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10759,7 +10704,7 @@
 			)
 		)
 		(property "DEPTH" "500µm"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10771,7 +10716,7 @@
 			)
 		)
 		(property "COMPOSITION" "Ceramic"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10783,7 +10728,7 @@
 			)
 		)
 		(property "WIDTH" "508µm"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10795,7 +10740,7 @@
 			)
 		)
 		(property "MIN OPERATING TEMPERATURE" "-55°C"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10807,7 +10752,7 @@
 			)
 		)
 		(property "MIN WIDTH" "450µm"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10819,7 +10764,7 @@
 			)
 		)
 		(property "CASE/PACKAGE" "0402"
-			(at 199.533 176.7482 90)
+			(at 227.473 175.656 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10830,7 +10775,7 @@
 			)
 		)
 		(property "NUMBER OF PINS" "2"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10842,7 +10787,7 @@
 			)
 		)
 		(property "TERMINATION" "SMD/SMT"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10854,7 +10799,7 @@
 			)
 		)
 		(property "LENGTH" "1mm"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10866,7 +10811,7 @@
 			)
 		)
 		(property "DIELECTRIC" "X7R"
-			(at 198.964 178.6322 90)
+			(at 226.904 177.54 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10877,7 +10822,7 @@
 			)
 		)
 		(property "MIN THICKNESS" "450µm"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10889,7 +10834,7 @@
 			)
 		)
 		(property "RADIATION HARDENING" "No"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10901,7 +10846,7 @@
 			)
 		)
 		(property "MAX LENGTH" "1.05mm"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10913,7 +10858,7 @@
 			)
 		)
 		(property "PACKAGING" "Digi-Reel®"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10925,7 +10870,7 @@
 			)
 		)
 		(property "MAX THICKNESS" "550µm"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10937,7 +10882,7 @@
 			)
 		)
 		(property "TOLERANCE" "10%"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10949,7 +10894,7 @@
 			)
 		)
 		(property "LEAD FREE" "Lead Free"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10961,7 +10906,7 @@
 			)
 		)
 		(property "MAX OPERATING TEMPERATURE" "125°C"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10973,7 +10918,7 @@
 			)
 		)
 		(property "ROHS" "Compliant"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10985,7 +10930,7 @@
 			)
 		)
 		(property "CASE CODE (IMPERIAL)" "0402"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10997,7 +10942,7 @@
 			)
 		)
 		(property "MAX WIDTH" "550µm"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11009,7 +10954,7 @@
 			)
 		)
 		(property "CAPACITANCE" "100nF"
-			(at 199.451 174.9212 90)
+			(at 227.391 173.829 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11020,7 +10965,7 @@
 			)
 		)
 		(property "MOUNT" "Surface Mount"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11032,7 +10977,7 @@
 			)
 		)
 		(property "MATERIAL" "Ceramic"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11044,7 +10989,7 @@
 			)
 		)
 		(property "VOLTAGE RATING" "16V"
-			(at 199.471 180.8242 90)
+			(at 227.411 179.732 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11055,7 +11000,7 @@
 			)
 		)
 		(property "VOLTAGE RATING (DC)" "16V"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11067,7 +11012,7 @@
 			)
 		)
 		(property "CASE CODE (METRIC)" "1005"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11079,7 +11024,7 @@
 			)
 		)
 		(property "REACH SVHC" "Unknown"
-			(at 195.326 164.4142 90)
+			(at 223.266 163.322 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11091,7 +11036,7 @@
 			)
 		)
 		(property "LCSC PART #" "C385888"
-			(at 199.133 172.9972 90)
+			(at 227.073 171.905 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11116,9 +11061,101 @@
 			)
 		)
 	)
+	(sheet
+		(at 340.36 38.2778)
+		(size 41.91 25.4)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "18b838e3-d00f-47aa-befc-ab2f3f2df8a4")
+		(property "Sheetname" "Regulation"
+			(at 340.36 37.5662 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Regulation.kicad_sch"
+			(at 340.36 64.2624 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "eps"
+				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 341.63 77.6478)
+		(size 40.64 21.59)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "cbea4672-2c2a-44c7-acc6-ef883c33aba3")
+		(property "Sheetname" "Solar_Charger"
+			(at 341.63 76.9362 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Solar_Charger.kicad_sch"
+			(at 341.63 99.8224 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "eps"
+				(path "/75ee1ecd-4027-47ce-89b0-cfef828c5d5f"
+					(page "3")
+				)
+			)
+		)
+	)
 	(sheet_instances
 		(path "/"
-			(page "2")
+			(page "1")
 		)
 	)
 	(embedded_fonts no)
