@@ -1,4 +1,10 @@
-# Altium Layout & Routing Guide — EPS Board
+# Layout & Routing Guide — EPS Board
+
+**Board:** [`hardware/eps/kicad/`](../kicad/), project `eps`. 2-layer,
+JLCPCB 1.6 mm FR-4.
+**Rules:** the numbers below that are project-wide live in
+[`../../conventions/kicad_jlcpcb_design_rules.md`](../../conventions/kicad_jlcpcb_design_rules.md);
+this guide covers what is specific to laying out *this* board.
 
 ## Board Summary
 
@@ -267,10 +273,11 @@ supply testing (3.2 A charge current), the IC will warm up.
 - Connect the vias to the bottom ground pour
 - On the bottom layer, add a copper fill pad under the via grid if no
   battery holder interferes — this spreads heat to the bottom copper
-- In Altium: set the paste mask expansion to negative so solder paste
-  doesn't flow down the vias (or use via-in-pad with filled/capped
-  vias if budget allows — but for prototype, tented or open vias with
-  reduced paste are fine)
+- Set a negative paste-mask expansion on the exposed pad so solder paste
+  doesn't flow down the vias — in KiCad, the pad's **Solder Paste Margin**
+  in Pad Properties. Alternatively use via-in-pad with filled/capped vias
+  if budget allows; for prototype, tented or open vias with reduced paste
+  are fine
 
 ### TPS62933F (U2, U3) Thermal Pad
 
@@ -353,9 +360,9 @@ circles with 2 mm solder mask opening:
 ### Component Orientation
 
 JLCPCB uses the component centroid file and rotation data from the
-Altium pick-and-place export. After generating outputs:
-1. Export Pick and Place files (File > Assembly Outputs > Generates
-   Pick and Place Files)
+position-file export. After generating outputs:
+1. Export the position file (`File → Fabrication Outputs → Component
+   Placement (.pos)`), CSV format, units mm
 2. Verify the CSV has correct X/Y/Rotation for each part
 3. JLCPCB's online tool lets you visually verify placement before
    ordering — use it
@@ -388,7 +395,7 @@ Altium pick-and-place export. After generating outputs:
 ### Required Markings
 
 - Board name: `EPS v0.1`
-- All component reference designators (Altium default)
+- All component reference designators
 - Connector labels: `SOLAR X+`, `SOLAR X-`, `SOLAR Y+`, `SOLAR Y-`,
   `BATT`, `BENCH`, `STACK (J1)`
 - Rail labels near test points: `+3V3`, `+5V`, `VBAT`, `VOUT_PP`
@@ -412,28 +419,36 @@ Altium pick-and-place export. After generating outputs:
 
 ## 10. Design Rule Check (DRC) Settings
 
-Set these in Altium before routing (Design > Rules):
+Project-wide constraints are **already set in the project** and live in
+[`../../conventions/kicad_jlcpcb_design_rules.md`](../../conventions/kicad_jlcpcb_design_rules.md)
+§5.1 — don't restate them here, they drift. `Board Setup → Design Rules →
+Constraints` currently holds:
 
-| Rule | Value | Notes |
-|---|---|---|
-| Min trace width | 0.15 mm | project default; JLCPCB 2-layer allows 0.10 mm |
-| Min clearance | 0.15 mm | Trace-to-trace, trace-to-pad |
-| Min drill size | 0.3 mm | JLCPCB standard process |
-| Min annular ring | 0.13 mm | JLCPCB minimum |
-| Power trace width | 0.5-1.0 mm | For VOUT_PP, VBAT, +3V3, +5V |
-| Signal trace width | 0.2 mm | I2C, feedback, control nets |
-| High-current trace width | 1.0-2.0 mm | Charger input/output, buck SW nodes |
+| Constraint | Value |
+|---|---|
+| Min track width | 0.2 mm |
+| Min clearance | 0.2 mm |
+| Min via diameter / drill | 0.6 / 0.3 mm |
+| Min annular width | 0.15 mm |
+| Hole to hole | 0.6 mm |
+
+`eps.kicad_dru` adds the board-specific rules: a minimum-width floor on the
+high-current classes, and extra clearance around switching nodes.
 
 ### Net-Specific Trace Width Rules
 
-In Altium, create net class rules (Design > Rules > Routing > Width):
+Set in `Board Setup → Net Classes`, assigned by net-name pattern. These are
+the classes the project actually carries:
 
-| Net Class | Nets | Min Width | Preferred Width |
+| Net class | Patterns | Track width | Clearance |
 |---|---|---|---|
-| `Power_High` | VOUT_PP, VBAT, SOLAR_BUS, VIN_CHG, SW_NODE | 0.5 mm | 1.0 mm |
-| `Power_Rail` | +3V3, +5V | 0.4 mm | 0.8 mm |
-| `Signal` | I2C_SCL, I2C_SDA, SMBALERT_N, FB nets | 0.15 mm | 0.2 mm |
-| `Control` | BUCK_EN, DEPLOY_ARMED, COMMS_TX_EN, BURN_EN | 0.15 mm | 0.2 mm |
+| `PWR_HIGH` | `VBAT`, `BATT_POS`, `VOUT_PP`, `VIN_CHG`, `SW_NODE` | 1.27 mm | 0.25 mm |
+| `PWR` | `+3V3`, `+5V` | 0.5 mm | 0.2 mm |
+| `Default` | everything else — I2C, feedback, control nets | 0.2 mm | 0.2 mm |
+
+`eps.kicad_dru` enforces a 1.0 mm floor on `PWR_HIGH` — the IPC-2152 width
+for 3 A on 1 oz outer copper — so DRC catches a high-current rail routed at
+signal width.
 
 ---
 
@@ -463,20 +478,24 @@ Before generating Gerbers:
 
 ## 12. Gerber Export Settings (for JLCPCB)
 
-File > Fabrication Outputs > Gerber Files:
+`File → Fabrication Outputs → Gerbers (.gbr)`. Select these layers:
 
-| Layer | Gerber Suffix |
+| Layer | KiCad name |
 |---|---|
-| Top Copper | `.GTL` |
-| Bottom Copper | `.GBL` |
-| Top Solder Mask | `.GTS` |
-| Bottom Solder Mask | `.GBS` |
-| Top Silkscreen | `.GTO` |
-| Bottom Silkscreen | `.GBO` |
-| Top Paste | `.GTP` |
-| Board Outline | `.GKO` (mechanical 1) |
+| Top copper | `F.Cu` |
+| Bottom copper | `B.Cu` |
+| Top solder mask | `F.Mask` |
+| Bottom solder mask | `B.Mask` |
+| Top silkscreen | `F.SilkS` |
+| Bottom silkscreen | `B.SilkS` |
+| Top paste | `F.Paste` |
+| Board outline | `Edge.Cuts` |
 
-Drill file: File > Fabrication Outputs > NC Drill Files (`.DRL`)
+Options: **Use Protel filename extensions** on (JLCPCB expects them),
+plot on a single page, no X2 attributes.
+
+Drill file: `File → Fabrication Outputs → Drill Files`, Excellon format,
+PTH and NPTH in one file, drill units mm.
 
 Zip all files and upload to JLCPCB. Use their online Gerber viewer to
 verify before ordering.
@@ -485,7 +504,7 @@ verify before ordering.
 
 ## Related Documents
 
-- Schematic guide: [`hardware/eps/design/altium_eps_schematic_guide.md`](altium_eps_schematic_guide.md)
+- Schematic guide: [`altium_eps_schematic_guide.md`](altium_eps_schematic_guide.md) — still Altium-worded, conversion pending
 - EPS architecture: [`hardware/eps/design/overview.md`](overview.md)
 - Bring-up plan: [`hardware/eps/bringup/phase1_validation.md`](../bringup/phase1_validation.md)
 - TPS62933F datasheet: TI SLUSEA4D (layout section 12, pp. 40-41)
