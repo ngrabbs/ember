@@ -79,7 +79,7 @@ the trace width needed to hit each impedance target.
 same JLCPCB JLC04161H-7628 stackup — see
 [`hardware/comms/design/rf_layout_guidelines.md`](../../comms/design/rf_layout_guidelines.md) for the full
 discussion of why 4-layer with a dedicated solid L2 GND is the right
-default for every board, and [`altium_comms_schematic.md`](../../comms/design/altium_comms_schematic.md)
+default for every board, and [`schematic_guide.md`](../../comms/design/schematic_guide.md)
 for layer-by-layer dielectric thicknesses and the Altium Layer Stack
 Manager setup.
 

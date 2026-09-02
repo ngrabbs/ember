@@ -11,7 +11,7 @@ LPF design is adequate.
 
 See companion docs:
 - [`../design/rx_mixer_trade_study.md`](../design/rx_mixer_trade_study.md) — why this measurement matters
-- [`../design/altium_comms_schematic.md`](../design/altium_comms_schematic.md) — Sheet 4 Section B.2 (LO LPF design)
+- [`../design/schematic_guide.md`](../design/schematic_guide.md) — Sheet 4 Section B.2 (LO LPF design)
 - [`../../../docs/research/`](../../../docs/research/) — TinySA / NanoVNA tool inventory
 
 ---

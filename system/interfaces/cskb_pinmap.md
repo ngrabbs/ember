@@ -207,7 +207,7 @@ both names refer to the same wire:
 
 - [`hardware/ihu/design/altium_ihu_schematic.md`](../../hardware/ihu/design/altium_ihu_schematic.md) — IHU Sheet 6 (Connectors & Debug)
 - [`hardware/eps/design/schematic_guide.md`](../../hardware/eps/design/schematic_guide.md) — EPS Sheet 3 (Connectors & Telemetry)
-- [`hardware/comms/design/altium_comms_schematic.md`](../../hardware/comms/design/altium_comms_schematic.md) — Comms Sheet 7 (Connectors)
+- [`hardware/comms/design/schematic_guide.md`](../../hardware/comms/design/schematic_guide.md) — Comms Sheet 7 (Connectors)
 - [`hardware/payload_compute/design/payload_carrier_pinmap.md`](../../hardware/payload_compute/design/payload_carrier_pinmap.md) — Payload carrier SO-DIMM↔CSKB pin assignments (Jetson Orin Nano)
 
 ## Source of truth

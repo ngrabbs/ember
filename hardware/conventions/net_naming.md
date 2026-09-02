@@ -221,7 +221,7 @@ full list.
 
 ### Comms board
 
-See [`hardware/comms/design/altium_comms_schematic.md`](../comms/design/altium_comms_schematic.md)
+See [`hardware/comms/design/schematic_guide.md`](../comms/design/schematic_guide.md)
 for the full RF / BB chain listing. Examples:
 `RF_TX_TRIPLER_OUT`, `RF_TX_BPF1_TAP1`, `RF_RX_LNA_OUT`,
 `RF_RX_MIXER_LO`, `BB_RX_IF`, `BB_RX_BASEBAND`.

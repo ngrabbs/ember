@@ -204,7 +204,7 @@ Place a large text frame across the top of the sheet:
 >
 > Project: EMBER — Senior Capstone Design
 > Board: Internal Housekeeping Unit Subsystem, Single PCB
-> Designer: Nick Grabbs / K15Y NG
+> Designer: Nick Grabbs / KI5YNG
 > Revision: 0.1
 > Date: (today)
 > Repository: ember/hardware/ihu
@@ -1104,7 +1104,7 @@ HF bypass.
 > (no USB), D4 feeds VSYS from `+5V_SYS`. Drop across D4 (~0.3 V)
 > gives VSYS ≈ 4.7 V — well within the Pico's VSYS range
 > (1.8–5.5 V). Same pattern as the comms board's D5 (see
-> `hardware/comms/design/altium_comms_schematic.md` Sheet 6, Section C).
+> `hardware/comms/design/schematic_guide.md` Sheet 6, Section C).
 >
 > SS14 (1A/40V, SMA) is overkill for the IHU's ~30 mA draw but it's
 > a JLCPCB basic part and matches the comms board, so reuse it.
@@ -1492,14 +1492,14 @@ On each sheet, double-click the title block and fill in:
 |---|---|---|---|
 | Title | IHU — Overview | IHU — MCU Core | IHU — Memory & WDT |
 | Revision | 0.1 | 0.1 | 0.1 |
-| Drawn By | Nick Grabbs / K15Y NG | Nick Grabbs / K15Y NG | Nick Grabbs / K15Y NG |
+| Drawn By | Nick Grabbs / KI5YNG | Nick Grabbs / KI5YNG | Nick Grabbs / KI5YNG |
 | Date | (today) | (today) | (today) |
 
 | Field | Sheet 4 | Sheet 5 | Sheet 6 |
 |---|---|---|---|
 | Title | IHU — Interfaces | IHU — Power | IHU — Connectors & Debug |
 | Revision | 0.1 | 0.1 | 0.1 |
-| Drawn By | Nick Grabbs / K15Y NG | Nick Grabbs / K15Y NG | Nick Grabbs / K15Y NG |
+| Drawn By | Nick Grabbs / KI5YNG | Nick Grabbs / KI5YNG | Nick Grabbs / KI5YNG |
 | Date | (today) | (today) | (today) |
 
 ### 4. Export PDF

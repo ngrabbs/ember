@@ -236,7 +236,7 @@ assumes the ADE-1+; a future active mixer would let the LO chain shed its amp.
 
 ## Related Documents
 
-- Altium schematic instructions: [`altium_comms_schematic.md`](altium_comms_schematic.md) — Sheet 4 updated with new front-end
+- Schematic instructions: [`schematic_guide.md`](schematic_guide.md) — Sheet 4 updated with new front-end
 - RX chain notes: [`rx_chain.md`](rx_chain.md)
 - ADE-1+ datasheet: [`C2942210.pdf`](C2942210.pdf)
 - Architecture overview: [`overview.md`](overview.md)

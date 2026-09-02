@@ -385,6 +385,6 @@ the signal side; you give the GND side correct vias by hand.
 
 ## Related Documents
 
-- Altium schematic instructions: [`altium_comms_schematic.md`](altium_comms_schematic.md)
+- Schematic instructions: [`schematic_guide.md`](schematic_guide.md)
 - RX mixer trade study: [`rx_mixer_trade_study.md`](rx_mixer_trade_study.md)
 - Bring-up procedures: [`../bringup/`](../bringup/)

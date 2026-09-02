@@ -9,7 +9,7 @@ the ADE-1+ passive mixer.
 See companion docs:
 - [`si5351a_breakout_bench_test.md`](si5351a_breakout_bench_test.md) — Pico 2 + Adafruit 5640 setup code, breakout-vs-PCB circuit equivalence
 - [`../design/rx_mixer_trade_study.md`](../design/rx_mixer_trade_study.md) — design rationale (why this measurement matters)
-- [`../design/altium_comms_schematic.md`](../design/altium_comms_schematic.md) — Sheet 2 CLK1 design, Sheet 4 Section B.2 (LO LPF)
+- [`../design/schematic_guide.md`](../design/schematic_guide.md) — Sheet 2 CLK1 design, Sheet 4 Section B.2 (LO LPF)
 - `/workspace/MSU_Cubesat/100_day_challenge/docs/tool_inventory.md` — gear list and pad characterization data
 
 ---

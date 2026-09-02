@@ -1509,4 +1509,4 @@ on Sheet 1.
 - EPS interfaces: [`hardware/eps/design/interfaces.md`](interfaces.md)
 - Inhibit & deployment policy: [`docs/architecture/inhibit_and_deployment.md`](../../../docs/architecture/inhibit_and_deployment.md)
 - Bring-up plan: [`hardware/eps/bringup/phase1_validation.md`](../bringup/phase1_validation.md)
-- Comms board schematic guide (reference format): [`../../comms/design/altium_comms_schematic.md`](../../comms/design/altium_comms_schematic.md) — still Altium-worded, conversion pending
+- Comms board schematic guide (reference format): [`../../comms/design/schematic_guide.md`](../../comms/design/schematic_guide.md)

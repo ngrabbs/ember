@@ -1,4 +1,11 @@
-# Altium Schematic Instructions — Comms Board
+# Schematic Instructions — Comms Board
+
+**Board:** [`../kicad/`](../kicad/), project `transceiver`.
+**Rules and conventions:**
+[`../../conventions/kicad_jlcpcb_design_rules.md`](../../conventions/kicad_jlcpcb_design_rules.md)
+and [`../../conventions/net_naming.md`](../../conventions/net_naming.md).
+**RF layout:** [`rf_layout_guidelines.md`](rf_layout_guidelines.md).
+**Implementation plan:** [`kicad_implementation_plan.md`](kicad_implementation_plan.md).
 
 ## Design Summary
 
@@ -40,36 +47,27 @@ Key design decisions:
 
 ---
 
-## Altium Project Setup
+## Project Setup
 
-1. Create a new PCB project: `Comms_Board.PrjPcb`
-2. Add seven schematic sheets (flat design):
-   - `Overview.SchDoc` — title sheet, block diagram, design notes (non-electrical)
-   - `Clock_Gen.SchDoc` — Si5351A and I2C interface
-   - `TX_Chain.SchDoc` — XOR modulator, tripler, BPF, MMIC
-   - `RX_Chain.SchDoc` — PSA4-5043+ LNA, ADE-1+ passive mixer, LO LPF, IF termination, Sallen-Key LPF, MCP6022 gain stage
-   - `Digital_Control.SchDoc` — RP2040 (Pico module), USB, GPIOs
-   - `Power.SchDoc` — power distribution, bypass, and protection
-   - `Connectors.SchDoc` — CSKB H1 + H2 stack connectors, SMA connectors, test headers
-3. Each sheet uses A3 landscape format
-4. Set the project's designator scope to "Flat" so R1, C1, etc. are unique
-   across all sheets
+The project exists as [`../kicad/transceiver.kicad_pro`](../kicad/transceiver.kicad_pro).
+Sheets, all A3 landscape:
 
-### Flat Design — How Inter-Sheet Connections Work
+| Sheet | File | Contents |
+|---|---|---|
+| Overview | `transceiver.kicad_sch` | Root — block diagram, design notes, revision history |
+| Clock Gen | `Clock_Gen.kicad_sch` | Si5351A and I2C |
+| TX Chain | `TX_Chain.kicad_sch` | XOR modulator, tripler, BPF, MMIC |
+| RX Chain | `RX_Chain.kicad_sch` | LNA, ADE-1+ mixer, LO LPF, IF termination, Sallen-Key LPF, MCP6022 |
+| Digital Control | `Digital_Control.kicad_sch` | RP2040 Pico module, USB, GPIO |
+| Power | `Power.kicad_sch` | Distribution, bypass, protection |
+| Connectors | `Connectors.kicad_sch` | CSKB H1/H2, SMA, test headers |
 
-This project uses a **flat** (non-hierarchical) design, same as the EPS
-board. There is no top-level sheet with sheet symbols. Instead, nets
-connect between sheets using **net labels** and **power ports**:
+Reference designators are unique across the whole project, not per sheet.
 
-- **Power ports** (`+3V3`, `+5V`, `GND`, `VBAT`) are global automatically —
-  place the same power port symbol on any sheet and they connect.
-- **Signal net labels** (`I2C_SDA`, `CLK0_OUT`, `BPSK_DATA`, etc.) are also
-  global in a flat project — place the same net label on two different sheets
-  and Altium connects them automatically.
-- **No ports or sheet entries needed** — those are only for hierarchical designs.
-  In a flat design, just use net labels with matching names across sheets.
-
-This is simpler to set up and matches the EPS board's structure.
+> **Do not re-annotate.** Reference designators are the only link between
+> these sheets and the PCB. `Tools → Annotate Schematic` without "Keep
+> existing annotations" will renumber parts and unlink every footprint. This
+> has already happened on the EPS board.
 
 ### Net Name Convention
 
@@ -98,10 +96,10 @@ symbols** (not net labels) for supply rails so they are global automatically.
 
 #### Note on Power Port Symbols
 
-Altium power port symbols come in several styles (circle, T-bar, arrow, etc.).
-The style is **cosmetic only** — the net name on the power port is what
-matters electrically. All power ports with the same net name connect globally
-regardless of symbol shape. Convention used in this design:
+Power symbols come in several styles (bar, arrow, circle). The style is
+**cosmetic only** — the net name on the symbol is what matters
+electrically. All power symbols sharing a net name connect globally
+regardless of shape. Convention used in this design:
 - **T-bar** for supply rails (`+3V3`, `+5V`, `VBAT`)
 - **Circle with line** for `GND`
 - You can use any style as long as the net name matches exactly
@@ -111,9 +109,8 @@ regardless of symbol shape. Convention used in this design:
 Project-wide net naming convention is documented in
 [`hardware/conventions/net_naming.md`](../../conventions/net_naming.md)
 — read that first for the prefix system (`RF_`, `BB_`, `LO_`, etc.),
-the Altium application techniques (Net Labels, Net Class directives,
-Blankets), and the recovery procedure for inherited designs with
-`NetCXX_Y` everywhere.
+how to apply it (labels and net-class patterns), and the recovery
+procedure for inherited designs with `NetCXX_Y` names everywhere.
 
 This subsection lists the **comms-board-specific** application of
 that convention — the actual named nets that live inside the comms
@@ -175,10 +172,9 @@ history) because:
 - TX↔RX isolation (a real concern at 437 MHz with the receiver on the
   same board as the transmitter) is much better with a continuous
   ground plane and via fences than with an interrupted top-side pour
-- The original LSM had a 0.32 mm dielectric — this was Altium's
-  default placeholder, not a real fab stackup. Reviewer flagged the
-  board as "looks thin" because the 3D view was showing a 0.41 mm
-  total thickness instead of the actual 1.6 mm the fab would deliver
+- An early revision carried a 0.32 mm dielectric — a tool default, not a
+  real fab stackup. A reviewer flagged the board as "looks thin" because
+  the 3D view showed 0.41 mm total instead of the 1.6 mm the fab delivers
 
 See [`rf_layout_guidelines.md`](rf_layout_guidelines.md) for the
 ground-plane and via-stitching rules this stackup enables.
@@ -187,17 +183,17 @@ ground-plane and via-stitching rules this stackup enables.
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│ Solder mask                  0.0152 mm                   │
+│ Solder mask                  0.01524 mm  (εr 3.8)        │
 │ L1 — Signals (top, RF zone)  0.035 mm (1 oz Cu)         │
 ├──────────────────────────────────────────────────────────┤  ← Prepreg 7628, 0.21 mm, εr ≈ 4.4
 │ L2 — GND plane (solid)       0.0152 mm (½ oz Cu)         │
 ├──────────────────────────────────────────────────────────┤
-│ Core FR4                     1.065 mm  (εr ≈ 4.4)        │
+│ Core FR4                     1.065 mm  (εr 4.43)         │
 ├──────────────────────────────────────────────────────────┤
 │ L3 — Power distribution      0.0152 mm (½ oz Cu)         │
 ├──────────────────────────────────────────────────────────┤  ← Prepreg 7628, 0.21 mm
 │ L4 — Signals (bottom)        0.035 mm (1 oz Cu)         │
-│ Solder mask                  0.0152 mm                   │
+│ Solder mask                  0.01524 mm  (εr 3.8)        │
 └──────────────────────────────────────────────────────────┘
 Total: 1.6 mm ± 10%
 ```
@@ -211,170 +207,38 @@ Total: 1.6 mm ± 10%
 | L3 | Power distribution | Pour `+3V3` and `+5V` islands here. May also carry low-speed signals if needed, but power first. |
 | L4 (bottom) | Digital signals, slow control | SPI, I2C, USB, status LEDs, any signal that doesn't need RF performance. Keep away from RF zones above. |
 
-### Altium Layer Stack Manager — How to Configure
+### Setting this up in KiCad
 
-1. **Tools → Layer Stack Manager**
-2. Delete the existing 2-layer stack
-3. Either:
-   - **Recommended:** click "Tools → Presets → JLCPCB → JLC04161H-7628 (1.6 mm)" if your Altium has the preset library installed, OR
-   - Build manually: Add Plane (L2 — assign to net `GND`), Add Plane (L3 — leave as Plane, individual nets pour at PCB level), and configure the dielectrics per the diagram above
-4. **Materials:** set FR4 with Dk = 4.4 (or 4.3) for both prepreg layers and core
-5. **Verify total thickness reads 1.600 mm** in the LSM properties pane
-6. Save and re-pour all polygons. The 3D view should now show a realistic-thickness board.
+The stackup, constraints, net classes and custom rule are **already set in
+the project**. The procedure, and the reasoning behind each number, is in
+[`../../conventions/kicad_jlcpcb_design_rules.md`](../../conventions/kicad_jlcpcb_design_rules.md)
+§2–§5. What the project currently holds:
 
-### Impedance and Trace Width
-
-50 Ω microstrip on the top signal layer, referenced to the first
-inner layer (GND plane) below, with top prepreg = 0.21 mm and
-εr = 4.4.
-
-**Important — Altium vs documentation layer naming:**
-
-Our docs and Altium label the layers differently. Don't let this trip
-you up when configuring the impedance profile:
-
-| This doc says... | Altium's UI calls it... |
-|---|---|
-| L1 (top signal) | **Top Layer** |
-| L2 (GND plane) | **Layer 1** (first inner) |
-| L3 (power) | **Layer 2** (second inner) |
-| L4 (bottom signal) | **Bottom Layer** |
-
-So when Altium's impedance profile says "Bottom ref: Layer 1," that's
-referring to our **L2 GND plane** — which is correct for our top-layer
-microstrip.
-
-| Trace target | Width | Calculation basis |
+| Setting | Value | Where |
 |---|---|---|
-| 50 Ω microstrip (with solder mask) | **0.358 mm (14 mil)** | h=0.21mm, εr=4.4, t=0.035mm, mask 0.015mm/side |
-| 50 Ω microstrip (no mask, ideal) | ~0.38 mm | same, less mask loading |
-| 50 Ω microstrip (alt thinner stack) | 0.14 mm (5.5 mil) | only if using JLC04161H-3313 with 0.075 mm top prepreg |
+| Stackup | `JLC04161H-7628`, ENIG, impedance-controlled | Board Setup → Physical Stackup |
+| `RF` net class | 0.358 mm track | Board Setup → Net Classes |
+| RF width enforcement | 0.35–0.37 mm band | [`../kicad/transceiver.kicad_dru`](../kicad/transceiver.kicad_dru) |
+| Constraints | §5.1 minimums | Board Setup → Design Rules |
 
-Always trust Altium's impedance calculator over hand calculations or
-generic numbers — it uses your actual stackup including solder mask.
-The 0.358 mm figure assumes JLC04161H-7628 plus solder mask checked
-in the impedance profile. If your stackup differs, the calculated
-width differs accordingly.
+**The 50 Ω number is 0.358 mm**, confirmed against jlcpcb.com/impedance
+(14.12 mil, L1→L2, single-ended, non-coplanar) on the measured 7628
+dielectrics — 0.2104 mm prepreg at εr 4.4.
 
-Every existing RF trace in the design must be re-set to the calculated
-width. The procedure below sets up an Altium Design Rule that enforces
-this automatically.
+> **KiCad has no impedance profile.** Altium's Layer Stack Manager bound
+> trace width to the stackup live, so a stackup change re-flagged every
+> off-target route. KiCad has no equivalent: the width is computed once and
+> pinned into the net class, and **nothing warns you if the stackup
+> changes**. The `.kicad_dru` rule is the substitute — it makes DRC flag any
+> RF trace outside the width band. If the stackup ever moves, recompute the
+> width and update the net class and the `.dru` band together.
 
-#### Step 1 — Create the RF net class
+**Microstrip, not coplanar.** The RF traces reference ground on L2 only, and
+the L1 ground pour is held 1.1 mm back from them. Let the pour come closer
+and the geometry becomes coplanar waveguide, at which point 0.358 mm no
+longer gives 50 Ω. See
+[`rf_layout_guidelines.md`](rf_layout_guidelines.md).
 
-1. **Design → Classes** (opens Object Class Explorer)
-2. Left tree → **Net Classes** → right-click → **Add Class**
-3. Name it **`RF`**
-4. In the right pane, move every RF-carrying net from Non-Members to
-   Members using the `>` arrow. Nets to include:
-   - `CLK0_OUT` (145.67 MHz, Si5351A → XOR)
-   - `CLK1_OUT` (145.9 MHz, Si5351A → LO LPF)
-   - Tripler output net (Q1 collector → pre-MMIC BPF)
-   - All intermediate nets inside the pre-MMIC and output BPFs
-   - MMIC input/output nets (around U2 / ADL5602)
-   - Output net to TX SMA (`TX_OUT` or similar)
-   - `RX_IN` from RX SMA to 2m BPF
-   - LNA input/output nets (around U10 / PSA4-5043+)
-   - Mixer RF/LO/IF nets (around U3 / ADE-1+)
-   - LO LPF intermediate nets (C57/L13/C58/L14/C59)
-
-   Exclude DC bias lines, baseband signals, and digital nets — they're not RF.
-
-#### Step 2 — Create the Width rule
-
-1. **Design → Rules** (opens PCB Rules and Constraints Editor)
-2. Left tree → expand **Routing → Width**
-3. Right-click **Width** → **New Rule**
-4. Click the new rule and set:
-   - **Name:** `RF_Trace_Width`
-   - **Where The Object Matches:** change from "All" to **Net Class**,
-     then select `RF`
-   - **Constraints** (values from Altium impedance calculator, see Step 5):
-     - Min Width: **0.34 mm**
-     - Preferred Width: **0.358 mm** (or whatever the LSM impedance profile reports)
-     - Max Width: **0.40 mm**
-5. Apply
-
-#### Step 3 — Set the rule priority
-
-Default Width rule has higher priority than your new one unless you
-move it up. Without this step, Altium ignores your RF rule.
-
-1. Bottom of Rules dialog → click **Priorities…**
-2. Select `RF_Trace_Width` → click **Increase Priority** until it's #1
-3. Default `Width` becomes #2 (fallback for non-RF nets)
-4. OK
-
-#### Step 4 — (Recommended) RF clearance rule
-
-Wider clearance between RF traces reduces coupling. Add a clearance
-rule scoped to the same RF class:
-
-1. Rules → **Electrical → Clearance** → right-click → New Rule
-2. Name: `RF_Clearance`
-3. Where: both First Object and Second Object = **Net Class = RF**
-4. Min Clearance: **0.30 mm** (vs default 0.15 mm)
-5. Priorities → bump above default Clearance rule
-
-#### Step 5 — Verify impedance against your stackup
-
-In Altium Designer 20+, the impedance calculator lives inside the
-Layer Stack Manager, not under Tools.
-
-1. **Design → Layer Stack Manager**
-2. In the LSM window, find the **Impedance** view in the top toolbar
-   (tab or pane button)
-3. Click **+** to add a new Impedance Profile:
-   - **Name:** `Z50_Microstrip_L1`
-   - **Type:** Single Ended
-   - **Reference Layer:** in Altium UI this is "Bottom ref" → pick
-     `Layer 1` (Altium's first inner layer, = our L2 GND plane)
-   - **Trace Layer:** Top Layer
-   - **Target Impedance:** 50 Ω
-   - **Tolerance:** ±10%
-   - **Use solder mask:** ✓ checked (more accurate — mask loading
-     pulls the required width down by ~0.02 mm)
-4. Altium reports the required width — should be ~**0.358 mm** with
-   solder mask checked, or ~0.38 mm without. The mask-checked value
-   is what you should use because that's what your fabricated board
-   will actually look like.
-5. The "Top ref" field stays empty — there's no plane above a
-   top-layer microstrip trace, only the reference plane below.
-
-If your Altium version doesn't have the Impedance view in LSM, use
-**Saturn PCB Toolkit** (free, https://saturnpcb.com/saturn-pcb-toolkit/),
-"Conductor Impedance" → "Microstrip":
-- Trace thickness: 0.035 mm (1 oz)
-- Substrate height: 0.21 mm
-- Dielectric constant: 4.4
-- Target Z: 50 Ω
-- Solve for width → ~0.38 mm
-
-#### Step 6 — Re-route or re-set existing RF traces
-
-After the rule is in place, existing RF traces don't automatically
-update to the new width. For each one:
-- Option A: select the trace → Properties panel → set Width to 0.38 mm
-- Option B: select trace → right-click → **Routing → Retrace Selected**
-  → Altium re-runs the trace with current rules applied (preferred,
-  also re-applies clearance)
-- Option C: delete and re-route — only do this if the trace is so old
-  it doesn't follow current pad/component positions anyway
-
-Run **DRC (Tools → Design Rule Check)** after the changes to confirm
-no violations.
-
-### Component / Mass Impact
-
-- Extra copper: ~10 g per board for the two inner layers (negligible
-  for a 1 U mass budget)
-- Cost increase at JLCPCB: roughly $10–20 on a 5-board prototype run
-  (2-layer ~$10, 4-layer ~$25)
-- CSKB stack mechanics: unchanged (still 1.6 mm board, same H1/H2
-  connector engagement)
-- Mechanical drill / mounting: unchanged
-
----
 ---
 
 ## Sheet 1: Overview
@@ -383,23 +247,24 @@ This is a non-electrical title/overview sheet. No components or nets are
 placed here — it serves as the front page of the schematic package and
 provides context for anyone reviewing or building the design.
 
-### Text Frame 1: Project Identification (Top of Sheet)
+### Text Box 1 — Project Identification (Top of Sheet)
 
-Place a large text frame across the top of the sheet:
+Place a large text box across the top of the sheet:
 
 > **CubeSat Communications Board — 70cm BPSK TX / 2m AFSK RX**
 >
 > Project: EMBER — Senior Capstone Design
 > Board: Communications Subsystem, Single PCB
-> Designer: Nick Grabbs / K15Y NG
+> Designer: Nick Grabbs / KI5YNG
 > Revision: 0.2
 > Date: (today)
 > Repository: ember/hardware/comms
 
-### Text Frame 2: System Block Diagram (Center of Sheet)
+### Text Box 2 — System Block Diagram (Center of Sheet)
 
-Place a text frame with the system architecture. In Altium, you can also
-paste a graphic (Place > Drawing Tools > Graphic or import a bitmap/SVG).
+Place a text box with the system architecture. You can also import a
+graphic with `Place → Image` — use PNG, not BMP; an uncompressed bitmap
+bloats the sheet file by megabytes.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
@@ -449,7 +314,7 @@ paste a graphic (Place > Drawing Tools > Graphic or import a bitmap/SVG).
 └──────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Text Frame 3: Power Rail Summary (Bottom-Left)
+### Text Box 3 — Power Rail Summary (Bottom-Left)
 
 > **Power Rails**
 >
@@ -465,7 +330,7 @@ paste a graphic (Place > Drawing Tools > Graphic or import a bitmap/SVG).
 > +5V: ~140 mA (PSA4 LNA ~60mA, ADL5602 ~60mA, tripler ~5mA, Pico VSYS ~10mA, margin ~5mA)
 > Total: <300 mA — well within EPS TPS62933F capacity (3A per rail). Note: PSA4 LNA bias can be GPIO-gated for RX duty-cycling.
 
-### Text Frame 4: Net Name Convention (Bottom-Center)
+### Text Box 4 — Net Name Convention (Bottom-Center)
 
 > **Net Name Convention**
 >
@@ -481,7 +346,7 @@ paste a graphic (Place > Drawing Tools > Graphic or import a bitmap/SVG).
 > | TX_OUT, RX_IN | Net label | RF paths to SMA connectors |
 > | RX_BASEBAND | Net label | MCP6022 output → Pico ADC |
 
-### Text Frame 5: Key Design Notes (Bottom-Right)
+### Text Box 5 — Key Design Notes (Bottom-Right)
 
 > **Key Design Decisions**
 >
@@ -496,7 +361,7 @@ paste a graphic (Place > Drawing Tools > Graphic or import a bitmap/SVG).
 > 7. Flat schematic design — nets connect by name across sheets
 > 8. Prototype uses Pico module; bare RP2040 deferred to v2
 
-### Text Frame 6: Sheet Index (Right Edge)
+### Text Box 6 — Sheet Index (Right Edge)
 
 > **Sheet Index**
 >
@@ -510,7 +375,7 @@ paste a graphic (Place > Drawing Tools > Graphic or import a bitmap/SVG).
 > | 6 | Power | Distribution, protection, bypass |
 > | 7 | Connectors | CSKB H1 + H2 bus, SMA ports, test points |
 
-### Text Frame 7: Revision History (Bottom, or Separate Table)
+### Text Box 7 — Revision History (Bottom, or Separate Table)
 
 > **Revision History**
 >
@@ -527,19 +392,19 @@ paste a graphic (Place > Drawing Tools > Graphic or import a bitmap/SVG).
 > | 0.9 | 2026-05-21 | NG | `RX_BASEBAND` moved from GP26/ADC0 (pin 31) to GP27/ADC1 (pin 32). Same ADC peripheral, different input channel — firmware change: `adc_select_input(0)` → `adc_select_input(1)`. Pin 31 freed (was the only ADC channel routed; now no signals on ADC0). Layout reason: shifting baseband signal entry one pin over. Net label unchanged. |
 > | 1.0 | 2026-05-22 | NG | **Board converted from 2-layer to 4-layer** (JLCPCB JLC04161H-7628, 1.6 mm). Layer 2 = solid GND plane, Layer 3 = power distribution, L1/L4 = signals. Fixes (a) snake-y power routes that broke the ground pour in the RF zones on the 2-layer design, (b) Altium LSM showing 0.41 mm "thin" board because of placeholder dielectric value, (c) cleaner 50 Ω microstrip with predictable return path on L2. Triggered by reviewer feedback. New 50 Ω trace width: **0.38 mm (15 mil)** on top prepreg (0.21 mm, εr 4.4). Every existing RF trace must be re-set to 0.38 mm. New "Board Stackup" section added at the top of this doc. Also enables the via stitching / via fence techniques from `rf_layout_guidelines.md`. Mass impact ~10 g extra copper; cost impact ~$15 per 5-board run. |
 > | 1.1 | 2026-05-22 | NG | Documentation improvement to the Board Stackup section: expanded "Impedance and Trace Width" subsection into a full 6-step procedure (RF net class, Width rule, rule priority, RF clearance rule, impedance verification, re-routing existing traces). Fixed obsolete reference to "Tools → Routing → Impedance Calculator" — in Altium 20+ this lives inside the Layer Stack Manager Impedance view. Added Saturn PCB Toolkit as fallback for older Altium versions. No schematic / layout changes. |
-> | 1.2 | 2026-05-22 | NG | Refined 50 Ω trace width from 0.38 mm to **0.358 mm** based on Altium LSM impedance calculator with "Use solder mask" enabled (mask loading lowers required width by ~0.02 mm vs ideal). Width rule constraints updated accordingly (0.34 / 0.358 / 0.40 mm). Added a layer-naming mapping table (this doc's L1/L2/L3/L4 vs Altium's Top Layer / Layer 1 / Layer 2 / Bottom Layer) to prevent confusion when configuring impedance profiles. Clarified that the "Top ref" field stays empty for top-layer microstrip. No schematic / layout changes. |
+> | 1.2 | 2026-05-22 | NG | Refined 50 Ω trace width from 0.38 mm to **0.358 mm** based on impedance calculator with "Use solder mask" enabled (mask loading lowers required width by ~0.02 mm vs ideal). Width rule constraints updated accordingly (0.34 / 0.358 / 0.40 mm). Added a layer-naming mapping table (this doc's L1/L2/L3/L4 vs Altium's Top Layer / Layer 1 / Layer 2 / Bottom Layer) to prevent confusion when configuring impedance profiles. Clarified that the "Top ref" field stays empty for top-layer microstrip. No schematic / layout changes. |
 > | 1.3 | 2026-05-22 | NG | Expanded "Net Name Convention" section with three new subsections: (1) **prefix convention** (`RF_*`, `LO_*`, `BB_*`) for naming internal nets so wildcard-based net classes work; (2) **three ways to populate an RF net class** — prefix-based wildcard, Net Class directive in the schematic (for fixing existing auto-named nets), or manual selection; (3) **how to rename `NetCXX_Y` nets** with net labels. Includes explicit examples of internal RF net names for the TX, RX, and LO chains. No schematic / layout changes; purely documentation. |
 > | 1.4 | 2026-05-24 | NG | Net naming convention promoted to project level. Created `hardware/conventions/` directory and `hardware/conventions/net_naming.md` as the canonical project-wide reference (prefix system, Altium application techniques, recovery procedure for inherited designs). Refactored this doc's "Naming for wildcard rules" section to a short pointer to the project-level doc + the comms-specific named-net list (TX/RX/LO/BB chains). Added the project-level naming doc to Related Documents. No schematic / layout changes; documentation restructure to support cross-board consistency (EPS, IHU, payload all reference the same convention). |
 > | 1.5 | 2026-05-31 | NG | **LO drive verification complete on Adafruit 5640 breakout + Pico 2 + TinySA Ultra.** Si5351A CLK1 at 145.9 MHz, 8 mA drive, no series R: measured **+9.4 dBm fundamental** into 50 Ω (exceeds ADE-1+ +7 dBm target), 2nd harmonic at -17 dB rel, 3rd harmonic at **437.683 MHz / -12.2 dB rel (-2.77 dBm absolute)**. Post-LPF 3rd harmonic at mixer input: -37 dBm — 30+ dB margin over worst-case TX-leak spur scenario. **R3 (CLK0) and R4 (CLK1) both set to 0Ω in BOM** — CLK1 needs full drive into the LPF/mixer chain; CLK0 doesn't care because XOR is high-Z (no functional difference between 0Ω and 33Ω at the XOR input). Footprints kept for swap to 33Ω if ringing/EMI mitigation needed during bring-up. Removed obsolete "consider 0Ω, verify on bench" caveat from the CLK output coupling Note. Full bench results in `bringup/si5351a_bringup_log.md`. **Design committed for fab.** |
 
-### How to Build This Sheet in Altium
+### How to Build This Sheet
 
-1. Create a new schematic sheet: `Overview.SchDoc`
-2. Use Place > Text Frame for each section above
+1. The root sheet is `transceiver.kicad_sch`
+2. Use `Place → Text Box` for each section above
 3. For the block diagram, you can either:
-   - Use text frames with monospace font (as shown above)
-   - Use Place > Drawing Tools > Line/Rectangle to draw boxes and arrows
-   - Import a PNG/SVG of the block diagram (Place > Drawing Tools > Graphic)
+   - Use text boxes with a monospace font (as shown above)
+   - Use `Place → Graphic Line` / `Rectangle` to draw boxes and arrows
+   - Or import a PNG of the block diagram (`Place → Image`) — keep it PNG, not BMP
 4. No electrical components, no nets, no power ports on this sheet
 5. Set the title block: "CubeSat Comms Board — Overview", Rev 1.5
 
@@ -551,7 +416,7 @@ paste a graphic (Place > Drawing Tools > Graphic or import a bitmap/SVG).
 This sheet contains the Si5351A clock generator, its crystal, I2C
 pull-ups, and output coupling networks.
 
-### Text Frame (Place > Text Frame, top of sheet):
+### Text Box (Place → Text Box, top of sheet):
 
 > CLOCK GENERATOR — Si5351A (I2C address 0x60). Generates three
 > independent clock outputs from a single 25 MHz crystal. CLK0 =
@@ -592,7 +457,7 @@ Place in the center of the sheet.
 | C2 | 10µF, 10V, X5R | 0805 | VDD (pin 1) to GND | Bulk bypass |
 | C3 | 100nF, 16V, X7R | 0402 | VDDO (pin 6) to GND | Output driver bypass |
 
-#### Note (Place > Note, next to bypass caps):
+#### Note (Place → Text, next to bypass caps):
 
 > C1/C2 at VDD: place C1 (100nF) directly at pin 1 with shortest
 > possible traces. C2 (10µF) can be further away. C3 at VDDO: place
@@ -620,7 +485,7 @@ XA (pin 9) ──┤├── XB (pin 10)
      GND              GND
 ```
 
-#### Note (Place > Note, next to crystal):
+#### Note (Place → Text, next to crystal):
 
 > Crystal load capacitance: CL = (C4 × C5)/(C4 + C5) + Cstray.
 > With C4=C5=10pF and ~3pF stray: CL ≈ 8pF. Match to crystal's
@@ -649,7 +514,7 @@ XA (pin 9) ──┤├── XB (pin 10)
                   Si5351A SDA (pin 8)
 ```
 
-#### Note (Place > Note, next to pull-ups):
+#### Note (Place → Text, next to pull-ups):
 
 > I2C pull-ups: 4.7kΩ to +3V3. Si5351A address = 0x60 (7-bit).
 > Standard mode (100 kHz) or Fast mode (400 kHz). These are the ONLY
@@ -682,7 +547,7 @@ CLK1 (pin 4) ── C7 (100nF) ── R4 (0Ω) ──→ CLK1_OUT (port)
 CLK2 (pin 5) ── [no connect X] or spare header
 ```
 
-#### Note (Place > Note, next to output coupling):
+#### Note (Place → Text, next to output coupling):
 
 > DC blocking caps prevent Si5351A output bias from affecting
 > downstream stages. R3 and R4 are populated as **0Ω** — the
@@ -707,7 +572,7 @@ CLK2 (pin 5) ── [no connect X] or spare header
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│  [Text Frame: Clock Generator Description]                       │
+│  [Text Box: Clock Generator Description]                       │
 │                                                                  │
 │        Y1 (25 MHz)          ┌────────────┐                       │
 │     C4─┤├─C5              │  Si5351A   │                       │
@@ -743,7 +608,7 @@ CLK2 (pin 5) ── [no connect X] or spare header
 This sheet implements the complete 437 MHz BPSK transmit chain: XOR
 modulator, frequency tripler, band-pass filter, and MMIC amplifier.
 
-### Text Frame (Place > Text Frame, top of sheet):
+### Text Box (Place → Text Box, top of sheet):
 
 > TX CHAIN — 437 MHz BPSK downlink transmitter. The carrier from the
 > Si5351A (145.67 MHz) is BPSK-modulated by the 74LVC1G86 XOR gate,
@@ -788,7 +653,7 @@ BPSK_DATA (port) ── R5 (100Ω) ──┬── pin 2 (B)
                                            GND ────────── pin 3
 ```
 
-#### Note (Place > Note, next to XOR gate):
+#### Note (Place → Text, next to XOR gate):
 
 > 74LVC1G86 operates at 145.67 MHz where it has massive timing
 > margin (half-period = 3.43 ns vs typical tpd = 0.6–2.3 ns).
@@ -853,7 +718,7 @@ BPSK_145 ── C10 (100nF) ─┬── Base
                                          GND
 ```
 
-#### Note (Place > Note, next to tripler):
+#### Note (Place → Text, next to tripler):
 
 > Class-C frequency tripler. R6 (47kΩ) biases the transistor below
 > cutoff — it only conducts on positive input peaks, generating
@@ -885,7 +750,7 @@ critical filter in the TX chain — it must reject the fundamental
 | L4 | 15nH, ±2% | 0402 | — | Shunt inductor |
 | C16 | 10pF, 50V | 0402 | C0G/NP0 | Series output cap |
 
-#### Note (Place > Note, next to BPF):
+#### Note (Place → Text, next to BPF):
 
 > 437 MHz BPF: 3-pole LC, ~5 MHz bandwidth, target <3 dB insertion
 > loss. ALL capacitors MUST be C0G/NP0 dielectric — X7R has voltage-
@@ -963,7 +828,7 @@ supply current in. L5 feeds DC from +5V to pin 3 while blocking RF from
 reaching the supply. C18 passes RF to the output while blocking the DC
 bias from reaching the TX SMA.
 
-#### Note (Place > Note, next to MMIC):
+#### Note (Place → Text, next to MMIC):
 
 > ADL5602: 50Ω matched input/output, 20 dB gain, DC to 4 GHz.
 > 3-pin SOT-89 — NO separate VCC pin. DC bias enters through the
@@ -1008,7 +873,7 @@ TX_OUT (from C18) ──[C45]──┬──[L7]──┬──[C48]──→ TX
                           GND      GND
 ```
 
-#### Note (Place > Note, next to output BPF):
+#### Note (Place → Text, next to output BPF):
 
 > Output BPF: identical topology to the pre-MMIC filter. Required
 > because the ADL5602 has broadband gain (DC–4 GHz) and will amplify
@@ -1027,7 +892,7 @@ TX_OUT (from C18) ──[C45]──┬──[L7]──┬──[C48]──→ TX
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│  [Text Frame: TX Chain Description]                                          │
+│  [Text Box: TX Chain Description]                                          │
 │                                                                              │
 │  CLK0_OUT ─→ [XOR 74LVC1G86] ─C10─→ [Tripler BFR92A] ─C11─→ [BPF 1]        │
 │  (port)       ↑ BPSK_DATA          R6(47k)  L1(RFC)    L2 C14               │
@@ -1062,7 +927,7 @@ TX_OUT (from C18) ──[C45]──┬──[L7]──┬──[C48]──→ TX
 This sheet implements the 145.9 MHz AFSK uplink receiver: input BPF,
 mixer, baseband Sallen-Key low-pass filter, and gain stage.
 
-### Text Frame (Place > Text Frame, top of sheet):
+### Text Box (Place → Text Box, top of sheet):
 
 > RX CHAIN — 145.9 MHz FM AFSK uplink receiver. A 2m band-pass filter
 > at the input rejects out-of-band signals before the LNA. A
@@ -1113,7 +978,7 @@ RX_IN (port) ──[C49]──┬──[L10]──┬──[C52]──→ to PSA
                       GND       GND
 ```
 
-#### Note (Place > Note, next to 2m BPF):
+#### Note (Place → Text, next to 2m BPF):
 
 > 2m input BPF: 3-pole LC, centered ~146 MHz, ~4 MHz bandwidth.
 > Critical for protecting the LNA front-end and mixer from overload. Must reject:
@@ -1270,7 +1135,7 @@ LO LPF out ─────────── 6│ LO               │     └�
 > loss, ~55 dB LO-RF isolation, ~45 dB LO-IF isolation, +15 dBm IIP3,
 > +1 dBm P1dB. LO drive: +7 dBm specified, +4 dBm to +10 dBm tolerable
 > with mild conversion-loss penalty. Max RF power 50 mW (+17 dBm).
-> Package footprint (CD636) must be drawn in Altium — see
+> Package footprint (CD636) must be drawn by hand — see
 > recommended PCB land pattern in datasheet. Tie all three GND pads
 > (1, 4, 5) to ground plane with vias underneath, kept short.
 
@@ -1329,7 +1194,7 @@ RX_IF ──────────/\/\/──────┬──────
                         (feedback)                           (unity gain)
 ```
 
-#### Note (Place > Note, next to Sallen-Key):
+#### Note (Place → Text, next to Sallen-Key):
 
 > Sallen-Key topology per Art of Electronics Fig 6.16A. C28 is the
 > FEEDBACK capacitor — connects from the R8/R9 junction to the op-amp
@@ -1392,7 +1257,7 @@ RX_FILT ── C30 (100nF) ──┬──→ IN+ (pin 5)
                                                GND
 ```
 
-#### Note (Place > Note, next to gain stage):
+#### Note (Place → Text, next to gain stage):
 
 > Non-inverting amplifier, gain = 1 + 100k/10k = 11 (20.8 dB).
 > R10/R11 bias the input to 1.65V (mid-supply) for single-supply
@@ -1411,7 +1276,7 @@ RX_FILT ── C30 (100nF) ──┬──→ IN+ (pin 5)
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────┐
-│  [Text Frame: RX Chain Description]                                                │
+│  [Text Box: RX Chain Description]                                                │
 │                                                                                    │
 │  RX_IN ──[2m BPF]──C53──[PSA4]──C54──┐                                            │
 │  (port)  L9 C50           │ Vd       │                                            │
@@ -1446,7 +1311,7 @@ RX_FILT ── C30 (100nF) ──┬──→ IN+ (pin 5)
 This sheet holds the RP2040 (Pico module), USB connector, and GPIO
 assignments.
 
-### Text Frame (Place > Text Frame, top of sheet):
+### Text Box (Place → Text Box, top of sheet):
 
 > DIGITAL CONTROL — Raspberry Pi Pico module (RP2040-based). Handles
 > BPSK/DBPSK encoding for TX, AFSK demodulation for RX, Si5351A
@@ -1481,7 +1346,7 @@ with its net name.
 | VSYS (pin 39) | `VSYS` | System power input | See Power section |
 | VBUS (pin 40) | `VBUS_USB` | From USB connector VBUS | USB power |
 
-#### Note (Place > Note, next to Pico module):
+#### Note (Place → Text, next to Pico module):
 
 > Pico module power: The Pico has an internal regulator that produces
 > 3.3V from VSYS (1.8–5.5V input). For stack operation, feed +5V
@@ -1508,7 +1373,7 @@ If adding a separate connector:
 |---|---|---|---|
 | J1 | USB Micro-B or USB-C | SMD | D+ to Pico USB_DP, D- to USB_DN |
 
-#### Note (Place > Note):
+#### Note (Place → Text):
 
 > USB connector is optional for prototype. The Pico module has its
 > own Micro-USB. For the flight board (v2 with bare RP2040), a USB-C
@@ -1547,7 +1412,7 @@ Use whatever free GPIOs are available. Mark as DNP for flight.
 |---|---|---|---|
 | J3 | 1×6 pin header, 2.54mm | 6 | Unused GPIOs — free pins available: GP2, GP8, GP9, GP10, GP11, GP12, GP13, GP14, GP15, GP17, GP18, GP19, GP22 (pick any 6) |
 
-#### Note (Place > Note, next to spare header):
+#### Note (Place → Text, next to spare header):
 
 > Spare GPIO header: invaluable during integration and testing.
 > Can be used for UART debug output, logic analyzer probing, or
@@ -1560,7 +1425,7 @@ Use whatever free GPIOs are available. Mark as DNP for flight.
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│  [Text Frame: Digital Control Description]                       │
+│  [Text Box: Digital Control Description]                       │
 │                                                                  │
 │  [USB Connector]      [Pico Module / 2x20 Header]                │
 │   (optional)           GP3  ── COMMS_IRQ (port → H1.16)          │
@@ -1600,7 +1465,7 @@ Use whatever free GPIOs are available. Mark as DNP for flight.
 - [ ] `+3V3` — power port (Pico 3V3)
 - [ ] `GND` — power port (global)
 
-#### Note (Place > Note, next to GP3 / COMMS_IRQ label):
+#### Note (Place → Text, next to GP3 / COMMS_IRQ label):
 
 > COMMS_IRQ is a data-ready interrupt from the comms RP2040 to the
 > internal housekeeping unit, modelled after the AX5043 IRQ pattern in AMSAT
@@ -1623,7 +1488,7 @@ regulated power (+3V3, +5V) comes from the EPS board via the CSKB
 stack connector** — there are no on-board voltage regulators on the
 comms board (prototype configuration).
 
-### Text Frame (Place > Text Frame, top of sheet):
+### Text Box (Place → Text Box, top of sheet):
 
 > POWER DISTRIBUTION — The comms board receives +3V3 and +5V from the
 > EPS via the CSKB stack connectors. No on-board voltage regulation.
@@ -1665,7 +1530,7 @@ and add protection and filtering.
                                       GND     GND
 ```
 
-#### Note (Place > Note, next to input protection):
+#### Note (Place → Text, next to input protection):
 
 > D4 provides reverse polarity protection on the +5V rail. Adds
 > ~0.3V forward drop — the ADL5602 and PSA4-5043+ LNA can tolerate
@@ -1697,7 +1562,7 @@ bypass at the power distribution point.
 | C39 | 10µF, 10V, X5R | 0805 | +5V to GND | Board-level bulk, 5V |
 | C40 | 100nF, 16V, X7R | 0402 | +5V to GND | Board-level HF, 5V |
 
-#### Note (Place > Note, next to bulk bypass):
+#### Note (Place → Text, next to bulk bypass):
 
 > Board-level bulk bypass at the power distribution star point.
 > Local bypass at each consumer IC is the responsibility of that
@@ -1725,7 +1590,7 @@ when the Pico is also connected to a computer.
 +5V rail ── D5 (Schottky) ──→ VSYS (to Pico pin 39)
 ```
 
-#### Note (Place > Note, next to D5):
+#### Note (Place → Text, next to D5):
 
 > D5 isolates the stack +5V from the Pico's USB VBUS. When USB is
 > connected, the Pico's internal diode on VBUS feeds VSYS. When
@@ -1745,7 +1610,7 @@ when the Pico is also connected to a computer.
 
 Mark as DNP (Do Not Populate) for flight — LEDs waste power in orbit.
 
-#### Note (Place > Note, next to LEDs):
+#### Note (Place → Text, next to LEDs):
 
 > Power indicator LEDs for bench debugging. I = (3.3-2.0)/1k = 1.3mA
 > (dim but visible). Mark R17/R18 as DNP-optional in BOM for flight.
@@ -1756,7 +1621,7 @@ Mark as DNP (Do Not Populate) for flight — LEDs waste power in orbit.
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│  [Text Frame: Power Distribution Description]                    │
+│  [Text Box: Power Distribution Description]                    │
 │                                                                  │
 │  +5V (power port) ── D4 (Schottky) ──┬── +5V internal           │
 │                                      │                          │
@@ -1812,7 +1677,7 @@ This sheet holds the CSKB H1 + H2 stack connectors, RF SMA connectors,
 and any test point headers. It is the physical interface between the
 comms board and the rest of the CubeSat stack.
 
-### Text Frame (Place > Text Frame, top of sheet):
+### Text Box (Place → Text Box, top of sheet):
 
 > CONNECTORS — CSKB H1 + H2 stack connectors for inter-board power
 > and signal distribution, SMA connectors for TX and RX antenna
@@ -1882,7 +1747,7 @@ bus routing for other subsystems.
 All other H1/H2 pins are reserved or left unconnected on the comms
 board.
 
-#### Note (Place > Note, next to CSKB connectors):
+#### Note (Place → Text, next to CSKB connectors):
 
 > CSKB stack connectors: 2× Samtec ESQ-126-39-G-D (2×26, 0.1″
 > (2.54 mm), stackthrough headers, one each for H1 and H2). Pin
@@ -1907,7 +1772,7 @@ Place bypass caps physically close to the CSKB H2 connector pads:
 | C43 | 10µF, 10V, X5R | 0805 | +5V to GND at connector | Receiving-end bulk, 5V |
 | C44 | 100nF, 16V, X7R | 0402 | +5V to GND at connector | Receiving-end HF, 5V |
 
-#### Note (Place > Note, next to bypass caps):
+#### Note (Place → Text, next to bypass caps):
 
 > Connector-side bypass caps are the receiving complement to the EPS
 > board's connector-side caps (C60–C63 on EPS Sheet 3). Together they
@@ -1936,7 +1801,7 @@ TX_OUT (port) ──→ J4 (SMA) ──→ to TX antenna / cable
 RX_IN (port) ──→ J5 (SMA) ──→ from RX antenna / cable
 ```
 
-#### Note (Place > Note, next to SMA connectors):
+#### Note (Place → Text, next to SMA connectors):
 
 > Separate TX and RX SMA connectors — no diplexer for prototype.
 > For flight, a diplexer can be added between a single antenna and
@@ -1968,15 +1833,15 @@ Place TP9 (GND) as a large pad or loop — always need a convenient
 ground reference for scope probing. Consider placing two GND test
 points on opposite sides of the board.
 
-#### How to Place Test Points in Altium
+#### How to place test points
 
-1. Place > Part > search "Test Point" in Manufacturer Part Search
+1. `Place → Add Symbol`, search the `Connector` library for `TestPoint`
 2. Or: create a generic 1-pin schematic symbol called "TP"
 3. Assign a footprint: round pad (1–2mm diameter) or Keystone 5019 loop
 4. Label each test point with its net name in the Comment field
 5. On the PCB, test points appear as pads — probe with scope/DMM
 
-#### Note (Place > Note, next to test points):
+#### Note (Place → Text, next to test points):
 
 > Test points are critical for bring-up and debugging. TP3–TP6
 > trace the TX signal through the chain — essential for validating
@@ -2003,7 +1868,7 @@ analyzer or oscilloscope connection during integration testing.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│  [Text Frame: Connectors Description]                                │
+│  [Text Box: Connectors Description]                                │
 │                                                                      │
 │  ┌─────────────────────────────────┐     ┌──────────┐                │
 │  │ J1 (H1+H2): 2× ESQ-126-39-G-D   │     │ J4: SMA  │                │
@@ -2062,13 +1927,14 @@ analyzer or oscilloscope connection during integration testing.
 
 ### 1. Annotate
 
-Tools > Annotate Schematic Quietly (or Annotate Schematic for manual
-control). Assign unique designators across all sheets: R1, R2, ... C1,
+**Only for genuinely new parts** — `Tools → Annotate Schematic`, scoped to
+the new symbols, with **"Keep existing annotations" selected**. Never run a
+full re-annotation; see the warning under Project Setup. Assign unique designators across all sheets: R1, R2, ... C1,
 C2, ... U1, U2, ... etc.
 
 ### 2. Compile and Validate
 
-Project > Validate PCB Project. Check the Messages panel for:
+`Inspect → Electrical Rules Checker`. Check for:
 - **Net mismatch** — net labels with the same name on different sheets
   must match exactly (case-sensitive)
 - **Unconnected pins** — add no-connect X markers on any intentionally
@@ -2086,19 +1952,19 @@ On each sheet, double-click the title block and fill in:
 |---|---|---|---|---|
 | Title | Comms — Overview | Comms — Clock Gen | Comms — TX Chain | Comms — RX Chain |
 | Revision | 0.2 | 0.2 | 0.2 | 0.2 |
-| Drawn By | Nick Grabbs / K15Y NG | Nick Grabbs / K15Y NG | Nick Grabbs / K15Y NG | Nick Grabbs / K15Y NG |
+| Drawn By | Nick Grabbs / KI5YNG | Nick Grabbs / KI5YNG | Nick Grabbs / KI5YNG | Nick Grabbs / KI5YNG |
 | Date | (today) | (today) | (today) | (today) |
 
 | Field | Sheet 5 | Sheet 6 | Sheet 7 |
 |---|---|---|---|
 | Title | Comms — Digital Control | Comms — Power | Comms — Connectors |
 | Revision | 0.2 | 0.2 | 0.2 |
-| Drawn By | Nick Grabbs / K15Y NG | Nick Grabbs / K15Y NG | Nick Grabbs / K15Y NG |
+| Drawn By | Nick Grabbs / KI5YNG | Nick Grabbs / KI5YNG | Nick Grabbs / KI5YNG |
 | Date | (today) | (today) | (today) |
 
 ### 4. Export PDF
 
-File > Smart PDF (or File > Print > PDF).
+`File → Plot`, output format PDF, all sheets, one file.
 Save to `hardware/comms/releases/Comms_schematic_v0.2.pdf` for review.
 
 ---
@@ -2222,7 +2088,7 @@ Save to `hardware/comms/releases/Comms_schematic_v0.2.pdf` for review.
 ## Design Notes Summary
 
 These are the key design decisions. Place a condensed version in the
-title block "Notes" field or as a text frame on the Top sheet.
+title block comment fields or as a text box on the root sheet.
 
 1. **Architecture:** 70cm BPSK TX / 2m AFSK RX, single PCB, RP2040 controller
 2. **Power:** All regulated power (+3V3, +5V) from EPS via CSKB bus connector.

@@ -147,14 +147,12 @@ This repo covers the carrier board. Open items in
       command/telemetry/debug interface. `system/` interface docs still
       describe the four-way split.
 - [ ] **Five Altium board guides remain** while board design is KiCad-only:
-      `altium_comms_schematic.md`, `altium_ihu_schematic.md`,
-      `altium_payload_schematic_guide.md`, `altium_payload_layout_guide.md`.
-      **Comms is the pressing case** — that board is KiCad and its guide is
-      the largest at 2278 lines. The IHU and payload guides describe boards
-      not started, so they can convert when those boards do. Both EPS guides
-      are converted and are the worked examples: tool-specific content runs
-      about 5%, clustered in note headings, DRC/net-class tables, and
-      fabrication-output paths.
+      `altium_ihu_schematic.md`, `altium_payload_schematic_guide.md`,
+      `altium_payload_layout_guide.md`. Both boards are unstarted, so these
+      can convert when the boards do — there is no live contradiction. The
+      comms and EPS guides are converted and are the worked examples:
+      tool-specific content runs about 5%, clustered in note headings,
+      DRC/net-class tables, and fabrication-output paths.
 - [ ] `net_naming.md` worked example still cites `BFR92A` as the tripler; the
       part is `2SC3356`
 - [ ] **KiCad template project** — `jlcpcb_baseline.kicad_dru` exists, the

@@ -20,7 +20,7 @@ runaway current and cooking the part.
 
 - **Root cause:** Q1 `L1 → base` wiring error → **rev-B one-line fix**
   (rewire L1 to the collector, ECO, re-route). See
-  [`../design/altium_comms_schematic.md`](../design/altium_comms_schematic.md)
+  [`../design/schematic_guide.md`](../design/schematic_guide.md)
   Section B (Frequency Tripler).
 - **Casualty (to confirm):** U2 (ADL5602) most likely shorted by the fault
   event → **replace on the two physical boards**.
@@ -631,7 +631,7 @@ This sim is the worked proof of all four rev-B TX fixes together (Q1 wiring,
 - **KiCad implementation plan (all-UHF v2):** [`../design/kicad_implementation_plan.md`](../design/kicad_implementation_plan.md)
 - **End-to-end TX reference sim (cap-coupled cheby, CURRENT):** [`../design/ltspice_simulations/tx_circuit_cheby.asc`](../design/ltspice_simulations/tx_circuit_cheby.asc)
 - End-to-end TX sim (L-coupled, superseded): [`../design/ltspice_simulations/tx_circuit.asc`](../design/ltspice_simulations/tx_circuit.asc)
-- Schematic doc: [`../design/altium_comms_schematic.md`](../design/altium_comms_schematic.md)
+- Schematic doc: [`../design/schematic_guide.md`](../design/schematic_guide.md)
 - Tripler LTspice model: [`../design/ltspice_simulations/tripler.asc`](../design/ltspice_simulations/tripler.asc)
 - 437 MHz BPF sims: [`437MHz_BPF_2nd_order_chebyshev.asc`](../design/ltspice_simulations/Filters/437MHz_BPF_2nd_order_chebyshev.asc) (cheby, current), [`437MHz_BPF_asbuilt.asc`](../design/ltspice_simulations/Filters/437MHz_BPF_asbuilt.asc) (L-coupled)
 - Tripler breadboard notes: [`tripler_breadboard.md`](tripler_breadboard.md)
