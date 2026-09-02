@@ -1,4 +1,4 @@
-# EMBER Hello
+# EMBER Hello from Nick
 
 **E**mission **M**onitoring for **B**urn **E**vent **R**ecognition — a CubeSat-class
 wildfire detection instrument and its supporting ground segment, built as the
