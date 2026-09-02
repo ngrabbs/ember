@@ -1,0 +1,852 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "34355200-1bb0-4506-ab43-0e1897ffed50")
+	(paper "A3")
+	(title_block
+		(title "CubeSat Comms -- Overview")
+		(rev "A")
+	)
+	(lib_symbols)
+	(rectangle
+		(start 298.45 20.32)
+		(end 163.83 175.26)
+		(stroke
+			(width 0.254)
+			(type solid)
+			(color 128 0 0 1)
+		)
+		(fill
+			(type none)
+		)
+		(uuid "231a9cf5-f6fe-4e17-b619-7e6645be5d30")
+	)
+	(text "System Block Diagram"
+		(exclude_from_sim no)
+		(at 163.83 20.32 0)
+		(effects
+			(font
+				(size 3.048 3.048)
+			)
+			(justify left bottom)
+		)
+		(uuid "01a4c2bf-1c6f-4cf9-b213-709b25fe0c1f")
+	)
+	(text "Key Design Notes"
+		(exclude_from_sim no)
+		(at 19.05 86.36 0)
+		(effects
+			(font
+				(size 3.048 3.048)
+			)
+			(justify left bottom)
+		)
+		(uuid "3760accf-39d3-46a7-82e7-e09974826765")
+	)
+	(text "Revision History"
+		(exclude_from_sim no)
+		(at 19.05 132.08 0)
+		(effects
+			(font
+				(size 3.048 3.048)
+			)
+			(justify left bottom)
+		)
+		(uuid "4cfa7471-6d4a-4c28-b0de-1a7ff334f273")
+	)
+	(text "Si5351A Clock Gen"
+		(exclude_from_sim no)
+		(at 209.55 83.82 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left bottom)
+		)
+		(uuid "611134d4-e1f5-458d-9cd8-7331533c807c")
+	)
+	(text "PCI-104 Bus (from EPS)"
+		(exclude_from_sim no)
+		(at 166.37 25.4 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left bottom)
+		)
+		(uuid "6a3ac291-28d7-4dc1-b590-a07de6d276ca")
+	)
+	(text "70 cm BPSK TX / 2m AFSK RX"
+		(exclude_from_sim no)
+		(at 19.05 27.94 0)
+		(effects
+			(font
+				(size 3.048 3.048)
+			)
+			(justify left bottom)
+		)
+		(uuid "6c25b550-98dc-407c-b897-bc103ced8bbe")
+	)
+	(text "CubeSat Communications Board"
+		(exclude_from_sim no)
+		(at 19.05 20.32 0)
+		(effects
+			(font
+				(size 3.048 3.048)
+			)
+			(justify left bottom)
+		)
+		(uuid "8ac7665e-3cf0-48ff-879b-037526a3fe96")
+	)
+	(text "Acronym Legend"
+		(exclude_from_sim no)
+		(at 19.05 73.66 0)
+		(effects
+			(font
+				(size 3.048 3.048)
+			)
+			(justify left bottom)
+		)
+		(uuid "b28042a9-6df5-4386-bd86-3b10b524abb3")
+	)
+	(text "Power Distribution"
+		(exclude_from_sim no)
+		(at 166.37 55.88 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left bottom)
+		)
+		(uuid "c4329145-be4e-47bc-a3ec-f8c1af908078")
+	)
+	(text "Net Name Convention"
+		(exclude_from_sim no)
+		(at 163.83 251.46 0)
+		(effects
+			(font
+				(size 3.048 3.048)
+			)
+			(justify left bottom)
+		)
+		(uuid "d21a2b59-881c-4336-9d3d-b59f9cd2f69b")
+	)
+	(text "RX Chain"
+		(exclude_from_sim no)
+		(at 227.33 116.84 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left bottom)
+		)
+		(uuid "e644bc5a-63d7-4bcb-928f-6fa63fccf42a")
+	)
+	(text "Power Rail Summary"
+		(exclude_from_sim no)
+		(at 163.83 182.88 0)
+		(effects
+			(font
+				(size 3.048 3.048)
+			)
+			(justify left bottom)
+		)
+		(uuid "ebcfec4b-5c87-4d68-a57e-317494f3879a")
+	)
+	(text "Sheet Index"
+		(exclude_from_sim no)
+		(at 19.05 228.6 0)
+		(effects
+			(font
+				(size 3.048 3.048)
+			)
+			(justify left bottom)
+		)
+		(uuid "ed2eb348-be52-4ad2-8a7b-59c83f32da01")
+	)
+	(text "RP2040 (Pico)"
+		(exclude_from_sim no)
+		(at 166.37 86.36 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left bottom)
+		)
+		(uuid "f03c994a-0467-49de-aade-d93a82d6e932")
+	)
+	(text "TX Chain"
+		(exclude_from_sim no)
+		(at 166.37 116.84 0)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left bottom)
+		)
+		(uuid "ffc362a3-3884-4e98-a7f7-46e0ebb65956")
+	)
+	(text_box "Project: CentiSat CubeSat -- Senior Capstone Design\n\nBoard: Communications Subsystem, Single PCB\n\nDesigner: Nick Grabbs / KI5YNG\n\nRevsion: 0.5\nDate: 05/20/2026\n\nRepsoitory: centisat/hardware/comms"
+		(exclude_from_sim no)
+		(at 158.75 28.905 0)
+		(size -139.7 37.135)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 255 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "31542158-3664-4ad1-9290-4f26426c0682")
+	)
+	(text_box "~2 Sheet ~2 Title ~2 Contents ~2\n~2-------~2-------~2----------~2\n~2 1 ~2 Overview ~2 This sheet — block diagram, design notes ~2\n~2 2 ~2 Clock Gen ~2 Si5351A, 25 MHz crystal, I2C, clock outputs ~2\n~2 3 ~2 TX Chain ~2 XOR modulator, tripler, BPF, ADL5602 MMIC ~2\n~2 4 ~2 RX Chain ~2 PSA4 LNA, LO LPF, ADE-1+ mixer, IF term, Sallen-Key LPF, MCP6022 gain ~2\n~2 5 ~2 Digital Control ~2 RP2040 (Pico module), GPIOs, USB ~2\n~2 6 ~2 Power ~2 Distribution, protection, bypass ~2\n~2 7 ~2 Connectors ~2 CSKB H1 + H2 bus, SMA ports, test points ~2"
+		(exclude_from_sim no)
+		(at 161.29 228.6 0)
+		(size -142.24 40.64)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 255 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "3934ce7e-e94c-4da6-95c7-9f8de098675a")
+	)
+	(text_box "\n * 74LVC1G86 XOR Modulator\n    ( BPSK @ 145.67 MHz )\n                    ~2\n * BRF92A Freq Tripler\n    ( 145.67 -> 437 MHz )\n                    ~2\n * 437 MHz BPF ( pre-MMIC )\n                    ~2\n * ADL5602 MMIC ( +20 db )\n                    ~2\n * 437 MHz BPF ( output )\n                    ~2\n * TX SMA -> 437 MHz antenna"
+		(exclude_from_sim no)
+		(at 217.17 116.84 0)
+		(size -50.8 55.88)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 0 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "495f58b4-36e7-4a91-a75c-52f39ac7fab6")
+	)
+	(text_box "\n * +3V3, +5V, GND\n * I2C_SCL/SDA\n * VBAT (monitor)"
+		(exclude_from_sim no)
+		(at 199.39 25.4 0)
+		(size -33.02 17.78)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 0 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "515f980c-dd37-4ad0-8719-bb7d1a076164")
+	)
+	(text_box "~2 Rail ~2 Source ~2 Voltage ~2 Consumers ~2\n~2------~2--------~2---------~2-----------~2\n~2 +3V3 ~2 EPS via CSKB (H2.27/28) ~2 3.3V ±2% ~2 RP2040, Si5351A, 74LVC1G86, MCP6022 ~2\n~2 +5V ~2 EPS via CSKB (H2.25/26) ~2 5.0V ±2% ~2 PSA4-5043+ LNA, ADL5602 MMIC, tripler bias, Pico VSYS ~2\n~2 GND ~2 EPS via CSKB (H2.29/30/32, H2.31 AGND) ~2 0V ~2 All ~2\n~2 VBAT ~2 EPS via CSKB (H2.45/46) ~2 6.0–8.4V ~2 Monitor only (not used for power) ~2\n\nEstimated current budget:\n+3V3: ~\n50 mA (RP2040 ~~50mA, Si5351A ~~30mA, logic ~\n0mA, op-amp ~\n0mA)\n+5V: ~\n40 mA (PSA4 LNA ~~60mA, ADL5602 ~~60mA, tripler 5mA, Pico VSYS ~\n0mA, margin ~~5mA)\nTotal: <300 mA — well within EPS TPS62933F capacity (3A per rail). Note: PSA4 LNA bias can be GPIO-gated for RX duty-cycling."
+		(exclude_from_sim no)
+		(at 298.45 182.88 0)
+		(size -134.62 60.96)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 255 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "5fcad27f-5e47-4cf0-9389-4142d4e9400f")
+	)
+	(text_box "1. Power from EPS via CSKB bus — no on-board regulators\n2. BPSK modulation at 145.67 MHz (before tripler) — 74LVC1G86\n    fails at 437 MHz, see overview.md timing analysis\n3. Odd-order frequency multiplication preserves BPSK phase states\n   (3 × 180° = 540° ≡ 180° mod 360°)\n4. Tripler bias 47kΩ — empirically optimized (-7.4 dBm @ 437 MHz)\n5. All RF filter caps must be C0G/NP0 (not X7R)\n6. I2C addresses: Si5351A = 0x60, EPS LTC4162 = 0x68 (no conflict)\n7. Flat schematic design — nets connect by name across sheets\n8. Prototype uses Pico module; bare RP2040 deferred to v2"
+		(exclude_from_sim no)
+		(at 158.75 86.36 0)
+		(size -139.7 38.1)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 255 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "87086e8f-8b19-4254-81d6-77f6724ec5b2")
+	)
+	(text_box "\n * Input protection\n * Bulk Bypass\n * Pico VSYS feed"
+		(exclude_from_sim no)
+		(at 201.93 55.88 0)
+		(size -35.56 17.78)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 0 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "90682ddf-a536-470e-b28c-ad5f03296a2c")
+	)
+	(text_box "\n * 25 MHz XTAL -> PLL -> CLK0 (145.67 MHz)\n                                               CLK1 (145.90 MHz)\n                                               CLK2 (spare)"
+		(exclude_from_sim no)
+		(at 209.55 83.82 0)
+		(size 76.2 22.86)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 0 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "b69dd803-f4d6-4e63-b46a-15d078cba9bf")
+	)
+	(text_box "~2 Net ~2 Type ~2 Description ~2\n~2-----~2------~2-------------~2\n~2 +3V3, +5V, GND, VBAT ~2 Power port ~2 Supply rails (global) ~2\n~2 I2C_SDA, I2C_SCL ~2 Net label ~2 I2C bus (Si5351A + IHU bus) ~2\n~2 CLK0_OUT, CLK1_OUT ~2 Net label ~2 Si5351A clock outputs ~2\n~2 BPSK_DATA ~2 Net label ~2 RP2040 → XOR modulator ~2\n~2 TX_OUT, RX_IN ~2 Net label ~2 RF paths to SMA connectors ~2\n~2 RX_BASEBAND ~2 Net label ~2 MCP6022 output → Pico ADC ~2"
+		(exclude_from_sim no)
+		(at 275.59 251.46 0)
+		(size -111.76 30.48)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 255 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "ccc502d9-f4cc-49e7-928e-0d433052ece2")
+	)
+	(text_box "\n * 2m BPF ( input filter )\n                    ~2\n * PSA4-5043+ LNA (+21 dB)\n                    ~2\n * ADE-1+ Mixer <- LO LPF <- CLK1\n                    ~2 (+ 31 ohm term)\n * Sallen-Key LPF ( fc = 3.3kHz )\n                    ~2\n * MCP6022 Gain Stage ( x11 )\n                    ~2\n                    ~2 -> Pico ADC\n\n* RX SMA < - 145.9 MHz antenna"
+		(exclude_from_sim no)
+		(at 293.37 116.84 0)
+		(size -66.04 53.34)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 0 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "cfc98727-e703-4551-ab6b-2e857d05baca")
+	)
+	(text_box "~2 Rev ~2 Date ~2 Author ~2 Description ~2\n~2-----~2------~2--------~2-------------~2\n~2 0.1 ~2 2026-04-10 ~2 NG ~2 Initial schematic — all sheets placed, basic connectivity ~2\n\n~2 0.2 ~2 2026-04-13 ~2 NG ~2 Added Connectors sheet, stack bus, removed on-board regulators, added overview sheet ~2\n\n~2 0.3 ~2 2026-04-15 ~2 NG ~2 Added COMMS_IRQ on GP3 and SPI slave wiring on GP16–19; initial Pumpkin pin-number lock ~2\n\n~2 0.4 ~2 2026-04-15 ~2 NG ~2 Rebuilt connectors against Pumpkin datasheet Rev. E: bus renamed PC/104 → CubeSat Kit Bus (CSKB); pin numbers remapped H10 → H1/H2; connector family corrected to 2× Samtec ESQ-126-39-G-D stackthrough (2×26, 52 pins each); see `system/interfaces/cskb_pinmap.md` ~2\n\n~2 0.5 ~2 2026-05-19 ~2 NG ~2 Sheet 4 RX front-end rebuilt: SA612 active mixer (EOL, sourcing failed) replaced with ADE-1+ passive diode mixer + PSA4-5043+ MMIC LNA + 5-pole LC LPF on the LO line + 51 Ω IF termination. New refdes: U10 (LNA), L12 (Vd choke), L13/L14 + C57/C58/C59 (LO LPF), R19 (IF term), C53/C54/C55/C56/C60 (DC blocks + bypass). Removed: U3 became ADE-1+ (was SA612), and C21/C22/C26/C27 + R7 (SA612-specific support parts) deleted. +5V budget grew from ~~80 mA to ~\n40 mA. Rationale in `rx_mixer_trade_study.md`; bench verification of LO drive level in `bringup/lo_drive_verification.md` and `bringup/si5351a_breakout_bench_test.md`. ~2"
+		(exclude_from_sim no)
+		(at 158.75 132.08 0)
+		(size -139.7 88.9)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 255 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "dc76fc40-b9a6-4f57-8546-5524e87a9ffd")
+	)
+	(text_box "\n * I2C master\n * BPSK data\n * ADC input"
+		(exclude_from_sim no)
+		(at 196.85 86.36 0)
+		(size -30.48 20.32)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 0 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "ec7cf8be-6f3b-43df-aaf0-3a8aaa06beea")
+	)
+	(text_box "* EPS - Electrical Power System"
+		(exclude_from_sim no)
+		(at 158.75 73.66 0)
+		(size -139.7 5.08)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type default)
+			(color 0 0 0 1)
+		)
+		(fill
+			(type color)
+			(color 255 255 255 1)
+		)
+		(effects
+			(font
+				(size 1.778 1.778)
+			)
+			(justify left top)
+		)
+		(uuid "eedf364f-dca7-4359-be49-8298d9d723cd")
+	)
+	(polyline
+		(pts
+			(xy 181.61 45.72) (xy 181.61 50.8)
+		)
+		(stroke
+			(width 0.254)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(uuid "098335a3-2371-4997-846f-998d06827354")
+	)
+	(polyline
+		(pts
+			(xy 199.39 96.52) (xy 199.39 114.3)
+		)
+		(stroke
+			(width 0.254)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(uuid "3322dbb6-eb93-4892-b6a9-c1f6cafdda16")
+	)
+	(polyline
+		(pts
+			(xy 186.69 99.06) (xy 207.01 99.06)
+		)
+		(stroke
+			(width 0.254)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(uuid "3d9bd94c-3c24-4692-bae5-d7cc567eeb8b")
+	)
+	(polyline
+		(pts
+			(xy 186.69 96.52) (xy 199.39 96.52)
+		)
+		(stroke
+			(width 0.254)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(uuid "6605ad3a-2710-4185-a8b4-4cb67da82870")
+	)
+	(polyline
+		(pts
+			(xy 207.01 99.06) (xy 207.01 109.22)
+		)
+		(stroke
+			(width 0.254)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(uuid "6b0d4a5e-4d96-40d7-84dc-ac7b66231159")
+	)
+	(polyline
+		(pts
+			(xy 186.69 91.44) (xy 207.01 91.44)
+		)
+		(stroke
+			(width 0.254)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(uuid "7565b9cb-72c4-4010-a272-14853e57d652")
+	)
+	(polyline
+		(pts
+			(xy 252.73 109.22) (xy 252.73 114.3)
+		)
+		(stroke
+			(width 0.254)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(uuid "c2782f8d-859a-4a53-bb2f-337661662fc3")
+	)
+	(polyline
+		(pts
+			(xy 181.61 76.2) (xy 181.61 81.28)
+		)
+		(stroke
+			(width 0.254)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(uuid "d4ce9dd1-5db9-411b-b5df-26fe0b118373")
+	)
+	(polyline
+		(pts
+			(xy 207.01 109.22) (xy 252.73 109.22)
+		)
+		(stroke
+			(width 0.254)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(uuid "ea1ac89a-7d12-4084-afe7-20a72c2292bf")
+	)
+	(sheet
+		(at 326.39 180.17)
+		(size 55 22)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "11228c3a-4d2c-4805-8d88-16c63b40aa9e")
+		(property "Sheetname" "Digital Control"
+			(at 326.39 179.27 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Digital Control.kicad_sch"
+			(at 326.39 203.07 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "transciever_kicad"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 326.39 150.17)
+		(size 55 22)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2")
+		(property "Sheetname" "Power"
+			(at 326.39 149.27 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Power.kicad_sch"
+			(at 326.39 173.07 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "transciever_kicad"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 326.39 120.17)
+		(size 55 22)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "8e04e994-8636-422b-bbcc-3acfa2e99d78")
+		(property "Sheetname" "RX Chain"
+			(at 326.39 119.27 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "RX Chain.kicad_sch"
+			(at 326.39 143.07 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "transciever_kicad"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 326.39 90.17)
+		(size 55 22)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "95253c0f-15a7-4b27-a643-2156a456084b")
+		(property "Sheetname" "TX Chain"
+			(at 326.39 89.27 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "TX Chain.kicad_sch"
+			(at 326.39 113.07 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "transciever_kicad"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 326.39 210.17)
+		(size 55 22)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "c2664762-33ef-4da5-894f-f6bccdb5ab3d")
+		(property "Sheetname" "Connectors"
+			(at 326.39 209.27 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Connectors.kicad_sch"
+			(at 326.39 233.07 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "transciever_kicad"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 326.39 58.42)
+		(size 54.61 25.4)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e")
+		(property "Sheetname" "Clock Gen"
+			(at 326.39 57.7084 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Clock Gen.kicad_sch"
+			(at 326.39 84.4046 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "transciever_kicad"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
