@@ -82,9 +82,12 @@ handling, the radio link, and system integration.
 | `test/` | Validation procedures and recorded results |
 | `docs/` | Architecture, research references, and supporting documentation |
 
-Board CAD (Altium and KiCad project files) is **not** tracked here — only the
-written design record, fabrication outputs, and measured results. See
-`hardware/conventions/` for the design rules those boards are built to.
+KiCad projects are tracked, under `hardware/<board>/kicad/` — the KiCad file
+formats are plain text, so schematics and layout diff and review like any other
+source. Altium projects are **not** tracked: the formats are binary and the
+project trees dwarf the design. For Altium boards this repository carries the
+written design record, fabrication outputs, and measured results only. See
+`hardware/conventions/` for the design rules every board is built to.
 
 ---
 

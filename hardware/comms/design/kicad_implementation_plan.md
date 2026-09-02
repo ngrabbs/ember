@@ -6,7 +6,7 @@ board** (new RX front end + single antenna), not a patch of the smoked Rev A.
 **Status:** analysis phase complete (TX + RX validated in LTspice); this is the
 implementation scaffold.
 
-**KiCad project:** `hardware/comms/kicad/transciever_kicad/`
+**KiCad project:** [`hardware/comms/kicad/`](../kicad/) — project name `transceiver`
 
 ## Source-of-truth references (don't restate — link)
 
@@ -88,11 +88,11 @@ Everything validated, in one place. Details/rationale in the log.
 
 ## Phase 0 — KiCad project setup
 
-- [ ] Confirm/repair the `transciever_kicad` project opens clean
+- [ ] Confirm/repair the `transceiver` project opens clean
 - [ ] **Physical Stackup** → JLC04161H-7628 (per design-rules doc §2); solid L2 GND
 - [ ] **Design Rules → Constraints** → per design-rules doc §5.1
 - [ ] **Net Classes** → `RF` (50 Ω, 0.358 mm), `PWR`, `PWR_HIGH`; assign by pattern `RF_*` / rails
-- [ ] **Custom rule** (`.kicad_dru`) → enforce RF 50 Ω width band (design-rules §5.3)
+- [ ] **Custom rule** (`transceiver.kicad_dru`) → copy `hardware/conventions/jlcpcb_baseline.kicad_dru`, then tune the band (design-rules §5.3)
 - [ ] Get 50 Ω width from JLCPCB impedance calc, set in `RF` class
 
 ## Phase 1 — Schematic (by sheet)

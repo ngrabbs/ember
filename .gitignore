@@ -20,12 +20,12 @@ Thumbs.db
 *.bck
 
 # ---------------------------------------------------------------------------
-# EDA source trees — held outside this repo.
-# Board design lives in the CAD workspace, not here; only the written design
-# docs, fabrication releases, and measured results are tracked.
+# Altium — not tracked. The binary .SchDoc/.PcbDoc formats do not diff, and
+# Altium's History/ and __Previews/ trees dwarf the design itself. Altium
+# board design lives in the CAD workspace; only the written design record,
+# fabrication releases, and measured results are tracked here.
 # ---------------------------------------------------------------------------
 **/altium/
-**/kicad/
 *.SchDoc
 *.PcbDoc
 *.PrjPcb
@@ -36,18 +36,25 @@ Thumbs.db
 *.RUL
 *.Cam
 *-cache.lib
-*.kicad_pcb
-*.kicad_sch
-*.kicad_pro
+
+# ---------------------------------------------------------------------------
+# KiCad — tracked. .kicad_sch/.kicad_pcb/.kicad_pro are plain-text
+# S-expressions: they diff, they review, and a whole project is well under a
+# megabyte. Only KiCad's own generated and per-user files are ignored below.
+# ---------------------------------------------------------------------------
 *.kicad_prl
-*.kicad_sym
-*.kicad_mod
-*.kicad_dru
 *-backups/
 fp-info-cache
 _autosave-*
 \#auto_saved_files#
 ~*.lck
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*.kicad_pro-bak
+*.sch-bak
+*-save.kicad_pcb
+*-save.pro
+*.000
 
 # ---------------------------------------------------------------------------
 # LTSpice — keep the schematics (.asc/.asy) and netlists (.net).
