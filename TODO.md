@@ -1,15 +1,59 @@
 # EMBER — Open Work
 
-Index of what needs attention and where. Updated 2026-09-02.
+Updated 2026-09-02.
 
 **What lives here:** the current front on each subsystem, plus anything that
-doesn't belong to a checklist already in the docs — cross-cutting cleanups,
-decisions still owed, and inconsistencies found but not yet resolved.
+doesn't belong to a checklist already in the docs.
 
-**What doesn't:** the step-by-step checklists. Those stay in the documents that
-own them (`kicad_implementation_plan.md` has 38 open boxes, `tx_test_plan.md`
-25, and so on). Duplicating them here guarantees the copy goes stale. This file
-points at them.
+**What doesn't:** step-by-step checklists. Those stay in the documents that
+own them — the comms implementation plan has 38 open boxes, `tx_test_plan.md`
+25, and so on. Duplicating them here guarantees the copy goes stale. This
+file points at them.
+
+---
+
+## Where things are
+
+| Path | What's in it |
+|---|---|
+| `hardware/<board>/design/` | The design record — schematic and layout guides, trade studies |
+| `hardware/<board>/kicad/` | The KiCad project. Comms and EPS exist; IHU and payload don't yet |
+| `hardware/<board>/bringup/` | Bench procedures and logs |
+| `hardware/<board>/releases/` | What was actually fabbed — gerbers, BOM, CPL |
+| `hardware/conventions/` | Project-wide: design rules, net naming, the shared `.kicad_dru` |
+| `analysis/` | Orbit and access modelling, power budget, link budget |
+| `system/` | Board-to-board interfaces, the CSKB pin map, protocols |
+| `firmware/` | Housekeeping unit firmware (FreeRTOS on RP2040) |
+| `docs/architecture/` | System-level scope and policy |
+
+The payload **instrument** is a separate repository —
+[koenig_wildfire](https://github.com/ngrabbs/koenig_wildfire). Optics, capture
+software, calibration and flight results live there, not here.
+
+Board CAD policy: **KiCad is tracked, Altium is not.** See the README.
+
+---
+
+## Read this first — the power budget may not close
+
+The budget in [`analysis/power/`](analysis/power/) concludes the design closes
+with **3.7× margin**. That rests on a **200 mW placeholder** for the entire
+spacecraft. Against real subsystem numbers already in this repo:
+
+| | |
+|---|---|
+| Worst-case orbit-average harvest | **736 mW** |
+| Comms board alone, from its own schematic | 3.3 V × 100 mA + 5 V × 140 mA = **1.03 W** |
+| Payload compute (Orin Nano) | **7 W / 15 W** modes |
+
+The comms board by itself is ~1.4× the entire harvest. Duty cycling is
+presumably what saves this, but the budget has no notion of modes — §4 has
+the Nominal / RX-Only / Safe structure sitting empty.
+
+**Until §3 is filled in with real per-mode loads and duty cycles, we do not
+know whether the design closes.** It is also the number the PDR poster's
+argument rests on. `power_budget.py` computes harvest and eclipse DOD
+already; give it real loads and it answers the question immediately.
 
 ---
 
@@ -19,7 +63,8 @@ The active front. Board is KiCad, project at
 [`hardware/comms/kicad/`](hardware/comms/kicad/), plan at
 [`hardware/comms/design/kicad_implementation_plan.md`](hardware/comms/design/kicad_implementation_plan.md).
 
-Phase 0 (project setup) is complete. Next, in order:
+Phase 0 (project setup) is complete. **The next four are order-dependent** —
+doing them out of order means routing the RF twice:
 
 - [ ] **Run DRC for the first time.** `min_clearance` was `0.0` until now, so
       the 511 already-routed segments have never been checked against
@@ -27,14 +72,14 @@ Phase 0 (project setup) is complete. Next, in order:
 - [ ] **Re-route RF at 0.358 mm.** 194 segments currently sit at 0.34 mm,
       which is neither the old net-class width nor the new one.
       `transceiver.kicad_dru` will flag anything outside 0.35–0.37 mm.
-- [ ] **Set the L1 ground zone clearance to 1.1 mm before pouring.** Keeps the
+- [ ] **Set the L1 ground zone clearance to 1.1 mm before pouring** (currently 0.5 mm). Keeps the
       RF traces microstrip rather than accidental coplanar — see the decision
       in [`rf_layout_guidelines.md`](hardware/comms/design/rf_layout_guidelines.md).
       Do *not* raise the `RF` net-class clearance to achieve this; it would
       make the filter and mixer pads unroutable.
 - [ ] **Rename RF nets to `RF_*` / `LO_*`.** The wildcards are already in the
-      net classes; renaming collapses 30 brittle auto-name patterns
-      (`NetC24_1`, `NetIC1_3`) into two. Convention in
+      net classes; renaming collapses 22 brittle auto-name patterns
+      (`NetC24_1`, `NetIC1_3`) into two. 22 remain. Convention in
       [`net_naming.md`](hardware/conventions/net_naming.md).
 
 ### RX front end — architecture change not yet made
@@ -107,6 +152,29 @@ Schematic: [`altium_ihu_schematic.md`](hardware/ihu/design/altium_ihu_schematic.
 
 ---
 
+## Command, Telemetry and Debug Interface
+
+The fifth subsystem on the poster, and **the thinnest in the repo.** What
+exists today is four short stubs totalling ~120 lines:
+[`system/protocols/command.md`](system/protocols/command.md) (39),
+[`system/protocols/telemetry.md`](system/protocols/telemetry.md) (40),
+[`system/integration/integration_plan.md`](system/integration/integration_plan.md) (20),
+[`system/integration/system_tests.md`](system/integration/system_tests.md) (19).
+
+- [ ] Define the command format — framing, addressing, acknowledgement
+- [ ] Define the telemetry format and the beacon contents
+- [ ] Decide what the operator-facing debug path is on the bench, and whether
+      it is the same path as the flight command link
+- [ ] Reconcile with the ground-station half of Communications — the poster
+      folds the ground station into comms, so the boundary between "comms"
+      and "command/telemetry" needs stating before both are worked in
+      parallel
+
+This is the most greenfield of the five. Good candidate to hand to whoever
+wants to define something rather than inherit it.
+
+---
+
 ## Payload
 
 The instrument lives in its own repository —
@@ -131,10 +199,11 @@ This repo covers the carrier board. Open items in
       change — currently **0.358 mm**, verified 2026-09-02 (14.12 mil)
 - [ ] Ground-station access modelling — contact duration, revisit, per-pass
       data volume. Checklist in [`analysis/orbit/README.md`](analysis/orbit/README.md) (15 open)
-- [ ] Fill in the **load profile** in [`analysis/power/README.md`](analysis/power/README.md) §3
-      with measured subsystem currents. The whole budget still rests on a
-      200 mW placeholder; the margin claim is 3.7× against that placeholder,
-      not against real loads
+- [ ] **Fill in the load profile** — see the callout at the top of this file.
+      This is the highest-value open item in the repo. §3 of
+      [`analysis/power/README.md`](analysis/power/README.md) needs per-mode
+      currents; §4 needs duty cycles for Nominal / RX-Only / Safe. Everything
+      else in Analysis can wait behind it.
 - [ ] Link budget — [`analysis/link_budget/`](analysis/link_budget/) is an empty stub
 
 ---
@@ -176,13 +245,41 @@ This repo covers the carrier board. Open items in
 
 ---
 
-## Done recently
+## What's been done
 
-- Repository renamed and scrubbed of the predecessor project name
-- Board CAD policy settled: KiCad tracked, Altium not
-- Altium design-rules doc retired, content folded into the KiCad one
-- Comms KiCad Phase 0 complete — stackup, constraints, net classes,
-  custom rule, pre-defined sizes
-- Power budget verified reproducible (`analysis/power/power_budget.py`)
-- EPS schematic assembled into a hierarchy and linked to the PCB — 77/77
-  footprints, 0 warnings, 0 errors from Update PCB from Schematic
+Context for anyone arriving now — this is why the repo looks the way it does.
+
+**Repository.** Renamed from the predecessor project and scrubbed of its name
+(456 raw hits, of which 302 were `CSKB` — the Pumpkin CubeSat Kit Bus, an
+industry standard, deliberately left alone). Went from 1.3 GB to ~120 MB by
+dropping vendored CAD, regenerable simulation output, and 8 MB of embedded
+uncompressed bitmaps. A pre-publication book that had been committed by
+mistake was removed from history.
+
+**Board CAD policy.** KiCad is tracked, Altium is not — KiCad's formats are
+plain text and diff properly; Altium's are binary and its project trees dwarf
+the design. All design guides for boards that exist have been converted to
+KiCad wording.
+
+**Comms board.** KiCad project set up end to end: stackup entered and verified
+field-by-field against jlcpcb.com/impedance, constraints, net classes, custom
+width rule, pre-defined sizes. The 50 Ω width is 0.358 mm, confirmed at
+14.12 mil. Recorded a decision that was being made by accident — the RF traces
+are microstrip, so the L1 ground pour must stay 1.1 mm back or the geometry
+becomes coplanar and 0.358 mm stops being 50 Ω.
+
+**EPS board.** Docs corrected from 4-layer to 2-layer — rev A gerbers confirm
+2 is what was always fabbed. The schematic was three unlinked files from an
+Altium import; it is now a proper hierarchy with all 77 footprints linked to
+the PCB, 0 warnings and 0 errors. Recovering that took restoring an
+annotation KiCad had silently renumbered.
+
+**Analysis.** The power budget's harvest figures were verified reproducible —
+`power_budget.py` recomputes them from the STK exports and matches the
+published table exactly. Its *load* side is the open question at the top of
+this file.
+
+**Documentation.** Two duplicated design-rules docs merged into one; a stale
+copy of the K-line physics primer removed after it was found to describe an
+abandoned filter plan (762/766/770 nm rather than the current 750/770/780);
+about 190 bare filenames converted to working links.
