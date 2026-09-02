@@ -2273,6 +2273,6 @@ title block "Notes" field or as a text frame on the Top sheet.
 - Tripler breadboard build guide: [`hardware/comms/bringup/tripler_breadboard.md`](../bringup/tripler_breadboard.md)
 - TX test plan: [`hardware/comms/bringup/tx_test_plan.md`](../bringup/tx_test_plan.md)
 - RX test plan: [`hardware/comms/bringup/rx_test_plan.md`](../bringup/rx_test_plan.md)
-- EPS Altium schematic guide: [`hardware/eps/design/altium_eps_schematic_guide.md`](../../eps/design/altium_eps_schematic_guide.md)
+- EPS schematic guide: [`hardware/eps/design/schematic_guide.md`](../../eps/design/schematic_guide.md)
 - EPS architecture: [`hardware/eps/design/overview.md`](../../eps/design/overview.md)
 - v0.1 schematic PDF: `hardware/comms/design/satellite_comms_draft_v0.1.pdf`

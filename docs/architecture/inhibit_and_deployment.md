@@ -6,7 +6,7 @@ Define the stack's **power inhibit** and **deployment detect** strategy
 so that the RBF pin, separation switches, post-ejection timer, and
 RF/deployable enable logic are all consistent across the EPS and IHU
 boards. This is a design-notes stub — the schematic implementation
-will land in [`hardware/eps/design/altium_eps_schematic_guide.md`](../../hardware/eps/design/altium_eps_schematic_guide.md) once the
+will land in [`hardware/eps/design/schematic_guide.md`](../../hardware/eps/design/schematic_guide.md) once the
 policy below is locked.
 
 ## TL;DR breadcrumb (read this first if you forgot where we left off)
@@ -227,6 +227,6 @@ WDT jumper.
   which is less conservative than CDS recommends).
 - [`hardware/ihu/design/altium_ihu_schematic.md`](../../hardware/ihu/design/altium_ihu_schematic.md)
   Section C — current WDT-disable jumper (JP1), to be re-labeled.
-- [`hardware/eps/design/altium_eps_schematic_guide.md`](../../hardware/eps/design/altium_eps_schematic_guide.md) — target location
+- [`hardware/eps/design/schematic_guide.md`](../../hardware/eps/design/schematic_guide.md) — target location
   for the new RBF + separation switch + timer block once policy
   is locked.

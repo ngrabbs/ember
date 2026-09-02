@@ -15,7 +15,7 @@ When a test fails, switch to the diagnosis docs:
 - [`hardware/eps/bringup/tps62933_ltspice_debug_guide.md`](tps62933_ltspice_debug_guide.md) — TPS62933F feedback
   network theory, LTSpice behavioral model, per-pin scope expectations, and a
   fault tree for "regulator has no output."
-- [`hardware/eps/design/altium_eps_schematic_guide.md`](../design/altium_eps_schematic_guide.md) — schematic source of
+- [`hardware/eps/design/schematic_guide.md`](../design/schematic_guide.md) — schematic source of
   truth (Sheet 1 = LTC4162, Sheet 2 = TPS62933F regulators).
 - `analysis/power/` — orbital power balance with the locked
   4S panel configuration (Vmp ≈ 22.3 V, Voc ≈ 27.6 V).

@@ -228,7 +228,7 @@ for the full RF / BB chain listing. Examples:
 
 ### EPS board
 
-See [`hardware/eps/design/altium_eps_schematic_guide.md`](../eps/design/altium_eps_schematic_guide.md).
+See [`hardware/eps/design/schematic_guide.md`](../eps/design/schematic_guide.md).
 Suggested naming once renamed: `PWR_PANEL_RAW_<face>` for solar
 inputs, `PWR_BATT_BUS` for the 2S battery bus,
 `THM_BATT_NTC` for charge-disable thermal sense.

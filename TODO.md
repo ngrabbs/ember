@@ -88,7 +88,7 @@ Open items (from [`hardware/eps/README.md`](hardware/eps/README.md)):
 - [ ] Battery balancing / protection strategy
 - [ ] Integrated EPS release package
 
-Detailed checklists: [`altium_eps_schematic_guide.md`](hardware/eps/design/altium_eps_schematic_guide.md)
+Detailed checklists: [`schematic_guide.md`](hardware/eps/design/schematic_guide.md)
 (22 open), [`layout_guide.md`](hardware/eps/design/layout_guide.md) (15 open),
 [`phase1_validation.md`](hardware/eps/bringup/phase1_validation.md).
 
@@ -147,14 +147,13 @@ This repo covers the carrier board. Open items in
       command/telemetry/debug interface. `system/` interface docs still
       describe the four-way split.
 - [ ] **Five Altium board guides remain** while board design is KiCad-only:
-      `altium_comms_schematic.md`, `altium_eps_schematic_guide.md`,
-      `altium_ihu_schematic.md`, `altium_payload_schematic_guide.md`,
-      `altium_payload_layout_guide.md`. The comms and EPS *schematic* guides
-      are the pressing cases, since both boards are now KiCad; the IHU and
-      payload guides describe boards not started, so they can convert when
-      those boards do. `hardware/eps/design/layout_guide.md` is converted
-      and is the worked example for the rest — the tool-specific content is
-      only about 5%, clustered in note headings, DRC/net-class tables, and
+      `altium_comms_schematic.md`, `altium_ihu_schematic.md`,
+      `altium_payload_schematic_guide.md`, `altium_payload_layout_guide.md`.
+      **Comms is the pressing case** — that board is KiCad and its guide is
+      the largest at 2278 lines. The IHU and payload guides describe boards
+      not started, so they can convert when those boards do. Both EPS guides
+      are converted and are the worked examples: tool-specific content runs
+      about 5%, clustered in note headings, DRC/net-class tables, and
       fabrication-output paths.
 - [ ] `net_naming.md` worked example still cites `BFR92A` as the tripler; the
       part is `2SC3356`

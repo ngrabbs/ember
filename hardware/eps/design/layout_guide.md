@@ -504,7 +504,7 @@ verify before ordering.
 
 ## Related Documents
 
-- Schematic guide: [`altium_eps_schematic_guide.md`](altium_eps_schematic_guide.md) — still Altium-worded, conversion pending
+- Schematic guide: [`schematic_guide.md`](schematic_guide.md)
 - EPS architecture: [`hardware/eps/design/overview.md`](overview.md)
 - Bring-up plan: [`hardware/eps/bringup/phase1_validation.md`](../bringup/phase1_validation.md)
 - TPS62933F datasheet: TI SLUSEA4D (layout section 12, pp. 40-41)

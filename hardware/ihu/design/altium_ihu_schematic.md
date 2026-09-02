@@ -801,7 +801,7 @@ Connectors sheet.
 ### Section A: I2C Bus to EPS (Top-Left)
 
 The EPS board already has its own I2C pull-ups for the LTC4162 (per
-[`hardware/eps/design/altium_eps_schematic_guide.md`](../../eps/design/altium_eps_schematic_guide.md)). The IHU's role on this
+[`hardware/eps/design/schematic_guide.md`](../../eps/design/schematic_guide.md)). The IHU's role on this
 bus is master, so we do NOT add a second set of pull-ups here unless
 the EPS pull-ups prove inadequate during bring-up. Reserve footprints
 for optional pull-ups.

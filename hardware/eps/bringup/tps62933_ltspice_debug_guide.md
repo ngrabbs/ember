@@ -41,7 +41,7 @@ If all four pass and you still have no rail, jump to Section 2.
 
 ## Section 2 — CRITICAL: Verify Vref Against Your Datasheet
 
-The schematic guide ([`hardware/eps/design/altium_eps_schematic_guide.md`](../design/altium_eps_schematic_guide.md))
+The schematic guide ([`hardware/eps/design/schematic_guide.md`](../design/schematic_guide.md))
 documents Vref as 0.8 V and sized the dividers for that. The TI
 TPS62933 datasheet family (SLUSEA4 / SLUSEA4D) has historically listed
 Vref = 0.6 V for the standard part. **The TPS62933F variant we used
@@ -484,7 +484,7 @@ investigation — the regulator is fine, the bus isn't.
 
 ## Related Documents
 
-- Schematic source-of-truth: [`hardware/eps/design/altium_eps_schematic_guide.md`](../design/altium_eps_schematic_guide.md)
+- Schematic source-of-truth: [`hardware/eps/design/schematic_guide.md`](../design/schematic_guide.md)
   (Sheet 2 covers the regulator stages)
 - BOM: `hardware/eps/releases/CubeSat_EPS_rev_A_BOM.csv`
   (TPS62933FDRLR = LCSC C5219272; FB resistors are R9/R10/R13/R14)

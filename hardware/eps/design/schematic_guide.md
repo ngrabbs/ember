@@ -1,4 +1,10 @@
-# Altium Schematic Instructions — EPS Board
+# Schematic Instructions — EPS Board
+
+**Board:** [`hardware/eps/kicad/`](../kicad/), project `eps`.
+**Rules and conventions:**
+[`../../conventions/kicad_jlcpcb_design_rules.md`](../../conventions/kicad_jlcpcb_design_rules.md)
+and [`../../conventions/net_naming.md`](../../conventions/net_naming.md).
+**Layout:** [`layout_guide.md`](layout_guide.md).
 
 ## Design Summary
 
@@ -50,21 +56,28 @@ the need for a separate 5 V LDO entirely.
 
 ---
 
-## Altium Project Setup
+## Project Setup
 
-1. Create a new PCB project: `EPS_Board.PrjPcb`
-2. Add three schematic sheets:
-   - `Solar_Charger.SchDoc`
-   - `Regulation.SchDoc`
-   - `Connectors_Telemetry.SchDoc`
-3. Each sheet uses A3 landscape format (gives more room than A4)
-4. Set the project's designator scope to "Flat" so R1, C1, etc. are unique
-   across all sheets
+The project already exists as [`../kicad/eps.kicad_pro`](../kicad/eps.kicad_pro)
+with a root sheet and two hierarchical sheets:
+
+- `eps.kicad_sch` — root: connectors, telemetry, inhibits
+- `Solar_Charger.kicad_sch`
+- `Regulation.kicad_sch`
+
+Sheets are A3 landscape. Reference designators are unique across the whole
+hierarchy — R1, C1 and so on appear once each, not once per sheet.
+
+> **Do not re-annotate.** The reference designators are the only link
+> between these sheets and the PCB. Running `Tools → Annotate Schematic`
+> with "Keep existing annotations" unset will renumber parts and unlink
+> every footprint on the board. This has already happened once.
 
 ### Net Name Convention
 
-Use these global net names consistently across all sheets. Use **power port
-symbols** (not net labels) for supply rails so they are global automatically.
+Use these global net names consistently across all sheets. Use **power
+symbols** (not plain labels) for supply rails — a power symbol is global
+across the hierarchy without needing a hierarchical label.
 
 | Net Name | Type | Description |
 |---|---|---|
@@ -92,7 +105,7 @@ compensation, and the complete LTC4162-L application circuit.
 
 ### Section A: Solar Input (Top-Left of Sheet)
 
-#### Text Frame (Place > Text Frame, top of this section):
+#### Text Box (Place → Text Box, top of this section):
 
 > SOLAR INPUT — 4 face PCBs (X+, X-, Y+, Y-), each with 4x SM141K10TF
 > in series (~18.4V Vmp, ~23.6V Voc, ~41mA Imp per face). Faces are
@@ -129,7 +142,7 @@ Pick from JLCPCB basic parts stock.
 
 All four cathodes connect to the common `SOLAR_BUS` net.
 
-#### Note (Place > Note, next to the diodes):
+#### Note (Place → Text, next to the diodes):
 
 > Blocking diodes prevent shadowed/unlit face PCBs from sinking current
 > from illuminated faces. Forward drop ~0.3V at 50mA. For bench testing,
@@ -163,7 +176,7 @@ SOLAR_BUS ──→ R1 (2.7 Ohm) ──→ VIN_CHG ──→ to LTC4162 VIN (pin
                GND                   GND
 ```
 
-#### Note (Place > Note, next to R1/C1):
+#### Note (Place → Text, next to R1/C1):
 
 > Solar panel impedance compensation per LTC4162-L datasheet Fig. 8.
 > 2.7 Ohm + 150uF maintains ~2.7 Ohm real impedance in the 1–10kHz band
@@ -217,7 +230,7 @@ VIN_CHG ──→ MN1 drain
 | MN1 | FDMC8327L | WDFN-8 (5x3.3mm) | Drain=`VIN_CHG`, Gate=INFET(pin6), Source=`CLP_NODE` |
 | RS1 | 10m Ohm, 1%, 1/2W | 0805 (Kelvin) | Between CLP (pin 5) and CLN (pin 4) |
 
-#### Note (Place > Note, next to MN1 and RS1):
+#### Note (Place → Text, next to MN1 and RS1):
 
 > MN1: Input reverse-blocking MOSFET. LTC4162 drives gate via INFET
 > charge pump. FDMC8327L selected per DC2038A reference design.
@@ -251,7 +264,7 @@ BOOST (pin 1) ── C_BST (22nF, 10V, X7R) ── SW_NODE
 | L1 | 4.7uH, >4.2A sat | Shielded power inductor | `SW_NODE` to `CSP_NODE` |
 | C4 | 22nF, 10V, X7R ceramic | 0402 | `BOOST` (pin 1) to `SW_NODE` |
 
-#### Note (Place > Note, next to L1):
+#### Note (Place → Text, next to L1):
 
 > L1 = 4.7uH per LTC4162-L solar application (datasheet p.49).
 > L = 0.3 x VIN(MAX) / fOSC = 0.3 x 23.6 / 1.5 = 4.7uH.
@@ -291,7 +304,7 @@ L1 output ──→ CSP (pin 21)
 | RS2 | 10m Ohm, 1%, 1/2W | 0805 (Kelvin) | Between CSP (pin 21) and CSN (pin 20) |
 | C5 | 10uF, 10V, X5R ceramic | 0805 | `VBAT` (BATSENS+ side) to `GND` |
 
-#### Note (Place > Note, next to MN2 and RS2):
+#### Note (Place → Text, next to MN2 and RS2):
 
 > MN2: Battery reverse-blocking MOSFET. Prevents battery back-feeding
 > the input when VIN is absent. FDMC8327L per DC2038A reference.
@@ -316,7 +329,7 @@ L1 output ──→ CSP (pin 21)
 | C7 | 1uF, 6.3V, X5R ceramic | 0402 | `VCC2P5` to `GND` |
 | R2 | 63.4k, 1%, 1/10W | 0603 | RT (pin 11) to `GND` |
 
-#### Note (Place > Note, next to R2):
+#### Note (Place → Text, next to R2):
 
 > R2 = 63.4k sets switching frequency: fOSC = 94 / R_T(kOhm)
 > = 94 / 63.4 = 1.48MHz (nominal 1.5MHz). Optimized for efficiency
@@ -334,7 +347,7 @@ L1 output ──→ CSP (pin 21)
 These are direct wire connections (no resistors needed). The pin strapping
 sets the cell count to 2 cells per the LTC4162-L datasheet Table 5.
 
-#### Note (Place > Note, next to CELLS0/CELLS1):
+#### Note (Place → Text, next to CELLS0/CELLS1):
 
 > Cell count = 2S Li-Ion: CELLS1 = INTVCC, CELLS0 = VCC2P5.
 > Matches DC2038A demo board jumper configuration for 2-cell Li-Ion.
@@ -364,7 +377,7 @@ NTCBIAS (pin 9) ── R3 (10k)  ──┬── NTC (pin 10)
 Suggested thermistor: Vishay NTCS0402E3103FHT (10k, beta=3950K, 0402).
 This is the same part used on the DC2038A demo board.
 
-#### Note (Place > Note, next to thermistor network):
+#### Note (Place → Text, next to thermistor network):
 
 > NTC thermistor senses battery temperature for JEITA charge safety.
 > LTC4162 applies 1.2V to NTCBIAS and reads the voltage divider on NTC.
@@ -393,7 +406,7 @@ This is the same part used on the DC2038A demo board.
 Connect DVCC (pin 15) directly to INTVCC with a short trace. The datasheet
 requires DVCC to be the same supply as the I2C pull-up resistors.
 
-#### Note (Place > Note, next to I2C pullups):
+#### Note (Place → Text, next to I2C pullups):
 
 > I2C address: 0x68 (7-bit). Up to 400kHz (Fast Mode).
 > DVCC = INTVCC (~5V) sets I2C logic levels. The internal housekeeping unit
@@ -434,7 +447,7 @@ Place **sheet entry ports** (or off-sheet connectors) on the right edge:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│  [Text Frame: Solar Input Description]                                 │
+│  [Text Box: Solar Input Description]                                 │
 │                                                                        │
 │  J1 ──D1──┐                                                            │
 │  J2 ──D2──┤                   ┌──────────────┐                         │
@@ -479,7 +492,7 @@ This sheet takes `VOUT_PP` from the LTC4162 PowerPath output and
 produces the two regulated rails using two TPS62933F synchronous buck
 converters: 3.3V at up to 3A and 5.0V at up to 3A.
 
-### Text Frame (Place > Text Frame, top of sheet):
+### Text Box (Place → Text Box, top of sheet):
 
 > REGULATION — Both rails are produced by TPS62933F 3A synchronous
 > buck converters fed from VOUT_PP (LTC4162 PowerPath output, 6–18V).
@@ -562,7 +575,7 @@ the maximum VOUT_PP excursion (~18 V) with healthy derating.
 | C30 | 10 µF, 35 V, X7R ceramic | 1210 | `VOUT_PP` to `GND` |
 | C31 | 100 nF, 50 V, X7R ceramic | 0402 | `VOUT_PP` to `GND` |
 
-#### Note (Place > Note, next to C30/C31):
+#### Note (Place → Text, next to C30/C31):
 
 > Input bypass per TPS62933F datasheet §10.2.2.9. C31 (100 nF) MUST
 > be placed directly across the VIN and GND pins with the shortest
@@ -602,7 +615,7 @@ Resulting VOUT = 0.8 × (1 + 31.6 / 10) = **3.328 V** (within ±1% target).
 | R23 | 31.6 kΩ, 1%, 100 ppm/°C | 0603 | Top feedback resistor |
 | R24 | 10 kΩ, 1%, 100 ppm/°C | 0603 | Bottom feedback resistor |
 
-#### Note (Place > Note, next to R23/R24):
+#### Note (Place → Text, next to R23/R24):
 
 > Feedback divider for 3.3V rail. Vref = 0.8 V (TPS62933F internal
 > bandgap). R_FBT = ((Vout − Vref) / Vref) × R_FBB.
@@ -629,7 +642,7 @@ Datasheet Table 10-2 calls for 40 µF typical effective capacitance at
 | C32 | 100 nF, 16 V, X5R ceramic | 0402 | BST (pin 6) to SW (pin 5) |
 | C33 | 33 nF, 16 V, X7R ceramic | 0402 | SS (pin 7) to `GND` |
 
-#### Note (Place > Note, next to C32/C33):
+#### Note (Place → Text, next to C32/C33):
 
 > C32 is the bootstrap cap — provides gate drive for the high-side FET.
 > 100 nF X5R 16 V minimum, placed directly between BST and SW pins
@@ -664,7 +677,7 @@ Ven_fall = 1.17 V, Ven_rise = 1.21 V):
 | R20 | 226 kΩ, 1% | 0603 | `VOUT_PP` to EN (pin 2) |
 | R21 | 61.9 kΩ, 1% | 0603 | EN (pin 2) to `GND` |
 
-#### Note (Place > Note, next to R20/R21):
+#### Note (Place → Text, next to R20/R21):
 
 > EN UVLO divider: VSTART ≈ 5.5 V rising, VSTOP ≈ 5.0 V falling.
 > Backstop against deep-discharge oscillation if the LTC4162 LVD ever
@@ -732,7 +745,7 @@ Resulting VOUT = 0.8 × (1 + 52.3 / 10) = **4.984 V** (within ±0.4%).
 | R25 | 52.3 kΩ, 1%, 100 ppm/°C | 0603 | Top feedback resistor |
 | R26 | 10 kΩ, 1%, 100 ppm/°C | 0603 | Bottom feedback resistor |
 
-#### Note (Place > Note, next to R25/R26):
+#### Note (Place → Text, next to R25/R26):
 
 > Feedback divider for 5V rail. Same Vref/equation as the 3.3V stage.
 > Datasheet Table 10-2 lists R_top = 52.5 kΩ for this rail; 52.3 kΩ
@@ -770,7 +783,7 @@ the regulator footprint.
 | C52 | 10 µF, 16 V, X7R | 0805 | `+5V` to `GND` | Board-level bulk, 5V |
 | C53 | 100 nF, 16 V, X7R | 0402 | `+5V` to `GND` | HF decoupling, 5V |
 
-#### Note (Place > Note, next to C50–C53):
+#### Note (Place → Text, next to C50–C53):
 
 > Board-level bulk bypass at the rail aggregation point. Local
 > bypass at each consumer (RP2040, RF stages, etc.) is the
@@ -807,7 +820,7 @@ Sheet 2 Port Entries (Left Edge):
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│  [Text Frame: Regulation Description]                                │
+│  [Text Box: Regulation Description]                                │
 │                                                                      │
 │  VOUT_PP (port) ──┬─────────────────────────┬───────────────         │
 │                   │                         │                        │
@@ -855,7 +868,7 @@ Sheet 2 Port Entries (Left Edge):
 This sheet holds the battery connector, CSKB H1 + H2 stack connectors, status
 LEDs, and test points.
 
-### Text Frame (Place > Text Frame, top of sheet):
+### Text Box (Place → Text Box, top of sheet):
 
 > CONNECTORS & TELEMETRY — Battery interface, CSKB H1 + H2 stack connectors
 > for inter-board power and signal distribution, status LEDs, and test
@@ -877,7 +890,7 @@ Provide both a JST for the battery holder and a pin header for bench
 supply clip leads. They connect in parallel to the same `VBAT` and `GND`
 nets.
 
-#### Note (Place > Note, next to battery connectors):
+#### Note (Place → Text, next to battery connectors):
 
 > Battery: 2S2P LG MJ1 18650 (7000mAh total, 6.0–8.4V).
 > J5 (JST): permanent battery holder connection.
@@ -958,7 +971,7 @@ resistance and provides low-impedance current return paths. AGND is a
 single pin on CSKB (H2.31) and is tied to the single GND plane at the
 EPS board only.
 
-#### Note (Place > Note, next to CSKB connectors):
+#### Note (Place → Text, next to CSKB connectors):
 
 > CSKB stack connectors: 2× Samtec ESQ-126-37-G-D (2×26, 0.1″
 > (2.54 mm), non-stackthrough through-hole socket, one each for H1
@@ -1007,7 +1020,7 @@ telemetry path.
 | D11 | Green LED | 0603 |
 | D12 | Yellow LED | 0603 |
 
-#### Note (Place > Note, next to LEDs):
+#### Note (Place → Text, next to LEDs):
 
 > LED brightness at 3.3V: I = (3.3 - 2.0) / 1k = 1.3mA (dim but visible).
 > LED brightness at 5.0V: I = (5.0 - 2.0) / 1k = 3.0mA.
@@ -1019,18 +1032,15 @@ telemetry path.
 
 ### Section D: Test Points (Bottom-Right)
 
-In Altium, place test points as single-pin components. Search Manufacturer
-Part Search for "test point" or use a generic 1-pin symbol and assign a
-test point pad footprint (e.g., a 1.5mm round pad or Keystone 5019 loop).
+Test points are single-pin components. The board already carries TP1–TP5 on
+`Vault:TP06R`.
 
-#### How to Place Test Points in Altium
+#### Placing a test point
 
-1. Place > Part > search "Test Point" in Manufacturer Part Search
-2. Or: create a generic 1-pin schematic symbol called "TP"
-3. Assign a footprint: use a round pad (1mm–2mm diameter) or a loop
-   footprint (Keystone 5000-series)
-4. Label each test point with its net name in the Comment field
-5. On the PCB, test points appear as pads — probe them with scope/DMM
+1. `Place → Add Symbol`, search the `Connector` library for `TestPoint`
+2. Assign a footprint — a round pad 1–2 mm, or a Keystone 5000-series loop
+3. Put the net name in the symbol's Value field so it shows on the sheet
+4. On the PCB the test point is a pad — probe it with scope or DMM
 
 #### Test Point List
 
@@ -1049,7 +1059,7 @@ Place TP8 (GND) as a large pad or loop — you always need a convenient
 ground reference for scope probing. Consider placing two GND test points
 on opposite sides of the board.
 
-#### Note (Place > Note, next to test points):
+#### Note (Place → Text, next to test points):
 
 > All test points are single-pad footprints accessible from the top
 > side. TP7 (SW_NODE) is critical for validating switching behavior —
@@ -1078,7 +1088,7 @@ on opposite sides of the board.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│  [Text Frame: Connectors & Telemetry Description]                    │
+│  [Text Box: Connectors & Telemetry Description]                    │
 │                                                                      │
 │  ┌──────────────────┐        ┌─────────────────────────────┐         │
 │  │ Battery          │        │ J7 (H1) + J7 (H2):          │         │
@@ -1129,7 +1139,7 @@ on opposite sides of the board.
 
 ## Sheet 4: Inhibits & RBF
 
-### Text Frame (Place > Text Frame, top of sheet):
+### Text Box (Place → Text Box, top of sheet):
 
 > **EPS Sheet 4 — Inhibits & RBF (v0.1 proto)**
 >
@@ -1185,7 +1195,7 @@ PCB, and label it clearly on silk:
 Also add a bright red silkscreen border or "RBF" marker so a
 reviewer can see it at a glance during integration.
 
-#### Note (Place > Note, next to JP_RBF):
+#### Note (Place → Text, next to JP_RBF):
 
 > **JP_RBF — Remove Before Flight pin (v0.1 proto jumper).**
 >
@@ -1254,7 +1264,7 @@ Place `JP_INH1` and `JP_INH2` side-by-side, clearly separated from
 > Both pulled   = TX + deployables ARMED.
 > Either one alone is enough to keep the satellite inhibited.
 
-#### Note (Place > Note, next to JP_INH1 / JP_INH2):
+#### Note (Place → Text, next to JP_INH1 / JP_INH2):
 
 > **JP_INH1 / JP_INH2 — Deployment inhibit jumpers (v0.1 proto).**
 >
@@ -1306,7 +1316,7 @@ Future-spin improvement: add a 74LVC2G08 dual AND gate so
 Not in v0.1 — see the open items in
 [`docs/architecture/inhibit_and_deployment.md`](../../../docs/architecture/inhibit_and_deployment.md).
 
-#### Note (Place > Note, near the DEPLOY_ARMED net label):
+#### Note (Place → Text, near the DEPLOY_ARMED net label):
 
 > `DEPLOY_ARMED` exits this sheet to `COMMS_TX_EN` (CSKB to comms
 > board) and `BURN_EN` (burn-wire load switch, TBD). For v0.1
@@ -1326,8 +1336,9 @@ Not in v0.1 — see the open items in
 
 Note: Sheet 4 has a **cross-sheet tie** to Sheet 2. The `JP_RBF`
 jumper pin 1 is the same net as the R20/R21 EN midpoint on Sheet 2.
-Use a matching net label (e.g. `BUCK_EN`) on both sheets so Altium's
-ERC ties them together on compile.
+Use a matching label on both sheets so ERC ties them together. Across a
+hierarchy this needs a **hierarchical label** on each sheet plus a matching
+sheet pin, or a global label if the net should be visible everywhere.
 
 ---
 
@@ -1335,15 +1346,16 @@ ERC ties them together on compile.
 
 ### 1. Annotate
 
-Tools > Annotate Schematic Quietly (or Annotate Schematic for manual
-control). Assign unique designators across all sheets: R1, R2, ... C1,
-C2, ... etc.
+**Only for genuinely new parts.** `Tools → Annotate Schematic` with scope
+set to the new symbols and **"Keep existing annotations" selected**. Never
+run a full re-annotation on this project — see the warning under Project
+Setup.
 
 ### 2. Compile and Validate
 
-Project > Compile PCB Project. Check the Messages panel for:
+`Inspect → Electrical Rules Checker`. Check for:
 - **Net mismatch** between sheet entry ports (names must match exactly)
-- **Unconnected pins** — add no-connect X markers on any intentionally
+- **Unconnected pins** — add no-connect flags on any intentionally
   unconnected pins on the LTC4162 or other ICs
 - **Duplicate designators** — fix before proceeding
 - **Power port direction warnings** — these are usually benign but review
@@ -1361,7 +1373,7 @@ On each sheet, double-click the title block and fill in:
 
 ### 4. Export PDF
 
-File > Smart PDF (or File > Print > PDF).
+`File → Plot`, output format PDF, all sheets, one file.
 Save to `hardware/eps/releases/EPS_schematic_v0.1.pdf` for review.
 
 ---
@@ -1448,7 +1460,7 @@ Save to `hardware/eps/releases/EPS_schematic_v0.1.pdf` for review.
 ## Design Notes Summary (For Title Block or Separate Note Sheet)
 
 These are the key design decisions documented in this schematic. Place
-a condensed version in the title block "Notes" field or as a text frame
+a condensed version in the title block comment fields or as a text box
 on Sheet 1.
 
 1. **Battery**: 2S2P LG MJ1 18650 Li-Ion, 7.2V nom, 6.0–8.4V range
@@ -1497,4 +1509,4 @@ on Sheet 1.
 - EPS interfaces: [`hardware/eps/design/interfaces.md`](interfaces.md)
 - Inhibit & deployment policy: [`docs/architecture/inhibit_and_deployment.md`](../../../docs/architecture/inhibit_and_deployment.md)
 - Bring-up plan: [`hardware/eps/bringup/phase1_validation.md`](../bringup/phase1_validation.md)
-- Comms board Altium guide (reference format): [`hardware/comms/design/altium_comms_schematic.md`](../../comms/design/altium_comms_schematic.md)
+- Comms board schematic guide (reference format): [`../../comms/design/altium_comms_schematic.md`](../../comms/design/altium_comms_schematic.md) — still Altium-worded, conversion pending
