@@ -2030,7 +2030,7 @@
 		)
 		(uuid "b0ed7464-7c6e-4222-b5a8-08533d0ec918")
 	)
-	(text_box "Non-inverting amplifier, gain = 1 + 100k/10k = 11 (20.8 dB). R10/R11 bias the input to 1.65V (mid-supply) for single-supply operation. C32 (10µF) decouples the bias point at AC so it acts as a solid virtual ground for the signal. C30 AC-couples the Sallen-Key output to remove any DC offset from the filter. Output goes to RP2040 ADC (GP26/ADC0). Full-scale ADC input is 0–3.3V; with 1.65V bias, the signal can swing ±1.65V before clipping. Gain of 11 may need adjustment based on actual signal levels — change R13 to tune. MCP6022 GBW = 10 MHz, well above the ~~3 kHz signal band."
+	(text_box "Non-inverting amplifier, gain = 1 + 100k/10k = 11 (20.8 dB). R10/R11 bias the input to 1.65V (mid-supply) for single-supply operation. C32 (10µF) decouples the bias point at AC so it acts as a solid virtual ground for the signal. C30 AC-couples the Sallen-Key output to remove any DC offset from the filter. Output goes to RP2040 ADC (GP26/ADC0). Full-scale ADC input is 0–3.3V; with 1.65V bias, the signal can swing ±1.65V before clipping. Gain of 11 may need adjustment based on actual signal levels — change R13 to tune. MCP6022 GBW = 10 MHz, well above the ~3 kHz signal band."
 		(exclude_from_sim no)
 		(at 281.94 149.6822 0)
 		(size -45.72 38.1)
@@ -4026,7 +4026,7 @@
 			(uuid "81f0bb41-ea59-4705-894f-a5f1a07e72b1")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C72")
 					(unit 1)
@@ -4124,7 +4124,7 @@
 			(uuid "3fa94819-b129-4a1a-bcb6-4661e066f510")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "U5")
 					(unit 1)
@@ -4202,7 +4202,7 @@
 			(uuid "00f657fb-1361-49f1-be5e-c80f21bc712b")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR084")
 					(unit 1)
@@ -4291,7 +4291,7 @@
 			(uuid "2738ac57-186d-46f6-a49c-c4010570823a")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C60")
 					(unit 1)
@@ -4368,7 +4368,7 @@
 			(uuid "db607095-6fbd-4ad2-9c02-5e04c97fac3a")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0108")
 					(unit 1)
@@ -4446,7 +4446,7 @@
 			(uuid "1e3cf16e-a1c5-4cba-8ced-3152fd8a2030")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0118")
 					(unit 1)
@@ -4546,7 +4546,7 @@
 			(uuid "c164c79b-3191-4248-b093-3b940ab1b0ee")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "U5")
 					(unit 3)
@@ -4624,7 +4624,7 @@
 			(uuid "3690b0be-8560-4d17-801f-b10a364fa132")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#FLG05")
 					(unit 1)
@@ -4713,7 +4713,7 @@
 			(uuid "a6ae228e-1d32-46e9-99ab-51e70631a4f4")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "R34")
 					(unit 1)
@@ -4804,7 +4804,7 @@
 			(uuid "5f736985-329a-48e8-a7d3-a7c824debe96")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "L22")
 					(unit 1)
@@ -4895,7 +4895,7 @@
 			(uuid "1a1268f5-72cb-4dc6-9181-80d11551e7b8")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "R28")
 					(unit 1)
@@ -4984,7 +4984,7 @@
 			(uuid "a10cca33-2cf2-469b-8aa0-9f0978e012c5")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C86")
 					(unit 1)
@@ -5075,7 +5075,7 @@
 			(uuid "086bf234-6193-44c9-a8c9-2a80be4a7807")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C82")
 					(unit 1)
@@ -5153,7 +5153,7 @@
 			(uuid "ee41dbda-7cb5-4750-a853-88eb1c6caf2e")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR090")
 					(unit 1)
@@ -5231,7 +5231,7 @@
 			(uuid "bff93860-d730-4ae0-825f-6ab8e8d6383a")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0105")
 					(unit 1)
@@ -5331,7 +5331,7 @@
 			(uuid "13a12eaf-60e9-4f6e-a20c-42657911207c")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C99")
 					(unit 1)
@@ -5422,7 +5422,7 @@
 			(uuid "5351d28c-d92b-431f-bc5a-ec38265bc357")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C56")
 					(unit 1)
@@ -5500,7 +5500,7 @@
 			(uuid "e8520e54-8f38-419d-9b2d-baf39809e8da")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR094")
 					(unit 1)
@@ -5600,7 +5600,7 @@
 			(uuid "f51e578c-0c7d-476e-9c80-f78e27f98127")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C88")
 					(unit 1)
@@ -5678,7 +5678,7 @@
 			(uuid "5b3f746a-55f6-43ba-bbff-ec686e032635")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0107")
 					(unit 1)
@@ -5769,7 +5769,7 @@
 			(uuid "a70ee98a-3d71-4403-8d62-61fc1867f48e")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "R33")
 					(unit 1)
@@ -5858,7 +5858,7 @@
 			(uuid "3b551632-6fce-46d4-a205-1dac8f1c234e")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C97")
 					(unit 1)
@@ -5947,7 +5947,7 @@
 			(uuid "f8591f49-506d-4df2-8062-d12120e9f5f8")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C91")
 					(unit 1)
@@ -6047,7 +6047,7 @@
 			(uuid "74e33423-5798-4376-9d06-6831f98b19ba")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C69")
 					(unit 1)
@@ -6125,7 +6125,7 @@
 			(uuid "b2bb22fe-9921-498b-9381-5c56abff3ee8")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR047")
 					(unit 1)
@@ -6225,7 +6225,7 @@
 			(uuid "286ab0dd-3af7-4f3d-88ee-61b0df50f351")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C83")
 					(unit 1)
@@ -6316,7 +6316,7 @@
 			(uuid "0289c2ae-ed89-4086-a73b-a0e193159d7e")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "L20")
 					(unit 1)
@@ -6394,7 +6394,7 @@
 			(uuid "8994cc12-b212-466e-a228-05fc95b2d61f")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#FLG06")
 					(unit 1)
@@ -6485,7 +6485,7 @@
 			(uuid "9f50217d-eee4-42fc-8a65-cb72bdd9cbd9")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "L16")
 					(unit 1)
@@ -6576,7 +6576,7 @@
 			(uuid "57af983e-e516-4ad5-8c4d-5b4f75acbc77")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C63")
 					(unit 1)
@@ -6676,7 +6676,7 @@
 			(uuid "3d60a230-0a96-413c-a180-ea22d20f9df9")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C77")
 					(unit 1)
@@ -6765,7 +6765,7 @@
 			(uuid "2bb87387-698a-4bea-a8e9-2715a993f1e4")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "R20")
 					(unit 1)
@@ -6843,7 +6843,7 @@
 			(uuid "27d6f2ae-eac8-447f-b4dc-2c60dfeb3d56")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR077")
 					(unit 1)
@@ -6921,7 +6921,7 @@
 			(uuid "d9872c59-0c9d-4b4d-914a-e073ead31d86")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0113")
 					(unit 1)
@@ -7012,7 +7012,7 @@
 			(uuid "31eee1cf-bd60-4560-99b6-1397b176c049")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "L12")
 					(unit 1)
@@ -7090,7 +7090,7 @@
 			(uuid "4b047289-1e23-409c-8d5f-d56b1e627e70")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0116")
 					(unit 1)
@@ -7188,7 +7188,7 @@
 			(uuid "f9c8210f-da44-4264-bc70-4217437c38fb")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "U5")
 					(unit 2)
@@ -7279,7 +7279,7 @@
 			(uuid "c66eef6c-99f4-4628-b6ab-deba7c9e28f9")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C90")
 					(unit 1)
@@ -7368,7 +7368,7 @@
 			(uuid "8dd6d7d7-490e-418a-9df8-a3d653a213ef")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C55")
 					(unit 1)
@@ -7459,7 +7459,7 @@
 			(uuid "94e0f5cc-810e-47a9-9997-04cc14062e0b")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C57")
 					(unit 1)
@@ -7548,7 +7548,7 @@
 			(uuid "7d37db3d-deb4-4aa9-a835-22fbbe805b70")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "R32")
 					(unit 1)
@@ -7626,7 +7626,7 @@
 			(uuid "888e798f-ad22-4751-ac4f-cbf11419c56f")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0109")
 					(unit 1)
@@ -7718,7 +7718,7 @@
 			(uuid "8821d949-0254-48aa-a5ac-ebbacfee6f5d")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "U9")
 					(unit 1)
@@ -7795,7 +7795,7 @@
 			(uuid "ddb1a318-acab-4cbc-a459-10c08fa6dd6c")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0102")
 					(unit 1)
@@ -7886,7 +7886,7 @@
 			(uuid "36a194d4-edb8-40b7-9b48-4e10b7f0a18b")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "R29")
 					(unit 1)
@@ -7975,7 +7975,7 @@
 			(uuid "36204dad-7055-4a0c-a5f1-f4b150432596")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C79")
 					(unit 1)
@@ -8069,7 +8069,7 @@
 			(uuid "1fe30797-5571-43f7-b4c5-0175736b512d")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "U10")
 					(unit 1)
@@ -8147,7 +8147,7 @@
 			(uuid "d8a731ff-4f4f-4f01-865a-417b89039673")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR091")
 					(unit 1)
@@ -8238,7 +8238,7 @@
 			(uuid "bfb9c85d-c480-46b8-a1e0-8a658f95b19c")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "L13")
 					(unit 1)
@@ -8316,7 +8316,7 @@
 			(uuid "7b77a409-d367-4792-85ff-b83103e3b020")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR092")
 					(unit 1)
@@ -8407,7 +8407,7 @@
 			(uuid "73188e31-723d-4271-ad5c-74dfca1d65bd")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C64")
 					(unit 1)
@@ -8498,7 +8498,7 @@
 			(uuid "16162746-48ae-4c82-b466-5d4d1f36d0a7")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "R30")
 					(unit 1)
@@ -8576,7 +8576,7 @@
 			(uuid "84bba487-aed0-47fd-a86c-3042e5252273")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR050")
 					(unit 1)
@@ -8667,7 +8667,7 @@
 			(uuid "bb12d4f3-01f8-471c-a7b1-29a40ca16829")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "L18")
 					(unit 1)
@@ -8744,7 +8744,7 @@
 			(uuid "4b0157c1-7cd8-4aa7-a0d7-2b51a54e8cd3")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0104")
 					(unit 1)
@@ -8835,7 +8835,7 @@
 			(uuid "245d320e-4db4-4a29-a00b-e558624f8697")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C95")
 					(unit 1)
@@ -8913,7 +8913,7 @@
 			(uuid "48121d17-2270-4c86-bc4c-cbd4ef9193d8")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR097")
 					(unit 1)
@@ -9002,7 +9002,7 @@
 			(uuid "f0694eb5-1f52-4e07-b408-b0e997e724cf")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "R21")
 					(unit 1)
@@ -9081,7 +9081,7 @@
 			(uuid "9391112b-1c1e-41ab-a82c-02ceba08df2e")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C75")
 					(unit 1)
@@ -9181,7 +9181,7 @@
 			(uuid "f78a4ed7-f85f-4c54-9753-1822ddf85af4")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C85")
 					(unit 1)
@@ -9259,7 +9259,7 @@
 			(uuid "666c6326-53af-4648-889b-9eb9ebfebe9b")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0112")
 					(unit 1)
@@ -9386,7 +9386,7 @@
 			(uuid "46900159-961b-4f5c-b593-e58358bbab67")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "Q4")
 					(unit 1)
@@ -9475,7 +9475,7 @@
 			(uuid "123ffd27-d536-46e4-a530-4b77eb164261")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C67")
 					(unit 1)

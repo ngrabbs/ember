@@ -66,7 +66,7 @@
 		)
 		(uuid "611134d4-e1f5-458d-9cd8-7331533c807c")
 	)
-	(text "PCI-104 Bus (from EPS)"
+	(text "CSKB Bus (from EPS)"
 		(exclude_from_sim no)
 		(at 166.37 25.4 0)
 		(effects
@@ -187,7 +187,7 @@
 		)
 		(uuid "ffc362a3-3884-4e98-a7f7-46e0ebb65956")
 	)
-	(text_box "Project: CentiSat CubeSat -- Senior Capstone Design\n\nBoard: Communications Subsystem, Single PCB\n\nDesigner: Nick Grabbs / KI5YNG\n\nRevsion: 0.5\nDate: 05/20/2026\n\nRepsoitory: centisat/hardware/comms"
+	(text_box "Project: EMBER -- Senior Capstone Design\n\nBoard: Communications Subsystem, Single PCB\n\nDesigner: Nick Grabbs / KI5YNG\n\nRevision: 0.5\nDate: 05/20/2026\n\nRepository: ember/hardware/comms"
 		(exclude_from_sim no)
 		(at 158.75 28.905 0)
 		(size -139.7 37.135)
@@ -209,7 +209,7 @@
 		)
 		(uuid "31542158-3664-4ad1-9290-4f26426c0682")
 	)
-	(text_box "~2 Sheet ~2 Title ~2 Contents ~2\n~2-------~2-------~2----------~2\n~2 1 ~2 Overview ~2 This sheet — block diagram, design notes ~2\n~2 2 ~2 Clock Gen ~2 Si5351A, 25 MHz crystal, I2C, clock outputs ~2\n~2 3 ~2 TX Chain ~2 XOR modulator, tripler, BPF, ADL5602 MMIC ~2\n~2 4 ~2 RX Chain ~2 PSA4 LNA, LO LPF, ADE-1+ mixer, IF term, Sallen-Key LPF, MCP6022 gain ~2\n~2 5 ~2 Digital Control ~2 RP2040 (Pico module), GPIOs, USB ~2\n~2 6 ~2 Power ~2 Distribution, protection, bypass ~2\n~2 7 ~2 Connectors ~2 CSKB H1 + H2 bus, SMA ports, test points ~2"
+	(text_box "| Sheet | Title | Contents |\n|-------|-------|----------|\n| 1 | Overview | This sheet — block diagram, design notes |\n| 2 | Clock Gen | Si5351A, 25 MHz crystal, I2C, clock outputs |\n| 3 | TX Chain | XOR modulator, tripler, BPF, ADL5602 MMIC |\n| 4 | RX Chain | PSA4 LNA, LO LPF, ADE-1+ mixer, IF term, Sallen-Key LPF, MCP6022 gain |\n| 5 | Digital Control | RP2040 (Pico module), GPIOs, USB |\n| 6 | Power | Distribution, protection, bypass |\n| 7 | Connectors | CSKB H1 + H2 bus, SMA ports, test points |"
 		(exclude_from_sim no)
 		(at 161.29 228.6 0)
 		(size -142.24 40.64)
@@ -231,7 +231,7 @@
 		)
 		(uuid "3934ce7e-e94c-4da6-95c7-9f8de098675a")
 	)
-	(text_box "\n * 74LVC1G86 XOR Modulator\n    ( BPSK @ 145.67 MHz )\n                    ~2\n * BRF92A Freq Tripler\n    ( 145.67 -> 437 MHz )\n                    ~2\n * 437 MHz BPF ( pre-MMIC )\n                    ~2\n * ADL5602 MMIC ( +20 db )\n                    ~2\n * 437 MHz BPF ( output )\n                    ~2\n * TX SMA -> 437 MHz antenna"
+	(text_box "\n * 74LVC1G86 XOR Modulator\n    ( BPSK @ 145.67 MHz )\n                    |\n * 2SC3356 Freq Tripler\n    ( 145.67 -> 437 MHz )\n                    |\n * 437 MHz BPF ( pre-MMIC )\n                    |\n * ADL5602 MMIC ( +20 dB )\n                    |\n * 437 MHz BPF ( output )\n                    |\n * TX SMA -> 437 MHz antenna"
 		(exclude_from_sim no)
 		(at 217.17 116.84 0)
 		(size -50.8 55.88)
@@ -275,7 +275,7 @@
 		)
 		(uuid "515f980c-dd37-4ad0-8719-bb7d1a076164")
 	)
-	(text_box "~2 Rail ~2 Source ~2 Voltage ~2 Consumers ~2\n~2------~2--------~2---------~2-----------~2\n~2 +3V3 ~2 EPS via CSKB (H2.27/28) ~2 3.3V ±2% ~2 RP2040, Si5351A, 74LVC1G86, MCP6022 ~2\n~2 +5V ~2 EPS via CSKB (H2.25/26) ~2 5.0V ±2% ~2 PSA4-5043+ LNA, ADL5602 MMIC, tripler bias, Pico VSYS ~2\n~2 GND ~2 EPS via CSKB (H2.29/30/32, H2.31 AGND) ~2 0V ~2 All ~2\n~2 VBAT ~2 EPS via CSKB (H2.45/46) ~2 6.0–8.4V ~2 Monitor only (not used for power) ~2\n\nEstimated current budget:\n+3V3: ~\n50 mA (RP2040 ~~50mA, Si5351A ~~30mA, logic ~\n0mA, op-amp ~\n0mA)\n+5V: ~\n40 mA (PSA4 LNA ~~60mA, ADL5602 ~~60mA, tripler 5mA, Pico VSYS ~\n0mA, margin ~~5mA)\nTotal: <300 mA — well within EPS TPS62933F capacity (3A per rail). Note: PSA4 LNA bias can be GPIO-gated for RX duty-cycling."
+	(text_box "| Rail | Source | Voltage | Consumers |\n|------|--------|---------|-----------|\n| +3V3 | EPS via CSKB (H2.27/28) | 3.3V ±2% | RP2040, Si5351A, 74LVC1G86, MCP6022 |\n| +5V | EPS via CSKB (H2.25/26) | 5.0V ±2% | PSA4-5043+ LNA, ADL5602 MMIC, tripler bias, Pico VSYS |\n| GND | EPS via CSKB (H2.29/30/32, H2.31 AGND) | 0V | All |\n| VBAT | EPS via CSKB (H2.45/46) | 6.0–8.4V | Monitor only (not used for power) |\n\nEstimated current budget:\n+3V3: ~100 mA (RP2040 ~50mA, Si5351A ~30mA, logic ~10mA, op-amp ~10mA)\n+5V: ~140 mA (PSA4 LNA ~60mA, ADL5602 ~60mA, tripler 5mA, Pico VSYS ~10mA, margin ~5mA)\nTotal: <300 mA — well within EPS TPS62933F capacity (3A per rail). Note: PSA4 LNA bias can be GPIO-gated for RX duty-cycling."
 		(exclude_from_sim no)
 		(at 298.45 182.88 0)
 		(size -134.62 60.96)
@@ -363,7 +363,7 @@
 		)
 		(uuid "b69dd803-f4d6-4e63-b46a-15d078cba9bf")
 	)
-	(text_box "~2 Net ~2 Type ~2 Description ~2\n~2-----~2------~2-------------~2\n~2 +3V3, +5V, GND, VBAT ~2 Power port ~2 Supply rails (global) ~2\n~2 I2C_SDA, I2C_SCL ~2 Net label ~2 I2C bus (Si5351A + IHU bus) ~2\n~2 CLK0_OUT, CLK1_OUT ~2 Net label ~2 Si5351A clock outputs ~2\n~2 BPSK_DATA ~2 Net label ~2 RP2040 → XOR modulator ~2\n~2 TX_OUT, RX_IN ~2 Net label ~2 RF paths to SMA connectors ~2\n~2 RX_BASEBAND ~2 Net label ~2 MCP6022 output → Pico ADC ~2"
+	(text_box "| Net | Type | Description |\n|-----|------|-------------|\n| +3V3, +5V, GND, VBAT | Power port | Supply rails (global) |\n| I2C_SDA, I2C_SCL | Net label | I2C bus (Si5351A + IHU bus) |\n| CLK0_OUT, CLK1_OUT | Net label | Si5351A clock outputs |\n| BPSK_DATA | Net label | RP2040 → XOR modulator |\n| TX_OUT, RX_IN | Net label | RF paths to SMA connectors |\n| RX_BASEBAND | Net label | MCP6022 output → Pico ADC |"
 		(exclude_from_sim no)
 		(at 275.59 251.46 0)
 		(size -111.76 30.48)
@@ -385,7 +385,7 @@
 		)
 		(uuid "ccc502d9-f4cc-49e7-928e-0d433052ece2")
 	)
-	(text_box "\n * 2m BPF ( input filter )\n                    ~2\n * PSA4-5043+ LNA (+21 dB)\n                    ~2\n * ADE-1+ Mixer <- LO LPF <- CLK1\n                    ~2 (+ 31 ohm term)\n * Sallen-Key LPF ( fc = 3.3kHz )\n                    ~2\n * MCP6022 Gain Stage ( x11 )\n                    ~2\n                    ~2 -> Pico ADC\n\n* RX SMA < - 145.9 MHz antenna"
+	(text_box "\n * 2m BPF ( input filter )\n                    |\n * PSA4-5043+ LNA (+21 dB)\n                    |\n * ADE-1+ Mixer <- LO LPF <- CLK1\n                    | (+ 31 ohm term)\n * Sallen-Key LPF ( fc = 3.3kHz )\n                    |\n * MCP6022 Gain Stage ( x11 )\n                    |\n                    | -> Pico ADC\n\n* RX SMA <- 145.9 MHz antenna"
 		(exclude_from_sim no)
 		(at 293.37 116.84 0)
 		(size -66.04 53.34)
@@ -407,7 +407,7 @@
 		)
 		(uuid "cfc98727-e703-4551-ab6b-2e857d05baca")
 	)
-	(text_box "~2 Rev ~2 Date ~2 Author ~2 Description ~2\n~2-----~2------~2--------~2-------------~2\n~2 0.1 ~2 2026-04-10 ~2 NG ~2 Initial schematic — all sheets placed, basic connectivity ~2\n\n~2 0.2 ~2 2026-04-13 ~2 NG ~2 Added Connectors sheet, stack bus, removed on-board regulators, added overview sheet ~2\n\n~2 0.3 ~2 2026-04-15 ~2 NG ~2 Added COMMS_IRQ on GP3 and SPI slave wiring on GP16–19; initial Pumpkin pin-number lock ~2\n\n~2 0.4 ~2 2026-04-15 ~2 NG ~2 Rebuilt connectors against Pumpkin datasheet Rev. E: bus renamed PC/104 → CubeSat Kit Bus (CSKB); pin numbers remapped H10 → H1/H2; connector family corrected to 2× Samtec ESQ-126-39-G-D stackthrough (2×26, 52 pins each); see `system/interfaces/cskb_pinmap.md` ~2\n\n~2 0.5 ~2 2026-05-19 ~2 NG ~2 Sheet 4 RX front-end rebuilt: SA612 active mixer (EOL, sourcing failed) replaced with ADE-1+ passive diode mixer + PSA4-5043+ MMIC LNA + 5-pole LC LPF on the LO line + 51 Ω IF termination. New refdes: U10 (LNA), L12 (Vd choke), L13/L14 + C57/C58/C59 (LO LPF), R19 (IF term), C53/C54/C55/C56/C60 (DC blocks + bypass). Removed: U3 became ADE-1+ (was SA612), and C21/C22/C26/C27 + R7 (SA612-specific support parts) deleted. +5V budget grew from ~~80 mA to ~\n40 mA. Rationale in `rx_mixer_trade_study.md`; bench verification of LO drive level in `bringup/lo_drive_verification.md` and `bringup/si5351a_breakout_bench_test.md`. ~2"
+	(text_box "| Rev | Date | Author | Description |\n|-----|------|--------|-------------|\n| 0.1 | 2026-04-10 | NG | Initial schematic — all sheets placed, basic connectivity |\n\n| 0.2 | 2026-04-13 | NG | Added Connectors sheet, stack bus, removed on-board regulators, added overview sheet |\n\n| 0.3 | 2026-04-15 | NG | Added COMMS_IRQ on GP3 and SPI slave wiring on GP16–19; initial Pumpkin pin-number lock |\n\n| 0.4 | 2026-04-15 | NG | Rebuilt connectors against Pumpkin datasheet Rev. E: bus renamed PC/104 → CubeSat Kit Bus (CSKB); pin numbers remapped H10 → H1/H2; connector family corrected to 2× Samtec ESQ-126-39-G-D stackthrough (2×26, 52 pins each); see `system/interfaces/cskb_pinmap.md` |\n\n| 0.5 | 2026-05-19 | NG | Sheet 4 RX front-end rebuilt: SA612 active mixer (EOL, sourcing failed) replaced with ADE-1+ passive diode mixer + PSA4-5043+ MMIC LNA + 5-pole LC LPF on the LO line + 51 Ω IF termination. New refdes: U10 (LNA), L12 (Vd choke), L13/L14 + C57/C58/C59 (LO LPF), R19 (IF term), C53/C54/C55/C56/C60 (DC blocks + bypass). Removed: U3 became ADE-1+ (was SA612), and C21/C22/C26/C27 + R7 (SA612-specific support parts) deleted. +5V budget grew from ~80 mA to ~140 mA. Rationale in `rx_mixer_trade_study.md`; bench verification of LO drive level in `bringup/lo_drive_verification.md` and `bringup/si5351a_breakout_bench_test.md`. |"
 		(exclude_from_sim no)
 		(at 158.75 132.08 0)
 		(size -139.7 88.9)
@@ -598,7 +598,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "Digital Control.kicad_sch"
+		(property "Sheetfile" "Digital_Control.kicad_sch"
 			(at 326.39 203.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -610,7 +610,7 @@
 			)
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
 					(page "4")
 				)
@@ -655,7 +655,7 @@
 			)
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
 					(page "5")
 				)
@@ -688,7 +688,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "RX Chain.kicad_sch"
+		(property "Sheetfile" "RX_Chain.kicad_sch"
 			(at 326.39 143.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -700,7 +700,7 @@
 			)
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
 					(page "6")
 				)
@@ -733,7 +733,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "TX Chain.kicad_sch"
+		(property "Sheetfile" "TX_Chain.kicad_sch"
 			(at 326.39 113.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -745,7 +745,7 @@
 			)
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
 					(page "7")
 				)
@@ -790,7 +790,7 @@
 			)
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
 					(page "3")
 				)
@@ -824,7 +824,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "Clock Gen.kicad_sch"
+		(property "Sheetfile" "Clock_Gen.kicad_sch"
 			(at 326.39 84.4046 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -836,7 +836,7 @@
 			)
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a"
 					(page "2")
 				)

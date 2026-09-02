@@ -1212,7 +1212,7 @@
 		)
 		(uuid "535febbe-5073-437b-8b2b-4fd8b0f050a4")
 	)
-	(text_box "DC blocking caps prevent Si5351A output bias from affecting downstream stages. 33Ω series resistors provide impedance matching and reduce ringing on traces. Si5351A outputs are push-pull CMOS with ~~50Ω source impedance at 8mA drive setting. CLK0 feeds the XOR BPSK modulator at 145.67 MHz. CLK1 feeds the ADE-1+ passive mixer LO at 145.9 MHz (target +7 dBm at the mixer LO pin) through a 5-pole LC LPF on the RX sheet that suppresses square-wave harmonics. **Consider populating R4 as 0Ω instead of 33Ω** to preserve drive into the LPF/mixer chain — verify CLK1 power on the bench before committing. CLK2 reserved — bring to a test header if board space permits."
+	(text_box "DC blocking caps prevent Si5351A output bias from affecting downstream stages. 33Ω series resistors provide impedance matching and reduce ringing on traces. Si5351A outputs are push-pull CMOS with ~50Ω source impedance at 8mA drive setting. CLK0 feeds the XOR BPSK modulator at 145.67 MHz. CLK1 feeds the ADE-1+ passive mixer LO at 145.9 MHz (target +7 dBm at the mixer LO pin) through a 5-pole LC LPF on the RX sheet that suppresses square-wave harmonics. **Consider populating R4 as 0Ω instead of 33Ω** to preserve drive into the LPF/mixer chain — verify CLK1 power on the bench before committing. CLK2 reserved — bring to a test header if board space permits."
 		(exclude_from_sim no)
 		(at 161.29 138.2522 0)
 		(size 76.2 23.0378)
@@ -2012,7 +2012,7 @@
 			(uuid "cc2e589b-fbe3-4c50-95cd-f7c129efd1d4")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "R1")
 					(unit 1)
@@ -2112,7 +2112,7 @@
 			(uuid "215665a9-4784-4584-87e7-102c2ee5f8d5")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "R3")
 					(unit 1)
@@ -2190,7 +2190,7 @@
 			(uuid "a04044de-8529-4f90-8b04-438174a23a93")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "#PWR07")
 					(unit 1)
@@ -2279,7 +2279,7 @@
 			(uuid "50a013c1-6da7-49cb-8b6d-d861ffa0c5ad")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "C4")
 					(unit 1)
@@ -2357,7 +2357,7 @@
 			(uuid "c0755182-2d63-4479-a565-f59112c8dd71")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "#PWR08")
 					(unit 1)
@@ -2435,7 +2435,7 @@
 			(uuid "795ea12f-62cb-4792-b54d-9362f374a4bb")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "#PWR06")
 					(unit 1)
@@ -2524,7 +2524,7 @@
 			(uuid "2b553061-0291-403e-ae87-baa5e472bf30")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "C5")
 					(unit 1)
@@ -2602,7 +2602,7 @@
 			(uuid "de1e8e79-5cfb-4484-a4bd-aae15a086e27")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "#PWR011")
 					(unit 1)
@@ -2702,7 +2702,7 @@
 			(uuid "1caf34c1-d90c-4153-9f23-b3d3227360e6")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "R4")
 					(unit 1)
@@ -2780,7 +2780,7 @@
 			(uuid "5b0dfa54-7c0f-4a24-84ab-f743c224c989")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "#PWR012")
 					(unit 1)
@@ -2871,7 +2871,7 @@
 			(uuid "e4647d31-5bbc-4f39-bde8-787fca8ed215")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "R2")
 					(unit 1)
@@ -2949,7 +2949,7 @@
 			(uuid "d5803ed1-3afa-4b90-8aa9-de5404ff8b81")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "#PWR01")
 					(unit 1)
@@ -3055,7 +3055,7 @@
 			(uuid "d3b8b710-8f74-4919-9506-0645715b347a")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "Y2")
 					(unit 1)
@@ -3133,7 +3133,7 @@
 			(uuid "2818ff51-e458-4f86-b272-9e604461fb3a")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "#PWR02")
 					(unit 1)
@@ -3211,7 +3211,7 @@
 			(uuid "6e346826-f291-4736-b053-d78cc2a0dc69")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "#PWR09")
 					(unit 1)
@@ -3311,7 +3311,7 @@
 			(uuid "42d1b99a-5934-4a6f-9011-2598884d96ee")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "C6")
 					(unit 1)
@@ -3405,7 +3405,7 @@
 			(uuid "f1fee3a2-6cdf-4d0d-9ef6-0bb9514892e2")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "Y1")
 					(unit 1)
@@ -3494,7 +3494,7 @@
 			(uuid "cee91e59-10cb-4c2b-b52e-a336b2713029")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "C3")
 					(unit 1)
@@ -3594,7 +3594,7 @@
 			(uuid "671b8d9d-8a9e-4da4-a6cd-3819532dc93c")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "C2")
 					(unit 1)
@@ -3672,7 +3672,7 @@
 			(uuid "1429ac9e-be8d-4d54-b38b-7f64ea38d344")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "#PWR04")
 					(unit 1)
@@ -3750,7 +3750,7 @@
 			(uuid "6a83aff2-168a-4b37-97cc-0cd713992e20")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "#PWR03")
 					(unit 1)
@@ -3850,7 +3850,7 @@
 			(uuid "50b2a459-ffdc-470b-a865-a67e3f474772")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "C1")
 					(unit 1)
@@ -3950,7 +3950,7 @@
 			(uuid "ede10beb-3f94-4d01-94dd-09569449ab78")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/f9c62eb1-d7c0-4e60-a61d-f835f0c0a42e"
 					(reference "C7")
 					(unit 1)

@@ -1419,7 +1419,7 @@
 		)
 		(uuid "c506a3e7-99fa-49b6-80ed-36abc97f7fde")
 	)
-	(text_box "D5 isolates the stack +5V from the Pico's USB VBUS. When USB is connected, the Pico's internal diode on VBUS feeds VSYS. When running from the stack (no USB), @{\"Id\":\"VHEONQQK\\OZTORYTH\",\"ObjectType\":2} feeds VSYS from +5V. The Pico's internal 3.3V buck-boost regulator produces 3V3 from VSYS. Drop across D5 (~~0.3V) gives VSYS ≈ 4.7V — well within the Pico's VSYS range (1.8–5.5V)."
+	(text_box "D5 isolates the stack +5V from the Pico's USB VBUS. When USB is connected, the Pico's internal diode on VBUS feeds VSYS. When running from the stack (no USB), @{\"Id\":\"VHEONQQK\\OZTORYTH\",\"ObjectType\":2} feeds VSYS from +5V. The Pico's internal 3.3V buck-boost regulator produces 3V3 from VSYS. Drop across D5 (~0.3V) gives VSYS ≈ 4.7V — well within the Pico's VSYS range (1.8–5.5V)."
 		(exclude_from_sim no)
 		(at 279.4 80.01 0)
 		(size 46.99 22.86)
@@ -1441,7 +1441,7 @@
 		)
 		(uuid "3b338d22-c4e6-4048-b80b-ebb050d20e92")
 	)
-	(text_box "D4 provides reverse polarity protection on the +5V rail. Adds ~~0.3V forward drop — the ADL5602 and SA612 can tolerate this (both specified for supply down to 4.5V, so 5.0-0.3=4.7V is fine). The +3V3 rail does NOT have a series diode because the RP2040 and Si5351A are sensitive to voltage drop — 3.0V may be too low for reliable operation. If reverse polarity protection is needed on +3V3, use a P-MOSFET instead of a Schottky (near-zero drop when conducting). Bulk caps dampen transients from the PCI-104 connector traces. The EPS has its own bulk caps at the connector — these are the receiving-end complements."
+	(text_box "D4 provides reverse polarity protection on the +5V rail. Adds ~0.3V forward drop — the ADL5602 and PSA4-5043+ can tolerate this (both specified for supply down to 4.5V, so 5.0-0.3=4.7V is fine). The +3V3 rail does NOT have a series diode because the RP2040 and Si5351A are sensitive to voltage drop — 3.0V may be too low for reliable operation. If reverse polarity protection is needed on +3V3, use a P-MOSFET instead of a Schottky (near-zero drop when conducting). Bulk caps dampen transients from the CSKB connector traces. The EPS has its own bulk caps at the connector — these are the receiving-end complements."
 		(exclude_from_sim no)
 		(at 111.76 91.2622 0)
 		(size 40.64 37.0078)
@@ -1463,7 +1463,7 @@
 		)
 		(uuid "6d873411-ebc8-4fc5-a655-e863292ea77d")
 	)
-	(text_box "POWER DISTRIBUTION — The comms board receives +3V3 and +5V from the EPS via the CSKB stack connectors. No on-board voltage regulation. This sheet provides input protection, bulk bypass capacitors, and distributes power to all subsystems. Power budget: ~\n50 mA on +3V3 (RP2040 + Si5351A + logic), ~\n40 mA on +5V (PSA4-5043+ LNA + ADL5602 MMIC + tripler bias). Total: <300 mA — well within EPS TPS62933F capacity (3A per rail)."
+	(text_box "POWER DISTRIBUTION — The comms board receives +3V3 and +5V from the EPS via the CSKB stack connectors. No on-board voltage regulation. This sheet provides input protection, bulk bypass capacitors, and distributes power to all subsystems. Power budget: ~100 mA on +3V3 (RP2040 + Si5351A + logic), ~140 mA on +5V (PSA4-5043+ LNA + ADL5602 MMIC + tripler bias). Total: <300 mA — well within EPS TPS62933F capacity (3A per rail)."
 		(exclude_from_sim no)
 		(at 177.8 40.4622 0)
 		(size -134.62 20.32)
@@ -1981,7 +1981,7 @@
 			(uuid "e1b834ed-2722-4635-9a5d-c3b28d64d9a6")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "#PWR042")
 					(unit 1)
@@ -2072,7 +2072,7 @@
 			(uuid "6dca0437-e626-43de-abc0-85aa117d46aa")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "C58")
 					(unit 1)
@@ -2163,7 +2163,7 @@
 			(uuid "e94cb441-e1e0-4b4a-b692-aaa602ba3188")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "C59")
 					(unit 1)
@@ -2241,7 +2241,7 @@
 			(uuid "c6e0fbfc-b1fb-48f9-a632-7d1c206144b9")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "#PWR087")
 					(unit 1)
@@ -2319,7 +2319,7 @@
 			(uuid "46d5a5af-d742-4012-b96c-f25e5be0816b")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "#PWR0101")
 					(unit 1)
@@ -2419,7 +2419,7 @@
 			(uuid "4c2e0441-eb26-4f6e-8287-7bed02f11760")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "C61")
 					(unit 1)
@@ -2497,7 +2497,7 @@
 			(uuid "74934d77-0de2-492b-98dc-f56f7639c9eb")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "#FLG04")
 					(unit 1)
@@ -2575,7 +2575,7 @@
 			(uuid "5d70345b-3abe-4a68-ac29-c066b0bc564d")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "#PWR040")
 					(unit 1)
@@ -2666,7 +2666,7 @@
 			(uuid "848e9684-8888-434a-ab14-a0f9e41ea345")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "R31")
 					(unit 1)
@@ -2744,7 +2744,7 @@
 			(uuid "2a84bfec-1589-4b7e-a02c-bbaa39f282a9")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "#PWR0100")
 					(unit 1)
@@ -2822,7 +2822,7 @@
 			(uuid "a9704004-9564-420c-b6c0-e99533676ec1")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "#PWR032")
 					(unit 1)
@@ -2922,7 +2922,7 @@
 			(uuid "d8c31546-eec3-4133-9da5-6be538e036ed")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "D12")
 					(unit 1)
@@ -3022,7 +3022,7 @@
 			(uuid "085f3b9f-e0a2-4154-a37d-4b2daadf5e0c")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "D13")
 					(unit 1)
@@ -3112,7 +3112,7 @@
 			(uuid "14f40aa8-1bde-4e60-8316-a3d01303481f")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "D14")
 					(unit 1)
@@ -3190,7 +3190,7 @@
 			(uuid "db0bd2e0-3c07-41dc-b270-9ff00e312710")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "#PWR088")
 					(unit 1)
@@ -3280,7 +3280,7 @@
 			(uuid "9373553c-dfbc-4796-88d6-61a19b9814b3")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "D8")
 					(unit 1)
@@ -3358,7 +3358,7 @@
 			(uuid "b0128b3c-d815-4ebb-9911-663d98107ef9")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "#PWR0111")
 					(unit 1)
@@ -3436,7 +3436,7 @@
 			(uuid "6fc8fac6-01ab-47eb-ad42-8b07870c81e9")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "#PWR038")
 					(unit 1)
@@ -3536,7 +3536,7 @@
 			(uuid "509a7805-cbf8-4420-93aa-739c582d6ec0")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "C62")
 					(unit 1)
@@ -3627,7 +3627,7 @@
 			(uuid "b64905a5-7777-4c59-844f-50cf24ea9e0d")
 		)
 		(instances
-			(project "transciever_kicad"
+			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/4f8afa8d-57f2-41d3-bba2-d581d8d3eaa2"
 					(reference "R26")
 					(unit 1)

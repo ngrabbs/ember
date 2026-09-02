@@ -16,6 +16,29 @@ Expected contents:
 | `transceiver.kicad_dru` | Custom rules — copy [`../../conventions/jlcpcb_baseline.kicad_dru`](../../conventions/jlcpcb_baseline.kicad_dru), then retune |
 | `lib/` | Project-local symbols and footprints |
 
+## Current state — imported rev 0.5, RX rebuild pending
+
+This project was imported from the Altium rev 0.5 design. The TX chain matches
+the current plan (2SC3356 tripler, ADL5602 MMIC). **The RX chain does not.**
+
+The architecture is moving to **all-UHF** — a 435 MHz uplink sharing the single
+antenna — because the VHF front-end filters proved too difficult to realise.
+The schematic still carries the 2 m uplink: a 2 m input band-pass filter, and
+CLK1 at 145.90 MHz as the LO.
+
+Annotations describing the RX front end are therefore accurate to what is drawn
+today, not to where the board is going. When the RX is rebuilt, these change
+together:
+
+- Root sheet subtitle: `70 cm BPSK TX / 2m AFSK RX`
+- Root sheet RX block: `2m BPF ( input filter )`
+- Root sheet clock block: `CLK1 (145.90 MHz)`
+- RX sheet: `2m Input Band-Pass Filter`
+- `RX SMA <- 145.9 MHz antenna`
+
+Until then, do not read the RX sheet as the target design. See
+[`../design/kicad_implementation_plan.md`](../design/kicad_implementation_plan.md).
+
 ## Before starting
 
 Work through Phase 0 of

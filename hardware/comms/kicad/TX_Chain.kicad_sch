@@ -1582,7 +1582,7 @@
 	)
 	(rectangle
 		(start 204.47 181.61)
-		(end 295.91 217.17)
+		(end 299.72 217.17)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -1621,7 +1621,7 @@
 	)
 	(rectangle
 		(start 267.97 107.95)
-		(end 355.6 143.51)
+		(end 358.14 143.51)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -1698,7 +1698,7 @@
 		)
 		(uuid "eb2b6779-4824-4013-9683-f308ff434911")
 	)
-	(text_box "ADL5602: 50 Ohm matched input/output, 20 dB gain, DC to 4 GHz. 3-pin SOT-89 -- NO separate VCC pin.  DC bias enters through the RFOUT pin (pin 3) via bias tee inductor L5 .  This is standard for MMIC gain blocks.  L5 (RFC) feeds DC while presenting high impedance at RF.  Expected output: -7 dBm (tripler) + 20 dB (MMIC) ~~+13 dBm at 437 MHz.  May need an attenuator pad if output exceeds amateur power limits or if the MMIC saturates -- check P1dB in datasheet."
+	(text_box "ADL5602: 50 Ohm matched input/output, 20 dB gain, DC to 4 GHz. 3-pin SOT-89 -- NO separate VCC pin.  DC bias enters through the RFOUT pin (pin 3) via bias tee inductor L5 .  This is standard for MMIC gain blocks.  L5 (RFC) feeds DC while presenting high impedance at RF.  Expected output: -7 dBm (tripler) + 20 dB (MMIC) ~+13 dBm at 437 MHz.  May need an attenuator pad if output exceeds amateur power limits or if the MMIC saturates -- check P1dB in datasheet."
 		(exclude_from_sim no)
 		(at 74.93 162.0793 0)
 		(size 68.58 18.2607)
@@ -1720,7 +1720,7 @@
 		)
 		(uuid "948c51c2-682e-419e-aaf5-4bfe0a77763c")
 	)
-	(text_box "TX CHAIN - 437 MHz BPSK downlink transmitter.  The carrier from the Si5351A (145.67 MHz) is BPSK-modulated by the 74LVC1G86 XOR gate, then frequency-tripled to 437 MHz by a class-C biased 2SC3356 transistor. A 2-pole cap-coupled Chebyshev BPF selects the 3rd harmonic and rejects the fundamental and 2nd harmonic.  The ADL5602 MMIC provides ~~20 dB gain to bring the signal to ~~+11.9 dBm output.  BPSK phase states are preserved through odd-order multiplication: 3 x 180* = 540* = 180*"
+	(text_box "TX CHAIN - 437 MHz BPSK downlink transmitter.  The carrier from the Si5351A (145.67 MHz) is BPSK-modulated by the 74LVC1G86 XOR gate, then frequency-tripled to 437 MHz by a class-C biased 2SC3356 transistor. A 2-pole cap-coupled Chebyshev BPF selects the 3rd harmonic and rejects the fundamental and 2nd harmonic.  The ADL5602 MMIC provides ~20 dB gain to bring the signal to ~+11.9 dBm output.  BPSK phase states are preserved through odd-order multiplication: 3 x 180* = 540* = 180*"
 		(exclude_from_sim no)
 		(at 74.93 55.88 0)
 		(size 142.24 20.32)
@@ -1742,7 +1742,7 @@
 		)
 		(uuid "b092de76-3009-4a59-a4eb-9c033b557f73")
 	)
-	(text_box "Class-C frequency tripler. R5 (47K Ohm) biases the transistor below cutoff -- it only conducts on positive input peaks, generating strong harmonic content.  47kOhm was empirically optimized on the breadboard prototype: -7.4 dBm at 437 MHz with 2N3904 (vs -12.2 dBm at 10kOhm). BRF92A (ft=5 GHz, SOT-23) is the flight transistor; 2N3904 (ft=300MHz) validated during bring-up.  RFC L1 provides DC bias path while presenting high impedance at RF.  SRF of L1 must be well above 437 MHz -- Coilcraft 0805CS-221XJRC (SRF ~\n.5GHz). Supply is +5V for maximum collector swing and harmonic output."
+	(text_box "Class-C frequency tripler. R27 (47K Ohm) biases the transistor below cutoff -- it only conducts on positive input peaks, generating strong harmonic content.  47kOhm was empirically optimized on the breadboard prototype: -7.4 dBm at 437 MHz with 2N3904 (vs -12.2 dBm at 10kOhm). 2SC3356 is the flight transistor, dropping into the MMBT3904 footprint; 2N3904 (ft=300MHz) validated during bring-up.  RFC L1 provides DC bias path while presenting high impedance at RF.  SRF of L1 must be well above 437 MHz -- Coilcraft 0805CS-221XJRC (SRF ~1.5GHz). Supply is +5V for maximum collector swing and harmonic output."
 		(exclude_from_sim no)
 		(at 205.74 115.57 0)
 		(size 53.34 28.4838)
@@ -1766,7 +1766,7 @@
 	)
 	(text_box "437 MHz BPF: 2-pole capacitively-coupled Chebyshev (2 LC resonators +\n  series coupling cap + I/O coupling caps). Moderate bandwidth (~tens of MHz),\n  deliberately NOT narrow -- wide keeps IL low and holds 437 in-band despite\n  tuning/temperature drift. Target IL <2 dB at 437 (sim ~1.3 dB). Two of these\n  cascade: pre-MMIC and post-MMIC.\n\n  ALL capacitors MUST be C0G/NP0 dielectric -- X7R has voltage-dependent\n  capacitance that detunes the filter and generates intermodulation products\n  at RF.\n\n  Starting values -- tune with VNA during bring-up. Tune IN-CHAIN, not on a\n  50-ohm bench sweep: the tripler tank's source impedance shifts the center\n  (a 50-ohm sweep mis-predicts it). Resonator tuning pads add capacitance =\n  lower center (add-only direction).\n\n  Rejection at the antenna (full chain = both BPFs + collector tank):\n    145.67 MHz (fundamental)  >40 dB   (far out, easy)\n    291.3 MHz  (2nd harmonic)  >30 dB   (crushed, ~-69 dBc achieved)\n    582.7 MHz  (4th harmonic)  >20 dB   <- WATCH ITEM: the 2-pole's weak\n                                            high side (~-13 dB per stage,\n                                            ~-37 dBc in the full chain)"
 		(exclude_from_sim no)
-		(at 270.51 35.1691 0)
+		(at 266.7 58.42 0)
 		(size 82.55 44.8409)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
@@ -1847,6 +1847,12 @@
 		(uuid "6817b322-fe21-4512-a135-ea50bfb7041f")
 	)
 	(junction
+		(at 149.86 124.46)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "69230417-54d8-4487-adc8-63502da9013f")
+	)
+	(junction
 		(at 172.72 124.46)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1887,6 +1893,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "a237965d-68fb-494f-a026-9fc6300ece64")
+	)
+	(junction
+		(at 228.6 114.3)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a52a6a14-9235-4e36-8a39-51ccdbc758a2")
 	)
 	(junction
 		(at 123.19 110.49)
@@ -1988,6 +2000,16 @@
 	)
 	(wire
 		(pts
+			(xy 344.17 114.3) (xy 347.98 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0fb4633c-693e-4654-a4a6-1f27949140da")
+	)
+	(wire
+		(pts
 			(xy 200.66 95.25) (xy 215.9 95.25)
 		)
 		(stroke
@@ -2018,6 +2040,16 @@
 	)
 	(wire
 		(pts
+			(xy 228.6 114.3) (xy 228.6 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "17d28b25-1060-423e-9343-80f72fa2996e")
+	)
+	(wire
+		(pts
 			(xy 149.86 172.72) (xy 160.02 172.72)
 		)
 		(stroke
@@ -2045,16 +2077,6 @@
 			(type default)
 		)
 		(uuid "1b4ed3d0-a029-4a49-9df5-37f4f89b7ff7")
-	)
-	(wire
-		(pts
-			(xy 76.2 200.66) (xy 115.57 200.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1e579a81-97a0-414d-a245-c355666002a1")
 	)
 	(wire
 		(pts
@@ -2108,13 +2130,13 @@
 	)
 	(wire
 		(pts
-			(xy 344.17 114.3) (xy 346.71 114.3)
+			(xy 87.63 121.92) (xy 107.95 121.92)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "24e9cac8-8c99-40dc-955f-be63354ccfb5")
+		(uuid "24854dfc-032a-4fea-b38c-e7e6005fd327")
 	)
 	(wire
 		(pts
@@ -2298,7 +2320,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 114.3) (xy 269.24 114.3)
+			(xy 190.5 114.3) (xy 228.6 114.3)
 		)
 		(stroke
 			(width 0)
@@ -2378,16 +2400,6 @@
 	)
 	(wire
 		(pts
-			(xy 284.48 186.69) (xy 287.02 186.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "578e0176-758b-4218-9772-1292c6b40ca8")
-	)
-	(wire
-		(pts
 			(xy 200.66 106.68) (xy 207.01 106.68)
 		)
 		(stroke
@@ -2445,6 +2457,16 @@
 			(type default)
 		)
 		(uuid "6697a74a-7370-4ff0-8fbd-e0cf1773fa24")
+	)
+	(wire
+		(pts
+			(xy 149.86 129.54) (xy 149.86 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "66d34276-d830-4c70-b669-54ac92106e82")
 	)
 	(wire
 		(pts
@@ -2518,6 +2540,16 @@
 	)
 	(wire
 		(pts
+			(xy 87.63 127) (xy 90.17 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7ab0cb93-a17f-4016-a634-197bf16395fc")
+	)
+	(wire
+		(pts
 			(xy 149.86 200.66) (xy 199.39 200.66)
 		)
 		(stroke
@@ -2538,16 +2570,6 @@
 	)
 	(wire
 		(pts
-			(xy 72.39 127) (xy 90.17 127)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8332d930-b883-4695-ada8-451441a4a486")
-	)
-	(wire
-		(pts
 			(xy 326.39 128.27) (xy 331.47 128.27)
 		)
 		(stroke
@@ -2555,6 +2577,16 @@
 			(type default)
 		)
 		(uuid "8643000c-63b4-4d71-8aad-91f3ef5625c5")
+	)
+	(wire
+		(pts
+			(xy 149.86 124.46) (xy 160.02 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8742d766-ea2e-416f-974c-529b55ffa4a7")
 	)
 	(wire
 		(pts
@@ -2648,6 +2680,16 @@
 	)
 	(wire
 		(pts
+			(xy 228.6 114.3) (xy 269.24 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9c4fe322-69e4-48a4-91d3-afec32068996")
+	)
+	(wire
+		(pts
 			(xy 297.18 114.3) (xy 297.18 116.84)
 		)
 		(stroke
@@ -2655,6 +2697,16 @@
 			(type default)
 		)
 		(uuid "9c607698-c16c-4075-8cd1-c4fc5f21e3af")
+	)
+	(wire
+		(pts
+			(xy 284.48 186.69) (xy 288.29 186.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9cfc986b-fd05-44db-a33e-bb6ce0ffbaa3")
 	)
 	(wire
 		(pts
@@ -2688,7 +2740,7 @@
 	)
 	(wire
 		(pts
-			(xy 135.89 124.46) (xy 160.02 124.46)
+			(xy 135.89 124.46) (xy 149.86 124.46)
 		)
 		(stroke
 			(width 0)
@@ -2775,16 +2827,6 @@
 			(type default)
 		)
 		(uuid "ccd5e3a7-7ee7-44ca-986d-80a4a324ccb0")
-	)
-	(wire
-		(pts
-			(xy 92.71 121.92) (xy 107.95 121.92)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cd13da15-7434-4781-a168-5edf75a77c6a")
 	)
 	(wire
 		(pts
@@ -2888,6 +2930,26 @@
 	)
 	(wire
 		(pts
+			(xy 228.6 110.49) (xy 232.41 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ea8f5ba3-7e93-4c32-8e2a-a4c943c3950d")
+	)
+	(wire
+		(pts
+			(xy 146.05 129.54) (xy 149.86 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eea0fe60-9efc-459d-9b6a-e18c61c6b0c6")
+	)
+	(wire
+		(pts
 			(xy 234.95 186.69) (xy 241.3 186.69)
 		)
 		(stroke
@@ -2895,6 +2957,16 @@
 			(type default)
 		)
 		(uuid "f039a576-c7a2-4903-8f41-e0bc6f79a22d")
+	)
+	(wire
+		(pts
+			(xy 107.95 200.66) (xy 115.57 200.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f9de1481-5daf-4443-a6f0-1d62ec20f320")
 	)
 	(wire
 		(pts
@@ -2916,75 +2988,173 @@
 		)
 		(uuid "fe64b90b-8785-4d0e-86c9-eac30e8637e0")
 	)
-	(label "BPSK_145"
-		(at 140.97 124.46 0)
+	(global_label "CLK0_OUT"
+		(shape output)
+		(at 87.63 121.92 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right)
 		)
-		(uuid "69b71b65-d5d9-446c-bc51-fc3c097b7cc7")
+		(uuid "2c1e357b-deb9-4988-89c4-7529d0034be0")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 75.271 121.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
 	)
-	(label "CLK0_OUT"
-		(at 92.71 121.92 0)
+	(global_label "BPSK_DATA"
+		(shape output)
+		(at 146.05 129.54 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right)
 		)
-		(uuid "929fd689-b03e-4555-b164-244d84d4e294")
+		(uuid "2da3b2e7-ce0d-4443-87f4-6d8a33d626f0")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 132.6629 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
 	)
-	(label "TX_437"
-		(at 76.2 200.66 0)
+	(global_label "TX_OUT"
+		(shape output)
+		(at 288.29 186.69 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify left)
 		)
-		(uuid "99f2b895-1763-4c4a-8f6d-5c68ed2a86f3")
+		(uuid "36d36555-79b9-447b-b4ee-e46411e7aafe")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 298.0485 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 	)
-	(label "TX_437"
-		(at 346.71 114.3 0)
+	(global_label "BPSK_DATA"
+		(shape output)
+		(at 87.63 127 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right)
 		)
-		(uuid "ac50f658-b117-4eee-8f77-b7e6eba1da5a")
+		(uuid "4341f510-15c4-4607-a2e0-630038857daa")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 74.2429 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
 	)
-	(label "BPSK_DATA"
-		(at 72.39 127 0)
+	(global_label "TRIPLER_OUT"
+		(shape bidirectional)
+		(at 232.41 110.49 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify left)
 		)
-		(uuid "bb795446-b87e-441a-b7ee-36e3160bc181")
+		(uuid "60f5b284-babd-4a12-9f57-a7454abfb2a4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 248.6622 110.49 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 	)
-	(label "TX_OUT"
-		(at 287.02 186.69 0)
+	(global_label "TX_437"
+		(shape input)
+		(at 107.95 200.66 180)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right)
 		)
-		(uuid "d6f41e48-b46a-49c6-9bda-e994343f3048")
+		(uuid "a7bb4795-6df3-4704-aa17-1305f4670fb1")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 98.1916 200.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
 	)
-	(label "TRIPLER_OUT"
-		(at 228.6 114.3 0)
+	(global_label "TX_437"
+		(shape output)
+		(at 347.98 114.3 0)
+		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify left)
 		)
-		(uuid "ef6e3cee-5ffb-4622-9617-d1917d75e3ba")
+		(uuid "b78fb9f2-1561-41d7-a53a-3c4f34ec4daa")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 357.7384 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -2998,7 +3168,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0623fb79-6fda-4749-8c47-f6cbba606361")
-		(property "Reference" "#PWR059"
+		(property "Reference" "#PWR078"
 			(at 105.41 119.38 0)
 			(hide yes)
 			(show_name no)
@@ -3053,12 +3223,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "d3338103-0d37-44a7-9a44-a944786176d7")
+			(uuid "a688219c-d91b-403e-b2c7-ba4e1f4ec34d")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR059")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR078")
 					(unit 1)
 				)
 			)
@@ -3075,7 +3245,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "075138b8-e539-47b7-8402-6a90b7e0c4c9")
-		(property "Reference" "C12"
+		(property "Reference" "C96"
 			(at 299.974 119.634 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3141,15 +3311,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "4ac8a024-152f-4804-b58c-b14fdfca5bae")
+			(uuid "eaa4996d-a861-49d5-b563-5b781d4353b1")
 		)
 		(pin "1"
-			(uuid "ce291fe1-41ad-471a-9468-7d3542bd95ab")
+			(uuid "b3a13341-7908-42d2-8e81-b91c13a40667")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C12")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C96")
 					(unit 1)
 				)
 			)
@@ -3166,7 +3336,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "09ef07b1-e022-478c-86e3-7b1757e733ba")
-		(property "Reference" "C28"
+		(property "Reference" "C89"
 			(at 248.158 188.214 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3230,15 +3400,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "18999fce-b1d7-4206-8a09-ff3db67201fa")
+			(uuid "ef708c8f-1eb7-499c-b8f7-bc438ad2a70e")
 		)
 		(pin "1"
-			(uuid "f0d30f98-2fd7-4f7b-bffa-3ae590953f86")
+			(uuid "a5b3beee-18da-4187-8729-f2e060b4331a")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C28")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C89")
 					(unit 1)
 				)
 			)
@@ -3255,7 +3425,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "16278e2e-dbed-44b3-a72d-972c3a9bc16d")
-		(property "Reference" "C17"
+		(property "Reference" "C71"
 			(at 162.56 180.086 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3330,15 +3500,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "6f01df37-3c37-419d-ba99-cd0d9e92bc51")
+			(uuid "8561dc0c-607e-42c8-8fa3-3674f3aaf2ae")
 		)
 		(pin "1"
-			(uuid "718b4405-75db-403d-bea5-0e46784af3b1")
+			(uuid "edcc8b1d-a5bb-4392-b306-fb7122a3472b")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C17")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C71")
 					(unit 1)
 				)
 			)
@@ -3355,7 +3525,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "23e6f012-86cb-4a63-91dc-38ef89ff2815")
-		(property "Reference" "L7"
+		(property "Reference" "L19"
 			(at 223.52 191.7699 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3421,15 +3591,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "553702b4-2130-430a-8a05-91c6811215fc")
+			(uuid "b1e48b0f-aaab-4436-be80-4275e21bc02d")
 		)
 		(pin "2"
-			(uuid "e4a495b7-e127-46bf-903f-969ebe8e42a1")
+			(uuid "3e08c99c-7350-46d8-a1f8-30ee9a58a3e0")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "L7")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "L19")
 					(unit 1)
 				)
 			)
@@ -3446,7 +3616,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "245f0516-0670-4e91-a4d9-9ec4f5e2f5df")
-		(property "Reference" "C10"
+		(property "Reference" "C93"
 			(at 276.606 116.078 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3510,15 +3680,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "c1135d9b-6851-4ea2-a5b4-311911020350")
+			(uuid "cc065bf7-cdab-4f19-862c-ec77b5395678")
 		)
 		(pin "1"
-			(uuid "f067fb09-30b8-40a6-82a1-94d985505af1")
+			(uuid "e9ee21ae-a01a-45fc-9316-9560e73b8a4f")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C10")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C93")
 					(unit 1)
 				)
 			)
@@ -3535,7 +3705,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "252e2723-cb1d-45c7-ba58-3e23e7ef560b")
-		(property "Reference" "C26"
+		(property "Reference" "C98"
 			(at 311.658 115.824 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3599,15 +3769,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "73b5fa69-c9b3-4b36-b284-0f7f7f686ead")
+			(uuid "a80cf5d3-8634-41ae-a2a7-537926f62d25")
 		)
 		(pin "1"
-			(uuid "cc2228be-e09a-46a2-b1b8-33826e3ef6b1")
+			(uuid "48730709-3b79-4259-bb32-b8b8d6fdaee6")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C26")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C98")
 					(unit 1)
 				)
 			)
@@ -3624,7 +3794,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "29a940b2-6e4f-4b4c-b124-e1457ab0a3a1")
-		(property "Reference" "L5"
+		(property "Reference" "L15"
 			(at 151.13 180.3399 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3690,15 +3860,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "72a63b93-39b8-4d33-ad1e-e7ff5473dfc0")
+			(uuid "16ab3fe0-4e85-43b3-8403-229c0424643d")
 		)
 		(pin "1"
-			(uuid "9cba7dd7-8b9b-44ed-ac7b-9e13ccb13e68")
+			(uuid "054103a6-f903-4488-9ba6-ac6e1f01f2f1")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "L5")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "L15")
 					(unit 1)
 				)
 			)
@@ -3715,7 +3885,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "370a477a-c37a-4235-a64c-10180a056181")
-		(property "Reference" "C19"
+		(property "Reference" "C94"
 			(at 284.226 188.468 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3779,15 +3949,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "c5153690-df32-4c84-a6dd-961c406db81c")
+			(uuid "bf68e71f-1350-4dfa-9bf1-6b29bd142d5a")
 		)
 		(pin "1"
-			(uuid "fbeb4232-a4c3-4bc4-8a32-825cf65c50f9")
+			(uuid "a36578a3-18cb-4b59-8a01-502a271bc907")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C19")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C94")
 					(unit 1)
 				)
 			)
@@ -3804,7 +3974,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "38a5b560-7b8b-4fef-b242-1e60f5cd5eac")
-		(property "Reference" "C14"
+		(property "Reference" "C73"
 			(at 164.084 128.016 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3879,15 +4049,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "a484f10e-3202-48b4-9599-91c6dcf2cc87")
+			(uuid "5c72a6ef-4b9d-4cfd-9244-ca1bd9f85f74")
 		)
 		(pin "1"
-			(uuid "bf88c0b6-c929-4079-ae1e-5022a6f9bb06")
+			(uuid "0acdc785-3507-4a34-99b3-551dc318effc")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C14")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C73")
 					(unit 1)
 				)
 			)
@@ -3904,7 +4074,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3a497ce4-8c44-4e0d-b1cd-73d533bc7333")
-		(property "Reference" "Q1"
+		(property "Reference" "Q3"
 			(at 193.04 123.698 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4003,18 +4173,18 @@
 			)
 		)
 		(pin "2"
-			(uuid "11a29fa4-db88-476e-a626-9c59dfd31cd2")
+			(uuid "0dc19f27-188f-4aae-9c3c-c1e5467c24f0")
 		)
 		(pin "1"
-			(uuid "50e32f5b-ec5d-4f2c-8d08-ba6a434aadec")
+			(uuid "f1c73be6-4b23-4627-a5d2-db3096d7a110")
 		)
 		(pin "3"
-			(uuid "47ecc7c2-20fb-48bd-8252-8c7befcca365")
+			(uuid "5fc4834d-018a-459b-b4da-2f3e1f494baa")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "Q1")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "Q3")
 					(unit 1)
 				)
 			)
@@ -4032,7 +4202,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3b74ed4d-ad58-4651-884a-edbbf47e0f46")
-		(property "Reference" "#PWR061"
+		(property "Reference" "#PWR082"
 			(at 123.19 148.59 0)
 			(hide yes)
 			(show_name no)
@@ -4087,12 +4257,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "40e63ccc-bd85-483a-9cc0-761b36c6ccff")
+			(uuid "3bc3ab1c-502e-4939-b313-626a8114855d")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR061")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR082")
 					(unit 1)
 				)
 			)
@@ -4110,7 +4280,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3e590446-af55-47e9-8226-79c3fa5934bd")
-		(property "Reference" "#PWR062"
+		(property "Reference" "#PWR089"
 			(at 172.72 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -4165,12 +4335,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "36a485a2-be1d-4d6c-a51f-bec4433f0792")
+			(uuid "f050ae81-c9db-4ed5-89b6-1745475388c0")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR062")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR089")
 					(unit 1)
 				)
 			)
@@ -4187,7 +4357,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3fe352d7-5851-478d-9895-929247f8faf4")
-		(property "Reference" "U6"
+		(property "Reference" "U8"
 			(at 123.19 190.5 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4251,18 +4421,18 @@
 			)
 		)
 		(pin "1"
-			(uuid "8e55fbae-4558-4714-95fb-82cbef11b95e")
+			(uuid "152c3927-65c9-4ecb-9d63-456d3652ddf0")
 		)
 		(pin "2"
-			(uuid "031f66f0-ca03-410e-897e-e6d47011aa43")
+			(uuid "43dfd2ce-e6b8-43bd-a3c0-ee21c57a75df")
 		)
 		(pin "3"
-			(uuid "1028e762-d941-45ab-a6c8-1544840682f5")
+			(uuid "7ba57f54-07b8-41ad-b75d-f85891d471bd")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "U6")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "U8")
 					(unit 1)
 				)
 			)
@@ -4280,7 +4450,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4b93d8b2-8981-4b78-a3bb-5de292cca64b")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR0106"
 			(at 215.9 111.76 0)
 			(hide yes)
 			(show_name no)
@@ -4335,12 +4505,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "5bd5027a-56d9-4d22-ab60-a4104c8c6321")
+			(uuid "3d6b3ebd-59c4-4965-811f-97292506f9d5")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR019")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR0106")
 					(unit 1)
 				)
 			)
@@ -4357,7 +4527,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "64823e20-599e-41f2-b2ef-4caa1c0f50ba")
-		(property "Reference" "C8"
+		(property "Reference" "C81"
 			(at 201.168 108.204 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4423,15 +4593,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "c1207156-f878-4f28-98af-6bf271cb0bbb")
+			(uuid "6a5f476d-ce72-4dfe-973f-abd086427fec")
 		)
 		(pin "1"
-			(uuid "4480caf9-a8fc-4473-9a99-103c87c20930")
+			(uuid "5cd6d18c-9c64-4e21-bc04-a216131e20af")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C8")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C81")
 					(unit 1)
 				)
 			)
@@ -4448,7 +4618,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "6556250e-a671-4793-ae2a-c30a301427a1")
-		(property "Reference" "L4"
+		(property "Reference" "L24"
 			(at 320.04 119.3799 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4514,15 +4684,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "542cf555-5a37-41c9-ac9d-addb467cdbc7")
+			(uuid "6c1210a7-86c9-4c65-bc3d-6c296dfd7b4a")
 		)
 		(pin "2"
-			(uuid "1401fb8d-ea82-4e5c-acbf-9705cacd6205")
+			(uuid "fcfc5aec-8c3f-4ef1-b5bd-ca9380ac11ee")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "L4")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "L24")
 					(unit 1)
 				)
 			)
@@ -4539,7 +4709,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "6a0bd469-0ad5-4561-a8d7-f8cb4aa37f65")
-		(property "Reference" "R6"
+		(property "Reference" "R25"
 			(at 93.98 129.032 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4603,15 +4773,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "9d1bf050-de4b-471b-859d-08454119d79d")
+			(uuid "62fe836b-c402-44ee-970e-86e8893b04d5")
 		)
 		(pin "2"
-			(uuid "082816ac-ad39-4dab-859a-ea074410a3c0")
+			(uuid "b66f43bd-c364-40f5-a991-074d39e6ef6c")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "R6")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "R25")
 					(unit 1)
 				)
 			)
@@ -4628,7 +4798,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "6d3fb03a-cc45-40fc-9f38-ad0f9b4d1409")
-		(property "Reference" "L1"
+		(property "Reference" "L17"
 			(at 185.42 99.314 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4694,15 +4864,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "baea3990-0ac0-4ad4-a4c8-761cd3a44825")
+			(uuid "69094749-de5d-494a-9040-7319c66f4d69")
 		)
 		(pin "2"
-			(uuid "8c25de1c-aa18-49c9-af8a-6691142e72f9")
+			(uuid "e30e00f1-aefd-41e3-b12e-85279d84eaf5")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "L1")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "L17")
 					(unit 1)
 				)
 			)
@@ -4720,7 +4890,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "75778b3b-8918-471b-be28-bb44b186b802")
-		(property "Reference" "#PWR060"
+		(property "Reference" "#PWR079"
 			(at 105.41 148.59 0)
 			(hide yes)
 			(show_name no)
@@ -4775,12 +4945,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "e5d93f48-08fb-496d-9d74-640699058311")
+			(uuid "8e0985ea-31f1-4994-ba1f-3fdd1224af70")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR060")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR079")
 					(unit 1)
 				)
 			)
@@ -4797,7 +4967,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "7a42e378-2600-453c-a596-0e2969a6aa13")
-		(property "Reference" "C25"
+		(property "Reference" "C65"
 			(at 107.696 135.89 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4861,15 +5031,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "3bedbacf-8a91-467c-9469-dee9c053906e")
+			(uuid "af88dae0-f430-4b50-9072-43cb9a6f13d6")
 		)
 		(pin "1"
-			(uuid "0683f286-02ae-42bd-b0da-8a316020536d")
+			(uuid "63af2bc4-2b33-4661-816a-571c6543bad8")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C25")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C65")
 					(unit 1)
 				)
 			)
@@ -4887,7 +5057,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "84103a62-191d-469e-86ce-657342366d8f")
-		(property "Reference" "#PWR066"
+		(property "Reference" "#PWR081"
 			(at 123.19 111.76 0)
 			(hide yes)
 			(show_name no)
@@ -4942,12 +5112,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "48ef8a7c-e76d-414c-807c-c23793cbddc9")
+			(uuid "722d3c16-896a-41d1-994c-8c71911c9ff5")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR066")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR081")
 					(unit 1)
 				)
 			)
@@ -4965,7 +5135,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8bb5d292-190b-447d-ad7e-e43c75eb25f4")
-		(property "Reference" "#PWR073"
+		(property "Reference" "#PWR0110"
 			(at 245.11 214.63 0)
 			(hide yes)
 			(show_name no)
@@ -5020,12 +5190,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "16110d03-117e-4421-ae5e-175d9ddf5fb9")
+			(uuid "6228bb19-4ede-4fa4-9f92-45da6956705a")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR073")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR0110")
 					(unit 1)
 				)
 			)
@@ -5042,7 +5212,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8e8b057d-41bb-40cf-8d98-8b90f5bde226")
-		(property "Reference" "L3"
+		(property "Reference" "L23"
 			(at 285.75 119.3799 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5108,15 +5278,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "e5e66100-e5c0-42ff-9b5e-cb0d85c269bb")
+			(uuid "bf54c691-5f57-433c-b8a2-9109962bf73b")
 		)
 		(pin "2"
-			(uuid "2f2ca30c-f857-40f6-9cb0-3f97c9a7aba2")
+			(uuid "64e96b10-c519-413d-ad38-8c6736de7575")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "L3")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "L23")
 					(unit 1)
 				)
 			)
@@ -5133,7 +5303,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "902bd9bb-3ec9-47b2-a222-88fc50560dad")
-		(property "Reference" "L8"
+		(property "Reference" "L21"
 			(at 257.81 191.7699 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5199,15 +5369,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "20a43012-68ec-46c6-94b1-4e16a9bb0bff")
+			(uuid "9677e3fd-351b-4767-8986-b898be551f1b")
 		)
 		(pin "2"
-			(uuid "d09ecb00-2dcd-4090-9637-253a9401e6f2")
+			(uuid "d94f8b56-f1b3-4364-bd3b-8a9cb48f2924")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "L8")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "L21")
 					(unit 1)
 				)
 			)
@@ -5224,7 +5394,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "92d396c1-4a38-4bbf-85a3-372d9791fbcd")
-		(property "Reference" "R5"
+		(property "Reference" "R27"
 			(at 174.498 129.032 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5290,15 +5460,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "95edef29-6e0d-44fc-8cbf-2364faf9c348")
+			(uuid "6c02c96a-7b4e-4263-98f8-847adeac220a")
 		)
 		(pin "1"
-			(uuid "03fea1fa-74dd-4d99-a297-ec1875a2765a")
+			(uuid "41632a22-6a85-449e-9a77-93bdb06e911f")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "R5")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "R27")
 					(unit 1)
 				)
 			)
@@ -5316,7 +5486,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9cf35472-efe0-46f1-b89a-58eb23b1cb34")
-		(property "Reference" "#PWR065"
+		(property "Reference" "#PWR098"
 			(at 190.5 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -5371,12 +5541,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "0047dc27-e423-49de-a027-4b4dfade2910")
+			(uuid "ff83373c-b1cb-4adc-9c3d-8d3ed310296a")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR065")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR098")
 					(unit 1)
 				)
 			)
@@ -5393,7 +5563,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a02cad69-edc3-43c3-a20d-2c1e2f7fdf8b")
-		(property "Reference" "C9"
+		(property "Reference" "C84"
 			(at 213.106 188.468 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5457,15 +5627,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "41eb3241-d258-4d79-aef8-f980996b0d0c")
+			(uuid "49bffc36-6a9a-4aca-a5d2-e704f4fa6a24")
 		)
 		(pin "1"
-			(uuid "5518e156-0c1e-42cb-b34d-38fbdedc80d7")
+			(uuid "ab732f22-4352-4106-9ff6-93a5e5dd0737")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C9")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C84")
 					(unit 1)
 				)
 			)
@@ -5482,7 +5652,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a372b3d7-5311-4740-98dd-0f1d7160d208")
-		(property "Reference" "C13"
+		(property "Reference" "C100"
 			(at 334.264 119.634 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5548,15 +5718,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "996e2075-1044-4538-9124-1807aeb82a58")
+			(uuid "4a55b5d9-0f89-4653-9850-4b992f2770df")
 		)
 		(pin "1"
-			(uuid "49fae5f6-7988-4e13-a379-0032e1b70fe6")
+			(uuid "dc7a2b3f-e04a-4c6d-aa6d-9dff4e924633")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C13")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C100")
 					(unit 1)
 				)
 			)
@@ -5573,7 +5743,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a724d958-1d1a-44a4-9232-de48fd12587f")
-		(property "Reference" "C15"
+		(property "Reference" "C66"
 			(at 115.062 112.268 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5648,15 +5818,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "9a459fa9-aff3-4e67-b4e1-ee5e869c5ebc")
+			(uuid "03830ee7-9807-49b9-b06a-bb7e14866e9e")
 		)
 		(pin "1"
-			(uuid "cf34a4fa-1ba4-4ba1-b707-f2a7f305a269")
+			(uuid "1996abce-42d2-43d9-b99a-9c76f7976388")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C15")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C66")
 					(unit 1)
 				)
 			)
@@ -5673,7 +5843,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a8a13e7b-8059-4657-a12b-a5004f051694")
-		(property "Reference" "U2"
+		(property "Reference" "U7"
 			(at 134.62 118.0398 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5737,24 +5907,24 @@
 			)
 		)
 		(pin "3"
-			(uuid "d4ee6913-9047-4b0a-812d-69149ed3161d")
+			(uuid "e48f97a9-e0e8-4679-ba05-36595c142701")
 		)
 		(pin "1"
-			(uuid "9ca6f377-38ee-4c94-a60f-720b002e92ad")
+			(uuid "a698f57d-3cef-4d48-81b8-91f37151f8b6")
 		)
 		(pin "5"
-			(uuid "c413592f-243f-4127-a0b8-b313cdb09430")
+			(uuid "82950bde-ba89-45fb-81df-eca52a0e36e9")
 		)
 		(pin "4"
-			(uuid "7d921475-52b3-4e0b-95b1-277224a0be2d")
+			(uuid "c155ad23-5069-4ef5-b940-bf88e0d29051")
 		)
 		(pin "2"
-			(uuid "040915eb-3154-4835-93d2-cd4b44bdc027")
+			(uuid "26b5a392-2221-4957-a461-f991c768ebdb")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "U2")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "U7")
 					(unit 1)
 				)
 			)
@@ -5772,7 +5942,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "adfc9d59-2f2c-4a91-ac3f-11c3434736c4")
-		(property "Reference" "#PWR056"
+		(property "Reference" "#PWR096"
 			(at 186.69 199.39 0)
 			(hide yes)
 			(show_name no)
@@ -5827,12 +5997,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "678e01fd-3294-48c1-9c97-3e4433c3f0e4")
+			(uuid "c48a93aa-f12e-46e5-ac15-7feefa8c9940")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR056")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR096")
 					(unit 1)
 				)
 			)
@@ -5849,7 +6019,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b29ad7f8-c1d6-44d6-b293-e83cc3c104fc")
-		(property "Reference" "C11"
+		(property "Reference" "C101"
 			(at 343.916 116.078 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5913,15 +6083,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "3ef5750c-eb97-4efb-aee6-e1c0848b6e47")
+			(uuid "f8143feb-0fce-4765-9a1b-2bd9db8fd882")
 		)
 		(pin "1"
-			(uuid "ae6e4c5b-780f-4c1a-9c30-27ab5d2025f7")
+			(uuid "27e269aa-9ce9-41ab-bdfe-ade7a30303b0")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C11")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C101")
 					(unit 1)
 				)
 			)
@@ -5938,7 +6108,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "cefcfdd8-08ca-43cd-9707-db819225d35c")
-		(property "Reference" "C18"
+		(property "Reference" "C76"
 			(at 177.8 180.086 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6002,15 +6172,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "87b8c933-1b04-47ba-b16f-f1df6892241f")
+			(uuid "61ee75cb-35a6-4469-8cd5-4a95ba20f802")
 		)
 		(pin "2"
-			(uuid "ca54b671-4f18-45f0-8524-988909378c63")
+			(uuid "ab64305e-2e07-46ff-b925-31b755f52ca0")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C18")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C76")
 					(unit 1)
 				)
 			)
@@ -6027,7 +6197,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "dfe6782b-68a1-4bff-a0da-66795903310f")
-		(property "Reference" "C21"
+		(property "Reference" "C92"
 			(at 272.034 192.024 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6093,15 +6263,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "b58bafe0-0cd3-4de4-9827-a3a6ff83fa33")
+			(uuid "947ffbc3-f9eb-44d7-993f-d18bf796c388")
 		)
 		(pin "1"
-			(uuid "9fb32885-4952-4c14-80ea-ecd5d8efab09")
+			(uuid "bcbe7d83-2401-433d-bc47-f6c4ee544990")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C21")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C92")
 					(unit 1)
 				)
 			)
@@ -6119,7 +6289,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e4ee2969-9a74-4c7a-ae8b-010cc7cb453c")
-		(property "Reference" "#PWR055"
+		(property "Reference" "#PWR057"
 			(at 120.65 218.44 0)
 			(hide yes)
 			(show_name no)
@@ -6174,12 +6344,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "273136ee-6bda-4f55-acbf-ed84791fa98b")
+			(uuid "5bc2ff92-d30d-42c1-b7a8-d27f02e1f0f5")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR055")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR057")
 					(unit 1)
 				)
 			)
@@ -6197,7 +6367,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e538e950-fbea-44f4-a1ac-876c49bc5edd")
-		(property "Reference" "#PWR063"
+		(property "Reference" "#PWR099"
 			(at 190.5 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -6252,12 +6422,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "d1c877b5-a5f5-4d96-b601-199453170aa6")
+			(uuid "6b49c2df-8c8e-490f-b72a-7360302bcac1")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR063")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR099")
 					(unit 1)
 				)
 			)
@@ -6275,7 +6445,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e5917836-1b86-4ac0-82a9-7fbd8be15c97")
-		(property "Reference" "#PWR058"
+		(property "Reference" "#PWR083"
 			(at 149.86 172.72 0)
 			(hide yes)
 			(show_name no)
@@ -6330,12 +6500,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "164dcee6-61c8-4d1c-9268-3dc6f0b3ad9a")
+			(uuid "841b7b6e-a5c2-4572-ad49-7e9544870bad")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR058")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR083")
 					(unit 1)
 				)
 			)
@@ -6353,7 +6523,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e9ea8f45-cc38-43ef-bd53-1ddd4e3be472")
-		(property "Reference" "#PWR067"
+		(property "Reference" "#PWR0117"
 			(at 308.61 142.24 0)
 			(hide yes)
 			(show_name no)
@@ -6408,12 +6578,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "bb202b8f-82a7-4b53-b23e-2f1688f07f65")
+			(uuid "7e20e33a-33b2-4ae6-9c82-008b7fd387a4")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "#PWR067")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR0117")
 					(unit 1)
 				)
 			)
@@ -6430,7 +6600,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ee96f5f9-524e-4212-8285-da95da5e9a8d")
-		(property "Reference" "C20"
+		(property "Reference" "C87"
 			(at 237.744 192.024 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6496,15 +6666,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "2823b953-6bdf-4929-8b40-382f653f699c")
+			(uuid "472efe4e-4284-4cf8-b86a-f36903b332f6")
 		)
 		(pin "1"
-			(uuid "9cda3a70-c1ac-48eb-b46f-b7cb60d18c39")
+			(uuid "ba605206-9298-45e3-8a26-3420cb480c13")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C20")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C87")
 					(unit 1)
 				)
 			)
@@ -6521,7 +6691,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f7a73856-4ae0-4e69-83e7-22ee9619f77a")
-		(property "Reference" "C16"
+		(property "Reference" "C80"
 			(at 199.898 96.774 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6596,24 +6766,18 @@
 			)
 		)
 		(pin "2"
-			(uuid "1cfa202e-9d92-4229-a7c2-62e1557c3766")
+			(uuid "5d83b385-ad57-43fb-8ede-06ddc29a1d3f")
 		)
 		(pin "1"
-			(uuid "b691c38a-aece-43eb-bbba-b76d9daf5fb1")
+			(uuid "3b1a19d5-26c7-433f-be65-8b3c874e5de6")
 		)
 		(instances
-			(project "transciever_kicad"
-				(path "/e5b5f744-9f01-45bd-b00e-f85382577a30"
-					(reference "C16")
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C80")
 					(unit 1)
 				)
 			)
 		)
 	)
-	(sheet_instances
-		(path "/"
-			(page "8")
-		)
-	)
-	(embedded_fonts no)
 )
