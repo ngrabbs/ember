@@ -1,0 +1,146 @@
+<mxfile host="app.diagrams.net" agent="Codex">
+  <diagram id="sband-direct-bpsk" name="Direct S-Band BPSK TX">
+    <mxGraphModel dx="3812" dy="1362" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="950" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;" value="&lt;font style=&quot;font-size:24px&quot; color=&quot;#111111&quot;&gt;&lt;b&gt;Direct S-Band BPSK Transmitter — DAC-Free RF Block Diagram&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="1250" x="45" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;" value="&lt;font style=&quot;font-size:12px&quot; color=&quot;#555555&quot;&gt;The FPGA supplies packet bits and symbol timing; a phase modulator switches a continuous S-band carrier between 0° and 180°.&lt;/font&gt;" vertex="1">
+          <mxGeometry height="28" width="1350" x="47" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="digital-panel" parent="1" style="rounded=1;html=1;whiteSpace=wrap;fillColor=#E6F3F7;strokeColor=#007FA3;strokeWidth=1.6;verticalAlign=top;spacingTop=7;container=1;collapsible=0;" value="&lt;font style=&quot;font-size:13px&quot; color=&quot;#005A75&quot;&gt;&lt;b&gt;SOURCE DATA AND DIGITAL LINK PROCESSING&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="380" width="780" x="-360" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="source" parent="digital-panel" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#007FA3;strokeWidth=1.6;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:14px&quot;&gt;&lt;b&gt;Source Data&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#333333&quot;&gt;camera / image processor&lt;br&gt;file or flash storage&lt;br&gt;test pattern / PRBS&lt;/font&gt;" vertex="1">
+          <mxGeometry height="115" width="129.32000000000002" x="8" y="139.5" as="geometry" />
+        </mxCell>
+        <mxCell id="fpga" parent="digital-panel" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#007FA3;strokeWidth=1.6;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:14px&quot;&gt;&lt;b&gt;FPGA Link Processor&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#333333&quot;&gt;packet framing + CRC&lt;br&gt;FEC + interleaving&lt;br&gt;scrambler + BPSK symbols&lt;br&gt;synchronous symbol timing&lt;/font&gt;" vertex="1">
+          <mxGeometry height="145" width="138.008" x="321" y="124.5" as="geometry" />
+        </mxCell>
+        <mxCell id="e-source-fpga" edge="1" parent="digital-panel" source="source" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" target="fpga" value="image bytes / packets">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="229.17" y="197.03" />
+              <mxPoint x="229.17" y="195.03" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="logic-buffer" parent="digital-panel" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#007FA3;strokeWidth=1.6;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;Logic Buffer /&lt;br&gt;Level Interface&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;clean edges&lt;br&gt;proper drive level&lt;/font&gt;" vertex="1">
+          <mxGeometry height="95" width="92" x="670" y="149.5" as="geometry" />
+        </mxCell>
+        <mxCell id="e-fpga-buffer" edge="1" parent="digital-panel" source="fpga" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" target="logic-buffer" value="coded BPSK bitstream">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rf-panel" parent="1" style="rounded=1;html=1;whiteSpace=wrap;fillColor=#F7EBEE;strokeColor=#5D1725;strokeWidth=1.6;verticalAlign=top;spacingTop=7;container=1;collapsible=0;" value="&lt;font style=&quot;font-size:13px&quot; color=&quot;#5D1725&quot;&gt;&lt;b&gt;S-BAND MODULATION AND POWER CHAIN&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="380" width="1335" x="565" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="tp-data" parent="rf-panel" style="ellipse;html=1;fillColor=#FBEFE9;strokeColor=#A9431E;strokeWidth=1.4;fontSize=8;fontColor=#8A3517;align=center;verticalAlign=middle;" value="DATA" vertex="1">
+          <mxGeometry height="40" width="44.87394957983193" x="16.827731092436974" y="179" as="geometry" />
+        </mxCell>
+        <mxCell id="phase-mod" parent="rf-panel" style="ellipse;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=2;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:27px&quot;&gt;0° / 180°&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;RF Phase Modulator&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;phase switch or mixer&lt;/font&gt;" vertex="1">
+          <mxGeometry height="130" width="162.66806722689077" x="105.00260504201681" y="134" as="geometry" />
+        </mxCell>
+        <mxCell id="e-data-phase" edge="1" parent="rf-panel" source="tp-data" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=9;fontColor=#333333;" target="phase-mod" value="control">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="antenna" parent="rf-panel" style="shape=mxgraph.electrical.radio.aerial;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.8;align=center;verticalLabelPosition=bottom;verticalAlign=top;labelPosition=center;" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;Antenna&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;or 50 Ω&lt;br&gt;cabled load&lt;/font&gt;" vertex="1">
+          <mxGeometry height="120" width="50" x="1255" y="134" as="geometry" />
+        </mxCell>
+        <mxCell id="coupler" parent="rf-panel" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.6;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;Directional&lt;br&gt;Coupler&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;forward / reflected&lt;br&gt;power sample&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="115" x="1060" y="152.5" as="geometry" />
+        </mxCell>
+        <mxCell id="monitor" parent="rf-panel" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#A9431E;strokeWidth=1.4;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:12px&quot;&gt;&lt;b&gt;RF Power Detector / ADC&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;forward/reflected telemetry&lt;br&gt;PA protection&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="180" x="1025" y="285.5" as="geometry" />
+        </mxCell>
+        <mxCell id="e-coupler-ant" edge="1" parent="rf-panel" source="coupler" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" target="antenna" value="RF OUT">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-coupler-monitor" edge="1" parent="rf-panel" source="coupler" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=6;strokeColor=#A9431E;strokeWidth=1.5;fontSize=9;fontColor=#8A3517;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="monitor" value="coupled sample">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rf-filter-2" parent="rf-panel" style="shape=trapezoid;direction=east;perimeter=trapezoidPerimeter;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.6;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;Output BPF&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;harmonic + spur&lt;br&gt;suppression&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="125" x="915" y="152.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pa" parent="rf-panel" style="triangle;direction=east;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.8;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;S-Band PA&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;RF output power&lt;br&gt;enable / inhibit&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="120" x="765" y="152" as="geometry" />
+        </mxCell>
+        <mxCell id="driver" parent="rf-panel" style="triangle;direction=east;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.6;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;RF Driver&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;gain + level set&lt;br&gt;maintain bandwidth&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="110" x="612.5" y="154.5" as="geometry" />
+        </mxCell>
+        <mxCell id="e-filter-coupler" edge="1" parent="rf-panel" source="rf-filter-2" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;" target="coupler" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-pa-filter" edge="1" parent="rf-panel" source="pa" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;" target="rf-filter-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-driver-pa" edge="1" parent="rf-panel" source="driver" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;" target="pa" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rf-filter-1" parent="rf-panel" style="shape=trapezoid;direction=east;perimeter=trapezoidPerimeter;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.6;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;S-Band BPF&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;carrier cleanup&lt;br&gt;modulator spur rejection&lt;/font&gt;" vertex="1">
+          <mxGeometry height="95" width="135" x="365" y="149.5" as="geometry" />
+        </mxCell>
+        <mxCell id="e-filter-driver" edge="1" parent="rf-panel" source="rf-filter-1" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" target="driver" value="filtered BPSK carrier">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="tp-rf" parent="rf-panel" style="ellipse;html=1;fillColor=#FBEFE9;strokeColor=#A9431E;strokeWidth=1.4;fontSize=9;fontColor=#8A3517;align=center;verticalAlign=middle;" value="RF" vertex="1">
+          <mxGeometry height="40" width="40" x="305" y="177" as="geometry" />
+        </mxCell>
+        <mxCell id="e-phase-rftp" edge="1" parent="rf-panel" source="phase-mod" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=none;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" target="tp-rf" value="BPSK at S-band">
+          <mxGeometry relative="1" x="0.4288" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-rftp-filter" edge="1" parent="rf-panel" source="tp-rf" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;" target="rf-filter-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lo-panel" parent="1" style="rounded=1;html=1;whiteSpace=wrap;fillColor=#F0EAF3;strokeColor=#642F6C;strokeWidth=1.6;verticalAlign=top;spacingTop=7;container=1;collapsible=0;" value="&lt;font style=&quot;font-size:13px&quot; color=&quot;#4A2350&quot;&gt;&lt;b&gt;S-BAND CARRIER SOURCE&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="230" width="700" x="130" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="refosc" parent="1" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#642F6C;strokeWidth=1.5;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;Frequency Reference&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;TCXO / OCXO&lt;br&gt;frequency stability&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="145" x="160" y="685" as="geometry" />
+        </mxCell>
+        <mxCell id="synth" parent="1" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#642F6C;strokeWidth=1.5;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;S-Band PLL / VCO&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;carrier ≈ 2.4 GHz&lt;br&gt;programmable frequency&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="155" x="345" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="lo-filter" parent="1" style="shape=trapezoid;direction=east;perimeter=trapezoidPerimeter;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#642F6C;strokeWidth=1.5;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;LO / Carrier BPF&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;PLL spur + harmonic&lt;br&gt;cleanup&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="140" x="540" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="Xob_DOq8C38Uzp3Tmal3-7" edge="1" parent="1" source="carrier-buffer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#642F6C;endSize=7;strokeWidth=2;" target="phase-mod">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="930" y="724.5" />
+              <mxPoint x="930" y="560" />
+              <mxPoint x="751.3" y="560" />
+            </Array>
+            <mxPoint x="890" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Xob_DOq8C38Uzp3Tmal3-8" connectable="0" parent="Xob_DOq8C38Uzp3Tmal3-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=#4A2350;" value="continuous RF carrier" vertex="1">
+          <mxGeometry relative="1" x="-0.1715" y="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="carrier-buffer" parent="1" style="triangle;direction=east;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#642F6C;strokeWidth=1.7;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;Carrier Buffer&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;drive phase modulator&lt;br&gt;set required RF level&lt;/font&gt;" vertex="1">
+          <mxGeometry height="85" width="100" x="715" y="682" as="geometry" />
+        </mxCell>
+        <mxCell id="note1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:11px&quot; color=&quot;#555555&quot;&gt;&lt;i&gt;Symbol transitions must be synchronous to the carrier/modulator timing. Abrupt BPSK phase reversals create wide sidelobes; occupied bandwidth must be verified against the selected symbol rate and RF filtering.&lt;/i&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="45" width="1460" x="170" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="e-buffer-data" edge="1" parent="1" source="logic-buffer" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=none;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" target="tp-data" value="0 / 1 phase command">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-ref-synth" edge="1" parent="1" source="refosc" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#642F6C;strokeWidth=1.8;fontSize=10;fontColor=#4A2350;" target="synth" value="reference">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-synth-lofilter" edge="1" parent="1" source="synth" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#642F6C;strokeWidth=1.8;fontSize=10;fontColor=#4A2350;" target="lo-filter" value="unmodulated S-band carrier">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-lofilter-buffer" edge="1" parent="1" source="lo-filter" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#642F6C;strokeWidth=1.8;" target="carrier-buffer" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

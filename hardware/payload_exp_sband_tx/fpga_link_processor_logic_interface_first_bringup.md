@@ -1,0 +1,582 @@
+# FPGA Link Processor and Logic Interface: First Bring-Up Plan
+
+## Purpose
+
+This document defines the smallest useful, testable portion of the experimental BPSK transmitter:
+
+```text
+FPGA test-pattern and symbol source
+             ↓
+Registered symbol output
+             ↓
+Logic buffer or voltage translator
+             ↓
+Logic-analyzer output and protected FPGA loopback
+```
+
+The goal is to prove the digital transmitter core and its electrical interface without depending on the oscillator, mixer, filters, amplifier, antenna, or DAC.
+
+The first milestone is:
+
+> Generate constant, alternating, and PRBS-7 symbol patterns in the FPGA; send them through an output-enable-controlled buffer; loop the buffered signal back into the FPGA; and count errors at progressively higher symbol rates.
+
+This is the smallest building block that produces reusable evidence for every later RF architecture.
+
+---
+
+## 1. Why These Blocks Matter
+
+The **FPGA link processor** is the reusable data and waveform engine. It can eventually provide:
+
+- Source-data ingestion.
+- Buffering and flow control.
+- Packet framing and synchronization.
+- CRC generation.
+- Scrambling and optional forward-error correction.
+- Symbol mapping.
+- Symbol-rate timing.
+- Test-pattern generation.
+- Transmitter enable and fault handling.
+- Telemetry counters and debugging.
+
+The **logic buffer/level interface** provides the electrical boundary between the FPGA and the selected modulator. It can provide:
+
+- Voltage compatibility.
+- FPGA pin protection and isolation.
+- A defined disabled state while the FPGA configures.
+- Output-enable control.
+- Greater drive current when appropriate.
+- Edge damping and convenient test access.
+
+These blocks are central, but they do not replace the RF front end. The eventual mixer, phase switch, or modulator determines the required electrical drive, while the filters and amplifier determine spectral cleanup and transmitted power.
+
+In particular, a CMOS logic buffer is **not automatically a 50-ohm RF driver** and is not automatically suitable for driving a passive mixer's IF port. That decision requires the modulator's impedance, voltage, current, bandwidth, and linearity requirements.
+
+---
+
+## 2. Board Facts to Verify
+
+The published IceZero TE0876 documentation reports:
+
+- A Lattice iCE40 LP/HX-family FPGA.
+- A 100 MHz SiT8008 onboard clock.
+- 3.3 V LVCMOS I/O on the PMOD connectors.
+- An open-source iCE40 build flow.
+
+Sources:
+
+- [Trenz TE0876 resources](https://wiki.trenz-electronic.de/display/PD/TE0876%2BResources)
+- [IceZero Rev. 2 pinout and build notes](https://www.trenz-electronic.de/trenzdownloads/Trenz_Electronic/Modules_and_Module_Carriers/3.05x6.5/TE0876/REV02/Documents/iceZero-pinout-v5.pdf)
+- [Lattice iCE40 LP/HX family data sheet](https://www.latticesemi.com/~/media/latticesemi/documents/datasheets/ice/ice40lphxfamilydatasheet.pdf)
+
+The available IceZero documents contain device/revision caveats. Before writing the final pin constraints, record:
+
+| Item | Observation |
+|---|---|
+| IceZero assembly/revision | |
+| FPGA top marking | |
+| FPGA density: HX4K or HX8K | |
+| FPGA package | |
+| Oscillator marking/frequency | |
+| Selected PMOD connector | |
+| Selected FPGA output pin | |
+| Selected FPGA loopback input pin | |
+| I/O-bank voltage | |
+| Pinout document revision | |
+
+Do not copy a constraint file for another iCE40 board without verifying every pin.
+
+---
+
+## 3. First-Milestone Architecture
+
+```text
+100 MHz board clock
+        │
+        v
+┌────────────────────┐
+│ Symbol tick divider│  1 k, 10 k, 100 k, 1 M symbols/s initially
+└─────────┬──────────┘
+          │ symbol_tick
+          v
+┌────────────────────┐
+│ Pattern selector   │  0, 1, 1010..., PRBS-7
+└─────────┬──────────┘
+          v
+┌────────────────────┐
+│ Output register    │  changes only on clock edges
+└─────────┬──────────┘
+          │ FPGA_TX_SYMBOL
+          v
+┌────────────────────┐
+│ Buffer/translator  │  hardware-disabled during FPGA configuration
+└──────┬─────────┬───┘
+       │         │
+       │         └────────────→ scope or logic analyzer
+       v
+protected loopback input
+       │
+       v
+┌────────────────────┐
+│ PRBS checker       │
+│ bit/error counters │
+└────────────────────┘
+```
+
+### Recommended signal names
+
+| Signal | Direction | Meaning |
+|---|---|---|
+| `clk_100m` | FPGA input | Board clock |
+| `rst` | Internal/input | Synchronous reset |
+| `pattern_sel[1:0]` | Internal/input | Constant 0, constant 1, alternating, PRBS-7 |
+| `symbol_rate_sel` | Internal/input | Selects the initial test rate |
+| `tx_enable` | Internal/input | Logical transmitter permission |
+| `tx_symbol` | FPGA output | Registered binary symbol |
+| `tx_oe_n` | FPGA output | Active-low external-buffer enable |
+| `tx_loopback` | FPGA input | Protected return from the interface |
+| `prbs_locked` | FPGA output/status | Checker synchronized to the expected sequence |
+| `bit_count` | Status register | Number of checked symbols |
+| `error_count` | Status register | Number of mismatches |
+
+The eventual BPSK interpretation is:
+
+```text
+tx_symbol = 0 → request 0° RF phase
+tx_symbol = 1 → request 180° RF phase
+```
+
+At this stage, `tx_symbol` is only a logic-level command. It is not an RF waveform.
+
+---
+
+## 4. Why the Output Must Be Registered
+
+Combinational decoding can briefly glitch when several internal bits change at slightly different times. Driving the final pin from a flip-flop gives a single, clock-defined transition and makes timing analysis meaningful.
+
+The iCE40 PIO includes an optional output register before the sysIO buffer; the Lattice data sheet documents this path. A normal fabric register placed close to the I/O can also be used, but the place-and-route timing report should confirm the result.
+
+Rules:
+
+- [ ] `tx_symbol` is assigned only in a clocked process.
+- [ ] Pattern-selection changes are registered or applied while transmission is disabled.
+- [ ] The symbol rate uses a clock-enable pulse; do not create a new fabric clock with ordinary logic.
+- [ ] No asynchronous data path directly reaches `tx_symbol`.
+- [ ] Reset produces a documented idle symbol.
+- [ ] RF enable remains separate from the symbol value.
+
+---
+
+## 5. Minimal FPGA Functions
+
+### 5.1 Symbol tick
+
+For the first experiment, use an integer divider of the 100 MHz board clock:
+
+```text
+cycles_per_symbol = 100,000,000 / symbol_rate
+```
+
+Initial exact-divisor test rates:
+
+| Symbol rate | Clock cycles per symbol |
+|---:|---:|
+| 1 ksym/s | 100,000 |
+| 10 ksym/s | 10,000 |
+| 100 ksym/s | 1,000 |
+| 1 Msym/s | 100 |
+
+Later, use a phase accumulator when arbitrary fractional symbol rates are needed.
+
+### 5.2 Pattern selector
+
+| `pattern_sel` | Output |
+|---:|---|
+| `00` | Constant zero |
+| `01` | Constant one |
+| `10` | Alternating `1010...` |
+| `11` | PRBS-7 |
+
+Constant patterns prove DC logic levels. The alternating pattern makes timing and symbol rate easy to measure. PRBS exercises transitions and enables automated error counting.
+
+### 5.3 PRBS-7 convention
+
+Use the polynomial:
+
+```text
+x^7 + x^6 + 1
+```
+
+For one explicit shift convention:
+
+```text
+new_bit = state[6] XOR state[5]
+state   = {state[5:0], new_bit}
+output  = state[6]
+```
+
+Requirements:
+
+- [ ] Seed the state with a nonzero value, initially `7'b1111111`.
+- [ ] Advance exactly once per `symbol_tick`.
+- [ ] Document bit order, inversion, seed, and whether output is taken before or after the shift.
+- [ ] Use the identical convention in the generator, checker, and software golden model.
+- [ ] Confirm a 127-bit repeat period in simulation.
+
+The representation `7'h41` used by parameterized libraries corresponds to PRBS-7 under their documented polynomial convention. Do not copy only the hexadecimal value without also matching that library's shift direction and output convention.
+
+### 5.4 Output-enable behavior
+
+Use a separate output-enable signal:
+
+```text
+not configured or reset or fault → interface disabled
+configured and commanded         → interface enabled
+```
+
+The external buffer must have a resistor-defined disabled state during FPGA configuration. Firmware alone cannot guarantee the state of a pin before configuration completes.
+
+---
+
+## 6. Minimal Reference RTL
+
+This is intentionally small teaching code, not a complete transmitter. Pin constraints, reset synchronization, status access, and hardware-specific I/O details remain to be added.
+
+```systemverilog
+module tx_pattern_source #(
+    parameter int unsigned CLOCK_HZ    = 100_000_000,
+    parameter int unsigned SYMBOL_RATE = 1_000
+) (
+    input  logic       clk,
+    input  logic       rst,
+    input  logic       tx_enable,
+    input  logic [1:0] pattern_sel,
+    output logic       tx_symbol,
+    output logic       tx_oe_n
+);
+    localparam int unsigned DIVISOR = CLOCK_HZ / SYMBOL_RATE;
+    localparam int unsigned CW = (DIVISOR <= 1) ? 1 : $clog2(DIVISOR);
+
+    logic [CW-1:0] div_count;
+    logic          symbol_tick;
+    logic          alternating;
+    logic [6:0]    prbs7 = 7'h7f;
+    logic          selected_symbol;
+
+    always_comb begin
+        unique case (pattern_sel)
+            2'b00: selected_symbol = 1'b0;
+            2'b01: selected_symbol = 1'b1;
+            2'b10: selected_symbol = alternating;
+            2'b11: selected_symbol = prbs7[6];
+        endcase
+    end
+
+    always_ff @(posedge clk) begin
+        symbol_tick <= 1'b0;
+
+        if (rst) begin
+            div_count   <= '0;
+            alternating <= 1'b0;
+            prbs7       <= 7'h7f;
+            tx_symbol   <= 1'b0;
+            tx_oe_n     <= 1'b1;
+        end else begin
+            tx_oe_n <= ~tx_enable;
+
+            if (div_count == DIVISOR-1) begin
+                div_count   <= '0;
+                symbol_tick <= 1'b1;
+                alternating <= ~alternating;
+                prbs7       <= {prbs7[5:0], prbs7[6] ^ prbs7[5]};
+                tx_symbol   <= selected_symbol;
+            end else begin
+                div_count <= div_count + 1'b1;
+            end
+
+            if (!tx_enable)
+                tx_symbol <= 1'b0;
+        end
+    end
+
+    initial begin
+        if (SYMBOL_RATE == 0 || CLOCK_HZ % SYMBOL_RATE != 0)
+            $error("First bring-up requires an exact integer symbol-rate divisor");
+    end
+endmodule
+```
+
+Before hardware use, simulation must define whether the first output bit occurs from the initial PRBS state or after the first shift. The checker must use the same choice.
+
+---
+
+## 7. Logic Buffer and Level Interface
+
+There are three distinct electrical cases.
+
+### Case A: 3.3 V FPGA to 3.3 V high-impedance logic input
+
+A single-channel three-state buffer such as the **SN74LVC1G125 powered at 3.3 V** is a reasonable prototype candidate. It has an active-low output enable and partial-power-down/back-drive protection. Place a pull-up on `/OE` so the output remains high impedance during FPGA configuration.
+
+Reference: [TI SN74LVC1G125 data sheet](https://www.ti.com/lit/ds/symlink/sn74lvc1g125.pdf).
+
+This part can provide buffering and down-translation when powered at the lower voltage. It should not be assumed to provide valid 3.3-to-5 V up-translation merely because its inputs tolerate 5.5 V.
+
+### Case B: Different input and output logic voltages
+
+A fixed-direction dual-rail translator such as the **TXU0101** is a prototype candidate when the FPGA voltage and destination logic voltage differ. Its two rails cover 1.1 V through 5.5 V, it has an output-enable input, and it includes defined input pulldowns and power-sequencing behavior.
+
+Reference: [TI TXU0101 data sheet](https://www.ti.com/lit/ds/symlink/txu0101.pdf).
+
+Do not select the translator until the destination's VIH, VIL, input current, allowable overshoot, and required switching rate are known.
+
+### Case C: Mixer, analog modulator, 50-ohm input, or bipolar control
+
+Neither logic part above should automatically drive this load. The final interface may instead need:
+
+- A differential or complementary driver.
+- A controlled bipolar voltage or current.
+- AC coupling and bias generation.
+- An RF transformer or balun.
+- A fast analog switch or purpose-built biphase modulator.
+- A resistive pad or impedance-matching network.
+
+Record the eventual modulator requirements:
+
+| Requirement | Value/source |
+|---|---|
+| Input type | |
+| Input impedance | |
+| Required low/high or positive/negative voltage | |
+| Required drive current | |
+| Maximum input voltage/current | |
+| Input bandwidth | |
+| Common-mode requirement | |
+| Differential/complementary requirement | |
+| DC coupling permitted? | |
+
+---
+
+## 8. Prototype Interface Schematic Requirements
+
+```text
+3.3 V FPGA_TX_SYMBOL ─────→ A   buffer/translator   Y ── Rseries ──→ test output
+
+3.3 V FPGA_TX_OE_N ───────→ /OE
+                                  │
+                             local bypass
+                                  │
+                                 GND
+
+/OE ── pull-up ── buffer output-side supply
+```
+
+Include:
+
+- [ ] 0.1 µF bypass capacitor at each supply pin, placed close to the device.
+- [ ] Optional bulk capacitor footprint near the interface connector.
+- [ ] `/OE` pull-up that disables the output while the FPGA is unconfigured.
+- [ ] Series-resistor footprint next to the driver; initially populate approximately 22–100 ohms only after considering trace/cable/load behavior.
+- [ ] Test points before and after the buffer.
+- [ ] Ground pins adjacent to signal pins at the connector.
+- [ ] Clearly labeled supply-voltage test points.
+- [ ] A protected loopback path.
+- [ ] Optional shunt-resistor and AC-coupling footprints left unpopulated.
+
+Series resistance is a signal-integrity tuning element, not a universal 50-ohm termination. TI's logic design guide discusses source-series and other termination methods: [Design Considerations for Logic Products](https://www.ti.com/lit/an/sdya002/sdya002.pdf).
+
+### Loopback warning
+
+If the output is translated above the FPGA's I/O voltage, do not return it directly to an FPGA pin. Use one of these instead:
+
+- Loop back from the buffer input.
+- Add a second down-translator.
+- Use a resistor network only after validating thresholds, current, and transient limits.
+
+---
+
+## 9. Test Sequence
+
+### Phase 0: Toolchain and clock
+
+- [ ] Build and load a minimal LED counter.
+- [ ] Confirm the 100 MHz clock assumption against the board marking.
+- [ ] Run place-and-route timing analysis.
+- [ ] Save tool versions and build command.
+
+### Phase 1: Direct FPGA output
+
+Connect only a high-impedance logic analyzer or properly compensated oscilloscope probe.
+
+- [ ] Constant zero produces the expected low voltage.
+- [ ] Constant one produces the expected high voltage.
+- [ ] Alternating mode produces half the symbol-rate frequency.
+- [ ] PRBS-7 repeats every 127 symbols in simulation/capture.
+- [ ] `tx_symbol` remains at the documented idle state when disabled.
+- [ ] No narrow glitches are visible during steady operation or pattern changes.
+
+### Phase 2: Buffered output
+
+- [ ] Confirm the buffer output is high impedance while the FPGA is unconfigured.
+- [ ] Confirm `/OE` polarity.
+- [ ] Measure both sides of the buffer.
+- [ ] Measure propagation delay if the instruments permit.
+- [ ] Check overshoot, undershoot, ringing, rise time, and fall time.
+- [ ] Tune the source-series resistor if necessary.
+
+### Phase 3: FPGA loopback and checker
+
+- [ ] Return the signal through a voltage-safe path.
+- [ ] Synchronize the returned asynchronous signal before general control use.
+- [ ] For the PRBS data path, define the expected latency explicitly.
+- [ ] Establish checker lock before incrementing `error_count`.
+- [ ] Verify deliberate inversion produces errors.
+- [ ] Verify a forced missing/extra bit produces loss of lock or errors.
+- [ ] Run at 1 ksym/s for visual inspection.
+- [ ] Repeat at 10 ksym/s, 100 ksym/s, and 1 Msym/s.
+- [ ] At the intended test rate, check at least 1,000,000 symbols with zero errors.
+
+### Phase 4: Packet source
+
+Only after PRBS loopback is reliable, add:
+
+```text
+preamble → sync word → version/flags → payload length → payload → CRC
+```
+
+Do not add FEC, pulse shaping, or host streaming in the first milestone.
+
+---
+
+## 10. Measurement Worksheet
+
+### Logic-level and waveform results
+
+| Pattern/rate | FPGA-side Vlow/Vhigh | Buffer-side Vlow/Vhigh | Rise/fall time | Overshoot/undershoot | Notes |
+|---|---|---|---|---|---|
+| Constant 0 | | | | | |
+| Constant 1 | | | | | |
+| Alternating, 1 ksym/s | | | | | |
+| Alternating, 10 ksym/s | | | | | |
+| Alternating, 100 ksym/s | | | | | |
+| Alternating, 1 Msym/s | | | | | |
+| PRBS-7, 1 Msym/s | | | | | |
+
+### Loopback results
+
+| Symbol rate | Run time | Checked bits | Errors | Lock losses | Pass/fail |
+|---:|---:|---:|---:|---:|---|
+| 1 ksym/s | | | | | |
+| 10 ksym/s | | | | | |
+| 100 ksym/s | | | | | |
+| 1 Msym/s | | | | | |
+| Other: | | | | | |
+
+### Startup behavior
+
+| Event | Output behavior | Expected? | Notes |
+|---|---|---|---|
+| Interface powered, FPGA unconfigured | | | |
+| FPGA configuration begins | | | |
+| Configuration completes | | | |
+| FPGA reset asserted | | | |
+| FPGA reset released | | | |
+| `tx_enable` asserted | | | |
+| `tx_enable` removed | | | |
+| FPGA power removed first | | | |
+| Interface power removed first | | | |
+
+---
+
+## 11. Acceptance Criteria for Milestone One
+
+- [ ] Exact board revision, FPGA device, clock, and pin constraints are recorded.
+- [ ] RTL simulation confirms symbol timing and the 127-bit PRBS-7 period.
+- [ ] The output is registered and changes only at symbol boundaries.
+- [ ] The external output remains disabled during FPGA configuration and reset.
+- [ ] Constant levels meet the destination logic thresholds with margin.
+- [ ] Alternating output frequency matches the expected symbol rate divided by two.
+- [ ] Buffered edges have no threshold-crossing glitches or damaging overshoot.
+- [ ] Loopback checks at least 1,000,000 symbols at the selected target rate with zero errors.
+- [ ] The design recovers predictably after reset and disable/enable cycles.
+- [ ] Tool versions, RTL revision, constraint revision, scope captures, and results are committed.
+
+Passing this milestone proves the digital symbol path and interface. It does **not** yet prove RF spectral purity, BPSK modulation quality, occupied bandwidth, EVM, or receiver performance.
+
+---
+
+## 12. Existing Implementations and What to Reuse
+
+Review licenses before copying code, and pin any dependency to a specific commit.
+
+### PRBS, LFSR, and CRC
+
+- [Taxi HDL](https://github.com/fpganinja/taxi) is the maintained successor to several Alex Forencich Verilog libraries. It includes parameterized PRBS generators/checkers, LFSR/CRC modules, FIFOs, UART components, stream infrastructure, and cocotb/Verilator tests.
+- [Taxi PRBS generator source](https://github.com/fpganinja/taxi/blob/master/src/lfsr/rtl/taxi_lfsr_prbs_gen.sv) shows explicit polynomial, shift style, inversion, data width, seed, and enable handling.
+- [Older `verilog-lfsr` repository](https://github.com/alexforencich/verilog-lfsr) contains Verilog-2001 PRBS generator/checker and CRC wrappers with cocotb tests. Its author now marks it deprecated in favor of Taxi, but it remains a useful reference and has a different license from Taxi.
+- [Analog Devices AD9361 PN monitor](https://github.com/analogdevicesinc/hdl/blob/main/library/axi_ad9361/axi_ad9361_rx_pnmon.v) is a production-oriented example of PRBS checking around a converter interface. It is more complex than this milestone and should be studied rather than dropped in unchanged.
+
+Recommendation: write and verify the tiny local PRBS-7 for milestone one. Reevaluate Taxi when parallel PRBS, configurable CRC, stream FIFOs, or a larger data plane is required.
+
+### UART and host data
+
+- [ZipCPU `wbuart32`](https://github.com/ZipCPU/wbuart32) provides Verilog UART transmit/receive modules, FIFOs, simulation support, and formal verification. It is useful later if source data enters through UART. Its GPL licensing must be evaluated before incorporation.
+
+### Streaming and FIFOs
+
+- [Taxi HDL](https://github.com/fpganinja/taxi) provides current stream, FIFO, synchronization, and peripheral components.
+- [Older `verilog-axis`](https://github.com/alexforencich/verilog-axis) documents frame-aware FIFOs, asynchronous FIFOs, width adapters, rate limiters, and test infrastructure. Prefer its maintained successor for a new design.
+
+For the small iCE40, do not introduce AXI Stream merely for a one-bit test pattern. A simple `valid/ready/data` byte interface is sufficient until the design actually needs multiple producers, backpressure, or clock-domain boundaries.
+
+### iCE40 examples and toolchain
+
+- [Project IceStorm](https://github.com/YosysHQ/icestorm) documents the open iCE40 bitstream flow and includes board examples.
+- [Open iCE40 HX8K example projects](https://github.com/nesl/ice40_examples) show small build trees, pin-constraint files, counters, UART transmission, and simulation-oriented exercises. These target different boards, so use their structure rather than their pin assignments.
+
+---
+
+## 13. Suggested Repository Layout
+
+```text
+hardware/payload_exp_sband_tx/
+├── fpga_link_processor_logic_interface_first_bringup.md
+├── fpga/
+│   ├── rtl/
+│   │   ├── tx_pattern_source.sv
+│   │   ├── prbs7_gen.sv
+│   │   └── prbs7_check.sv
+│   ├── sim/
+│   │   ├── tb_tx_pattern_source.sv
+│   │   └── prbs7_golden.py
+│   ├── constraints/
+│   │   └── icezero_<verified-revision>.pcf
+│   ├── Makefile
+│   └── README.md
+└── measurements/
+    └── fpga_logic_interface/
+        ├── README.md
+        ├── captures/
+        └── raw_data/
+```
+
+Do not create the hardware-specific constraint filename until the board revision and pin mapping are verified.
+
+---
+
+## 14. Next Review Package
+
+Bring these results to the next design review:
+
+- [ ] IceZero revision and FPGA top-marking photo.
+- [ ] Selected PMOD pins and verified constraint entries.
+- [ ] RTL and simulator output confirming PRBS period and bit order.
+- [ ] Scope capture of constant high and low.
+- [ ] Scope capture of the alternating pattern.
+- [ ] Scope capture of PRBS before and after the buffer.
+- [ ] Power-up/configuration capture showing the buffer remains disabled.
+- [ ] Loopback bit count, error count, and lock-loss count.
+- [ ] Buffer/translator part number and populated series resistor.
+- [ ] Target RF modulator or mixer input requirements.
+
+Those results will determine whether the interface can connect directly to the selected RF modulator or needs a dedicated analog/bipolar driver stage.

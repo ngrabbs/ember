@@ -1,0 +1,165 @@
+<mxfile host="app.diagrams.net" modified="2026-09-04T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="sband-experimental-tx" name="S-Band Experimental TX">
+    <mxGraphModel dx="1800" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="&lt;font style=&quot;font-size:24px&quot; color=&quot;#111111&quot;&gt;&lt;b&gt;Experimental S-Band Digital Transmitter — RF Block Diagram&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="45" y="30" width="1200" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="subtitle" value="&lt;font style=&quot;font-size:12px&quot; color=&quot;#555555&quot;&gt;Example frequency plan: 100 MSPS DAC · 20 MHz low IF · 2.380 GHz LO · 2.400 GHz desired RF&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="47" y="72" width="1150" height="28" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="if-panel" value="&lt;font style=&quot;font-size:13px&quot; color=&quot;#005A75&quot;&gt;&lt;b&gt;DIGITAL MODULATION AND LOW-IF GENERATION&lt;/b&gt;&lt;/font&gt;" style="rounded=1;html=1;whiteSpace=wrap;fillColor=#E6F3F7;strokeColor=#007FA3;strokeWidth=1.6;verticalAlign=top;spacingTop=7;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="135" width="700" height="390" as="geometry"/>
+        </mxCell>
+        <mxCell id="rf-panel" value="&lt;font style=&quot;font-size:13px&quot; color=&quot;#5D1725&quot;&gt;&lt;b&gt;S-BAND UPCONVERSION AND POWER CHAIN&lt;/b&gt;&lt;/font&gt;" style="rounded=1;html=1;whiteSpace=wrap;fillColor=#F7EBEE;strokeColor=#5D1725;strokeWidth=1.6;verticalAlign=top;spacingTop=7;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry x="765" y="135" width="990" height="390" as="geometry"/>
+        </mxCell>
+        <mxCell id="lo-panel" value="&lt;font style=&quot;font-size:13px&quot; color=&quot;#4A2350&quot;&gt;&lt;b&gt;LOCAL OSCILLATOR CHAIN&lt;/b&gt;&lt;/font&gt;" style="rounded=1;html=1;whiteSpace=wrap;fillColor=#F0EAF3;strokeColor=#642F6C;strokeWidth=1.6;verticalAlign=top;spacingTop=7;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry x="330" y="585" width="615" height="245" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="fpga" value="&lt;font style=&quot;font-size:14px&quot;&gt;&lt;b&gt;FPGA Modulator&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#333333&quot;&gt;framing + FEC&lt;br&gt;RRC pulse shaping&lt;br&gt;BPSK / QPSK low IF&lt;/font&gt;" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#007FA3;strokeWidth=1.6;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="70" y="285" width="155" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="dac" value="&lt;font style=&quot;font-size:14px&quot;&gt;&lt;b&gt;DAC902&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#333333&quot;&gt;12-bit parallel&lt;br&gt;100 MSPS initial&lt;br&gt;operate ≈ −6 dBFS&lt;/font&gt;" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#007FA3;strokeWidth=1.6;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="270" y="285" width="145" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="if-filter" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;IF Reconstruction&lt;br&gt;Band-Pass Filter&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#333333&quot;&gt;center ≈ 20 MHz&lt;br&gt;BW ≥ occupied BW&lt;/font&gt;" style="shape=trapezoid;direction=east;perimeter=trapezoidPerimeter;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#007FA3;strokeWidth=1.6;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="460" y="285" width="145" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="if-pad" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;IF Level Set&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot; color=&quot;#333333&quot;&gt;6–10 dB pad&lt;br&gt;or linear driver&lt;/font&gt;" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#007FA3;strokeWidth=1.6;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="630" y="295" width="90" height="85" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="mixer" value="&lt;font style=&quot;font-size:30px&quot;&gt;×&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;&lt;b&gt;MIXER&lt;/b&gt;&lt;/font&gt;" style="ellipse;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=2;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="790" y="287" width="100" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="rf-filter-1" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;2.4 GHz Image-Reject&lt;br&gt;Band-Pass Filter&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;pass 2400 MHz&lt;br&gt;reject 2360 MHz + LO&lt;/font&gt;" style="shape=trapezoid;direction=east;perimeter=trapezoidPerimeter;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.6;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="930" y="280" width="165" height="115" as="geometry"/>
+        </mxCell>
+        <mxCell id="driver" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;RF Driver&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;linear gain&lt;br&gt;level control&lt;/font&gt;" style="triangle;direction=east;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.6;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1135" y="295" width="105" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="pa" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;S-Band PA&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;linear for&lt;br&gt;shaped PSK&lt;/font&gt;" style="triangle;direction=east;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.8;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="292" width="115" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="rf-filter-2" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;Output BPF&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;harmonic + spur&lt;br&gt;suppression&lt;/font&gt;" style="shape=trapezoid;direction=east;perimeter=trapezoidPerimeter;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.6;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1415" y="292" width="125" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="coupler" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;Directional&lt;br&gt;Coupler&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;forward power&lt;br&gt;+ monitor port&lt;/font&gt;" style="rounded=0;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.6;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1570" y="292" width="115" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="antenna" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;Antenna&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;or 50 Ω&lt;br&gt;cabled load&lt;/font&gt;" style="shape=mxgraph.electrical.radio.aerial;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#5D1725;strokeWidth=1.8;align=center;verticalLabelPosition=bottom;verticalAlign=top;labelPosition=center;" vertex="1" parent="1">
+          <mxGeometry x="1700" y="270" width="45" height="115" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="refosc" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;Reference&lt;br&gt;Oscillator&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;TCXO / OCXO&lt;/font&gt;" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#642F6C;strokeWidth=1.5;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="355" y="675" width="115" height="75" as="geometry"/>
+        </mxCell>
+        <mxCell id="synth" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;PLL / VCO&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;LO = 2.380 GHz&lt;br&gt;programmable synth&lt;/font&gt;" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#642F6C;strokeWidth=1.5;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="500" y="670" width="130" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="lo-filter" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;LO BPF&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;spur and harmonic&lt;br&gt;cleanup&lt;/font&gt;" style="shape=trapezoid;direction=east;perimeter=trapezoidPerimeter;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#642F6C;strokeWidth=1.5;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="660" y="670" width="115" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="lo-amp" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;LO Amplifier&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;+13 dBm at mixer&lt;/font&gt;" style="triangle;direction=east;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#642F6C;strokeWidth=1.7;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="805" y="672" width="110" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="sample-clock" value="&lt;font style=&quot;font-size:13px&quot;&gt;&lt;b&gt;Low-Jitter Sample Clock&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;100 MHz initial · common timing reference&lt;/font&gt;" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FAFBF3;strokeColor=#8F993E;strokeWidth=1.5;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="180" y="165" width="260" height="65" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="monitor" value="&lt;font style=&quot;font-size:12px&quot;&gt;&lt;b&gt;Power Detector / ADC&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px&quot; color=&quot;#333333&quot;&gt;telemetry + protection&lt;/font&gt;" style="rounded=1;arcSize=8;html=1;whiteSpace=wrap;fillColor=#FFFFFF;strokeColor=#A9431E;strokeWidth=1.4;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1545" y="430" width="165" height="65" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="tp1" value="TP1" style="ellipse;html=1;fillColor=#FBEFE9;strokeColor=#A9431E;strokeWidth=1.4;fontSize=9;fontColor=#8A3517;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="425" y="317" width="38" height="38" as="geometry"/>
+        </mxCell>
+        <mxCell id="tp2" value="TP2" style="ellipse;html=1;fillColor=#FBEFE9;strokeColor=#A9431E;strokeWidth=1.4;fontSize=9;fontColor=#8A3517;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="730" y="317" width="38" height="38" as="geometry"/>
+        </mxCell>
+        <mxCell id="tp3" value="TP3" style="ellipse;html=1;fillColor=#FBEFE9;strokeColor=#A9431E;strokeWidth=1.4;fontSize=9;fontColor=#8A3517;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="892" y="317" width="38" height="38" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="note" value="&lt;font style=&quot;font-size:11px&quot; color=&quot;#555555&quot;&gt;&lt;i&gt;Example frequencies are a bring-up starting point, not final link requirements. Set symbol rate, occupied bandwidth, PA power, and filtering from the link budget and authorized allocation.&lt;/i&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="245" y="885" width="1310" height="45" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e-fpga-dac" value="12-bit samples" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" edge="1" parent="1" source="fpga" target="dac">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-dac-tp1" value="20 MHz low IF" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=none;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" edge="1" parent="1" source="dac" target="tp1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-tp1-filter" value="" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;" edge="1" parent="1" source="tp1" target="if-filter">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-filter-pad" value="filtered IF" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" edge="1" parent="1" source="if-filter" target="if-pad">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-pad-tp2" value="" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=none;strokeColor=#4A4A4A;strokeWidth=1.8;" edge="1" parent="1" source="if-pad" target="tp2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-tp2-mixer" value="IF port" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" edge="1" parent="1" source="tp2" target="mixer">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-mixer-tp3" value="2400 MHz desired&lt;br&gt;2360 MHz image + LO leakage" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=none;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" edge="1" parent="1" source="mixer" target="tp3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-tp3-rffilter" value="" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;" edge="1" parent="1" source="tp3" target="rf-filter-1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-rffilter-driver" value="2400 MHz shaped PSK" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" edge="1" parent="1" source="rf-filter-1" target="driver">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-driver-pa" value="" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;" edge="1" parent="1" source="driver" target="pa">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-pa-filter" value="" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;" edge="1" parent="1" source="pa" target="rf-filter-2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-filter-coupler" value="" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;" edge="1" parent="1" source="rf-filter-2" target="coupler">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-coupler-ant" value="RF OUT" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#4A4A4A;strokeWidth=1.8;fontSize=10;fontColor=#333333;" edge="1" parent="1" source="coupler" target="antenna">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e-ref-synth" value="reference" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#642F6C;strokeWidth=1.8;fontSize=10;fontColor=#4A2350;" edge="1" parent="1" source="refosc" target="synth">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-synth-lofilter" value="2.380 GHz" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#642F6C;strokeWidth=1.8;fontSize=10;fontColor=#4A2350;" edge="1" parent="1" source="synth" target="lo-filter">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-lofilter-loamp" value="" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#642F6C;strokeWidth=1.8;" edge="1" parent="1" source="lo-filter" target="lo-amp">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-loamp-mixer" value="LO port · +13 dBm" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=7;strokeColor=#642F6C;strokeWidth=2;fontSize=10;fontColor=#4A2350;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="lo-amp" target="mixer">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="860" y="560"/>
+              <mxPoint x="840" y="560"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e-clock-fpga" value="sample timing" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=6;strokeColor=#8F993E;strokeWidth=1.5;fontSize=9;fontColor=#5E6626;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sample-clock" target="fpga">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-clock-dac" value="DAC CLK" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=6;strokeColor=#8F993E;strokeWidth=1.5;fontSize=9;fontColor=#5E6626;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sample-clock" target="dac">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-coupler-monitor" value="coupled sample" style="html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;endArrow=classic;endSize=6;strokeColor=#A9431E;strokeWidth=1.5;fontSize=9;fontColor=#8A3517;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="coupler" target="monitor">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
