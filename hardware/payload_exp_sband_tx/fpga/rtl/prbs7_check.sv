@@ -36,6 +36,7 @@
 // lock intact.
 // ---------------------------------------------------------------------------
 
+`timescale 1ns / 1ps
 `default_nettype none
 
 module prbs7_check #(
@@ -70,10 +71,24 @@ module prbs7_check #(
     logic       predicted;
     logic       match;
 
-    logic [$clog2(LOAD_BITS+1)-1:0]      load_count;
-    logic [$clog2(LOCK_THRESHOLD+1)-1:0] good_run;
-    logic [$clog2(LOSS_THRESHOLD+1)-1:0] bucket;
-    logic [$clog2(DECAY_BITS+1)-1:0]     decay_run;
+    // Counter widths and their terminal values, so every comparison below is
+    // between operands of the same width. An unsized 32-bit constant on the
+    // right of one of these would compare correctly but hide a genuine width
+    // mistake in the surrounding code.
+    localparam int unsigned LOAD_W  = $clog2(LOAD_BITS+1);
+    localparam int unsigned LOCK_W  = $clog2(LOCK_THRESHOLD+1);
+    localparam int unsigned LOSS_W  = $clog2(LOSS_THRESHOLD+1);
+    localparam int unsigned DECAY_W = $clog2(DECAY_BITS+1);
+
+    localparam logic [LOAD_W-1:0]  LOAD_LAST  = LOAD_W'(LOAD_BITS - 1);
+    localparam logic [LOCK_W-1:0]  LOCK_LAST  = LOCK_W'(LOCK_THRESHOLD - 1);
+    localparam logic [LOSS_W-1:0]  LOSS_LAST  = LOSS_W'(LOSS_THRESHOLD - 1);
+    localparam logic [DECAY_W-1:0] DECAY_LAST = DECAY_W'(DECAY_BITS - 1);
+
+    logic [LOAD_W-1:0]  load_count;
+    logic [LOCK_W-1:0]  good_run;
+    logic [LOSS_W-1:0]  bucket;
+    logic [DECAY_W-1:0] decay_run;
 
     assign predicted = sr[6] ^ sr[5];
     assign match     = (rx_bit == predicted);
@@ -98,7 +113,7 @@ module prbs7_check #(
                 // predict the next one.
                 HUNT: begin
                     sr <= {sr[5:0], rx_bit};
-                    if (load_count == LOAD_BITS-1) begin
+                    if (load_count == LOAD_LAST) begin
                         load_count <= '0;
                         good_run   <= '0;
                         state      <= VERIFY;
@@ -111,7 +126,7 @@ module prbs7_check #(
                 VERIFY: begin
                     sr <= {sr[5:0], predicted};
                     if (match) begin
-                        if (good_run == LOCK_THRESHOLD-1) begin
+                        if (good_run == LOCK_LAST) begin
                             good_run  <= '0;
                             bucket    <= '0;
                             decay_run <= '0;
@@ -136,7 +151,7 @@ module prbs7_check #(
                     bit_count <= bit_count + 1'b1;
 
                     if (match) begin
-                        if (decay_run == DECAY_BITS-1) begin
+                        if (decay_run == DECAY_LAST) begin
                             decay_run <= '0;
                             bucket    <= '0;
                         end else begin
@@ -145,7 +160,7 @@ module prbs7_check #(
                     end else begin
                         error_count <= error_count + 1'b1;
                         decay_run   <= '0;
-                        if (bucket == LOSS_THRESHOLD-1) begin
+                        if (bucket == LOSS_LAST) begin
                             bucket     <= '0;
                             loss_count <= loss_count + 1'b1;
                             load_count <= '0;

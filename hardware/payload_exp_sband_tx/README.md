@@ -141,6 +141,12 @@ gate. The generator/checker pair is proven in simulation. The buffered loopback
 returns to being required only if the deferred phase-modulator architecture is
 revived.
 
+**M0 is verified in simulation** — Verilator-lint clean, both testbenches
+passing, and the gate met at 1,000,000 symbols with zero errors. What remains
+of M0 is the hardware half: a verified pin constraint file, a bitstream, and
+the scope captures. See [`fpga/README.md`](fpga/README.md) for results and the
+toolchain of record.
+
 M3 is the milestone that matters. Seeing the carrier flip phase on a scope is
 the proof that the FPGA is generating its own BPSK.
 

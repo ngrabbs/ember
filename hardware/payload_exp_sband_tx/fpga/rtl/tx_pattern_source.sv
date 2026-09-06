@@ -42,6 +42,7 @@
 //   defined value before configuration completes.
 // ---------------------------------------------------------------------------
 
+`timescale 1ns / 1ps
 `default_nettype none
 
 module tx_pattern_source #(
@@ -117,6 +118,9 @@ module tx_pattern_source #(
     logic       prbs_bit;
     logic       selected_symbol;
 
+    // state_o is a debug and simulation aid only - tb_prbs7 uses it to prove
+    // the generator visits all 127 nonzero states. Nothing here needs it.
+    /* verilator lint_off PINCONNECTEMPTY */
     prbs7_gen #(
         .SEED (PRBS_SEED)
     ) u_prbs7_gen (
@@ -124,8 +128,9 @@ module tx_pattern_source #(
         .rst     (rst),
         .en      (tick_now),
         .bit_o   (prbs_bit),
-        .state_o (/* unused */)
+        .state_o ()
     );
+    /* verilator lint_on PINCONNECTEMPTY */
 
     // Both pattern sources present their CURRENT value here and advance on the
     // same edge that registers it, so the symbol transmitted is the one that

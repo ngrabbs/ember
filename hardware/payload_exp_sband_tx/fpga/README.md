@@ -15,13 +15,20 @@ for why this block is built before anything else.
 ```bash
 cd hardware/payload_exp_sband_tx/fpga
 make golden     # Python only - no HDL toolchain needed
-make sim        # both testbenches
+make check      # golden + lint + both testbenches
 make sim-long   # the M0 gate: 1,000,000 symbols, zero errors
+make count      # iCE40 resource usage, per module
+make waves      # FST traces for GTKWave
 make tools      # install notes if something is missing
 ```
 
 `make golden` is worth running first on any machine. It needs nothing but
 Python 3 and it checks the part of the design most likely to be wrong.
+
+Every simulation target runs **Verilator `--lint-only` before Icarus compiles**.
+Verilator's diagnostics are markedly better, so it should be the first thing to
+see a change; Icarus then runs the event-driven testbench. The RTL is held to a
+clean `-Wall` with no suppressions except one documented empty debug port.
 
 ---
 
@@ -188,24 +195,75 @@ cycle resumes on a clean boundary and re-locks.
 
 ## Status
 
-The RTL, testbenches, golden model, and build flow are written. **The
-testbenches have not yet been run against a simulator** — no HDL toolchain was
-available on the machine they were written on. What *has* been verified is the
-Python layer, which runs anywhere:
+**M0 is verified in simulation.** All checks pass and the acceptance gate is
+met.
 
-- `prbs7_golden.py --self-test` confirms the sequence properties.
-- `prbs7_golden.py --checker-model` models the checker FSM bit for bit and
-  reproduces every scenario in `tb_prbs7` part B, which is what grounds the
-  thresholds and run lengths the testbench asserts.
+| Run | Result |
+|---|---|
+| `make golden` | 6 sequence properties + 12 checker-model scenarios pass |
+| `make lint` | Verilator `-Wall` clean, RTL and both testbenches |
+| `make sim-prbs` | 22 checks pass |
+| `make sim-tx` | 26 checks pass (200,000 symbols) |
+| `make sim-long` | **1,000,000 symbols, 0 errors, 0 lock losses** — the M0 gate — in 4.8 s |
 
-Expect to fix compile errors on the first `make sim`. Install the toolchain
-(`make tools`), run `make check`, and record the result here.
+The suite was checked against a deliberately broken design as well as a working
+one: inverting one PRBS feedback tap drops the period from 127 to 93 and fails
+A1, A2, A3, A4b, B1b and B1d with a nonzero exit status. A test suite that
+cannot fail is not evidence of anything.
+
+Two bugs were found and fixed getting here:
+
+- `div_target` held the divisor but was sized `clog2(DIV_MAX)` bits, one short
+  of representing `DIV_MAX` itself. A divisor of 2 truncated to zero and only
+  produced the right period by accident of the borrow. It now stores the
+  terminal count `DIV-1`, which always fits. Found by reading, before the
+  toolchain existed.
+- `tb_prbs7` let one clock edge through before sampling, so the capture began
+  at b[1] and the golden-vector comparison was off by one bit. Found by the
+  testbench itself — A1 failed while the phase-independent checks A2, A3 and A4
+  all passed, which is exactly the signature of a phase offset rather than a
+  broken generator.
+
+### Resource usage
+
+From `make count`, synthesised for iCE40 with `-noflatten`:
+
+| Module | LUT4 | Flip-flops | Carry |
+|---|---:|---:|---:|
+| `prbs7_gen` | 2 | 7 | — |
+| `tx_pattern_source` | 29 | 25 | 31 |
+| **Total** | **31** | **32** | **31** |
+
+Small enough that device density is not a constraint at M0. The carry cells are
+the symbol-rate divider, which is sized for the slowest rate — 100,000 counts
+at 1 ksym/s from a 100 MHz clock. It shrinks if the slow rates are dropped.
+This is a synthesis estimate only; place-and-route and timing closure wait on a
+verified pin constraint file.
+
+### Toolchain of record
+
+| Tool | Version |
+|---|---|
+| oss-cad-suite | 20260906 |
+| Icarus Verilog | 14.0 (devel) s20260301-403-g5ab23063f |
+| Verilator | 5.053 devel rev v5.052-22-g7cf8c5cca |
+| Yosys | 0.68+195 (git sha1 435977e97) |
+| Python | 3.11.6 |
+
+`make tools` prints the install route. The recommended one is the YosysHQ
+oss-cad-suite tarball: one download, no root, and iverilog, verilator, yosys,
+nextpnr-ice40, icestorm and gtkwave all at consistent versions.
 
 ## Next
 
-- [ ] Run `make sim` and `make sim-long`; record tool versions and results.
-- [ ] Run `make synth` for an iCE40 resource estimate.
-- [ ] Fill in the board-facts table in the bring-up document, then write
-      `constraints/icezero_<verified-revision>.pcf`.
-- [ ] Capture the scope traces listed in the M0 gate and commit them under
+- [ ] Fill in the board-facts table in the bring-up document — assembly
+      revision, FPGA density and package, oscillator marking, PMOD pins — then
+      write `constraints/icezero_<verified-revision>.pcf`.
+- [ ] Place-and-route and timing report once that file exists.
+- [ ] Load the bitstream and capture the M0 scope traces: constant high and
+      low, alternating at each rate, PRBS-7. Commit them under
       `../measurements/`.
+- [ ] Decide whether to build the optional hardware loopback. The trade study
+      made it optional; the generator/checker pair is already proven in
+      simulation, so its remaining value is bench practice and signal-integrity
+      experience rather than verification.

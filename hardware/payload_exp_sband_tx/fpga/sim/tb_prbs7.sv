@@ -105,7 +105,7 @@ module tb_prbs7;
     logic       exp_bits [0:PERIOD-1];
     logic       visited [0:127];
 
-    int i, j, p, ones, found_period, distinct;
+    int i, p, ones, found_period, distinct, first_bad;
     logic mismatch;
     logic [31:0] err_base;
     logic [15:0] loss_base;
@@ -135,7 +135,9 @@ module tb_prbs7;
         run_bits(4);
         gen_rst = 1'b0;
         gen_en  = 1'b1;
-        @(negedge clk);
+        // No wait here: the generator still holds the seed, so the very first
+        // sample below is b[0]. Letting one edge through would capture b[1] and
+        // silently shift the whole comparison by one bit.
 
         for (i = 0; i < 2*PERIOD; i++) begin
             seq[i] = gen_bit;
@@ -144,10 +146,17 @@ module tb_prbs7;
         end
 
         // A1 - match the golden model bit for bit.
-        mismatch = 1'b0;
-        for (i = 0; i < PERIOD; i++)
-            if (seq[i] !== exp_bits[i]) mismatch = 1'b1;
-        check(!mismatch, "A1 generated bits match the golden model vector file");
+        first_bad = -1;
+        for (i = PERIOD-1; i >= 0; i--)
+            if (seq[i] !== exp_bits[i]) first_bad = i;
+        if (first_bad >= 0) begin
+            $write("        RTL     ");
+            for (i = 0; i < 24; i++) $write("%b", seq[i]);
+            $write("\n        golden  ");
+            for (i = 0; i < 24; i++) $write("%b", exp_bits[i]);
+            $display("\n        first divergence at bit %0d", first_bad);
+        end
+        check(first_bad < 0, "A1 generated bits match the golden model vector file");
 
         // A2 - period is exactly 127.
         found_period = 0;
@@ -286,7 +295,7 @@ module tb_prbs7;
 
 `ifdef WAVES
     initial begin
-        $dumpfile("build/tb_prbs7.vcd");
+        $dumpfile("build/tb_prbs7.fst");
         $dumpvars(0, tb_prbs7);
     end
 `endif

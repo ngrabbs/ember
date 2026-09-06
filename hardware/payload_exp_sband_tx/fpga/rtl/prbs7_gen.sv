@@ -27,6 +27,7 @@
 //     b[k+7] = b[k] XOR b[k+1]
 // ---------------------------------------------------------------------------
 
+`timescale 1ns / 1ps
 `default_nettype none
 
 module prbs7_gen #(

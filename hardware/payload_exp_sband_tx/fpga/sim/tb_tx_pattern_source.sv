@@ -48,10 +48,10 @@ module tb_tx_pattern_source;
         endcase
     endfunction
 
-    localparam int PAT_ZERO = 2'b00;
-    localparam int PAT_ONE  = 2'b01;
-    localparam int PAT_ALT  = 2'b10;
-    localparam int PAT_PRBS = 2'b11;
+    localparam logic [1:0] PAT_ZERO = 2'b00;
+    localparam logic [1:0] PAT_ONE  = 2'b01;
+    localparam logic [1:0] PAT_ALT  = 2'b10;
+    localparam logic [1:0] PAT_PRBS = 2'b11;
 
     // -----------------------------------------------------------------------
     // Clock and DUT
@@ -286,7 +286,7 @@ module tb_tx_pattern_source;
         check(error_count == err_base,
               $sformatf("C8b zero errors over %0d symbols (delta=%0d)",
                         symbols, error_count - err_base));
-        check(bit_count - bits_base >= symbols - 8,
+        check(bit_count - bits_base >= 48'(symbols - 8),
               $sformatf("C8c checker counted the symbols (%0d checked)",
                         bit_count - bits_base));
         check(loss_count == 16'd0,
@@ -350,7 +350,7 @@ module tb_tx_pattern_source;
 
 `ifdef WAVES
     initial begin
-        $dumpfile("build/tb_tx_pattern_source.vcd");
+        $dumpfile("build/tb_tx_pattern_source.fst");
         $dumpvars(0, tb_tx_pattern_source);
     end
 `endif
