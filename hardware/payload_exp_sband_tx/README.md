@@ -214,10 +214,16 @@ These are short because the scope is narrow.
 
 ## Open items
 
-- [ ] Confirm what hardware is physically on hand: IceZero revision, DAC902 or
-      DAC904 (bare or module), mixer, filters, SDR, spectrum analyzer.
-- [ ] Verify the IceZero PMOD pin budget supports 12 data lines plus a clock.
-- [ ] Record the IceZero revision, FPGA density, package, and oscillator marking.
+Settled 2026-09-06: an IceZero, a Raspberry Pi and an FTDI TTL-232R-3.3V cable
+are all on hand, so nothing blocks hardware M0. The bench control and readout
+path is **UART over J3**. The board-facts table is filled in from the pinout
+document and awaits only a physical check.
+
+- [ ] Confirm the board in hand is TE0876-02 rev2 and matches the pinout document.
+- [ ] Confirm J3 TX/RX direction before blaming the RTL for a silent UART.
+- [ ] Inventory the RF half: DAC902 or DAC904 (bare or module), mixer, filters,
+      SDR, spectrum analyzer. The converter choice now waits on this — the
+      pin-count argument that decided it turned out to be wrong.
 - [ ] Study the DAC module's output stage and required termination before
       putting a probe on it.
 - [ ] Decide whether the directory name still fits. It says `sband_tx`; the work

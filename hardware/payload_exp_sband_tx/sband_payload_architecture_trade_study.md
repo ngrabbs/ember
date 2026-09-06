@@ -117,16 +117,29 @@ Every sample rate is an exact integer divisor of the 100 MHz board clock, which 
 
 The M5 row adopts the `sband_experimental_tx` drawio's plan — 20 MHz IF, 2380 MHz LO, 2400 MHz RF, image at 2360 MHz. The `mini_totem` plan's 50 MHz IF / 2350 MHz LO is superseded.
 
-### Converter selection: DAC902 over DAC904
+### Converter selection: DAC902 or DAC904 — REOPENED 2026-09-06
 
 | | Data lines | Plus clock | Resolution |
 |---|---:|---:|---:|
 | DAC902 | 12 | 13 | 12-bit |
 | DAC904 | 14 | 15 | 14-bit |
 
-Pin count decides it. A 12-bit bus plus a clock fits in two 8-pin PMOD connectors with a pin to spare; a 14-bit bus does not. Two extra bits of resolution buy nothing at this stage — the DAC is operated near −6 dBFS anyway, quantization is far below the noise the rest of the bench contributes, and no measurement through M4 is resolution-limited. **DAC902 selected.** Revisit only if a spurious-free dynamic range measurement ever becomes a deliverable.
+**The original decision here was wrong and is withdrawn.** It selected DAC902 on
+the grounds that a 12-bit bus plus a clock fits in two 8-pin PMOD connectors
+while a 14-bit bus does not. The IceZero pinout document shows four 2×6 PMOD
+connectors carrying **eight signal pins each, 32 in total**. Two connectors give
+sixteen signals, so DAC904's fifteen fits with a pin to spare, and the board has
+twice as many pins again beyond that. Pin budget does not decide this.
 
-This depends on verifying the IceZero PMOD pin budget against the board's actual revision — an open item, not an assumption.
+What survives of the argument is weaker and no longer sufficient on its own: two
+extra bits buy nothing at this stage, since the DAC is operated near −6 dBFS,
+quantization sits far below the noise the rest of the bench contributes, and no
+measurement through M4 is resolution-limited. Against that, DAC904 costs two more
+hand-soldered wires.
+
+**Decision deferred to the hardware inventory.** Whichever part is actually on
+hand wins; if both are, take the DAC902 for the smaller bus. Revisit properly if
+a spurious-free dynamic range measurement ever becomes a deliverable.
 
 ### Amendment to the M0 bring-up document
 
@@ -168,9 +181,19 @@ Deferred entirely. If time remains after M4, M5 is built from the `sband_experim
 
 ### Open items
 
-- [ ] Physical hardware inventory: IceZero revision, DAC902/904 availability and form (bare IC or module), mixer, filters, SDR, spectrum analyzer.
-- [ ] IceZero revision, FPGA density, package, oscillator marking recorded per the bring-up document's board-facts table.
-- [ ] PMOD pin budget verified for 12 data lines plus a clock.
+- [x] PMOD pin budget — **closed 2026-09-06.** Four PMODs, eight signal pins each,
+      32 in total. Neither DAC's bus is a constraint; see the reopened converter
+      section above.
+- [x] IceZero revision, FPGA density, package, oscillator marking — **closed from
+      documentation**, pending a physical check. See the bring-up document's
+      board-facts table.
+- [x] Bench control and readout path — **decided 2026-09-06: UART over J3**, with
+      an FTDI TTL-232R-3.3V cable. Mode and rate set by command, `prbs_locked`,
+      `bit_count` and `error_count` printed back. This is the only option that
+      lets the million-symbol gate be read rather than inferred from an LED that
+      failed to light, and it carries forward to every later milestone.
+- [ ] Physical hardware inventory for the RF half: DAC902/904 availability and
+      form (bare IC or module), mixer, filters, SDR, spectrum analyzer.
 - [ ] DAC output stage and termination understood on paper before first probe.
 - [ ] Directory name reconsidered — `sband_tx` describes the optional half.
 

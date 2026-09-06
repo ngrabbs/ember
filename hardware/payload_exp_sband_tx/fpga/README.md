@@ -256,14 +256,28 @@ nextpnr-ice40, icestorm and gtkwave all at consistent versions.
 
 ## Next
 
-- [ ] Fill in the board-facts table in the bring-up document — assembly
-      revision, FPGA density and package, oscillator marking, PMOD pins — then
-      write `constraints/icezero_<verified-revision>.pcf`.
-- [ ] Place-and-route and timing report once that file exists.
-- [ ] Load the bitstream and capture the M0 scope traces: constant high and
-      low, alternating at each rate, PRBS-7. Commit them under
-      `../measurements/`.
-- [ ] Decide whether to build the optional hardware loopback. The trade study
-      made it optional; the generator/checker pair is already proven in
-      simulation, so its remaining value is bench practice and signal-integrity
-      experience rather than verification.
+The open questions were settled on 2026-09-06. An IceZero, a Raspberry Pi and an
+FTDI TTL-232R-3.3V cable are all on hand; bench control and readout go over
+**UART on J3**; and the three bring-up criteria that assumed an external buffer
+have been amended, because under the selected architecture `tx_symbol` never
+leaves the FPGA. The pin plan and build flow are in
+[`constraints/README.md`](constraints/README.md).
+
+What remains is build work rather than open questions:
+
+- [ ] `rtl/uart_tx.sv`, `rtl/uart_rx.sv` and a small command/status core — set
+      pattern, rate and enable by typed command; print `prbs_locked`,
+      `bit_count` and `error_count` on demand.
+- [ ] `rtl/top.sv` — instantiate the symbol engine and the checker, map the
+      pins, drive the LEDs, and provide reset. The checker's loopback comes back
+      through a PMOD jumper.
+- [ ] `constraints/icezero_rev2.pcf`, then place-and-route and a timing report.
+- [ ] Decide whether to force the output flop into the IO cell (`SB_IO` with
+      `PIN_OUTPUT_REGISTERED`) or leave the placement to nextpnr. It affects how
+      strongly the no-glitch claim holds at the pin rather than in the fabric.
+- [ ] Confirm the board is TE0876-02 rev2, and confirm the J3 TX/RX direction
+      before blaming the RTL for a silent UART.
+- [ ] Load the bitstream and capture the M0 traces: constant high and low,
+      alternating at each rate, PRBS-7. Commit them under `../measurements/`.
+- [ ] Run the hardware gate — 1,000,000 symbols, zero errors — and record the
+      count read back over the UART rather than inferring it from an LED.

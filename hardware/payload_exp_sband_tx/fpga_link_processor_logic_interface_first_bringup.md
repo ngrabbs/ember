@@ -69,20 +69,48 @@ Sources:
 - [IceZero Rev. 2 pinout and build notes](https://www.trenz-electronic.de/trenzdownloads/Trenz_Electronic/Modules_and_Module_Carriers/3.05x6.5/TE0876/REV02/Documents/iceZero-pinout-v5.pdf)
 - [Lattice iCE40 LP/HX family data sheet](https://www.latticesemi.com/~/media/latticesemi/documents/datasheets/ice/ice40lphxfamilydatasheet.pdf)
 
-The available IceZero documents contain device/revision caveats. Before writing the final pin constraints, record:
+The available IceZero documents contain device/revision caveats. The table below
+is filled in from `iceZero-pinout-v5.pdf` (board rev2, document v7, 2022-07-02),
+which is a complete pin map. **Every row is documentation, not observation** —
+the right-hand column stays open until someone has the board in hand.
 
-| Item | Observation |
+| Item | From pinout doc v7 (board rev2) | Physically confirmed |
+|---|---|---|
+| IceZero assembly/revision | TE0876-02, board rev2 | ☐ |
+| FPGA top marking | `iCE40HX4K-TQ144` | ☐ |
+| FPGA density: HX4K or HX8K | Marked HX4K (3520 LC). HX8K die inside (7680 LC), reached by targeting `--hx8k --package tq144:4k` | ☐ |
+| FPGA package | 144-pin TQFP, 20 × 20 mm, 0.50 mm pitch, 107 I/O | ☐ |
+| Oscillator marking/frequency | SiT8008AI-73-XXS-100.0000OE, 100 MHz, on pin 49 (`IOB_81_GBIN5`, a global buffer input) | ☐ |
+| Selected PMOD connector | P1 — P2/P3/P4 held free for the M1 DAC bus | ☐ |
+| Selected FPGA output pin | 139 (`IOT_217`) = `tx_symbol` | ☐ |
+| Selected FPGA loopback input pin | 135 (`IOT_213`) = `tx_loopback` | ☐ |
+| I/O-bank voltage | 3.3 V LVCMOS | ☐ |
+| Pinout document revision | `iceZero-pinout-v5.pdf`, board rev2, doc v7 | ☐ |
+
+Additional facts from the same document, all of which M0 now depends on:
+
+| Resource | Pins |
 |---|---|
-| IceZero assembly/revision | |
-| FPGA top marking | |
-| FPGA density: HX4K or HX8K | |
-| FPGA package | |
-| Oscillator marking/frequency | |
-| Selected PMOD connector | |
-| Selected FPGA output pin | |
-| Selected FPGA loopback input pin | |
-| I/O-bank voltage | |
-| Pinout document revision | |
+| LEDs | LED1 #110, LED2 #93, LED3 #94 |
+| Button | BTN #63 (`IOB_103_CBSEL0` — also a configuration-select pin, sampled at config time) |
+| UART, J3 (**FTDI TTL-232R-3.3V only**) | TX #122 (FPGA out), RX #124 (FPGA in), CTS #119 (FPGA out), DTR #125 (ignore) |
+| Configuration, via the Raspberry Pi header | CDONE #65, SDI #68, SDO #67, SCK #70, SS #71, CRESET_B #66 |
+| PMOD signal pins, 8 each | P1 139,137,135,130 / 141,138,136,134 · P2 56,48,45,43 / 55,47,44,42 · P3 26,29,28,52 / 41,39,38,37 · P4 21,20,8,7 / 1,144,143,142 |
+
+The bitstream is loaded by `icezprog`, which bitbangs the configuration pins from
+the Raspberry Pi's GPIO. **A Raspberry Pi is a hard prerequisite** for anything
+beyond simulation; the board is a Pi HAT and has no other documented programming
+path.
+
+Two cautions carried forward to bring-up:
+
+- The J3 signal names above are read from the IceZero's perspective. A swapped
+  TX/RX is the classic UART bring-up failure; confirm the direction with a scope
+  or a loopback jumper before blaming the RTL.
+- The PMOD **connector pin positions** (which physical pin of the 2×6 carries
+  which FPGA pin) are inferred from the document's row/column layout. The FPGA
+  pin numbers above are unambiguous and are what the `.pcf` uses, but check
+  continuity with a meter before wiring anything to the connector.
 
 Do not copy a constraint file for another iCE40 board without verifying every pin.
 
@@ -490,18 +518,39 @@ Do not add FEC, pulse shaping, or host streaming in the first milestone.
 
 ## 11. Acceptance Criteria for Milestone One
 
-- [ ] Exact board revision, FPGA device, clock, and pin constraints are recorded.
-- [ ] RTL simulation confirms symbol timing and the 127-bit PRBS-7 period.
-- [ ] The output is registered and changes only at symbol boundaries.
-- [ ] The external output remains disabled during FPGA configuration and reset.
-- [ ] Constant levels meet the destination logic thresholds with margin.
-- [ ] Alternating output frequency matches the expected symbol rate divided by two.
-- [ ] Buffered edges have no threshold-crossing glitches or damaging overshoot.
-- [ ] Loopback checks at least 1,000,000 symbols at the selected target rate with zero errors.
-- [ ] The design recovers predictably after reset and disable/enable cycles.
+**Amended 2026-09-06.** Three criteria in the original list assumed an external
+SN74LVC1G125 buffer driving a destination logic input. The payload trade study
+selected the DAC low-IF architecture, in which `tx_symbol` never leaves the
+FPGA — it feeds the symbol mapper and NCO internally. There is no destination
+to meet thresholds at and no buffered edge to inspect, so those criteria could
+not be satisfied as written and are replaced by the equivalent measurements at
+the FPGA pin. The buffer criteria are retained below as dormant, and become
+live again only if the deferred phase-modulator architecture is revived.
+
+### Simulation — met
+
+- [x] RTL simulation confirms symbol timing and the 127-bit PRBS-7 period.
+- [x] The output is registered and changes only at symbol boundaries.
+- [x] Loopback checks at least 1,000,000 symbols at the selected target rate with zero errors.
+- [x] The design recovers predictably after reset and disable/enable cycles.
+
+### Hardware — open
+
+- [ ] Exact board revision, FPGA device, clock, and pin constraints are recorded and physically confirmed.
+- [ ] Place-and-route completes and the timing report meets 100 MHz. *(Predicted 119.45 MHz; confirm on the real constraint file.)*
+- [ ] Constant zero and constant one measure at the FPGA pin as valid 3.3 V LVCMOS levels.
+- [ ] Alternating output frequency matches the expected symbol rate divided by two, at every `rate_sel`.
+- [ ] Edges at the FPGA pin show no threshold-crossing glitches, and overshoot stays inside the device's tolerance.
+- [ ] The hardware loopback checks at least 1,000,000 symbols with zero errors, **and the count is read back and recorded** — not merely inferred from an LED that failed to light.
 - [ ] Tool versions, RTL revision, constraint revision, scope captures, and results are committed.
 
-Passing this milestone proves the digital symbol path and interface. It does **not** yet prove RF spectral purity, BPSK modulation quality, occupied bandwidth, EVM, or receiver performance.
+### Dormant — revive only with the phase-modulator architecture
+
+- [ ] The external buffer output remains disabled during FPGA configuration and reset.
+- [ ] Constant levels meet the destination logic thresholds with margin.
+- [ ] Buffered edges have no threshold-crossing glitches or damaging overshoot.
+
+Passing this milestone proves the digital symbol path. It does **not** yet prove RF spectral purity, BPSK modulation quality, occupied bandwidth, EVM, or receiver performance.
 
 ---
 
