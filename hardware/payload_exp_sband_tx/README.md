@@ -132,7 +132,7 @@ bench work.
 | **M4** | RRC pulse shaping, higher rate | Measurable sidelobe reduction against the M3 capture |
 | **M5** | *(optional)* RF upconversion to 2.4 GHz | Signal at 2400 MHz into a dummy load, image and LO leakage characterized |
 
-M0 comes from
+M0 is implemented in [`fpga/`](fpga/) and specified by
 [`fpga_link_processor_logic_interface_first_bringup.md`](fpga_link_processor_logic_interface_first_bringup.md)
 with one amendment under the selected architecture: the **RTL, simulation, and
 PRBS work is required**, while the external SN74LVC1G125 buffer and the hardware
@@ -176,9 +176,13 @@ hardware/payload_exp_sband_tx/
 ├── mini_totem_bpsk_if_to_sband_plan.md
 ├── tektronix_7l13_a20_2p2ghz_oscillator_characterization.md
 ├── *.drawio
-├── fpga/                            ← planned: rtl/ sim/ constraints/ Makefile
+├── fpga/                            ← M0 symbol engine: rtl/ sim/ constraints/
 └── measurements/                    ← planned: captures/ raw_data/ per milestone
 ```
+
+The FPGA work has its own README: [`fpga/README.md`](fpga/README.md) covers the
+PRBS-7 convention, the timing contract, the test coverage, and how to build and
+simulate.
 
 The constraint filename is not created until the IceZero revision and pin
 mapping are physically verified — see the board-facts table in the bring-up
