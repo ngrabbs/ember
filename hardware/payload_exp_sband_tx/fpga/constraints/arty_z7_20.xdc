@@ -47,6 +47,28 @@ set_property -dict { PACKAGE_PIN Y17  IOSTANDARD LVCMOS33 } [get_ports { ja_loop
 set_property -dict { PACKAGE_PIN W14  IOSTANDARD LVCMOS33 } [get_ports { jb_uart_tx }]
 set_property -dict { PACKAGE_PIN Y14  IOSTANDARD LVCMOS33 } [get_ports { jb_uart_rx }]
 
+## AD9910 DDS - Pmod JB pins 3,4,7,8,9,10 and JA pins 7,8,9,10
+## GROUND IS THE ONLY OTHER CONNECTION between the two boards. The DDS has its
+## own 5 V barrel jack; do not bridge 5 V or 3.3 V in either direction.
+set_property -dict { PACKAGE_PIN T11  IOSTANDARD LVCMOS33 } [get_ports { dds_cs_n }]
+set_property -dict { PACKAGE_PIN T10  IOSTANDARD LVCMOS33 } [get_ports { dds_sclk }]
+set_property -dict { PACKAGE_PIN V16  IOSTANDARD LVCMOS33 } [get_ports { dds_sdio }]
+set_property -dict { PACKAGE_PIN W16  IOSTANDARD LVCMOS33 } [get_ports { dds_sdo }]
+set_property -dict { PACKAGE_PIN V12  IOSTANDARD LVCMOS33 } [get_ports { dds_io_update }]
+set_property -dict { PACKAGE_PIN W13  IOSTANDARD LVCMOS33 } [get_ports { dds_master_reset }]
+set_property -dict { PACKAGE_PIN U18  IOSTANDARD LVCMOS33 } [get_ports { dds_pf0 }]
+set_property -dict { PACKAGE_PIN U19  IOSTANDARD LVCMOS33 } [get_ports { dds_pf1 }]
+set_property -dict { PACKAGE_PIN W18  IOSTANDARD LVCMOS33 } [get_ports { dds_pf2 }]
+set_property -dict { PACKAGE_PIN W19  IOSTANDARD LVCMOS33 } [get_ports { dds_pll_lock }]
+
+## AD9910 reference clock - ChipKit header ck_io0. JA and JB are fully used.
+## 125 MHz / 4 = 31.25 MHz. This replaces the breakout's own 40 MHz oscillator,
+## whose output does not reach the AD9910's REF_CLK pin, and has the side
+## benefit of making the DDS carrier coherent with the symbol clock.
+set_property -dict { PACKAGE_PIN T14  IOSTANDARD LVCMOS33 } [get_ports { dds_refclk }]
+set_property SLEW FAST [get_ports { dds_refclk }]
+set_property DRIVE 12  [get_ports { dds_refclk }]
+
 # ---------------------------------------------------------------------------
 # Timing exceptions
 #
@@ -60,6 +82,11 @@ set_false_path -from [get_ports { btn[*] }]
 set_false_path -from [get_ports { sw[*] }]
 set_false_path -from [get_ports { ja_loopback }]
 set_false_path -from [get_ports { jb_uart_rx }]
+set_false_path -from [get_ports { dds_sdo dds_pll_lock }]
+set_false_path -to   [get_ports { dds_cs_n dds_sclk dds_sdio dds_io_update \
+                                  dds_master_reset dds_pf0 dds_pf1 dds_pf2 }]
+create_generated_clock -name dds_refclk -source [get_ports clk] -divide_by 4 \
+                       [get_ports dds_refclk]
 set_false_path -to   [get_ports { jb_uart_tx }]
 set_false_path -to   [get_ports { led[*] }]
 set_false_path -to   [get_ports { ja_tx_symbol ja_symbol_tick ja_tx_oe_n }]

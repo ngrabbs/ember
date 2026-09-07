@@ -49,12 +49,20 @@ module tb_uart_console;
     logic [1:0] pattern_sel, rate_sel;
     logic       tx_enable, clear;
 
+    logic        dds_lock = 1'b1, dds_done = 1'b1, dds_timeout = 1'b0;
+    logic [31:0] dds_ftw, dds_cfr3;
+    logic        dds_start;
+    int          dds_starts = 0;
+    always @(posedge clk) if (dds_start) dds_starts++;
+
     m0_console u_con (
         .clk(clk), .rst(rst),
         .rx_data(cmd_data), .rx_valid(cmd_valid),
         .tx_data(c_tx_data), .tx_valid(c_tx_valid), .tx_ready(c_tx_ready),
         .locked(locked), .bit_count(bit_count),
         .error_count(error_count), .loss_count(loss_count),
+        .dds_lock(dds_lock), .dds_done(dds_done), .dds_timeout(dds_timeout),
+        .dds_ftw(dds_ftw), .dds_cfr3(dds_cfr3), .dds_start(dds_start),
         .pattern_sel(pattern_sel), .rate_sel(rate_sel),
         .tx_enable(tx_enable), .clear(clear));
 
@@ -143,7 +151,7 @@ module tb_uart_console;
 
         // D2 - banner
         clear_got(); send("?"); settle();
-        expect_string({"EMBER M0  s=status p0-3=pattern r0-3=rate e/d=enable z=clear", 8'h0D, 8'h0A},
+        expect_string({"EMBER M0 s p0-3 r0-3 e d z k i fXXXXXXXX cXXXXXXXX ? ", 8'h0D, 8'h0A},
                       "D2 banner is byte-exact");
 
         // D3 - pattern and rate
@@ -187,6 +195,39 @@ module tb_uart_console;
         settle();
         expect_string({"LOCK 1 BITS 000000000001 ERR 0000002A LOSS 0007", 8'h0D, 8'h0A},
                       "D7 counters are snapshotted at 's', not sampled per character");
+
+        // D9 - DDS status line
+        clear_got(); send("k"); settle();
+        expect_string({"DDS LOCK 1 DONE 1 TMO 0 FTW 028F5C29", 8'h0D, 8'h0A},
+                      "D9 DDS status line is byte-exact");
+
+        // D10 - eight hex digits set the tuning word and trigger a reload
+        dds_starts = 0;
+        send("f"); send("1"); send("2"); send("3"); send("4");
+        send("A"); send("b"); send("C"); send("d"); settle();
+        check(dds_ftw == 32'h1234_ABCD,
+              $sformatf("D10a f1234AbCd sets the tuning word (got %08h)", dds_ftw));
+        check(dds_starts == 1, $sformatf("D10b and reloads once (%0d)", dds_starts));
+
+        // D11 - a bad digit aborts rather than loading half a word
+        dds_starts = 0;
+        send("f"); send("1"); send("2"); send("q"); settle();
+        check(dds_ftw == 32'h1234_ABCD, "D11a a malformed tuning word is ignored");
+        check(dds_starts == 0, "D11b and does not trigger a reload");
+
+        // D13 - 'c' targets CFR3, not the tuning word
+        dds_starts = 0;
+        send("c"); send("0"); send("5"); send("3"); send("8");
+        send("C"); send("1"); send("3"); send("2"); settle();
+        check(dds_cfr3 == 32'h0538_C132,
+              $sformatf("D13a c0538C132 sets CFR3 (got %08h)", dds_cfr3));
+        check(dds_ftw == 32'h1234_ABCD, "D13b and leaves the tuning word alone");
+        check(dds_starts == 1, "D13c and reloads once");
+
+        // D12 - explicit re-init
+        dds_starts = 0;
+        send("i"); settle();
+        check(dds_starts == 1, $sformatf("D12 i re-runs the DDS bring-up (%0d)", dds_starts));
 
         // D8 - every byte in this run framed correctly. A stop bit that is not
         // held for a full bit time shows up here and nowhere else.

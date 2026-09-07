@@ -13,6 +13,12 @@
 //   r0..r3   symbol rate: 1k, 10k, 100k, 1M
 //   e / d    assert / deassert tx_enable
 //   z        zero the checker (pulses its reset)
+//   k        DDS status: PLL lock, init done, lock timeout, tuning word
+//   fXXXXXXXX  set the AD9910 frequency tuning word (8 hex digits) and reload
+//   cXXXXXXXX  set CFR3, the REFCLK PLL configuration, and reload. Needed
+//              because N depends on the reference: 0538C132 for a 40 MHz
+//              reference (N=25), 0538C140 for 31.25 MHz (N=32)
+//   i        re-run the AD9910 bring-up sequence
 //   ?        command summary
 //
 // Status format, all values hexadecimal:
@@ -43,6 +49,13 @@ module m0_console (
     input  wire [31:0] error_count,
     input  wire [15:0] loss_count,
 
+    input  wire        dds_lock,
+    input  wire        dds_done,
+    input  wire        dds_timeout,
+    output logic [31:0] dds_ftw,
+    output logic [31:0] dds_cfr3,
+    output logic       dds_start,
+
     output logic [1:0] pattern_sel,
     output logic [1:0] rate_sel,
     output logic       tx_enable,
@@ -53,9 +66,11 @@ module m0_console (
     // renders "\r" as a literal 'r', which would make simulation and hardware
     // disagree about what is on the wire.
     localparam int TEXT_STATUS = 47;
-    localparam int TEXT_BANNER = 60;
+    localparam int TEXT_BANNER = 53;
+    localparam int TEXT_DDS    = 36;
     localparam int STATUS_LEN  = TEXT_STATUS + 2;
     localparam int BANNER_LEN  = TEXT_BANNER + 2;
+    localparam int DDS_LEN     = TEXT_DDS + 2;
 
     localparam logic [7:0] CR = 8'h0D;
     localparam logic [7:0] LF = 8'h0A;
@@ -63,13 +78,20 @@ module m0_console (
     localparam logic [8*TEXT_STATUS-1:0] STATUS_T =
         "LOCK 0 BITS 000000000000 ERR 00000000 LOSS 0000";
     localparam logic [8*TEXT_BANNER-1:0] BANNER =
-        "EMBER M0  s=status p0-3=pattern r0-3=rate e/d=enable z=clear";
+        "EMBER M0 s p0-3 r0-3 e d z k i fXXXXXXXX cXXXXXXXX ? ";
+    localparam logic [8*TEXT_DDS-1:0] DDS_T =
+        "DDS LOCK 0 DONE 0 TMO 0 FTW 00000000";
 
-    typedef enum logic [2:0] { IDLE, ARG_P, ARG_R, SEND } state_e;
+    typedef enum logic [2:0] { IDLE, ARG_P, ARG_R, ARG_F, SEND } state_e;
     state_e state;
 
-    logic        msg_is_banner;
+    logic [1:0]  msg_sel;          // 0 status, 1 banner, 2 DDS
     logic [6:0]  idx;
+    logic [2:0]  hex_count;
+    logic [27:0] hex_acc;   // 7 nibbles; the 8th completes the word
+    logic        hex_target;  // 0 = FTW, 1 = CFR3
+    logic        snap_dl, snap_dd, snap_dt;
+    logic [31:0] snap_ftw;
     logic [47:0] snap_bits;
     logic [31:0] snap_err;
     logic [15:0] snap_loss;
@@ -85,10 +107,20 @@ module m0_console (
     always_comb begin
         n  = 7'd0;
         ch = 8'h20;
-        if (msg_is_banner) begin
+        if (msg_sel == 2'd1) begin
             if      (idx == 7'(TEXT_BANNER))     ch = CR;
             else if (idx == 7'(TEXT_BANNER + 1)) ch = LF;
             else ch = BANNER[(TEXT_BANNER-1-int'(idx))*8 +: 8];
+        end else if (msg_sel == 2'd2) begin
+            if      (idx == 7'(TEXT_DDS))     ch = CR;
+            else if (idx == 7'(TEXT_DDS + 1)) ch = LF;
+            else if (idx == 7'd9)  ch = snap_dl ? "1" : "0";
+            else if (idx == 7'd16) ch = snap_dd ? "1" : "0";
+            else if (idx == 7'd22) ch = snap_dt ? "1" : "0";
+            else if (idx >= 7'd28 && idx <= 7'd35) begin
+                n  = 7'd35 - idx;
+                ch = nib2asc(snap_ftw[int'(n)*4 +: 4]);
+            end else ch = DDS_T[(TEXT_DDS-1-int'(idx))*8 +: 8];
         end else if (idx == 7'(TEXT_STATUS)) begin
             ch = CR;
         end else if (idx == 7'(TEXT_STATUS + 1)) begin
@@ -110,37 +142,80 @@ module m0_console (
     end
 
     logic [6:0] msg_len;
-    assign msg_len = msg_is_banner ? 7'(BANNER_LEN) : 7'(STATUS_LEN);
+    always_comb begin
+        case (msg_sel)
+            2'd1:    msg_len = 7'(BANNER_LEN);
+            2'd2:    msg_len = 7'(DDS_LEN);
+            default: msg_len = 7'(STATUS_LEN);
+        endcase
+    end
+
+    // 0-9 A-F a-f to a nibble; anything else aborts the entry.
+    function automatic logic is_hex(input logic [7:0] c);
+        return (c >= "0" && c <= "9") || (c >= "A" && c <= "F") || (c >= "a" && c <= "f");
+    endfunction
+    function automatic logic [3:0] asc2nib(input logic [7:0] c);
+        if (c <= "9")      return c[3:0];
+        else if (c <= "F") return 4'(c - "A") + 4'd10;
+        else               return 4'(c - "a") + 4'd10;
+    endfunction
 
     always_ff @(posedge clk) begin
-        tx_valid <= 1'b0;
-        clear    <= 1'b0;
+        tx_valid  <= 1'b0;
+        clear     <= 1'b0;
+        dds_start <= 1'b0;
 
         if (rst) begin
-            state         <= IDLE;
-            idx           <= '0;
-            msg_is_banner <= 1'b0;
-            pattern_sel   <= 2'b11;      // PRBS-7 is the useful default
-            rate_sel      <= 2'b00;
-            tx_enable     <= 1'b1;
+            state       <= IDLE;
+            idx         <= '0;
+            msg_sel     <= 2'd0;
+            pattern_sel <= 2'b11;      // PRBS-7 is the useful default
+            rate_sel    <= 2'b00;
+            tx_enable   <= 1'b1;
+            dds_ftw     <= 32'h028F_5C29;   // 10 MHz at a 1 GHz SYSCLK
+            dds_cfr3    <= 32'h0538_C140;   // N=32, for the 31.25 MHz FPGA reference
+            hex_count   <= '0;
+            hex_target  <= 1'b0;
         end else begin
             case (state)
                 IDLE: if (rx_valid) begin
                     case (rx_data)
                         "s", "S": begin
-                            snap_bits     <= bit_count;
-                            snap_err      <= error_count;
-                            snap_loss     <= loss_count;
-                            snap_lock     <= locked;
-                            msg_is_banner <= 1'b0;
-                            idx           <= '0;
-                            state         <= SEND;
+                            snap_bits <= bit_count;
+                            snap_err  <= error_count;
+                            snap_loss <= loss_count;
+                            snap_lock <= locked;
+                            msg_sel   <= 2'd0;
+                            idx       <= '0;
+                            state     <= SEND;
                         end
                         "?", "h", "H": begin
-                            msg_is_banner <= 1'b1;
-                            idx           <= '0;
-                            state         <= SEND;
+                            msg_sel <= 2'd1;
+                            idx     <= '0;
+                            state   <= SEND;
                         end
+                        "k", "K": begin
+                            snap_dl  <= dds_lock;
+                            snap_dd  <= dds_done;
+                            snap_dt  <= dds_timeout;
+                            snap_ftw <= dds_ftw;
+                            msg_sel  <= 2'd2;
+                            idx      <= '0;
+                            state    <= SEND;
+                        end
+                        "f", "F": begin
+                            hex_acc    <= '0;
+                            hex_count  <= '0;
+                            hex_target <= 1'b0;
+                            state      <= ARG_F;
+                        end
+                        "c", "C": begin
+                            hex_acc    <= '0;
+                            hex_count  <= '0;
+                            hex_target <= 1'b1;
+                            state      <= ARG_F;
+                        end
+                        "i", "I": dds_start <= 1'b1;
                         "p", "P": state     <= ARG_P;
                         "r", "R": state     <= ARG_R;
                         "e", "E": tx_enable <= 1'b1;
@@ -162,6 +237,25 @@ module m0_console (
                     state <= IDLE;
                 end
 
+                // Eight hex digits, then load and reload the DDS profiles. A
+                // non-hex character aborts rather than loading a half-typed
+                // tuning word, which would put the carrier somewhere arbitrary.
+                ARG_F: if (rx_valid) begin
+                    if (!is_hex(rx_data)) begin
+                        state <= IDLE;
+                    end else begin
+                        hex_acc <= {hex_acc[23:0], asc2nib(rx_data)};
+                        if (hex_count == 3'd7) begin
+                            if (hex_target) dds_cfr3 <= {hex_acc[27:0], asc2nib(rx_data)};
+                            else            dds_ftw  <= {hex_acc[27:0], asc2nib(rx_data)};
+                            dds_start <= 1'b1;
+                            state     <= IDLE;
+                        end else begin
+                            hex_count <= hex_count + 3'd1;
+                        end
+                    end
+                end
+
                 SEND: if (tx_ready && !tx_valid) begin
                     tx_data  <= ch;
                     tx_valid <= 1'b1;
@@ -173,6 +267,20 @@ module m0_console (
             endcase
         end
     end
+`ifndef SYNTHESIS
+    // A string literal shorter than its field is silently zero-padded on the
+    // LEFT, so the message would begin with NULs and every index would be
+    // wrong. Catching it here turns a puzzling terminal into a clear error.
+    initial begin
+        if (STATUS_T[8*TEXT_STATUS-1 -: 8] == 8'h00)
+            $fatal(1, "m0_console: STATUS_T is shorter than TEXT_STATUS (%0d)", TEXT_STATUS);
+        if (BANNER[8*TEXT_BANNER-1 -: 8] == 8'h00)
+            $fatal(1, "m0_console: BANNER is shorter than TEXT_BANNER (%0d)", TEXT_BANNER);
+        if (DDS_T[8*TEXT_DDS-1 -: 8] == 8'h00)
+            $fatal(1, "m0_console: DDS_T is shorter than TEXT_DDS (%0d)", TEXT_DDS);
+    end
+`endif
+
 endmodule
 
 `default_nettype wire

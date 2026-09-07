@@ -12,6 +12,7 @@
 //   F8  a reference clock that never locks reports lock_timeout and still
 //       completes, rather than hanging
 //   F9  busy is asserted for the whole sequence and clear once done
+//   F10 a single start pulse restarts the sequence from S_DONE
 //
 // F3 and F6 matter more than they look: an AD9910 buffers register writes and
 // nothing takes effect until IO_UPDATE. A sequencer that writes perfect
@@ -41,10 +42,10 @@ module tb_ad9910_ctrl;
 
     ad9910_ctrl #(
         .CLOCK_HZ(125_000_000), .RESET_NS(200), .SETTLE_NS(200),
-        .IOUP_NS(50), .LOCK_TMO_US(20), .CFR3_VALUE(CFR3)
+        .IOUP_NS(50), .LOCK_TMO_US(20)
     ) dut (
         .clk(clk), .rst(rst), .start(start),
-        .ftw(FTW), .pow0(POW0), .pow1(POW1), .asf(ASF),
+        .ftw(FTW), .pow0(POW0), .pow1(POW1), .asf(ASF), .cfr3(CFR3),
         .pll_lock(pll_lock),
         .master_reset(master_reset), .io_update(io_update), .cs_n(cs_n),
         .spi_tx_data(spi_tx_data), .spi_tx_valid(spi_tx_valid),
@@ -150,11 +151,14 @@ module tb_ad9910_ctrl;
         check(!lock_timeout, "F8a no timeout reported when the PLL locks");
 
         // ---- no reference clock: must report and still finish ----
+        // A SINGLE start pulse must restart from S_DONE. Two pulses would hide
+        // the bug where S_DONE only stepped to S_IDLE and dropped the pulse.
         pll_lock = 1'b0; ntrans = 0;
         @(negedge clk); start = 1'b1; @(negedge clk); start = 1'b0;
-        @(negedge clk); start = 1'b1; @(negedge clk); start = 1'b0;
+        wait (!done);
         wait (done); repeat (10) @(negedge clk);
         check(lock_timeout, "F8b lock_timeout reported when the PLL never locks");
+        check(ntrans == 3, "F10 a single start pulse restarted the sequence from S_DONE");
         check(ntrans == 3, $sformatf("F8c sequence still completed (got %0d transactions)", ntrans));
 
         $display("");

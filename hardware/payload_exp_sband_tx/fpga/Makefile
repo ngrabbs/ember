@@ -14,6 +14,7 @@
 #   make check      golden + lint + sim
 #   make bitstream  build the Arty Z7-20 bitstream (Vivado, on the m75q host)
 #   make program    load the bitstream over USB-JTAG
+#   make sanity     end-to-end bench check: console, symbol engine, DDS
 #   make tools      how to install what is missing
 #
 # Target board is the Digilent Arty Z7 (Zynq-7000) as of 2026-09-07; synthesis
@@ -80,7 +81,7 @@ VERILATOR_TB_OPTS := $(VERILATOR_OPTS) -Wno-STMTDLY -Wno-PROCASSINIT -Wno-BLKSEQ
 YOSYS_OPTS       := -e "no driver"
 YOSYS_SYNTH_OPTS := -device $(DEVICE) -abc9
 
-.PHONY: help golden vectors lint sim sim-prbs sim-tx sim-uart sim-spi sim-dds sim-long waves gtkwave ascii count synth push bitstream program check clean tools
+.PHONY: help sanity golden vectors lint sim sim-prbs sim-tx sim-uart sim-spi sim-dds sim-ref sim-long waves gtkwave ascii count synth push bitstream program check clean tools
 
 help:
 	@sed -n '2,$$ { /^# ----/q; s/^# \{0,1\}//; p; }' Makefile
@@ -128,6 +129,8 @@ lint:
 	$(VERILATOR) --lint-only $(VERILATOR_TB_OPTS) $(DEFINES) --top-module tb_spi_master $(SRC) $(SIMDIR)/tb_spi_master.sv
 	@echo "=== lint: tb_ad9910_ctrl ==="
 	$(VERILATOR) --lint-only $(VERILATOR_TB_OPTS) $(DEFINES) --top-module tb_ad9910_ctrl $(SRC) $(SIMDIR)/tb_ad9910_ctrl.sv
+	@echo "=== lint: tb_refclk_gen ==="
+	$(VERILATOR) --lint-only $(VERILATOR_TB_OPTS) $(DEFINES) --top-module tb_refclk_gen $(SRC) $(SIMDIR)/tb_refclk_gen.sv
 	@echo "=== lint: top_arty_z7 ==="
 	$(VERILATOR) --lint-only $(VERILATOR_OPTS) $(DEFINES) --top-module top_arty_z7 $(SRC)
 	@echo "=== lint clean ==="
@@ -190,7 +193,17 @@ sim-dds: $(BUILD)/tb_ad9910_ctrl.vvp
 	$(call need,$(VVP))
 	@$(VVP) $(BUILD)/tb_ad9910_ctrl.vvp $(VVP_OPTS)
 
-sim: sim-prbs sim-tx sim-uart sim-spi sim-dds
+$(BUILD)/tb_refclk_gen.vvp: $(SRC) $(SIMDIR)/tb_refclk_gen.sv $(MAKEFILE_LIST) | $(BUILD)
+	$(call need,$(VERILATOR))
+	$(call need,$(IVERILOG))
+	@$(VERILATOR) --lint-only $(VERILATOR_TB_OPTS) $(DEFINES) --top-module tb_refclk_gen $(SRC) $(SIMDIR)/tb_refclk_gen.sv
+	$(IVERILOG) $(IVERILOG_OPTS) $(DEFINES) $(IVEXTRA) -o $@ -s tb_refclk_gen $(SRC) $(SIMDIR)/tb_refclk_gen.sv
+
+sim-ref: $(BUILD)/tb_refclk_gen.vvp
+	$(call need,$(VVP))
+	@$(VVP) $(BUILD)/tb_refclk_gen.vvp $(VVP_OPTS)
+
+sim: sim-prbs sim-tx sim-uart sim-spi sim-dds sim-ref
 
 # The .vvp files are removed on both sides so that a wave build is never
 # silently reused by a later plain `make sim`, and vice versa - IVEXTRA is not
@@ -264,6 +277,10 @@ bitstream: push
 
 program: push
 	@ssh $(VIVADO_HOST) 'cd $(VIVADO_DIR) && ./vivado/build.sh program'
+
+# Run after any rewiring, reprogramming or power cycle, before writing code.
+sanity:
+	@cd tools && $(PYTHON) sanity.py
 
 check: golden lint sim
 

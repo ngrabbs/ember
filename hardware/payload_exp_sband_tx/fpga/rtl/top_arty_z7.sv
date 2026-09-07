@@ -44,6 +44,10 @@
 
 module top_arty_z7 #(
     parameter int unsigned CLOCK_HZ     = 125_000_000,
+    // The DDS reference is generated here rather than taken from the breakout's
+    // own oscillator, whose output does not reach the AD9910's REF_CLK pin.
+    // 125 / 4 = 31.25 MHz, and CFR3's N becomes 32 for exactly 1 GHz SYSCLK.
+    parameter int unsigned REFCLK_DIV   = 4,
     parameter int unsigned SAMPLE_DELAY = 8,
     parameter int unsigned DEBOUNCE_W   = 20        // ~8.4 ms at 125 MHz
 ) (
@@ -56,7 +60,20 @@ module top_arty_z7 #(
     output wire       ja_tx_oe_n,     // JA pin 3
     input  wire       ja_loopback,    // JA pin 4
     output wire       jb_uart_tx,     // JB pin 1 -> cable RX
-    input  wire       jb_uart_rx      // JB pin 2 <- cable TX
+    input  wire       jb_uart_rx,     // JB pin 2 <- cable TX
+
+    // AD9910 DDS - see constraints/README.md for the interconnect
+    output wire       dds_cs_n,         // JB 3
+    output wire       dds_sclk,         // JB 4
+    output wire       dds_sdio,         // JB 7
+    input  wire       dds_sdo,          // JB 8   (unused until CFR1[1] is set)
+    output wire       dds_io_update,    // JB 9
+    output wire       dds_master_reset, // JB 10
+    output wire       dds_pf0,          // JA 7   the BPSK phase command
+    output wire       dds_pf1,          // JA 8
+    output wire       dds_pf2,          // JA 9
+    input  wire       dds_pll_lock,     // JA 10
+    output wire       dds_refclk        // ck_io0 - reference for the AD9910
 );
 
     // -----------------------------------------------------------------------
@@ -141,14 +158,73 @@ module top_arty_z7 #(
         .clk(clk), .rst(rst), .data(u_tx_data),
         .valid(u_tx_valid), .ready(u_tx_ready), .tx(jb_uart_tx));
 
+    logic [31:0] dds_ftw, dds_cfr3;
+    logic        dds_start_cmd, dds_done, dds_timeout;
+
     m0_console u_console (
         .clk(clk), .rst(rst),
         .rx_data(u_rx_data), .rx_valid(u_rx_valid),
         .tx_data(u_tx_data), .tx_valid(u_tx_valid), .tx_ready(u_tx_ready),
         .locked(locked), .bit_count(bit_count),
         .error_count(error_count), .loss_count(loss_count),
+        .dds_lock(dds_pll_lock), .dds_done(dds_done), .dds_timeout(dds_timeout),
+        .dds_ftw(dds_ftw), .dds_cfr3(dds_cfr3), .dds_start(dds_start_cmd),
         .pattern_sel(con_pattern), .rate_sel(con_rate),
         .tx_enable(con_enable), .clear(con_clear));
+
+    // -----------------------------------------------------------------------
+    // AD9910: bring it up once after configuration, and again on command.
+    //
+    // dds_pf0 carries tx_symbol directly. Profile 0 and profile 1 hold the same
+    // frequency 180 degrees apart, so this one pin turns the symbol stream into
+    // BPSK on a real carrier. PF1 and PF2 stay low - profiles 2 to 7 are spare.
+    // -----------------------------------------------------------------------
+    logic dds_autostart, dds_started;
+    always_ff @(posedge clk) begin
+        if (rst) begin
+            dds_started   <= 1'b0;
+            dds_autostart <= 1'b0;
+        end else if (!dds_started) begin
+            dds_started   <= 1'b1;
+            dds_autostart <= 1'b1;
+        end else begin
+            dds_autostart <= 1'b0;
+        end
+    end
+
+    logic [7:0] dds_spi_data;
+    logic       dds_spi_valid, dds_spi_ready, dds_spi_busy;
+
+    // busy is left unread: the console reports done and lock_timeout, which
+    // together say everything busy would, and there is no spare LED for it.
+    /* verilator lint_off PINCONNECTEMPTY */
+    refclk_gen #(.DIVIDE(REFCLK_DIV)) u_refclk (
+        .clk(clk), .rst(rst), .refclk(dds_refclk));
+
+    ad9910_ctrl #(.CLOCK_HZ(CLOCK_HZ)) u_dds (
+        .clk(clk), .rst(rst),
+        .start(dds_autostart | dds_start_cmd),
+        .ftw(dds_ftw), .pow0(16'h0000), .pow1(16'h8000), .asf(14'h3FFF),
+        .cfr3(dds_cfr3),
+        .pll_lock(dds_pll_lock),
+        .master_reset(dds_master_reset), .io_update(dds_io_update),
+        .cs_n(dds_cs_n),
+        .spi_tx_data(dds_spi_data), .spi_tx_valid(dds_spi_valid),
+        .spi_tx_ready(dds_spi_ready), .spi_busy(dds_spi_busy),
+        .busy(), .done(dds_done), .lock_timeout(dds_timeout));
+    /* verilator lint_on PINCONNECTEMPTY */
+
+    /* verilator lint_off PINCONNECTEMPTY */
+    spi_master #(.CLOCK_HZ(CLOCK_HZ), .SCLK_HZ(1_000_000)) u_dds_spi (
+        .clk(clk), .rst(rst),
+        .tx_data(dds_spi_data), .tx_valid(dds_spi_valid), .tx_ready(dds_spi_ready),
+        .rx_data(), .rx_valid(),
+        .sclk(dds_sclk), .mosi(dds_sdio), .miso(dds_sdo), .busy(dds_spi_busy));
+    /* verilator lint_on PINCONNECTEMPTY */
+
+    assign dds_pf0 = tx_symbol;
+    assign dds_pf1 = 1'b0;
+    assign dds_pf2 = 1'b0;
 
     always_ff @(posedge clk) begin
         if (rst) con_active <= 1'b0;

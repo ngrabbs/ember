@@ -45,8 +45,7 @@ module ad9910_ctrl #(
     parameter int unsigned RESET_NS    = 10_000,        // MASTER_RESET width
     parameter int unsigned SETTLE_NS   = 10_000,        // after reset release
     parameter int unsigned IOUP_NS     = 100,           // IO_UPDATE width
-    parameter int unsigned LOCK_TMO_US = 10_000,        // PLL lock timeout
-    parameter logic [31:0] CFR3_VALUE  = 32'h0538_C132
+    parameter int unsigned LOCK_TMO_US = 10_000         // PLL lock timeout
 ) (
     input  wire        clk,
     input  wire        rst,
@@ -56,6 +55,7 @@ module ad9910_ctrl #(
     input  wire [15:0] pow0,           // profile 0 phase offset word
     input  wire [15:0] pow1,           // profile 1 phase offset word, 0x8000 = 180 deg
     input  wire [13:0] asf,            // amplitude scale factor, 0x3FFF = full
+    input  wire [31:0] cfr3,           // PLL configuration; see the note above
 
     input  wire        pll_lock,       // AD9910 PLL_LOCK pin
 
@@ -115,7 +115,11 @@ module ad9910_ctrl #(
             launch       <= 1'b0;
         end else begin
             case (state)
-                S_IDLE: if (start) begin
+                // S_DONE handles start identically to S_IDLE. Routing S_DONE
+                // through S_IDLE instead loses the pulse: start is one cycle
+                // wide, so by the time the FSM reached S_IDLE it was gone and
+                // the sequence never re-ran - every second 'i' did nothing.
+                S_IDLE, S_DONE: if (start) begin
                     lock_timeout <= 1'b0;
                     master_reset <= 1'b1;
                     timer        <= '0;
@@ -130,7 +134,7 @@ module ad9910_ctrl #(
 
                 S_SETTLE: if (timer == SETTLE_CYCLES-1) begin
                     timer      <= '0;
-                    shifter    <= {ADDR_CFR3, CFR3_VALUE, 32'b0};
+                    shifter    <= {ADDR_CFR3, cfr3, 32'b0};
                     bytes_left <= 4'd5;
                     cs_n       <= 1'b0;
                     launch     <= 1'b1;
@@ -197,8 +201,6 @@ module ad9910_ctrl #(
                     io_update <= 1'b0;
                     state     <= S_DONE;
                 end else timer <= timer + 1'b1;
-
-                S_DONE: if (start) state <= S_IDLE;
 
                 default: state <= S_IDLE;
             endcase
