@@ -54,7 +54,9 @@ module top_arty_z7 #(
     output wire       ja_tx_symbol,   // JA pin 1
     output wire       ja_symbol_tick, // JA pin 2
     output wire       ja_tx_oe_n,     // JA pin 3
-    input  wire       ja_loopback     // JA pin 4
+    input  wire       ja_loopback,    // JA pin 4
+    output wire       jb_uart_tx,     // JB pin 1 -> cable RX
+    input  wire       jb_uart_rx      // JB pin 2 <- cable TX
 );
 
     // -----------------------------------------------------------------------
@@ -108,8 +110,61 @@ module top_arty_z7 #(
         else if (btn1_rise) rate_sel <= rate_sel + 1'b1;
     end
 
-    logic tx_enable;
-    assign tx_enable = ~btn2_level;      // held down = disabled
+    logic sw_tx_enable;
+    assign sw_tx_enable = ~btn2_level;   // held down = disabled
+
+    // -----------------------------------------------------------------------
+    // UART console
+    //
+    // Two masters would be ambiguous, so the rule is explicit: the switches and
+    // buttons are in charge after reset, and the first console p/r/e/d command
+    // hands control to the console until the next reset. Status and clear work
+    // either way.
+    // -----------------------------------------------------------------------
+    logic [7:0] u_rx_data, u_tx_data;
+    logic       u_rx_valid, u_tx_valid, u_tx_ready;
+    logic [1:0] con_pattern, con_rate;
+    logic       con_enable, con_clear;
+    logic       con_active;
+
+    // frame_error is deliberately unread. A framing error means the baud rate
+    // or the cable is wrong, and the operator already sees that directly as
+    // garbage in their terminal - a dedicated indicator would tell them nothing
+    // the screen has not already told them.
+    /* verilator lint_off PINCONNECTEMPTY */
+    uart_rx #(.CLOCK_HZ(CLOCK_HZ)) u_uart_rx (
+        .clk(clk), .rst(rst), .rx(jb_uart_rx),
+        .data(u_rx_data), .valid(u_rx_valid), .frame_error());
+    /* verilator lint_on PINCONNECTEMPTY */
+
+    uart_tx #(.CLOCK_HZ(CLOCK_HZ)) u_uart_tx (
+        .clk(clk), .rst(rst), .data(u_tx_data),
+        .valid(u_tx_valid), .ready(u_tx_ready), .tx(jb_uart_tx));
+
+    m0_console u_console (
+        .clk(clk), .rst(rst),
+        .rx_data(u_rx_data), .rx_valid(u_rx_valid),
+        .tx_data(u_tx_data), .tx_valid(u_tx_valid), .tx_ready(u_tx_ready),
+        .locked(locked), .bit_count(bit_count),
+        .error_count(error_count), .loss_count(loss_count),
+        .pattern_sel(con_pattern), .rate_sel(con_rate),
+        .tx_enable(con_enable), .clear(con_clear));
+
+    always_ff @(posedge clk) begin
+        if (rst) con_active <= 1'b0;
+        else if (u_rx_valid) begin
+            case (u_rx_data)
+                "p","P","r","R","e","E","d","D": con_active <= 1'b1;
+                default: ;
+            endcase
+        end
+    end
+
+    logic [1:0] pattern_eff, rate_eff;
+    logic       tx_enable;
+    assign pattern_eff = con_active ? con_pattern   : sw_sync_b;
+    assign rate_eff    = con_active ? con_rate      : rate_sel;
+    assign tx_enable   = con_active ? con_enable    : sw_tx_enable;
 
     // -----------------------------------------------------------------------
     // Symbol engine
@@ -126,8 +181,8 @@ module top_arty_z7 #(
         .clk         (clk),
         .rst         (rst),
         .tx_enable   (tx_enable),
-        .pattern_sel (sw_sync_b),
-        .rate_sel    (rate_sel),
+        .pattern_sel (pattern_eff),
+        .rate_sel    (rate_eff),
         .tx_symbol   (tx_symbol),
         .tx_oe_n     (tx_oe_n),
         .symbol_tick (symbol_tick)
@@ -153,16 +208,16 @@ module top_arty_z7 #(
     logic [31:0] error_count;
     logic [15:0] loss_count;
 
-    // bit_count is the number the M0 gate is actually stated in - "1,000,000
-    // symbols with zero errors". Four LEDs cannot show a 48-bit counter, so it
-    // is left unread here and is the first thing the UART readout must expose.
-    /* verilator lint_off UNUSEDSIGNAL */
+    // bit_count is the number the M0 gate is stated in - "1,000,000 symbols
+    // with zero errors" - and the console now prints it.
     logic [47:0] bit_count;
-    /* verilator lint_on UNUSEDSIGNAL */
+
+    logic chk_rst;
+    assign chk_rst = rst | con_clear;
 
     prbs7_check u_chk (
         .clk         (clk),
-        .rst         (rst),
+        .rst         (chk_rst),
         .en          (sample_en),
         .rx_bit      (lb_sync[1]),
         .locked      (locked),
@@ -176,7 +231,7 @@ module top_arty_z7 #(
     // -----------------------------------------------------------------------
     logic err_sticky;
     always_ff @(posedge clk) begin
-        if (rst || btn3_rise)
+        if (rst || btn3_rise || con_clear)
             err_sticky <= 1'b0;
         else if (error_count != 32'd0 || loss_count != 16'd0)
             err_sticky <= 1'b1;

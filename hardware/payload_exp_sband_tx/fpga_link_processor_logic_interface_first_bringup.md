@@ -140,13 +140,18 @@ A generic USB-serial cable was connected to **J3** with its **VCC wire
 connected**, and the board was powered solely from that cable with the Raspberry
 Pi detached. Two things were wrong:
 
-1. The board's schematic and silkscreen both say **"FTDI TTL-232R-3V3 Only"**,
+1. **Connecting the cable's VCC.** With the Pi detached, that red wire was
+   powering the entire IceZero through J3's 5 V pin — up to 500 mA straight
+   from USB. U8, the 5 V-to-3.3 V buck regulator, is what died.
+2. The board's schematic and silkscreen both say **"FTDI TTL-232R-3V3 Only"**,
    and label J3 for that cable's colours (BLK / ORN / YLW / GRN). The cable used
-   had white and green conductors — not that family — and generic USB-TTL cables
-   commonly signal at 5 V. J3 places a 5 V pin directly beside FPGA I/O rated
-   about 3.6 V absolute maximum.
-2. Connecting a cable's VCC to a board that has its own supply is wrong
-   regardless of the cable.
+   was an Adafruit 954 (red / black / white / green) — not that family.
+
+**Corrected 2026-09-07.** The first analysis blamed 5 V signalling into FPGA I/O
+rated about 3.6 V. That mechanism is ruled out: the Adafruit 954's TX and RX are
+**3.3 V logic** (CP2102). The signal wires were never the problem. The fault was
+the 5 V power wire and nothing else — which makes the rule below narrower and
+more useful than "be careful with cables".
 
 ### A checker that could pass a dead wire
 
@@ -174,9 +179,9 @@ testbench now does deliberately.
 
 - [ ] **Never connect a USB-serial cable's VCC** to a board that has its own
       power. GND, TX and RX only.
-- [ ] **Verify the cable signals at 3.3 V** before it touches an FPGA pin. Wire
-      colours are the cheapest tell: a genuine FTDI TTL-232R is
-      black/brown/red/orange/yellow/green and nothing else.
+- [ ] **Verify the cable signals at 3.3 V** before it touches an FPGA pin.
+      Check the datasheet, not the wire colours — the Adafruit 954 signals at
+      3.3 V despite carrying a 5 V power wire, so colour alone proves nothing.
 - [ ] Prefer a connector that carries **no 5 V near 3.3 V logic** at all.
 
 ### Replacement: Digilent Arty Z7 (Zynq-7000)

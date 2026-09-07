@@ -38,6 +38,15 @@ set_property -dict { PACKAGE_PIN Y19  IOSTANDARD LVCMOS33 } [get_ports { ja_symb
 set_property -dict { PACKAGE_PIN Y16  IOSTANDARD LVCMOS33 } [get_ports { ja_tx_oe_n }]
 set_property -dict { PACKAGE_PIN Y17  IOSTANDARD LVCMOS33 } [get_ports { ja_loopback }]
 
+## Pmod JB - UART console, 115200 8N1
+##   pin 1  jb_uart_tx  FPGA output -> the cable's RX
+##   pin 2  jb_uart_rx  FPGA input  <- the cable's TX
+## Connect GND, TX and RX only. NEVER the cable's VCC: this board has its own
+## supply, and a 5 V VCC wire on a self-powered board is what destroyed the
+## IceZero this payload started on.
+set_property -dict { PACKAGE_PIN W14  IOSTANDARD LVCMOS33 } [get_ports { jb_uart_tx }]
+set_property -dict { PACKAGE_PIN Y14  IOSTANDARD LVCMOS33 } [get_ports { jb_uart_rx }]
+
 # ---------------------------------------------------------------------------
 # Timing exceptions
 #
@@ -50,6 +59,8 @@ set_property -dict { PACKAGE_PIN Y17  IOSTANDARD LVCMOS33 } [get_ports { ja_loop
 set_false_path -from [get_ports { btn[*] }]
 set_false_path -from [get_ports { sw[*] }]
 set_false_path -from [get_ports { ja_loopback }]
+set_false_path -from [get_ports { jb_uart_rx }]
+set_false_path -to   [get_ports { jb_uart_tx }]
 set_false_path -to   [get_ports { led[*] }]
 set_false_path -to   [get_ports { ja_tx_symbol ja_symbol_tick ja_tx_oe_n }]
 
