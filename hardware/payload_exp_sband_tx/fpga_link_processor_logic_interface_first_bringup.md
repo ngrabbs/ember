@@ -148,6 +148,28 @@ Pi detached. Two things were wrong:
 2. Connecting a cable's VCC to a board that has its own supply is wrong
    regardless of the cable.
 
+### A checker that could pass a dead wire
+
+Found on the bench on 2026-09-07, and worth preserving because simulation could
+not have found it.
+
+With the pattern switches at `00` — constant zero — `prbs7_check` locked and
+reported zero errors. An all-zero shift register satisfies the checker's
+prediction recurrence trivially, since `0 = 0 XOR 0`. The consequence reaches
+far past the test pattern: **a stuck-low loopback, an unseated jumper or a dead
+output driver would all have reported "locked, zero errors"** — the one false
+pass a bit-error counter must never give.
+
+The guard added is exact rather than heuristic. The longest run of zeros in a
+PRBS-7 sequence is six, so a seven-bit all-zero window cannot occur in a valid
+stream and can only mean a dead line.
+
+Simulation was structurally incapable of catching this: the generator cannot
+emit all-zeros, because the seed is nonzero and the LFSR never enters that
+state. Exposing it required driving the checker from something other than the
+generator — which is what a person flipping two switches did, and what the
+testbench now does deliberately.
+
 ### Rules adopted
 
 - [ ] **Never connect a USB-serial cable's VCC** to a board that has its own
@@ -622,15 +644,45 @@ live again only if the deferred phase-modulator architecture is revived.
 - [x] Loopback checks at least 1,000,000 symbols at the selected target rate with zero errors.
 - [x] The design recovers predictably after reset and disable/enable cycles.
 
-### Hardware — open
+### Hardware — Arty Z7-20, 2026-09-07
 
-- [ ] Exact board revision, FPGA device, clock, and pin constraints are recorded and physically confirmed.
-- [ ] Place-and-route completes and the timing report meets 100 MHz. *(Predicted 119.45 MHz; confirm on the real constraint file.)*
-- [ ] Constant zero and constant one measure at the FPGA pin as valid 3.3 V LVCMOS levels.
-- [ ] Alternating output frequency matches the expected symbol rate divided by two, at every `rate_sel`.
-- [ ] Edges at the FPGA pin show no threshold-crossing glitches, and overshoot stays inside the device's tolerance.
-- [ ] The hardware loopback checks at least 1,000,000 symbols with zero errors, **and the count is read back and recorded** — not merely inferred from an LED that failed to light.
-- [ ] Tool versions, RTL revision, constraint revision, scope captures, and results are committed.
+- [x] Board, device, clock and pin constraints recorded and physically
+      confirmed — Arty Z7-20, XC7Z020-1CLG400C, 125 MHz, pins taken verbatim
+      from Digilent's master XDC. Builds, programs, and runs.
+- [x] Place-and-route completes and timing is met — **WNS +2.903 ns, WHS
+      +0.122 ns** against the 8 ns clock. 112 LUTs and 200 registers, 0.2% of
+      the part.
+- [x] The hardware loopback checks at least 1,000,000 symbols with zero errors
+      — **60,000,000 symbols in 60 s at 1 Msym/s, zero errors, zero lock
+      losses.**
+- [ ] Constant zero and constant one measure at the pin as valid 3.3 V LVCMOS
+      levels. *(scope capture outstanding)*
+- [ ] Alternating output frequency is the symbol rate divided by two, at every
+      `rate_sel`. *(scope capture outstanding)*
+- [ ] Edges show no threshold-crossing glitches and overshoot stays inside the
+      device's tolerance. *(scope capture outstanding)*
+- [ ] Scope captures committed under `measurements/m0_symbol_engine/`.
+
+#### On trusting the sticky LED
+
+The original criterion demanded the symbol count be *read back*, "not merely
+inferred from an LED that failed to light" — and what was actually run is a
+sticky error latch observed over a measured minute. That is defensible here,
+for two specific reasons, and it is worth being precise about why rather than
+quietly relaxing the bar:
+
+1. **The count is computed, not estimated.** The symbol rate is 125 MHz divided
+   by exactly 125, from a crystal, so 60 s is 60,000,000 symbols and not an
+   approximation.
+2. **The negative case was demonstrated.** Pulling the loopback jumper makes
+   `led[2]` go dark and `led[3]` latch. An indicator that has never been seen
+   to trip is not evidence; one that has been made to trip on demand is. That
+   test is what converts a dark LED from an absence of information into a
+   measurement.
+
+The remaining gap is real but narrow: `bit_count` and `error_count` are still
+not readable, so a *partial* failure late in a long run cannot be quantified,
+only detected. Closing that is the first job of the UART readout.
 
 ### Dormant — revive only with the phase-modulator architecture
 

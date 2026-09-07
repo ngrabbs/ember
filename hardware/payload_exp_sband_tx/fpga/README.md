@@ -270,8 +270,22 @@ cycle resumes on a clean boundary and re-locks.
 
 ## Status
 
-**M0 is verified in simulation.** All checks pass and the acceptance gate is
-met.
+**M0 is verified in simulation and on hardware.**
+
+Hardware, Arty Z7-20, 2026-09-07:
+
+| | |
+|---|---|
+| Loopback run | **60,000,000 symbols at 1 Msym/s — zero errors, zero lock losses** |
+| Timing | WNS +2.903 ns, WHS +0.122 ns against the 8 ns clock |
+| Utilisation | 112 LUTs, 200 registers — 0.2% of the XC7Z020 |
+| Negative test | pulling the loopback jumper drops lock and latches the error LED |
+
+Outstanding: the scope captures for the constant levels, the alternating
+frequency at each rate, and the edge quality. Those go under
+`../measurements/m0_symbol_engine/`.
+
+Simulation:
 
 | Run | Result |
 |---|---|
