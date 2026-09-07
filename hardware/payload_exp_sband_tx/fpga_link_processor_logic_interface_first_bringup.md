@@ -657,37 +657,40 @@ live again only if the deferred phase-modulator architecture is revived.
 - [x] Place-and-route completes and timing is met — **WNS +2.903 ns, WHS
       +0.122 ns** against the 8 ns clock. 112 LUTs and 200 registers, 0.2% of
       the part.
-- [x] The hardware loopback checks at least 1,000,000 symbols with zero errors
-      — **60,000,000 symbols in 60 s at 1 Msym/s, zero errors, zero lock
-      losses.**
-- [ ] Constant zero and constant one measure at the pin as valid 3.3 V LVCMOS
-      levels. *(scope capture outstanding)*
-- [ ] Alternating output frequency is the symbol rate divided by two, at every
-      `rate_sel`. *(scope capture outstanding)*
-- [ ] Edges show no threshold-crossing glitches and overshoot stays inside the
-      device's tolerance. *(scope capture outstanding)*
-- [ ] Scope captures committed under `measurements/m0_symbol_engine/`.
+- [x] The hardware loopback checks at least 1,000,000 symbols with zero errors,
+      **and the count is read back and recorded** — 62,049,047 symbols, zero
+      errors, zero lock losses, read over the UART console rather than inferred.
+      Measured symbol rate 1,000,000 sym/s, 0.0000% from nominal. BER < 4.8e-8
+      at 95% confidence.
+- [x] Constant zero and constant one measure at the pin as valid 3.3 V LVCMOS
+      levels — **0.063 V and 3.338 V**.
+- [x] Alternating output frequency is the symbol rate divided by two, at every
+      `rate_sel` — **0.000% error at all four rates**.
+- [x] The PRBS-7 stream captured at the pin decodes and matches the golden
+      model — phase 19, exact.
+- [x] `symbol_tick` measures **8.000 ns**, one 125 MHz clock.
+- [~] Edges show no threshold-crossing glitches and overshoot stays inside the
+      device's tolerance. **Partial**: no glitches seen, but the edge and
+      overshoot figures were taken on a standard probe ground lead and are
+      measurement-limited. Re-measure with a short ground spring before
+      accepting the overshoot number.
+- [x] Scope captures committed under `measurements/m0_symbol_engine/captures/`.
 
-#### On trusting the sticky LED
+#### On trusting the sticky LED — superseded
 
-The original criterion demanded the symbol count be *read back*, "not merely
-inferred from an LED that failed to light" — and what was actually run is a
-sticky error latch observed over a measured minute. That is defensible here,
-for two specific reasons, and it is worth being precise about why rather than
-quietly relaxing the bar:
+An earlier revision of this document argued at some length that observing a
+sticky error latch over a measured minute was an acceptable substitute for
+reading the count, on the grounds that the rate is exact and the negative case
+had been demonstrated by pulling the jumper.
 
-1. **The count is computed, not estimated.** The symbol rate is 125 MHz divided
-   by exactly 125, from a crystal, so 60 s is 60,000,000 symbols and not an
-   approximation.
-2. **The negative case was demonstrated.** Pulling the loopback jumper makes
-   `led[2]` go dark and `led[3]` latch. An indicator that has never been seen
-   to trip is not evidence; one that has been made to trip on demand is. That
-   test is what converts a dark LED from an absence of information into a
-   measurement.
+That argument is now moot rather than merely weakened: the UART console reads
+`bit_count`, `error_count` and `loss_count` directly, and the run above is a
+counted one. The reasoning is left here only as a record that the criterion was
+softened before it was met, which is worth noticing when the next criterion
+starts to look inconvenient.
 
-The remaining gap is real but narrow: `bit_count` and `error_count` are still
-not readable, so a *partial* failure late in a long run cannot be quantified,
-only detected. Closing that is the first job of the UART readout.
+The jumper-pull test remains valuable and should stay in the procedure — an
+indicator never seen to trip is not evidence, whatever else is being measured.
 
 ### Dormant — revive only with the phase-modulator architecture
 

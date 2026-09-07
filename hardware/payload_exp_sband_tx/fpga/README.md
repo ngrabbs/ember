@@ -276,14 +276,19 @@ Hardware, Arty Z7-20, 2026-09-07:
 
 | | |
 |---|---|
-| Loopback run | **60,000,000 symbols at 1 Msym/s — zero errors, zero lock losses** |
+| Loopback run | **62,049,047 symbols counted at 1 Msym/s — zero errors, zero lock losses** |
+| Measured rate | 1,000,000 sym/s — 0.0000% from nominal |
+| BER bound | < 4.8 × 10⁻⁸ at 95% confidence |
 | Timing | WNS +2.903 ns, WHS +0.122 ns against the 8 ns clock |
 | Utilisation | 112 LUTs, 200 registers — 0.2% of the XC7Z020 |
 | Negative test | pulling the loopback jumper drops lock and latches the error LED |
 
+Counters are read over the UART console on Pmod JB — see
+`../measurements/m0_symbol_engine/` for the raw console output and the
+arithmetic.
+
 Outstanding: the scope captures for the constant levels, the alternating
-frequency at each rate, and the edge quality. Those go under
-`../measurements/m0_symbol_engine/`.
+frequency at each rate, and the edge quality.
 
 Simulation:
 
