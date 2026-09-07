@@ -94,6 +94,15 @@ module prbs7_check #(
     assign match     = (rx_bit == predicted);
     assign locked    = (state == LOCKED);
 
+    // An all-zero shift register satisfies the prediction recurrence trivially
+    // (0 = 0 XOR 0), so without this guard a stuck-low input locks the checker
+    // and reports zero errors - the one false pass a bit-error counter must
+    // never give. The guard is exact rather than heuristic: the longest run of
+    // zeros in PRBS-7 is six, so a seven-bit all-zero window cannot occur in a
+    // valid stream and can only mean a dead line.
+    logic sr_all_zero;
+    assign sr_all_zero = (sr == 7'b0);
+
     always_ff @(posedge clk) begin
         if (rst) begin
             state       <= HUNT;
@@ -125,7 +134,13 @@ module prbs7_check #(
                 // Free-run and demand a clean run before trusting the phase.
                 VERIFY: begin
                     sr <= {sr[5:0], predicted};
-                    if (match) begin
+                    if (sr_all_zero) begin
+                        // Stuck-low line, not a phase of the sequence.
+                        sr         <= {sr[5:0], rx_bit};
+                        load_count <= '0;
+                        good_run   <= '0;
+                        state      <= HUNT;
+                    end else if (match) begin
                         if (good_run == LOCK_LAST) begin
                             good_run  <= '0;
                             bucket    <= '0;
@@ -150,7 +165,12 @@ module prbs7_check #(
                     sr        <= {sr[5:0], predicted};
                     bit_count <= bit_count + 1'b1;
 
-                    if (match) begin
+                    if (sr_all_zero) begin
+                        sr         <= {sr[5:0], rx_bit};
+                        load_count <= '0;
+                        loss_count <= loss_count + 1'b1;
+                        state      <= HUNT;
+                    end else if (match) begin
                         if (decay_run == DECAY_LAST) begin
                             decay_run <= '0;
                             bucket    <= '0;

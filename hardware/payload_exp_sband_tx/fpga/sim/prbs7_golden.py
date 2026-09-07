@@ -104,7 +104,12 @@ class Prbs7Checker:
                 self.state = VERIFY
 
         elif self.state == VERIFY:
-            if rx == predicted:
+            if sr == 0:                       # stuck-low line, see the RTL note
+                self.sr = shift_rx
+                self.load = 0
+                self.good = 0
+                self.state = HUNT
+            elif rx == predicted:
                 self.sr = shift_pred
                 self.good += 1
                 if self.good == self.lock_threshold:
@@ -118,7 +123,12 @@ class Prbs7Checker:
 
         else:  # LOCKED
             self.bits += 1
-            if rx == predicted:
+            if sr == 0:
+                self.sr = shift_rx
+                self.load = 0
+                self.losses += 1
+                self.state = HUNT
+            elif rx == predicted:
                 self.sr = shift_pred
                 self.decay += 1
                 if self.decay == self.decay_bits:
@@ -229,6 +239,17 @@ def checker_model_test():
         errors += _fail(f"B6 counted {chk.errors - base} errors after re-locking")
     else:
         print("  ok  B6 no further errors once re-locked")
+
+    # A stuck-low line must never look like a pass.
+    for label, stream in (("all zeros", [0]*3000), ("all ones", [1]*3000),
+                          ("alternating", [i & 1 for i in range(3000)])):
+        c = Prbs7Checker()
+        for b in stream:
+            c.feed(b)
+        if c.locked:
+            errors += _fail(f"B7 checker locked on a constant {label} stream")
+        else:
+            print(f"  ok  B7 never locks on {label}")
 
     # How quickly a slip actually trips the bucket, averaged over phases. This
     # is the number that sets the 2000-bit allowance in the testbench.

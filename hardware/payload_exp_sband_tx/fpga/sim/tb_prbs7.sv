@@ -48,14 +48,15 @@ module tb_prbs7;
 
     logic        chk_rst = 1'b1;
     logic        chk_en  = 1'b0;
-    logic        invert  = 1'b0;
+    logic        invert    = 1'b0;
+    logic        stuck_low = 1'b0;   // simulate a dead loopback line
     logic        rx_bit;
     logic        locked;
     logic [47:0] bit_count;
     logic [31:0] error_count;
     logic [15:0] loss_count;
 
-    assign rx_bit = gen_bit ^ invert;
+    assign rx_bit = stuck_low ? 1'b0 : (gen_bit ^ invert);
 
     prbs7_gen u_gen (
         .clk     (clk),
@@ -273,6 +274,15 @@ module tb_prbs7;
         check(error_count == err_base,
               $sformatf("B6c no further errors once re-locked (delta=%0d)",
                         error_count - err_base));
+
+        // B7 - a stuck-low line must never look like a pass. All zeros
+        // satisfies the prediction recurrence trivially, so without the
+        // all-zero guard the checker locks and reports no errors.
+        stuck_low = 1'b1;
+        chk_rst   = 1'b1; run_bits(4);
+        chk_rst   = 1'b0; run_bits(3000);
+        check(!locked, "B7 never locks on a stuck-low (all zeros) line");
+        stuck_low = 1'b0;
 
         // -------------------------------------------------------------------
         $display("");
