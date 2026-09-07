@@ -80,7 +80,7 @@ VERILATOR_TB_OPTS := $(VERILATOR_OPTS) -Wno-STMTDLY -Wno-PROCASSINIT -Wno-BLKSEQ
 YOSYS_OPTS       := -e "no driver"
 YOSYS_SYNTH_OPTS := -device $(DEVICE) -abc9
 
-.PHONY: help golden vectors lint sim sim-prbs sim-tx sim-uart sim-long waves gtkwave ascii count synth push bitstream program check clean tools
+.PHONY: help golden vectors lint sim sim-prbs sim-tx sim-uart sim-spi sim-long waves gtkwave ascii count synth push bitstream program check clean tools
 
 help:
 	@sed -n '2,$$ { /^# ----/q; s/^# \{0,1\}//; p; }' Makefile
@@ -124,6 +124,8 @@ lint:
 	$(VERILATOR) --lint-only $(VERILATOR_TB_OPTS) $(DEFINES) --top-module tb_tx_pattern_source $(SRC) $(SIMDIR)/tb_tx_pattern_source.sv
 	@echo "=== lint: tb_uart_console ==="
 	$(VERILATOR) --lint-only $(VERILATOR_TB_OPTS) $(DEFINES) --top-module tb_uart_console $(SRC) $(SIMDIR)/tb_uart_console.sv
+	@echo "=== lint: tb_spi_master ==="
+	$(VERILATOR) --lint-only $(VERILATOR_TB_OPTS) $(DEFINES) --top-module tb_spi_master $(SRC) $(SIMDIR)/tb_spi_master.sv
 	@echo "=== lint: top_arty_z7 ==="
 	$(VERILATOR) --lint-only $(VERILATOR_OPTS) $(DEFINES) --top-module top_arty_z7 $(SRC)
 	@echo "=== lint clean ==="
@@ -166,7 +168,17 @@ sim-uart: $(BUILD)/tb_uart_console.vvp
 	$(call need,$(VVP))
 	@$(VVP) $(BUILD)/tb_uart_console.vvp $(VVP_OPTS)
 
-sim: sim-prbs sim-tx sim-uart
+$(BUILD)/tb_spi_master.vvp: $(SRC) $(SIMDIR)/tb_spi_master.sv $(MAKEFILE_LIST) | $(BUILD)
+	$(call need,$(VERILATOR))
+	$(call need,$(IVERILOG))
+	@$(VERILATOR) --lint-only $(VERILATOR_TB_OPTS) $(DEFINES) --top-module tb_spi_master $(SRC) $(SIMDIR)/tb_spi_master.sv
+	$(IVERILOG) $(IVERILOG_OPTS) $(DEFINES) $(IVEXTRA) -o $@ -s tb_spi_master $(SRC) $(SIMDIR)/tb_spi_master.sv
+
+sim-spi: $(BUILD)/tb_spi_master.vvp
+	$(call need,$(VVP))
+	@$(VVP) $(BUILD)/tb_spi_master.vvp $(VVP_OPTS)
+
+sim: sim-prbs sim-tx sim-uart sim-spi
 
 # The .vvp files are removed on both sides so that a wave build is never
 # silently reused by a later plain `make sim`, and vice versa - IVEXTRA is not
