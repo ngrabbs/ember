@@ -33,11 +33,11 @@
 module prbs7_gen #(
     parameter logic [6:0] SEED = 7'h7f
 ) (
-    input  logic       clk,
-    input  logic       rst,      // synchronous, active high
-    input  logic       en,       // advance one symbol when high
-    output logic       bit_o,    // current output bit, valid before the shift
-    output logic [6:0] state_o   // register state, for debug and simulation
+    input  wire        clk,
+    input  wire        rst,      // synchronous, active high
+    input  wire        en,       // advance one symbol when high
+    output wire        bit_o,    // current output bit, valid before the shift
+    output wire  [6:0] state_o   // register state, for debug and simulation
 );
 
     logic [6:0] state;

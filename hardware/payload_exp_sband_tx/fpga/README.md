@@ -19,6 +19,8 @@ make check      # golden + lint + both testbenches
 make sim-long   # the M0 gate: 1,000,000 symbols, zero errors
 make waves      # FST traces for GTKWave
 make gtkwave    # open the traces in GTKWave
+make bitstream  # Vivado build on the m75q host, bitstream comes back
+make program    # load it over USB-JTAG
 make ascii      # render the symbol stream in the terminal - no display needed
 make tools      # install notes if something is missing
 ```
@@ -52,6 +54,9 @@ clean `-Wall` with no suppressions except one documented empty debug port.
 | `rtl/prbs7_gen.sv` | PRBS-7 generator, x^7 + x^6 + 1 |
 | `rtl/prbs7_check.sv` | Free-running PRBS-7 checker with lock detection and error counting |
 | `rtl/tx_pattern_source.sv` | Symbol-tick divider, pattern selector, registered output, buffer enable |
+| `rtl/top_arty_z7.sv` | Arty Z7-20 bench top: switches, buttons, LEDs, Pmod, loopback |
+| `constraints/arty_z7_20.xdc` | Pins from Digilent's official master XDC |
+| `vivado/` | `build.tcl`, `program.tcl`, and the container runner |
 | `sim/prbs7_golden.py` | Golden model of the sequence, plus a model of the checker |
 | `sim/tb_prbs7.sv` | Sequence properties and checker behaviour |
 | `sim/tb_tx_pattern_source.sv` | Symbol timing, patterns, output registration, loopback |
@@ -180,6 +185,62 @@ million-symbol run finishes in seconds. Only the ratio matters to the checks.
 | `01` | constant one | DC high level and drive |
 | `10` | alternating | Symbol rate — measures as half the symbol rate on a scope |
 | `11` | PRBS-7 | Transitions, and automated error counting |
+
+---
+
+## On the bench — Arty Z7-20
+
+`rtl/top_arty_z7.sv` wraps the symbol engine with what the board actually has.
+
+| Control | Function |
+|---|---|
+| `sw[1:0]` | pattern: `00` zero · `01` one · `10` alternating · `11` PRBS-7 |
+| `btn[0]` | reset (a power-on reset also holds for ~2 µs after configuration) |
+| `btn[1]` | press to advance the rate: 1k → 10k → 100k → 1M → 1k |
+| `btn[2]` | hold to deassert `tx_enable` — exercises the disable/enable path |
+| `btn[3]` | clear the sticky error latch |
+
+| LED | Meaning |
+|---|---|
+| `led[1:0]` | current `rate_sel` |
+| `led[2]` | `prbs_locked` |
+| `led[3]` | sticky: at least one bit error **or lock loss** since last cleared |
+
+| Pmod JA | Signal |
+|---|---|
+| pin 1 | `tx_symbol` — put the scope probe here |
+| pin 2 | `symbol_tick` — trigger on this; one clock wide, marks the first clock of each symbol |
+| pin 3 | `tx_oe_n` |
+| pin 4 | `tx_loopback` — **jumper from pin 1** to close the loop |
+
+### The loopback sample point matters
+
+This is the detail most likely to waste a bench session. The returned symbol is
+delayed by the output register, two pad crossings, the jumper wire and a
+two-flop synchroniser — roughly three clocks. Enabling the checker on
+`symbol_tick` itself would latch the *previous* symbol every time and the
+checker would never lock, which looks exactly like a broken design.
+
+So the checker is enabled by `symbol_tick` delayed by `SAMPLE_DELAY` clocks,
+default 8. That is comfortably past the round trip and comfortably inside the
+shortest symbol — 125 clocks at 1 Msym/s. If the loop is ever extended with a
+long cable or an external buffer, raise `SAMPLE_DELAY`, and keep it below the
+clocks-per-symbol of the fastest rate in use.
+
+### Build and program
+
+Vivado 2024.2 runs in a container on **m75q (192.168.1.252)**. `make bitstream`
+pushes the sources there, builds in non-project mode — no `.xpr`, so nothing can
+drift out of step with the repository — and brings the bitstream and reports
+back into `build/vivado/`. The build **fails on negative slack** rather than
+shipping a bitstream that misses timing.
+
+```bash
+make bitstream    # synthesise, implement, write the bitstream
+make program      # hw_server + JTAG, loads it onto the board
+```
+
+Override `VIVADO_HOST` and `VIVADO_DIR` if the host changes.
 
 ---
 

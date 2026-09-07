@@ -12,6 +12,8 @@
 #   make gtkwave    open the traces in GTKWave
 #   make ascii      render the symbol stream in the terminal, no display needed
 #   make check      golden + lint + sim
+#   make bitstream  build the Arty Z7-20 bitstream (Vivado, on the m75q host)
+#   make program    load the bitstream over USB-JTAG
 #   make tools      how to install what is missing
 #
 # Target board is the Digilent Arty Z7 (Zynq-7000) as of 2026-09-07; synthesis
@@ -62,6 +64,10 @@ WAVE_SYMBOLS ?= 400
 # sidesteps it without needing root.
 GUI_HOME := $(CURDIR)/$(BUILD)/.home
 
+# Vivado runs in a container on a separate host; only the bitstream comes back.
+VIVADO_HOST ?= ngrabbs@192.168.1.252
+VIVADO_DIR  ?= vivado-work/ember-payload-fpga
+
 IVERILOG_OPTS := -g2012 -Wall -I$(RTLDIR) $(IV_TECH)
 
 # The RTL is held to a clean -Wall. The two suppressions on the testbench line
@@ -74,7 +80,7 @@ VERILATOR_TB_OPTS := $(VERILATOR_OPTS) -Wno-STMTDLY -Wno-PROCASSINIT -Wno-BLKSEQ
 YOSYS_OPTS       := -e "no driver"
 YOSYS_SYNTH_OPTS := -device $(DEVICE) -abc9
 
-.PHONY: help golden vectors lint sim sim-prbs sim-tx sim-long waves gtkwave ascii count synth check clean tools
+.PHONY: help golden vectors lint sim sim-prbs sim-tx sim-long waves gtkwave ascii count synth push bitstream program check clean tools
 
 help:
 	@sed -n '2,$$ { /^# ----/q; s/^# \{0,1\}//; p; }' Makefile
@@ -198,6 +204,28 @@ synth: $(SRC) $(MAKEFILE_LIST) | $(BUILD) $(LOGS)
 	$(YOSYS) $(YOSYS_OPTS) -q -l $(LOGS)/$(TOP)_synth.log \
 	  -p 'read_verilog -DSYNTHESIS $(DEFINES) -I$(RTLDIR) -sv $(SRC); synth_ice40 $(YOSYS_SYNTH_OPTS) -top $(TOP) -json $(BUILD)/$(TOP).json'
 	@echo "=== netlist: $(BUILD)/$(TOP).json ==="
+
+# ---------------------------------------------------------------------------
+# Hardware: Arty Z7-20 via Vivado 2024.2 in the container on $(VIVADO_HOST).
+# Sources are pushed, the build runs there, and the bitstream and reports come
+# back into build/vivado/. Nothing about the simulation flow depends on this.
+# ---------------------------------------------------------------------------
+push:
+	@ssh $(VIVADO_HOST) 'mkdir -p $(VIVADO_DIR)'
+	@rsync -az --delete \
+	   --exclude 'build/' --exclude 'logs/' --exclude '__pycache__/' \
+	   ./ $(VIVADO_HOST):$(VIVADO_DIR)/
+
+bitstream: push
+	@ssh $(VIVADO_HOST) 'cd $(VIVADO_DIR) && ./vivado/build.sh'
+	@mkdir -p $(BUILD)/vivado
+	@rsync -az $(VIVADO_HOST):$(VIVADO_DIR)/build/vivado/ $(BUILD)/vivado/
+	@echo ""
+	@grep -E 'WNS|Slack' $(BUILD)/vivado/timing_summary.rpt 2>/dev/null | head -3 || true
+	@echo "  bitstream: $(BUILD)/vivado/top_arty_z7.bit"
+
+program: push
+	@ssh $(VIVADO_HOST) 'cd $(VIVADO_DIR) && ./vivado/build.sh program'
 
 check: golden lint sim
 

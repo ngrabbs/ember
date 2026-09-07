@@ -57,11 +57,11 @@ module tx_pattern_source #(
     parameter logic [6:0]  PRBS_SEED   = 7'h7f,
     parameter logic        IDLE_SYMBOL = 1'b0
 ) (
-    input  logic       clk,
-    input  logic       rst,          // synchronous, active high
-    input  logic       tx_enable,    // logical permission to transmit
-    input  logic [1:0] pattern_sel,  // 00 zero, 01 one, 10 alternating, 11 PRBS-7
-    input  logic [1:0] rate_sel,     // selects RATE_0 .. RATE_3
+    input  wire        clk,
+    input  wire        rst,          // synchronous, active high
+    input  wire        tx_enable,    // logical permission to transmit
+    input  wire  [1:0] pattern_sel,  // 00 zero, 01 one, 10 alternating, 11 PRBS-7
+    input  wire  [1:0] rate_sel,     // selects RATE_0 .. RATE_3
     output logic       tx_symbol,    // registered binary symbol
     output logic       tx_oe_n,      // active-low external buffer enable
     output logic       symbol_tick   // one cycle, marks the first clock of a symbol

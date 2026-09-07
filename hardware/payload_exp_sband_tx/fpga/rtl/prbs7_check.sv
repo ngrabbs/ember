@@ -47,11 +47,11 @@ module prbs7_check #(
     parameter int unsigned ERR_COUNT_W    = 32,
     parameter int unsigned LOSS_COUNT_W   = 16
 ) (
-    input  logic                    clk,
-    input  logic                    rst,         // synchronous, active high
-    input  logic                    en,          // rx_bit is valid this cycle
-    input  logic                    rx_bit,
-    output logic                    locked,
+    input  wire                     clk,
+    input  wire                     rst,         // synchronous, active high
+    input  wire                     en,          // rx_bit is valid this cycle
+    input  wire                     rx_bit,
+    output wire                     locked,
     output logic [BIT_COUNT_W-1:0]  bit_count,   // bits checked while locked
     output logic [ERR_COUNT_W-1:0]  error_count, // mismatches while locked
     output logic [LOSS_COUNT_W-1:0] loss_count   // lock-loss events
