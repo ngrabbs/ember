@@ -143,9 +143,17 @@ revived.
 
 **M0 is verified in simulation** — Verilator-lint clean, both testbenches
 passing, and the gate met at 1,000,000 symbols with zero errors. What remains
-of M0 is the hardware half: a verified pin constraint file, a bitstream, and
-the scope captures. See [`fpga/README.md`](fpga/README.md) for results and the
-toolchain of record.
+of M0 is the hardware half: constraints, a bitstream, and the captures. See
+[`fpga/README.md`](fpga/README.md) for results and the toolchain of record.
+
+> **Platform change, 2026-09-07.** The IceZero is dead — a failed buck regulator
+> and a hard short on its 3.3 V rail, caused by a generic USB-serial cable
+> connected to J3 with its VCC wire attached. The payload moves to a **Digilent
+> Arty Z7**, which brings USB-JTAG and USB-UART on one cable and removes that
+> failure mode entirely. The RTL and the whole simulation flow are unaffected
+> and already re-verified at the Arty's 125 MHz. Synthesis moves from
+> yosys/nextpnr to **Vivado 2024.2**. Full record in the
+> [bring-up document](fpga_link_processor_logic_interface_first_bringup.md).
 
 M3 is the milestone that matters. Seeing the carrier flip phase on a scope is
 the proof that the FPGA is generating its own BPSK.
@@ -214,15 +222,11 @@ These are short because the scope is narrow.
 
 ## Open items
 
-Settled 2026-09-06: an IceZero, a Raspberry Pi and an FTDI TTL-232R-3.3V cable
-are all on hand, so nothing blocks hardware M0. The bench control and readout
-path is **UART over J3**. The board-facts table is filled in from the pinout
-document and awaits only a physical check.
-
-- [ ] Confirm the board in hand is TE0876-02 rev2 and matches the pinout document.
-- [ ] Confirm J3 TX/RX direction before blaming the RTL for a silent UART.
+- [ ] Confirm the Arty Z7 variant in hand — Z7-10 (XC7Z010) or Z7-20 (XC7Z020).
+- [ ] Pull Digilent's master XDC and write `constraints/arty_z7.xdc`.
+- [ ] Rebuild the M0 bitstream under Vivado and re-run the hardware gate.
 - [ ] Inventory the RF half: DAC902 or DAC904 (bare or module), mixer, filters,
-      SDR, spectrum analyzer. The converter choice now waits on this — the
+      SDR, spectrum analyzer. The converter choice waits on this — the
       pin-count argument that decided it turned out to be wrong.
 - [ ] Study the DAC module's output stage and required termination before
       putting a probe on it.

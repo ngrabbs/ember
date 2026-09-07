@@ -1,61 +1,62 @@
 # Constraints
 
-**Still no `.pcf` — but the blocker has moved.**
+**Target changed 2026-09-07: Digilent Arty Z7 (Zynq-7000).**
 
-The pin map is now known. `iceZero-pinout-v5.pdf` (board rev2, doc v7) gives every
-FPGA pin number, and those are recorded in the board-facts table in
+The IceZero is dead — a failed EP53A7HQI buck regulator plus a hard short on its
+3.3 V rail. The full failure record, root cause and the rules adopted afterwards
+are in
 [`../../fpga_link_processor_logic_interface_first_bringup.md`](../../fpga_link_processor_logic_interface_first_bringup.md).
-What is missing is the top-level design the constraints would apply to, and a
-physical confirmation that the board in hand matches the document.
 
-Write `icezero_rev2.pcf` once `rtl/top.sv` exists, and record which pinout
-document revision it came from.
+No `.xdc` is committed yet. Write `arty_z7.xdc` from **Digilent's official master
+XDC** for the board revision in hand rather than transcribing pin names by hand,
+and record which master file it came from.
 
----
+## Signals to constrain
 
-## Planned pin assignment
+| Signal | Notes |
+|---|---|
+| `clk` | 125 MHz board clock. Needs a `create_clock` of 8.000 ns |
+| `rst` | A button, active high, synchronised internally |
+| `tx_enable`, `pattern_sel[1:0]`, `rate_sel[1:0]` | Slide switches and buttons, or UART commands |
+| `tx_symbol` | Pmod pin — the signal to put a scope on |
+| `symbol_tick` | Pmod pin — one clock wide, use it as the scope trigger |
+| `tx_loopback` | Pmod pin, jumpered back from `tx_symbol` |
+| `prbs_locked` | LED |
+| `uart_tx`, `uart_rx` | Built-in USB-UART, no external cable |
 
-| Signal | FPGA pin | Where |
-|---|---:|---|
-| `clk` | 49 | `IOB_81_GBIN5` — 100 MHz SiT8008, on a global buffer input |
-| `btn` | 63 | `IOB_103_CBSEL0` — the only button |
-| `led1` | 110 | `IOT_168` |
-| `led2` | 93 | `IOR_140_GBIN3` |
-| `led3` | 94 | `IOR_141_GBIN2` |
-| `uart_tx` | 122 | J3 `IOT_190`, FPGA output |
-| `uart_rx` | 124 | J3 `IOT_191`, FPGA input |
-| `uart_cts` | 119 | J3 `IOT_178`, FPGA output, driven low |
-| `tx_symbol` | 139 | PMOD P1, `IOT_217` |
-| `tx_oe_n` | 137 | PMOD P1, `IOT_215` |
-| `tx_loopback` | 135 | PMOD P1, `IOT_213` |
-| `symbol_tick` | 130 | PMOD P1, `IOT_206` — scope trigger |
+Confirm the variant before writing anything: **Z7-10 is XC7Z010-1CLG400C**,
+**Z7-20 is XC7Z020-1CLG400C**. They share a footprint but not a part number.
 
-P2, P3 and P4 are deliberately left free: 24 signal pins, which is where the M1
-DAC bus goes.
+## Why this board
+
+USB-JTAG and USB-UART are built in on a single cable. There is no separate
+serial cable to mis-wire and no 5 V pin sitting beside 3.3 V logic — which is
+exactly what killed the IceZero.
 
 ## Build flow
 
-From the vendor's notes on the pinout sheet, adapted to this design:
+Vivado 2024.2 runs in a Docker container on **m75q (192.168.1.252)**, with the
+Xilinx tree bind-mounted read-only and USB passed through for JTAG. JTAG through
+that container is already proven working.
 
 ```bash
-yosys     -p 'synth_ice40 -top top -json top.json' rtl/*.sv
-nextpnr-ice40 --hx8k --package tq144:4k \
-              --json top.json --pcf constraints/icezero_rev2.pcf \
-              --asc top.asc --freq 100
-icepack   top.asc top.bin
-icezprog  top.bin          # on the Raspberry Pi
+# on m75q
+~/vivado-docker/vivado-run.sh vivado -mode batch -source build.tcl
+
+# inside the container, to program:
+hw_server &
+vivado -mode tcl
+  open_hw_manager; connect_hw_server; open_hw_target
+  current_hw_device [lindex [get_hw_devices] 0]
+  set_property PROGRAM.FILE design.bit [current_hw_device]
+  program_hw_devices
 ```
 
-Note `--hx8k --package tq144:4k`: the part is marked HX4K but carries an HX8K
-die, and this is the combination the vendor documents. `icezprog` bitbangs the
-configuration pins from the Pi's GPIO header — the board is a Pi HAT and has no
-other documented programming path.
+Launcher and notes: `/workspace/notes/home_lab/vivado-docker/`.
 
 ## Timing
 
-A trial place-and-route of `tx_pattern_source` against this pin plan reports
-**119.45 MHz, passing at 100 MHz**, using 50 of 7680 logic cells. The symbol
-engine therefore runs directly off the board oscillator; no PLL and no clock
-division are needed. Worth re-checking as the design grows — M1 adds an NCO, a
-sine table and a 12-bit output bus, and 15–19% margin is comfortable rather than
-generous.
+Under the old iCE40 target the symbol engine closed at 119 MHz against a 100 MHz
+clock. The Arty's clock is 125 MHz and the Zynq's fabric is far faster, so
+timing is not expected to be a constraint — but the Vivado timing report
+replaces that number and should be recorded here once it exists.

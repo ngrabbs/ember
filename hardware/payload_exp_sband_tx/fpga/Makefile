@@ -9,10 +9,14 @@
 #   make sim        both testbenches
 #   make sim-long   the M0 gate: 1,000,000 symbols with zero errors
 #   make waves      simulate with FST traces for GTKWave
-#   make count      iCE40 resource usage, per module
-#   make synth      synthesise to a JSON netlist
+#   make gtkwave    open the traces in GTKWave
+#   make ascii      render the symbol stream in the terminal, no display needed
 #   make check      golden + lint + sim
 #   make tools      how to install what is missing
+#
+# Target board is the Digilent Arty Z7 (Zynq-7000) as of 2026-09-07; synthesis
+# and programming run under Vivado 2024.2 in the m75q container. The count and
+# synth targets below are iCE40 legacy and no longer describe the target.
 #
 # Every simulation target lints with Verilator before compiling with Icarus.
 # Verilator's diagnostics are far better, so it should be the first thing to
@@ -50,7 +54,13 @@ endif
 # IceZero carries an iCE40 HX part. Confirm the density and package against the
 # board before this matters - see constraints/README.md.
 DEVICE  ?= hx
-SYMBOLS ?= 1000000
+SYMBOLS      ?= 1000000
+WAVE_SYMBOLS ?= 400
+
+# The oss-cad-suite wrappers write a fontconfig file under $HOME/.config, which
+# fails when that directory is not writable. Pointing HOME at the build tree
+# sidesteps it without needing root.
+GUI_HOME := $(CURDIR)/$(BUILD)/.home
 
 IVERILOG_OPTS := -g2012 -Wall -I$(RTLDIR) $(IV_TECH)
 
@@ -64,7 +74,7 @@ VERILATOR_TB_OPTS := $(VERILATOR_OPTS) -Wno-STMTDLY -Wno-PROCASSINIT -Wno-BLKSEQ
 YOSYS_OPTS       := -e "no driver"
 YOSYS_SYNTH_OPTS := -device $(DEVICE) -abc9
 
-.PHONY: help golden vectors lint sim sim-prbs sim-tx sim-long waves count synth check clean tools
+.PHONY: help golden vectors lint sim sim-prbs sim-tx sim-long waves gtkwave ascii count synth check clean tools
 
 help:
 	@sed -n '2,$$ { /^# ----/q; s/^# \{0,1\}//; p; }' Makefile
@@ -149,8 +159,32 @@ waves:
 	@echo "  FST traces in $(BUILD)/ - view with: gtkwave $(BUILD)/tb_tx_pattern_source.fst"
 
 # ---------------------------------------------------------------------------
-# Synthesis. Place-and-route and a bitstream wait on a verified pin constraint
-# file - see constraints/README.md. These two targets need none.
+# Waveform viewing
+# ---------------------------------------------------------------------------
+$(BUILD)/wave.fst: $(SRC) $(SIMDIR)/tb_tx_pattern_source.sv $(MAKEFILE_LIST) | $(BUILD)
+	$(call need,$(IVERILOG))
+	@$(IVERILOG) $(IVERILOG_OPTS) $(DEFINES) -DWAVES -o $(BUILD)/wave.vvp \
+	   -s tb_tx_pattern_source $(SRC) $(SIMDIR)/tb_tx_pattern_source.sv
+	@$(VVP) $(BUILD)/wave.vvp -fst +symbols=$(WAVE_SYMBOLS) > /dev/null
+	@mv -f $(BUILD)/tb_tx_pattern_source.fst $@
+
+$(BUILD)/wave.vcd: $(BUILD)/wave.fst
+	@fst2vcd $< -o $@ 2>/dev/null
+
+# Sample tx_symbol on every symbol_tick, draw it, and check the captured bits
+# against the golden PRBS-7 at all 127 phases. Needs no display.
+ascii: $(BUILD)/wave.vcd
+	@$(PYTHON) $(SIMDIR)/ascii_wave.py $< --last 56
+
+gtkwave: $(BUILD)/wave.fst
+	@mkdir -p $(GUI_HOME)
+	@HOME=$(GUI_HOME) gtkwave $(BUILD)/wave.fst
+
+# ---------------------------------------------------------------------------
+# Synthesis - iCE40 LEGACY.
+#
+# Kept for reference only. The target board is now the Arty Z7 and synthesis
+# runs under Vivado 2024.2 in the m75q container; see constraints/README.md.
 # ---------------------------------------------------------------------------
 count: $(SRC) $(MAKEFILE_LIST) | $(LOGS)
 	$(call need,$(YOSYS))

@@ -151,6 +151,25 @@ a spurious-free dynamic range measurement ever becomes a deliverable.
 
 The measurement worksheets in that document remain useful as-is; the DAC bus is measured the same way a buffered logic output is.
 
+### Platform change: IceZero to Arty Z7 (2026-09-07)
+
+The IceZero failed in hardware — a dead EP53A7HQI buck regulator plus a hard
+short on the 3.3 V rail, traced to a generic USB-serial cable connected to J3
+with its VCC wire attached. The payload moves to a Digilent Arty Z7.
+
+**This does not reopen the architecture decision.** The trade selected
+FPGA-generated low-IF BPSK into a DAC on the strength of observability, HDL
+content and a deliberately low sample rate — none of which depend on which FPGA
+runs the logic. The RTL is plain SystemVerilog with no vendor primitives and
+re-simulates unchanged at the Arty's 125 MHz, where all four symbol rates still
+divide exactly.
+
+What the change does affect is downstream: the toolchain becomes Vivado 2024.2,
+constraints become `.xdc`, and the M1 DAC interface will be planned against the
+Arty's Pmod and shield connectors rather than the IceZero's four PMODs. The
+Zynq's PS also opens an option the iCE40 never had — a hard ARM core for control
+and readout — which should be considered at M1 rather than assumed now.
+
 ### The A20 oscillator moves off the critical path
 
 The surplus Tektronix hybrid runs near 2.2 GHz. The selected RF plan, if it is ever built, needs a 2380 MHz LO. The A20 does not reach it, and forcing the plan to fit the A20 would put the output near 2.18–2.25 GHz and require an IF around 200 MHz — beyond a DAC902's sample rate in first Nyquist, and a substantially harder reconstruction problem.

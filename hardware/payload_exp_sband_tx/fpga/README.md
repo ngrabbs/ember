@@ -17,9 +17,22 @@ cd hardware/payload_exp_sband_tx/fpga
 make golden     # Python only - no HDL toolchain needed
 make check      # golden + lint + both testbenches
 make sim-long   # the M0 gate: 1,000,000 symbols, zero errors
-make count      # iCE40 resource usage, per module
 make waves      # FST traces for GTKWave
+make gtkwave    # open the traces in GTKWave
+make ascii      # render the symbol stream in the terminal - no display needed
 make tools      # install notes if something is missing
+```
+
+`make ascii` is the fastest way to see the design actually working. It samples
+`tx_symbol` on every `symbol_tick` and draws it, then checks the captured bits
+against the golden PRBS-7 at all 127 phases:
+
+```text
+  tx_symbol  ────────┐ ┌───┐     ┌───┐ ┌─┐   ┌─┐ ┌─────┐ ┌─────┐   ┌───┐
+                     └─┘   └─────┘   └─┘ └───┘ └─┘     └─┘     └───┘
+             1 1 1 1 0 1 1 0 0 0 1 1 0 1 0 0 1 0 1 1 1 0 1 1 1 0 0 1 1
+
+  ✓ matches the golden PRBS-7 sequence at phase 90
 ```
 
 `make golden` is worth running first on any machine. It needs nothing but
@@ -42,7 +55,8 @@ clean `-Wall` with no suppressions except one documented empty debug port.
 | `sim/prbs7_golden.py` | Golden model of the sequence, plus a model of the checker |
 | `sim/tb_prbs7.sv` | Sequence properties and checker behaviour |
 | `sim/tb_tx_pattern_source.sv` | Symbol timing, patterns, output registration, loopback |
-| `constraints/` | Deliberately empty until the board is identified — see its README |
+| `sim/ascii_wave.py` | Renders the symbol stream as a waveform in the terminal, no GUI needed |
+| `constraints/` | Arty Z7 pin plan and build flow — see its README |
 
 ---
 
@@ -242,8 +256,15 @@ verified pin constraint file.
 
 ### Toolchain of record
 
+Simulation and lint run locally from oss-cad-suite. **Synthesis, place-and-route
+and programming now run under Vivado 2024.2**, in a Docker container on the host
+m75q (192.168.1.252), with the Xilinx tree bind-mounted read-only and USB passed
+through for JTAG. Launcher and notes live in
+`/workspace/notes/home_lab/vivado-docker/`.
+
 | Tool | Version |
 |---|---|
+| Vivado | 2024.2 (Docker on m75q) |
 | oss-cad-suite | 20260906 |
 | Icarus Verilog | 14.0 (devel) s20260301-403-g5ab23063f |
 | Verilator | 5.053 devel rev v5.052-22-g7cf8c5cca |
@@ -256,28 +277,23 @@ nextpnr-ice40, icestorm and gtkwave all at consistent versions.
 
 ## Next
 
-The open questions were settled on 2026-09-06. An IceZero, a Raspberry Pi and an
-FTDI TTL-232R-3.3V cable are all on hand; bench control and readout go over
-**UART on J3**; and the three bring-up criteria that assumed an external buffer
-have been amended, because under the selected architecture `tx_symbol` never
-leaves the FPGA. The pin plan and build flow are in
-[`constraints/README.md`](constraints/README.md).
+**Platform changed 2026-09-07: IceZero to Arty Z7.** The IceZero died — a failed
+buck regulator and a hard short on its 3.3 V rail. Full record in the
+[bring-up document](../fpga_link_processor_logic_interface_first_bringup.md).
 
-What remains is build work rather than open questions:
+Nothing above this line changed. The RTL has no vendor primitives, and it has
+been re-simulated at the Arty's **125 MHz** and passes unmodified — all four
+symbol rates still divide the board clock exactly, so the exact-divisor
+elaboration check still holds with only `CLOCK_HZ` changed.
 
-- [ ] `rtl/uart_tx.sv`, `rtl/uart_rx.sv` and a small command/status core — set
-      pattern, rate and enable by typed command; print `prbs_locked`,
-      `bit_count` and `error_count` on demand.
-- [ ] `rtl/top.sv` — instantiate the symbol engine and the checker, map the
-      pins, drive the LEDs, and provide reset. The checker's loopback comes back
-      through a PMOD jumper.
-- [ ] `constraints/icezero_rev2.pcf`, then place-and-route and a timing report.
-- [ ] Decide whether to force the output flop into the IO cell (`SB_IO` with
-      `PIN_OUTPUT_REGISTERED`) or leave the placement to nextpnr. It affects how
-      strongly the no-glitch claim holds at the pin rather than in the fabric.
-- [ ] Confirm the board is TE0876-02 rev2, and confirm the J3 TX/RX direction
-      before blaming the RTL for a silent UART.
-- [ ] Load the bitstream and capture the M0 traces: constant high and low,
-      alternating at each rate, PRBS-7. Commit them under `../measurements/`.
-- [ ] Run the hardware gate — 1,000,000 symbols, zero errors — and record the
-      count read back over the UART rather than inferring it from an LED.
+- [ ] Confirm the Arty Z7 variant — Z7-10 (XC7Z010) or Z7-20 (XC7Z020).
+- [ ] Pull Digilent's master XDC; write `constraints/arty_z7.xdc`.
+- [ ] Change the RTL default `CLOCK_HZ` to 125 MHz once the variant is confirmed.
+- [ ] Add Vivado synthesis and bitstream targets to the Makefile, driven through
+      the m75q container.
+- [ ] Route the loopback and `symbol_tick` to Pmod pins; capture on a scope.
+- [ ] Run the hardware gate — 1,000,000 symbols, zero errors — reading the count
+      back over the built-in USB-UART rather than inferring it from an LED.
+
+The iCE40 `count` and `synth` targets in the Makefile are kept but are now
+**legacy**; they no longer describe the target device.

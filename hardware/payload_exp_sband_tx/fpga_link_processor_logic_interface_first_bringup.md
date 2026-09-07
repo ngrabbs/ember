@@ -116,6 +116,94 @@ Do not copy a constraint file for another iCE40 board without verifying every pi
 
 ---
 
+## Platform change: IceZero abandoned, Arty Z7 adopted (2026-09-07)
+
+The IceZero TE0876-02 is **dead and out of the project**.
+
+### What failed
+
+| Finding | Evidence |
+|---|---|
+| 3.3 V rail dead | 300 mV at every PMOD 3.3 V pin |
+| U8 (EP53A7HQI buck) failed | PVIN, AVIN and ENABLE all at 4.8 V, VS0/1/2 strapped, output 310 mV |
+| 3.3 V rail hard-shorted | An external supply hit compliance at both 20 mA and 100 mA |
+
+Two independent faults. Since U8 also feeds U10 (MCP1700) which makes the FPGA's
+1.2 V core, the FPGA and the configuration flash have had no power at all since
+the event — which is why the flash returned `00` to every JEDEC ID request and
+CDONE never rose. **Nothing ever indicated the FPGA or the flash was itself
+damaged**; they were simply never powered. That question is now moot.
+
+### Root cause
+
+A generic USB-serial cable was connected to **J3** with its **VCC wire
+connected**, and the board was powered solely from that cable with the Raspberry
+Pi detached. Two things were wrong:
+
+1. The board's schematic and silkscreen both say **"FTDI TTL-232R-3V3 Only"**,
+   and label J3 for that cable's colours (BLK / ORN / YLW / GRN). The cable used
+   had white and green conductors — not that family — and generic USB-TTL cables
+   commonly signal at 5 V. J3 places a 5 V pin directly beside FPGA I/O rated
+   about 3.6 V absolute maximum.
+2. Connecting a cable's VCC to a board that has its own supply is wrong
+   regardless of the cable.
+
+### Rules adopted
+
+- [ ] **Never connect a USB-serial cable's VCC** to a board that has its own
+      power. GND, TX and RX only.
+- [ ] **Verify the cable signals at 3.3 V** before it touches an FPGA pin. Wire
+      colours are the cheapest tell: a genuine FTDI TTL-232R is
+      black/brown/red/orange/yellow/green and nothing else.
+- [ ] Prefer a connector that carries **no 5 V near 3.3 V logic** at all.
+
+### Replacement: Digilent Arty Z7 (Zynq-7000)
+
+Chosen for reasons that also remove the failure mode above: **USB-JTAG and
+USB-UART are built in on one cable**, so there is no separate serial cable to
+mis-wire and no 5 V pin next to an FPGA input.
+
+What changes, and what does not:
+
+| | Before (IceZero) | After (Arty Z7) |
+|---|---|---|
+| Device | iCE40HX4K-TQ144 | Zynq-7000 (XC7Z010 / XC7Z020) |
+| Synthesis / P&R | yosys + nextpnr-ice40 | **Vivado 2024.2** |
+| Constraints | `.pcf` | `.xdc` |
+| Programming | `icezprog` over Raspberry Pi GPIO | Vivado hardware manager over USB-JTAG |
+| Board clock | 100 MHz | **125 MHz** |
+| Console / readout | FTDI cable on J3, or Pi header | Built-in USB-UART |
+| **RTL** | — | **unchanged** |
+| **Simulation** | — | **unchanged** (Verilator + Icarus) |
+
+The RTL is portable because it contains no iCE40 primitives — plain
+SystemVerilog throughout. It has been re-simulated at 125 MHz and passes
+unmodified. All four symbol rates still divide the board clock exactly:
+
+| Symbol rate | Clocks at 125 MHz |
+|---:|---:|
+| 1 ksym/s | 125,000 |
+| 10 ksym/s | 12,500 |
+| 100 ksym/s | 1,250 |
+| 1 Msym/s | 125 |
+
+So `tx_pattern_source`'s exact-divisor elaboration check still passes with only
+`CLOCK_HZ` changed.
+
+### Toolchain location
+
+Vivado 2024.2 runs in a Docker container on the host **m75q (192.168.1.252)**,
+with the Xilinx tree bind-mounted read-only and USB passed through. JTAG through
+that container is already proven. Launcher and notes:
+`/workspace/notes/home_lab/vivado-docker/`.
+
+The IceZero board-facts table above is retained as a historical record. It is
+no longer the target. An equivalent table for the Arty Z7 is written once the
+board revision is confirmed and Digilent's master XDC is pulled in.
+
+
+---
+
 ## 3. First-Milestone Architecture
 
 ```text
