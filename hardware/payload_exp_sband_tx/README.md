@@ -134,15 +134,22 @@ phase switch that the DAC path would have built in the FPGA.
 | ID | Milestone | Gate |
 |---|---|---|
 | **M0** ✅ | FPGA link processor: symbol timing, pattern selector, PRBS-7, registered output | **Met.** 62,049,047 symbols, zero errors; PRBS decoded from the pin against the golden model; `symbol_tick` measured at 8.000 ns |
-| **M1** | AD9910 bring-up: SPI, PLL lock, a stable CW tone | `PLL_LOCK` asserted and a measured tone at the programmed frequency out of the SMA |
-| **M2** | **BPSK** — `tx_symbol` drives `PROFILE[0]` | Visible 180° carrier phase reversals at symbol boundaries, at a known symbol rate |
+| **M1** ✅ | AD9910 bring-up: SPI, PLL lock, a stable CW tone | **Met 2026-09-08.** `LOCK 1 TMO 0`, SYSCLK 1 GHz from the module's 40 MHz (N=25). Carrier measured at 1, 10 and 50 MHz with 0 ppm error |
+| **M2** ✅ | **BPSK** — `tx_symbol` drives `PROFILE[0]` | **Met 2026-09-08.** Two overlapping carrier phases under PRBS-7 vs a single clean sine under a constant pattern; period stretches to exactly 1.5 T, the signature of a 180° reversal |
 | **M3** | Characterisation | Occupied bandwidth against symbol rate; spectrum on an SDR or analyser; carrier-frequency error |
 | **M4** | Beyond BPSK | QPSK via profiles 0–3, or amplitude shaping via the ASF and OSK path |
 | **M5** | *(optional)* S-band | Mixer to 2.4 GHz, image and LO leakage characterised, into a dummy load |
 
-M2 is the milestone that matters. Seeing the carrier reverse phase on a scope,
-driven by the FPGA's own PRBS-7, is the proof that this is a modulator and not a
-signal generator.
+M2 was the milestone that mattered, and it is **met**. The carrier reverses
+phase on the scope, driven by the FPGA's own PRBS-7 — this is a modulator, not a
+signal generator. Captures in
+[`measurements/m1_dds/`](measurements/m1_dds/): `G_m1_carrier_10MHz_locked.png`,
+`H_bpsk_p0.png` (clean, constant pattern) and `H_bpsk_p3.png` (two phases,
+PRBS-7).
+
+The whole M1 blockage was **one unstrapped pin**: `PWR`, floating, held the
+module off while presenting as a clock fault. It is now in the mandatory strap
+table beside `PD`, which does the same thing.
 
 **M0 is closed on hardware, not just in simulation.** Verilator-lint clean,
 both testbenches passing, and the gate met on the Arty Z7-20 at 62,049,047
@@ -150,9 +157,9 @@ symbols with zero errors — PRBS-7 decoded off the physical pin against the
 golden model. See [`fpga/README.md`](fpga/README.md) for the measured
 utilisation, timing and captures.
 
-M1 is the live milestone. The AD9910 module is proven good on its own demo
-board, and the FPGA-side blocker — an `IO_UPDATE` pulse far narrower than the
-DDS's `SYNC_CLK` period — is fixed in RTL and awaiting a bench run.
+**M1 and M2 are both closed on hardware as of 2026-09-08.** The DDS locks at
+1 GHz off its own crystal and the carrier reverses phase under the FPGA's PRBS-7.
+M3, characterisation, is the live milestone.
 
 ---
 

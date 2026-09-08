@@ -164,6 +164,7 @@ module top_arty_z7 #(
         .valid(u_tx_valid), .ready(u_tx_ready), .tx(jb_uart_tx));
 
     logic [31:0] dds_ftw, dds_cfr3;
+    logic        refclk_en;
     logic        dds_start_cmd, dds_done, dds_timeout;
 
     m0_console u_console (
@@ -174,6 +175,7 @@ module top_arty_z7 #(
         .error_count(error_count), .loss_count(loss_count),
         .dds_lock(dds_pll_lock), .dds_done(dds_done), .dds_timeout(dds_timeout),
         .dds_ftw(dds_ftw), .dds_cfr3(dds_cfr3), .dds_start(dds_start_cmd),
+        .refclk_en(refclk_en),
         .pattern_sel(con_pattern), .rate_sel(con_rate),
         .tx_enable(con_enable), .clear(con_clear));
 
@@ -203,8 +205,20 @@ module top_arty_z7 #(
     // busy is left unread: the console reports done and lock_timeout, which
     // together say everything busy would, and there is no spare LED for it.
     /* verilator lint_off PINCONNECTEMPTY */
+    // The reference pin is TRI-STATED when disabled, never driven low.
+    //
+    // ck_io0 lands on W1's AD9910-side pin, which is the same node the module's
+    // own 40 MHz oscillator drives when W1 is at 2&3. Driving that node low
+    // while the oscillator drives it high is a harder short than the clock
+    // collision this is here to prevent. High-Z is the only safe idle.
+    //
+    // Default is off: running the DDS from its own oscillator is the normal
+    // configuration, and the FPGA has no business on the reference net there.
+    logic refclk_int;
     refclk_gen #(.DIVIDE(REFCLK_DIV)) u_refclk (
-        .clk(clk), .rst(rst), .refclk(dds_refclk));
+        .clk(clk), .rst(rst), .refclk(refclk_int));
+
+    assign dds_refclk = refclk_en ? refclk_int : 1'bz;
 
     ad9910_ctrl #(.CLOCK_HZ(CLOCK_HZ)) u_dds (
         .clk(clk), .rst(rst),

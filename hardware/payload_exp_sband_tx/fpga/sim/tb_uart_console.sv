@@ -52,6 +52,7 @@ module tb_uart_console;
     logic        dds_lock = 1'b1, dds_done = 1'b1, dds_timeout = 1'b0;
     logic [31:0] dds_ftw, dds_cfr3;
     logic        dds_start;
+    logic        refclk_en;
     int          dds_starts = 0;
     always @(posedge clk) if (dds_start) dds_starts++;
 
@@ -63,6 +64,7 @@ module tb_uart_console;
         .error_count(error_count), .loss_count(loss_count),
         .dds_lock(dds_lock), .dds_done(dds_done), .dds_timeout(dds_timeout),
         .dds_ftw(dds_ftw), .dds_cfr3(dds_cfr3), .dds_start(dds_start),
+        .refclk_en(refclk_en),
         .pattern_sel(pattern_sel), .rate_sel(rate_sel),
         .tx_enable(tx_enable), .clear(clear));
 
@@ -151,7 +153,7 @@ module tb_uart_console;
 
         // D2 - banner
         clear_got(); send("?"); settle();
-        expect_string({"EMBER M0 s p0-3 r0-3 e d z k i fXXXXXXXX cXXXXXXXX ? ", 8'h0D, 8'h0A},
+        expect_string({"EMBER M0 s p0-3 r0-3 e d z k i x0-1 fXXXXXXXX cXXXXXXXX ? ", 8'h0D, 8'h0A},
                       "D2 banner is byte-exact");
 
         // D3 - pattern and rate
@@ -198,7 +200,7 @@ module tb_uart_console;
 
         // D9 - DDS status line
         clear_got(); send("k"); settle();
-        expect_string({"DDS LOCK 1 DONE 1 TMO 0 FTW 028F5C29", 8'h0D, 8'h0A},
+        expect_string({"DDS LOCK 1 DONE 1 TMO 0 REF 0 FTW 028F5C29", 8'h0D, 8'h0A},
                       "D9 DDS status line is byte-exact");
 
         // D10 - eight hex digits set the tuning word and trigger a reload
@@ -228,6 +230,24 @@ module tb_uart_console;
         dds_starts = 0;
         send("i"); settle();
         check(dds_starts == 1, $sformatf("D12 i re-runs the DDS bring-up (%0d)", dds_starts));
+
+        // D14 - the reference generator. It must come out of reset OFF: ck_io0
+        // lands on the same node the DDS module's own oscillator drives, so a
+        // default-on reference is a driver collision waiting for someone to
+        // forget a jumper.
+        check(refclk_en == 1'b0, "D14a refclk_en is off after reset");
+        send("x"); send("1"); settle();
+        check(refclk_en == 1'b1, "D14b x1 enables the reference generator");
+        send("x"); send("0"); settle();
+        check(refclk_en == 1'b0, "D14c x0 releases it again");
+        send("x"); send("9"); settle();
+        check(refclk_en == 1'b0, "D14d a malformed argument leaves it off");
+        send("x"); send("1"); settle();
+        clear_got();
+        send("k"); settle();
+        expect_string({"DDS LOCK 1 DONE 1 TMO 0 REF 1 FTW 1234ABCD", 8'h0D, 8'h0A},
+                      "D14e the status line reports REF 1");
+        send("x"); send("0"); settle();
 
         // D8 - every byte in this run framed correctly. A stop bit that is not
         // held for a full bit time shows up here and nowhere else.

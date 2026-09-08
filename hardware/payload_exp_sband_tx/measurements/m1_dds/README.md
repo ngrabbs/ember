@@ -161,3 +161,359 @@ our own driving of the part was correct.
 
 If it locks, `PF0` already carries the symbol stream and the SMA should show
 BPSK immediately.
+
+---
+
+## 2026-09-08 — IO_UPDATE fix programmed; SYNC_CLK still dead
+
+First bench run with the 1 ms `IO_UPDATE` / `MASTER_RESET` widths actually
+loaded onto the board. **The FPGA side is provably healthy and the DDS side has
+not moved.**
+
+Bitstream `top_arty_z7.bit` md5 `5edfb147031405fc9d682f1915f0d5de`, built
+09:22:16 — after the `ad9910_ctrl.sv` fix at 09:20:49, so the wide pulses are in
+it.
+
+`make sanity`:
+
+| Check | Result |
+|---|---|
+| S1 console | PASS |
+| S2a checker locked on loopback | PASS |
+| S2b bit errors | PASS — 0 over 7,757,103 symbols |
+| S2c lock losses | PASS — 0 |
+| S2d symbol rate | PASS — 993,501 sym/s at the 1 Msym/s setting |
+| S3a DDS sequencer completed | PASS — `DONE 1` |
+| S3b PLL lock | **FAIL** — `LOCK 0 TMO 1` |
+
+Configured for the module's own 40 MHz oscillator: `c0538C132`, N = 25,
+40 × 25 = 1 GHz. Note the console commits an eight-digit hex argument and
+starts the sequence itself, so the following `i` is redundant.
+
+### What was measured, and what it does not tell us
+
+**Correction.** The scope probe was on the **SMA OUT port**, not on `SYC`. The
+first write-up of this run read the capture as a dead `SYNC_CLK`; that
+conclusion is withdrawn, because `SYNC_CLK` was never measured.
+
+CH1 on the SMA OUT (10x probe, DC, 1 V/div, 100 ns/div):
+
+| | |
+|---|---|
+| Frequency | none measurable |
+| Vpp | 0.08 V |
+| Vmax / Vmin | 0.84 V / 0.76 V |
+| Vavg | 0.80 V, static |
+
+It does not move during `MASTER_RESET` or across a full register-load sequence.
+Capture: `F_smaout_static_40MHz_ref.png`.
+
+What this establishes: **there is no RF output**, which is consistent with
+`LOCK 0` and nothing more. A static DC level on the DAC output is what an
+unlocked, non-transmitting AD9910 looks like. It does not discriminate between
+no power, no reference clock, a wrong `CFR3`, and a register load that never
+took effect — every one of those produces exactly this trace.
+
+### The measurement that would discriminate
+
+`SYNC_CLK` on the `SYC` pin, which is why the risk table names it first. It is
+SYSCLK/4 and free-runs as soon as the part has power and a reference — no SPI,
+no PLL, no correct configuration required. On the module's own 40 MHz oscillator
+with the PLL unlocked, SYSCLK is the bare reference, so:
+
+| `SYC` reading | Meaning |
+|---|---|
+| **10 MHz** | Part is powered and clocked. The fault is downstream — `CFR3`, the register load, or PLL settings |
+| **Static at a rail (0 V or 3.3 V)** | Powered, but no reference reaching REF_CLK. Look at W1 and the oscillator |
+| **Static mid-rail (~0.8 V)** | Undriven node — no power, or the probe is not on the pin |
+
+Not yet measured.
+
+### Bench measurements, 2026-09-08
+
+| Point | Reading | Verdict |
+|---|---|---|
+| `PD` (header, 3rd bottom row) | **0.000 V** | Strap present, part enabled. Note this proves the *strap*, not that the die has power — a wire to ground reads 0 V either way |
+| Chip pin 2 (core rail) | **1.792 V** | 1.8 V core rail good |
+| Chip pin 11 (`DVDD_I/O`) | **3.270 V** | 3.3 V I/O rail good |
+| `SYC` (header) | **silent** | No SYSCLK |
+| ~pins 100–12 | 40 MHz present | **Treat as pickup, not evidence.** A driven net does not appear on ~13 contiguous pins; this is the 0.5 mm pitch problem this file already warns about |
+
+Powered, enabled, and not clocked. With both rails confirmed at the package and
+`PD` strapped, the only remaining explanation for a dead `SYNC_CLK` is that no
+usable reference is reaching `REF_CLK` (pins 90/91).
+
+### The bisect that settles it
+
+The module is known good — the demo board proved it. The variable that has
+changed since is **our FPGA being attached**. Three candidates, in order:
+
+1. **`ck_io0` still landed on W1 pin 2.** `refclk_gen` free-runs, so the FPGA
+   drives 12.5 MHz out of `ck_io0` continuously regardless of what the
+   sequencer is doing. With the jumper at 2&3 that output fights the 40 MHz
+   oscillator's output — two push-pull drivers on one node, the reference gets
+   clamped to neither, and SYSCLK stops. Also the failure class that already
+   cost this project a board.
+2. **W1 not actually at 2&3.**
+3. **`RST` held high.** The RTL deasserts it in `S_SETTLE` and it resets to 0,
+   verified in simulation but not on the pin.
+
+The decisive test is to reproduce the demo-board condition on this bench:
+**disconnect every FPGA signal, strap `PD` and `RST` to GND, W1 at 2&3, power
+up, scope on `SYC`.** Expect 10 MHz (40 MHz reference / 4, PLL unlocked).
+
+- `SYC` alive with the FPGA off the board → the fault is in our wiring or our
+  driving, and it bisects from there one signal at a time.
+- `SYC` still dead → the fault is the module's reference path after all, and the
+  earlier W1-to-`REF_CLK` suspicion comes back into play.
+
+Either answer is worth more than another round of probing fine-pitch pins.
+
+### Toolchain note: a second `hw_server` will steal the cable
+
+`make program` failed first with `Device xc7z020_1 is no longer available`
+immediately after the chain enumerated correctly as `arm_dap_0 xc7z020_1`.
+
+Cause: an unrelated Vivado container on m75q was running its own `hw_server`
+for a different board on a Digilent JTAG-HS2. `hw_server` opens **every** FTDI
+device it can see, and the container is given `/dev/bus/usb` wholesale, so it
+had also claimed the Arty's FT2232H and was holding it. The kernel log shows
+both servers on the same device:
+
+```
+usb 3-1.2: usbfs: process <pid> (hw_server) did not claim interface 0 before use
+```
+
+Killing the other container's `hw_server` freed the cable and programming
+succeeded immediately. **If programming fails this way, check for another
+`hw_server` before suspecting the board:**
+
+```bash
+sudo lsof /dev/bus/usb/<bus>/<dev>     # who holds the Arty's FT2232H
+```
+
+---
+
+## 2026-09-08, second session — reference gating fixed, part still not clocked
+
+### The demo board settles the W1 question
+
+Every pin of the demo driver board's header was checked: **none carries a
+clock**. `REF_CLK` is not brought out on that header, and the module's only two
+reference inputs are the external SMA and the onboard 40 MHz oscillator, both
+selected by W1. So the module was clocked by its own oscillator through W1 when
+it worked on the demo board. **The W1 → `REF_CLK` path is good**, and the
+earlier "break between W1 and REF_CLK" is now properly refuted rather than just
+doubted.
+
+### A code fault, found and fixed
+
+`refclk_gen` was instantiated with no enable and free-ran from power-on, driving
+12.5 MHz onto `ck_io0` — which the pin map routes to W1's AD9910-side pin, the
+same node the oscillator drives at W1 2&3. Two push-pull drivers on one node.
+
+Fixed: the reference generator is now gated by `refclk_en`, default **off**, set
+over the console with `x0` / `x1`, and reported as `REF n` in the `k` status
+line. The disabled state is **high-Z, not low** — driving that node low against
+a running oscillator is a harder short than the collision being prevented.
+Confirmed in the implemented design: `OBUFT | 1` in `utilization.rpt`.
+
+The console's default CFR3 is now `0x0538C132` (N = 25, for the module's own
+40 MHz), matching the default `refclk_en = 0`. The two now agree; previously the
+default was N = 80 for an FPGA reference that the default wiring did not supply.
+
+### It was not the cause
+
+With `REF 0` confirmed and `ck_io0` released, there is still no lock.
+
+| Check | Result |
+|---|---|
+| S1 console | PASS |
+| S2a–d symbol engine | PASS — 0 errors over 7,752,072 symbols, 992,788 sym/s |
+| S3a sequencer completed | PASS |
+| S3b reference released | PASS — `REF 0` |
+| S3c PLL lock | **FAIL** — `LOCK 0 TMO 1` |
+
+### The sharpest test yet: PLL bypassed
+
+`c0738C000` — VCO SEL = 111, PLL enable = 0, input divider bypassed. This takes
+the PLL out of the picture completely: SYSCLK becomes the bare 40 MHz reference,
+and FTW `0x028F5C29` should put **exactly 400 kHz** on the SMA
+(0x028F5C29 / 2^32 x 40 MHz). The sequencer loads the profiles even after a lock
+timeout — `// carry on; 40 MHz still works` — so FTW does get written.
+
+Measured on OUT, AC coupled, 1 us/div: **no tone. 100 mV of noise, no frequency
+reading.**
+
+That is the cleanest statement of the fault so far:
+
+> With the PLL bypassed, the profiles loaded, `PD` strapped, both rails good at
+> the package, the FPGA off the reference net, and W1 on a path proven good by
+> the demo board — **the part still produces nothing.**
+
+The DAC and output network are known good (1.32 Vpp on the demo board), so the
+remaining explanation is that SYSCLK is absent: no reference is reaching
+`REF_CLK`, or nothing is being captured.
+
+### Still not measured: `SYC`
+
+Every conclusion above is inference. `SYNC_CLK` is the one measurement that
+separates "not clocked" from "clocked but not transferring", and the probe has
+been on the SMA OUT for this entire session. **Expect 10 MHz** (40 MHz / 4) if
+the part is clocked.
+
+### Worth retrying: FPGA as the sole reference driver
+
+The earlier "FPGA reference injected at W1 pins → no effect" result predates
+both the `IO_UPDATE` width fix and the `S_DONE` restart fix, and this file
+already notes that several results from that period "may never have re-run the
+sequencer at all". It is worth repeating now:
+
+- Remove the W1 jumper entirely, so nothing else drives the node.
+- Wire `ck_io0` to W1 **pin 2** (the centre, AD9910 side).
+- Console: `x1`, then `c0538C1A0` (N = 80 for 12.5 MHz).
+
+With the jumper out, the FPGA is the only driver of `REF_CLK` and there is no
+contention by construction.
+
+---
+
+## 2026-09-08 — found: the module needs `PWR`, and our interconnect omits it
+
+Demonstrated, not inferred. Connecting **only the pins our FPGA drives** to the
+demo board reproduced our exact failure on known-good hardware: no signal.
+Adding **`PWR`** made it work.
+
+Working set: **all four GND**, `CSB`, `SCK`, `SDO`, `SDIO`, `PF0`, `PF1`, `PF2`,
+`IOUP`, `PD`, `PLL`, `RST`, **`PWR`**.
+
+Our pin map has all of these except `PWR`.
+
+### Why this explains everything
+
+The one measurement that never fitted any theory was 40 MHz **present at U5 and
+at W1, absent at the chip**, with both rails correct at the package. If `PWR`
+gates an oscillator or a clock buffer upstream of `REF_CLK`, then the AD9910 is
+healthy and simply unclocked — and that produces, in order: no SYSCLK, no PLL
+lock, no output, and no 400 kHz even with the PLL bypassed. Every one of those
+is what we measured.
+
+### How this went wrong for a day
+
+Three separate conclusions were written into the repo as fact and each was
+withdrawn:
+
+1. "Break between W1 and `REF_CLK`" — withdrawn on the demo-board test.
+2. "W1 is good, the demo board proves it" — withdrawn when a 46 kHz capture
+   turned out to be unable to show a 40 MHz clock.
+3. "`SYNC_CLK` dead means no reference" — withdrawn when `SYC` measured **low on
+   the demo board while it was working**, most likely because the demo firmware
+   disables the pin in CFR2.
+
+`SYC` was treated as the definitive test for hours. It is not: a low `SYC` is
+consistent with a fully working part.
+
+**The lesson is about method, not about the AD9910.** Every wrong conclusion
+came from reasoning about what we could not see, using instruments whose limits
+were not written down beside their readings. The thing that actually solved it
+was a controlled substitution on known-good hardware — removing pins until it
+broke, adding them back until it worked. That was available on day one and is
+worth reaching for well before a fourth round of probing.
+
+### Next
+
+1. Measure `PWR` on the running demo board — steady 3.3 V, steady 5 V, or
+   toggling. That decides whether it is a strap or a driven signal.
+2. **Source it from the DDS module's own supply, never from the Arty.** Ground
+   stays the only connection between the boards.
+3. If it is driven rather than strapped, it goes on the ChipKit header — both
+   Pmods are fully committed — and into the XDC and `ad9910_ctrl`.
+
+---
+
+## 2026-09-08 — M1 AND M2 MET. `PWR` strapped to GND, and the carrier came up.
+
+`PWR` tied to GND at the module. Nothing else changed. First `make sanity` after
+programming:
+
+```
+[PASS] S1  UART console responds
+[PASS] S2a checker locked on the loopback
+[PASS] S2b zero bit errors            0 errors over 7,814,100 symbols
+[PASS] S2c zero lock losses           0
+[PASS] S2d symbol rate                1,000,658 sym/s at the 1 Msym/s setting
+[PASS] S3a DDS sequencer completed    DONE 1
+[PASS] S3b reference generator released
+[PASS] S3c AD9910 PLL locked          LOCK 1  TMO 0
+all checks passed
+```
+
+`TMO 0` — the PLL locked promptly rather than timing out. SYSCLK is 1 GHz from
+the module's own 40 MHz crystal, N = 25, `CFR3 = 0x0538C132`, with the FPGA off
+the reference net entirely (`REF 0`, `ck_io0` high-Z).
+
+### M1 gate: a measured tone at the programmed frequency
+
+Scope on the SMA OUT, AC coupled, 10x probe. Period measurement at a timebase
+chosen per frequency:
+
+| FTW | Programmed | Measured | Error |
+|---|---:|---:|---:|
+| `0x00418937` | 1 MHz | 1.0000 MHz | 0 ppm |
+| `0x028F5C29` | 10 MHz | 10.0000 MHz | 0 ppm |
+| `0x0CCCCCCD` | 50 MHz | 50.0000 MHz | 0 ppm |
+| `0x1999999A` | 100 MHz | ~100 MHz | scope-limited |
+
+The carrier tracks the tuning word across two decades. The 100 MHz row is the
+DS1202Z-E quantising period to 0.1 ns (readings land on 1/9.9 ns and 1/9.8 ns),
+not DDS error. The instrument's hardware counter was tried and is less reliable
+than the period measurement at this amplitude — recorded here so nobody repeats
+it. Capture: `G_m1_carrier_10MHz_locked.png`.
+
+Amplitude falls from 340 to 160 mVpp across 1 to 100 MHz — DAC sinc roll-off
+plus cable and probe response, and modest overall because **we still never write
+the DAC full-scale current** (register `0x03`; the JQIamo driver sets `0xFF`).
+
+### M2 gate: 180 degree phase reversals at symbol boundaries
+
+`PF0` is driven by `tx_symbol`, and profiles 0 and 1 are loaded 180 degrees
+apart, so BPSK needed no further work once the carrier existed. Same carrier,
+same scope settings, pattern changed over the console:
+
+| Pattern | Trace | Counter | Freq max | Freq min |
+|---|---|---:|---:|---:|
+| `p0` constant 0 | single clean sine | 10.0000 MHz | 10.1 MHz | 9.90 MHz |
+| `p3` PRBS-7 | **two overlapping phases** | 10.2520 MHz unstable | **13.3 MHz** | **6.67 MHz** |
+
+Captures: `H_bpsk_p0.png`, `H_bpsk_p1.png`, `H_bpsk_p3.png`.
+
+The frequency spread is the quantitative proof, not just the visual smear.
+**6.67 MHz is exactly 10 MHz / 1.5.** A 180 degree phase reversal landing near a
+zero crossing stretches the measured period to 1.5 T, which is the maximum a
+half-cycle jump can produce; flips landing elsewhere in the cycle fill in the
+range up to 13.3 MHz. A frequency error or a glitch would not produce that
+signature. A clean carrier under `p0` and this under `p3`, with nothing changed
+but the pattern selector, is the modulator working.
+
+### What actually solved it
+
+One wire. `PWR` strapped to ground.
+
+The finding came from **controlled substitution on known-good hardware** — wiring
+only our pin set to the demo board, confirming it failed the same way, then
+adding pins until it worked. Not from reasoning about symptoms. Three conclusions
+reached by reasoning were written into this repo as fact during the search and
+all three were withdrawn:
+
+1. "Break between W1 and `REF_CLK`."
+2. "W1 is good, the demo board proves it."
+3. "`SYNC_CLK` dead means no reference" — `SYC` measures **low on the demo board
+   while it is working**, so a low `SYC` proves nothing.
+
+Each was sound reasoning from real measurements. Each failed because the limits
+of the instrument were not written down beside the reading — a 46 kHz logic
+capture cannot show a 40 MHz clock, and a `SYNC_CLK` pin can be disabled in CFR2.
+
+**Two pins on this breakout hold the part off when floating — `PD` and `PWR` —
+and both present as a clock fault.** Check every strap with a meter before
+diagnosing anything on this module.

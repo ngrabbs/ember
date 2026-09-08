@@ -56,6 +56,10 @@ module m0_console (
     output logic [31:0] dds_cfr3,
     output logic       dds_start,
 
+    // Reference-clock generator enable. Defaults OFF: when the DDS runs from
+    // its own oscillator, the FPGA must not drive the reference net at all.
+    output logic       refclk_en,
+
     output logic [1:0] pattern_sel,
     output logic [1:0] rate_sel,
     output logic       tx_enable,
@@ -66,8 +70,8 @@ module m0_console (
     // renders "\r" as a literal 'r', which would make simulation and hardware
     // disagree about what is on the wire.
     localparam int TEXT_STATUS = 47;
-    localparam int TEXT_BANNER = 53;
-    localparam int TEXT_DDS    = 36;
+    localparam int TEXT_BANNER = 58;
+    localparam int TEXT_DDS    = 42;
     localparam int STATUS_LEN  = TEXT_STATUS + 2;
     localparam int BANNER_LEN  = TEXT_BANNER + 2;
     localparam int DDS_LEN     = TEXT_DDS + 2;
@@ -78,11 +82,11 @@ module m0_console (
     localparam logic [8*TEXT_STATUS-1:0] STATUS_T =
         "LOCK 0 BITS 000000000000 ERR 00000000 LOSS 0000";
     localparam logic [8*TEXT_BANNER-1:0] BANNER =
-        "EMBER M0 s p0-3 r0-3 e d z k i fXXXXXXXX cXXXXXXXX ? ";
+        "EMBER M0 s p0-3 r0-3 e d z k i x0-1 fXXXXXXXX cXXXXXXXX ? ";
     localparam logic [8*TEXT_DDS-1:0] DDS_T =
-        "DDS LOCK 0 DONE 0 TMO 0 FTW 00000000";
+        "DDS LOCK 0 DONE 0 TMO 0 REF 0 FTW 00000000";
 
-    typedef enum logic [2:0] { IDLE, ARG_P, ARG_R, ARG_F, SEND } state_e;
+    typedef enum logic [3:0] { IDLE, ARG_P, ARG_R, ARG_F, ARG_X, SEND } state_e;
     state_e state;
 
     logic [1:0]  msg_sel;          // 0 status, 1 banner, 2 DDS
@@ -90,7 +94,7 @@ module m0_console (
     logic [2:0]  hex_count;
     logic [27:0] hex_acc;   // 7 nibbles; the 8th completes the word
     logic        hex_target;  // 0 = FTW, 1 = CFR3
-    logic        snap_dl, snap_dd, snap_dt;
+    logic        snap_dl, snap_dd, snap_dt, snap_dr;
     logic [31:0] snap_ftw;
     logic [47:0] snap_bits;
     logic [31:0] snap_err;
@@ -117,8 +121,9 @@ module m0_console (
             else if (idx == 7'd9)  ch = snap_dl ? "1" : "0";
             else if (idx == 7'd16) ch = snap_dd ? "1" : "0";
             else if (idx == 7'd22) ch = snap_dt ? "1" : "0";
-            else if (idx >= 7'd28 && idx <= 7'd35) begin
-                n  = 7'd35 - idx;
+            else if (idx == 7'd28) ch = snap_dr ? "1" : "0";
+            else if (idx >= 7'd34 && idx <= 7'd41) begin
+                n  = 7'd41 - idx;
                 ch = nib2asc(snap_ftw[int'(n)*4 +: 4]);
             end else ch = DDS_T[(TEXT_DDS-1-int'(idx))*8 +: 8];
         end else if (idx == 7'(TEXT_STATUS)) begin
@@ -173,7 +178,12 @@ module m0_console (
             rate_sel    <= 2'b00;
             tx_enable   <= 1'b1;
             dds_ftw     <= 32'h028F_5C29;   // 10 MHz at a 1 GHz SYSCLK
-            dds_cfr3    <= 32'h0538_C1A0;   // N=80, for the 12.5 MHz FPGA reference
+            // N=25, for the module's own 40 MHz oscillator - 40 x 25 = 1 GHz.
+            // This pairs with refclk_en = 0 below: the default configuration is
+            // the DDS clocking itself, with the FPGA off the reference net.
+            // For the FPGA-driven 12.5 MHz reference use x1 then c0538C1A0.
+            dds_cfr3    <= 32'h0538_C132;
+            refclk_en   <= 1'b0;
             hex_count   <= '0;
             hex_target  <= 1'b0;
         end else begin
@@ -198,6 +208,7 @@ module m0_console (
                             snap_dl  <= dds_lock;
                             snap_dd  <= dds_done;
                             snap_dt  <= dds_timeout;
+                            snap_dr  <= refclk_en;
                             snap_ftw <= dds_ftw;
                             msg_sel  <= 2'd2;
                             idx      <= '0;
@@ -216,6 +227,7 @@ module m0_console (
                             state      <= ARG_F;
                         end
                         "i", "I": dds_start <= 1'b1;
+                        "x", "X": state     <= ARG_X;
                         "p", "P": state     <= ARG_P;
                         "r", "R": state     <= ARG_R;
                         "e", "E": tx_enable <= 1'b1;
@@ -223,6 +235,16 @@ module m0_console (
                         "z", "Z": clear     <= 1'b1;
                         default:  ;                  // ignore anything else
                     endcase
+                end
+
+                // x0 releases the reference pin, x1 drives it. Deliberately
+                // explicit rather than a toggle: the wrong state here shorts
+                // the FPGA's driver against the DDS module's oscillator, so
+                // "what is it now?" must never be part of setting it.
+                ARG_X: if (rx_valid) begin
+                    if      (rx_data == "0") refclk_en <= 1'b0;
+                    else if (rx_data == "1") refclk_en <= 1'b1;
+                    state <= IDLE;
                 end
 
                 ARG_P: if (rx_valid) begin

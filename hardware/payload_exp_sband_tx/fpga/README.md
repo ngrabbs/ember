@@ -468,16 +468,19 @@ library.
 off the physical pin against the golden model, `symbol_tick` measured at
 8.000 ns. Nothing in M0 is outstanding.
 
-M1 is the AD9910 bring-up. The blocking bug is fixed in RTL but not yet proven
-on the bench:
+**M1 and M2 are also complete as of 2026-09-08.** The DDS locks at 1 GHz off
+its own 40 MHz crystal (`LOCK 1 TMO 0`), the carrier measures 0 ppm error at 1,
+10 and 50 MHz, and it reverses phase under PRBS-7. The blocker was one
+unstrapped pin — `PWR` — not RTL. See
+[`../measurements/m1_dds/`](../measurements/m1_dds/).
 
-- [ ] Program the current bitstream. The IO_UPDATE pulse-width fix is built and
-      committed but has never been loaded onto the board.
-- [ ] Bring the DDS up on its own 40 MHz crystal, W1 at 2–3: console `c0538C132`,
-      then `i`, then `k`. Gate is `PLL_LOCK` asserted.
-- [ ] Confirm a measured tone at the programmed frequency out of the SMA.
-- [ ] Re-measure the M0 edge rates and overshoot with a short ground spring —
-      the existing captures used a ground lead long enough to add ringing.
+M3 is characterisation:
 
-M2 follows immediately once M1 locks: `tx_symbol` drives `PROFILE[0]` and the
-carrier reverses phase at symbol boundaries.
+- [ ] Occupied bandwidth against symbol rate, on an SDR or analyser.
+- [ ] Carrier-frequency error against the 40 MHz reference.
+- [ ] **Write the DAC full-scale current** (register `0x03`). We never write it;
+      the reference driver sets `0xFF`. Output is currently ~300 mVpp at 10 MHz.
+- [ ] **Add SPI readback** so register state can be verified rather than
+      inferred. The AD9910 powers up in 2-wire mode, so reads return on `SDIO`
+      and it needs a tristate. The absence of this cost a full day.
+- [ ] Re-measure the M0 edge rates and overshoot with a short ground spring.

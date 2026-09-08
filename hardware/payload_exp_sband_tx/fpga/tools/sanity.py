@@ -81,16 +81,22 @@ def main():
     # S3 - the DDS sequencer runs to completion, whatever the board does.
     console("i"); time.sleep(2.0)
     k = console("k")
-    m = re.search(r"LOCK (\d) DONE (\d) TMO (\d) FTW ([0-9A-F]+)", k)
+    m = re.search(r"LOCK (\d) DONE (\d) TMO (\d) REF (\d) FTW ([0-9A-F]+)", k)
     if not m:
         check(False, "S3 DDS status parses", k)
     else:
-        dlock, ddone, dtmo, ftw = int(m[1]), int(m[2]), int(m[3]), m[4]
+        dlock, ddone, dtmo, dref, ftw = (int(m[1]), int(m[2]), int(m[3]),
+                                         int(m[4]), m[5])
         check(ddone == 1, "S3a DDS sequencer completed", k)
-        check(dlock == 1, "S3b AD9910 PLL locked",
-              "known blocked: no SYNC_CLK, see measurements/m1_dds/")
+        # The FPGA must not drive the reference net while the DDS runs from its
+        # own oscillator - ck_io0 lands on the same node W1 feeds, and two
+        # push-pull drivers there is what kept SYNC_CLK dead.
+        check(dref == 0, "S3b reference generator released (ck_io0 high-Z)",
+              "REF=1 drives ck_io0; safe only with W1 at 1&2 and the "
+              "oscillator disconnected")
+        check(dlock == 1, "S3c AD9910 PLL locked", k)
         if dtmo:
-            print("         (TMO=1 is consistent with the known reference-clock fault)")
+            print("         (TMO=1 means the sequencer gave up waiting for lock)")
 
     print()
     if FAILS:
