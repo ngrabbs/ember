@@ -69,7 +69,7 @@ SBX-2 is the requirement that decides the trade. Under the corrected scope it is
 
 ### Adopted as an interim step
 
-**Option 3 — Sigma-delta on an FPGA pin.** A one-bit noise-shaped output through a small RC filter produces a genuine analog waveform from an iCE40 with no converter and no procurement. Bandwidth is modest, the spectrum is dominated by shaping noise outside the passband, and it will never drive a mixer — but it will show a low-IF carrier reversing phase on a scope, using hardware already on the desk. Adopted as **M0.5**, an optional de-risking step between the symbol engine and the DAC bring-up. It proves the modulator logic before any DAC wiring exists, which means a failure at M1 is unambiguously an interface problem rather than a modulator problem.
+**Option 3 — Sigma-delta on an FPGA pin.** A one-bit noise-shaped output through a small RC filter produces a genuine analog waveform from the FPGA alone, with no converter and no procurement. Bandwidth is modest, the spectrum is dominated by shaping noise outside the passband, and it will never drive a mixer — but it will show a low-IF carrier reversing phase on a scope, using hardware already on the desk. Adopted as **M0.5**, an optional de-risking step between the symbol engine and the DAC bring-up. It proves the modulator logic before any DAC wiring exists, which means a failure at M1 is unambiguously an interface problem rather than a modulator problem.
 
 ### Selected
 
@@ -85,7 +85,7 @@ SBX-2 is the requirement that decides the trade. Under the corrected scope it is
 
 **It keeps the S-band option alive at zero cost.** Option 1's DAC output is exactly the signal the deferred RF chain wants at its IF port. Adding the mixer later changes nothing upstream. The two drawio diagrams stop being rival plans and become the same plan at two stages.
 
-**The rate ceiling is a choice, not a constraint.** The stated objection to Option 1 is signal integrity: a 12-bit parallel bus at 100 MSPS over PMOD headers and hand wiring is genuinely difficult, and the `mini_totem` document lists it as risk #1. That objection assumes 100 MSPS. Nothing about demonstrating BPSK requires it. At 20 MSPS the bus period is 50 ns, edge rates are set by the iCE40 output driver rather than the data rate, and hand wiring with adjacent ground returns is entirely tractable. **Decoupling the sample rate from the ambition removes the only strong argument against Option 1.**
+**The rate ceiling is a choice, not a constraint.** The stated objection to Option 1 is signal integrity: a 12-bit parallel bus at 100 MSPS over PMOD headers and hand wiring is genuinely difficult, and the `mini_totem` document lists it as risk #1. That objection assumes 100 MSPS. Nothing about demonstrating BPSK requires it. At 20 MSPS the bus period is 50 ns, edge rates are set by the FPGA's output driver rather than the data rate, and hand wiring with adjacent ground returns is entirely tractable. **Decoupling the sample rate from the ambition removes the only strong argument against Option 1.**
 
 **The instruments already available are the right ones.** A scope and a logic analyzer are sufficient through M3. An SDR or spectrum analyzer improves M3 and M4 but gates neither.
 
@@ -118,7 +118,7 @@ rejection, which still applies to the M5 mixer stage.)*
 | M4 shaped | 50 MSPS | 5 MHz | 500 ksym/s | 100 | 2 |
 | M5 RF (optional) | 100 MSPS | 20 MHz | 1 Msym/s | 100 | 1 |
 
-Every sample rate is an exact integer divisor of the 100 MHz board clock, which keeps the symbol-tick divider exact and satisfies the assertion already written into `tx_pattern_source`.
+Every sample rate is an exact integer divisor of the board clock, which keeps the symbol-tick divider exact and satisfies the assertion already written into `tx_pattern_source`. *(This table was computed against the original 100 MHz board. The platform is now a 125 MHz Arty Z7-20, and the sample-rate plan is moot in any case — see* Superseded by the hardware *below. The four symbol rates still divide exactly at 125 MHz.)*
 
 The M5 row adopts the `sband_experimental_tx` drawio's plan — 20 MHz IF, 2380 MHz LO, 2400 MHz RF, image at 2360 MHz. The `mini_totem` plan's 50 MHz IF / 2350 MHz LO is superseded.
 
@@ -134,10 +134,10 @@ error below is instructive.)*
 
 **The original decision here was wrong and is withdrawn.** It selected DAC902 on
 the grounds that a 12-bit bus plus a clock fits in two 8-pin PMOD connectors
-while a 14-bit bus does not. The IceZero pinout document shows four 2×6 PMOD
-connectors carrying **eight signal pins each, 32 in total**. Two connectors give
-sixteen signals, so DAC904's fifteen fits with a pin to spare, and the board has
-twice as many pins again beyond that. Pin budget does not decide this.
+while a 14-bit bus does not. That was a miscount: the FPGA board of the day
+carried four 2×6 PMOD connectors with **eight signal pins each, 32 in total**.
+Two connectors give sixteen signals, so DAC904's fifteen fits with a pin to
+spare. Pin budget does not decide this.
 
 What survives of the argument is weaker and no longer sufficient on its own: two
 extra bits buy nothing at this stage, since the DAC is operated near −6 dBFS,
@@ -204,26 +204,25 @@ The converter sub-decision — DAC902 versus DAC904, reopened above on a
 pin-count argument that turned out to be wrong — is now moot. Neither part is
 present.
 
-### Platform change: IceZero to Arty Z7 (2026-09-07)
+### Platform change: Arty Z7-20 adopted (2026-09-07)
 
-The IceZero failed in hardware — a dead EP53A7HQI buck regulator plus a hard
-short on the 3.3 V rail, traced to a generic USB-serial cable connected to J3
-with its VCC wire attached. The payload moves to a Digilent Arty Z7.
+The FPGA board this study was originally written against failed in hardware and
+was replaced by a **Digilent Arty Z7-20 (XC7Z020)**, which carries USB-JTAG and
+USB-UART on a single cable.
 
 **This does not reopen the architecture decision.** The trade selected
-FPGA-generated low-IF BPSK into a DAC on the strength of observability, HDL
-content and a deliberately low sample rate — none of which depend on which FPGA
-runs the logic. The RTL is plain SystemVerilog with no vendor primitives and
-re-simulates unchanged at the Arty's 125 MHz, where all four symbol rates still
-divide exactly.
+FPGA-generated low-IF BPSK into a converter on the strength of observability,
+HDL content and a deliberately low sample rate — none of which depend on which
+FPGA runs the logic. The RTL is plain SystemVerilog with no vendor primitives
+and re-simulates unchanged at the Arty's 125 MHz, where all four symbol rates
+still divide exactly.
 
-What the change does affect is downstream: the toolchain becomes Vivado 2024.2,
-constraints become `.xdc`, and the M1 converter interface is planned against the
-Arty's Pmod and ChipKit connectors rather than the IceZero's four PMODs. *(That
-interface turned out to be an SPI link to a DDS rather than a parallel DAC bus —
-see* Superseded by the hardware *below.)* The
-Zynq's PS also opens an option the iCE40 never had — a hard ARM core for control
-and readout — which should be considered at M1 rather than assumed now.
+What the change affects is downstream: the toolchain is Vivado 2024.2,
+constraints are `.xdc`, and the M1 converter interface is planned against the
+Arty's Pmod and ChipKit connectors. *(That interface turned out to be an SPI
+link to a DDS rather than a parallel DAC bus — see* Superseded by the hardware
+*below.)* The Zynq's PS also opens an option worth considering at M1 rather than
+assuming now: a hard ARM core for control and readout.
 
 ### The A20 oscillator moves off the critical path
 
@@ -257,7 +256,8 @@ Deferred entirely. If time remains after M4, M5 is built from the `sband_experim
 ## 6. Risks and open items
 
 Rewritten 2026-09-08. Every risk in the original table concerned a parallel DAC
-bus, iCE40 resources or the IceZero toolchain, and none of those exist any more.
+bus, FPGA fabric resources or the original board's open-source toolchain, and
+none of those exist any more.
 
 | Risk | Severity | Mitigation |
 |---|---|---|
@@ -275,9 +275,9 @@ bus, iCE40 resources or the IceZero toolchain, and none of those exist any more.
 
 - [x] PMOD pin budget — closed 2026-09-06, then moot: no parallel bus is used.
 - [x] Board facts — closed. Arty Z7-20, `constraints/arty_z7_20.xdc`.
-- [x] Bench control and readout — **UART console**, now on Pmod JB rather than
-      the IceZero's J3. Reads `bit_count` and `error_count` directly, which is
-      what let the M0 gate be counted rather than inferred.
+- [x] Bench control and readout — **UART console** on Pmod JB. Reads
+      `bit_count` and `error_count` directly, which is what let the M0 gate be
+      counted rather than inferred.
 - [x] Converter selection — moot. The part on hand is an AD9910 DDS.
 - [ ] **M1**: `PLL_LOCK` and a measured tone. Bench work, not RTL.
 - [ ] Inventory the RF half for M5: mixer, filters, SDR, spectrum analyser. The

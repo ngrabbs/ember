@@ -167,12 +167,16 @@ rebuild between them. Each must divide the board clock exactly; the RTL refuses
 to elaborate otherwise rather than silently producing a rate that is a fraction
 of a percent off.
 
-| `rate_sel` | Default rate | Clocks per symbol at 100 MHz |
+| `rate_sel` | Default rate | Clocks per symbol at 125 MHz |
 |---|---:|---:|
-| `00` | 1 ksym/s | 100,000 |
-| `01` | 10 ksym/s | 10,000 |
-| `10` | 100 ksym/s | 1,000 |
-| `11` | 1 Msym/s | 100 |
+| `00` | 1 ksym/s | 125,000 |
+| `01` | 10 ksym/s | 12,500 |
+| `10` | 100 ksym/s | 1,250 |
+| `11` | 1 Msym/s | 125 |
+
+`top_arty_z7` sets `CLOCK_HZ = 125_000_000`. The `tx_pattern_source` module
+default is still 100 MHz, which is what the testbenches elaborate against; only
+the ratio matters to the checks.
 
 The testbench overrides these to divisors of 16, 8, 4 and 2 so that a
 million-symbol run finishes in seconds. Only the ratio matters to the checks.
@@ -411,21 +415,30 @@ Two bugs were found and fixed getting here:
   all passed, which is exactly the signature of a phase offset rather than a
   broken generator.
 
-### Resource usage
+### Resource usage and timing
 
-From `make count`, synthesised for iCE40 with `-noflatten`:
+Measured, from the Vivado reports that come back with the bitstream
+(`build/vivado/utilization.rpt` and `timing_summary.rpt`). This is the whole
+design — symbol engine, UART console, SPI master, AD9910 sequencer and
+reference-clock divider:
 
-| Module | LUT4 | Flip-flops | Carry |
+| Resource | Used | Available | % |
 |---|---:|---:|---:|
-| `prbs7_gen` | 2 | 7 | — |
-| `tx_pattern_source` | 29 | 25 | 31 |
-| **Total** | **31** | **32** | **31** |
+| Slice LUTs | 518 | 53,200 | 0.97 |
+| Slice registers | 718 | 106,400 | 0.67 |
+| Bonded IOB | 27 | 125 | 21.6 |
 
-Small enough that device density is not a constraint at M0. The carry cells are
-the symbol-rate divider, which is sized for the slowest rate — 100,000 counts
-at 1 ksym/s from a 100 MHz clock. It shrinks if the slow rates are dropped.
-This is a synthesis estimate only; place-and-route and timing closure wait on a
-verified pin constraint file.
+| Timing, against the 8.000 ns board clock | |
+|---|---:|
+| WNS (setup) | **+1.727 ns** → F<sub>max</sub> ≈ 159 MHz |
+| WHS (hold) | +0.051 ns |
+| Failing endpoints | **0** of 1720 |
+
+Device density is not a constraint — under 1% of the fabric. **Pins are the
+scarce resource**, at 21.6% with both Pmods fully used, which is why the DDS's
+`PD` is strapped at the board rather than driven. The symbol-rate divider is
+sized for the slowest rate, 125,000 counts at 1 ksym/s from the 125 MHz clock,
+and shrinks if the slow rates are dropped.
 
 ### Toolchain of record
 
@@ -441,32 +454,30 @@ through for JTAG. Launcher and notes live in
 | oss-cad-suite | 20260906 |
 | Icarus Verilog | 14.0 (devel) s20260301-403-g5ab23063f |
 | Verilator | 5.053 devel rev v5.052-22-g7cf8c5cca |
-| Yosys | 0.68+195 (git sha1 435977e97) |
 | Python | 3.11.6 |
 
-`make tools` prints the install route. The recommended one is the YosysHQ
-oss-cad-suite tarball: one download, no root, and iverilog, verilator, yosys,
-nextpnr-ice40, icestorm and gtkwave all at consistent versions.
+`make tools` prints the install route. The recommended one is the oss-cad-suite
+tarball: one download, no root, and iverilog, verilator and gtkwave all at
+consistent versions. Synthesis is Vivado's job, not the open toolchain's — the
+RTL instantiates no vendor primitives, so nothing local needs a technology
+library.
 
 ## Next
 
-**Platform changed 2026-09-07: IceZero to Arty Z7.** The IceZero died — a failed
-buck regulator and a hard short on its 3.3 V rail. Full record in the
-[bring-up document](../fpga_link_processor_logic_interface_first_bringup.md).
+**M0 is complete on hardware** — 62,049,047 symbols, zero errors, PRBS-7 decoded
+off the physical pin against the golden model, `symbol_tick` measured at
+8.000 ns. Nothing in M0 is outstanding.
 
-Nothing above this line changed. The RTL has no vendor primitives, and it has
-been re-simulated at the Arty's **125 MHz** and passes unmodified — all four
-symbol rates still divide the board clock exactly, so the exact-divisor
-elaboration check still holds with only `CLOCK_HZ` changed.
+M1 is the AD9910 bring-up. The blocking bug is fixed in RTL but not yet proven
+on the bench:
 
-- [ ] Confirm the Arty Z7 variant — Z7-10 (XC7Z010) or Z7-20 (XC7Z020).
-- [ ] Pull Digilent's master XDC; write `constraints/arty_z7.xdc`.
-- [ ] Change the RTL default `CLOCK_HZ` to 125 MHz once the variant is confirmed.
-- [ ] Add Vivado synthesis and bitstream targets to the Makefile, driven through
-      the m75q container.
-- [ ] Route the loopback and `symbol_tick` to Pmod pins; capture on a scope.
-- [ ] Run the hardware gate — 1,000,000 symbols, zero errors — reading the count
-      back over the built-in USB-UART rather than inferring it from an LED.
+- [ ] Program the current bitstream. The IO_UPDATE pulse-width fix is built and
+      committed but has never been loaded onto the board.
+- [ ] Bring the DDS up on its own 40 MHz crystal, W1 at 2–3: console `c0538C132`,
+      then `i`, then `k`. Gate is `PLL_LOCK` asserted.
+- [ ] Confirm a measured tone at the programmed frequency out of the SMA.
+- [ ] Re-measure the M0 edge rates and overshoot with a short ground spring —
+      the existing captures used a ground lead long enough to add ringing.
 
-The iCE40 `count` and `synth` targets in the Makefile are kept but are now
-**legacy**; they no longer describe the target device.
+M2 follows immediately once M1 locks: `tx_symbol` drives `PROFILE[0]` and the
+carrier reverses phase at symbol boundaries.

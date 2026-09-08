@@ -42,8 +42,8 @@ set_property -dict { PACKAGE_PIN Y17  IOSTANDARD LVCMOS33 } [get_ports { ja_loop
 ##   pin 1  jb_uart_tx  FPGA output -> the cable's RX
 ##   pin 2  jb_uart_rx  FPGA input  <- the cable's TX
 ## Connect GND, TX and RX only. NEVER the cable's VCC: this board has its own
-## supply, and a 5 V VCC wire on a self-powered board is what destroyed the
-## IceZero this payload started on.
+## supply, and back-feeding a self-powered board through a 5 V VCC wire is a
+## known way to destroy its regulator.
 set_property -dict { PACKAGE_PIN W14  IOSTANDARD LVCMOS33 } [get_ports { jb_uart_tx }]
 set_property -dict { PACKAGE_PIN Y14  IOSTANDARD LVCMOS33 } [get_ports { jb_uart_rx }]
 

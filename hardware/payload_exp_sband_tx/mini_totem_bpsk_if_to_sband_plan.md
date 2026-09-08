@@ -9,7 +9,8 @@
 >   Wherever this document says "DAC", read the AD9910's internal 14-bit DAC —
 >   the FPGA does not feed it samples.
 > - **The frequency plan.** Its IF and sample rates were written for a 100 MHz
->   iCE40 that is no longer the target. Current plan: the payload README.
+>   FPGA board that is no longer the target. The platform is now a Digilent
+>   Arty Z7-20 at 125 MHz. Current plan: the payload README.
 >
 > The architecture decision lives in
 > [`sband_payload_architecture_trade_study.md`](sband_payload_architecture_trade_study.md).
@@ -29,7 +30,7 @@ Linux Host / Controller
         |
         | command/config/data stream
         v
-IceZero FPGA
+FPGA
         |
         | parallel digital samples
         v
@@ -80,7 +81,7 @@ Possible jobs:
 - Log results.
 - Optionally control LO frequency if a programmable synthesizer is used.
 
-### 2. IceZero FPGA
+### 2. FPGA
 
 The FPGA is the core of the experiment.
 
@@ -182,7 +183,7 @@ Start with simple patterns:
 ### What to connect
 
 ```text
-IceZero FPGA digital DAC pins → logic analyzer
+FPGA digital DAC pins → logic analyzer
 ```
 
 ### What to look for
@@ -217,7 +218,7 @@ Prove that the DAC is wired correctly and can produce basic analog waveforms.
 ### What to connect
 
 ```text
-IceZero FPGA → DAC902/DAC904 → oscilloscope
+FPGA → DAC902/DAC904 → oscilloscope
 ```
 
 Use a 50 ohm termination if required by the DAC output stage or module documentation.
@@ -845,7 +846,7 @@ Mitigation:
 
 ## Practical Development Order
 
-1. Confirm IceZero toolchain works.
+1. Confirm the FPGA toolchain works.
 2. Blink LEDs and output a slow test clock.
 3. Output a parallel counter to a logic analyzer.
 4. Connect DAC and output DC midscale.
@@ -869,7 +870,7 @@ Mitigation:
 The minimum successful demonstration is:
 
 ```text
-IceZero FPGA → DAC → scope
+FPGA → DAC → scope
 ```
 
 With the FPGA generating:

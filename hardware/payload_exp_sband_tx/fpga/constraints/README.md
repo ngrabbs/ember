@@ -1,37 +1,45 @@
 # Constraints
 
-**Target changed 2026-09-07: Digilent Arty Z7 (Zynq-7000).**
+**Target board: Digilent Arty Z7-20 (XC7Z020-1CLG400C).**
 
-The IceZero is dead — a failed EP53A7HQI buck regulator plus a hard short on its
-3.3 V rail. The full failure record, root cause and the rules adopted afterwards
-are in
-[`../../fpga_link_processor_logic_interface_first_bringup.md`](../../fpga_link_processor_logic_interface_first_bringup.md).
+`arty_z7_20.xdc` is the constraint file of record. Every pin in it is taken
+verbatim from **Digilent's official master XDC**
+([digilent-xdc](https://github.com/Digilent/digilent-xdc) → `Arty-Z7-20-Master.xdc`)
+rather than transcribed by hand. Re-derive from that file if the board revision
+changes; do not edit pin names in place.
 
-No `.xdc` is committed yet. Write `arty_z7.xdc` from **Digilent's official master
-XDC** for the board revision in hand rather than transcribing pin names by hand,
-and record which master file it came from.
+Note the variants share a footprint but not a part number: **Z7-10 is
+XC7Z010-1CLG400C**, **Z7-20 is XC7Z020-1CLG400C**. This payload is on the Z7-20.
 
-## Signals to constrain
+## Signals constrained
 
 | Signal | Notes |
 |---|---|
 | `clk` | 125 MHz board clock. Needs a `create_clock` of 8.000 ns |
 | `rst` | A button, active high, synchronised internally |
 | `tx_enable`, `pattern_sel[1:0]`, `rate_sel[1:0]` | Slide switches and buttons, or UART commands |
-| `tx_symbol` | Pmod pin — the signal to put a scope on |
-| `symbol_tick` | Pmod pin — one clock wide, use it as the scope trigger |
-| `tx_loopback` | Pmod pin, jumpered back from `tx_symbol` |
-| `prbs_locked` | LED |
-| `uart_tx`, `uart_rx` | Built-in USB-UART, no external cable |
+| `ja_tx_symbol` | Pmod JA pin 1 — the signal to put a scope on |
+| `ja_symbol_tick` | Pmod JA pin 2 — one clock wide, use it as the scope trigger |
+| `ja_loopback` | Pmod JA pin 4, jumpered back from pin 1 |
+| `led[2]` | `prbs_locked` |
+| `jb_uart_tx`, `jb_uart_rx` | Pmod JB pins 1–2, 115200 8N1, **3.3 V cable, GND/TX/RX only** |
 
-Confirm the variant before writing anything: **Z7-10 is XC7Z010-1CLG400C**,
-**Z7-20 is XC7Z020-1CLG400C**. They share a footprint but not a part number.
+`ck_io0` on the ChipKit header carries the AD9910 reference clock; JA and JB are
+fully used by the bench interface, the console and the DDS control lines.
 
 ## Why this board
 
-USB-JTAG and USB-UART are built in on a single cable. There is no separate
-serial cable to mis-wire and no 5 V pin sitting beside 3.3 V logic — which is
-exactly what killed the IceZero.
+**USB-JTAG is built in**, so programming needs no external adapter and no
+bit-banged configuration path. The 125 MHz board clock is an exact multiple of
+all four symbol rates, and the Zynq's PL has room to spare — the whole M0+M1
+design uses under 1% of it.
+
+One caveat worth stating plainly: the board's USB-UART is wired to the **PS**
+(MIO), and this is a **PL-only design** with no PS instantiated, so the console
+does *not* come out of the programming cable. It runs on **Pmod JB** with an
+external 3.3 V USB-serial cable. Connect GND, TX and RX only — never the cable's
+VCC. See the power note below; that exact wire has already cost this payload one
+FPGA board.
 
 ## Build flow
 
@@ -56,10 +64,32 @@ Launcher and notes: `/workspace/notes/home_lab/vivado-docker/`.
 
 ## Timing
 
-Under the old iCE40 target the symbol engine closed at 119 MHz against a 100 MHz
-clock. The Arty's clock is 125 MHz and the Zynq's fabric is far faster, so
-timing is not expected to be a constraint — but the Vivado timing report
-replaces that number and should be recorded here once it exists.
+Closed with room to spare. From `build/vivado/timing_summary.rpt`, against the
+8.000 ns board-clock period:
+
+| Metric | Value |
+|---|---:|
+| WNS (setup) | **+1.727 ns** → F<sub>max</sub> ≈ 159 MHz |
+| WHS (hold) | +0.051 ns |
+| WPWS (pulse width) | +3.020 ns |
+| Failing endpoints | **0** of 1720 |
+
+Timing is not a constraint at M0 or M1. Record a new row here if the design
+grows enough to move these numbers.
+
+## Utilisation
+
+From `build/vivado/utilization.rpt` — the full M0 symbol engine plus the UART
+console, SPI master, AD9910 sequencer and reference-clock divider:
+
+| Resource | Used | Available | % |
+|---|---:|---:|---:|
+| Slice LUTs | 518 | 53,200 | 0.97 |
+| Slice registers | 718 | 106,400 | 0.67 |
+| Bonded IOB | 27 | 125 | 21.6 |
+
+Pins, not logic, are the scarce resource on this board — which is why `PD` is
+strapped at the DDS rather than driven.
 
 
 ---
@@ -75,9 +105,10 @@ The AD9910 breakout has its **own 5 V barrel jack**. Connect **GND between the
 two boards and nothing else**. No 5 V, no 3.3 V, in either direction. Two
 independently powered boards sharing a ground reference and signal lines.
 
-This is not a general caution. The IceZero that this payload started on was
-destroyed by exactly one wire: a USB-serial cable's 5 V conductor connected to
-a board that already had its own supply.
+This is not a general caution. This payload has already lost one FPGA board to
+exactly one wire — a USB-serial cable's 5 V conductor connected to a board that
+already had its own supply. Back-feeding a powered board through a VCC pin kills
+its regulator.
 
 Signal levels are compatible without translation — the AD9910 is a 3.3 V CMOS
 part (`DVDD_I/O` = 3.3 V ±5%) and the Arty's Pmods are LVCMOS33. The

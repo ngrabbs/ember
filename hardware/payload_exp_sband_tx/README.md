@@ -144,22 +144,15 @@ M2 is the milestone that matters. Seeing the carrier reverse phase on a scope,
 driven by the FPGA's own PRBS-7, is the proof that this is a modulator and not a
 signal generator.
 
-**M0 is verified in simulation** — Verilator-lint clean, both testbenches
-passing, and the gate met at 1,000,000 symbols with zero errors. What remains
-of M0 is the hardware half: constraints, a bitstream, and the captures. See
-[`fpga/README.md`](fpga/README.md) for results and the toolchain of record.
+**M0 is closed on hardware, not just in simulation.** Verilator-lint clean,
+both testbenches passing, and the gate met on the Arty Z7-20 at 62,049,047
+symbols with zero errors — PRBS-7 decoded off the physical pin against the
+golden model. See [`fpga/README.md`](fpga/README.md) for the measured
+utilisation, timing and captures.
 
-> **Platform change, 2026-09-07.** The IceZero is dead — a failed buck regulator
-> and a hard short on its 3.3 V rail, caused by a generic USB-serial cable
-> connected to J3 with its VCC wire attached. The payload moves to a **Digilent
-> Arty Z7**, which brings USB-JTAG and USB-UART on one cable and removes that
-> failure mode entirely. The RTL and the whole simulation flow are unaffected
-> and already re-verified at the Arty's 125 MHz. Synthesis moves from
-> yosys/nextpnr to **Vivado 2024.2**. Full record in the
-> [bring-up document](fpga_link_processor_logic_interface_first_bringup.md).
-
-M3 is the milestone that matters. Seeing the carrier flip phase on a scope is
-the proof that the FPGA is generating its own BPSK.
+M1 is the live milestone. The AD9910 module is proven good on its own demo
+board, and the FPGA-side blocker — an `IO_UPDATE` pulse far narrower than the
+DDS's `SYNC_CLK` period — is fixed in RTL and awaiting a bench run.
 
 ---
 
@@ -168,7 +161,7 @@ the proof that the FPGA is generating its own BPSK.
 | Document | Status | Covers |
 |---|---|---|
 | [`sband_payload_architecture_trade_study.md`](sband_payload_architecture_trade_study.md) | **Current** — decision record | Architecture options, selection, consequences, risks |
-| [`fpga_link_processor_logic_interface_first_bringup.md`](fpga_link_processor_logic_interface_first_bringup.md) | **Current** for M0, amended above | Symbol engine, PRBS-7 convention, registered output, buffer/level interface, test sequence, worksheets |
+| [`fpga_link_processor_logic_interface_first_bringup.md`](fpga_link_processor_logic_interface_first_bringup.md) | **Current** for M0 | Symbol engine, PRBS-7 convention, registered output, buffer/level interface, board facts, test sequence, worksheets |
 | [`mini_totem_bpsk_if_to_sband_plan.md`](mini_totem_bpsk_if_to_sband_plan.md) | **Reference** — frequency plan superseded | Overall narrative, bring-up phases, HDL module list, risks. Its 50 MHz IF / 2350 MHz LO plan is replaced by the table above |
 | [`sband_experimental_tx_rf_block_diagram.drawio`](sband_experimental_tx_rf_block_diagram.drawio) | **Current** for the optional RF stage | Selected architecture drawn out, including the deferred RF chain and LO |
 | [`sband_direct_bpsk_rf_block_diagram.drawio`](sband_direct_bpsk_rf_block_diagram.drawio) | **Deferred** — not selected | The 1-bit phase-modulator alternative, retained as the future RF path |
@@ -201,9 +194,9 @@ The FPGA work has its own README: [`fpga/README.md`](fpga/README.md) covers the
 PRBS-7 convention, the timing contract, the test coverage, and how to build and
 simulate.
 
-The constraint filename is not created until the IceZero revision and pin
-mapping are physically verified — see the board-facts table in the bring-up
-document.
+Constraints live in [`fpga/constraints/arty_z7_20.xdc`](fpga/constraints/arty_z7_20.xdc),
+derived verbatim from Digilent's master XDC, with the AD9910 interconnect pin
+map alongside it in [`fpga/constraints/README.md`](fpga/constraints/README.md).
 
 ---
 

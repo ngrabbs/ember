@@ -54,106 +54,78 @@ In particular, a CMOS logic buffer is **not automatically a 50-ohm RF driver** a
 
 ---
 
-## 2. Board Facts to Verify
+## 2. Board Facts
 
-The published IceZero TE0876 documentation reports:
+**Target board: Digilent Arty Z7-20, XC7Z020-1CLG400C.** Every row below is
+confirmed on the board in hand, not read off a datasheet.
 
-- A Lattice iCE40 LP/HX-family FPGA.
-- A 100 MHz SiT8008 onboard clock.
-- 3.3 V LVCMOS I/O on the PMOD connectors.
-- An open-source iCE40 build flow.
+| Item | Value |
+|---|---|
+| FPGA | XC7Z020-1CLG400C (Zynq-7000, dual-core ARM PS + Artix-7 class PL) |
+| Board clock | 125 MHz on `H16`, LVCMOS33 — an 8.000 ns `create_clock` |
+| I/O standard | 3.3 V LVCMOS on the Pmods and the ChipKit headers |
+| Programming | USB-JTAG, Vivado hardware manager. **Volatile** — any power cycle drops the bitstream |
+| Constraints | `.xdc`, derived verbatim from Digilent's `Arty-Z7-20-Master.xdc` |
+| PS usage | **None.** This is a PL-only design; the PS is not instantiated |
 
 Sources:
 
-- [Trenz TE0876 resources](https://wiki.trenz-electronic.de/display/PD/TE0876%2BResources)
-- [IceZero Rev. 2 pinout and build notes](https://www.trenz-electronic.de/trenzdownloads/Trenz_Electronic/Modules_and_Module_Carriers/3.05x6.5/TE0876/REV02/Documents/iceZero-pinout-v5.pdf)
-- [Lattice iCE40 LP/HX family data sheet](https://www.latticesemi.com/~/media/latticesemi/documents/datasheets/ice/ice40lphxfamilydatasheet.pdf)
+- [Digilent Arty Z7 reference manual](https://digilent.com/reference/programmable-logic/arty-z7/reference-manual)
+- [Digilent master XDC files](https://github.com/Digilent/digilent-xdc) — `Arty-Z7-20-Master.xdc`
 
-The available IceZero documents contain device/revision caveats. The table below
-is filled in from `iceZero-pinout-v5.pdf` (board rev2, document v7, 2022-07-02),
-which is a complete pin map. **Every row is documentation, not observation** —
-the right-hand column stays open until someone has the board in hand.
+### Pin assignments in use
 
-| Item | From pinout doc v7 (board rev2) | Physically confirmed |
-|---|---|---|
-| IceZero assembly/revision | TE0876-02, board rev2 | ☐ |
-| FPGA top marking | `iCE40HX4K-TQ144` | ☐ |
-| FPGA density: HX4K or HX8K | Marked HX4K (3520 LC). HX8K die inside (7680 LC), reached by targeting `--hx8k --package tq144:4k` | ☐ |
-| FPGA package | 144-pin TQFP, 20 × 20 mm, 0.50 mm pitch, 107 I/O | ☐ |
-| Oscillator marking/frequency | SiT8008AI-73-XXS-100.0000OE, 100 MHz, on pin 49 (`IOB_81_GBIN5`, a global buffer input) | ☐ |
-| Selected PMOD connector | P1 — P2/P3/P4 held free for the M1 DAC bus | ☐ |
-| Selected FPGA output pin | 139 (`IOT_217`) = `tx_symbol` | ☐ |
-| Selected FPGA loopback input pin | 135 (`IOT_213`) = `tx_loopback` | ☐ |
-| I/O-bank voltage | 3.3 V LVCMOS | ☐ |
-| Pinout document revision | `iceZero-pinout-v5.pdf`, board rev2, doc v7 | ☐ |
-
-Additional facts from the same document, all of which M0 now depends on:
+Taken from `fpga/constraints/arty_z7_20.xdc`, which is the file of record.
 
 | Resource | Pins |
 |---|---|
-| LEDs | LED1 #110, LED2 #93, LED3 #94 |
-| Button | BTN #63 (`IOB_103_CBSEL0` — also a configuration-select pin, sampled at config time) |
-| UART, J3 (**FTDI TTL-232R-3.3V only**) | TX #122 (FPGA out), RX #124 (FPGA in), CTS #119 (FPGA out), DTR #125 (ignore) |
-| Configuration, via the Raspberry Pi header | CDONE #65, SDI #68, SDO #67, SCK #70, SS #71, CRESET_B #66 |
-| PMOD signal pins, 8 each | P1 139,137,135,130 / 141,138,136,134 · P2 56,48,45,43 / 55,47,44,42 · P3 26,29,28,52 / 41,39,38,37 · P4 21,20,8,7 / 1,144,143,142 |
+| Clock | `clk` H16 |
+| Switches | `sw[0]` M20, `sw[1]` M19 |
+| Buttons | `btn[0]` D19, `btn[1]` D20, `btn[2]` L20, `btn[3]` L19 |
+| LEDs | `led[0]` R14, `led[1]` P14, `led[2]` N16, `led[3]` M14 |
+| Pmod JA — bench interface | `tx_symbol` Y18, `symbol_tick` Y19, `tx_oe_n` Y16, `loopback` Y17 |
+| Pmod JB — console | `uart_tx` W14, `uart_rx` Y14 |
+| Pmod JB/JA — AD9910 | `cs_n` T11, `sclk` T10, `sdio` V16, `sdo` W16, `io_update` V12, `master_reset` W13, `pf0` U18, `pf1` U19, `pf2` W18, `pll_lock` W19 |
+| ChipKit `ck_io0` | `dds_refclk` T14 — 125 MHz / 10 = 12.5 MHz |
 
-The bitstream is loaded by `icezprog`, which bitbangs the configuration pins from
-the Raspberry Pi's GPIO. **A Raspberry Pi is a hard prerequisite** for anything
-beyond simulation; the board is a Pi HAT and has no other documented programming
-path.
+Three cautions that carry into every bench session:
 
-Two cautions carried forward to bring-up:
+- **The console is not on the programming cable.** The board's USB-UART is wired
+  to the PS, and no PS is instantiated, so the console runs on Pmod JB through
+  an external 3.3 V USB-serial cable. Connect **GND, TX and RX only**.
+- **A swapped TX/RX is the classic UART bring-up failure.** The names above are
+  from the FPGA's perspective. Confirm direction with a loopback jumper or a
+  scope before blaming the RTL. This has already cost time once, when the cable
+  was on Pmod JA instead of JB.
+- **JTAG configuration is volatile.** If the board loses power, the bitstream is
+  gone and every symptom looks like a logic bug. `make program` first, then
+  `make sanity`, then debug.
 
-- The J3 signal names above are read from the IceZero's perspective. A swapped
-  TX/RX is the classic UART bring-up failure; confirm the direction with a scope
-  or a loopback jumper before blaming the RTL.
-- The PMOD **connector pin positions** (which physical pin of the 2×6 carries
-  which FPGA pin) are inferred from the document's row/column layout. The FPGA
-  pin numbers above are unambiguous and are what the `.pcf` uses, but check
-  continuity with a meter before wiring anything to the connector.
+### The symbol rates still divide exactly
 
-Do not copy a constraint file for another iCE40 board without verifying every pin.
+The design moved from a 100 MHz board to this one, and the exact-divisor
+elaboration check in `tx_pattern_source` holds with only `CLOCK_HZ` changed:
+
+| Symbol rate | Clocks at 125 MHz |
+|---:|---:|
+| 1 ksym/s | 125,000 |
+| 10 ksym/s | 12,500 |
+| 100 ksym/s | 1,250 |
+| 1 Msym/s | 125 |
+
+The RTL is portable because it instantiates no vendor primitives — plain
+SystemVerilog throughout.
+
+### Toolchain location
+
+Vivado 2024.2 runs in a Docker container on the host **m75q (192.168.1.252)**,
+with the Xilinx tree bind-mounted read-only and USB passed through for JTAG.
+Sources are pushed with `make bitstream`; the bitstream and reports come back.
+Launcher and notes: `/workspace/notes/home_lab/vivado-docker/`.
 
 ---
 
-## Platform change: IceZero abandoned, Arty Z7 adopted (2026-09-07)
-
-The IceZero TE0876-02 is **dead and out of the project**.
-
-### What failed
-
-| Finding | Evidence |
-|---|---|
-| 3.3 V rail dead | 300 mV at every PMOD 3.3 V pin |
-| U8 (EP53A7HQI buck) failed | PVIN, AVIN and ENABLE all at 4.8 V, VS0/1/2 strapped, output 310 mV |
-| 3.3 V rail hard-shorted | An external supply hit compliance at both 20 mA and 100 mA |
-
-Two independent faults. Since U8 also feeds U10 (MCP1700) which makes the FPGA's
-1.2 V core, the FPGA and the configuration flash have had no power at all since
-the event — which is why the flash returned `00` to every JEDEC ID request and
-CDONE never rose. **Nothing ever indicated the FPGA or the flash was itself
-damaged**; they were simply never powered. That question is now moot.
-
-### Root cause
-
-A generic USB-serial cable was connected to **J3** with its **VCC wire
-connected**, and the board was powered solely from that cable with the Raspberry
-Pi detached. Two things were wrong:
-
-1. **Connecting the cable's VCC.** With the Pi detached, that red wire was
-   powering the entire IceZero through J3's 5 V pin — up to 500 mA straight
-   from USB. U8, the 5 V-to-3.3 V buck regulator, is what died.
-2. The board's schematic and silkscreen both say **"FTDI TTL-232R-3V3 Only"**,
-   and label J3 for that cable's colours (BLK / ORN / YLW / GRN). The cable used
-   was an Adafruit 954 (red / black / white / green) — not that family.
-
-**Corrected 2026-09-07.** The first analysis blamed 5 V signalling into FPGA I/O
-rated about 3.6 V. That mechanism is ruled out: the Adafruit 954's TX and RX are
-**3.3 V logic** (CP2102). The signal wires were never the problem. The fault was
-the 5 V power wire and nothing else — which makes the rule below narrower and
-more useful than "be careful with cables".
-
-### A checker that could pass a dead wire
+## 2a. A Checker That Could Pass a Dead Wire
 
 Found on the bench on 2026-09-07, and worth preserving because simulation could
 not have found it.
@@ -175,66 +147,35 @@ state. Exposing it required driving the checker from something other than the
 generator — which is what a person flipping two switches did, and what the
 testbench now does deliberately.
 
-### Rules adopted
+The same shape recurs elsewhere and is worth watching for: `make sanity` was
+also reporting a pass for "zero bit errors over zero symbols". Zero errors out
+of nothing measured is not a pass.
+
+---
+
+## 2b. Bench Wiring Rules
+
+These are not general cautions. This payload has already destroyed one FPGA
+board, and the cause was a single wire.
 
 - [ ] **Never connect a USB-serial cable's VCC** to a board that has its own
-      power. GND, TX and RX only.
-- [ ] **Verify the cable signals at 3.3 V** before it touches an FPGA pin.
-      Check the datasheet, not the wire colours — the Adafruit 954 signals at
-      3.3 V despite carrying a 5 V power wire, so colour alone proves nothing.
-- [ ] Prefer a connector that carries **no 5 V near 3.3 V logic** at all.
-
-### Replacement: Digilent Arty Z7 (Zynq-7000)
-
-Chosen for reasons that also remove the failure mode above: **USB-JTAG and
-USB-UART are built in on one cable**, so there is no separate serial cable to
-mis-wire and no 5 V pin next to an FPGA input.
-
-What changes, and what does not:
-
-| | Before (IceZero) | After (Arty Z7) |
-|---|---|---|
-| Device | iCE40HX4K-TQ144 | Zynq-7000 (XC7Z010 / XC7Z020) |
-| Synthesis / P&R | yosys + nextpnr-ice40 | **Vivado 2024.2** |
-| Constraints | `.pcf` | `.xdc` |
-| Programming | `icezprog` over Raspberry Pi GPIO | Vivado hardware manager over USB-JTAG |
-| Board clock | 100 MHz | **125 MHz** |
-| Console / readout | FTDI cable on J3, or Pi header | Built-in USB-UART |
-| **RTL** | — | **unchanged** |
-| **Simulation** | — | **unchanged** (Verilator + Icarus) |
-
-The RTL is portable because it contains no iCE40 primitives — plain
-SystemVerilog throughout. It has been re-simulated at 125 MHz and passes
-unmodified. All four symbol rates still divide the board clock exactly:
-
-| Symbol rate | Clocks at 125 MHz |
-|---:|---:|
-| 1 ksym/s | 125,000 |
-| 10 ksym/s | 12,500 |
-| 100 ksym/s | 1,250 |
-| 1 Msym/s | 125 |
-
-So `tx_pattern_source`'s exact-divisor elaboration check still passes with only
-`CLOCK_HZ` changed.
-
-### Toolchain location
-
-Vivado 2024.2 runs in a Docker container on the host **m75q (192.168.1.252)**,
-with the Xilinx tree bind-mounted read-only and USB passed through. JTAG through
-that container is already proven. Launcher and notes:
-`/workspace/notes/home_lab/vivado-docker/`.
-
-The IceZero board-facts table above is retained as a historical record. It is
-no longer the target. An equivalent table for the Arty Z7 is written once the
-board revision is confirmed and Digilent's master XDC is pulled in.
-
+      power. GND, TX and RX only. Back-feeding a powered board through a VCC pin
+      kills its regulator — which is exactly what happened here, with the board
+      drawing its entire supply through a serial cable's 5 V conductor.
+- [ ] **Verify the cable signals at 3.3 V** before it touches an FPGA pin. Check
+      the datasheet, not the wire colours. The Adafruit 954 signals at 3.3 V
+      despite carrying a 5 V power wire, so colour alone proves nothing.
+- [ ] **Ground is the only connection to a separately powered board.** The
+      AD9910 module has its own 5 V barrel jack. GND between the two boards and
+      nothing else — no 5 V, no 3.3 V, in either direction.
+- [ ] **No antenna at any stage.** Everything cabled, attenuated and terminated.
 
 ---
 
 ## 3. First-Milestone Architecture
 
 ```text
-100 MHz board clock
+125 MHz board clock
         │
         v
 ┌────────────────────┐
@@ -297,7 +238,7 @@ At this stage, `tx_symbol` is only a logic-level command. It is not an RF wavefo
 
 Combinational decoding can briefly glitch when several internal bits change at slightly different times. Driving the final pin from a flip-flop gives a single, clock-defined transition and makes timing analysis meaningful.
 
-The iCE40 PIO includes an optional output register before the sysIO buffer; the Lattice data sheet documents this path. A normal fabric register placed close to the I/O can also be used, but the place-and-route timing report should confirm the result.
+The 7-series I/O block includes an output flip-flop (`OFDRE`) inside the IOB itself, which Vivado will infer and pack automatically when the driving register has no other fanout; `set_property IOB TRUE` forces it. A normal fabric register placed close to the I/O also works, but the place-and-route timing report should confirm the result either way.
 
 Rules:
 
@@ -314,7 +255,7 @@ Rules:
 
 ### 5.1 Symbol tick
 
-For the first experiment, use an integer divider of the 100 MHz board clock:
+For the first experiment, use an integer divider of the 125 MHz board clock:
 
 ```text
 cycles_per_symbol = 100,000,000 / symbol_rate
@@ -543,7 +484,7 @@ If the output is translated above the FPGA's I/O voltage, do not return it direc
 ### Phase 0: Toolchain and clock
 
 - [ ] Build and load a minimal LED counter.
-- [ ] Confirm the 100 MHz clock assumption against the board marking.
+- [x] Board clock confirmed: 125 MHz on `H16`, per Digilent's master XDC.
 - [ ] Run place-and-route timing analysis.
 - [ ] Save tool versions and build command.
 
@@ -724,12 +665,13 @@ Recommendation: write and verify the tiny local PRBS-7 for milestone one. Reeval
 - [Taxi HDL](https://github.com/fpganinja/taxi) provides current stream, FIFO, synchronization, and peripheral components.
 - [Older `verilog-axis`](https://github.com/alexforencich/verilog-axis) documents frame-aware FIFOs, asynchronous FIFOs, width adapters, rate limiters, and test infrastructure. Prefer its maintained successor for a new design.
 
-For the small iCE40, do not introduce AXI Stream merely for a one-bit test pattern. A simple `valid/ready/data` byte interface is sufficient until the design actually needs multiple producers, backpressure, or clock-domain boundaries.
+For a design this small, do not introduce AXI Stream merely for a one-bit test pattern. A simple `valid/ready/data` byte interface is sufficient until the design actually needs multiple producers, backpressure, or clock-domain boundaries.
 
-### iCE40 examples and toolchain
+### Board support and toolchain
 
-- [Project IceStorm](https://github.com/YosysHQ/icestorm) documents the open iCE40 bitstream flow and includes board examples.
-- [Open iCE40 HX8K example projects](https://github.com/nesl/ice40_examples) show small build trees, pin-constraint files, counters, UART transmission, and simulation-oriented exercises. These target different boards, so use their structure rather than their pin assignments.
+- [Digilent digilent-xdc](https://github.com/Digilent/digilent-xdc) is the source of record for Arty Z7 pin constraints. Copy `Arty-Z7-20-Master.xdc` and uncomment what the design uses; do not transcribe pin names by hand.
+- [Digilent Arty Z7 reference manual](https://digilent.com/reference/programmable-logic/arty-z7/reference-manual) documents the connectors, clocking, and the Pmod / ChipKit pin mapping.
+- The build here runs Vivado in non-project mode from `fpga/vivado/build.tcl`, so the whole flow is a script in git rather than a `.xpr` no one can diff.
 
 ---
 
@@ -747,7 +689,9 @@ hardware/payload_exp_sband_tx/
 │   │   ├── tb_tx_pattern_source.sv
 │   │   └── prbs7_golden.py
 │   ├── constraints/
-│   │   └── icezero_<verified-revision>.pcf
+│   │   └── arty_z7_20.xdc
+│   ├── vivado/
+│   │   └── build.tcl
 │   ├── Makefile
 │   └── README.md
 └── measurements/
@@ -757,7 +701,7 @@ hardware/payload_exp_sband_tx/
         └── raw_data/
 ```
 
-Do not create the hardware-specific constraint filename until the board revision and pin mapping are verified.
+The constraint filename names the exact board variant, because the Z7-10 and Z7-20 share a footprint but not a part number.
 
 ---
 
@@ -765,8 +709,8 @@ Do not create the hardware-specific constraint filename until the board revision
 
 Bring these results to the next design review:
 
-- [ ] IceZero revision and FPGA top-marking photo.
-- [ ] Selected PMOD pins and verified constraint entries.
+- [x] Board variant confirmed and constraint file derived from the vendor master XDC.
+- [x] Selected Pmod pins and verified constraint entries.
 - [ ] RTL and simulator output confirming PRBS period and bit order.
 - [ ] Scope capture of constant high and low.
 - [ ] Scope capture of the alternating pattern.

@@ -17,9 +17,9 @@
 #   make sanity     end-to-end bench check: console, symbol engine, DDS
 #   make tools      how to install what is missing
 #
-# Target board is the Digilent Arty Z7 (Zynq-7000) as of 2026-09-07; synthesis
-# and programming run under Vivado 2024.2 in the m75q container. The count and
-# synth targets below are iCE40 legacy and no longer describe the target.
+# Target board is the Digilent Arty Z7-20 (XC7Z020). Synthesis, place-and-route
+# and programming run under Vivado 2024.2 in the m75q container; utilisation and
+# timing come back with the bitstream, so there is no local synthesis step.
 #
 # Every simulation target lints with Verilator before compiling with Icarus.
 # Verilator's diagnostics are far better, so it should be the first thing to
@@ -42,21 +42,10 @@ PYTHON       ?= python3
 IVERILOG     ?= iverilog
 VVP          ?= vvp
 VERILATOR    ?= verilator
-YOSYS        ?= yosys
-YOSYS_CONFIG ?= yosys-config
 
-# iCE40 primitive simulation library, so a design that instantiates SB_* cells
-# still simulates. M0 does not need it; M1 will, as soon as the DAC bus uses
-# SB_IO registers. Resolved only when yosys is on the path.
-TECH_LIB := $(shell command -v $(YOSYS_CONFIG) >/dev/null 2>&1 && $(YOSYS_CONFIG) --datdir/ice40/cells_sim.v)
-ifneq ($(TECH_LIB),)
-  IV_TECH := -l$(TECH_LIB)
-  DEFINES += -DNO_ICE40_DEFAULT_ASSIGNMENTS
-endif
+# The RTL instantiates no vendor primitives - plain SystemVerilog throughout -
+# so the testbenches need no technology simulation library.
 
-# IceZero carries an iCE40 HX part. Confirm the density and package against the
-# board before this matters - see constraints/README.md.
-DEVICE  ?= hx
 SYMBOLS      ?= 1000000
 WAVE_SYMBOLS ?= 400
 
@@ -69,7 +58,7 @@ GUI_HOME := $(CURDIR)/$(BUILD)/.home
 VIVADO_HOST ?= ngrabbs@192.168.1.252
 VIVADO_DIR  ?= vivado-work/ember-payload-fpga
 
-IVERILOG_OPTS := -g2012 -Wall -I$(RTLDIR) $(IV_TECH)
+IVERILOG_OPTS := -g2012 -Wall -I$(RTLDIR)
 
 # The RTL is held to a clean -Wall. The two suppressions on the testbench line
 # are ordinary testbench idioms, not code smells: PROCASSINIT is `logic clk =
@@ -78,10 +67,7 @@ IVERILOG_OPTS := -g2012 -Wall -I$(RTLDIR) $(IV_TECH)
 VERILATOR_OPTS    := -sv --language 1800-2012 -Wall -Wno-DECLFILENAME
 VERILATOR_TB_OPTS := $(VERILATOR_OPTS) -Wno-STMTDLY -Wno-PROCASSINIT -Wno-BLKSEQ
 
-YOSYS_OPTS       := -e "no driver"
-YOSYS_SYNTH_OPTS := -device $(DEVICE) -abc9
-
-.PHONY: help sanity golden vectors lint sim sim-prbs sim-tx sim-uart sim-spi sim-dds sim-ref sim-long waves gtkwave ascii count synth push bitstream program check clean tools
+.PHONY: help sanity golden vectors lint sim sim-prbs sim-tx sim-uart sim-spi sim-dds sim-ref sim-long waves gtkwave ascii push bitstream program check clean tools
 
 help:
 	@sed -n '2,$$ { /^# ----/q; s/^# \{0,1\}//; p; }' Makefile
@@ -238,25 +224,6 @@ gtkwave: $(BUILD)/wave.fst
 	@HOME=$(GUI_HOME) gtkwave $(BUILD)/wave.fst
 
 # ---------------------------------------------------------------------------
-# Synthesis - iCE40 LEGACY.
-#
-# Kept for reference only. The target board is now the Arty Z7 and synthesis
-# runs under Vivado 2024.2 in the m75q container; see constraints/README.md.
-# ---------------------------------------------------------------------------
-count: $(SRC) $(MAKEFILE_LIST) | $(LOGS)
-	$(call need,$(YOSYS))
-	@$(YOSYS) $(YOSYS_OPTS) -q -l $(LOGS)/$(TOP)_count.log \
-	  -p 'read_verilog -DSYNTHESIS $(DEFINES) -I$(RTLDIR) -sv $(SRC); synth_ice40 $(YOSYS_SYNTH_OPTS) -top $(TOP) -noflatten'
-	@sed -n '/Printing statistics/,/Executing CHECK pass/p' $(LOGS)/$(TOP)_count.log | sed '$$d'
-	@echo "=== full log in $(LOGS)/$(TOP)_count.log ==="
-
-synth: $(SRC) $(MAKEFILE_LIST) | $(BUILD) $(LOGS)
-	$(call need,$(YOSYS))
-	$(YOSYS) $(YOSYS_OPTS) -q -l $(LOGS)/$(TOP)_synth.log \
-	  -p 'read_verilog -DSYNTHESIS $(DEFINES) -I$(RTLDIR) -sv $(SRC); synth_ice40 $(YOSYS_SYNTH_OPTS) -top $(TOP) -json $(BUILD)/$(TOP).json'
-	@echo "=== netlist: $(BUILD)/$(TOP).json ==="
-
-# ---------------------------------------------------------------------------
 # Hardware: Arty Z7-20 via Vivado 2024.2 in the container on $(VIVADO_HOST).
 # Sources are pushed, the build runs there, and the bitstream and reports come
 # back into build/vivado/. Nothing about the simulation flow depends on this.
@@ -295,13 +262,11 @@ tools:
 	@echo "    tar xzf oss-cad-suite-linux-x64-*.tgz -C ~/opt"
 	@echo "    source ~/opt/oss-cad-suite/environment"
 	@echo ""
-	@echo "  One tarball with iverilog, verilator, yosys, nextpnr-ice40,"
-	@echo "  icestorm and gtkwave at consistent versions. Add the source line"
-	@echo "  to your shell profile."
+	@echo "  One tarball with iverilog, verilator and gtkwave at consistent"
+	@echo "  versions. Add the source line to your shell profile."
 	@echo ""
 	@echo "  Distribution packages work too, but mix versions and need root:"
-	@echo "    Debian/Ubuntu:  sudo apt-get install iverilog verilator yosys \\"
-	@echo "                         nextpnr-ice40 fpga-icestorm gtkwave"
+	@echo "    Debian/Ubuntu:  sudo apt-get install iverilog verilator gtkwave"
 	@echo "    macOS:          brew install icarus-verilog verilator gtkwave"
 	@echo "                    brew install --cask oss-cad-suite"
 	@echo ""
