@@ -57,11 +57,17 @@ module ad9910_ctrl #(
     parameter int unsigned RESET_US    = 1_000,         // MASTER_RESET width
     parameter int unsigned SETTLE_US   = 1_000,         // after reset release
     parameter int unsigned IOUP_US     = 1_000,         // IO_UPDATE width
-    parameter int unsigned LOCK_TMO_US = 10_000         // PLL lock timeout
+    parameter int unsigned LOCK_TMO_US = 10_000,        // PLL lock timeout
+    // DAC full-scale current, auxiliary DAC control register 0x03.
+    // Reset default is not full scale; the JQIamo reference driver writes 0xFF
+    // and so do we. This sets output amplitude and nothing else, so it is safe
+    // to turn down if a later stage needs less drive.
+    parameter logic [7:0]  FSC         = 8'hFF
 ) (
     input  wire        clk,
     input  wire        rst,
     input  wire        start,          // pulse to run the sequence
+    input  wire        rd_start,       // pulse to read CFR3 back
 
     input  wire [31:0] ftw,            // frequency tuning word
     input  wire [15:0] pow0,           // profile 0 phase offset word
@@ -77,12 +83,19 @@ module ad9910_ctrl #(
 
     output logic [7:0] spi_tx_data,
     output logic       spi_tx_valid,
+    output logic       spi_tx_read,   // release SDIO for this byte
     input  wire        spi_tx_ready,
     input  wire        spi_busy,      // needed to know the LAST byte has shifted
+    input  wire  [7:0] spi_rx_data,
+    input  wire        spi_rx_valid,
 
     output logic       busy,
     output logic       done,
-    output logic       lock_timeout
+    output logic       lock_timeout,
+
+    // Register readback. rd_data is only meaningful once rd_valid has pulsed.
+    output logic [31:0] rd_data,
+    output logic        rd_valid
 );
     localparam int unsigned RESET_CYCLES  = (CLOCK_HZ / 1_000_000) * RESET_US;
     localparam int unsigned SETTLE_CYCLES = (CLOCK_HZ / 1_000_000) * SETTLE_US;
@@ -91,12 +104,17 @@ module ad9910_ctrl #(
 
     // AD9910 serial addresses
     localparam logic [7:0] ADDR_CFR3 = 8'h02;
+    localparam logic [7:0] ADDR_ADAC = 8'h03;   // auxiliary DAC control (FSC)
     localparam logic [7:0] ADDR_PRF0 = 8'h0E;
     localparam logic [7:0] ADDR_PRF1 = 8'h0F;
 
+    // Bit 7 of the instruction byte is read/not-write.
+    localparam logic [7:0] RD_CFR3   = 8'h80 | ADDR_CFR3;
+
     typedef enum logic [3:0] {
         S_IDLE, S_RST, S_SETTLE, S_CFR3, S_IOUP1, S_LOCK,
-        S_PRF0, S_PRF1, S_IOUP2, S_DONE
+        S_PRF0, S_PRF1, S_ADAC, S_IOUP2, S_DONE,
+        S_RD_CMD, S_RD_DATA
     } state_e;
     state_e state;
 
@@ -104,6 +122,8 @@ module ad9910_ctrl #(
     logic [71:0] shifter;        // up to 9 bytes: instruction + 8 data
     logic [3:0]  bytes_left;
     logic        launch;         // one-shot: load the shifter for this state
+    logic [2:0]  rd_left;        // read-data bytes still to be clocked in
+    logic [2:0]  rd_got;         // read-data bytes actually collected
 
     // A single-tone profile is 64 bits: [61:48] ASF, [47:32] POW, [31:0] FTW.
     function automatic logic [63:0] profile(input logic [15:0] p);
@@ -115,6 +135,7 @@ module ad9910_ctrl #(
 
     always_ff @(posedge clk) begin
         spi_tx_valid <= 1'b0;
+        rd_valid     <= 1'b0;
 
         if (rst) begin
             state        <= S_IDLE;
@@ -125,6 +146,10 @@ module ad9910_ctrl #(
             lock_timeout <= 1'b0;
             bytes_left   <= '0;
             launch       <= 1'b0;
+            spi_tx_read  <= 1'b0;
+            rd_left      <= '0;
+            rd_got       <= '0;
+            rd_data      <= '0;
         end else begin
             case (state)
                 // S_DONE handles start identically to S_IDLE. Routing S_DONE
@@ -136,6 +161,17 @@ module ad9910_ctrl #(
                     master_reset <= 1'b1;
                     timer        <= '0;
                     state        <= S_RST;
+                end else if (rd_start) begin
+                    // Read does NOT reset the part. The whole point is to
+                    // inspect the registers as they currently stand.
+                    shifter    <= {RD_CFR3, 64'b0};
+                    bytes_left <= 4'd1;
+                    rd_left    <= 3'd4;
+                    rd_got     <= '0;
+                    rd_data    <= '0;
+                    cs_n       <= 1'b0;
+                    launch     <= 1'b1;
+                    state      <= S_RD_CMD;
                 end
 
                 S_RST: if (timer == RESET_CYCLES-1) begin
@@ -154,7 +190,7 @@ module ad9910_ctrl #(
                 end else timer <= timer + 1'b1;
 
                 // Shift the loaded transaction out, MSB byte first, then raise CS.
-                S_CFR3, S_PRF0, S_PRF1: begin
+                S_CFR3, S_PRF0, S_PRF1, S_ADAC: begin
                     launch <= 1'b0;
                     // CS may only rise once the final byte has actually left
                     // the shifter. tx_ready is still high during the cycle the
@@ -171,6 +207,15 @@ module ad9910_ctrl #(
                                     bytes_left <= 4'd9;
                                     cs_n       <= 1'b0;
                                     state      <= S_PRF1;
+                                end
+                                S_PRF1: begin
+                                    // Full-scale current, folded in before the
+                                    // final IO_UPDATE so one pulse commits the
+                                    // profiles and the amplitude together.
+                                    shifter    <= {ADDR_ADAC, 24'b0, FSC, 32'b0};
+                                    bytes_left <= 4'd5;
+                                    cs_n       <= 1'b0;
+                                    state      <= S_ADAC;
                                 end
                                 default: begin io_update <= 1'b1; state <= S_IOUP2; end
                             endcase
@@ -207,6 +252,49 @@ module ad9910_ctrl #(
                         launch       <= 1'b1;
                         state        <= S_PRF0;   // carry on; 40 MHz still works
                     end else timer <= timer + 1'b1;
+                end
+
+                // The instruction byte of a read, in its own state precisely
+                // because it must NOT touch cs_n: the data phase belongs to the
+                // same transaction, and CS has to stay low across the bus
+                // turnaround. The shared write state above raises CS by default
+                // and relies on each case re-lowering it, which is the wrong
+                // default to inherit here.
+                S_RD_CMD: begin
+                    launch <= 1'b0;
+                    if (bytes_left == 0) begin
+                        if (!spi_tx_valid && !spi_busy) state <= S_RD_DATA;
+                    end else if (spi_tx_ready && !spi_tx_valid && !launch) begin
+                        spi_tx_data  <= shifter[71:64];
+                        spi_tx_valid <= 1'b1;
+                        shifter      <= {shifter[63:0], 8'h00};
+                        bytes_left   <= bytes_left - 1'b1;
+                    end
+                end
+
+                // Clock four bytes in with SDIO released. rd_got counts what
+                // actually arrived, so a slave that never drives the line is
+                // distinguishable from one that returns zeros: the former
+                // still completes, and the value is whatever the floating pin
+                // sampled. Compare against what was written to tell them apart.
+                S_RD_DATA: begin
+                    if (spi_rx_valid) begin
+                        rd_data <= {rd_data[23:0], spi_rx_data};
+                        rd_got  <= rd_got + 1'b1;
+                    end
+                    if (rd_left == 0) begin
+                        if (!spi_tx_valid && !spi_busy && !spi_rx_valid) begin
+                            cs_n        <= 1'b1;
+                            spi_tx_read <= 1'b0;
+                            rd_valid    <= 1'b1;
+                            state       <= S_DONE;
+                        end
+                    end else if (spi_tx_ready && !spi_tx_valid) begin
+                        spi_tx_data  <= 8'h00;      // ignored while reading
+                        spi_tx_read  <= 1'b1;
+                        spi_tx_valid <= 1'b1;
+                        rd_left      <= rd_left - 1'b1;
+                    end
                 end
 
                 S_IOUP2: if (timer == IOUP_CYCLES-1) begin

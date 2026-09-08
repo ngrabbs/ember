@@ -27,6 +27,8 @@ module tb_spi_master;
 
     logic [7:0] tx_data = 8'h00;
     logic       tx_valid = 1'b0;
+    logic       tx_read  = 1'b0;
+    logic       mosi_oe;
     logic       tx_ready;
     logic [7:0] rx_data;
     logic       rx_valid;
@@ -34,9 +36,20 @@ module tb_spi_master;
 
     spi_master #(.CLOCK_HZ(CLOCK_HZ), .SCLK_HZ(SCLK_HZ)) dut (
         .clk(clk), .rst(rst),
-        .tx_data(tx_data), .tx_valid(tx_valid), .tx_ready(tx_ready),
+        .tx_data(tx_data), .tx_valid(tx_valid), .tx_read(tx_read),
+        .tx_ready(tx_ready),
         .rx_data(rx_data), .rx_valid(rx_valid),
-        .sclk(sclk), .mosi(mosi), .miso(miso), .busy(busy));
+        .sclk(sclk), .mosi(mosi), .mosi_oe(mosi_oe), .miso(miso), .busy(busy));
+
+    // mosi_oe must be low for every SCLK edge of a read byte and high for every
+    // edge of a write byte. On hardware this drives a tri-state, so getting it
+    // wrong means the FPGA and the AD9910 drive SDIO at the same time.
+    logic reading_now = 1'b0;
+    int oe_low_on_write = 0, oe_high_on_read = 0;
+    always @(posedge sclk) begin
+        if (reading_now && mosi_oe)   oe_high_on_read++;
+        if (!reading_now && !mosi_oe) oe_low_on_write++;
+    end
 
     // ---------------- slave model: shift in on rising, out on falling -------
     logic [7:0] slave_rx;
@@ -81,6 +94,18 @@ module tb_spi_master;
         @(negedge clk);
     endtask
 
+    // A read: tx_data is ignored and the line is released for the slave.
+    task automatic xfer_read(input logic [7:0] slave_gives);
+        load_slave(slave_gives);
+        @(negedge clk);
+        tx_data = 8'h00; tx_valid = 1'b1; tx_read = 1'b1; reading_now = 1'b1;
+        @(negedge clk);
+        tx_valid = 1'b0; tx_read = 1'b0;
+        wait (rx_valid);
+        @(negedge clk);
+        reading_now = 1'b0;
+    endtask
+
     realtime t0, t1;
     int i;
 
@@ -115,6 +140,18 @@ module tb_spi_master;
         slave_bits = 0;
         for (i = 0; i < 8; i++) xfer(i[7:0], 8'hFF - i[7:0]);
         check(slave_bits == 64, $sformatf("E6 64 SCLK edges for 8 bytes (got %0d)", slave_bits));
+
+        // E8 - read mode. The byte comes back and the line was released.
+        xfer_read(8'h5A);
+        check(rx_data == 8'h5A, $sformatf("E8a a read byte returns 5A (got %02h)", rx_data));
+        xfer_read(8'hC3);
+        check(rx_data == 8'hC3, $sformatf("E8b and tracks a second value (got %02h)", rx_data));
+        xfer(8'h99, 8'h00);
+        check(rx_data == 8'h00, "E8c a following write still transfers normally");
+        check(oe_high_on_read == 0,
+              $sformatf("E9a MOSI released for every read edge (%0d violations)", oe_high_on_read));
+        check(oe_low_on_write == 0,
+              $sformatf("E9b MOSI driven for every write edge (%0d violations)", oe_low_on_write));
 
         // E4 / E5
         check(mosi_violations == 0,

@@ -12,10 +12,15 @@
 // Keeping CS with the sequencer means this block stays a dumb shifter and the
 // protocol knowledge lives in one place.
 //
-// SDIO / SDO rather than a bidirectional line: the AD9910 powers up with SDIO
-// bidirectional (2-wire), but the breakout brings out SDO as well, so the
-// first write sets CFR1[1] (SDIO input only) and everything afterwards is
-// 3-wire. No tri-state is ever needed on our side.
+// SDIO is bidirectional. The AD9910 powers up in 2-wire mode, where read data
+// comes back on SDIO rather than SDO, and getting to 3-wire needs a successful
+// CFR1 write - which is exactly what you cannot assume when the question is
+// "does this part respond at all". So reads are done the way the part powers
+// up: `tx_read` releases MOSI for the duration of a byte and captures it.
+//
+// The alternative, setting CFR1[1] first and reading on SDO, was the original
+// plan and was never implemented. It is also circular as a diagnostic: it
+// needs a working write before it can verify that writes work.
 // ---------------------------------------------------------------------------
 
 `timescale 1ns / 1ps
@@ -30,6 +35,10 @@ module spi_master #(
 
     input  wire  [7:0] tx_data,
     input  wire        tx_valid,
+    // Sampled with tx_valid. 1 = this byte is a READ: MOSI is released for the
+    // whole byte so the slave can drive the line, and the result appears in
+    // rx_data. tx_data is ignored.
+    input  wire        tx_read,
     output logic       tx_ready,
 
     output logic [7:0] rx_data,
@@ -37,6 +46,7 @@ module spi_master #(
 
     output logic       sclk,
     output logic       mosi,
+    output logic       mosi_oe,   // 0 while reading - drive a tri-state here
     input  wire        miso,
     output logic       busy
 );
@@ -54,7 +64,9 @@ module spi_master #(
     logic [6:0]    shift_tx;   // bit 7 goes straight to mosi at load time
     logic [7:0]    shift_rx;
     logic          phase;          // 0 = about to rise, 1 = about to fall
+    logic          reading;        // this byte is a read; MOSI is released
 
+    assign mosi_oe  = ~reading;
     assign tx_ready = ~busy;
     assign tick     = (div == CW'(HALF-1));
 
@@ -68,6 +80,7 @@ module spi_master #(
             div       <= '0;
             phase     <= 1'b0;
             bit_index <= '0;
+            reading   <= 1'b0;
         end else if (!busy) begin
             sclk <= 1'b0;
             div  <= '0;
@@ -77,6 +90,9 @@ module spi_master #(
                 busy      <= 1'b1;
                 phase     <= 1'b0;
                 bit_index <= '0;
+                // Released before the first rising edge, so the slave owns the
+                // line for the whole byte rather than for seven eighths of it.
+                reading   <= tx_read;
             end
         end else if (!tick) begin
             div <= div + 1'b1;

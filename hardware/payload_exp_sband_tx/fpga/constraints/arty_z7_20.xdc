@@ -82,7 +82,7 @@ set_false_path -from [get_ports { btn[*] }]
 set_false_path -from [get_ports { sw[*] }]
 set_false_path -from [get_ports { ja_loopback }]
 set_false_path -from [get_ports { jb_uart_rx }]
-set_false_path -from [get_ports { dds_sdo dds_pll_lock }]
+set_false_path -from [get_ports { dds_sdo dds_pll_lock dds_sdio }]
 set_false_path -to   [get_ports { dds_cs_n dds_sclk dds_sdio dds_io_update \
                                   dds_master_reset dds_pf0 dds_pf1 dds_pf2 }]
 create_generated_clock -name dds_refclk -source [get_ports clk] -divide_by 10 \

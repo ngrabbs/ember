@@ -478,9 +478,10 @@ M3 is characterisation:
 
 - [ ] Occupied bandwidth against symbol rate, on an SDR or analyser.
 - [ ] Carrier-frequency error against the 40 MHz reference.
-- [ ] **Write the DAC full-scale current** (register `0x03`). We never write it;
-      the reference driver sets `0xFF`. Output is currently ~300 mVpp at 10 MHz.
-- [ ] **Add SPI readback** so register state can be verified rather than
-      inferred. The AD9910 powers up in 2-wire mode, so reads return on `SDIO`
-      and it needs a tristate. The absence of this cost a full day.
+- [x] **DAC full-scale current** (register `0x03`, `FSC = 0xFF`) — done. Output
+      roughly doubled: 292 mVpp to **512 mVpp** at 10 MHz, about +4.9 dB.
+- [x] **SPI readback** — done. `v` reads CFR3 back off the part and tracks live
+      changes. Reads use 2-wire mode on `SDIO` with a tri-state, so it works
+      from power-up defaults rather than needing a successful `CFR1` write
+      first — which would have been circular as a diagnostic.
 - [ ] Re-measure the M0 edge rates and overshoot with a short ground spring.

@@ -38,7 +38,14 @@ module tb_ad9910_ctrl;
     logic [7:0] spi_tx_data;
     logic       spi_tx_valid, spi_tx_ready;
     logic       busy, done, lock_timeout, spi_busy;
-    logic       sclk, mosi;
+    logic       sclk, mosi, mosi_oe;
+    logic       rd_start = 1'b0, spi_tx_read, rd_valid;
+    logic [31:0] rd_data;
+    logic [7:0] spi_rx_data;
+    logic       spi_rx_valid;
+
+    // What the slave model hands back on a read.
+    localparam logic [31:0] RESP = 32'hA5C3_1729;
 
     ad9910_ctrl #(
         .CLOCK_HZ(125_000_000), .RESET_US(2), .SETTLE_US(2),
@@ -48,18 +55,25 @@ module tb_ad9910_ctrl;
         .ftw(FTW), .pow0(POW0), .pow1(POW1), .asf(ASF), .cfr3(CFR3),
         .pll_lock(pll_lock),
         .master_reset(master_reset), .io_update(io_update), .cs_n(cs_n),
+        .rd_start(rd_start),
         .spi_tx_data(spi_tx_data), .spi_tx_valid(spi_tx_valid),
+        .spi_tx_read(spi_tx_read),
         .spi_tx_ready(spi_tx_ready), .spi_busy(spi_busy),
-        .busy(busy), .done(done), .lock_timeout(lock_timeout));
+        .spi_rx_data(spi_rx_data), .spi_rx_valid(spi_rx_valid),
+        .busy(busy), .done(done), .lock_timeout(lock_timeout),
+        .rd_data(rd_data), .rd_valid(rd_valid));
 
-    // Write-only bring-up: reads need CFR1[1] (SDIO input only) set first.
-    /* verilator lint_off PINCONNECTEMPTY */
+    // miso is the slave model's SDIO drive. On real hardware SDIO is one
+    // bidirectional pin; here the two directions are separate nets, which is
+    // equivalent as long as mosi_oe is respected - and F13 checks that it is.
+    logic miso_model;
     spi_master #(.CLOCK_HZ(125_000_000), .SCLK_HZ(10_000_000)) spi (
         .clk(clk), .rst(rst),
-        .tx_data(spi_tx_data), .tx_valid(spi_tx_valid), .tx_ready(spi_tx_ready),
-        .rx_data(), .rx_valid(),
-        .sclk(sclk), .mosi(mosi), .miso(1'b0), .busy(spi_busy));
-    /* verilator lint_on PINCONNECTEMPTY */
+        .tx_data(spi_tx_data), .tx_valid(spi_tx_valid), .tx_read(spi_tx_read),
+        .tx_ready(spi_tx_ready),
+        .rx_data(spi_rx_data), .rx_valid(spi_rx_valid),
+        .sclk(sclk), .mosi(mosi), .mosi_oe(mosi_oe), .miso(miso_model),
+        .busy(spi_busy));
 
     // ---------------- AD9910 slave model ------------------------------------
     logic [6:0]  sh;
@@ -73,15 +87,38 @@ module tb_ad9910_ctrl;
     logic [63:0] t_data  [0:7];
     int          t_bytes [0:7];
 
+    logic [31:0] rd_shift;
+    logic        rd_active = 1'b0;
+    int          oe_violations = 0;
+
     always @(posedge sclk) if (!cs_n) begin
+        // Checked BEFORE rd_active can be set by this same edge: the master
+        // cannot have released the line for a read it has not yet been told
+        // about, so counting that edge would be a model artifact.
+        if (rd_active && mosi_oe) oe_violations = oe_violations + 1;
         if (nbits % 8 == 7) begin
             cur_byte = {sh, mosi};
-            if (nbytes == 0) addr = cur_byte;
-            else             data = {data[55:0], cur_byte};
+            if (nbytes == 0) begin
+                addr = cur_byte;
+                // Bit 7 of the instruction byte is read/not-write.
+                if (cur_byte[7]) begin
+                    rd_active = 1'b1;
+                    rd_shift  = RESP;
+                end
+            end else begin
+                data = {data[55:0], cur_byte};
+            end
             nbytes = nbytes + 1;
         end
         sh    = {sh[5:0], mosi};
         nbits = nbits + 1;
+    end
+
+    // Mode 0: the slave presents on the falling edge, the master samples on
+    // the rising edge that follows.
+    always @(negedge sclk) if (!cs_n && rd_active) begin
+        miso_model = rd_shift[31];
+        rd_shift   = {rd_shift[30:0], 1'b0};
     end
 
     always @(posedge cs_n) begin
@@ -91,7 +128,7 @@ module tb_ad9910_ctrl;
             t_bytes[ntrans] = nbytes;
             ntrans          = ntrans + 1;
         end
-        nbytes = 0; nbits = 0; data = 64'h0;
+        nbytes = 0; nbits = 0; data = 64'h0; rd_active = 1'b0;
     end
 
     // ---------------- checks -------------------------------------------------
@@ -108,7 +145,7 @@ module tb_ad9910_ctrl;
     always @(posedge clk) if (!rst && done && busy) busy_violations++;
     always @(posedge io_update) begin
         if (ntrans == 1) ioup_after_cfr3++;
-        if (ntrans == 3) ioup_after_prof++;
+        if (ntrans == 4) ioup_after_prof++;
     end
     always @(negedge cs_n) if (master_reset === 1'b0 && rst_before_spi == 0) rst_before_spi = 1;
 
@@ -128,7 +165,7 @@ module tb_ad9910_ctrl;
         wait (done); repeat (10) @(negedge clk);
 
         check(rst_before_spi == 1, "F1 MASTER_RESET pulsed before any SPI traffic");
-        check(ntrans == 3, $sformatf("F7a three transactions (got %0d)", ntrans));
+        check(ntrans == 4, $sformatf("F7a four transactions (got %0d)", ntrans));
         check(t_addr[0] == 8'h02 && t_bytes[0] == 5,
               $sformatf("F7b CFR3 framed as addr 02 + 4 bytes (got %02h, %0d bytes)",
                         t_addr[0], t_bytes[0]));
@@ -146,6 +183,14 @@ module tb_ad9910_ctrl;
         check(t_data[2][31:0] == t_data[1][31:0],
               "F5b both profiles carry the same frequency, differing only in phase");
         check(ioup_after_prof >= 1, "F6 IO_UPDATE pulsed after the profiles");
+        // F11 - DAC full-scale current. Without this the part works but runs
+        // at reduced output; it is written before the final IO_UPDATE so one
+        // pulse commits amplitude and profiles together.
+        check(t_addr[3] == 8'h03 && t_bytes[3] == 5,
+              $sformatf("F11a FSC framed as addr 03 + 4 bytes (got %02h, %0d)",
+                        t_addr[3], t_bytes[3]));
+        check(t_data[3][31:0] == 32'h0000_00FF,
+              $sformatf("F11b FSC = 000000FF (got %08h)", t_data[3][31:0]));
         check(busy_violations == 0 && !busy,
               $sformatf("F9 busy clear once done (%0d overlaps)", busy_violations));
         check(!lock_timeout, "F8a no timeout reported when the PLL locks");
@@ -158,8 +203,28 @@ module tb_ad9910_ctrl;
         wait (!done);
         wait (done); repeat (10) @(negedge clk);
         check(lock_timeout, "F8b lock_timeout reported when the PLL never locks");
-        check(ntrans == 3, "F10 a single start pulse restarted the sequence from S_DONE");
-        check(ntrans == 3, $sformatf("F8c sequence still completed (got %0d transactions)", ntrans));
+        check(ntrans == 4, "F10 a single start pulse restarted the sequence from S_DONE");
+        check(ntrans == 4, $sformatf("F8c sequence still completed (got %0d transactions)", ntrans));
+
+        // ---- F12/F13 - register readback ----
+        // This is the instrument that was missing on 2026-09-08: with no way
+        // to read a register back, "is the part listening?" could only be
+        // inferred from symptoms, and the inference was wrong three times.
+        ntrans = 0;
+        @(negedge clk); rd_start = 1'b1; @(negedge clk); rd_start = 1'b0;
+        wait (rd_valid); @(negedge clk);
+        check(rd_data == RESP,
+              $sformatf("F12a readback returns the slave's value %08h (got %08h)",
+                        RESP, rd_data));
+        check(ntrans == 1, $sformatf("F12b one transaction for a read (got %0d)", ntrans));
+        check(t_addr[0] == 8'h82,
+              $sformatf("F12c instruction byte is 80|02 (got %02h)", t_addr[0]));
+        check(t_bytes[0] == 5,
+              $sformatf("F12d read framed as instruction + 4 bytes (got %0d)", t_bytes[0]));
+        check(oe_violations == 0,
+              $sformatf("F13 SDIO released for every read data bit (%0d violations)",
+                        oe_violations));
+        check(!master_reset, "F14 a read does not reset the part");
 
         $display("");
         if (errors == 0) $display("tb_ad9910_ctrl: PASS");

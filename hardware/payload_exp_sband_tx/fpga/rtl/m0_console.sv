@@ -55,6 +55,9 @@ module m0_console (
     output logic [31:0] dds_ftw,
     output logic [31:0] dds_cfr3,
     output logic       dds_start,
+    output logic       dds_rd_start,
+    input  wire [31:0] dds_rd_data,
+    input  wire        dds_rd_valid,
 
     // Reference-clock generator enable. Defaults OFF: when the DDS runs from
     // its own oscillator, the FPGA must not drive the reference net at all.
@@ -70,11 +73,13 @@ module m0_console (
     // renders "\r" as a literal 'r', which would make simulation and hardware
     // disagree about what is on the wire.
     localparam int TEXT_STATUS = 47;
-    localparam int TEXT_BANNER = 58;
+    localparam int TEXT_BANNER = 60;
     localparam int TEXT_DDS    = 42;
+    localparam int TEXT_RD     = 17;
     localparam int STATUS_LEN  = TEXT_STATUS + 2;
     localparam int BANNER_LEN  = TEXT_BANNER + 2;
     localparam int DDS_LEN     = TEXT_DDS + 2;
+    localparam int RD_LEN      = TEXT_RD + 2;
 
     localparam logic [7:0] CR = 8'h0D;
     localparam logic [7:0] LF = 8'h0A;
@@ -82,11 +87,13 @@ module m0_console (
     localparam logic [8*TEXT_STATUS-1:0] STATUS_T =
         "LOCK 0 BITS 000000000000 ERR 00000000 LOSS 0000";
     localparam logic [8*TEXT_BANNER-1:0] BANNER =
-        "EMBER M0 s p0-3 r0-3 e d z k i x0-1 fXXXXXXXX cXXXXXXXX ? ";
+        "EMBER M0 s p0-3 r0-3 e d z k i v x0-1 fXXXXXXXX cXXXXXXXX ? ";
     localparam logic [8*TEXT_DDS-1:0] DDS_T =
         "DDS LOCK 0 DONE 0 TMO 0 REF 0 FTW 00000000";
+    localparam logic [8*TEXT_RD-1:0] RD_T =
+        "DDS CFR3 00000000";
 
-    typedef enum logic [3:0] { IDLE, ARG_P, ARG_R, ARG_F, ARG_X, SEND } state_e;
+    typedef enum logic [3:0] { IDLE, ARG_P, ARG_R, ARG_F, ARG_X, WAITRD, SEND } state_e;
     state_e state;
 
     logic [1:0]  msg_sel;          // 0 status, 1 banner, 2 DDS
@@ -95,6 +102,14 @@ module m0_console (
     logic [27:0] hex_acc;   // 7 nibbles; the 8th completes the word
     logic        hex_target;  // 0 = FTW, 1 = CFR3
     logic        snap_dl, snap_dd, snap_dt, snap_dr;
+    // Latched whenever a read completes, so 'v' reports the most recent
+    // readback rather than racing the transaction.
+    logic [31:0] rd_latch;
+    // A read needs ~40 us of SPI, but ad9910_ctrl only accepts rd_start when
+    // it is idle - so a 'v' typed during the bring-up sequence would wait for
+    // a reply that never comes. Bounded so the console can never hang: on
+    // expiry it prints the last value it did latch.
+    logic [23:0] rd_wait;
     logic [31:0] snap_ftw;
     logic [47:0] snap_bits;
     logic [31:0] snap_err;
@@ -126,6 +141,13 @@ module m0_console (
                 n  = 7'd41 - idx;
                 ch = nib2asc(snap_ftw[int'(n)*4 +: 4]);
             end else ch = DDS_T[(TEXT_DDS-1-int'(idx))*8 +: 8];
+        end else if (msg_sel == 2'd3) begin
+            if      (idx == 7'(TEXT_RD))     ch = CR;
+            else if (idx == 7'(TEXT_RD + 1)) ch = LF;
+            else if (idx >= 7'd9 && idx <= 7'd16) begin
+                n  = 7'd16 - idx;
+                ch = nib2asc(rd_latch[int'(n)*4 +: 4]);
+            end else ch = RD_T[(TEXT_RD-1-int'(idx))*8 +: 8];
         end else if (idx == 7'(TEXT_STATUS)) begin
             ch = CR;
         end else if (idx == 7'(TEXT_STATUS + 1)) begin
@@ -151,6 +173,7 @@ module m0_console (
         case (msg_sel)
             2'd1:    msg_len = 7'(BANNER_LEN);
             2'd2:    msg_len = 7'(DDS_LEN);
+            2'd3:    msg_len = 7'(RD_LEN);
             default: msg_len = 7'(STATUS_LEN);
         endcase
     end
@@ -167,8 +190,10 @@ module m0_console (
 
     always_ff @(posedge clk) begin
         tx_valid  <= 1'b0;
-        clear     <= 1'b0;
-        dds_start <= 1'b0;
+        clear        <= 1'b0;
+        dds_start    <= 1'b0;
+        dds_rd_start <= 1'b0;
+        if (dds_rd_valid) rd_latch <= dds_rd_data;
 
         if (rst) begin
             state       <= IDLE;
@@ -186,6 +211,8 @@ module m0_console (
             refclk_en   <= 1'b0;
             hex_count   <= '0;
             hex_target  <= 1'b0;
+            rd_latch    <= '0;
+            rd_wait     <= '0;
         end else begin
             case (state)
                 IDLE: if (rx_valid) begin
@@ -227,6 +254,15 @@ module m0_console (
                             state      <= ARG_F;
                         end
                         "i", "I": dds_start <= 1'b1;
+                        // Read CFR3 back. The value the sequencer wrote is
+                        // known, so a mismatch says the bus is not working -
+                        // which is otherwise indistinguishable from a clock
+                        // fault, and cost a full day on 2026-09-08.
+                        "v", "V": begin
+                            dds_rd_start <= 1'b1;
+                            rd_wait      <= '0;
+                            state        <= WAITRD;
+                        end
                         "x", "X": state     <= ARG_X;
                         "p", "P": state     <= ARG_P;
                         "r", "R": state     <= ARG_R;
@@ -246,6 +282,12 @@ module m0_console (
                     else if (rx_data == "1") refclk_en <= 1'b1;
                     state <= IDLE;
                 end
+
+                WAITRD: if (dds_rd_valid || rd_wait == {24{1'b1}}) begin
+                    msg_sel <= 2'd3;
+                    idx     <= '0;
+                    state   <= SEND;
+                end else rd_wait <= rd_wait + 1'b1;
 
                 ARG_P: if (rx_valid) begin
                     if (rx_data >= "0" && rx_data <= "3")

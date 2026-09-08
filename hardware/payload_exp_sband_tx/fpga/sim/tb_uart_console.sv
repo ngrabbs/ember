@@ -53,7 +53,25 @@ module tb_uart_console;
     logic [31:0] dds_ftw, dds_cfr3;
     logic        dds_start;
     logic        refclk_en;
+    logic        dds_rd_start;
+    logic [31:0] dds_rd_data  = 32'h0538_C132;
+    logic        dds_rd_valid = 1'b0;
     int          dds_starts = 0;
+    int          dds_reads  = 0;
+    always @(posedge clk) if (dds_rd_start) dds_reads++;
+
+    // Stand in for ad9910_ctrl: answer a read request a few cycles later,
+    // the way a real SPI transaction would.
+    int rd_delay = 0;
+    always @(posedge clk) begin
+        dds_rd_valid <= 1'b0;
+        if (dds_rd_start)      rd_delay <= 20;
+        else if (rd_delay > 1) rd_delay <= rd_delay - 1;
+        else if (rd_delay == 1) begin
+            rd_delay     <= 0;
+            dds_rd_valid <= 1'b1;
+        end
+    end
     always @(posedge clk) if (dds_start) dds_starts++;
 
     m0_console u_con (
@@ -64,6 +82,8 @@ module tb_uart_console;
         .error_count(error_count), .loss_count(loss_count),
         .dds_lock(dds_lock), .dds_done(dds_done), .dds_timeout(dds_timeout),
         .dds_ftw(dds_ftw), .dds_cfr3(dds_cfr3), .dds_start(dds_start),
+        .dds_rd_start(dds_rd_start),
+        .dds_rd_data(dds_rd_data), .dds_rd_valid(dds_rd_valid),
         .refclk_en(refclk_en),
         .pattern_sel(pattern_sel), .rate_sel(rate_sel),
         .tx_enable(tx_enable), .clear(clear));
@@ -153,7 +173,7 @@ module tb_uart_console;
 
         // D2 - banner
         clear_got(); send("?"); settle();
-        expect_string({"EMBER M0 s p0-3 r0-3 e d z k i x0-1 fXXXXXXXX cXXXXXXXX ? ", 8'h0D, 8'h0A},
+        expect_string({"EMBER M0 s p0-3 r0-3 e d z k i v x0-1 fXXXXXXXX cXXXXXXXX ? ", 8'h0D, 8'h0A},
                       "D2 banner is byte-exact");
 
         // D3 - pattern and rate
@@ -235,6 +255,21 @@ module tb_uart_console;
         // lands on the same node the DDS module's own oscillator drives, so a
         // default-on reference is a driver collision waiting for someone to
         // forget a jumper.
+        // D15 - register readback. 'v' must wait for the read to complete
+        // before printing, otherwise it reports the previous value and the
+        // whole point of a readback is lost.
+        dds_reads = 0;
+        clear_got();
+        send("v"); settle();
+        check(dds_reads == 1, $sformatf("D15a v issues one read (%0d)", dds_reads));
+        expect_string({"DDS CFR3 0538C132", 8'h0D, 8'h0A},
+                      "D15b v prints the value the read returned");
+        dds_rd_data = 32'hDEADBEEF;
+        clear_got();
+        send("v"); settle();
+        expect_string({"DDS CFR3 DEADBEEF", 8'h0D, 8'h0A},
+                      "D15c and tracks a changed value");
+
         check(refclk_en == 1'b0, "D14a refclk_en is off after reset");
         send("x"); send("1"); settle();
         check(refclk_en == 1'b1, "D14b x1 enables the reference generator");

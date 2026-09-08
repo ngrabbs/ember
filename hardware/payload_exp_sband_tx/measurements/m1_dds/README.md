@@ -517,3 +517,73 @@ capture cannot show a 40 MHz clock, and a `SYNC_CLK` pin can be disabled in CFR2
 **Two pins on this breakout hold the part off when floating — `PD` and `PWR` —
 and both present as a clock fault.** Check every strap with a meter before
 diagnosing anything on this module.
+
+---
+
+## 2026-09-08 — DAC full-scale current and SPI readback added
+
+Two gaps against the JQIamo reference driver, both closed. Neither was the cause
+of the day's fault, but the second is the instrument whose absence made the
+fault expensive to find.
+
+### FSC: register 0x03, and it nearly doubled the output
+
+The sequencer now writes the auxiliary DAC control register with `FSC = 0xFF`,
+folded in after the profile writes so the final `IO_UPDATE` commits amplitude
+and profiles together. Measured on the SMA, constant pattern, AC coupled:
+
+| Carrier | Before | After | Gain |
+|---:|---:|---:|---:|
+| 1 MHz | ~0.340 V | **0.608 V** | +5.1 dB |
+| 10 MHz | 0.292 V | **0.512 V** | +4.9 dB |
+| 50 MHz | ~0.224 V | **0.416 V** | +5.4 dB |
+
+`FSC` is a module parameter, so it can be turned down if a later stage needs
+less drive. Capture: `I_bpsk_fsc_full_scale.png`.
+
+### Readback: `v` reads CFR3 back off the part
+
+Verified against real silicon, and it tracks changes rather than echoing our own
+register:
+
+```
+readback          DDS CFR3 0538C132     the value the sequencer wrote
+c0538C1A0   ->    DDS CFR3 0538C1A0     follows a live change
+c0538C132   ->    DDS CFR3 0538C132     and back
+```
+
+The AD9910 powers up in **2-wire mode**, returning read data on `SDIO` rather
+than `SDO`. So `dds_sdio` is now an `inout` with a tri-state (`OBUFT`, confirmed
+in the implemented design), `spi_master` gained a `tx_read` input that releases
+the line for a byte and captures it, and `ad9910_ctrl` gained a read path.
+
+The alternative — set `CFR1[1]` for 3-wire and read on `SDO` — was the original
+plan recorded in `spi_master`'s header and was never implemented. It is also
+**circular as a diagnostic**: it needs a working write before it can verify that
+writes work. The 2-wire path works from power-up defaults and assumes nothing.
+
+`S_RD_CMD` is a separate state rather than joining the shared write state,
+because that state raises `CS` by default and relies on each case re-lowering
+it. A read must hold `CS` low across the bus turnaround, and inheriting the
+wrong default there cost a debug cycle even in simulation.
+
+### Why this mattered
+
+The whole of 2026-09-08 was spent inferring the part's internal state from
+external symptoms, and the inference was wrong three times. With `v`, the
+question "does the part respond at all" is one keystroke and is not a matter of
+opinion. **Build the instrument before the debugging session, not after it.**
+
+### Test coverage
+
+- `tb_spi_master` E8a-c: read bytes return the slave's value, a following write
+  still transfers. E9a/b: `mosi_oe` low for every read edge, high for every
+  write edge — on hardware that gates a tri-state, so getting it wrong means the
+  FPGA and the AD9910 drive `SDIO` simultaneously.
+- `tb_ad9910_ctrl` F11a/b: FSC framed as address 03 plus four bytes, value
+  `0x000000FF`. F12a-d: readback returns the slave's value, one transaction,
+  instruction byte `0x82`, five bytes. F13: `SDIO` released for every read data
+  bit. F14: a read does not reset the part.
+- `tb_uart_console` D15a-c: `v` issues exactly one read, waits for it to
+  complete before printing, and tracks a changed value. The wait matters — an
+  earlier version printed the previous value, which defeats the purpose.

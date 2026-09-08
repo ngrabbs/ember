@@ -70,8 +70,8 @@ module top_arty_z7 #(
     // AD9910 DDS - see constraints/README.md for the interconnect
     output wire       dds_cs_n,         // JB 3
     output wire       dds_sclk,         // JB 4
-    output wire       dds_sdio,         // JB 7
-    input  wire       dds_sdo,          // JB 8   (unused until CFR1[1] is set)
+    inout  wire       dds_sdio,         // JB 7   bidirectional: reads come back here
+    input  wire       dds_sdo,          // JB 8   unused in 2-wire mode
     output wire       dds_io_update,    // JB 9
     output wire       dds_master_reset, // JB 10
     output wire       dds_pf0,          // JA 7   the BPSK phase command
@@ -165,6 +165,10 @@ module top_arty_z7 #(
 
     logic [31:0] dds_ftw, dds_cfr3;
     logic        refclk_en;
+    logic        dds_spi_read, dds_spi_rx_valid;
+    logic  [7:0] dds_spi_rx_data;
+    logic        dds_rd_start, dds_rd_valid;
+    logic [31:0] dds_rd_data;
     logic        dds_start_cmd, dds_done, dds_timeout;
 
     m0_console u_console (
@@ -175,6 +179,8 @@ module top_arty_z7 #(
         .error_count(error_count), .loss_count(loss_count),
         .dds_lock(dds_pll_lock), .dds_done(dds_done), .dds_timeout(dds_timeout),
         .dds_ftw(dds_ftw), .dds_cfr3(dds_cfr3), .dds_start(dds_start_cmd),
+        .dds_rd_start(dds_rd_start),
+        .dds_rd_data(dds_rd_data), .dds_rd_valid(dds_rd_valid),
         .refclk_en(refclk_en),
         .pattern_sel(con_pattern), .rate_sel(con_rate),
         .tx_enable(con_enable), .clear(con_clear));
@@ -220,25 +226,43 @@ module top_arty_z7 #(
 
     assign dds_refclk = refclk_en ? refclk_int : 1'bz;
 
+    // SDIO is bidirectional. The AD9910 powers up in 2-wire mode and returns
+    // read data on SDIO, not SDO, so a readback that works from power-up
+    // defaults has to turn this line around rather than rely on a CFR1 write
+    // having already succeeded.
+    logic sdio_o, sdio_oe;
+    assign dds_sdio = sdio_oe ? sdio_o : 1'bz;
+
+    // SDO stays wired but unused. Reading it here keeps the lint clean and
+    // documents that the pin is deliberately idle rather than forgotten.
+    logic unused_sdo;
+    assign unused_sdo = dds_sdo;
+
     ad9910_ctrl #(.CLOCK_HZ(CLOCK_HZ)) u_dds (
         .clk(clk), .rst(rst),
         .start(dds_autostart | dds_start_cmd),
+        .rd_start(dds_rd_start),
         .ftw(dds_ftw), .pow0(16'h0000), .pow1(16'h8000), .asf(14'h3FFF),
         .cfr3(dds_cfr3),
         .pll_lock(dds_pll_lock),
         .master_reset(dds_master_reset), .io_update(dds_io_update),
         .cs_n(dds_cs_n),
         .spi_tx_data(dds_spi_data), .spi_tx_valid(dds_spi_valid),
+        .spi_tx_read(dds_spi_read),
         .spi_tx_ready(dds_spi_ready), .spi_busy(dds_spi_busy),
+        .spi_rx_data(dds_spi_rx_data), .spi_rx_valid(dds_spi_rx_valid),
+        .rd_data(dds_rd_data), .rd_valid(dds_rd_valid),
         .busy(), .done(dds_done), .lock_timeout(dds_timeout));
     /* verilator lint_on PINCONNECTEMPTY */
 
     /* verilator lint_off PINCONNECTEMPTY */
     spi_master #(.CLOCK_HZ(CLOCK_HZ), .SCLK_HZ(1_000_000)) u_dds_spi (
         .clk(clk), .rst(rst),
-        .tx_data(dds_spi_data), .tx_valid(dds_spi_valid), .tx_ready(dds_spi_ready),
-        .rx_data(), .rx_valid(),
-        .sclk(dds_sclk), .mosi(dds_sdio), .miso(dds_sdo), .busy(dds_spi_busy));
+        .tx_data(dds_spi_data), .tx_valid(dds_spi_valid), .tx_read(dds_spi_read),
+        .tx_ready(dds_spi_ready),
+        .rx_data(dds_spi_rx_data), .rx_valid(dds_spi_rx_valid),
+        .sclk(dds_sclk), .mosi(sdio_o), .mosi_oe(sdio_oe), .miso(dds_sdio),
+        .busy(dds_spi_busy));
     /* verilator lint_on PINCONNECTEMPTY */
 
     assign dds_pf0 = tx_symbol;

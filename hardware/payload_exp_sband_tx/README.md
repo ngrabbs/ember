@@ -136,7 +136,7 @@ phase switch that the DAC path would have built in the FPGA.
 | **M0** ✅ | FPGA link processor: symbol timing, pattern selector, PRBS-7, registered output | **Met.** 62,049,047 symbols, zero errors; PRBS decoded from the pin against the golden model; `symbol_tick` measured at 8.000 ns |
 | **M1** ✅ | AD9910 bring-up: SPI, PLL lock, a stable CW tone | **Met 2026-09-08.** `LOCK 1 TMO 0`, SYSCLK 1 GHz from the module's 40 MHz (N=25). Carrier measured at 1, 10 and 50 MHz with 0 ppm error |
 | **M2** ✅ | **BPSK** — `tx_symbol` drives `PROFILE[0]` | **Met 2026-09-08.** Two overlapping carrier phases under PRBS-7 vs a single clean sine under a constant pattern; period stretches to exactly 1.5 T, the signature of a 180° reversal |
-| **M3** | Characterisation | Occupied bandwidth against symbol rate; spectrum on an SDR or analyser; carrier-frequency error |
+| **M3** | Characterisation | Occupied bandwidth against symbol rate; spectrum on an SDR or analyser; carrier-frequency error. Console `v` reads registers back off the part, so configuration can be verified rather than assumed |
 | **M4** | Beyond BPSK | QPSK via profiles 0–3, or amplitude shaping via the ASF and OSK path |
 | **M5** | *(optional)* S-band | Mixer to 2.4 GHz, image and LO leakage characterised, into a dummy load |
 
