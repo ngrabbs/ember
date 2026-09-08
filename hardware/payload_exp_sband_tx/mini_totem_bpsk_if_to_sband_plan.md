@@ -1,5 +1,19 @@
 # Mini-TOTEM BPSK Transmit Chain Plan
 
+> **Historical, 2026-09-01.** This is the original narrative that started the
+> payload, and it is kept for its bring-up phases, HDL module list and risk
+> analysis, most of which still apply. Two things in it are superseded:
+>
+> - **The DAC.** There is no DAC902 or DAC904. The converter on hand is an
+>   **AD9910 DDS**, which generates the carrier and switches its phase itself.
+>   Wherever this document says "DAC", read the AD9910's internal 14-bit DAC —
+>   the FPGA does not feed it samples.
+> - **The frequency plan.** Its IF and sample rates were written for a 100 MHz
+>   iCE40 that is no longer the target. Current plan: the payload README.
+>
+> The architecture decision lives in
+> [`sband_payload_architecture_trade_study.md`](sband_payload_architecture_trade_study.md).
+
 ## Goal
 
 Build a small experimental transmit signal chain that lets us generate our own BPSK waveform in an FPGA, convert it to analog with a high-speed DAC, optionally upconvert it to S-band around 2.4 GHz, and observe the result on a scope, SDR receiver, or spectrum analyzer.

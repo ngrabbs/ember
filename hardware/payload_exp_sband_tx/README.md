@@ -45,16 +45,18 @@ that the RF work can be added later without redesigning anything upstream.
   cabled, attenuated, and terminated. There is no antenna in any configuration
   of this payload, at any stage, which removes licensing and coordination from
   the problem entirely.
-- Not currently a PCB. First results come from an IceZero, hand wiring, and a
-  DAC module.
+- Not currently a PCB. First results come from an Arty Z7-20, a breadboard
+  interconnect, and an AD9910 DDS module.
 
 ---
 
 ## Selected architecture
 
-FPGA-generated **low-IF BPSK into a parallel DAC**. The modulated carrier exists
-as an analog waveform at the DAC output, where it can be measured directly. No
-RF hardware is required to see BPSK working.
+FPGA-generated symbols driving an **AD9910 DDS in profile-switched BPSK**. The
+FPGA produces the symbol stream; the DDS holds two profiles at the same
+frequency 180° apart and one pin selects between them, so the carrier flips
+phase per symbol. The modulated carrier comes out of a coaxial connector at a
+real RF frequency.
 
 ```text
 ┌───────────────────────── THE DELIVERABLE ─────────────────────────┐
@@ -66,80 +68,81 @@ RF hardware is required to see BPSK working.
 │   │ FPGA link          │  framing · CRC · scrambler · PRBS        │
 │   │ processor          │  symbol timing · BPSK symbol mapping     │
 │   └────────┬───────────┘                                          │
-│            │  ±1 symbols                                          │
+│            │  tx_symbol — ONE PIN                                 │
 │            v                                                      │
-│   ┌────────────────────┐                                          │
-│   │ NCO + modulator    │  low-IF carrier, 0° / 180° reversal      │
-│   │ (+ RRC shaping)    │  shaping added only after unshaped works │
+│   ┌────────────────────┐     ┌──────────────────────────┐        │
+│   │ AD9910 PROFILE[0]  │ <───│ ad9910_ctrl + spi_master │        │
+│   │ 0 → profile 0, 0°  │     │ CFR3 · profiles · IOUP   │        │
+│   │ 1 → profile 1,180° │     └──────────────────────────┘        │
 │   └────────┬───────────┘                                          │
-│            │  12-bit parallel samples                             │
+│            │  1 GSPS DDS, 14-bit DAC, up to ~400 MHz              │
 │            v                                                      │
-│   ┌────────────────────┐                                          │
-│   │ DAC902             │  20 MSPS initial · operate ≈ −6 dBFS     │
-│   └────────┬───────────┘                                          │
-│            │  analog low-IF BPSK                                  │
-│            v                                                      │
-│   oscilloscope · logic analyzer · SDR · 50 Ω termination          │
+│   oscilloscope · SDR · spectrum analyser · 50 Ω termination       │
 └───────────────────────────────────────────────────────────────────┘
              │
-             │  the same signal, later, only if time allows
+             │  later, only if time allows
              v
-   IF filter → mixer → 2.4 GHz BPF → attenuator → SDR / dummy load
-   (off the critical path — see the trade study)
+   mixer → 2.4 GHz BPF → attenuator → SDR / dummy load
+   (the AD9910 reaches ~400 MHz; S-band still needs upconversion)
 ```
 
-The alternative considered and deferred — a single-bit phase command driving an
-S-band phase modulator — puts all of the modulation in RF hardware and leaves a
-square wave on the bench. It was rejected for this scope for exactly that
-reason. It remains the preferred path *if* an RF front end is ever built,
-because it reuses the same link processor unchanged.
+**Superseded 2026-09-08.** This was previously "FPGA-generated low-IF BPSK into
+a parallel DAC", with a DAC902 fed 12-bit samples from an NCO in the FPGA. The
+converter actually on hand turned out to be an **AD9910 DDS**, not the DAC902
+the order history suggested. See the trade study for what that changes, and what
+it costs: the DDS removes the NCO, sine table and DAC-formatter work that the
+trade study valued as HDL content, and replaces it with SPI control of a real RF
+part. The symbol engine — the part M0 built — is unchanged and feeds the DDS
+directly.
 
 ---
 
 ## Frequency and rate plan
 
-One plan, adopted here, superseding the differing numbers scattered across the
-earlier documents. Rates start deliberately low: hand-wired PMOD interconnect,
-not ambition, sets the ceiling.
+The AD9910 runs at a 1 GHz system clock and its frequency is a 32-bit tuning
+word, so the carrier is set in software rather than by a sample-rate plan:
 
-| Stage | Sample rate | IF | Symbol rate | Samples/symbol | Measured with |
-|---|---:|---:|---:|---:|---|
-| M1 sine check | 20 MSPS | 1 MHz | — | — | scope |
-| M2 baseband BPSK | 20 MSPS | baseband | 100 ksym/s | 200 | scope, logic analyzer |
-| M3 low-IF BPSK | 20 MSPS | 1 MHz | 100 ksym/s | 200 | scope |
-| M4 shaped, faster | 50 MSPS | 5 MHz | 500 ksym/s | 100 | scope, SDR |
-| RF (optional) | 100 MSPS | 20 MHz | 1 Msym/s | 100 | SDR / spectrum analyzer |
+```text
+FTW = round(f_out × 2³² / SYSCLK)        SYSCLK = 1 GHz
+```
 
-Board clock is 100 MHz, so every sample rate above is an exact integer divisor.
+| Reference | N (CFR3) | SYSCLK | Console |
+|---|---:|---:|---|
+| module's own 40 MHz | 25 | 1 GHz | `c0538C132` |
+| FPGA `ck_io0`, 12.5 MHz | 80 | 1 GHz | `c0538C1A0` |
 
-Note the tension recorded in the trade study: a **low** IF is what makes the
-waveform easy to see on a bench scope, and a **high** IF is what makes the image
-easy to filter after a mixer. Those are different optima. The bench plan
-optimizes for observability; the optional RF stage gets its own sample-rate step
-(100 MSPS / 20 MHz IF / 2380 MHz LO / 2400 MHz RF) rather than compromising the
-bench work.
+Carrier choices for the bench:
+
+| Carrier | FTW | Notes |
+|---:|---|---|
+| 1 MHz | `0x00418937` | trivially visible on any scope |
+| 10 MHz | `0x028F5C29` | the default; comfortable on a 200 MHz scope |
+| 100 MHz | `0x1999999A` | a realistic IF |
+| ~400 MHz | — | the AD9910's practical ceiling |
+
+Symbol rates come from the FPGA and are unchanged from M0 — 1 k, 10 k, 100 k
+and 1 Msym/s, each an exact divisor of the 125 MHz board clock.
 
 ---
 
 ## Milestones
 
+Renumbered 2026-09-08 for the DDS architecture. **BPSK now arrives at M2
+instead of M3, and with far less RTL** — the DDS supplies the carrier and the
+phase switch that the DAC path would have built in the FPGA.
+
 | ID | Milestone | Gate |
 |---|---|---|
-| **M0** | FPGA link processor: symbol timing, pattern selector, PRBS-7, registered output | Simulation confirms 127-symbol PRBS period and exact symbol timing; scope confirms alternating pattern at half the symbol rate |
-| **M1** | FPGA → DAC interface: DC midscale, ramp, sine | Stable 1 MHz sine at the DAC output with no missing codes or bus glitches |
-| **M2** | Unshaped baseband BPSK | Two-level waveform, correct symbol rate, sync word recoverable from a capture |
-| **M3** | Unshaped low-IF BPSK | Visible 180° carrier phase reversals at symbol boundaries; SDR shows a lobe centered at the IF |
-| **M4** | RRC pulse shaping, higher rate | Measurable sidelobe reduction against the M3 capture |
-| **M5** | *(optional)* RF upconversion to 2.4 GHz | Signal at 2400 MHz into a dummy load, image and LO leakage characterized |
+| **M0** ✅ | FPGA link processor: symbol timing, pattern selector, PRBS-7, registered output | **Met.** 62,049,047 symbols, zero errors; PRBS decoded from the pin against the golden model; `symbol_tick` measured at 8.000 ns |
+| **M1** | AD9910 bring-up: SPI, PLL lock, a stable CW tone | `PLL_LOCK` asserted and a measured tone at the programmed frequency out of the SMA |
+| **M2** | **BPSK** — `tx_symbol` drives `PROFILE[0]` | Visible 180° carrier phase reversals at symbol boundaries, at a known symbol rate |
+| **M3** | Characterisation | Occupied bandwidth against symbol rate; spectrum on an SDR or analyser; carrier-frequency error |
+| **M4** | Beyond BPSK | QPSK via profiles 0–3, or amplitude shaping via the ASF and OSK path |
+| **M5** | *(optional)* S-band | Mixer to 2.4 GHz, image and LO leakage characterised, into a dummy load |
 
-M0 is implemented in [`fpga/`](fpga/) and specified by
-[`fpga_link_processor_logic_interface_first_bringup.md`](fpga_link_processor_logic_interface_first_bringup.md)
-with one amendment under the selected architecture: the **RTL, simulation, and
-PRBS work is required**, while the external SN74LVC1G125 buffer and the hardware
-loopback path become an **optional** signal-integrity exercise rather than a
-gate. The generator/checker pair is proven in simulation. The buffered loopback
-returns to being required only if the deferred phase-modulator architecture is
-revived.
+M2 is the milestone that matters. Seeing the carrier reverse phase on a scope,
+driven by the FPGA's own PRBS-7, is the proof that this is a modulator and not a
+signal generator.
 
 **M0 is verified in simulation** — Verilator-lint clean, both testbenches
 passing, and the gate met at 1,000,000 symbols with zero errors. What remains
@@ -222,14 +225,22 @@ These are short because the scope is narrow.
 
 ## Open items
 
-- [ ] Confirm the Arty Z7 variant in hand — Z7-10 (XC7Z010) or Z7-20 (XC7Z020).
-- [ ] Pull Digilent's master XDC and write `constraints/arty_z7.xdc`.
-- [ ] Rebuild the M0 bitstream under Vivado and re-run the hardware gate.
-- [ ] Inventory the RF half: DAC902 or DAC904 (bare or module), mixer, filters,
-      SDR, spectrum analyzer. The converter choice waits on this — the
-      pin-count argument that decided it turned out to be wrong.
-- [ ] Study the DAC module's output stage and required termination before
-      putting a probe on it.
+All four items about the Arty variant, the master XDC, the M0 bitstream and the
+DAC inventory are closed: it is a Z7-20, `constraints/arty_z7_20.xdc` exists,
+M0's hardware gate is met, and the converter question is moot — the part on hand
+is an AD9910, not a DAC902.
+
+- [ ] **M1**: get `PLL_LOCK` and a measured tone. The remaining work is on the
+      bench, not in the RTL — reconnect per the pin map, use the module's own
+      40 MHz with W1 at 2&3 (the configuration its demo board proved), then
+      `c0538C132`, `i`, `k`.
+- [ ] Confirm whether the module's onboard oscillator reaches `REF_CLK` at all,
+      now that the `IO_UPDATE` width fix removes the confound that made this
+      look like a board fault.
+- [ ] Inventory the RF half for M5: mixer, filters, SDR, spectrum analyser. The
+      AD9910 reaches about 400 MHz, so S-band still needs upconversion.
+- [ ] Re-measure edge rates and overshoot with a short ground spring, to
+      separate probe artefact from real signal — carried over from M0.
 - [ ] Decide whether the directory name still fits. It says `sband_tx`; the work
       is a digital modulation bench experiment whose S-band stage is optional.
 
