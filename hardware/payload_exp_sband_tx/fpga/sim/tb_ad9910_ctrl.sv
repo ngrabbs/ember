@@ -41,8 +41,8 @@ module tb_ad9910_ctrl;
     logic       sclk, mosi;
 
     ad9910_ctrl #(
-        .CLOCK_HZ(125_000_000), .RESET_NS(200), .SETTLE_NS(200),
-        .IOUP_NS(50), .LOCK_TMO_US(20)
+        .CLOCK_HZ(125_000_000), .RESET_US(2), .SETTLE_US(2),
+        .IOUP_US(2), .LOCK_TMO_US(20)
     ) dut (
         .clk(clk), .rst(rst), .start(start),
         .ftw(FTW), .pow0(POW0), .pow1(POW1), .asf(ASF), .cfr3(CFR3),

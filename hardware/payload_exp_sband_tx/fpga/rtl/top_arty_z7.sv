@@ -46,8 +46,13 @@ module top_arty_z7 #(
     parameter int unsigned CLOCK_HZ     = 125_000_000,
     // The DDS reference is generated here rather than taken from the breakout's
     // own oscillator, whose output does not reach the AD9910's REF_CLK pin.
-    // 125 / 4 = 31.25 MHz, and CFR3's N becomes 32 for exactly 1 GHz SYSCLK.
-    parameter int unsigned REFCLK_DIV   = 4,
+    //
+    // 125 / 10 = 12.5 MHz, with CFR3's N = 80 for exactly 1 GHz SYSCLK. The
+    // divide is 10 rather than 4 because the interconnect runs through a
+    // breadboard: a contact there is a few pF with real series inductance, and
+    // 31.25 MHz with fast CMOS edges rings through it. An 80 ns period is far
+    // more forgiving, and the AD9910 accepts anything from 3.2 MHz up.
+    parameter int unsigned REFCLK_DIV   = 10,
     parameter int unsigned SAMPLE_DELAY = 8,
     parameter int unsigned DEBOUNCE_W   = 20        // ~8.4 ms at 125 MHz
 ) (

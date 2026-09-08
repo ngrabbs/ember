@@ -188,6 +188,99 @@ million-symbol run finishes in seconds. Only the ratio matters to the checks.
 
 ---
 
+## How it fits together
+
+```mermaid
+flowchart LR
+  subgraph FPGA["Arty Z7-20 · top_arty_z7 · 125 MHz"]
+    direction TB
+    SW["sw / btn<br/>debounced"] --> CTL{"control mux<br/>console wins after<br/>first p/r/e/d"}
+    CON["m0_console<br/>command parser<br/>status printer"] --> CTL
+    CTL -->|pattern_sel<br/>rate_sel<br/>tx_enable| TXP
+
+    TXP["tx_pattern_source<br/>symbol divider<br/>pattern select<br/>registered output"]
+    PRBSG["prbs7_gen<br/>x⁷+x⁶+1"] --> TXP
+    TXP -->|tx_symbol| PF0
+    TXP -->|symbol_tick| TICK
+
+    LB["tx_loopback<br/>2-FF sync"] --> CHK
+    TXP -->|"symbol_tick<br/>delayed 8 clk"| CHK
+    CHK["prbs7_check<br/>free-running<br/>lock + error count"] -->|locked<br/>bit_count<br/>error_count| CON
+
+    RX["uart_rx"] --> CON
+    CON --> TX["uart_tx"]
+
+    CON -->|ftw, cfr3, start| DDSC
+    DDSC["ad9910_ctrl<br/>reset · CFR3 · profiles<br/>IO_UPDATE · lock wait"]
+    DDSC <-->|byte stream| SPI["spi_master<br/>mode 0"]
+    REF["refclk_gen<br/>÷10"] --> RCLK
+  end
+
+  PF0(["JA7 · PF0"]) --> DDS
+  TICK(["JA2 · symbol_tick<br/>scope trigger"])
+  SPI -->|"SCK SDIO CSB"| DDS
+  DDSC -->|"RST · IO_UPDATE"| DDS
+  RCLK(["ck_io0 · 12.5 MHz"]) --> DDS
+  DDS["AD9910<br/>PLL ×80 → 1 GHz<br/>profile 0 = 0°<br/>profile 1 = 180°"] -->|PLL_LOCK| DDSC
+  DDS --> OUT(["OUT SMA<br/>BPSK carrier"])
+  TX --> TERM(["USB-serial<br/>115200 8N1"])
+  TERM --> RX
+  PF0 -.->|"jumper JA1→JA4"| LB
+```
+
+The load-bearing idea: **`tx_symbol` drives `PF0` directly.** Profiles 0 and 1 hold
+the same frequency 180° apart, so one pin turns the symbol stream into BPSK on a
+real carrier — no DAC bus, no NCO, no reconstruction filter.
+
+## The AD9910 bring-up sequence
+
+```mermaid
+stateDiagram-v2
+  [*] --> IDLE
+  IDLE --> RST: start
+  DONE --> RST: start
+  note right of DONE
+    DONE handles start itself.
+    Routing it via IDLE loses the
+    one-cycle pulse - every second
+    'i' silently did nothing.
+  end note
+
+  RST: MASTER_RESET high, 1 ms
+  SETTLE: released, 1 ms
+  CFR3: write 0x02 + 4 bytes
+  IOUP1: IO_UPDATE high, 1 ms
+  LOCK: wait PLL_LOCK
+  PRF0: write 0x0E + 8 bytes
+  PRF1: write 0x0F + 8 bytes
+  IOUP2: IO_UPDATE high, 1 ms
+
+  RST --> SETTLE
+  SETTLE --> CFR3
+  CFR3 --> IOUP1: CS high once<br/>the last byte shifts
+  IOUP1 --> LOCK
+  LOCK --> PRF0: PLL_LOCK
+  LOCK --> PRF0: timeout,<br/>lock_timeout set
+  PRF0 --> PRF1
+  PRF1 --> IOUP2
+  IOUP2 --> DONE
+
+  note left of IOUP1
+    1 ms, not 100 ns.
+    IO_UPDATE is captured on
+    SYNC_CLK = SYSCLK/4, and
+    before lock SYSCLK is the
+    bare reference - 3.125 MHz
+    SYNC_CLK, 320 ns period.
+    A short pulse is never seen.
+  end note
+```
+
+Two failure modes are deliberately designed in rather than left to chance: a
+missing reference **reports `lock_timeout` and carries on** instead of hanging,
+and CS rises only once the final byte has actually left the shifter — gating on
+`tx_ready` alone truncates every transaction by a byte.
+
 ## On the bench — Arty Z7-20
 
 `rtl/top_arty_z7.sv` wraps the symbol engine with what the board actually has.

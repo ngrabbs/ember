@@ -42,9 +42,21 @@
 
 module ad9910_ctrl #(
     parameter int unsigned CLOCK_HZ    = 125_000_000,
-    parameter int unsigned RESET_NS    = 10_000,        // MASTER_RESET width
-    parameter int unsigned SETTLE_NS   = 10_000,        // after reset release
-    parameter int unsigned IOUP_NS     = 100,           // IO_UPDATE width
+    // Widths in MICROSECONDS. These are deliberately generous.
+    //
+    // IO_UPDATE and PROFILE[2:0] are captured on the rising edge of SYNC_CLK,
+    // and SYNC_CLK is SYSCLK/4. Before the PLL locks, SYSCLK is the bare
+    // reference - so with a 12.5 MHz reference SYNC_CLK is 3.125 MHz and its
+    // period is 320 ns. A pulse shorter than that is simply not seen, CFR3
+    // never transfers, the PLL never enables, and the part looks completely
+    // dead while the SPI bus tests perfectly.
+    //
+    // An earlier version used 100 ns here and did exactly that. The JQIamo
+    // Arduino library uses 1 ms for both reset and update; these match it.
+    // The cost is a few milliseconds on an operation that runs at startup.
+    parameter int unsigned RESET_US    = 1_000,         // MASTER_RESET width
+    parameter int unsigned SETTLE_US   = 1_000,         // after reset release
+    parameter int unsigned IOUP_US     = 1_000,         // IO_UPDATE width
     parameter int unsigned LOCK_TMO_US = 10_000         // PLL lock timeout
 ) (
     input  wire        clk,
@@ -72,9 +84,9 @@ module ad9910_ctrl #(
     output logic       done,
     output logic       lock_timeout
 );
-    localparam int unsigned RESET_CYCLES  = (CLOCK_HZ / 1_000_000) * RESET_NS  / 1000;
-    localparam int unsigned SETTLE_CYCLES = (CLOCK_HZ / 1_000_000) * SETTLE_NS / 1000;
-    localparam int unsigned IOUP_CYCLES   = (CLOCK_HZ / 1_000_000) * IOUP_NS   / 1000;
+    localparam int unsigned RESET_CYCLES  = (CLOCK_HZ / 1_000_000) * RESET_US;
+    localparam int unsigned SETTLE_CYCLES = (CLOCK_HZ / 1_000_000) * SETTLE_US;
+    localparam int unsigned IOUP_CYCLES   = (CLOCK_HZ / 1_000_000) * IOUP_US;
     localparam int unsigned LOCK_CYCLES   = (CLOCK_HZ / 1_000_000) * LOCK_TMO_US;
 
     // AD9910 serial addresses

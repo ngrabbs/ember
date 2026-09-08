@@ -2,9 +2,12 @@
 
 Bench record for the DDS half of M1 on the Digilent Arty Z7-20.
 
-## Status: blocked on a fault in the DDS board's reference clock path
+## Status: root cause found — our IO_UPDATE pulse was too short
 
-The FPGA side is complete and verified. The AD9910 breakout does not clock.
+**Superseded diagnosis.** This document previously concluded "a break between
+W1 and REF_CLK, a fault on the DDS board". That was wrong, and the correction is
+recorded below rather than edited away, because the reasoning that produced it
+was plausible and the way it failed is worth keeping.
 
 ## Setup
 
@@ -52,6 +55,70 @@ changed nothing.
 
 **Conclusion:** a break between W1 and the AD9910's `REF_CLK` (pins 90/91).
 
+## The module is fine — proven by substitution
+
+Running the module on the demo driver board it shipped with produced a clean
+**1.32 Vpp tone, stable at 44.6 kHz**, measured across every timebase, with a
+consistent 22.4 us period. `E_demoboard_output_working.png`.
+
+That single test destroyed the "board fault" conclusion. The module clocks, its
+PLL runs, its DAC and output network work. Substituting a known-good driver
+should have been the first move once the FPGA side was verified clean, rather
+than many rounds of probing an undocumented board from the outside.
+
+## Root cause: IO_UPDATE was never wide enough
+
+Found by reading a known-good reference implementation
+([JQIamo/AD9910-arduino](https://github.com/JQIamo/AD9910-arduino)). Its
+register values essentially match ours — same VCO band, same charge pump; the
+only real difference is CFR3[15], where it leaves the divide-by-two input
+divider engaged and we bypass it, which is harmless either way.
+
+The difference that mattered was timing:
+
+```c
+void AD9910::update(){
+  digitalWrite(_updatePin, HIGH);
+  delay(1);                        // ONE MILLISECOND
+  digitalWrite(_updatePin, LOW);
+}
+```
+
+Ours was **96 ns**. The datasheet (Table 3, pin 55) states that `I/O_UPDATE` and
+`PROFILE[2:0]` are captured on the rising edge of `SYNC_CLK`, and `SYNC_CLK` is
+SYSCLK/4. **Before the PLL locks, SYSCLK is the bare reference**, so:
+
+| Reference | SYNC_CLK | period | 96 ns pulse |
+|---|---:|---:|---|
+| onboard 40 MHz | 10 MHz | 100 ns | 1.0 period — marginal |
+| our 31.25 MHz | 7.81 MHz | 128 ns | 0.8 period — missed |
+| our 12.5 MHz | 3.125 MHz | 320 ns | **0.3 period — missed** |
+
+**The pulse was never wide enough in any configuration tried.** The first
+`IO_UPDATE`, the one that transfers CFR3 and enables the PLL, was never
+captured. So CFR3 never took effect, the PLL never enabled, `PLL_LOCK` stayed
+low, and profile 0 kept its reset default of FTW = 0 — leaving the DAC at DC
+and the SMA silent. Every symptom, and the SPI bus tested perfectly throughout
+because the writes themselves were landing in the buffer correctly.
+
+Worse: dropping the reference from 31.25 MHz to 12.5 MHz to suit the breadboard
+made it *less* likely to work, by lengthening the SYNC_CLK period against a
+fixed pulse width. That change was reasoned about carefully and was actively
+counterproductive.
+
+Fixed: `RESET_US`, `SETTLE_US` and `IOUP_US` are now 1 ms each, matching the
+reference implementation, with the reasoning in the module header so nobody
+shortens them again.
+
+## A second bug that corrupted the search
+
+`ad9910_ctrl` could not restart. `S_DONE` handled `start` by stepping to
+`S_IDLE`, but `start` is one cycle wide and was gone by the time the FSM
+arrived — so **every second `i` command silently did nothing**. The alternating
+`DONE 0 / DONE 1 / DONE 0` across repeated re-inits was read as a polling race
+and dismissed. It was not: half of those runs never executed. Several W1 and
+`PD` results recorded as negative may never have re-run the sequencer at all.
+
 ## Lessons worth keeping
 
 **A floating `PD` looks like three faults at once.** `EXT_PWR_DWN` floating high
@@ -71,11 +138,26 @@ the same net, use it.
 configuration, no SPI and no PLL. If it is dead, nothing else is worth
 investigating until it is not.
 
+**Substitute a known-good driver early.** One test on the demo board settled in
+minutes what hours of probing had not, and it decisively refuted a conclusion
+that had already been written down as fact.
+
+**Read the reference implementation before debugging the hardware.** The root
+cause was a `delay(1)` in a public Arduino library. It was findable at any point
+and would have saved the entire investigation.
+
+**A confident diagnosis from consistent evidence can still be wrong.** "The
+40 MHz reaches W1 and SYNC_CLK is dead, therefore the trace is broken" was
+sound reasoning from real measurements, and it was wrong, because it assumed
+our own driving of the part was correct.
+
 ## Next
 
-1. Rebuild the interconnect through a breadboard, per the pin map's breadboard
-   notes — reference clock at **12.5 MHz** (`REFCLK_DIV = 10`, console
-   `c0538C1A0`), several ground returns.
-2. If `SYNC_CLK` still does not run, the remaining options are a fine wire from
-   W1's chip side directly to `REF_CLK`, or a replacement board.
-3. `make sanity` re-runs the full end-to-end check after any rewiring.
+1. Reconnect the FPGA to the DDS per the pin map. Leave `ck_io0` disconnected
+   and use the module's own 40 MHz with **W1 at 2&3** — the configuration the
+   demo board just proved works.
+2. Console `c0538C132` sets N = 25 for 40 MHz × 25 = 1 GHz, then `i`, then `k`.
+3. `make sanity` first, after any rewiring, before anything else.
+
+If it locks, `PF0` already carries the symbol stream and the SMA should show
+BPSK immediately.

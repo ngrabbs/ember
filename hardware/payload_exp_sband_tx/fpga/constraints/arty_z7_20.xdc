@@ -62,7 +62,7 @@ set_property -dict { PACKAGE_PIN W18  IOSTANDARD LVCMOS33 } [get_ports { dds_pf2
 set_property -dict { PACKAGE_PIN W19  IOSTANDARD LVCMOS33 } [get_ports { dds_pll_lock }]
 
 ## AD9910 reference clock - ChipKit header ck_io0. JA and JB are fully used.
-## 125 MHz / 4 = 31.25 MHz. This replaces the breakout's own 40 MHz oscillator,
+## 125 MHz / 10 = 12.5 MHz. This replaces the breakout's own 40 MHz oscillator,
 ## whose output does not reach the AD9910's REF_CLK pin, and has the side
 ## benefit of making the DDS carrier coherent with the symbol clock.
 set_property -dict { PACKAGE_PIN T14  IOSTANDARD LVCMOS33 } [get_ports { dds_refclk }]
@@ -85,7 +85,7 @@ set_false_path -from [get_ports { jb_uart_rx }]
 set_false_path -from [get_ports { dds_sdo dds_pll_lock }]
 set_false_path -to   [get_ports { dds_cs_n dds_sclk dds_sdio dds_io_update \
                                   dds_master_reset dds_pf0 dds_pf1 dds_pf2 }]
-create_generated_clock -name dds_refclk -source [get_ports clk] -divide_by 4 \
+create_generated_clock -name dds_refclk -source [get_ports clk] -divide_by 10 \
                        [get_ports dds_refclk]
 set_false_path -to   [get_ports { jb_uart_tx }]
 set_false_path -to   [get_ports { led[*] }]

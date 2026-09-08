@@ -173,7 +173,7 @@ module m0_console (
             rate_sel    <= 2'b00;
             tx_enable   <= 1'b1;
             dds_ftw     <= 32'h028F_5C29;   // 10 MHz at a 1 GHz SYSCLK
-            dds_cfr3    <= 32'h0538_C140;   // N=32, for the 31.25 MHz FPGA reference
+            dds_cfr3    <= 32'h0538_C1A0;   // N=80, for the 12.5 MHz FPGA reference
             hex_count   <= '0;
             hex_target  <= 1'b0;
         end else begin
