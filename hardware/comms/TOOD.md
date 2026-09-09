@@ -1,5 +1,17 @@
 # Comms board — review and repair checklist
 
+## Current checkpoint — before RF placement/routing
+
+This summary supersedes intermediate status entries in the work log below.
+
+- PCB synchronized using the full native schematic connectivity after repairing 86 footprint links. All 113 schematic references are present; 21 legacy footprints remain for reviewed cleanup.
+- J6/J7/J8 are identical 1x20 through-hole headers, all DNP; their 60 numbered pads retain the original hole locations.
+- H3/H4 socket bodies mount on top, tails below. CSKB logical numbering retained; 104 pad positions/nets checked, connector spacing corrected to 5.08 mm.
+- U5 uses the selected SOIC-8 footprint; old U1 still remains and must be removed with its obsolete copper after placement review.
+- Latest saved-board DRC after zone refill: **631 errors, 273 warnings, 140 unconnected items**. No fabrication release is implied.
+- Next: RF placement, replacement alignment, legacy circuitry removal, rerouting, then fresh ERC/DRC and physical stack review. CLI/native schematic export discrepancy remains unresolved; use native connectivity for synchronization.
+
+
 Baseline: 2026-09-09, ember `513365c`. Target: 437 MHz BPSK TX / 435 MHz RX, half-duplex, single UHF antenna. Checked means implemented **and verified**, not merely planned. Current design is not ready for fabrication.
 
 ## Critical — correct electrical identity before PCB synchronization
@@ -16,7 +28,7 @@ Baseline: 2026-09-09, ember `513365c`. Target: 437 MHz BPSK TX / 435 MHz RX, hal
 - [ ] **H1 — LNA bias choke:** replace current L16=1 µH (old L14) with the specified 220 nH RF choke after verifying exact part, SRF, current rating and footprint.
 - [ ] **H2 — RX LO drive:** finish LO amplifier and attenuation, and establish +7 dBm acceptance at the mixer LO port.
 - [ ] **H3 — Antenna switching:** implement the selected SPDT, control/default RX state, compatible supply/control levels, antenna DC block and protection. Connect ANT, TX_OUT and RX_IN.
-- [ ] **H4 — Footprints:** resolve remaining empty fields on U5/J6/J7/J8/H3/H4. Audit exact BOM and package selections.
+- [ ] **H4 — Footprints:** resolve remaining empty fields on J6/J7/H3/H4. Audit exact BOM and package selections.
 - [ ] **H5 — Remaining RF identities:** audit U8 ADL5602 versus ADL5610 symbol and U10 ADE-1+ versus ADE-6 symbol.
 - [ ] **H6 — Schematic cleanup:** resolve 35 dangling-wire findings (UUID mapping: Clock_Gen 6, TX_Chain 7, RX_Chain 17, Power 2, Digital_Control 3; report incorrectly groups them under root); update obsolete VHF/clock notes and references. Rerun ERC without hiding unexplained errors.
 
@@ -92,3 +104,82 @@ Baseline: 2026-09-09, ember `513365c`. Target: 437 MHz BPSK TX / 435 MHz RX, hal
 - [x] C58/C59: corrected polarized symbols and assigned Ember_RF:CP_Elec_Panasonic_D_6.3x5.8. Panasonic EEHZA1V470P, 47uF/35V; pads 3.2x1.6mm, 1.8mm gap, positive pad 1. Scratch acceptance completed. Pin endpoints unchanged; exported C58.1=+5V, C59.1=+3V3, both pin 2=GND.
 - [ ] Native library state: project symbol table visibly lists enabled Ember_RF at the correct path, and KiCad CLI successfully renders the library symbol. Native ERC nevertheless reported library not found and footprint library unavailable. Applied the native Symbol Libraries OK action to reload configuration; a subsequent native ERC rerun is still required. Do not mark resolved.
 - The main PCB has not been synchronized or routed. Native/CLI connectivity disagreement remains unresolved; full native export remains the connectivity review reference. Latest CLI export is useful for component fields and these named supply nets only.
+
+## After checkpoint fc6b76c — 2026-09-09
+
+- [x] Native library loading resolved: applied both Symbol Libraries and Footprint Libraries settings, reopened schematic, and reran native ERC. No symbol/footprint library warnings remain. Latest native ERC: zero active errors, three isolated-label warnings (ANT/RX_IN/TX_OUT), two old transistor exclusions, four ignored tests unchanged.
+- [x] U5 assigned Microchip MCP6022-I/SN / Package_SO:SOIC-8_3.9x4.9mm_P1.27mm, following schematic_guide.md prototype BOM. Audited all eight pins and three units in scratch project, queried pads and inspected renders. Main readback confirms all three units updated.
+- [x] J8: user confirmed optional through-hole expansion header, unpopulated at fabrication/assembly. Native DNP flag saved and verified in CSV preview and XML property. Assigned standard Connector_PinHeader_2.54mm:PinHeader_1x20_P2.54mm_Vertical. Cleared copied Samtec purchasing field and added assembly note. Keep footprint on board; do not order/populate J8 in assembly BOM.
+- Remaining blank footprints: J6/J7/H3/H4. J6/J7 specify ESQ-120-14-G-S; Samtec footprint drawing confirms 2.54mm pitch and 1.02mm holes. Audit mating orientation and envelope before assignment. J8 exact purchased part is intentionally unspecified because it is DNP.
+- Named-net export comparison before/after confirms unchanged connectivity and only U5/J8 footprint identity changes. CLI still exports 35 nets; full native-versus-CLI discrepancy remains open. Native save normalized additional Power/TX/RX serialization and persisted symbol-table view settings in the project configuration; main PCB unchanged.
+
+## Connector footprint completion — 2026-09-09
+
+- [x] J6/J7 assigned project-local Samtec ESQ-120-14-G-S single-row 20-pin footprints; H3/H4 assigned ESQ-126-39-G-D double-row 52-pin footprints. Exact MPN/manufacturer/datasheet recorded; Samtec MPN removed from misleading LCSC field on J6/J7.
+- [x] Scratch readback verified all 72 unique pad numbers, coordinates, symbol pin sets, 2.54 mm pitch, 1.02 mm drills and 1.8 mm lands. Top render inspected. Detailed acceptance in design/samtec_pad_audit.md.
+- [x] Fresh export has no blank component footprints; named connectivity unchanged, J8 DNP preserved.
+- [ ] Confirm connector physical side, rotation and origins against mating boards. Samtec mating-face numbering is distinct from the project's schematic pin diagram; do not mirror the footprint merely to match that diagram. Verify opposite Pico row orientations and stack compatibility before routing. Final reference/silkscreen placement remains open.
+- [ ] New PCB dry-run passes missing-footprint preflight but reports 15 reference identity conflicts: C1, C2, C3, C4, C5, C6, C7, R1, R2, R3, R4, Y1, Y2, L12, L13. It classifies 107 footprints as board-only. These are not accepted deletions or a validated mapping; reconcile against full native connectivity before any update.
+- [ ] CLI export still contains only 35 nets; native baseline contains 176. This discrepancy remains a synchronization blocker. No main PCB changes applied.
+
+## User clarification — three identical DNP headers
+
+J6/J7/J8 all use Connector_PinHeader_2.54mm:PinHeader_1x20_P2.54mm_Vertical. Supersedes J6/J7 Samtec socket selection above; purchasing fields cleared and all three assembly notes specify DNP. J8 native DNP flag remains set. J6/J7 native DNP checkboxes still require setting: desktop control timed out twice and current Konnect component editing does not expose that flag. Main PCB still awaiting synchronization.
+
+## PCB identity investigation
+
+Read-only UUID comparison found 86 unique candidate matches. PCB references changed after annotation: for example PCB C4 maps to schematic C2, C6 to C4, R1/R2 to R3/R4, and R3/R4 to R1/R2. Blind relinking by reference would be incorrect. Old PCB paths omit hierarchy prefixes. See design/pcb_identity_review.md for full candidate table; pad/net validation still required. Native desktop control remains unavailable (timeout), so J6/J7 DNP checkboxes and native update are pending.
+
+## Desktop connection restored and DNP complete
+
+- [x] Restarting KiCad restored native desktop control. J6/J7 native Do Not Populate flags enabled and saved. Fresh XML independently verifies J6/J7/J8 all DNP with identical PinHeader_1x20_P2.54mm_Vertical footprints. Cleared the bulk-edit/BOM filter.
+- PCB identity candidate mappings and native/CLI netlist discrepancy still require resolution before applying an update.
+
+## Live PCB connectivity reconciliation
+
+- [x] Queried all 107 existing PCB footprints through live Konnect IPC. All mapped pad numbers exist in the native schematic connectivity export.
+- [ ] Seven existing PCB net assignments span multiple current schematic nets: I2C_SCL, I2C_SDA, GND (Q3 collector), TRIPLER_OUT (Q3 base), old Q1 base (Q3 emitter), old U4 RF (U9 input/output and L16), BPSK_145 (data/output separation). Review affected copper and routing during synchronization; net-assignment comparison alone does not prove physical copper continuity.
+- [ ] 21 unmatched footprints require classification; do not delete them automatically. Detailed list and affected pads in design/pcb_pad_reconciliation.md.
+- No PCB mutation applied in this reconciliation.
+
+## Unmatched footprints classified
+
+All 21 classified by circuit role in design/unmatched_pcb_classification.md. U1→U5 has eight-pin electrical agreement but requires replacing the incorrect 10-pad footprint with SOIC-8. Three capacitor candidates identified; two series-inductor positions become coupling capacitors. RX input and LO filter blocks require topology-aware replacement. Preserve TP1/TP2 and J5 pending test-access/antenna-switch decisions. No PCB edits applied.
+
+## Native update preview
+
+Native preview with reference relinking OFF, footprint replacement ON, deletion OFF proposes 113 additions (all schematic parts), with 17 warnings and zero errors. It does not recover the preserved leaf UUIDs beneath changed hierarchy paths. Closed without applying. Zero preview errors is not a safe-update verdict. Explicit footprint linkage repair is required before synchronization; report in design/native_update_preview.txt.
+
+## Footprint links repaired in working PCB
+
+- [x] Applied and saved 86 preserved-UUID hierarchy links through native KiCad board API, after isolated-copy test. Compared saved board against native baseline: only paths changed; references, pads, tracks, zones and geometry identical. Native save omits solder-mask epsilon_r entries and empty zone_defaults even without edits; other stackup data unchanged.
+- Native preview now recognizes existing parts and proposes 27 new footprints, rather than all 113. 21 warnings, zero errors; update not applied. See design/linked_update_preview.txt.
+
+## Native PCB synchronization applied
+
+- [x] Native update applied and saved with UUID matching, replacement enabled, deletion disabled. All 113 schematic references now exist, no duplicate references; PCB contains 134 footprints including 21 retained legacy items. J6/J7/J8 identical header footprints and native DNP flags verified.
+- Native update finished with zero errors and three warnings: two old RX filter vias and Y1 pad 4 absent from symbol.
+- U5 SOIC-8 added, but old U1 remains: attempted multi-unit U5 linkage was not recognized. Do not treat this as an in-place replacement. Review U5 placement and remove old U1 only with associated copper cleanup.
+- Old L12/L13 preserved as LEGACY_L12/LEGACY_L13 to avoid collisions.
+- DRC baseline after update: 1566 errors, 476 warnings, plus 171 unconnected items. New footprints are unplaced and legacy circuitry retained; this is an intermediate repair state, not fabrication-ready. Schematic parity not checked by this CLI run.
+- Next: place new components and correct replacement footprint alignment, then remove obsolete circuitry and reroute changed nets.
+
+## Header placement restored
+
+- [x] J6/J7/J8 moved and rotated via live Konnect IPC so all 60 numbered pads exactly coincide with original J1/J2/J3 pad centers (zero measured deviation). DNP and identical header footprints retained. C58/C59 replacement pad centers already match their old pads exactly.
+- [x] Zones refilled through IPC and board saved. DRC: 933 errors, 418 warnings, 154 unconnected items; total violations reduced from 2042 to 1351 after header alignment and zone refill. Not fabrication-ready.
+- [ ] H3/H4 require explicit physical mating review: best rigid numbered-pad fit leaves 2.54 mm error, indicating swapped rows/mirrored numbering relative to old connector. Do not force alignment or silently swap net numbers.
+
+## Stack connector mounting-side check
+
+- EPS saved PCB uses B.Cu for H1/H2, while original and current comms use F.Cu for H1/H2→H3/H4. Their imported local pad coordinates are the same despite different mounting sides; this is insufficient evidence of physical mating compatibility.
+- EPS H1 origin is x=113.2136 mm, H2 x=108.1336 mm (5.08 mm separation). Original comms H1 x=113.1736 mm, H2 x=108.1336 mm (5.04 mm separation). Both use y=136.1236 mm, -90 degrees. Comms also has a 0.04 mm inter-connector spacing discrepancy relative to EPS.
+- Samtec Figure 4 mating-face numbering and the new library pattern were re-inspected. Do not renumber pads to conceal a mirrored mounting-side mismatch. Need stack drawing/physical assembly orientation to select the socket side and verify alignment; question sent to user. No H3/H4 geometry changes applied in this check.
+
+## CSKB sockets placed for top-side assembly
+
+- [x] User confirmed socket bodies above PCB, pins below; EPS B.Cu assignment was a placement mistake and not the intended assembly reference. H3/H4 remain on F.Cu.
+- [x] Custom ESQ footprint updated through Konnect to CSKB logical numbering, odd-left/even-right in zero-rotation top view. This is an unkeyed socket with interface-defined numbering; distinguish from Samtec polarization-position numbers. No schematic bus pins or pad net assignments were changed. Earlier audit's generic Samtec mating-position convention is superseded for these CSKB instances.
+- [x] H3/H4 refreshed using reviewed Konnect plan and placed at (111.9436,104.3736)/(106.8636,104.3736), both 180 degrees. Separation 5.08 mm. H4 restores original numbered-pad coordinates; H3 shifts its original hole grid +0.04 mm in X to match EPS. All 104 pad coordinates and net assignments verified. Top copper/silk export inspected.
+- [x] Zones refilled and board saved. DRC now 631 errors, 273 warnings, 140 unconnected items (904 violations total). Placement/routing and silkscreen cleanup remain; not fab-ready.
+- Scratch-board Add API failed during validation; no scratch-board acceptance claimed. Acceptance here uses library-tool readback, reviewed live refresh, all-pad live position/net checks, and rendered board inspection.

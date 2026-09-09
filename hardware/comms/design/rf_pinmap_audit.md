@@ -46,3 +46,46 @@ Primary sources: https://industrial.panasonic.com/content/data/CP/PDF/news2014/e
 Searched existing library first: CP_Elec_6.3x5.8 uses Nichicon-style pads 3.5x1.6mm with 1.9mm gap. Created Ember_RF:CP_Elec_Panasonic_D_6.3x5.8 to match Panasonic's size-D recommendation exactly: rectangular pads 3.2x1.6mm, centers +/-2.5mm on X, gap 1.8mm. Pad 1 left positive; pad 2 right negative. Front Cu/Paste/Mask only. Body/fab base 6.6mm with positive-end chamfers and diameter 6.3mm circle; courtyard +/-4.35mm X and +/-3.65mm Y includes body tolerance and 0.25mm margin. Positive silk mark clear of pads. No 3D model assigned.
 
 Scratch C1 polarized symbol and C2 custom footprint placed, queried and rendered. Two symbol pins and two pads match; no duplicates or mechanical-only pads. Generator initially made pad-envelope-only courtyard; corrected via MCP before acceptance to include the full body. Main C58/C59 replacement preserves both pin endpoints exactly. Export after replacement confirms C58.1=+5V, C59.1=+3V3, C58.2=C59.2=GND. Values and LCSC C178639 preserved, exact manufacturer/MPN/voltage recorded. Main power schematic render visually checked. Main-board placement/routing and native library availability remain open.
+
+
+## U5 — Microchip MCP6022-I/SN
+
+Accepted SOIC-8 footprint assignment based on the existing prototype BOM in design/schematic_guide.md. Source: https://ww1.microchip.com/downloads/en/DeviceDoc/20001685E.pdf , DS20001685E (2017), p.1 package pinout and p.51 ordering suffix SN=8-lead SOIC. Top/component view with notch above; pin 1 upper left, counterclockwise lead numbering. Symbol Amplifier_Operational:MCP6022; footprint Package_SO:SOIC-8_3.9x4.9mm_P1.27mm. Eight physical leads, eight electrical symbol pins across units A/B/C, eight front SMD pads, no duplicate or mechanical-only pads. Stock pad dimensions 1.95x0.6mm, 1.27mm pitch, front Cu/Mask/Paste.
+
+| Lead | Function | Symbol pin/type | Footprint pad | Local X/Y mm | View |
+|---|---|---|---|---|---|
+| 1 | OUT A | 1 output | 1 | -2.475/-1.905 | top, counterclockwise from notch |
+| 2 | IN A- | 2 input | 2 | -2.475/-0.635 | top, counterclockwise from notch |
+| 3 | IN A+ | 3 input | 3 | -2.475/0.635 | top, counterclockwise from notch |
+| 4 | VSS | 4 power_in | 4 | -2.475/1.905 | top, counterclockwise from notch |
+| 5 | IN B+ | 5 input | 5 | 2.475/1.905 | top, counterclockwise from notch |
+| 6 | IN B- | 6 input | 6 | 2.475/0.635 | top, counterclockwise from notch |
+| 7 | OUT B | 7 output | 7 | 2.475/-0.635 | top, counterclockwise from notch |
+| 8 | VDD | 8 power_in | 8 | 2.475/-1.905 | top, counterclockwise from notch |
+
+Scratch U4 A/B/C placed and pin locations queried; footprint U4 queried with all eight pad positions and layer sets. Schematic/board renders inspected: pad-1 triangle and fab chamfer upper left, correct lead ordering, no mirror reversal. Main U5 edit/readback confirms footprint on all three units and exact manufacturer/MPN. This is package acceptance, not a new baseband performance qualification.
+
+## J8 — optional unpopulated header
+
+User specifies an unpopulated through-hole header for future use, no exact purchased part. Selected stock Connector_PinHeader_2.54mm:PinHeader_1x20_P2.54mm_Vertical, 20 pads at 2.54mm pitch. Native DNP flag enabled and verified in assembly CSV preview and exported XML. Board inclusion retained. No manufacturer-specific or mating-part acceptance claimed; check the actual future header/cable orientation if populated. Cleared old Samtec purchasing field to avoid unintended ordering.
+
+## Connector footprint completion — 2026-09-09
+
+- [x] J6/J7 assigned project-local Samtec ESQ-120-14-G-S single-row 20-pin footprints; H3/H4 assigned ESQ-126-39-G-D double-row 52-pin footprints. Exact MPN/manufacturer/datasheet recorded; Samtec MPN removed from misleading LCSC field on J6/J7.
+- [x] Scratch readback verified all 72 unique pad numbers, coordinates, symbol pin sets, 2.54 mm pitch, 1.02 mm drills and 1.8 mm lands. Top render inspected. Detailed acceptance in design/samtec_pad_audit.md.
+- [x] Fresh export has no blank component footprints; named connectivity unchanged, J8 DNP preserved.
+- [ ] Confirm connector physical side, rotation and origins against mating boards. Samtec mating-face numbering is distinct from the project's schematic pin diagram; do not mirror the footprint merely to match that diagram. Verify opposite Pico row orientations and stack compatibility before routing. Final reference/silkscreen placement remains open.
+- [ ] New PCB dry-run passes missing-footprint preflight but reports 15 reference identity conflicts: C1, C2, C3, C4, C5, C6, C7, R1, R2, R3, R4, Y1, Y2, L12, L13. It classifies 107 footprints as board-only. These are not accepted deletions or a validated mapping; reconcile against full native connectivity before any update.
+- [ ] CLI export still contains only 35 nets; native baseline contains 176. This discrepancy remains a synchronization blocker. No main PCB changes applied.
+
+## User clarification — three identical DNP headers
+
+J6/J7/J8 all use Connector_PinHeader_2.54mm:PinHeader_1x20_P2.54mm_Vertical. Supersedes J6/J7 Samtec socket selection above; purchasing fields cleared and all three assembly notes specify DNP. J8 native DNP flag remains set. J6/J7 native DNP checkboxes still require setting: desktop control timed out twice and current Konnect component editing does not expose that flag. Main PCB still awaiting synchronization.
+
+## CSKB sockets placed for top-side assembly
+
+- [x] User confirmed socket bodies above PCB, pins below; EPS B.Cu assignment was a placement mistake and not the intended assembly reference. H3/H4 remain on F.Cu.
+- [x] Custom ESQ footprint updated through Konnect to CSKB logical numbering, odd-left/even-right in zero-rotation top view. This is an unkeyed socket with interface-defined numbering; distinguish from Samtec polarization-position numbers. No schematic bus pins or pad net assignments were changed. Earlier audit's generic Samtec mating-position convention is superseded for these CSKB instances.
+- [x] H3/H4 refreshed using reviewed Konnect plan and placed at (111.9436,104.3736)/(106.8636,104.3736), both 180 degrees. Separation 5.08 mm. H4 restores original numbered-pad coordinates; H3 shifts its original hole grid +0.04 mm in X to match EPS. All 104 pad coordinates and net assignments verified. Top copper/silk export inspected.
+- [x] Zones refilled and board saved. DRC now 631 errors, 273 warnings, 140 unconnected items (904 violations total). Placement/routing and silkscreen cleanup remain; not fab-ready.
+- Scratch-board Add API failed during validation; no scratch-board acceptance claimed. Acceptance here uses library-tool readback, reviewed live refresh, all-pad live position/net checks, and rendered board inspection.
