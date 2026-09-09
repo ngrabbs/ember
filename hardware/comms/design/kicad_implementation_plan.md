@@ -102,7 +102,7 @@ Everything validated, in one place. Details/rationale in the log.
 - [ ] Fix the "TODO: these caps are wrong" note on the crystal load caps
 
 ### TX chain
-- [ ] **Q1: 2SC3356**, footprint verified vs datasheet (1=B,2=E,3=C — matches MMBT3904)
+- [ ] **Q1 (now Q3/Q4): Hottech 2SC3356, LCSC C193010**, component-side package audited against SOT-23 (1=B,2=E,3=C); see rf_pinmap_audit.md. This mapping is manufacturer-specific; do not apply it to Renesas variants
 - [ ] **L1 → collector** (fix the Rev-A base/collector wiring error), value **15 nH**
 - [ ] Add **Ctank ≈ 8.2 pF** collector→GND
 - [ ] Pre-MMIC + output BPF: **cap-coupled cheby** — 2× (10 nH 0402HP ∥ 9.1 p) + 1.6 p series coupling cap + 3.9 p I/O caps (C0G; in-chain-tuned targets) + **tuning pads** at shunt nodes
