@@ -326,3 +326,14 @@ Saved board DRC: 98 errors, 128 warnings, 51 unconnected items. Clock sheet ERC 
 - [ ] Review remaining 120 DRC warnings; RF bench qualification and L16 prototype limitation remain open.
 
 See design/remaining_layout_cleanup.md and design/remaining_layout_validation.json for the current saved-board evidence. No commit or push performed.
+
+## TX/RX placement pass — 2026-09-09
+
+- [x] Checkpoint validated routing: 11fb9a1.
+- [x] Move TX PA/bias/bypass group beside output filter; compact RX input filter; move TP14 into revised path.
+- [x] Reroute affected RF connections and move switch control to B.Cu.
+- [x] Combined PA routing 29.64 → 15.61 mm; RX input routing 38.69 → 22.57 mm.
+- [x] Validate: zero active DRC errors, zero unconnected items, 181 native nets match, all 1,245 ground samples covered.
+- [ ] Existing 120 DRC warnings, schematic annotation cleanup and RF bench qualification remain open.
+
+See design/placement_optimization.md and placement_optimization_validation.json. Optimized layout is saved but not committed/pushed.
