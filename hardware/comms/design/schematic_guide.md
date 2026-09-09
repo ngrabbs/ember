@@ -327,8 +327,7 @@ bloats the sheet file by megabytes.
 >
 > **Estimated current budget:**
 > +3V3: ~150 mA (RP2040 ~50mA, Si5351A ~30mA, logic ~10mA, op-amp ~10mA)
-> +5V: ~140 mA (PSA4 LNA ~60mA, ADL5602 ~60mA, tripler ~5mA, Pico VSYS ~10mA, margin ~5mA)
-> Total: <300 mA — well within EPS TPS62933F capacity (3A per rail). Note: PSA4 LNA bias can be GPIO-gated for RX duty-cycling.
+> **2026-09-09 audit correction:** the previous +5V estimate used 60 mA for ADL5602; its datasheet gives 89 mA typical and 106 mA maximum under the stated test conditions. Holding the other old assumptions fixed gives about 169 mA typical on +5V, before accounting for the new switch circuit and revisiting the RX/Pico assumptions. The previous “<300 mA total” conclusion is withdrawn pending a complete rail-budget review. See `u8_adl5602_pinmap.md`.
 
 ### Text Box 4 — Net Name Convention (Bottom-Center)
 

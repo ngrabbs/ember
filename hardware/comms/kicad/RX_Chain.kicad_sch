@@ -2609,12 +2609,6 @@
 		(uuid "6c73f7d2-ccb6-49cb-b42c-afb8203040db")
 	)
 	(junction
-		(at 162.56 195.58)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "6cd62c64-e073-4c1b-bc00-296aea21d00e")
-	)
-	(junction
 		(at 71.12 100.33)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2973,6 +2967,16 @@
 			(type default)
 		)
 		(uuid "27aacb84-6492-41c7-b13e-5c11b081a128")
+	)
+	(wire
+		(pts
+			(xy 182.88 176.53) (xy 187.96 176.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "289abfa0-12b7-4241-b403-805ad25827d9")
 	)
 	(wire
 		(pts
@@ -3616,16 +3620,6 @@
 	)
 	(wire
 		(pts
-			(xy 162.56 195.58) (xy 162.56 198.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "969b7387-5116-45ba-b7d2-88dec16f39c5")
-	)
-	(wire
-		(pts
 			(xy 196.85 80.01) (xy 196.85 81.28)
 		)
 		(stroke
@@ -4106,16 +4100,6 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 173.99) (xy 182.88 179.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e02354e1-afbf-4ac4-9d7b-6c1bc99c76a4")
-	)
-	(wire
-		(pts
 			(xy 99.06 186.69) (xy 109.22 186.69)
 		)
 		(stroke
@@ -4143,6 +4127,16 @@
 			(type default)
 		)
 		(uuid "ea60fd55-8bf7-4195-9330-80b0db39b083")
+	)
+	(wire
+		(pts
+			(xy 182.88 173.99) (xy 182.88 176.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eaf0d172-b9ef-4fc3-bac1-8e3a0338a554")
 	)
 	(wire
 		(pts
@@ -4223,6 +4217,98 @@
 			(type default)
 		)
 		(uuid "fe8d38cc-4b64-4add-bd54-e3c6f7f9256f")
+	)
+	(label "VREF_RX"
+		(at 187.96 176.53 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4e0c4f52-72b4-4e1f-8610-424c13c03616")
+	)
+	(label "VREF_RX"
+		(at 162.56 198.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "55f66cc2-1902-47bf-bc60-200cec3e9de1")
+	)
+	(label "VREF_RX"
+		(at 187.96 198.12 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "58184694-6205-4617-ac71-fa90bc5aa423")
+	)
+	(label "RX_AMP_IN"
+		(at 208.28 194.31 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "65d9c600-4ecf-4828-94f8-07439621fb66")
+	)
+	(label "RX_AMP_IN"
+		(at 187.96 205.74 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a0a81f8a-464a-4465-af16-ee2cc178cd6a")
+	)
+	(label "VREF_RX"
+		(at 172.72 198.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "bcaa9e7d-2d3d-4b29-87ba-266a2c193723")
+	)
+	(label "VREF_RX"
+		(at 87.63 180.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d9d29ac1-ac51-4a43-bde0-eef482e3386f")
+	)
+	(global_label "RX_IF"
+		(shape input)
+		(at 80.01 180.34 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "50edac2b-e57b-4df6-9c50-bcd4e20e04a1")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 80.01 180.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 	)
 	(global_label "RX_IF"
 		(shape output)
@@ -4392,7 +4478,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "10uF bypass on receiver mid-supply reference"
 			(at 162.56 201.93 0)
 			(hide yes)
 			(show_name no)
@@ -4787,6 +4873,99 @@
 			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0108")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 83.82 180.34 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "14c1a76f-8700-4e6b-8012-08035e98a7e9")
+		(property "Reference" "R38"
+			(at 83.82 178.308 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100k"
+			(at 83.82 180.34 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 82.042 180.34 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 83.82 180.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "100k receiver DC bias resistor"
+			(at 83.82 180.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C25741"
+			(at 83.82 180.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "43b463ed-8712-4234-b8a4-7793001353ab")
+		)
+		(pin "1"
+			(uuid "bfcf3b2c-3bbe-47e5-821b-ffb8889d2bb8")
+		)
+		(instances
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
+					(reference "R38")
 					(unit 1)
 				)
 			)
@@ -5880,84 +6059,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 182.88 179.07 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3b912eda-f1f1-484c-898f-cd40b7befe2a")
-		(property "Reference" "#PWR094"
-			(at 182.88 185.42 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 182.88 184.15 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 182.88 179.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 182.88 179.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 182.88 179.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "e8520e54-8f38-419d-9b2d-baf39809e8da")
-		)
-		(instances
-			(project "transceiver"
-				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
-					(reference "#PWR094")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 240.03 201.93 270)
 		(unit 1)
@@ -6873,7 +6974,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1u"
+		(property "Value" "220n"
 			(at 168.148 84.582 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6884,7 +6985,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_0805_2012Metric"
+		(property "Footprint" "Ember_RF:L_Coilcraft_0805HP"
 			(at 170.18 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -6895,7 +6996,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.coilcraft.com/getmedia/c30565bc-9cf5-4393-9380-6f782e4b4cd8/0805hp.pdf"
 			(at 170.18 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -6906,7 +7007,7 @@
 				)
 			)
 		)
-		(property "Description" "Inductor"
+		(property "Description" "220 nH 5% RF choke; Coilcraft 0805HP-221XJRC; prototype selection, RF bench qualification pending"
 			(at 170.18 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -6917,8 +7018,63 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C18221300"
+		(property "LCSC Part #" ""
 			(at 169.926 86.614 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0805HP-221XJRC"
+			(at 170.18 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Coilcraft"
+			(at 170.18 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part #" "0805HP-221XJRC"
+			(at 170.18 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PinMapAudit" "design/l16_footprint_acceptance.md"
+			(at 170.18 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Prototype; RF bench qualification pending"
+			(at 170.18 81.28 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7542,6 +7698,99 @@
 			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "#PWR0116")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 187.96 201.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "94463055-de46-43e0-8bb3-1f8da3905714")
+		(property "Reference" "R39"
+			(at 189.992 201.93 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100k"
+			(at 187.96 201.93 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 186.182 201.93 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 187.96 201.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "100k receiver DC bias resistor"
+			(at 187.96 201.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C25741"
+			(at 187.96 201.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "43b463ed-8712-4234-b8a4-7793001353ac")
+		)
+		(pin "1"
+			(uuid "bfcf3b2c-3bbe-47e5-821b-ffb8889d2bb9")
+		)
+		(instances
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
+					(reference "R39")
 					(unit 1)
 				)
 			)
@@ -8524,7 +8773,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.minicircuits.com/pdfs/ADE-6.pdf"
+		(property "Datasheet" "https://www.minicircuits.com/pdfs/ADE-1+.pdf"
 			(at 313.055 89.535 0)
 			(hide yes)
 			(show_name no)
@@ -8535,7 +8784,62 @@
 				)
 			)
 		)
-		(property "Description" "Mixer, +7 dBm LO, 0.05 to 250 MHz, CD542"
+		(property "Description" "ADE-1+ passive double-balanced mixer, +7 dBm LO, RF/LO 0.5-500 MHz, CD636; audited pin-compatible ADE-6 symbol and PL-052 land pattern"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "ADE-1+"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Mini-Circuits"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Package" "CD636"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageHeightMax_mm" "4.11"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PinMapAudit" "design/u10_ade1_pinmap.md"
 			(at 320.04 85.09 0)
 			(hide yes)
 			(show_name no)

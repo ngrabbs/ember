@@ -1,0 +1,261 @@
+{
+  "footprints": 141,
+  "copper_items": 689,
+  "removed": 4,
+  "added": 3,
+  "retained_copper_unchanged": true,
+  "all_pad_nets_unchanged": true,
+  "new_copper_nets_verified": true,
+  "local_violations": [],
+  "errors": 519,
+  "warnings": 211,
+  "unconnected": 118,
+  "plan": {
+    "remove": [
+      {
+        "id": "0a08e663-fc0a-4ca4-8926-594a61e6bae2",
+        "kind": "PCB_TRACK",
+        "net": "TRIPLER_OUT",
+        "a": [
+          140.3642,
+          126.2476
+        ],
+        "b": [
+          141.3776,
+          126.2476
+        ],
+        "width": 0.34,
+        "layer": 0
+      },
+      {
+        "id": "28e6c2b9-5d4e-4d27-b4be-6edba2d22cf5",
+        "kind": "PCB_TRACK",
+        "net": "TRIPLER_OUT",
+        "a": [
+          141.3776,
+          126.2476
+        ],
+        "b": [
+          141.3822,
+          126.243
+        ],
+        "width": 0.34,
+        "layer": 0
+      },
+      {
+        "id": "52fe2396-a957-4a94-bbe6-27e0dfa66fcd",
+        "kind": "PCB_TRACK",
+        "net": "TRIPLER_OUT",
+        "a": [
+          140.3596,
+          126.2522
+        ],
+        "b": [
+          140.3642,
+          126.2476
+        ],
+        "width": 0.34,
+        "layer": 0
+      },
+      {
+        "id": "c72ea8f3-6412-46aa-b024-9a39174c19fe",
+        "kind": "PCB_TRACK",
+        "net": "TRIPLER_OUT",
+        "a": [
+          141.3822,
+          126.243
+        ],
+        "b": [
+          142.322,
+          126.243
+        ],
+        "width": 0.34,
+        "layer": 0
+      }
+    ],
+    "placements": {
+      "TP13": [
+        143.9,
+        126.223,
+        0
+      ]
+    },
+    "paths": [
+      {
+        "net": "TRIPLER_OUT",
+        "width": 0.358,
+        "layer": "F.Cu",
+        "points": [
+          [
+            140.2971,
+            126.2522
+          ],
+          [
+            142.2928,
+            126.2522
+          ],
+          [
+            142.322,
+            126.223
+          ],
+          [
+            143.9,
+            126.223
+          ]
+        ]
+      }
+    ],
+    "vias": [],
+    "labels": {
+      "TP13": [
+        145.1,
+        124.8
+      ],
+      "C93": [
+        144,
+        127.55
+      ]
+    },
+    "keepout": "TRIPLER_OUT testpoint pour clearance"
+  },
+  "ground_sampling": {
+    "counts": {
+      "0": 40,
+      "-0.179": 40,
+      "0.179": 40,
+      "-0.6312": 40,
+      "0.6312": 40
+    },
+    "missing": [],
+    "pads": {
+      "C84": [
+        {
+          "number": "1",
+          "net": "Net-(C84-Pad1)",
+          "position": [
+            133.6298,
+            128.9608
+          ]
+        },
+        {
+          "number": "2",
+          "net": "Net-(C84-Pad2)",
+          "position": [
+            132.6698,
+            128.9608
+          ]
+        }
+      ],
+      "L19": [
+        {
+          "number": "1",
+          "net": "Net-(C84-Pad2)",
+          "position": [
+            131.5802,
+            131.1442
+          ]
+        },
+        {
+          "number": "2",
+          "net": "GND",
+          "position": [
+            130.6102,
+            131.1442
+          ]
+        }
+      ],
+      "C87": [
+        {
+          "number": "1",
+          "net": "Net-(C84-Pad2)",
+          "position": [
+            131.6006,
+            132.5676
+          ]
+        },
+        {
+          "number": "2",
+          "net": "GND",
+          "position": [
+            130.6406,
+            132.5676
+          ]
+        }
+      ],
+      "C89": [
+        {
+          "number": "1",
+          "net": "Net-(C84-Pad2)",
+          "position": [
+            131.6514,
+            133.99
+          ]
+        },
+        {
+          "number": "2",
+          "net": "Net-(C89-Pad2)",
+          "position": [
+            130.6914,
+            133.99
+          ]
+        }
+      ],
+      "L21": [
+        {
+          "number": "1",
+          "net": "Net-(C89-Pad2)",
+          "position": [
+            130.7928,
+            135.3362
+          ]
+        },
+        {
+          "number": "2",
+          "net": "GND",
+          "position": [
+            129.8228,
+            135.3362
+          ]
+        }
+      ],
+      "C92": [
+        {
+          "number": "1",
+          "net": "Net-(C89-Pad2)",
+          "position": [
+            130.8132,
+            136.7586
+          ]
+        },
+        {
+          "number": "2",
+          "net": "GND",
+          "position": [
+            129.8532,
+            136.7586
+          ]
+        }
+      ],
+      "C94": [
+        {
+          "number": "1",
+          "net": "Net-(C89-Pad2)",
+          "position": [
+            132.6,
+            145.48
+          ]
+        },
+        {
+          "number": "2",
+          "net": "TX_OUT",
+          "position": [
+            132.6,
+            144.52
+          ]
+        }
+      ]
+    }
+  },
+  "probe_branch_length_mm": 1.578,
+  "ipc_socket_at_validation": "ipc:///tmp/kicad/api-79720.sock"
+}

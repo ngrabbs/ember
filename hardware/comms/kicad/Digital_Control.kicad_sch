@@ -2139,16 +2139,6 @@
 		)
 		(uuid "023da940-80a0-4404-b5ed-198bbf868255")
 	)
-	(label "TX_ACTIVE"
-		(at 74.93 114.3 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "20b9d50a-5b0f-4e19-82c2-a0bd3b742cba")
-	)
 	(label "GPIO14"
 		(at 200.66 124.46 0)
 		(effects
@@ -2329,20 +2319,9 @@
 		)
 		(uuid "e64aa3c9-6085-42b8-970d-5b85b89e5eb8")
 	)
-	(label "TX_ACTIVE"
-		(at 60.96 175.26 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "fb2a5560-77e0-4cad-89d9-7522bb1381f1")
-	)
 	(global_label "SPI_COMMS_CS_N"
 		(shape bidirectional)
 		(at 74.93 96.52 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2366,7 +2345,6 @@
 	(global_label "PICO_VSYS"
 		(shape input)
 		(at 111.76 83.82 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2390,7 +2368,6 @@
 	(global_label "BPSK_DATA"
 		(shape output)
 		(at 111.76 129.54 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2414,7 +2391,6 @@
 	(global_label "SPI_COMMS_SCK"
 		(shape bidirectional)
 		(at 74.93 101.6 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2438,7 +2414,6 @@
 	(global_label "I2C_SCL"
 		(shape bidirectional)
 		(at 111.76 114.3 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2459,10 +2434,53 @@
 			)
 		)
 	)
+	(global_label "TX_ACTIVE"
+		(shape output)
+		(at 74.93 114.3 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "631ed3bb-a921-4bc5-a777-99cd361996ce")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 74.93 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "TX_ACTIVE"
+		(shape output)
+		(at 60.96 175.26 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6c6dd82c-6ff4-40a0-af05-7a1317a74d40")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 60.96 175.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "SPI_COMMS_MISO"
 		(shape bidirectional)
 		(at 74.93 93.98 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2486,7 +2504,6 @@
 	(global_label "I2C_SDA"
 		(shape bidirectional)
 		(at 111.76 116.84 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2510,7 +2527,6 @@
 	(global_label "RX_BASEBAND"
 		(shape output)
 		(at 111.76 101.6 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2534,7 +2550,6 @@
 	(global_label "COMMS_IRQ"
 		(shape bidirectional)
 		(at 74.93 91.44 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2558,7 +2573,6 @@
 	(global_label "SPI_COMMS_MOSI"
 		(shape bidirectional)
 		(at 74.93 104.14 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)

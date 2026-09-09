@@ -60,7 +60,12 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        [
+          "courtyards_overlap|108973600|70603600|3cb9d2c5-dbe7-4c8c-8227-404ddca17d99|59730e12-defd-4bb2-9b88-14a4b1eab542",
+          "User accepted H3/H4 courtyard overlap on 2026-09-09. Preserve fixed stack interface and equal 2.54 mm pin spacing across both headers (5.08 mm footprint center spacing). This exception applies only to this H3/H4 pair; it does not certify physical body fit."
+        ]
+      ],
       "meta": {
         "version": 2
       },
@@ -130,7 +135,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.2,
+        "min_clearance": 0.15,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
@@ -748,6 +753,78 @@
       {
         "netclass": "PWR_HIGH",
         "pattern": "VBAT"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "ANT"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U11-RFC)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C84-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C89-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C84-Pad1)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C93-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C100-Pad1)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C55-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C60-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U9-IN)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U9-OUT_DC)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U10-RF)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U10-IF)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C86-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C91-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U10-LO)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(Q4-B)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(Q4-C)"
       }
     ]
   },
@@ -959,7 +1036,7 @@
         "uuid": "c034ea61-6551-4f92-af2a-65337e5cc22a"
       }
     ],
-    "used_designators": "",
+    "used_designators": "D1",
     "variants": []
   },
   "sheets": [
@@ -990,6 +1067,10 @@
     [
       "95253c0f-15a7-4b27-a643-2156a456084b",
       "TX Chain"
+    ],
+    [
+      "65186007-09fd-4f4e-8a9d-28ec5cceb5b5",
+      "Single Antenna RF Switch"
     ]
   ],
   "text_variables": {

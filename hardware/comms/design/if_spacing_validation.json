@@ -1,0 +1,195 @@
+{
+  "footprints": 136,
+  "copper_items": 761,
+  "removed": 5,
+  "added": 4,
+  "retained_copper_unchanged": true,
+  "all_pad_nets_unchanged": true,
+  "new_copper_nets_verified": true,
+  "local_violations": [],
+  "errors": 439,
+  "warnings": 149,
+  "unconnected": 77,
+  "plan": {
+    "remove": [
+      {
+        "id": "307c7a59-086f-4e29-bf0d-8f4e28a3e77e",
+        "kind": "PCB_TRACK",
+        "net": "RX_IF",
+        "a": [
+          169.8556,
+          129.1132
+        ],
+        "b": [
+          169.8683,
+          129.1005
+        ],
+        "width": 0.34,
+        "layer": 0
+      },
+      {
+        "id": "88709c9c-328d-46e3-8fd3-1174e8bef327",
+        "kind": "PCB_TRACK",
+        "net": "RX_IF",
+        "a": [
+          168.8,
+          127.9
+        ],
+        "b": [
+          169.8556,
+          128.9556
+        ],
+        "width": 0.358,
+        "layer": 0
+      },
+      {
+        "id": "c4f3db3c-a534-43dc-87c7-e2976b45e981",
+        "kind": "PCB_TRACK",
+        "net": "RX_IF",
+        "a": [
+          169.8556,
+          128.9556
+        ],
+        "b": [
+          169.8556,
+          129.1132
+        ],
+        "width": 0.358,
+        "layer": 0
+      },
+      {
+        "id": "c56b1629-5d7e-475b-aba2-3733d0a66179",
+        "kind": "PCB_TRACK",
+        "net": "RX_IF",
+        "a": [
+          170.8589,
+          129.1005
+        ],
+        "b": [
+          170.8716,
+          129.0878
+        ],
+        "width": 0.34,
+        "layer": 0
+      },
+      {
+        "id": "d8a55fd1-bbf6-4529-a515-ba2dc25877be",
+        "kind": "PCB_TRACK",
+        "net": "RX_IF",
+        "a": [
+          169.8683,
+          129.1005
+        ],
+        "b": [
+          170.8589,
+          129.1005
+        ],
+        "width": 0.34,
+        "layer": 0
+      }
+    ],
+    "placements": {
+      "TP15": [
+        169,
+        129.1132,
+        0
+      ],
+      "R20": [
+        171.1,
+        129.0878,
+        0
+      ]
+    },
+    "labels": {
+      "TP15": [
+        168.2,
+        130.6
+      ],
+      "R20": [
+        171.3,
+        130.6
+      ]
+    },
+    "paths": [
+      {
+        "net": "RX_IF",
+        "width": 0.358,
+        "layer": "F.Cu",
+        "points": [
+          [
+            168.8,
+            127.9
+          ],
+          [
+            169,
+            128.1
+          ],
+          [
+            169,
+            129.1132
+          ],
+          [
+            170.5646,
+            129.1132
+          ],
+          [
+            170.59,
+            129.0878
+          ]
+        ]
+      }
+    ],
+    "vias": [],
+    "keepout": "unused"
+  },
+  "local_component_DRC_and_unconnected_findings": 0,
+  "outline_still_valid": true,
+  "live_readback": {
+    "TP15": {
+      "pad_count": 1,
+      "pads": [
+        {
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "net": "RX_IF",
+          "number": "1",
+          "x": 169.0,
+          "y": 129.1132
+        }
+      ],
+      "reference": "TP15",
+      "source": "ipc"
+    },
+    "R20": {
+      "pad_count": 2,
+      "pads": [
+        {
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "net": "RX_IF",
+          "number": "1",
+          "x": 170.59,
+          "y": 129.087799
+        },
+        {
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "net": "Net-(C57-Pad1)",
+          "number": "2",
+          "x": 171.61,
+          "y": 129.087799
+        }
+      ],
+      "reference": "R20",
+      "source": "ipc"
+    }
+  }
+}

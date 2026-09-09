@@ -1,0 +1,351 @@
+{
+  "footprints": 141,
+  "copper_items": 738,
+  "removed": 6,
+  "added": 6,
+  "retained_copper_unchanged": true,
+  "all_pad_nets_unchanged": true,
+  "new_copper_nets_verified": true,
+  "local_violations": [],
+  "errors": 501,
+  "warnings": 202,
+  "unconnected": 101,
+  "plan": {
+    "remove": [
+      {
+        "id": "ba48b209-7db2-4a85-8650-541c5816c33f",
+        "kind": "PCB_TRACK",
+        "net": "Net-(U10-RF)",
+        "a": [
+          160.3,
+          131.3
+        ],
+        "b": [
+          160.8,
+          130.8
+        ],
+        "width": 0.358,
+        "layer": 0
+      },
+      {
+        "id": "c5eb4619-5669-4503-955c-c5cb6d5f44c3",
+        "kind": "PCB_TRACK",
+        "net": "Net-(U10-RF)",
+        "a": [
+          159.38,
+          131.3
+        ],
+        "b": [
+          160.3,
+          131.3
+        ],
+        "width": 0.358,
+        "layer": 0
+      },
+      {
+        "id": "cdcf5e20-5e64-4abb-a184-1a44badaa5d1",
+        "kind": "PCB_TRACK",
+        "net": "Net-(U10-RF)",
+        "a": [
+          160.8,
+          130.8
+        ],
+        "b": [
+          160.8,
+          127.3
+        ],
+        "width": 0.358,
+        "layer": 0
+      },
+      {
+        "id": "0fdaa57d-85ea-4f31-b34c-6d33b5f488e3",
+        "kind": "PCB_TRACK",
+        "net": "Net-(U9-OUT_DC)",
+        "a": [
+          158.07,
+          130.949999
+        ],
+        "b": [
+          158.42,
+          131.3
+        ],
+        "width": 0.358,
+        "layer": 0
+      },
+      {
+        "id": "95fbdd1e-30a5-46ab-9f76-f1f4ea8bc99b",
+        "kind": "PCB_TRACK",
+        "net": "Net-(U9-OUT_DC)",
+        "a": [
+          158.42,
+          131.042499
+        ],
+        "b": [
+          158.42,
+          131.3
+        ],
+        "width": 0.358,
+        "layer": 0
+      },
+      {
+        "id": "a9e934ad-6d56-43f2-8207-8ed16d355ae5",
+        "kind": "PCB_TRACK",
+        "net": "Net-(U9-OUT_DC)",
+        "a": [
+          156.4,
+          130.949999
+        ],
+        "b": [
+          158.07,
+          130.949999
+        ],
+        "width": 0.358,
+        "layer": 0
+      }
+    ],
+    "placements": {
+      "L16": [
+        158.3,
+        129.55,
+        0
+      ],
+      "C75": [
+        158.9,
+        131.75,
+        0
+      ]
+    },
+    "labels": {
+      "L16": [
+        157,
+        132.6
+      ],
+      "C75": [
+        159.3,
+        132.85
+      ]
+    },
+    "paths": [
+      {
+        "net": "Net-(U9-OUT_DC)",
+        "width": 0.358,
+        "layer": "F.Cu",
+        "points": [
+          [
+            156.4,
+            130.95
+          ],
+          [
+            157.62,
+            130.95
+          ],
+          [
+            158.42,
+            131.75
+          ]
+        ]
+      },
+      {
+        "net": "Net-(U9-OUT_DC)",
+        "width": 0.358,
+        "layer": "F.Cu",
+        "points": [
+          [
+            158.42,
+            131.042499
+          ],
+          [
+            158.42,
+            131.75
+          ]
+        ]
+      },
+      {
+        "net": "Net-(U10-RF)",
+        "width": 0.358,
+        "layer": "F.Cu",
+        "points": [
+          [
+            159.38,
+            131.75
+          ],
+          [
+            160.3,
+            131.75
+          ],
+          [
+            160.8,
+            131.25
+          ],
+          [
+            160.8,
+            127.3
+          ]
+        ]
+      }
+    ],
+    "vias": [],
+    "keepout": "L16 package clearance RF adjustment"
+  },
+  "ground_sampling": {
+    "counts": {
+      "0": 692,
+      "-0.179": 692,
+      "0.179": 692,
+      "-0.6312": 692,
+      "0.6312": 692
+    },
+    "missing": [],
+    "pads": {
+      "C84": [
+        {
+          "number": "1",
+          "net": "Net-(C84-Pad1)",
+          "position": [
+            133.6298,
+            128.9608
+          ]
+        },
+        {
+          "number": "2",
+          "net": "Net-(C84-Pad2)",
+          "position": [
+            132.6698,
+            128.9608
+          ]
+        }
+      ],
+      "L19": [
+        {
+          "number": "1",
+          "net": "Net-(C84-Pad2)",
+          "position": [
+            131.5802,
+            131.1442
+          ]
+        },
+        {
+          "number": "2",
+          "net": "GND",
+          "position": [
+            130.6102,
+            131.1442
+          ]
+        }
+      ],
+      "C87": [
+        {
+          "number": "1",
+          "net": "Net-(C84-Pad2)",
+          "position": [
+            131.6006,
+            132.5676
+          ]
+        },
+        {
+          "number": "2",
+          "net": "GND",
+          "position": [
+            130.6406,
+            132.5676
+          ]
+        }
+      ],
+      "C89": [
+        {
+          "number": "1",
+          "net": "Net-(C84-Pad2)",
+          "position": [
+            131.6514,
+            133.99
+          ]
+        },
+        {
+          "number": "2",
+          "net": "Net-(C89-Pad2)",
+          "position": [
+            130.6914,
+            133.99
+          ]
+        }
+      ],
+      "L21": [
+        {
+          "number": "1",
+          "net": "Net-(C89-Pad2)",
+          "position": [
+            130.7928,
+            135.3362
+          ]
+        },
+        {
+          "number": "2",
+          "net": "GND",
+          "position": [
+            129.8228,
+            135.3362
+          ]
+        }
+      ],
+      "C92": [
+        {
+          "number": "1",
+          "net": "Net-(C89-Pad2)",
+          "position": [
+            130.8132,
+            136.7586
+          ]
+        },
+        {
+          "number": "2",
+          "net": "GND",
+          "position": [
+            129.8532,
+            136.7586
+          ]
+        }
+      ],
+      "C94": [
+        {
+          "number": "1",
+          "net": "Net-(C89-Pad2)",
+          "position": [
+            132.6,
+            145.48
+          ]
+        },
+        {
+          "number": "2",
+          "net": "TX_OUT",
+          "position": [
+            132.6,
+            144.52
+          ]
+        }
+      ]
+    }
+  },
+  "package_pad_audit": [
+    {
+      "number": "1",
+      "x": -1.0700000000000003,
+      "y": 0.0,
+      "width": 1.02,
+      "height": 1.98,
+      "layers": "00000000_00000000_00000000_00002003",
+      "drill": 0.0
+    },
+    {
+      "number": "2",
+      "x": 1.0700000000000003,
+      "y": 0.0,
+      "width": 1.02,
+      "height": 1.98,
+      "layers": "00000000_00000000_00000000_00002003",
+      "drill": 0.0
+    }
+  ],
+  "qualification": "Prototype selection only; RF bench acceptance and old >1.5 GHz SRF target remain open",
+  "schematic_fields_verified_in_export": true,
+  "live_pads_verified": true
+}
