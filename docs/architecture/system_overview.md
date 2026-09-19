@@ -31,3 +31,14 @@ See [`system/interfaces/board_to_board.md`](../../system/interfaces/board_to_boa
 - Safe mode: reduced loads, heartbeat and minimal telemetry retained
 - Nominal mode: full command/telemetry operation
 - High-duty mode: prioritized payload/telemetry transfer windows
+
+
+### Working operations draft
+
+Start with the [mode table](operations/01-mode-table.md), then review the
+[transition table](operations/02-transition-table.md) and
+[inhibit and permission matrix](operations/03-permission-matrix.md).
+These student-facing drafts expand the early mode list above and propose treating
+high-duty work as scheduled activity within Nominal. They remain proposals for
+team review; the mode table explains their relationship to existing prototype
+inhibit and jumper decisions.
