@@ -32,6 +32,5 @@ Report commanded output and measured feedback separately where feedback exists. 
 
 - [NASA CubeSat 101](https://www.nasa.gov/wp-content/uploads/2017/03/nasa_csli_cubesat_101_508.pdf), §§6.7 and 6.9.1: physical inhibits, timers, and day-in-the-life verification. Exact counts, delays, and acceptance criteria come from the mission interface requirements.
 - [LibreCube remote-segment architecture](https://librecube.gitlab.io/reference_architecture/remote_segment/): essential recovery functions and saved context across processor resets.
-- [AMSAT RT-IHU repository](https://gitlab.amsat.org/engineering/golf/rt-ihu), `main.c` boot sequence (local clone reviewed September 19, 2026). Umbilical/charger detection skips the initial waiting/deployment path and writes persistent state. EMBER's separate test history is a proposed difference, not a claim about RT-IHU.
 
 This matrix identifies design work; it does not claim that the required hardware is already implemented or verified.
