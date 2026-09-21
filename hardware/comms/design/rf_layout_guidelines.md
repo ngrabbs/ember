@@ -387,4 +387,4 @@ the signal side; you give the GND side correct vias by hand.
 
 - Schematic instructions: [`schematic_guide.md`](schematic_guide.md)
 - RX mixer trade study: [`rx_mixer_trade_study.md`](rx_mixer_trade_study.md)
-- Bring-up procedures: [`../bringup/`](../bringup/)
+- Bring-up procedures: [`../bringup/`](../bringup)

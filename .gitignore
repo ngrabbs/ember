@@ -12,6 +12,9 @@ ehthumbs.db
 Thumbs.db
 
 # Editor / tooling scratch
+.konnect/
+__pycache__/
+*.py[cod]
 .claude
 .vscode
 *~
@@ -39,8 +42,8 @@ Thumbs.db
 
 # ---------------------------------------------------------------------------
 # KiCad — tracked. .kicad_sch/.kicad_pcb/.kicad_pro are plain-text
-# S-expressions: they diff, they review, and a whole project is well under a
-# megabyte. Only KiCad's own generated and per-user files are ignored below.
+# S-expressions: retain the project, sheets, board and libraries. Ignore only
+# generated/per-user state; make design changes through KiCad-aware tools.
 # ---------------------------------------------------------------------------
 *.kicad_prl
 *-backups/
@@ -95,3 +98,12 @@ firmware/**/.cache/
 # ---------------------------------------------------------------------------
 docs/weekly_updates/
 docs/senior_design/
+
+# Disposable comms exports; accepted evidence belongs in verification/.
+# Scope netlists here so LTspice source .net files remain tracked.
+/hardware/comms/kicad/*.net
+/hardware/comms/kicad/*.rpt
+/hardware/comms/design/*_preview.txt
+/hardware/comms/design/latest_native_*.rpt
+/hardware/comms/design/spice_output.txt
+/hardware/comms/design/analysis/output/

@@ -1,0 +1,32 @@
+{
+  "scenarios": {
+    "vendor_only": {},
+    "low_parasitic": {
+      "pad_C_pF": 0.03,
+      "ground_L_nH": 0.1,
+      "cap_ESL_nH": 0.1,
+      "cap_ESR_ohm": 0.03
+    },
+    "mid_parasitic": {
+      "pad_C_pF": 0.07,
+      "ground_L_nH": 0.3,
+      "cap_ESL_nH": 0.25,
+      "cap_ESR_ohm": 0.08
+    },
+    "high_parasitic": {
+      "pad_C_pF": 0.12,
+      "ground_L_nH": 0.6,
+      "cap_ESL_nH": 0.4,
+      "cap_ESR_ohm": 0.15
+    }
+  },
+  "shunt_candidates_pF": [
+    9.1,
+    8.2,
+    7.5
+  ],
+  "frequencies_MHz": [
+    435,
+    437
+  ]
+}
