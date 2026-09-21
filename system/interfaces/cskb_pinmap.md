@@ -99,8 +99,8 @@ For each pin, the per-board column shows:
 
 ## H1 Pin Assignments
 
-H1 carries all of the stack's I/O, control, and user signals, plus the
-system I2C bus.
+H1 carries the stack's primary I/O and control signals, CAN A, and the
+system I2C bus. Additional USER signals and CAN B are on H2.
 
 | H1 pin | Pumpkin name | Net | EPS | IHU | Comms | Payload | Function |
 |---|---|---|---|---|---|---|---|
@@ -120,8 +120,8 @@ system I2C bus.
 | H1.48 | `USER1` | `COMMS_FAULT_N` | — | C | D | — | Comms → IHU fault indication (open-drain, active-low) |
 | H1.49 | `USER2` | `EPS_ALERT_N` | D | C | — | — | EPS `SMBALERT_N` (LTC4162) → IHU alert (open-drain, active-low) |
 | H1.50 | `USER3` | `PAYLOAD_EN` | — | D | — | C | IHU → payload enable |
-| H1.51 | `USER4` | `CAN_H` | — | B | B | B | CAN bus high (Iteration 2; DNP v0.1) |
-| H1.52 | `USER5` | `CAN_L` | — | B | B | B | CAN bus low (Iteration 2; DNP v0.1) |
+| H1.51 | `USER4` | `CAN_H` | — | B | B | B | CAN A high, primary bus (Iteration 2; DNP v0.1) |
+| H1.52 | `USER5` | `CAN_L` | — | B | B | B | CAN A low, primary bus (Iteration 2; DNP v0.1) |
 
 All other H1 pins (1–15, 17, 18, 25–28, 30, 32–40, 44–46) are
 **reserved** on v0.1 — leave unconnected on every board. They
@@ -132,8 +132,8 @@ the stack.
 
 ## H2 Pin Assignments
 
-H2 carries all of the stack's power rails plus the RBF/Separation
-switches and additional USER pins.
+H2 carries all of the stack's power rails, reserved RBF/Separation
+switch positions, additional USER signals, and CAN B.
 
 | H2 pin | Pumpkin name | Net | EPS | IHU | Comms | Payload | Function |
 |---|---|---|---|---|---|---|---|
@@ -149,17 +149,42 @@ switches and additional USER pins.
 | H2.46 | `VBATT` | `VBAT` | D | — | M | C | Battery bus (parallel) |
 | H2.47 | `USER6` | `PAYLOAD_FAULT_N` | — | C | — | D | Payload → IHU fault indication (open-drain, active-low). Mirrors `COMMS_FAULT_N` (H1.48) pattern. Driven low by payload on `SHUTDOWN_REQ*` from Orin module (software shutdown, thermal, undervoltage). |
 | H2.48 | `USER7` | `PAYLOAD_SLEEP_REQ_N` | — | D | — | C | IHU → payload sleep request (push-pull, active-low). IHU drives low to request the Orin enter SC7 sleep; payload routes to Orin `SLEEP/WAKE*` (SO-DIMM pin 240). |
+| H2.49 | `USER8` | `CAN_B_H` | — | B | B | B | CAN B high, redundant bus (Iteration 2; DNP v0.1) |
+| H2.50 | `USER9` | `CAN_B_L` | — | B | B | B | CAN B low, redundant bus (Iteration 2; DNP v0.1) |
 
-All other H2 pins (1–24, 33–44, 49–52) are **reserved** at
+All other H2 pins (1–24, 33–44, 51–52) are **reserved** at
 v0.1 — leave unconnected on every board. They carry Pumpkin-defined
 signals (extra IO.24–IO.47 analog inputs, RBF/Separation switches
-S0–S5 on H2.33–H2.44, USER8–USER11 on H2.49–H2.52).
+S0–S5 on H2.33–H2.44, USER10–USER11 on H2.51–H2.52).
 
 **Note on grounds:** the CSKB has three DGND pins (H2.29, H2.30, H2.32)
 and only one AGND pin (H2.31). This project treats all four as a single
 `GND` net (single-plane ground strategy) with AGND star-tied to DGND
 at the EPS board only. If a future analog subsystem needs truly
 isolated analog ground, revisit this.
+
+## CAN A / CAN B allocation (Iteration 2)
+
+The existing `CAN_H` / `CAN_L` nets on H1.51/H1.52 are **CAN A**;
+their canonical net names and pin assignments remain unchanged.
+**CAN B** uses `CAN_B_H` / `CAN_B_L` on H2.49/H2.50 as a separate
+physical bus. Both buses are planned for IHU, comms, and payload;
+the `B` direction entries describe their intended Iteration 2 roles.
+CAN interface components remain DNP in v0.1. EPS is not a CAN node
+under this allocation and continues to use its existing I2C interface.
+
+CAN B is an EMBER-specific allocation of CSKB USER8/USER9, not an
+adoption of the LibreCube pinout. Before fitting a third-party CSKB
+board, verify that its USER-pin connections do not conflict with
+EMBER's assignments. H2.51/H2.52 remain reserved and unconnected;
+this revision adds no power feeds or power redundancy.
+
+Implementing redundancy requires a separate transceiver path for each
+bus, independent termination at each bus's two physical ends, and
+defined bus-selection/failover behavior. Do not tie CAN A and CAN B
+together. Controller architecture, termination placement, timing, and
+firmware failover policy remain implementation decisions; the pin
+allocation alone does not provide operational redundancy.
 
 ## Naming aliases
 
@@ -224,3 +249,4 @@ both names refer to the same wire:
 | 0.1 | 2026-04-15 | NG | Initial canonical pin map (based on PPM H10 numbering — WRONG, superseded) |
 | 0.2 | 2026-04-15 | NG | Rebuilt against Pumpkin datasheet Rev. E: bus renamed PC/104 → CubeSat Kit Bus (CSKB); pin numbers remapped from H10 (PPM) → H1/H2 (stack bus); connector family corrected to Samtec ESQ-126 (not ESQ-130); split into H1 signal table + H2 power table; added connector options catalog and endpoint-vs-stackthrough guidance |
 | 0.3 | 2026-05-11 | NG / CC | Payload integration: H2.45/H2.46 (`VBAT`) payload column changed `M` → `C` (Orin Nano draws from VBAT, not stack +5V — see Rule 7); allocated H2.47 (`USER6`) = `PAYLOAD_FAULT_N` and H2.48 (`USER7`) = `PAYLOAD_SLEEP_REQ_N`; added `PAYLOAD_FAULT_N` pull-up to Rule 3; added Rule 7 (payload-power exception); pointed Per-board references at [`payload_carrier_pinmap.md`](../../hardware/payload_compute/design/payload_carrier_pinmap.md). |
+| 0.4 | 2026-09-21 | Codex | Allocated H2.49 (`USER8`) = `CAN_B_H` and H2.50 (`USER9`) = `CAN_B_L` for Iteration 2 (DNP v0.1); identified existing H1.51/H1.52 as CAN A without renaming nets; documented planned node roles and implementation requirements; retained H2.51/H2.52 as reserved with no power changes. |
