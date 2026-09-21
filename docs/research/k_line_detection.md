@@ -1,5 +1,7 @@
 # K-Line Wildfire Detection
 
+[Research references](README.md)
+
 The physics of the detection method — why potassium, why these wavelengths,
 what the narrowband channels measure, and how the index is formed — is
 maintained in the payload instrument repository:

@@ -1,16 +1,24 @@
-# System Integration Workspace
+# System interfaces and integration
 
-This directory tracks interface definitions, protocol decisions, and system
-integration planning across subsystems.
+[Documentation home](../docs/README.md)
 
-- `interfaces/`: electrical and logical subsystem interface definitions
-  - [`interfaces/board_to_board.md`](interfaces/board_to_board.md)
-  - [`interfaces/comms_to_ihu.md`](interfaces/comms_to_ihu.md)
-  - [`interfaces/power_interfaces.md`](interfaces/power_interfaces.md)
-  - [`interfaces/data_interfaces.md`](interfaces/data_interfaces.md)
-- `protocols/`: telemetry and command protocol documentation
-  - [`protocols/telemetry.md`](protocols/telemetry.md)
-  - [`protocols/command.md`](protocols/command.md)
-- `integration/`: integration plans and system test plans
-  - [`integration/integration_plan.md`](integration/integration_plan.md)
-  - [`integration/system_tests.md`](integration/system_tests.md)
+Use these documents when two subsystems must agree. The **CSKB pin map is
+canonical**; protocol layouts, timing targets, and integration gates remain drafts
+unless explicitly marked otherwise. Allocation does not imply implementation.
+
+| Need | Reference |
+|---|---|
+| Connector pin, signal name, or board direction | [CSKB pin map](interfaces/cskb_pinmap.md) |
+| Connector part or stack spacing | [CSKB mechanical reference](interfaces/cskb_mechanical.md) |
+| Which bus to use | [Board-to-board architecture](interfaces/board_to_board.md) |
+| IHU/comms ownership, signals, and timing | [IHU–comms interface](interfaces/comms_to_ihu.md) |
+| Power rails and load boundaries | [Power interfaces](interfaces/power_interfaces.md) |
+| Data ownership and buffering | [Data interfaces](interfaces/data_interfaces.md) |
+| Command acceptance and acknowledgments | [Command protocol](protocols/command.md) |
+| Telemetry fields and error checks | [Telemetry protocol](protocols/telemetry.md) |
+| Bring-up order and gates | [Integration plan](integration/integration_plan.md) |
+| Integrated verification coverage | [System tests](integration/system_tests.md) |
+
+For spacecraft behavior, use the [operations draft](../docs/architecture/operations/README.md).
+Board implementation belongs in [hardware](../docs/architecture/hardware_overview.md);
+shared assignments belong here.

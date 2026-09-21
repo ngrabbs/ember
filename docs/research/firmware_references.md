@@ -1,5 +1,7 @@
 # Firmware Research References
 
+[Research references](README.md)
+
 This file captures exploratory firmware learning resources that are not part of
 the implementation baseline.
 

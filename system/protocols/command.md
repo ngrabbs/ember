@@ -1,39 +1,24 @@
-# Command Protocol
+# Command protocol
 
-## Scope
+[System guide](../README.md) · [Data interfaces](../interfaces/data_interfaces.md)
 
-Define uplink command packet format, parsing behavior, and safety checks.
+**Draft: packet model and handling policy; encoding details pending.**
 
-## Provisional Packet Model
+Proposed fields: **version byte → command ID → target subsystem → argument length →
+arguments → sequence counter → CRC**. Remaining field widths, byte order, CRC parameters,
+and concrete command IDs remain unspecified.
 
-- Version byte
-- Command ID
-- Target subsystem ID
-- Argument length
-- Arguments
-- Sequence counter
-- CRC
+## Acceptance and execution
 
-## Validation Policy (Provisional)
+1. Comms decodes the uplink and forwards commands to IHU, the acceptance authority.
+2. IHU requires a valid CRC and known schema; unknown commands return an explicit error.
+3. Return an immediate transport ACK/NACK for validity, then an execution ACK/status
+   after handling. Use bounded retries on timeout; limits remain to be defined.
+4. Dispatch over the destination's [documented transport](../interfaces/board_to_board.md).
+   Record safety-critical mode changes in the event log.
 
-- IHU is authority for command acceptance/rejection decisions
-- Commands require valid CRC and known schema version
-- Unknown command IDs are rejected with explicit error code
+## Safe mode
 
-## Command Acknowledgment Model
-
-- Immediate transport ACK/NACK for packet validity
-- Execution ACK with status code after command handling completes
-- Timeout handling with bounded retries
-
-## Transport Mapping
-
-- Uplink commands are decoded by comms and forwarded to IHU
-- IHU dispatches inter-board commands over SPI and/or CAN by destination
-- Safety-critical mode-change commands are mirrored in event log
-
-## Safe-Mode Command Handling
-
-- Minimal command set remains active in safe mode
-- Non-essential commands are deferred or rejected while in safe mode
-- Recovery commands require explicit ACK path verification
+Keep a minimal command set available; defer or reject nonessential commands.
+Recovery commands require an explicitly verified acknowledgment path. The concrete
+safe-mode command set remains open; see the [operations draft](../../docs/architecture/operations/README.md).

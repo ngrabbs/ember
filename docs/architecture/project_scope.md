@@ -1,5 +1,7 @@
 # Project Scope and Positioning
 
+[Architecture](README.md)
+
 ## Mission
 
 EMBER detects actively flaming vegetation from orbit by its potassium emission

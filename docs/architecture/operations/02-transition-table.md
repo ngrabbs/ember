@@ -1,5 +1,7 @@
 # EMBER transition table
 
+[Operations guide](README.md)
+
 Draft 0.1 • September 19, 2026 • Proposed behavior for team review
 
 A transition is a change of mode. A condition is something that must be true before the change is allowed. Mode names match the [mode table](01-mode-table.md); action permissions are in the [permission matrix](03-permission-matrix.md).

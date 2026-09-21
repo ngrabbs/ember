@@ -1,22 +1,19 @@
-# Power Interfaces
+# Power interfaces
 
-## Purpose
+[System guide](../README.md) · [Canonical pin map](cskb_pinmap.md)
 
-Capture power rail interfaces between EPS and all dependent subsystems.
+**Status: documented rail allocation; current budgets and protection remain open.**
 
-## Baseline Rail Set
+| Rail | Documented use | Limit/status |
+|---|---|---|
+| `+5V` | Regulated stack supply | Provisional ≤2.0 A distribution budget |
+| `+3V3` | Regulated stack supply | Provisional ≤2.0 A distribution budget |
+| `VBAT` | 6.0–8.4 V battery bus; payload local 5 V converter; comms monitors only | Payload consumption exception is defined in the pin map |
 
-- 5 V regulated rail (distribution target, provisional <= 2.0 A)
-- 3.3 V regulated rail (distribution target, provisional <= 2.0 A)
-- Internal battery/load path for EPS conversion stages
+The payload carrier's local converter is gated by `PAYLOAD_EN`; its main load
+is not supplied from stack `+5V`. Parallel rail pins share current and do not
+establish independent redundant supplies.
 
-## Integration Items to Close
-
-- Current budgets per subsystem within rail ceilings
-- Startup sequencing dependencies
-- Brownout behavior and load shedding policy
-- Fault isolation strategy
-
-## Detailed EPS Interface Source
-
-See [`hardware/eps/design/interfaces.md`](../../hardware/eps/design/interfaces.md) for current EPS-side interface mapping.
+**Open:** per-subsystem budgets, startup order, brownout/load shedding, and fault
+isolation. See [EPS interfaces](../../hardware/eps/design/interfaces.md) for the
+EPS-side design record and the pin map for authoritative stack assignments.

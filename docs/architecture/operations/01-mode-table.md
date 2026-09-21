@@ -1,14 +1,22 @@
 # EMBER mode table
 
+[Operations guide](README.md)
+
 Draft 0.1 • September 19, 2026 • Proposed behavior for team review
 
-Start here. This table says what EMBER does. The [transition table](02-transition-table.md) says when it changes modes. The [permission matrix](03-permission-matrix.md) says what may block an action.
+The [transition table](02-transition-table.md) defines mode changes; the
+[permission matrix](03-permission-matrix.md) defines action gates.
 
 ## Relationship to existing architecture
 
-These are working proposals, not approved flight requirements. The [system overview](../system_overview.md) assigns system orchestration to the IHU; use that as the starting point for mode-manager ownership. Its earlier “high-duty mode” is treated here as scheduled activity within NOMINAL, pending team review.
+The IHU owns system orchestration in the [architecture](../system_overview.md);
+mode-manager ownership still needs team agreement. This draft treats the earlier
+high-duty mode as scheduled work within NOMINAL.
 
-The [existing inhibit design notes](../inhibit_and_deployment.md) record prototype jumper decisions. IHU `JP1` disables the watchdog; it is not the proposed software test-mode selector. EPS `JP_RBF`, `JP_INH1`, and `JP_INH2` have separate power/inhibit roles. Whether to add a dedicated test-mode input remains open. Existing timer values and inhibit-count interpretations need reconciliation with the eventual mission requirements before implementation; these tables intentionally leave those values undecided.
+[Prototype jumper decisions](../inhibit_and_deployment.md) remain separate:
+`JP1` disables the watchdog; EPS jumpers control power/inhibits. A dedicated
+software test-mode input is still proposed. Flight timer values and inhibit
+counts remain unresolved.
 
 ## Two configurations, five software modes
 

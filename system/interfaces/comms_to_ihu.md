@@ -1,57 +1,39 @@
-# Communications to Internal Housekeeping Unit Interface
+# IHU–communications interface
 
-## Purpose
+[System guide](../README.md) · [Bus architecture](board_to_board.md)
 
-Define the interface between communications hardware and internal housekeeping unit
-logic.
+**Status: documented ownership and assigned signals; framing and timing are draft.**
+The comms RP2040 owns local TX/RX and baseband handling. The IHU RP2040 owns
+system command authority, routing, and integration.
 
-## Controller Ownership
+| Stage | Transport | Use |
+|---|---|---|
+| Iteration 1 | SPI, IHU master / comms slave, bidirectional | Commands and telemetry/data |
+| Iteration 2 | CAN A/B alongside SPI | Mode, heartbeat, fault/status, and queue state; SPI retains bulk/timing-sensitive data |
+| Bring-up | UART debug | Logs and diagnostics |
 
-- Communications board hosts its own RP2040 for local TX/RX control and
-  baseband handling.
-- Internal Housekeeping Unit hosts a separate RP2040 for system-level command authority,
-  routing, and integration logic.
-- The two controllers communicate bidirectionally over the interfaces defined
-  below.
+## Signals
 
-## Baseline Interface (Iteration 1)
+Use the [canonical pin map](cskb_pinmap.md) for all pin numbers, directions,
+and pull resistors. Shared nets are:
 
-- Primary physical link: SPI (IHU master, comms slave)
-- Data direction: bidirectional
-- Nominal use: command exchange + telemetry/data transfer
-- Debug link: UART during bring-up and integration
+- SPI: `SPI_COMMS_SCK`, `SPI_COMMS_MOSI`, `SPI_COMMS_MISO`, `SPI_COMMS_CS_N`.
+- Data ready: `COMMS_IRQ`, driven by comms RP2040 GP3; active-low push-pull,
+  normally high. IHU services the SPI slave FIFO through its interrupt handler.
+- Control/status: `COMMS_EN`, `COMMS_FAULT_N`.
+- Iteration 2: CAN A (`CAN_H`, `CAN_L`) and CAN B (`CAN_B_H`, `CAN_B_L`), with GND.
 
-## Expanded Interface (Iteration 2)
+## Provisional targets and recovery
 
-- Add CAN control-plane messaging between IHU and comms
-- Keep SPI for bulk or timing-sensitive transfers
-- CAN carries mode changes, heartbeat, fault/status, and queue state
+| Parameter | Target |
+|---|---|
+| SPI clock | Initially 4–8 MHz |
+| CAN rate | 500 kbps, classic CAN |
+| IHU–comms heartbeat | 100 ms nominal |
 
-## Provisional Signal Set
+A missed-heartbeat timeout marks the link degraded. IHU retries with a bounded
+count; repeated failure enters reduced service and logs the fault.
 
-- SPI (IHU master, comms slave): `SPI_COMMS_SCK` (CSKB H1.21),
-  `SPI_COMMS_MOSI` (H1.23), `SPI_COMMS_MISO` (H1.22),
-  `SPI_COMMS_CS_N` (H1.24)
-- Data-ready interrupt: `COMMS_IRQ` (CSKB H1.16) — driven by comms
-  RP2040 GP3 (push-pull, active-low, normally high); triggers IHU ISR
-  to service the SPI slave FIFO. Pull-up lives on IHU side (R11, 10k).
-- CAN (Iteration 2): `CANH`, `CANL`, `GND`
-- Optional control: `COMMS_EN`, `COMMS_FAULT_N`
-
-## Provisional Timing and Throughput Targets
-
-- SPI clock target: 4 MHz to 8 MHz initial range
-- CAN rate target: 500 kbps (classic CAN)
-- IHU-comms heartbeat period: 100 ms nominal
-
-## Fault Behavior
-
-- Missing heartbeat timeout triggers comms link degraded state
-- IHU retries command transaction with bounded retry count
-- On repeated failure, IHU enters reduced service mode and logs fault
-
-## Open Items
-
-- Final SPI framing and CRC policy
-- CAN message ID allocation for comms state and command ack
-- Ownership of mode transitions when links disagree
+**Open:** SPI framing/CRC, CAN IDs and acknowledgments, retry/timeout limits,
+A/B failover, and mode-transition authority when links disagree. Redundancy is
+allocated, not yet established by this document.

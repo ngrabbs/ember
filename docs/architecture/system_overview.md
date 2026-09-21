@@ -1,44 +1,31 @@
-# System Overview
+# System overview
 
-## Purpose
+[Architecture](README.md) · [Interfaces](../../system/README.md)
 
-Provide a subsystem-level description of the modular satellite architecture and
-major design assumptions.
+**Status: architecture summary; operating modes are a separate draft.** EMBER
+combines power, housekeeping, radio, and payload subsystems on the CSKB stack.
+See [project scope](project_scope.md) for mission goals and validation scope.
 
-## Subsystem Boundaries
+| Subsystem | Responsibility |
+|---|---|
+| EPS | Energy input/storage, charging, rail generation, and power observability |
+| Internal Housekeeping Unit (IHU) | System orchestration, command authority, and telemetry aggregation |
+| Communications | RF uplink/downlink processing and the bridge to the IHU |
+| Payload | Observation, detection processing, and mission data |
 
-- EPS: source, storage, charging, and regulated rail generation
-- Internal Housekeeping Unit: system orchestration, command authority, data aggregation
-- Communications: RF uplink/downlink processing and transport bridge
-- Payload: mission-specific data generation and control surface
+## Power and data flow
 
-## Major Data and Power Flows
+- **Power:** EPS supplies regulated rails; the documented payload carrier draws
+  VBAT into a local converter. See [power interfaces](../../system/interfaces/power_interfaces.md).
+- **Commands:** RF uplink → comms → IHU validation → subsystem dispatch.
+- **Telemetry:** subsystem status and payload reports → IHU → comms downlink.
+- **Buses:** I2C handles housekeeping; SPI carries IHU–comms data. CAN A/B is
+  allocated for Iteration 2 control/status traffic. See the
+  [interconnect plan](../../system/interfaces/board_to_board.md).
 
-- Power flow: EPS -> regulated rails -> IHU/comms/payload
-- Command flow: RF uplink -> comms decode -> IHU validation -> subsystem dispatch
-- Telemetry flow: subsystem status -> IHU aggregation -> comms downlink framing
+## Operating behavior
 
-## Interconnect Strategy (Current)
-
-- I2C: housekeeping and charger telemetry (EPS-centric)
-- SPI: IHU <-> comms high-rate deterministic data exchange
-- CAN (Iteration 2): system control-plane messaging and fault broadcast
-
-See [`system/interfaces/board_to_board.md`](../../system/interfaces/board_to_board.md) for the detailed interconnect plan.
-
-## Operational Modes
-
-- Safe mode: reduced loads, heartbeat and minimal telemetry retained
-- Nominal mode: full command/telemetry operation
-- High-duty mode: prioritized payload/telemetry transfer windows
-
-
-### Working operations draft
-
-Start with the [mode table](operations/01-mode-table.md), then review the
-[transition table](operations/02-transition-table.md) and
-[inhibit and permission matrix](operations/03-permission-matrix.md).
-These student-facing drafts expand the early mode list above and propose treating
-high-duty work as scheduled activity within Nominal. They remain proposals for
-team review; the mode table explains their relationship to existing prototype
-inhibit and jumper decisions.
+The [operations draft](operations/README.md) proposes BOOT, STARTUP,
+COMMISSIONING, SAFE, and NOMINAL. It treats the earlier high-duty mode as scheduled
+work within NOMINAL, pending team review. The draft does not establish approved
+flight requirements or implemented behavior.

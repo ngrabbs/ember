@@ -1,5 +1,7 @@
 # EMBER inhibit and permission matrix
 
+[Operations guide](README.md)
+
 Draft 0.1 • September 19, 2026 • Proposed behavior for team review
 
 **A mode requests an action; permissions decide whether it may happen.** All required conditions must pass. Unknown required information blocks the affected action.
