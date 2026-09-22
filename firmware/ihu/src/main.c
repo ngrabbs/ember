@@ -1,12 +1,17 @@
 /*
  * IHU — application entry point.
  *
- * Brings up Pico stdio (UART on GP0/GP1), creates the three v0.1 tasks
- * (console heartbeat, LED blink, I2C bus scan), and hands control
- * to the FreeRTOS scheduler.
+ * Brings up Pico stdio (UART on GP0/GP1) and the shared i2c0
+ * housekeeping bus, creates the v0.1 tasks (console heartbeat, LED
+ * blink, EPS telemetry, comms-board link, CLI), and hands control to
+ * the FreeRTOS scheduler.
  *
- * New tasks (SPI to comms, EPS telemetry, command dispatch, watchdog
- * feed) hook in here as separate ihu_*_task_start() calls.
+ * i2c0 is brought up here rather than inside a task because two tasks
+ * now poll it — the EPS charger and the comms board — so neither one
+ * owns it. See config/i2c0_bus.h.
+ *
+ * New tasks (SPI to comms, command dispatch, watchdog feed) hook in
+ * here as separate ihu_*_task_start() calls.
  *
  * Diagnostics:
  *   - 3 slow LED blinks at boot, BEFORE vTaskStartScheduler() runs,
@@ -24,8 +29,10 @@
 #include "pico/stdlib.h"
 
 #include "config/pinmap.h"
+#include "config/i2c0_bus.h"
 #include "cli/cli.h"
 #include "tasks/blink_task.h"
+#include "tasks/comms_monitor_task.h"
 #include "tasks/console_task.h"
 #include "tasks/eps_monitor_task.h"
 
@@ -36,6 +43,7 @@
 #define IHU_TASK_PRIORITY_BLINK   (tskIDLE_PRIORITY + 1)
 #define IHU_TASK_PRIORITY_CONSOLE (tskIDLE_PRIORITY + 1)
 #define IHU_TASK_PRIORITY_EPS     (tskIDLE_PRIORITY + 1)
+#define IHU_TASK_PRIORITY_COMMS   (tskIDLE_PRIORITY + 1)
 #define IHU_TASK_PRIORITY_CLI     (tskIDLE_PRIORITY + 2)  /* one above the periodic tasks */
 
 /* Pre-scheduler "we got here" blink: 3 slow on/off pulses on GP25. */
@@ -81,6 +89,10 @@ int main(void) {
 
     printf("\n[ihu] booting (build " __DATE__ " " __TIME__ ")\n");
 
+    /* Bus and its mutex up before any task can reach for either.
+     * Safe pre-scheduler: creating a mutex only touches the heap. */
+    ihu_i2c0_bus_init();
+
     if (ihu_console_task_start(IHU_TASK_PRIORITY_CONSOLE) != pdPASS) {
         printf("[ihu][FATAL] console task creation failed\n");
         panic_blink_forever();
@@ -91,6 +103,10 @@ int main(void) {
     }
     if (ihu_eps_monitor_task_start(IHU_TASK_PRIORITY_EPS) != pdPASS) {
         printf("[ihu][FATAL] eps monitor task creation failed\n");
+        panic_blink_forever();
+    }
+    if (ihu_comms_monitor_task_start(IHU_TASK_PRIORITY_COMMS) != pdPASS) {
+        printf("[ihu][FATAL] comms monitor task creation failed\n");
         panic_blink_forever();
     }
     if (ihu_cli_task_start(IHU_TASK_PRIORITY_CLI) != pdPASS) {

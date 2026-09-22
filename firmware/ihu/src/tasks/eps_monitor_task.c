@@ -11,6 +11,8 @@
 #include "hardware/gpio.h"
 
 #include "config/pinmap.h"
+#include "config/i2c0_bus.h"
+#include "comms_hk_proto.h"   /* so the bus scan can name the comms board */
 #include "drivers/ltc4162.h"
 
 #define EPS_POLL_PERIOD_MS      5000
@@ -55,6 +57,13 @@ static void i2c_bus_scan_once(void) {
            IHU_I2C_EPS_SDA_GPIO, IHU_I2C_EPS_SCL_GPIO,
            (unsigned)IHU_I2C_EPS_HZ);
 
+    /* One lock for the whole sweep — a poll interleaved with the scan
+     * would show up as a phantom device or a missing one. */
+    if (!ihu_i2c0_lock(IHU_I2C0_SCAN_TIMEOUT_MS)) {
+        printf("[eps] bus scan skipped — could not take the i2c0 lock\n");
+        return;
+    }
+
     for (uint8_t addr = 0; addr < 0x80; ++addr) {
         if (i2c_addr_is_reserved(addr)) {
             continue;
@@ -62,11 +71,15 @@ static void i2c_bus_scan_once(void) {
         uint8_t rx;
         int ret = i2c_read_blocking(IHU_I2C_EPS_INSTANCE, addr, &rx, 1, false);
         if (ret >= 0) {
-            printf("[eps]   found device at 0x%02X%s\n", addr,
-                   addr == IHU_EPS_LTC4162_ADDR ? " (LTC4162)" : "");
+            const char *who = "";
+            if (addr == IHU_EPS_LTC4162_ADDR) { who = " (LTC4162 — EPS charger)"; }
+            else if (addr == COMMS_HK_I2C_ADDR) { who = " (comms board)"; }
+            printf("[eps]   found device at 0x%02X%s\n", addr, who);
             ++found;
         }
     }
+
+    ihu_i2c0_unlock();
 
     if (found == 0) {
         printf("[eps] no devices responded — check pull-ups, power, wiring\n");
@@ -121,13 +134,9 @@ static void print_telemetry(const ltc4162_telemetry_t *t) {
 static void eps_monitor_task(void *pvParameters) {
     (void)pvParameters;
 
-    i2c_init(IHU_I2C_EPS_INSTANCE, IHU_I2C_EPS_HZ);
-    gpio_set_function(IHU_I2C_EPS_SDA_GPIO, GPIO_FUNC_I2C);
-    gpio_set_function(IHU_I2C_EPS_SCL_GPIO, GPIO_FUNC_I2C);
-    /* On-MCU pull-ups for bench bring-up. Flight EPS has dedicated
-     * 4.7 k pull-ups; enabling these is harmless (they're 50-80 k weak). */
-    gpio_pull_up(IHU_I2C_EPS_SDA_GPIO);
-    gpio_pull_up(IHU_I2C_EPS_SCL_GPIO);
+    /* i2c0 itself is brought up in main() by ihu_i2c0_bus_init(), before
+     * any task runs — this task is no longer the bus's only user, so it
+     * is no longer the bus's owner either. See config/i2c0_bus.h. */
 
     /* Let the console task print its banner first. */
     vTaskDelay(pdMS_TO_TICKS(2000));

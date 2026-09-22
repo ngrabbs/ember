@@ -8,6 +8,7 @@
 #include "hardware/i2c.h"
 
 #include "config/pinmap.h"
+#include "config/i2c0_bus.h"
 
 /* ------------------------------------------------------------------
  * Register addresses (LTC4162-L datasheet Rev. F, Table 1)
@@ -87,33 +88,58 @@ static bool write_word(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint16_t valu
 
 /* ------------------------------------------------------------------
  * Public API
+ *
+ * Every entry point takes the i2c0 bus lock for the duration of one
+ * logical transaction and releases it before returning; read_word()
+ * and write_word() above never lock, so they can be composed inside a
+ * single held lock without needing a recursive mutex.
+ *
+ * "One logical transaction" means the whole sequence a caller needs to
+ * be coherent — all eight telemetry registers, or the read-modify-write
+ * in kick() — not each individual SDK call. See config/i2c0_bus.h.
  * ----------------------------------------------------------------*/
 
 bool ltc4162_present(i2c_inst_t *i2c, uint8_t addr) {
+    if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) {
+        return false;
+    }
     /* Zero-length write — peripheral ACKs the address byte or NACKs.
      * The Pico SDK returns PICO_ERROR_GENERIC on NACK, 0 on ACK. */
     int r = i2c_write_blocking(i2c, addr, NULL, 0, false);
+    ihu_i2c0_unlock();
     return r >= 0;
 }
 
 bool ltc4162_init(i2c_inst_t *i2c, uint8_t addr) {
+    if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) {
+        return false;
+    }
     /* Set force_telemetry_on; leave suspend/MPPT/etc. at defaults
      * (all zero). Side effect: writing CONFIG_BITS clears latched
      * fault state from any prior charger session. */
-    return write_word(i2c, addr, REG_CONFIG_BITS, CFG_FORCE_TELEMETRY_ON);
+    bool ok = write_word(i2c, addr, REG_CONFIG_BITS, CFG_FORCE_TELEMETRY_ON);
+    ihu_i2c0_unlock();
+    return ok;
 }
 
 bool ltc4162_set_jeita_enabled(i2c_inst_t *i2c, uint8_t addr, bool enabled) {
-    uint16_t val;
-    if (!read_word(i2c, addr, REG_CHARGER_CONFIG_BITS, &val)) {
+    /* Read-modify-write: the lock spans both halves so a concurrent
+     * writer cannot land between them and get its bits discarded. */
+    if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) {
         return false;
     }
-    if (enabled) {
-        val |= CHG_CFG_EN_JEITA;
-    } else {
-        val &= (uint16_t)~CHG_CFG_EN_JEITA;
+    uint16_t val;
+    bool ok = read_word(i2c, addr, REG_CHARGER_CONFIG_BITS, &val);
+    if (ok) {
+        if (enabled) {
+            val |= CHG_CFG_EN_JEITA;
+        } else {
+            val &= (uint16_t)~CHG_CFG_EN_JEITA;
+        }
+        ok = write_word(i2c, addr, REG_CHARGER_CONFIG_BITS, val);
     }
-    return write_word(i2c, addr, REG_CHARGER_CONFIG_BITS, val);
+    ihu_i2c0_unlock();
+    return ok;
 }
 
 bool ltc4162_set_ntc_bypass(i2c_inst_t *i2c, uint8_t addr, bool enabled) {
@@ -129,26 +155,44 @@ bool ltc4162_set_ntc_bypass(i2c_inst_t *i2c, uint8_t addr, bool enabled) {
      * so anything above 0 is fine for the lower bound. */
     uint16_t t1 = enabled ? 0x7FFFu : (uint16_t)JEITA_T1_DEFAULT;
     uint16_t t6 = enabled ? 0x0001u : (uint16_t)JEITA_T6_DEFAULT;
-    if (!write_word(i2c, addr, REG_JEITA_T1, t1)) return false;
-    if (!write_word(i2c, addr, REG_JEITA_T6, t6)) return false;
-    return true;
+
+    /* Both limits under one lock — a window where t1 is widened but t6
+     * is not is a JEITA config the chip would briefly act on. */
+    if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) {
+        return false;
+    }
+    bool ok = write_word(i2c, addr, REG_JEITA_T1, t1)
+           && write_word(i2c, addr, REG_JEITA_T6, t6);
+    ihu_i2c0_unlock();
+    return ok;
 }
 
 bool ltc4162_kick(i2c_inst_t *i2c, uint8_t addr) {
+    /* The lock is held across the whole pulse, including the 100 ms
+     * dwell. Releasing it in the middle would let another poller read
+     * CONFIG_BITS with suspend_charger asserted and report the charger
+     * as suspended, which is true for 100 ms and misleading forever
+     * after in a log. 100 ms is well inside the lock timeout. */
+    if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) {
+        return false;
+    }
+
     /* Read current CONFIG_BITS so we preserve force_telemetry_on,
      * MPPT, etc. — only briefly assert suspend_charger on top. */
     uint16_t base;
-    if (!read_word(i2c, addr, REG_CONFIG_BITS, &base)) {
-        return false;
+    bool ok = read_word(i2c, addr, REG_CONFIG_BITS, &base)
+           && write_word(i2c, addr, REG_CONFIG_BITS, base | CFG_SUSPEND_CHARGER);
+    if (ok) {
+        /* 100 ms is plenty for the state machine to register the
+         * suspend transition. Block-sleep here: this function is
+         * meant to be called from a normal task context. */
+        sleep_ms(100);
+        ok = write_word(i2c, addr, REG_CONFIG_BITS,
+                        base & (uint16_t)~CFG_SUSPEND_CHARGER);
     }
-    if (!write_word(i2c, addr, REG_CONFIG_BITS, base | CFG_SUSPEND_CHARGER)) {
-        return false;
-    }
-    /* 100 ms is plenty for the state machine to register the
-     * suspend transition. Block-sleep here: this function is
-     * meant to be called from a normal task context. */
-    sleep_ms(100);
-    return write_word(i2c, addr, REG_CONFIG_BITS, base & (uint16_t)~CFG_SUSPEND_CHARGER);
+
+    ihu_i2c0_unlock();
+    return ok;
 }
 
 bool ltc4162_read_telemetry(i2c_inst_t *i2c, uint8_t addr,
@@ -157,14 +201,25 @@ bool ltc4162_read_telemetry(i2c_inst_t *i2c, uint8_t addr,
     uint16_t i_bat_raw, i_in_raw;
     uint16_t state, status, sys;
 
-    if (!read_word(i2c, addr, REG_VBAT,          &v_bat_raw)) return false;
-    if (!read_word(i2c, addr, REG_VIN,           &v_in_raw))  return false;
-    if (!read_word(i2c, addr, REG_VOUT,          &v_out_raw)) return false;
-    if (!read_word(i2c, addr, REG_IBAT,          &i_bat_raw)) return false;
-    if (!read_word(i2c, addr, REG_IIN,           &i_in_raw))  return false;
-    if (!read_word(i2c, addr, REG_CHARGER_STATE, &state))     return false;
-    if (!read_word(i2c, addr, REG_CHARGE_STATUS, &status))    return false;
-    if (!read_word(i2c, addr, REG_SYSTEM_STATUS, &sys))       return false;
+    /* All eight registers under one lock, so the snapshot describes a
+     * single moment rather than eight moments with another task's
+     * traffic spliced between them. */
+    if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) {
+        return false;
+    }
+    bool ok = read_word(i2c, addr, REG_VBAT,          &v_bat_raw)
+           && read_word(i2c, addr, REG_VIN,           &v_in_raw)
+           && read_word(i2c, addr, REG_VOUT,          &v_out_raw)
+           && read_word(i2c, addr, REG_IBAT,          &i_bat_raw)
+           && read_word(i2c, addr, REG_IIN,           &i_in_raw)
+           && read_word(i2c, addr, REG_CHARGER_STATE, &state)
+           && read_word(i2c, addr, REG_CHARGE_STATUS, &status)
+           && read_word(i2c, addr, REG_SYSTEM_STATUS, &sys);
+    ihu_i2c0_unlock();
+
+    if (!ok) {
+        return false;
+    }
 
     /* IBAT/IIN are 2's-complement signed — the explicit int16_t cast
      * sign-extends correctly regardless of host endianness. */
