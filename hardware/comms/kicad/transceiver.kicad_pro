@@ -60,12 +60,7 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [
-        [
-          "courtyards_overlap|108973600|70603600|3cb9d2c5-dbe7-4c8c-8227-404ddca17d99|59730e12-defd-4bb2-9b88-14a4b1eab542",
-          "User accepted H3/H4 courtyard overlap on 2026-09-09. Preserve fixed stack interface and equal 2.54 mm pin spacing across both headers (5.08 mm footprint center spacing). This exception applies only to this H3/H4 pair; it does not certify physical body fit."
-        ]
-      ],
+      "drc_exclusions": [],
       "meta": {
         "version": 2
       },
@@ -825,6 +820,10 @@
       {
         "netclass": "RF",
         "pattern": "Net-(Q4-C)"
+      },
+      {
+        "netclass": "All Nets",
+        "pattern": "+5V"
       }
     ]
   },
@@ -1036,7 +1035,7 @@
         "uuid": "c034ea61-6551-4f92-af2a-65337e5cc22a"
       }
     ],
-    "used_designators": "D1",
+    "used_designators": "",
     "variants": []
   },
   "sheets": [
