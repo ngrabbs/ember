@@ -1143,20 +1143,16 @@ on opposite sides of the board.
 
 > **EPS Sheet 4 — Inhibits & RBF (v0.1 proto)**
 >
-> This sheet collects all of the stack's safety interlocks in one
-> place: the Remove-Before-Flight pin and the two deployment
-> inhibits. On the v0.1 proto board, all three are **1×2 pin header
-> jumpers** — a pull-pin RBF and real separation switches will
-> replace them on a later flight spin.
+> This sheet documents the v0.1 bench RBF jumper and two shared-net
+> deployment-control jumpers. It is not a complete flight inhibit architecture.
+> Installed JP_RBF disables the EPS bucks; either installed JP_INH jumper
+> pulls the shared deployment enable low. Removing a jumper permits operation
+> subject to the other controls; it does not prove orbital deployment.
 >
-> Convention: **jumper installed = safe/inhibited, jumper pulled =
-> armed/running.** Applies to all three jumpers on this sheet. The
-> `JP1` jumper on the IHU board (WDT Disable) uses the same
-> convention.
->
-> See `docs/architecture/inhibit_and_deployment.md` for the full
-> policy, the polarity-flip note for real flight switches, and the
-> list of what still needs to happen before flight.
+> IHU JP1 only disables the watchdog for bench use; it is not a safety inhibit.
+> Flight power isolation, independent barriers, timing, switch polarity, and
+> connector allocation remain to be designed and verified. See
+> [Inhibit and Deployment Architecture](../../../docs/architecture/inhibit_and_deployment.md).
 
 ---
 
@@ -1167,15 +1163,18 @@ on opposite sides of the board.
 `JP_RBF` is a 1×2 pin header wired **across R21** (the bottom leg of
 the shared EN UVLO divider on Sheet 2). When the jumper is installed,
 R21 is shorted out → the buck EN midpoint collapses to GND → both
-TPS62933F bucks (U2/U3) are disabled → `+3V3` and `+5V` are dead →
-the entire satellite bus is dead. When the jumper is pulled, R21 is
+TPS62933F bucks (U2/U3) are disabled, removing their regulated outputs. This does not isolate raw VBAT
+or every powered function. When the jumper is pulled, R21 is
 back in the divider and normal UVLO behavior resumes.
 
 Important: the LTC4162 charger on Sheet 1 is **upstream** of the
 bucks and is **not** gated by `JP_RBF`. Solar → charger → battery
-remains alive with the RBF pin installed, so the battery can top off
-during pre-launch integration and on the pad. This matches CDS §3.2
-intent ("charging circuit stays alive while RBF is in").
+remains connected with the prototype jumper installed. This is bench
+behavior, not an approved flight charging exception: CDS Rev. 14.1
+§2.3.5 requires inserted RBF to cut all satellite power. The separately
+discussed battery-protection allowances do not establish blanket charger
+permission. H2.45/H2.46 also distribute raw VBAT to the payload; those
+powered functions need hardware isolation in the flight design.
 
 #### Components
 
@@ -1189,8 +1188,8 @@ Put `JP_RBF` physically adjacent to the R20/R21 UVLO divider on the
 PCB, and label it clearly on silk:
 
 > **RBF — REMOVE BEFORE FLIGHT**
-> Installed = satellite bus OFF (charging still active).
-> Pulled    = satellite bus ON.
+> Installed = EPS +3V3/+5V bucks OFF (charger/raw VBAT remain connected).
+> Pulled = normal buck UVLO control restored.
 
 Also add a bright red silkscreen border or "RBF" marker so a
 reviewer can see it at a glance during integration.
@@ -1201,17 +1200,13 @@ reviewer can see it at a glance during integration.
 >
 > Wired across R21 (Sheet 2, shared EN UVLO divider). Jumper
 > installed = R21 shorted = buck EN forced low = +3V3 and +5V rails
-> OFF. Jumper removed = normal UVLO operation = bus ON.
+> OFF. Jumper removed = normal UVLO operation restored.
 >
-> The LTC4162 charger is upstream of the bucks and is NOT affected
-> by JP_RBF. Battery charging from solar continues while RBF is
-> installed, so the battery can top off during integration and on
-> the launch pad.
->
-> This is a proto-only implementation. The flight version will
-> replace this jumper with a physical pull-pin through the chassis,
-> with the same "installed = safe, pulled = armed" convention. See
-> `docs/architecture/inhibit_and_deployment.md`.
+> The charger and raw VBAT path are not disconnected by this jumper.
+> This is a prototype buck-disable control, not verified whole-spacecraft
+> isolation. Flight implementation must address all powered functions and
+> the applicable RBF requirements; replacing the header alone is insufficient.
+> See [Inhibit and Deployment Architecture](../../../docs/architecture/inhibit_and_deployment.md).
 
 ---
 
@@ -1219,13 +1214,10 @@ reviewer can see it at a glance during integration.
 
 #### What they do
 
-`JP_INH1` and `JP_INH2` are **two independent** 1×2 pin header
-jumpers that both gate a single net, `DEPLOY_ARMED`. Either jumper,
-installed on its own, is enough to force `DEPLOY_ARMED` low and
-inhibit the satellite. Both must be removed for the satellite to
-arm. This gives us two independent hardware inhibits on the proto,
-matching the "either switch alone keeps us inhibited" fail-safe
-direction of the eventual flight separation switches.
+`JP_INH1` and `JP_INH2` are two parallel 1×2 header pull-downs on
+one shared net, `DEPLOY_ARMED`. Either installed jumper holds the net
+low; both must be removed for it to rise. This is a prototype control
+function, not evidence of two independent flight energy barriers.
 
 #### Circuit
 
@@ -1262,7 +1254,7 @@ Place `JP_INH1` and `JP_INH2` side-by-side, clearly separated from
 > **INH1 / INH2 — DEPLOYMENT INHIBITS**
 > Both installed = TX + deployables OFF (ground handling).
 > Both pulled   = TX + deployables ARMED.
-> Either one alone is enough to keep the satellite inhibited.
+> Either one alone holds the shared TX/burn enable low.
 
 #### Note (Place → Text, next to JP_INH1 / JP_INH2):
 
@@ -1278,16 +1270,10 @@ Place `JP_INH1` and `JP_INH2` side-by-side, clearly separated from
 > deployables cannot activate while either jumper is present,
 > regardless of firmware state.
 >
-> **Polarity note for future-you:** on the flight version, these
-> jumpers get replaced by 2× series normally-closed separation
-> microswitches that the P-POD rails hold open while stowed. On
-> ejection, both switches close, completing the circuit and
-> allowing `DEPLOY_ARMED` to rise. Electrically that is the
-> **inverse** of the proto jumpers (proto = short-to-GND when
-> inhibited; flight = open-circuit when inhibited) even though the
-> *meaning* of the net is unchanged. See
-> `docs/architecture/inhibit_and_deployment.md` for the full
-> write-up.
+> Flight switch contact polarity and hardware power interruption remain
+> open. Normally closed contacts held open while stowed are one option.
+> Do not replace these pull-downs with series switches without designing
+> the resulting default states, power isolation, and independent barriers.
 
 ---
 
@@ -1296,8 +1282,8 @@ Place `JP_INH1` and `JP_INH2` side-by-side, clearly separated from
 `DEPLOY_ARMED` drives two downstream enable nets:
 
 - **`COMMS_TX_EN`** — gates the comms board TX power amplifier
-  enable. Exits Sheet 4 via a port and is carried on CSKB to the
-  comms board. Comms TX PA is only allowed to energize when
+  enable. Intended to exit Sheet 4 via a port and CSKB connection
+  (pin allocation remains open). Comms TX PA is only allowed to energize when
   `COMMS_TX_EN` is high.
 - **`BURN_EN`** — gates the antenna burn-wire deploy load switch.
   Burn-wire MOSFET (TBD on a future sheet or add-in board) only
@@ -1309,20 +1295,20 @@ actual TX PA and burn-wire load switches living on their respective
 boards and accepting `DEPLOY_ARMED` as their hardware enable input.
 No AND gate, no buffer — just a labeled net exit on Sheet 4.
 
-Future-spin improvement: add a 74LVC2G08 dual AND gate so
-`DEPLOY_ARMED` is combined with a firmware arm signal
-(`FW_DEPLOY_ARMED`) from the EPS MCU before driving `COMMS_TX_EN` and
-`BURN_EN`. That would add a firmware arm as the third CDS inhibit.
-Not in v0.1 — see the open items in
-[`docs/architecture/inhibit_and_deployment.md`](../../../docs/architecture/inhibit_and_deployment.md).
+The direct tie is for controlled bench testing only. It provides no
+30-minute antenna delay, 45-minute RF delay, or bounded burn pulse.
+A flight controller must sequence those functions separately, while
+independent hardware barriers remain effective. Adding a firmware arm
+through an AND gate does not by itself supply a third independent CDS
+inhibit. See the [startup sequence](../../../docs/architecture/startup_sequence.md).
 
 #### Note (Place → Text, near the DEPLOY_ARMED net label):
 
 > `DEPLOY_ARMED` exits this sheet to `COMMS_TX_EN` (CSKB to comms
 > board) and `BURN_EN` (burn-wire load switch, TBD). For v0.1
 > proto, both downstream nets are wired directly to `DEPLOY_ARMED`
-> with no intermediate gating. A future spin may insert a firmware
-> arm via a 2-input AND gate.
+> with no intermediate gating. This is a bench control, not a flight
+> sequencer or demonstration of inhibit independence.
 
 ---
 
@@ -1488,14 +1474,12 @@ on Sheet 1.
     level shifter. Open integration item.
 13. **Inhibits & RBF (Sheet 4)**: Three 1×2 pin header jumpers on the
     v0.1 proto board — `JP_RBF` (across R21, kills buck EN midpoint
-    → kills bus, leaves charger alive), `JP_INH1` and `JP_INH2`
+    → disables EPS bucks, leaves charger/raw VBAT connected), `JP_INH1` and `JP_INH2`
     (parallel pull-downs on `DEPLOY_ARMED`, either one inhibits
     `COMMS_TX_EN` + `BURN_EN`). Convention: installed = safe/inhibited,
-    pulled = armed/running. Flight version replaces the inhibit
-    jumpers with 2× series NC separation switches (polarity inverts,
-    meaning unchanged) and `JP_RBF` with a physical pull-pin through
-    the chassis. Full policy and breadcrumb in
-    [`docs/architecture/inhibit_and_deployment.md`](../../../docs/architecture/inhibit_and_deployment.md).
+    pulled = shared enable permitted. Flight switch polarity, all-source
+    power isolation, independent inhibits, and timing remain open. See
+    [Inhibit and Deployment Architecture](../../../docs/architecture/inhibit_and_deployment.md).
 
 ---
 

@@ -132,8 +132,9 @@ the stack.
 
 ## H2 Pin Assignments
 
-H2 carries all of the stack's power rails plus the RBF/Separation
-switches and additional USER pins.
+H2 carries the assigned power rails and USER signals below. Pumpkin-defined
+RBF/separation-switch positions remain reserved and unconnected in v0.1;
+this table does not allocate flight interlock connections.
 
 | H2 pin | Pumpkin name | Net | EPS | IHU | Comms | Payload | Function |
 |---|---|---|---|---|---|---|---|
@@ -154,6 +155,13 @@ All other H2 pins (1–24, 33–44, 49–52) are **reserved** at
 v0.1 — leave unconnected on every board. They carry Pumpkin-defined
 signals (extra IO.24–IO.47 analog inputs, RBF/Separation switches
 S0–S5 on H2.33–H2.44, USER8–USER11 on H2.49–H2.52).
+
+**Flight power-isolation gap:** H2.45/H2.46 distribute raw `VBAT` to the
+payload's local converter. The prototype `JP_RBF` disables only the EPS
++3V3/+5V bucks, so that action alone does not establish payload shutdown.
+Define and verify hardware isolation for this feed and any alternate feeds
+under RBF and deployment-switch actuation before flight use. See
+[Inhibit and Deployment Architecture](../../docs/architecture/inhibit_and_deployment.md).
 
 **Note on grounds:** the CSKB has three DGND pins (H2.29, H2.30, H2.32)
 and only one AGND pin (H2.31). This project treats all four as a single

@@ -95,7 +95,7 @@ TPS62933F rail bring-up in progress (see \path{phase1_validation.md}).
 
 ### Protection \& Safety
 
-- **Remove-Before-Flight (RBF)** jumper for hard system inhibit
+- **Prototype RBF jumper** disables EPS +3V3/+5V bucks; charger and raw VBAT remain connected. Whole-spacecraft flight isolation is not established.
 - LTC4162 NTC-based over/under-temperature charge inhibit
 - Schottky blocking diodes prevent panel reverse current at night
 - Per-cell-array bypass diodes on each panel string
