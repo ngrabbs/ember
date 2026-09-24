@@ -1,26 +1,114 @@
 # Ground Operations Subsystem Interfaces
-**Status:** Draft 0.1
+
+**Status:** Draft 0.2
+
+Ground Operations interfaces with Flight Communications, Spacecraft Management, EPS, and Payload.
+
+The interface design supports both operator-initiated commands and autonomous spacecraft-generated telemetry and events.
 
 ## Flight Communications
-Ground Operations provides/defines operator commands, IDs, parameters, sequence numbers, logs, telemetry interpretation, and display requirements.
 
-Flight Communications provides/defines the flight radio, spacecraft antenna, RF transmission/reception, radio status, communications errors, and associated signal conditioning.
+Ground Operations provides or defines:
 
-Ground radio/modem, antenna, enclosure, console interface, packet transport, link testing, and end-to-end testing are shared areas whose exact ownership is TBD.
+- Application-level commands
+- Command IDs and parameters
+- Command sequence numbers
+- ACK/NACK interpretation
+- Telemetry and event definitions
+- Message interpretation and display requirements
+- Operator alerts
+- Ground-side logging
+- Ground console behavior
+
+Flight Communications provides or defines:
+
+- Flight radio
+- Spacecraft antenna
+- RF transmission and reception
+- Radio status
+- Communications errors
+- Associated signal conditioning
+- Transport of application-level messages between EMBER and Ground Operations
+
+Ground radio/modem, ground antenna, enclosure, console-to-radio interface, packet transport, link testing, and end-to-end testing are shared areas whose exact ownership is TBD.
+
+Ground Operations should not depend on RF-specific details when interpreting an application-level message.
 
 ## Spacecraft Management
-Provides or helps define mode management, command execution/validation, permission enforcement, fault handling, reset behavior, system status, and mode-transition information.
+
+Spacecraft Management provides or helps define:
+
+- Autonomous spacecraft operation
+- Mode management
+- Command execution and validation
+- Command permission enforcement
+- Fault handling
+- Reset behavior
+- System status
+- Mode-transition information
+- Event generation and routing
+- Telemetry collection and routing
+
+Ground Operations provides the operator interface for viewing this information and issuing commands when operator interaction is required.
+
+Spacecraft Management remains responsible for onboard validation even when Ground Operations has already checked command permissions.
 
 ## EPS
-Provides or helps define battery, voltage, current, energy state, power faults/limits/interlocks, and SAFE-entry information.
+
+EPS provides or helps define:
+
+- Battery status
+- Voltage
+- Current
+- Energy state
+- Power faults
+- Power limits
+- Power interlocks
+- SAFE-entry information
+- Power-related event conditions
+
+Ground Operations uses this information for periodic status displays, requested telemetry, alerts, and event logging.
+
+Power-related events such as low-energy conditions should be capable of generating event-driven messages without requiring an operator request.
 
 ## Payload
-Provides or helps define payload states/commands, detection events, health, capture/processing status, stored data, and detection confidence/metric.
 
-## Interface Principle
-Logical command/telemetry definitions should remain independent of the physical communications link where practical. `SET_MODE -> NOMINAL`, for example, should mean the same thing over wired test or RF transport.
+Payload provides or helps define:
 
-Changes affecting command IDs, telemetry fields, transport, or operator behavior should be documented and reviewed by affected subsystem owners.
+- Payload states
+- Payload commands
+- Payload health
+- Capture status
+- Processing status
+- Detection results
+- Detection confidence/metric
+- Stored detection data
+- Data references
+- Fire-detection events
 
-## Draft 0.1 Interface Contract
-Ground Operations creates application-level messages and Flight Communications transports them. The shared interface must ultimately define the console-to-radio connection, application-message representation, maximum message size, link/error status, timing expectations, RF framing relationship, and integration-test interface. These implementation details remain TBD.
+Normal payload mission activity should not require continuous Ground Operations commands.
+
+When the payload identifies a qualifying fire detection, the resulting information should support generation of an autonomous `FIRE_DETECTED` event for storage, routing, and eventual transmission to Ground Operations.
+
+Manual payload commands remain available for testing, checkout, troubleshooting, and approved manual operations.
+
+## Application Messaging Interface
+
+Ground Operations uses an application-level messaging model consisting of:
+
+```text
++----------------------+
+| Periodic Telemetry   |
++----------------------+
+
++----------------------+
+| Event Messages       |
++----------------------+
+
++----------------------+
+| Operator Commands    |
++----------------------+
+
++----------------------+
+| Command Responses    |
++----------------------+
