@@ -1,13 +1,19 @@
 # EMBER Ground Operations & Test
-**Status:** Draft 0.1
 
-The Ground Operations & Test subsystem provides the operator-facing interface used to command, monitor, and test EMBER. Ground communications are shared with Flight Communications and the exact division will be refined as the design develops.
+**Status:** Draft 0.2
+
+The Ground Operations & Test subsystem provides the operator-facing interface used to monitor, command, and test EMBER.
+
+EMBER is designed to operate autonomously during normal mission operations. Ground Operations monitors spacecraft health and mission activity, receives periodic telemetry and event-driven messages, displays and logs significant events, and provides operator command capability for configuration, testing, recovery, manual operations, and on-demand information requests.
+
+Ground communications are shared with Flight Communications, and the exact division of responsibilities will continue to be refined as the design develops.
 
 ## Design Documents
+
 1. [Subsystem Overview](01-subsystem-overview.md)
 2. [Command Dictionary](02-command-dictionary.md)
 3. [Command Responses](03-command-responses.md)
-4. [Telemetry Dictionary](04-telemetry-dictionary.md)
+4. [Telemetry & Event Dictionary](04-telemetry-dictionary.md)
 5. [Ground Console](05-ground-console.md)
 6. [Ground Test](06-ground-test.md)
 7. [Subsystem Interfaces](07-interfaces.md)
@@ -15,11 +21,28 @@ The Ground Operations & Test subsystem provides the operator-facing interface us
 9. [Command / Telemetry Protocol](09-command-telemetry-protocol.md)
 
 ## Related Operations Documents
+
 - [Mode Table](../01-mode-table.md)
 - [Transition Table](../02-transition-table.md)
 - [Permission Matrix](../03-permission-matrix.md)
 
-## Draft 0.1 Status
-The application-level Ground Operations architecture is defined through the command/telemetry protocol. Remaining work is primarily interface resolution with Flight Communications, Spacecraft Management, EPS, and Payload, followed by implementation-level definition for Draft 0.2.
+## Application Messaging Architecture
 
-The logical command and telemetry definitions are intended to remain transport-independent where practical so the same application behavior can be exercised over wired development connections and the eventual RF link.
+Ground Operations supports four primary application-level message categories:
+
+- **Periodic Telemetry** - Routine spacecraft status generated automatically.
+- **Event Messages** - Significant spacecraft or mission events generated automatically.
+- **Operator Commands** - Operator-initiated requests for information, configuration, testing, recovery, or manual operations.
+- **Command Responses** - ACK/NACK responses, requested information, and command-completion information.
+
+Normal mission operation does not require continuous operator commands.
+
+Examples of autonomous spacecraft messages include:
+
+```text
+HEARTBEAT
+POWER_STATUS
+PAYLOAD_STATUS
+MODE_EVENT
+FAULT_EVENT
+FIRE_DETECTED
