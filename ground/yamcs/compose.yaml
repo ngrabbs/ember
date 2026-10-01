@@ -4,6 +4,9 @@ services:
     image: maven:3.9.9-eclipse-temurin-17
     working_dir: /yamcs
     command: ["mvn", "-B", "compile", "yamcs:run"]
+    depends_on:
+      simulator:
+        condition: service_started
     volumes:
       - ./.runtime/quickstart:/yamcs
       - maven-cache:/root/.m2
@@ -21,14 +24,11 @@ services:
       options: {max-size: "10m", max-file: "3"}
   simulator:
     image: python:3.12-slim
-    network_mode: service:yamcs
     working_dir: /simulator
-    command: ["python", "-u", "simulator.py"]
+    command: ["python", "-u", "/wait-and-simulate.py"]
     volumes:
       - ./.runtime/quickstart:/simulator:ro
-    depends_on:
-      yamcs:
-        condition: service_healthy
+      - ./wait-and-simulate.py:/wait-and-simulate.py:ro
     logging:
       driver: json-file
       options: {max-size: "10m", max-file: "3"}

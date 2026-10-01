@@ -29,8 +29,8 @@ def main():
     # Compose receiver counter proves delivery, not merely UDP transmission.
     info = links()
     destination = info["udp-out"]["detailedStatus"]
-    if "localhost:10025" not in destination:
-        raise SystemExit("This smoke check requires the isolated localhost starter simulator.")
+    if "simulator:10025" not in destination:
+        raise SystemExit("This smoke check requires the isolated Compose starter simulator.")
     before_tm = int(info["udp-in"]["dataInCount"])
     time.sleep(3)
     after = links()

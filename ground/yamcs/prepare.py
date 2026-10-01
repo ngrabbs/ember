@@ -25,7 +25,7 @@ def prepare():
     text = text.replace("secretKey: changeme", "secretKey: " + secrets.token_hex(32))
     config.write_text(text)
     instance = SOURCE / "src/main/yamcs/etc/yamcs.myproject.yaml"
-    instance.write_text(instance.read_text().replace("host: simulator", "host: localhost"))
+    instance.write_text(instance.read_text().replace("host: localhost", "host: simulator"))
     print(f"Prepared Yamcs 5.13.0 upstream starter at {REVISION}.")
     print("Run: docker compose up -d")
 
