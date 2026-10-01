@@ -435,3 +435,50 @@ thermistor/JEITA/charger-state capture after the divider is established. No
 hardware rewiring, temperature bypass or charger configuration change was made
 in response to that deferral. Charging acceptance remains open; telemetry and
 ground display integration can proceed with the actual NTC-pause state visible.
+
+
+## Opt-in timed charging experiment — prepared, not run
+
+On 2026-10-01 the operator requested a temporary NTC bypass. A separate build
+option `IHU_EPS_TIMED_BENCH_TEST=ON` implements `charge-test start|stop`.
+Keep `IHU_EPS_ALLOW_CHARGER_WRITES=OFF`; both options cannot be enabled together.
+Default builds still block all charger writes. This image is for supervised
+bench diagnosis with no real battery temperature measurement.
+
+The bench image first verifies charger suspension, reinstates datasheet JEITA
+T1/T6 thresholds and JEITA enable, and selects the minimum current servo.
+An explicit start checks PEC-valid ADC, LAD/two-cell compatibility, battery
+7–8.3 V, VIN 9–12 V, die below 45 C and nonzero/non-open NTC ADC. It saves
+configuration, caps the voltage setting at 4.10 V/cell (or retains a lower
+setting), selects the minimum servo, widens T1/T6 and disables JEITA before
+releasing suspension. Clearing JEITA alone does not remove NTC pause.
+
+After 60 seconds, manual stop or a failed health check, the firmware restores
+the captured settings with readback verification and leaves charging suspended.
+Repeated start cannot extend the window. A five-second MCU watchdog is enabled
+on start; reboot recovery suspends charging and restores datasheet temperature
+thresholds rather than custom thresholds lost from RAM. Permanent I2C failure
+can prevent software recovery: the operator must remain present and remove
+input power on failure. Die temperature is not battery temperature.
+
+The minimum servo is 1 mV / RSNSB, approximately 100 mA only if the fitted sense
+resistor is 10 mOhm. RSNSB remains unverified, so use the independent bench supply
+at 11 V with a 150 mA current limit, solar cells disconnected, and a battery
+confirmed at room temperature. This is one brief diagnostic window, not an
+unattended charging mode.
+
+Release build succeeded in m75q `amsat-dev-x86` with Pico SDK 2.1.1. Seven
+LTC4162 host tests pass, including actual C-driver timing, wraparound, manual
+stop, rejected restart, bad PEC, health failure and recovery/write failure cases.
+Staged on Mac and Pi as `ihu-eps-timed-test-20261001.uf2`:
+SHA-256 `826e3fa6ac645259bb7f1105db368c2e8f18f5d49f2fa0f1d8e680343ada7a71`.
+The normal PEC image remains available as `ihu-eps-pec-20261001.uf2`.
+
+No bench image has been flashed and no bypass test has run yet. The latest Pi
+USB inventory contains only root hubs; IHU UART and direct USB need reconnecting.
+Confirm physical conditions, identify IHU flash ID `E663682593923F31` in BOOTSEL,
+load/verify only that device, and verify suspended startup telemetry. Briefly
+stop the exclusive UART bridge to issue the start command, restart it, capture
+VIN/VBAT/IBAT and charger flags for the full window, and verify restored
+CHARGER_CONFIG/CONFIG (JEITA enabled and suspend set). Restore the normal image
+after the experiment; retain evidence even if no charging current is observed.

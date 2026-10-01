@@ -167,6 +167,13 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
   later 10.7 V, agreeing with PEC-verified telemetry at both operating points.
 - [x] Confirm input resistor replaced by jumper; supply 11 V / pin 7 10.69 V,
   consistent with the reported input blocking diode. Supply current pending.
+- [x] Implement and host-test a separately enabled 60-second NTC bench charge
+  test; build/stage the image on the Pi. Default builds retain read-only behavior.
+- [ ] Reconnect IHU UART/direct USB, identify BOOTSEL device, and flash/verify
+  the timed test image. Confirm room-temperature battery and supervised bench
+  supply at 11 V / 150 mA limit before starting.
+- [ ] Capture charger state and signed battery current during one timed test;
+  verify automatic restoration and suspended charging, then restore normal image.
 - [ ] Deferred by operator: inspect the thermistor bench wiring with solar,
   battery and USB disconnected. Record substitute resistor marking/value and
   its two connected nodes; verify a bias resistor connects NTCBIAS pin 9 to
