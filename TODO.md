@@ -1,6 +1,6 @@
 # EMBER — Open Work
 
-Updated 2026-09-02.
+Updated 2026-10-01 (ground station plan and current comms direction).
 
 **What lives here:** the current front on each subsystem, plus anything that
 doesn't belong to a checklist already in the docs.
@@ -82,17 +82,20 @@ doing them out of order means routing the RF twice:
       (`NetC24_1`, `NetIC1_3`) into two. 22 remain. Convention in
       [`net_naming.md`](hardware/conventions/net_naming.md).
 
-### RX front end — architecture change not yet made
+### Current radio direction and ground station lab
 
-The schematic is still the **rev 0.5 VHF-uplink design**: 2 m input BPF, CLK1
-at 145.90 MHz. The board is moving to **all-UHF** (435 MHz uplink, shared
-antenna) because the VHF filters proved too difficult to realise.
+The current working project is **all-UHF, single-antenna**, as recorded in
+[`hardware/comms/kicad/README.md`](hardware/comms/kicad/README.md). The former
+VHF-uplink/RX-rebuild description has been superseded. Current saved
+KiCad work is checkpointed in commit `b3f4a0d`; this is not fabrication approval.
 
-- [ ] Rebuild the RX front end per the implementation plan
-- [ ] Update the five annotations that describe the old architecture — listed
-      in [`hardware/comms/kicad/README.md`](hardware/comms/kicad/README.md)
+The working choice is **BPSK uplink and downlink**. Exact frequencies, rates,
+framing/coding, and spacecraft receive implementation remain to be settled.
 
-Until then the RX sheet describes what is drawn, not where the board is going.
+- [ ] Build the Pi-hosted command/telemetry bench module using the checklist in
+      [`system/ground_station/TODO.md`](system/ground_station/TODO.md).
+      Start with the existing Pico/SX1280 transport, then validate the UHF BPSK
+      waveform with SDRs and integrate the flight board and SatNOGS decoder.
 
 ### Smaller items
 

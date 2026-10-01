@@ -3,6 +3,9 @@
 This directory tracks interface definitions, protocol decisions, and system
 integration planning across subsystems.
 
+- `ground_station/`: bench ground station planning and command/telemetry lab
+  - [`ground_station/TODO.md`](ground_station/TODO.md)
+
 - `interfaces/`: electrical and logical subsystem interface definitions
   - [`interfaces/board_to_board.md`](interfaces/board_to_board.md)
   - [`interfaces/comms_to_ihu.md`](interfaces/comms_to_ihu.md)
