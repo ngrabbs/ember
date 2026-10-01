@@ -309,7 +309,7 @@ bool ltc4162_bench_recover(i2c_inst_t *i2c, uint8_t addr) {
     uint16_t cfg, chg;
     bool ok=read_word(i2c,addr,0x14,&cfg) && read_word(i2c,addr,0x29,&chg);
     if (ok) {
-        ok=bench_write(i2c,addr,0x14,cfg|CFG_SUSPEND_CHARGER);
+        ok=bench_write(i2c,addr,0x14,cfg|CFG_SUSPEND_CHARGER|CFG_FORCE_TELEMETRY_ON|CFG_TELEMETRY_SPEED_HIGH);
         /* Temperature recovery only after verified suspension. */
         if (ok) {
             bool a=bench_write(i2c,addr,0x1f,JEITA_T1_DEFAULT);
