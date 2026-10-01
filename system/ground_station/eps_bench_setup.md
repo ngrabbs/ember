@@ -99,9 +99,9 @@ configuration and hardware before deciding to enable or modify the ADC.
 
 ## Remaining integration
 
-Back up the assembled IHU flash through its direct USB connection before loading
-the new image. The UART adapter alone does not provide a picotool flash backup.
-Then capture the new registers and compare voltage against a meter. Preserve
+The assembled IHU flash was backed up and the new image verified through direct
+USB on 2026-10-01. The UART adapter alone does not provide a picotool flash backup.
+Next capture ADC-valid readings and compare voltage against a meter. Preserve
 battery/supply conditions and fitted resistor values with each measurement.
 
 The JSON console readout is a diagnostic format, not a CCSDS telemetry packet.
@@ -118,6 +118,39 @@ The read-only image built successfully on 2026-10-01 with Pico SDK 2.1.1 in
 in both write-disabled and explicitly write-enabled builds, signed negative
 ADC readings, little-endian words, timeout/lock failures, unchanged output on
 failure, chemistry/cell/ADC rejection, zero detected cells, preserved CONFIG_BITS
-flags, malformed ground readouts and generated-header consistency. This image
-has not yet been flashed to the assembled IHU; the baseline above came from
-its existing firmware.
+flags, malformed ground readouts and generated-header consistency. The image was subsequently flashed and verified on the assembled IHU; the
+baseline table above came from its previous firmware.
+
+
+## Diagnostic image hardware check
+
+The direct USB BOOTSEL device identified itself as `ihu`, RP2040 B2,
+2 MB flash, flash ID `E663682593923F31` (different from the spare packet Pico).
+Full-flash backup was saved and verified on the Pi and copied to the Mac:
+
+- Backup: `ihu-before-eps-readonly-20261001.uf2`, SHA-256
+  `8a98fdc72f76cc16e5665a345880fd993a6eb53dfc9179bf00a54435a9ef09d6`.
+- New image: `ihu-eps-readonly-20261001.uf2`, SHA-256
+  `28816c803930c903265c02d42c56702a7542ced1fd677aad8e5a4fa20baecc71`.
+- Pi copies are under `/home/ngrabbs/`; Mac copies are under
+  `/Users/nick/Documents/ChatGPT/EMBER/`.
+
+Flash verification passed. UART boot confirms both I2C devices (`0x42`, `0x68`),
+read-only operation and successful comms housekeeping. `eps json` returned the
+complete 19-register object. Both `kick` and `ntc-bypass on` were rejected without
+configuration changes; periodic output was restored with `loud` afterwards.
+
+After the BOOTSEL/flash procedure, the battery-powered EPS reported its default
+CONFIG_BITS `0` and CHARGER_CONFIG_BITS `1` (JEITA enabled), charger suspended,
+TELEMETRY_STATUS `0`, CHEM_CELLS `0x00E0`, and zero ADC measurements. The diagnostic
+firmware does not force the ADC on, so these zeros are not reported as valid
+voltages/current/temperature. The ground decoder confirms LAD chemistry,
+zero detected cells and configured two cells, with `conversion_valid=false`
+and `engineering=null`. See the
+[captured raw sample](evidence/ltc4162-battery-adc-off-20261001.json).
+
+The earlier valid-looking readings came from the prior configuration with
+force_telemetry_on set. Input-powered ADC-valid measurement and independent
+calibration remain open; ADC enable on battery will need a deliberate, narrowly
+scoped operation if required. Do not enable the legacy write build merely to
+obtain battery telemetry, because it also changes JEITA and charger state.

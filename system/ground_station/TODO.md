@@ -152,8 +152,10 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
 - [x] Build the default read-only IHU image in the m75q Pico SDK container.
 - [x] Add default read-only charger operation, bounded LTC4162 transactions,
   complete raw/JSON console readouts, and invalidation after failed EPS polls.
-- [ ] Back up assembled IHU firmware over direct USB and load the diagnostic
-  image; verify complete register capture on hardware.
+- [x] Back up assembled IHU firmware over direct USB, load and verify the
+  diagnostic image, and capture all 19 registers on hardware.
+- [x] Verify ADC-off battery readout is retained as raw data while engineering
+  values are suppressed; confirm legacy charger CLI commands are blocked.
 - [ ] Confirm fitted RSNSB/RSNSI and compare pack/output voltage with a meter.
 - [ ] Check TELEMETRY_STATUS and CHEM_CELLS on battery and controlled input power;
   document sample age, state transitions and measurement limits.
