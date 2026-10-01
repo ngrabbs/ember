@@ -46,6 +46,8 @@ def prepare(transport="simulator"):
     ember = ember.replace("com.example.myproject.MyPacketPreprocessor", "com.example.ember.EmberPacketPreprocessor")
     ember = ember.replace("com.example.myproject.MyCommandPostprocessor", "com.example.ember.EmberCommandPostprocessor")
     ember = ember.replace("file: mdb/xtce.xml", "file: mdb/ember.xml")
+    # EPS input is observational only, with its own sequence tracker and no TC link.
+    ember = ember.replace("\nmdb:\n", "\n  - name: eps-uart-in\n    class: org.yamcs.tctm.UdpTmDataLink\n    stream: tm_realtime\n    port: 10017\n    packetPreprocessorClassName: com.example.ember.EmberPacketPreprocessor\n\nmdb:\n")
     # EMBER displays are isolated from the upstream myproject reference.
     ember += "\nyamcs-web:\n  displayBucket: ember_displays\n"
     (instance.parent / "yamcs.ember.yaml").write_text(ember)

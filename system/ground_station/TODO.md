@@ -24,8 +24,10 @@ for application meanings and preliminary IDs. Remaining repairs and deliverables
 are in the [Dustin coordination note](dustin_followup.md).
 
 PR #5 is now merged at `a21832b`: the Pi/Yamcs dictionary and simulated loop
-are the established lab baseline. Next branch: `feature/ground-station-usb`,
-starting with the [one-Pico USB hookup](usb_bench_setup.md).
+are the established lab baseline. PR #6 is merged at `583ac9a`: the spare
+Pico USB command loop and native overview are verified. Draft PR #7 adds the
+read-only IHU/EPS diagnostics and live [EPS Yamcs path](eps_yamcs_setup.md) on
+`feature/ihu-eps-definitions`.
 
 ## Current direction and open decisions
 
@@ -93,7 +95,8 @@ Existing firmware references (separate repositories):
   laptop browser access and archive survival across a full Pi reboot.
 - [x] Open native parameter plotting from the system display and verify
   archived/live telemetry on the Pi.
-- [ ] Exercise interactive archive replay on the Pi.
+- [x] Exercise interactive archive replay on the Pi: play/pause, forward/backward
+  seek, historical EPS values and frozen replay clock; [verification](archive_replay.md).
 - [x] Add native EMBER overview and detail displays, with received timestamps,
   RSSI-unavailable handling and navigation to command history;
   [display setup](../../ground/yamcs/DISPLAYS.md).
@@ -138,8 +141,76 @@ Existing firmware references (separate repositories):
 
 Evidence: [software validation](ember_validation.md) and
 [USB hardware validation](usb_validation.md). USB acceptance is complete; RF
-acceptance remains open. Next: record the existing SX1280 wiring/settings and
-build the two-Pico RF transport using the same packet interface.
+acceptance remains open. While radios are unavailable, the real IHU EPS now
+feeds Yamcs through its UART adapter. Next software work: configure retention/backup, then extend the wired IHU command
+path with correlated results without enabling charger writes.
+
+## IHU/EPS bench while RF hardware is unavailable
+
+Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
+
+- [x] Identify the connected IHU UART adapter, confirm LTC4162-LAD and 2S2P
+  battery configuration, and capture existing telemetry without charger changes.
+- [x] Define the observational register dictionary and generated shared header;
+  check signed scaling and ADC/chemistry/cell-count rejection on the host.
+- [x] Build the default read-only IHU image in the m75q Pico SDK container.
+- [x] Add default read-only charger operation, bounded LTC4162 transactions,
+  complete raw/JSON console readouts, and invalidation after failed EPS polls.
+- [x] Back up assembled IHU firmware over direct USB, load and verify the
+  diagnostic image, and capture all 19 registers on hardware.
+- [x] Verify ADC-off battery readout is retained as raw data while engineering
+  values are suppressed; confirm legacy charger CLI commands are blocked.
+- [ ] Confirm fitted RSNSB/RSNSI and compare pack/output voltage with a meter.
+- [x] Capture TELEMETRY_STATUS and CHEM_CELLS on battery and input power:
+  ADC invalid → valid, LAD chemistry, detected two cells with input present.
+- [x] Resolve suspected VIN decoding discrepancy: pin 7 measured 8.168 V and
+  later 10.7 V, agreeing with PEC-verified telemetry at both operating points.
+- [x] Confirm input resistor replaced by jumper; supply 11 V / pin 7 10.69 V,
+  consistent with the reported input blocking diode. Supply current pending.
+- [x] Implement and host-test a separately enabled 60-second NTC bench charge
+  test; build/stage the image on the Pi. Default builds retain read-only behavior.
+- [x] Reconnect IHU UART/direct USB, identify BOOTSEL device, back up and flash/verify
+  the first timed test image. Operator confirmed supervised bench conditions.
+- [x] Flash/verify corrected bench image with ADC kept running while suspended.
+- [x] Resolve EPS recovery/comms I²C loss: operator had disconnected battery
+  and input. Battery reconnection restored communication and suspended telemetry.
+- [x] Capture one 60-second test and automatic restoration/suspension in Yamcs
+  and UART. Charger remained in NTC pause; no charging observed.
+- [ ] Independently inspect JEITA thresholds and charger DAC settings to explain
+  persistent NTC pause during the attempted bypass; complete divider wiring.
+- [x] Restore and flash-verify normal read-only IHU image after BOOTSEL reset.
+  Both I²C devices respond; Yamcs readout_valid=1, ADC off with input off.
+- [ ] Deferred by operator: inspect the thermistor bench wiring with solar,
+  battery and USB disconnected. Record substitute resistor marking/value and
+  its two connected nodes; verify a bias resistor connects NTCBIAS pin 9 to
+  NTC pin 10 and record its value. No real battery thermistor is fitted.
+- [ ] After divider wiring is confirmed, repeat raw thermistor/JEITA/state
+  readouts and resolve NTC-pause/region 7. Identify any dummy resistor as a
+  bench substitute, not measured battery temperature; keep JEITA enabled.
+- [x] Build/test SMBus PEC verification, including corrupted data/checksum rejection.
+- [x] Flash/verify PEC image; capture three complete readouts with all word
+  checksums accepted. Unexpected VIN is present in chip-returned data.
+- [x] Measure VCC2P5 (2.48 V), INTVCC (4.8 V), VOUTA (7.59 V); verify
+  suspected pin 3/4 junction is intended by the exported schematic netlist.
+- [x] Confirm pin 7 at 8.168 V agrees with checksum-verified telemetry.
+- [x] Correct design guide: input damping resistor belongs in a series RC shunt
+  branch, per datasheet Figure 8, rather than in the main solar feed.
+- [x] Identify resistor marking 2R70; operator reports ~109 ohm isolated,
+  inconsistent with 2.7 ohm marking.
+- [ ] Reconcile fitted resistor/reference and actual repair with schematic revision.
+- [ ] Document sample age and measurement limits across repeated power transitions.
+- [x] Define observational EPS POWER_STATUS payload v1 (Dustin ID 0x10),
+  provenance/validity/readout age and read-only IHU UART-to-UDP transport;
+  [packet contract](../protocols/eps_power_status_v1.md).
+- [x] Add native Yamcs EPS dashboard/raw table; verify real VIN, battery/output
+  voltage, signed current, die temperature and raw status;
+  [setup and validation](eps_yamcs_setup.md).
+- [x] Verify UART disconnect/reconnect, bridge-stop expiration, INVALID/EXPIRED
+  handling and archive survival across Yamcs restart; preserve API evidence.
+- [ ] Move host-packaged EPS observations to a native IHU packet link when the
+  IHU command/telemetry transport is ready; preserve explicit provenance.
+- [ ] Extend safe wired IHU commands with transaction identity and acceptance/
+  completion reports; do not route raw Yamcs commands into the diagnostic CLI.
 
 ## 3. Pico/SX1280 RF loop
 

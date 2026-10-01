@@ -1,0 +1,26 @@
+
+[ihu] booting (build Oct  1 2026 15:26:21)
+[ihu] tasks created, starting scheduler
+[ihu] console up — FreeRTOS scheduler running
+[ihu] heartbeat #0  uptime=1504 ms  tasks=7  free_heap=112872
+[eps] scanning i2c0 (sda=GP4 scl=GP5 @ 100000 Hz)
+[eps]   found device at 0x42 (comms board)
+[eps]   found device at 0x68 (LTC4162 — EPS charger)
+[eps] scan complete — 2 device(s)
+[eps] read-only diagnostics: charger configuration is preserved
+[eps] starting telemetry poll @ 5 s cadence
+[ltc4162] poll #0 — no valid sample (bus/ADC/chemistry/cell count)
+
+CLI ready — type 'help'
+ihu> 
+ihu> eps json
+{"profile":"ltc4162-l-readout-v1","uptime_ms":5895,"registers":{"config_bits":0,"charger_config_bits":1,"charger_state":256,"charge_status":0,"limit_alerts":0,"charger_state_alerts":0,"charge_status_alerts":0,"system_status":161,"vbat":0,"vin":0,"vout":0,"ibat":0,"iin":0,"die_temp":0,"thermistor_voltage":0,"bsr":0,"jeita_region":7,"chem_cells":224,"telemetry_status":0}}
+ihu> [comms] polling comms board at 0x42 @ 5 s cadence
+[comms] link UP — comms board answering at 0x42
+[comms] fw=v0.1  up=41 s  tasks=5  heap=119888 B  rtt=1333 us
+[comms]   si5351=FAIL (raw=0x00, absent)  rx-bb=WARN (79 mV)  i2c-devs=0
+[comms]   TX idle — T/R switch in receive
+[comms]   ALERT: comms board self-test FAIL — si5351a not responding (nothing on its bus at all)
+[comms]   (repeats suppressed until this changes; 'comms' shows current state)
+[ihu] heartbeat #1  uptime=6509 ms  tasks=7  free_heap=112872
+[ltc4162] poll #1 — no valid sample (bus/ADC/chemistry/cell count)

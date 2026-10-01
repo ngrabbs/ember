@@ -2,13 +2,10 @@
  * LTC4162-L lithium-ion charger driver (IHU side).
  *
  * The chip lives on the EPS board; the IHU talks to it over the
- * shared CSKB H1 I2C bus. This driver is intentionally read-mostly
- * for v0.1 — we sample telemetry and decode status. The single write
- * we do (CONFIG_BITS at init) sets force_telemetry_on so the ADC
- * runs even when the charger is idle. Charge-current, MPPT, and
- * voltage-limit configuration is owned by the EPS-side firmware on
- * the flight build; on the v0.1 proto board the IHU is the only
- * MCU on the bus so it handles the minimum init.
+ * shared CSKB H1 I2C bus. The default build observes registers without
+ * changing charger configuration. Legacy configuration helpers require
+ * IHU_EPS_ALLOW_CHARGER_WRITES=ON; enabling it also restores the legacy
+ * boot sequence, including disabling JEITA. Use only for a controlled bench.
  *
  * Datasheet: Analog Devices LTC4162-L Rev. A
  * (local copy at hardware/eps/components/LTC4162/LTC4162-L.pdf)
@@ -20,6 +17,11 @@
 #include <stdint.h>
 
 #include "hardware/i2c.h"
+#include "ltc4162_registers.h"
+
+#ifndef IHU_EPS_ALLOW_CHARGER_WRITES
+#define IHU_EPS_ALLOW_CHARGER_WRITES 0
+#endif
 
 /* CHARGER_STATE (register 0x34) — mutually-exclusive enum values
  * (NOT bit positions). The chip reports exactly one of these at a
@@ -66,10 +68,11 @@ typedef enum {
 /* Engineering-units telemetry snapshot.
  *
  * IBAT is signed: positive when current flows INTO the battery
- * (charging), negative when flowing OUT (discharging). VIN/VOUT/VBAT
- * are unsigned per the datasheet, but the driver returns them as
- * floats for caller convenience. */
+ * (charging), negative when flowing OUT (discharging). VIN/VOUT/VBAT are also signed ADC words per Rev A.
+ * Raw words are retained alongside engineering values for validation. */
 typedef struct {
+    ltc4162_raw_t raw;       /* observational register readout */
+    float    die_temp_c;     /* chip die, not battery temperature */
     float    v_bat;          /* V — total pack voltage (cells * per-cell) */
     float    v_in;           /* V — solar / charger input voltage */
     float    v_out;          /* V — bus output voltage */
@@ -80,13 +83,11 @@ typedef struct {
     uint16_t system_status;  /* raw 0x39 — bitmask, decode via LTC4162_SYS_*  */
 } ltc4162_telemetry_t;
 
-/* Probe the chip with a zero-length I2C write (address-only). */
+/* Bounded read of SYSTEM_STATUS; ACK alone does not identify the chip. */
 bool ltc4162_present(i2c_inst_t *i2c, uint8_t addr);
 
-/* One-time init: writes CONFIG_BITS = force_telemetry_on so the
- * telemetry ADC runs even when the charger is suspended (e.g. on
- * battery-only operation with no V_IN). Idempotent. Returns true
- * if the write was ACKed. */
+/* Set force_telemetry_on while preserving other CONFIG_BITS flags.
+ * Returns false when charger writes are disabled (the default). */
 bool ltc4162_init(i2c_inst_t *i2c, uint8_t addr);
 
 /* Enable or disable the JEITA temperature-qualified charging system.
@@ -104,7 +105,8 @@ bool ltc4162_set_jeita_enabled(i2c_inst_t *i2c, uint8_t addr, bool enabled);
  * suspend_charger bit (set, brief delay, clear). Useful for shaking
  * the chip out of a latched non-charging state like ntc_pause after
  * fixing the underlying condition (e.g. disabling JEITA, swapping
- * the thermistor, etc.). Idempotent and safe to call at any time. */
+ * the thermistor, etc.). This changes charger state and resets timers;
+ * it is disabled unless IHU_EPS_ALLOW_CHARGER_WRITES is explicitly enabled. */
 bool ltc4162_kick(i2c_inst_t *i2c, uint8_t addr);
 
 /* Software workaround for boards without a working NTC thermistor
@@ -115,7 +117,7 @@ bool ltc4162_kick(i2c_inst_t *i2c, uint8_t addr);
  * When `enabled = true`, this widens the JEITA temperature window to
  * the full int16 range:
  *   jeita_t1 = INT16_MAX (no reading is colder)
- *   jeita_t6 = INT16_MIN (no reading is hotter)
+ *   jeita_t6 = 1 (positive lower bound; strict comparisons)
  * so any thermistor_voltage that passes the hardware open_thermistor
  * check (< 21684) lets the chip exit ntc_pause and start charging.
  *
@@ -130,8 +132,15 @@ bool ltc4162_kick(i2c_inst_t *i2c, uint8_t addr);
  * gives a thermistor_voltage near 0, which is below 21684. */
 bool ltc4162_set_ntc_bypass(i2c_inst_t *i2c, uint8_t addr, bool enabled);
 
+/* Read the observational register dictionary, including ADC validity/chemistry.
+ * Every word verifies the chip's SMBus PEC checksum.
+ * Output is unchanged on bus/lock/checksum failure. No charger configuration writes.
+ * A held bus lock serializes callers, but does not freeze the chip ADC. */
+bool ltc4162_read_raw(i2c_inst_t *i2c, uint8_t addr, ltc4162_raw_t *out);
+
 /* Read all telemetry registers into `out`. Returns false on any I2C
- * transaction error; in that case `out` is left untouched. */
+ * transaction/checksum error, ADC not valid, non-L chemistry or nonzero cell-count
+ * mismatch; in those cases `out` is left untouched. */
 bool ltc4162_read_telemetry(i2c_inst_t *i2c, uint8_t addr,
                             ltc4162_telemetry_t *out);
 
@@ -140,3 +149,13 @@ const char *ltc4162_state_string(uint16_t charger_state);
 
 /* Short human label for a raw CHARGE_STATUS value (or "off"). */
 const char *ltc4162_charge_status_string(uint16_t charge_status);
+
+#ifndef IHU_EPS_TIMED_BENCH_TEST
+#define IHU_EPS_TIMED_BENCH_TEST 0
+#endif
+/* Separate supervised bench image. Boot recovery always suspends charging;
+ * start releases it for at most 60 s, service restores saved settings.
+ * All functions fail closed in normal builds. Call service every second. */
+bool ltc4162_bench_recover(i2c_inst_t *i2c, uint8_t addr);
+bool ltc4162_bench_start(i2c_inst_t *i2c, uint8_t addr, uint32_t now_ms);
+bool ltc4162_bench_service(i2c_inst_t *i2c, uint8_t addr, uint32_t now_ms, bool stop);

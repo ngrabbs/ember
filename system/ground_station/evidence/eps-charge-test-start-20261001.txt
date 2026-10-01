@@ -1,0 +1,14 @@
+
+ihu> charge-test start
+BENCH CHARGE TEST ACTIVE: 60s, minimum servo, <=4.10V/cell, NO BATTERY TEMPERATURE PROTECTION
+ihu> [ltc4162] poll #63
+[ltc4162] state=battery-detection  charge=off  sys=0x0067
+[ltc4162]   V_IN=10.677 V   V_OUT=10.016 V   V_BAT= 8.184 V
+[ltc4162]   I_IN=  +89.9 mA  I_BAT=   -1.6 mA  (positive = charging)
+[ltc4162] poll #64
+[ltc4162] state=ntc-pause  charge=off  sys=0x0067
+[ltc4162]   V_IN=10.677 V   V_OUT=10.012 V   V_BAT= 8.184 V
+[ltc4162]   I_IN=  +90.2 mA  I_BAT=   -1.8 mA  (positive = charging)
+[ihu] heartbeat #27  uptime=136640 ms  tasks=7  free_heap=112872
+[comms] fw=v0.1  up=151 s  tasks=5  heap=119888 B  rtt=1322 us
+[comms]   si5351=FAIL (raw=0x00, absent)  rx-bb=WARN (79 mV)  i2c-devs=0

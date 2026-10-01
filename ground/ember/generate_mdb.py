@@ -26,13 +26,24 @@ def generate(destination):
     def parameter(name, field):
         bits = layout([field]).size * 8
         enum = field.get("enum")
-        ptype = node(types, "EnumeratedParameterType" if enum else "IntegerParameterType",
-                     name=name + "_type", **({} if enum else {"signed": field["type"].startswith("i")}))
+        ptype = node(types, "EnumeratedParameterType" if enum else "FloatParameterType" if field.get("scale") else "IntegerParameterType",
+                     name=name + "_type", **({} if enum or field.get("scale") else {"signed": field["type"].startswith("i")}))
         units = node(ptype, "UnitSet")
         if field.get("unit"):
             node(units, "Unit").text = field["unit"]
-        node(ptype, "IntegerDataEncoding", sizeInBits=bits,
+        encoding = node(ptype, "IntegerDataEncoding", sizeInBits=bits,
              encoding="twosComplement" if field["type"].startswith("i") else "unsigned")
+        if field.get("scale"):
+            polynomial = node(node(encoding, "DefaultCalibrator"), "PolynomialCalibrator")
+            node(polynomial, "Term", coefficient=field["scale"], exponent=1)
+            if "unavailable" in field:
+                context = node(node(encoding, "ContextCalibratorList"), "ContextCalibrator")
+                node(node(context, "ContextMatch"), "Comparison",
+                     parameterRef="POWER_STATUS_conversion_valid", value=0)
+                polynomial = node(node(context, "Calibrator"), "PolynomialCalibrator")
+                node(polynomial, "Term", coefficient="NaN", exponent=0)
+                node(ptype, "ValidRange", validRangeAppliesToCalibrated=False,
+                     minExclusive=field["unavailable"], maxInclusive=2147483647)
         if enum:
             values = node(ptype, "EnumerationList")
             for label, value in D["enums"][enum].items():
@@ -53,6 +64,9 @@ def generate(destination):
         container = node(containers, "SequenceContainer", name=message["name"])
         ancillary = node(container, "AncillaryDataSet")
         node(ancillary, "AncillaryData", name="Yamcs").text = "UseAsArchivingPartition"
+        if message.get("expected_interval_ms"):
+            node(container, "DefaultRateInStream", basis="perSecond",
+                 minimumValue=1000 / message["expected_interval_ms"])
         entries = node(container, "EntryList")
         for field in message["fields"]:
             name = message["name"] + "_" + field["name"]
@@ -61,6 +75,14 @@ def generate(destination):
             if field == message["fields"][0]:
                 node(node(entry, "LocationInContainerInBits", referenceLocation="containerStart"),
                      "FixedValue").text = "240"
+        for field_name in ("source_boot_id", "uptime_ms"):
+            field = next(f for f in D["secondary_header"] if f["name"] == field_name)
+            name = message["name"] + "_" + field_name
+            parameter(name, field)
+            entry = node(entries, "ParameterRefEntry", parameterRef=name)
+            offset = 6 + sum(layout([f]).size for f in D["secondary_header"][:D["secondary_header"].index(field)])
+            node(node(entry, "LocationInContainerInBits", referenceLocation="containerStart"),
+                 "FixedValue").text = str(offset * 8)
         base_ref = node(container, "BaseContainer", containerRef="Packet")
         comparisons = node(node(base_ref, "RestrictionCriteria"), "ComparisonList")
         for name, value in (("kind", D["kinds"][message["kind"]]),
