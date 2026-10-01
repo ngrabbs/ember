@@ -19,23 +19,18 @@
 #define EPS_TASK_STACK_WORDS    768       /* printf with floats eats stack */
 #define EPS_TASK_NAME           "eps-mon"
 
-/* Snapshot of the latest valid telemetry read, for the CLI to
- * consume on demand. `s_have_snapshot` flips to true after the
- * first successful poll and never flips back — the contents may
- * be stale if the chip later disappears, but the values remain
- * the last known good ones. Reads and writes are word-sized on
- * RP2040 and the snapshot is only updated from the eps task, so
- * the race window is harmless for a diagnostic getter. */
+/* Snapshot is copied atomically and invalidated after a failed/invalid poll. */
 static ltc4162_telemetry_t s_last_telemetry;
 static volatile bool        s_have_snapshot = false;
 static volatile bool        s_quiet         = false;
 
 bool ihu_eps_get_latest_telemetry(ltc4162_telemetry_t *out) {
-    if (!s_have_snapshot) {
-        return false;
-    }
-    *out = s_last_telemetry;
-    return true;
+    if (!out) return false;
+    taskENTER_CRITICAL();
+    bool valid = s_have_snapshot;
+    if (valid) *out = s_last_telemetry;
+    taskEXIT_CRITICAL();
+    return valid;
 }
 
 void ihu_eps_set_quiet(bool quiet) { s_quiet = quiet; }
@@ -69,7 +64,7 @@ static void i2c_bus_scan_once(void) {
             continue;
         }
         uint8_t rx;
-        int ret = i2c_read_blocking(IHU_I2C_EPS_INSTANCE, addr, &rx, 1, false);
+        int ret = i2c_read_timeout_us(IHU_I2C_EPS_INSTANCE, addr, &rx, 1, false, 10000);
         if (ret >= 0) {
             const char *who = "";
             if (addr == IHU_EPS_LTC4162_ADDR) { who = " (LTC4162 — EPS charger)"; }
@@ -144,16 +139,15 @@ static void eps_monitor_task(void *pvParameters) {
     i2c_bus_scan_once();
 
     if (!ltc4162_present(IHU_I2C_EPS_INSTANCE, IHU_EPS_LTC4162_ADDR)) {
-        printf("[eps] LTC4162 not detected at 0x%02X — telemetry polling disabled\n",
+        printf("[eps] LTC4162 not detected at 0x%02X — will retry during polling\n",
                IHU_EPS_LTC4162_ADDR);
-        /* Park the task — keeps it visible in uxTaskGetNumberOfTasks. */
-        for (;;) {
-            vTaskDelay(pdMS_TO_TICKS(60000));
-        }
+        /* Keep polling: EPS may become available after MCU boot. */
     }
 
+#if IHU_EPS_ALLOW_CHARGER_WRITES
+
     if (ltc4162_init(IHU_I2C_EPS_INSTANCE, IHU_EPS_LTC4162_ADDR)) {
-        printf("[eps] LTC4162 init OK (force_telemetry_on set, fault state cleared)\n");
+        printf("[eps] LTC4162 init OK (force_telemetry_on set)\n");
     } else {
         printf("[eps] LTC4162 init write FAILED — telemetry may stay at zero\n");
     }
@@ -178,6 +172,10 @@ static void eps_monitor_task(void *pvParameters) {
         printf("[eps] kick write FAILED\n");
     }
 
+#else
+    printf("[eps] read-only diagnostics: charger configuration is preserved\n");
+#endif
+
     printf("[eps] starting telemetry poll @ %d s cadence\n",
            EPS_POLL_PERIOD_MS / 1000);
 
@@ -186,15 +184,19 @@ static void eps_monitor_task(void *pvParameters) {
         ltc4162_telemetry_t t;
         if (ltc4162_read_telemetry(IHU_I2C_EPS_INSTANCE,
                                    IHU_EPS_LTC4162_ADDR, &t)) {
+            taskENTER_CRITICAL();
             s_last_telemetry = t;
-            s_have_snapshot  = true;
+            s_have_snapshot = true;
+            taskEXIT_CRITICAL();
             if (!s_quiet) {
                 printf("[ltc4162] poll #%lu\n", (unsigned long)poll);
                 print_telemetry(&t);
             }
-        } else if (!s_quiet) {
-            printf("[ltc4162] poll #%lu — read failed (I2C error)\n",
-                   (unsigned long)poll);
+        } else {
+            taskENTER_CRITICAL();
+            s_have_snapshot = false;
+            taskEXIT_CRITICAL();
+            if (!s_quiet) printf("[ltc4162] poll #%lu — no valid sample (bus/ADC/chemistry/cell count)\n", (unsigned long)poll);
         }
         ++poll;
         vTaskDelay(pdMS_TO_TICKS(EPS_POLL_PERIOD_MS));

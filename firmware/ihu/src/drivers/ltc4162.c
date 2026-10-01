@@ -11,30 +11,21 @@
 #include "config/i2c0_bus.h"
 
 /* ------------------------------------------------------------------
- * Register addresses (LTC4162-L datasheet Rev. F, Table 1)
+ * Register addresses (LTC4162-L datasheet Rev. A, Table 1)
  * ----------------------------------------------------------------*/
 #define REG_CONFIG_BITS          0x14   /* CONFIG_BITS_REG — R/W */
 #define REG_JEITA_T1             0x1F   /* JEITA cold-side threshold — R/W */
 #define REG_JEITA_T6             0x24   /* JEITA hot-side threshold  — R/W */
 #define REG_CHARGER_CONFIG_BITS  0x29   /* CHARGER_CONFIG_BITS_REG — R/W */
-#define REG_CHARGER_STATE        0x34   /* enum active state */
-#define REG_CHARGE_STATUS        0x35   /* enum charge-loop status */
-#define REG_SYSTEM_STATUS        0x39   /* system-level status bits */
 
 /* Datasheet defaults for jeita_t1 and jeita_t6 (table 6, p. 25). */
 #define JEITA_T1_DEFAULT         16117  /* ~0 °C breakpoint  */
 #define JEITA_T6_DEFAULT         4970   /* ~60 °C breakpoint */
-#define REG_VBAT             0x3A   /* battery voltage telemetry */
-#define REG_VIN              0x3B   /* input voltage telemetry */
-#define REG_VOUT             0x3C   /* output voltage telemetry */
-#define REG_IBAT             0x3D   /* battery current telemetry (signed) */
-#define REG_IIN              0x3E   /* input current telemetry (signed) */
-
 /* CONFIG_BITS_REG (0x14) — bit positions per datasheet page 39.
  * Range is [5:1]; bit 0 is unused. Defaults are all zero. */
 #define CFG_MPPT_EN              (1u << 1)
 #define CFG_FORCE_TELEMETRY_ON   (1u << 2)  /* keep ADC running always */
-#define CFG_TELEMETRY_SPEED_HIGH (1u << 3)  /* 1 = ~10 Hz, 0 = ~0.2 Hz */
+#define CFG_TELEMETRY_SPEED_HIGH (1u << 3)  /* 1 = ~11 ms conversions, 0 = ~5 s */
 #define CFG_RUN_BSR              (1u << 4)
 #define CFG_SUSPEND_CHARGER      (1u << 5)
 
@@ -44,9 +35,9 @@
 #define CHG_CFG_EN_C_OVER_X_TERM (1u << 2)
 
 /* ------------------------------------------------------------------
- * LSB scaling factors (LTC4162-L datasheet Rev. F, Table 2)
+ * LSB scaling factors (LTC4162-L datasheet Rev. A, Table 1)
  *
- * VBAT is reported per cell — multiply by IHU_EPS_BATTERY_CELLS for
+ * VBAT is signed and reported per cell — multiply by IHU_EPS_BATTERY_CELLS for
  * total pack voltage. Currents are derived as (raw_LSB_voltage /
  * sense_resistor) so they scale with the board's sense resistors.
  * ----------------------------------------------------------------*/
@@ -63,13 +54,13 @@
  * ----------------------------------------------------------------*/
 static bool read_word(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint16_t *out) {
     /* Phase 1: write the register pointer with no stop (repeated start). */
-    int w = i2c_write_blocking(i2c, addr, &reg, 1, true);
+    int w = i2c_write_timeout_us(i2c, addr, &reg, 1, true, 10000);
     if (w != 1) {
         return false;
     }
     /* Phase 2: read 2 bytes — LTC4162 returns LSB then MSB. */
     uint8_t buf[2];
-    int r = i2c_read_blocking(i2c, addr, buf, 2, false);
+    int r = i2c_read_timeout_us(i2c, addr, buf, 2, false, 10000);
     if (r != 2) {
         return false;
     }
@@ -78,12 +69,17 @@ static bool read_word(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint16_t *out)
 }
 
 static bool write_word(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint16_t value) {
+#if !IHU_EPS_ALLOW_CHARGER_WRITES
+    (void)i2c; (void)addr; (void)reg; (void)value;
+    return false;
+#else
     uint8_t buf[3];
     buf[0] = reg;
     buf[1] = (uint8_t)(value & 0xFF);          /* LSB first */
     buf[2] = (uint8_t)((value >> 8) & 0xFF);   /* then MSB  */
-    int w = i2c_write_blocking(i2c, addr, buf, 3, false);
+    int w = i2c_write_timeout_us(i2c, addr, buf, 3, false, 10000);
     return w == 3;
+#endif
 }
 
 /* ------------------------------------------------------------------
@@ -95,7 +91,7 @@ static bool write_word(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint16_t valu
  * single held lock without needing a recursive mutex.
  *
  * "One logical transaction" means the whole sequence a caller needs to
- * be coherent — all eight telemetry registers, or the read-modify-write
+ * be coherent — the observational register set, or the read-modify-write
  * in kick() — not each individual SDK call. See config/i2c0_bus.h.
  * ----------------------------------------------------------------*/
 
@@ -103,21 +99,20 @@ bool ltc4162_present(i2c_inst_t *i2c, uint8_t addr) {
     if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) {
         return false;
     }
-    /* Zero-length write — peripheral ACKs the address byte or NACKs.
-     * The Pico SDK returns PICO_ERROR_GENERIC on NACK, 0 on ACK. */
-    int r = i2c_write_blocking(i2c, addr, NULL, 0, false);
+    uint16_t status;
+    bool ok = read_word(i2c, addr, LTC4162_REG_system_status, &status);
     ihu_i2c0_unlock();
-    return r >= 0;
+    return ok;
 }
 
 bool ltc4162_init(i2c_inst_t *i2c, uint8_t addr) {
     if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) {
         return false;
     }
-    /* Set force_telemetry_on; leave suspend/MPPT/etc. at defaults
-     * (all zero). Side effect: writing CONFIG_BITS clears latched
-     * fault state from any prior charger session. */
-    bool ok = write_word(i2c, addr, REG_CONFIG_BITS, CFG_FORCE_TELEMETRY_ON);
+    /* Preserve existing configuration; writes require an explicit build option. */
+    uint16_t config;
+    bool ok = read_word(i2c, addr, REG_CONFIG_BITS, &config)
+           && write_word(i2c, addr, REG_CONFIG_BITS, config | CFG_FORCE_TELEMETRY_ON);
     ihu_i2c0_unlock();
     return ok;
 }
@@ -195,54 +190,39 @@ bool ltc4162_kick(i2c_inst_t *i2c, uint8_t addr) {
     return ok;
 }
 
+bool ltc4162_read_raw(i2c_inst_t *i2c, uint8_t addr, ltc4162_raw_t *out) {
+    if (!out || !ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) return false;
+    ltc4162_raw_t sample;
+    bool ok = true;
+#define READ_FIELD(name, reg) if (ok) ok = read_word(i2c, addr, reg, &sample.name);
+    LTC4162_READOUT_REGISTERS(READ_FIELD)
+#undef READ_FIELD
+    ihu_i2c0_unlock();
+    if (ok) *out = sample;
+    return ok;
+}
+
 bool ltc4162_read_telemetry(i2c_inst_t *i2c, uint8_t addr,
                             ltc4162_telemetry_t *out) {
-    uint16_t v_bat_raw, v_in_raw, v_out_raw;
-    uint16_t i_bat_raw, i_in_raw;
-    uint16_t state, status, sys;
-
-    /* All eight registers under one lock, so the snapshot describes a
-     * single moment rather than eight moments with another task's
-     * traffic spliced between them. */
-    if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) {
-        return false;
-    }
-    bool ok = read_word(i2c, addr, REG_VBAT,          &v_bat_raw)
-           && read_word(i2c, addr, REG_VIN,           &v_in_raw)
-           && read_word(i2c, addr, REG_VOUT,          &v_out_raw)
-           && read_word(i2c, addr, REG_IBAT,          &i_bat_raw)
-           && read_word(i2c, addr, REG_IIN,           &i_in_raw)
-           && read_word(i2c, addr, REG_CHARGER_STATE, &state)
-           && read_word(i2c, addr, REG_CHARGE_STATUS, &status)
-           && read_word(i2c, addr, REG_SYSTEM_STATUS, &sys);
-    ihu_i2c0_unlock();
-
-    if (!ok) {
-        return false;
-    }
-
-    /* IBAT/IIN are 2's-complement signed — the explicit int16_t cast
-     * sign-extends correctly regardless of host endianness. */
-    int16_t i_bat_signed = (int16_t)i_bat_raw;
-    int16_t i_in_signed  = (int16_t)i_in_raw;
-
-    /* VBAT register reports per-cell voltage in steps of VBAT_LSB_UV_PER_CELL.
-     * Total pack voltage = raw * (cells * step_uV) / 1e6. */
-    out->v_bat = (float)v_bat_raw *
-                 ((float)IHU_EPS_BATTERY_CELLS * VBAT_LSB_UV_PER_CELL) / 1e6f;
-    out->v_in  = (float)v_in_raw  * VIN_LSB_MV  / 1000.0f;
-    out->v_out = (float)v_out_raw * VOUT_LSB_MV / 1000.0f;
-
-    /* I = V_sense / R_sense. Sense voltage = raw * ISENSE_LSB_UV (µV);
-     * dividing by R (ohms) gives current in µA — convert to mA. */
-    out->i_bat_ma = ((float)i_bat_signed * ISENSE_LSB_UV) /
-                    (IHU_EPS_RSNSB_OHMS * 1000.0f);
-    out->i_in_ma  = ((float)i_in_signed  * ISENSE_LSB_UV) /
-                    (IHU_EPS_RSNSI_OHMS * 1000.0f);
-
-    out->charger_state = state;
-    out->charge_status = status;
-    out->system_status = sys;
+    ltc4162_raw_t raw;
+    if (!out || !ltc4162_read_raw(i2c, addr, &raw)) return false;
+    unsigned chemistry = (raw.chem_cells >> 8) & 0x0f;
+    unsigned cells = raw.chem_cells & 0x0f;
+    /* Zero cells is documented when the charger is disabled. In that case
+     * use the configured board count, never silently guess a different count. */
+    if (!(raw.telemetry_status & 1u) || chemistry > 3 ||
+        (cells && cells != IHU_EPS_BATTERY_CELLS)) return false;
+    ltc4162_telemetry_t sample = {.raw = raw};
+    sample.v_bat = (float)(int16_t)raw.vbat * IHU_EPS_BATTERY_CELLS * VBAT_LSB_UV_PER_CELL / 1e6f;
+    sample.v_in = (float)(int16_t)raw.vin * VIN_LSB_MV / 1000.0f;
+    sample.v_out = (float)(int16_t)raw.vout * VOUT_LSB_MV / 1000.0f;
+    sample.i_bat_ma = (float)(int16_t)raw.ibat * ISENSE_LSB_UV / (IHU_EPS_RSNSB_OHMS * 1000.0f);
+    sample.i_in_ma = (float)(int16_t)raw.iin * ISENSE_LSB_UV / (IHU_EPS_RSNSI_OHMS * 1000.0f);
+    sample.die_temp_c = (float)(int16_t)raw.die_temp * 0.0215f - 264.4f;
+    sample.charger_state = raw.charger_state;
+    sample.charge_status = raw.charge_status;
+    sample.system_status = raw.system_status;
+    *out = sample;
     return true;
 }
 

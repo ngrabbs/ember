@@ -141,6 +141,26 @@ Evidence: [software validation](ember_validation.md) and
 acceptance remains open. Next: record the existing SX1280 wiring/settings and
 build the two-Pico RF transport using the same packet interface.
 
+## IHU/EPS bench while RF hardware is unavailable
+
+Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
+
+- [x] Identify the connected IHU UART adapter, confirm LTC4162-LAD and 2S2P
+  battery configuration, and capture existing telemetry without charger changes.
+- [x] Define the observational register dictionary and generated shared header;
+  check signed scaling and ADC/chemistry/cell-count rejection on the host.
+- [x] Build the default read-only IHU image in the m75q Pico SDK container.
+- [x] Add default read-only charger operation, bounded LTC4162 transactions,
+  complete raw/JSON console readouts, and invalidation after failed EPS polls.
+- [ ] Back up assembled IHU firmware over direct USB and load the diagnostic
+  image; verify complete register capture on hardware.
+- [ ] Confirm fitted RSNSB/RSNSI and compare pack/output voltage with a meter.
+- [ ] Check TELEMETRY_STATUS and CHEM_CELLS on battery and controlled input power;
+  document sample age, state transitions and measurement limits.
+- [ ] Define the versioned EPS POWER_STATUS payload with validity and freshness;
+  implement IHU telemetry transport to the ground station.
+- [ ] Add native Yamcs EPS display and validate it against real measurements.
+
 ## 3. Pico/SX1280 RF loop
 
 - [ ] Expose receive operations through the existing driver/HAL layers and

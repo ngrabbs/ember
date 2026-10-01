@@ -9,6 +9,8 @@
 #   src/cli/*.{c,h}         interactive command-line interface
 #   ../../shared/*.h        wire protocols shared with firmware/comms
 
+option(IHU_EPS_ALLOW_CHARGER_WRITES "Enable legacy charger configuration and CLI writes" OFF)
+
 set(EMBER_SHARED_DIR ${CMAKE_CURRENT_LIST_DIR}/../../shared)
 
 add_executable(${ProjectName}
@@ -52,3 +54,6 @@ target_link_libraries(${ProjectName}
 
 # Generate .uf2, .bin, .hex, .elf, .map alongside the binary.
 pico_add_extra_outputs(${ProjectName})
+
+target_compile_definitions(${ProjectName} PRIVATE
+    IHU_EPS_ALLOW_CHARGER_WRITES=$<BOOL:${IHU_EPS_ALLOW_CHARGER_WRITES}>)

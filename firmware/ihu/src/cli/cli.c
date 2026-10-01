@@ -53,7 +53,7 @@ static void cmd_reboot(int argc, char *argv[]);
 static const cli_command_t cli_commands[] = {
     { "help",       "list available commands",                       cmd_help       },
     { "stats",      "uptime, task count, free heap",                 cmd_stats      },
-    { "eps",        "EPS telemetry  (eps raw  for register dump)",   cmd_eps        },
+    { "eps",        "EPS telemetry (eps raw/json for observational registers)",   cmd_eps        },
     { "comms",      "comms board status (comms ping | comms raw)",   cmd_comms      },
     { "kick",       "pulse suspend_charger to restart LTC4162",      cmd_kick       },
     { "ntc-bypass", "ntc-bypass on|off — widen jeita to bypass NTC", cmd_ntc_bypass },
@@ -87,69 +87,48 @@ static void cmd_stats(int argc, char *argv[]) {
            (unsigned)xPortGetMinimumEverFreeHeapSize());
 }
 
-/* Raw register dump — uses the public driver if we wanted to add a
- * read-arbitrary helper, but for v0.1 we just re-do the same I2C
- * reads the eps task does and print hex. Useful for sanity-checking
- * the LSB-first byte order on new registers. */
-static void dump_ltc4162_register(uint8_t reg, const char *name) {
-    uint8_t buf[2];
-
-    /* Pointer write and data read under one lock — the monitor tasks
-     * poll this same bus, and a poll landing between the two phases
-     * would hand us back one of its registers instead of ours. */
-    if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) {
-        printf("  0x%02X %-18s i2c0 busy (lock timeout)\n", reg, name);
-        return;
-    }
-    int w = i2c_write_blocking(IHU_I2C_EPS_INSTANCE, IHU_EPS_LTC4162_ADDR,
-                               &reg, 1, true);
-    int r = (w == 1)
-        ? i2c_read_blocking(IHU_I2C_EPS_INSTANCE, IHU_EPS_LTC4162_ADDR,
-                            buf, 2, false)
-        : 0;
-    ihu_i2c0_unlock();
-
-    if (w != 1) {
-        printf("  0x%02X %-18s I2C write failed\n", reg, name);
-        return;
-    }
-    if (r != 2) {
-        printf("  0x%02X %-18s I2C read failed\n", reg, name);
-        return;
-    }
-    uint16_t v = ((uint16_t)buf[1] << 8) | (uint16_t)buf[0];
-    printf("  0x%02X %-18s 0x%04X (%5u)\n", reg, name, v, v);
-}
-
+/* Observe the shared dictionary without changing charger configuration. */
 static void cmd_eps(int argc, char *argv[]) {
-    bool raw = (argc >= 2) && (strcmp(argv[1], "raw") == 0);
-
+    bool raw = argc >= 2 && (strcmp(argv[1], "raw") == 0 || strcmp(argv[1], "json") == 0);
     if (raw) {
-        printf("LTC4162 raw registers (addr=0x%02X):\n", IHU_EPS_LTC4162_ADDR);
-        dump_ltc4162_register(0x14, "config_bits");
-        dump_ltc4162_register(0x1F, "jeita_t1");
-        dump_ltc4162_register(0x24, "jeita_t6");
-        dump_ltc4162_register(0x29, "chgr_config_bits");
-        dump_ltc4162_register(0x34, "charger_state");
-        dump_ltc4162_register(0x35, "charge_status");
-        dump_ltc4162_register(0x39, "system_status");
-        dump_ltc4162_register(0x3A, "vbat");
-        dump_ltc4162_register(0x3B, "vin");
-        dump_ltc4162_register(0x3C, "vout");
-        dump_ltc4162_register(0x3D, "ibat");
-        dump_ltc4162_register(0x3E, "iin");
-        dump_ltc4162_register(0x3F, "die_temp");
-        dump_ltc4162_register(0x40, "thermistor_v");
-        dump_ltc4162_register(0x42, "jeita_region");
-        printf("  (thermistor_v > 21684 = open_thermistor -> ntc_pause)\n");
-        printf("  (defaults: jeita_t1=16117, jeita_t6=4970)\n");
-        printf("  (ntc-bypass on: jeita_t1=0x7FFF=32767, jeita_t6=0x0001=1)\n");
+        ltc4162_raw_t r;
+        if (!ltc4162_read_raw(IHU_I2C_EPS_INSTANCE, IHU_EPS_LTC4162_ADDR, &r)) {
+            printf("[eps-readout] no complete readout (bus/lock failure)\n");
+            return;
+        }
+        if (strcmp(argv[1], "json") == 0) {
+            /* Assemble before printing; use quiet for a clean diagnostic capture. */
+            static char line[1024];
+            int used = snprintf(line, sizeof(line), "{\"profile\":\"ltc4162-l-readout-v1\",\"uptime_ms\":%lu,\"registers\":{",
+                                (unsigned long)(xTaskGetTickCount() * portTICK_PERIOD_MS));
+            if (used < 0 || (size_t)used >= sizeof(line)) return;
+#define JSON_FIELD(name, address) do { \
+    int n = snprintf(line + used, sizeof(line) - (size_t)used, "\"" #name "\":%u,", (unsigned)r.name); \
+    if (n < 0 || (size_t)n >= sizeof(line) - (size_t)used) { \
+        printf("[eps-readout] JSON buffer too small\n"); return; \
+    } \
+    used += n; \
+} while (0);
+            LTC4162_READOUT_REGISTERS(JSON_FIELD)
+#undef JSON_FIELD
+            /* Replace final comma, allowing room for two braces, newline and NUL. */
+            if ((size_t)used + 3 > sizeof(line)) return;
+            snprintf(line + used - 1, sizeof(line) - (size_t)used + 1, "}}\n");
+            printf("%s", line);
+        } else {
+            printf("LTC4162 observational readout (addr=0x%02X):\n", IHU_EPS_LTC4162_ADDR);
+#define DUMP_FIELD(name, address) printf("  0x%02X %-22s 0x%04X (%5u)\n", (unsigned)address, #name, (unsigned)r.name, (unsigned)r.name);
+            LTC4162_READOUT_REGISTERS(DUMP_FIELD)
+#undef DUMP_FIELD
+            printf("  ADC valid=%u, chemistry=%u, detected cells=%u (zero can mean charger disabled)\n",
+                   r.telemetry_status & 1u, (r.chem_cells >> 8) & 15u, r.chem_cells & 15u);
+        }
         return;
     }
 
     ltc4162_telemetry_t t;
     if (!ihu_eps_get_latest_telemetry(&t)) {
-        printf("no telemetry snapshot yet — wait for the first eps-mon poll\n");
+        printf("no current valid telemetry — use eps raw/json to inspect bus/ADC/chemistry\n");
         return;
     }
     printf("state       : %s\n", ltc4162_state_string(t.charger_state));
@@ -158,6 +137,7 @@ static void cmd_eps(int argc, char *argv[]) {
     printf("V_IN        : %6.3f V\n", t.v_in);
     printf("V_OUT       : %6.3f V\n", t.v_out);
     printf("V_BAT       : %6.3f V\n", t.v_bat);
+    printf("die_temp    : %6.2f C (chip die, not battery)\n", t.die_temp_c);
     printf("I_IN        : %+7.1f mA\n", t.i_in_ma);
     printf("I_BAT       : %+7.1f mA (positive = charging into battery)\n",
            t.i_bat_ma);
@@ -330,6 +310,10 @@ static void cmd_loud(int argc, char *argv[]) {
 
 static void cmd_kick(int argc, char *argv[]) {
     (void)argc; (void)argv;
+#if !IHU_EPS_ALLOW_CHARGER_WRITES
+    printf("read-only diagnostics: charger writes disabled\n");
+    return;
+#endif
     if (ltc4162_kick(IHU_I2C_EPS_INSTANCE, IHU_EPS_LTC4162_ADDR)) {
         printf("LTC4162 kicked — suspend_charger pulsed, state machine re-evaluating\n");
     } else {
@@ -338,6 +322,11 @@ static void cmd_kick(int argc, char *argv[]) {
 }
 
 static void cmd_ntc_bypass(int argc, char *argv[]) {
+#if !IHU_EPS_ALLOW_CHARGER_WRITES
+    (void)argc; (void)argv;
+    printf("read-only diagnostics: charger writes disabled\n");
+    return;
+#endif
     if (argc < 2 || (strcmp(argv[1], "on") != 0 && strcmp(argv[1], "off") != 0)) {
         printf("usage: ntc-bypass on|off\n");
         printf("  on  : widen jeita_t1/t6 to int16 range — NTC reading\n");
