@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Prepare an isolated, pinned upstream Yamcs starter; never edit flight files."""
 from pathlib import Path
+import argparse
 import secrets
 import shutil
 import subprocess
@@ -11,7 +12,7 @@ ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT / ".runtime" / "quickstart"
 
 
-def prepare():
+def prepare(transport="simulator"):
     if not SOURCE.exists():
         SOURCE.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(["git", "clone", "https://github.com/yamcs/quickstart.git", str(SOURCE)], check=True)
@@ -40,13 +41,24 @@ def prepare():
     shutil.copy2(generated / "WireProfile.java", java / "WireProfile.java")
     ember = instance.read_text().replace("port: 10015", "port: 10016").replace("port: 10025", "port: 10026")
     ember = ember.replace("host: simulator", "host: ember-simulator")
+    if transport == "usb":
+        ember = ember.replace("host: ember-simulator", "host: host.docker.internal")
     ember = ember.replace("com.example.myproject.MyPacketPreprocessor", "com.example.ember.EmberPacketPreprocessor")
     ember = ember.replace("com.example.myproject.MyCommandPostprocessor", "com.example.ember.EmberCommandPostprocessor")
     ember = ember.replace("file: mdb/xtce.xml", "file: mdb/ember.xml")
+    # EMBER displays are isolated from the upstream myproject reference.
+    ember += "\nyamcs-web:\n  displayBucket: ember_displays\n"
     (instance.parent / "yamcs.ember.yaml").write_text(ember)
-    print(f"Prepared Yamcs 5.13.0 at {REVISION}, upstream myproject + EMBER bench instance.")
+    print(f"Prepared Yamcs 5.13.0 at {REVISION}; EMBER transport: {transport}.")
     print("Run: docker compose up -d")
 
 
 if __name__ == "__main__":
-    prepare()
+    default = "simulator"
+    if (ROOT / ".env").exists():
+        for line in (ROOT / ".env").read_text().splitlines():
+            if line.startswith("EMBER_PACKET_TRANSPORT="):
+                default = line.split("=", 1)[1].strip()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--transport", choices=("simulator", "usb"), default=default)
+    prepare(parser.parse_args().transport)

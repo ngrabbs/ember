@@ -1,11 +1,13 @@
 # Development baseline across macOS and m75q
 
 Recorded 2026-10-01. These are distinct Git checkouts, not synchronized copies.
-PRs #2, #3, and #4 are merged; both hosts fast-forwarded `main` to `ebeec2f`.
+PRs #2–#5 are merged; macOS, m75q and Pi share baseline `a21832b`.
+The active hardware USB branch is `feature/ground-station-usb`.
 
 | Role | Location |
 |---|---|
 | macOS CAD and documentation | `/Users/nick/Desktop/ember` |
+| Pi ground repository | `ngrabbs@192.168.1.251:~/work/MSU_Cubesat/ember` |
 | m75q host repository | `ngrabbs@192.168.1.252:~/work/MSU_Cubesat/ember` |
 | macOS remote-mount view of m75q | `/Volumes/work/MSU_Cubesat/ember` |
 | Repository in `amsat-dev-x86` (`amsat-dev:x86`) | `/workspace/MSU_Cubesat/ember` |
@@ -69,15 +71,29 @@ root-owned on the host. No container images or SDK installation were changed.
   a stuck initialization flag, absent device, and read-only status decoding.
 - Fault-clear console reporting is restricted to a previously reported fault;
   healthy status changes must not produce a false recovery message.
-- Hardware behavior, RF reception, and command dispatch remain unverified.
+- Legacy IHU/comms hardware behavior and RF reception remain unverified.
+  The separate USB bench endpoint passes command dispatch on hardware; see
+  [USB validation](../ground_station/usb_validation.md).
 - The payload carrier is a preserved conversion checkpoint, not an ERC/DRC,
   mechanical, or fabrication acceptance. The older root TODO has other historical
   subsystem status notes that require checking before reuse.
 
-Both hosts now have the merged `main` baseline. New ground software work uses
-`feature/ground-station-lab`. Never discard local edits to make a pull succeed.
+All three hosts share the merged baseline. Ground software work uses
+`feature/ground-station-usb`. Never discard local edits to make a pull succeed.
 
 m75q fetches GitHub over HTTPS to avoid its current SSH host-key failure.
 Its configured push URL remains SSH; pushes for this reconciliation are made
 from macOS. Repair and verify m75q's GitHub SSH trust/authentication before
 expecting direct pushes from that host.
+
+## Dedicated USB bench build
+
+On m75q, run `sh tools/build_usb_bench.sh`; output is
+`firmware/usb_bench/build/ember_usb_bench.uf2`. This builds a standalone Pico SDK
+endpoint and does not change or flash the FreeRTOS IHU/comms applications.
+The SDK is 2.1.1 (`ee68c78d0afae2b69c03ae1a72bf5cc267a2d94c`); GCC ARM is
+14.2.1. SDK picotool discovery fetched develop revision
+`ba3df406c37774144a059b2bdae73ab52587a1d2` (2.3.2-develop). That cached
+build tool revision is recorded, but a clean SDK build can fetch newer develop;
+fully pinning the build tool remains a reproducibility improvement. Pi flash
+installation uses Debian picotool 2.1.1+dfsg-1.

@@ -23,6 +23,10 @@ Merged baseline: `ebeec2f` includes PRs #2, #3, and #4. Adopt Dustin’s
 for application meanings and preliminary IDs. Remaining repairs and deliverables
 are in the [Dustin coordination note](dustin_followup.md).
 
+PR #5 is now merged at `a21832b`: the Pi/Yamcs dictionary and simulated loop
+are the established lab baseline. Next branch: `feature/ground-station-usb`,
+starting with the [one-Pico USB hookup](usb_bench_setup.md).
+
 ## Current direction and open decisions
 
 - Flight comms is **UHF uplink / UHF downlink**. VHF references describe an
@@ -34,12 +38,13 @@ are in the [Dustin coordination note](dustin_followup.md).
   `192.168.1.251`, 128 GB SD. Laptop runs the browser. Yamcs is running;
   modem performance, cooling and USB power remain to verify.
 - Software: Yamcs `ember` instance and simulated command loop verified on the
-  Pi; `myproject` preserves the upstream reference. Packet/radio bridge and
-  GNU Radio BPSK modem remain to implement. The
+  Pi; `myproject` preserves the upstream reference. USB packet bridge and Pico endpoint are verified; the
+  radio bridge and GNU Radio BPSK modem remain to implement. The
   [bench v1 dictionary](../protocols/ember_bench_v1.md) uses CCSDS SPP;
   flight allocation and a possible ECSS PUS subset remain open.
-- Initial transport: two RP2040 Pico + SX1280 endpoints, reusing the existing
-  2.4 GHz work. LoRa transport tests command/telemetry behavior; it does not
+- First hardware transport: direct USB from Pi to one spare RP2040 Pico.
+  Then use two Pico + SX1280 endpoints, reusing the existing 2.4 GHz work.
+  LoRa transport tests command/telemetry behavior; it does not
   validate the flight BPSK waveform. SX1280 and RFM95W are not native BPSK modems.
 - Candidate UHF ground SDR: Pluto. Available alternatives/test instruments:
   LibreSDR, HackRF, RTL-SDR, IC-9700, and handheld radios. Select against the
@@ -86,7 +91,14 @@ Existing firmware references (separate repositories):
   recovery after server restart on m75q; [validation record](starter_validation.md).
 - [x] Verify Pi starter telemetry, simulator command receipt, packet archive,
   laptop browser access and archive survival across a full Pi reboot.
-- [ ] Exercise parameter plots and interactive archive replay on the Pi.
+- [x] Open native parameter plotting from the system display and verify
+  archived/live telemetry on the Pi.
+- [ ] Exercise interactive archive replay on the Pi.
+- [x] Add native EMBER overview and detail displays, with received timestamps,
+  RSSI-unavailable handling and navigation to command history;
+  [display setup](../../ground/yamcs/DISPLAYS.md).
+- [ ] Add a processor-aware freshness indication that expires appropriately
+  across the configurable telemetry period and during replay.
 
 ## 2. Packet contract and wired command loop
 
@@ -108,8 +120,11 @@ Existing firmware references (separate repositories):
   invalid-argument rejection and lost-response TIMEOUT/UNKNOWN on Pi/m75q.
 - [x] Verify duplicate suppression, transaction conflict, malformed/unknown
   commands and bounded/reset cache behavior in simulated endpoint tests.
-- [ ] Implement that validated command subset and bounded parser on the Pico;
+- [x] Implement that validated command subset and bounded parser on the Pico;
   repeat duplicate/reset tests with hardware.
+- [x] Connect and identify a spare RP2040 Pico on the Pi USB host; record its
+  model/USB identity and load the dedicated USB bench build when ready.
+  Existing IHU firmware uses UART stdio with USB CDC disabled.
 - [ ] Generate an unsolicited simulated event, preserve it during link loss,
   and deliver/deduplicate it after recovery without an operator command.
 - [x] Generate Yamcs EMBER mission database and Java wire offsets from JSON;
@@ -117,12 +132,14 @@ Existing firmware references (separate repositories):
   acceptance/completion history. Send SET_PARAMETER from the laptop browser.
 - [ ] Reconcile pending history after ground service restart and late results
   after timeout; expose an identity-preserving manual retry when appropriate.
-- [ ] Implement a USB/serial-to-UDP bridge with explicit framing and separate
+- [x] Implement a USB/serial-to-UDP bridge with explicit framing and separate
   debug output. Preserve the same CCSDS packet bytes across transports.
-- [ ] Prove the first acceptance test over USB with the spacecraft Pico.
+- [x] Prove the first acceptance test over USB with the spacecraft Pico.
 
-Software milestone evidence: [EMBER validation](ember_validation.md).
-This does not complete the USB or RF hardware acceptance tests.
+Evidence: [software validation](ember_validation.md) and
+[USB hardware validation](usb_validation.md). USB acceptance is complete; RF
+acceptance remains open. Next: record the existing SX1280 wiring/settings and
+build the two-Pico RF transport using the same packet interface.
 
 ## 3. Pico/SX1280 RF loop
 

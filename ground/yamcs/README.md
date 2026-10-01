@@ -2,10 +2,11 @@
 
 [Ground station checklist](../../system/ground_station/TODO.md) · [Ground software](../README.md)
 
-Two isolated software instances run together: `myproject` keeps the pinned
+Two isolated Yamcs instances run together: `myproject` keeps the pinned
 upstream demonstration and its archive; `ember` uses the
 [bench dictionary](../ember/README.md) and an executable simulated endpoint.
-Neither connects to radios or firmware. EMBER returns correlated acceptance,
+The default configuration uses software only; the USB override connects
+EMBER to the dedicated Pico bench endpoint. EMBER returns correlated acceptance,
 rejection and completion reports; the upstream sample only counts commands.
 
 ## Start
@@ -47,8 +48,15 @@ EMBER_HTTP_BIND=192.168.1.252 docker compose up -d
 ```
 
 The starter has no operator authentication configured. Keep it on the bench
-network; production operator access is a separate setup task. Only HTTP is
+network; production operator access is a separate setup task. In simulator mode only HTTP is
 published; both UDP directions remain inside the isolated Docker network.
+
+## EMBER displays
+
+[The operator overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
+shows received state, counters, heartbeat time and latest command report.
+[Display setup and interpretation](DISPLAYS.md) covers installation, native
+detail tables and the distinction between cached values and live connectivity.
 
 ## Smoke check
 
@@ -135,3 +143,50 @@ systemctl status ember-ground-starter
 Use `sudo systemctl stop ember-ground-starter` to stop the whole lab intentionally.
 Its `active (exited)` state means Compose startup finished; inspect container
 health and run the smoke check to verify the application itself.
+
+## Pi USB transport
+
+The deployed Pi selects USB in ignored `.env`:
+
+```dotenv
+EMBER_HTTP_BIND=192.168.1.251
+EMBER_PACKET_TRANSPORT=usb
+COMPOSE_FILE=compose.yaml:compose.usb.yaml
+```
+
+Install `python3-serial` and `picotool` on the Pi. Create ignored `.usb.env`
+with the actual device identity and Docker bridge gateway:
+
+```dotenv
+EMBER_USB_DEVICE=/dev/serial/by-id/usb-Raspberry_Pi_Pico_E663682593753535-if00
+EMBER_USB_BIND=172.17.0.1
+```
+
+Verify the gateway locally (`docker network inspect bridge`); it can differ
+on another host. `prepare.py` reads the selected transport from `.env` or
+`--transport usb`. Then:
+
+```sh
+python3 prepare.py --transport usb
+docker compose stop ember-simulator
+docker compose up -d
+sudo install -m 0644 ember-usb-bridge.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now ember-usb-bridge
+python3 ember_smoke.py --url http://192.168.1.251:8090 --transport usb --fault-test
+```
+
+The service assumes the same checkout/user as the starter and `dialout`
+membership. USB override keeps the EMBER simulator inactive and preserves
+`myproject`. TM UDP10016 is published only on host loopback; TC UDP10026 binds
+the Docker host gateway. Loopback UDP10027 is local fault injection for the
+smoke check. The bridge runs on the host; no USB device is mounted into Docker.
+The starter reads `COMPOSE_FILE` at boot and the bridge reconnects the same
+Pico identity after re-enumeration, without queuing commands for replay.
+
+To stop the entire hardware lab, stop `ember-usb-bridge` before
+`ember-ground-starter`. To return to the software reference, stop the bridge,
+remove `COMPOSE_FILE` from `.env`, set `EMBER_PACKET_TRANSPORT=simulator`, run
+`python3 prepare.py --transport simulator` and `docker compose up -d`. Both
+configurations retain the existing archives. Use the matching `--transport`
+for `ember_smoke.py`.
