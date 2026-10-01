@@ -427,3 +427,11 @@ NTCBIAS is applied during measurement; low-power telemetry is sampled roughly
 every five seconds, so a DMM may average the bias pulses. A low average meter
 voltage alone does not prove the bias output is defective. JEITA remains enabled
 and firmware configuration writes remain disabled.
+
+
+The operator deferred the thermistor wiring/resistance measurements for a later
+bench session. They are recorded explicitly in TODO, followed by a repeat
+thermistor/JEITA/charger-state capture after the divider is established. No
+hardware rewiring, temperature bypass or charger configuration change was made
+in response to that deferral. Charging acceptance remains open; telemetry and
+ground display integration can proceed with the actual NTC-pause state visible.

@@ -163,8 +163,13 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
   later 10.7 V, agreeing with PEC-verified telemetry at both operating points.
 - [x] Confirm input resistor replaced by jumper; supply 11 V / pin 7 10.69 V,
   consistent with the reported input blocking diode. Supply current pending.
-- [ ] Resolve NTC-pause/JEITA region 7: no real thermistor fitted; identify
-  bench substitute value/wiring and confirm complete NTCBIAS-to-NTC divider.
+- [ ] Deferred by operator: inspect the thermistor bench wiring with solar,
+  battery and USB disconnected. Record substitute resistor marking/value and
+  its two connected nodes; verify a bias resistor connects NTCBIAS pin 9 to
+  NTC pin 10 and record its value. No real battery thermistor is fitted.
+- [ ] After divider wiring is confirmed, repeat raw thermistor/JEITA/state
+  readouts and resolve NTC-pause/region 7. Identify any dummy resistor as a
+  bench substitute, not measured battery temperature; keep JEITA enabled.
 - [x] Build/test SMBus PEC verification, including corrupted data/checksum rejection.
 - [x] Flash/verify PEC image; capture three complete readouts with all word
   checksums accepted. Unexpected VIN is present in chip-returned data.
