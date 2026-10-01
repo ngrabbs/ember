@@ -22,3 +22,8 @@ unless explicitly marked otherwise. Allocation does not imply implementation.
 For spacecraft behavior, use the [operations draft](../docs/architecture/operations/README.md).
 Board implementation belongs in [hardware](../docs/architecture/hardware_overview.md);
 shared assignments belong here.
+
+Ground station bench build: [checklist](ground_station/TODO.md).
+
+Shared macOS/m75q development and container builds:
+[development baseline](integration/development_baseline.md).
