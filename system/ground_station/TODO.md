@@ -78,6 +78,8 @@ Existing firmware references (separate repositories):
 - [ ] Configure restart-on-boot, logs, telemetry retention, and archive backup.
 - [x] Add a pinned, reproducible [Yamcs starter lab](../../ground/yamcs/README.md)
   with isolated simulator and persistent archive storage.
+- [x] Verify starter telemetry, sample command receipt, packet archiving and
+  recovery after server restart on m75q; [validation record](starter_validation.md).
 - [ ] Run the starter on the selected Pi and verify commands, plots, archive/replay,
   and laptop access before inserting hardware. m75q is the interim software host.
 

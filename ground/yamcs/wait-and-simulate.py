@@ -1,5 +1,4 @@
 """Keep simulator DNS available during server boot, then begin sample traffic."""
-import os
 import runpy
 import sys
 import time

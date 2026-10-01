@@ -22,7 +22,7 @@ docker compose logs --tail 30 yamcs simulator
 ```
 
 First startup downloads Java/Maven dependencies and compiles Yamcs; allow several
-minutes. The simulator starts after Yamcs becomes healthy. Source is pinned to
+minutes. The simulator waits for Yamcs readiness before sending packets. Source is pinned to
 [upstream quickstart commit 61e9416](https://github.com/yamcs/quickstart/tree/61e94169687f8729832c754e0813bf90271e4800),
 which selects Yamcs 5.13.0. Container tags are fixed here, but image digests have
 not yet been locked. Both images must be checked on the selected ARM64 Pi.
@@ -49,11 +49,13 @@ published; both UDP directions remain inside the isolated Docker network.
 Open the `myproject` instance and `realtime` processor. Confirm inbound link
 counts grow, packets decode, and parameters update. Issue the example
 `SwitchVoltageOn` with `Battery=1`; check outbound count and the simulator's
-received-command count. View packet archive and command history. The upstream
-telemetry is prerecorded, so its spacecraft timestamps are historical; use
-that recorded time range when inspecting the archive.
+received-command count. View packet archive and command history. Sample data
+is prerecorded, but the upstream preprocessor assigns the current Yamcs-local
+generation time because these packets have no time secondary header. This does
+not validate spacecraft time decoding or synchronization.
 
 ```sh
+python3 smoke.py
 curl -fsS http://localhost:8090/api/links/myproject
 docker compose logs --tail 5 simulator
 ```
@@ -70,6 +72,10 @@ deliberately deleting the lab archive. Data is in the `yamcs-data` named volume
 at `/yamcs-data`, outside Maven build outputs. An installation-specific signing
 key is generated once in the ignored starter configuration. Preserve that
 configuration with the archive when migrating an existing installation.
+
+`smoke.py` checks growing receive counts, packet archive retrieval, and sample
+command delivery using the simulator’s receive counter. Run it on the Docker
+host; use `--url http://HOST:8090` when bound to a specific LAN address.
 
 The simulator replays about one day of sample data and does not loop. It is not
 a service for long-term operation; restart it for another smoke session. Pi
