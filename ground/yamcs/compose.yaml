@@ -8,6 +8,8 @@ services:
     depends_on:
       simulator:
         condition: service_started
+      ember-simulator:
+        condition: service_started
     volumes:
       - ./.runtime/quickstart:/yamcs
       - maven-cache:/root/.m2
@@ -15,7 +17,7 @@ services:
     ports:
       - "${EMBER_HTTP_BIND:-127.0.0.1}:${EMBER_HTTP_PORT:-8090}:8090"
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:8090/api/instances/myproject"]
+      test: ["CMD", "curl", "-fsS", "http://localhost:8090/api/instances/ember"]
       interval: 10s
       timeout: 5s
       retries: 30
@@ -31,6 +33,16 @@ services:
     volumes:
       - ./.runtime/quickstart:/simulator:ro
       - ./wait-and-simulate.py:/wait-and-simulate.py:ro
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+  ember-simulator:
+    image: python:3.12-slim
+    restart: unless-stopped
+    working_dir: /ember
+    command: ["python", "-u", "simulator.py"]
+    volumes:
+      - ../ember:/ember:ro
     logging:
       driver: json-file
       options: {max-size: "10m", max-file: "3"}

@@ -88,7 +88,7 @@ def encode(name, *, sequence, source, target, transaction_epoch=0,
     return packet + struct.pack(">H", crc16(packet))
 
 
-def decode(packet):
+def decode(packet, *, allow_unknown_command=False):
     if not 6 + HEADER.size + 2 <= len(packet) <= DICTIONARY["max_packet_bytes"]:
         raise PacketError("packet size outside profile limits")
     identity, sequence, length = struct.unpack_from(">HHH", packet)
@@ -104,12 +104,22 @@ def decode(packet):
         raise PacketError("unsupported EMBER schema version")
     kind = next((name for name, value in DICTIONARY["kinds"].items()
                  if value == header["kind"]), None)
-    message = message_for(kind, header["message_id"])
+    if kind is None:
+        raise PacketError("unknown packet kind")
     command = kind == "command"
     if (identity >> 12 & 1) != int(command) or identity & 0x7ff != DICTIONARY["apids"]["command" if command else "downlink"]:
         raise PacketError("packet type/APID does not match kind")
     validate_identity(header, kind)
     body = packet[6 + HEADER.size:-2]
+    if len(body) != header["payload_length"]:
+        raise PacketError("payload length mismatch")
+    try:
+        message = message_for(kind, header["message_id"])
+    except PacketError:
+        if not allow_unknown_command or kind != "command":
+            raise
+        return {"name": None, "sequence": sequence & 0x3fff,
+                "header": header, "payload": {}, "raw_payload": body}
     payload_layout = layout(message["fields"])
     if len(body) != header["payload_length"] or len(body) != payload_layout.size:
         raise PacketError("payload length mismatch")

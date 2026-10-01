@@ -14,7 +14,9 @@ Review the [bench v1 contract](../protocols/ember_bench_v1.md) and
 IDs are preserved; parameter/stage/reason/endpoint numeric values and
 TELEMETRY_PERIOD limits are new lab proposals. Please confirm these semantics
 and correlated result rules, or identify corrections before firmware adoption.
-Only the host codec is implemented so far; the live Yamcs example is unchanged.
+The codec, generated Yamcs `ember` MDB and simulated command handlers are
+implemented; `myproject` preserves the upstream demonstration. Pico adoption
+is next. Please review the lab proposal against flight operational policy.
 
 ## Request for Dustin
 

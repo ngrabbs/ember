@@ -1,11 +1,12 @@
 # EMBER bench packet dictionary v1
 
-Status: **implemented host codec; proposed lab contract, not a flight freeze**.
+Status: **implemented codec, Yamcs MDB and simulator; lab contract, not a flight freeze**.
 The [JSON dictionary](../../ground/ember/dictionary.json) is the source for IDs,
 field types, enum values and units. Dustin's merged operations documents own
 application meanings; this subset preserves their command and telemetry IDs.
 New numeric parameter, stage, endpoint and reason values here need his review.
-The codec does not dispatch commands, authenticate uplink, or change firmware.
+The codec does not dispatch commands or authenticate uplink. The simulated
+GROUND_TEST endpoint dispatches the bench subset; Pico firmware is unchanged.
 
 ## Envelope
 
@@ -78,7 +79,7 @@ returns COMM_STATUS. PING returns acceptance then completion without data.
 SET_PARAMETER is available only on the explicitly configured GROUND_TEST
 bench endpoint. Mode and interlock policy for flight is still Dustin's work.
 
-## Transactions and results (endpoint implementation pending)
+## Transactions and results
 
 Ground allocates a nonzero session `transaction_epoch` and monotonically
 increasing nonzero `transaction_id`. Start a new epoch on session restart
@@ -101,13 +102,13 @@ This bench adds 8 EXECUTION_ERROR and 9 TRANSACTION_CONFLICT. REJECTED and
 EXECUTION_FAILED require a nonzero reason; ACCEPTED and COMPLETED require 0.
 These cross-field rules belong in the dispatcher, not just packet decoding.
 
-Bench timeout proposal: 5 s for acceptance, 10 s from acceptance for terminal
+Implemented bench timeout: 5 s for acceptance, 10 s from acceptance for terminal
 result. A timeout means **unknown outcome**, never rejection or execution
 failure. No automatic retries. Check status before manually resending a
 state-changing command. A retry preserves transaction identity and semantic
 command contents; packet sequence/uptime/CRC may change.
 
-Proposed endpoint cache: retain the last 64 transactions during a boot,
+Implemented simulated endpoint cache: retain the last 64 transactions during a boot,
 keyed by ground source, epoch and ID. Exact command/target/arguments repeats
 return cached outcomes without executing again; changed contents with the
 same identity return TRANSACTION_CONFLICT. Cache eviction or endpoint reset
@@ -120,19 +121,27 @@ semantics remain open for flight.
 
 The host codec checks packet bounds, primary length/version/type/APID/flags,
 CRC, schema version, endpoint/transaction rules and exact payload length.
-Argument validation is a separate call: invalid values must reach the
+Argument validation is a separate call: invalid values reach the simulator
 command handler's correlated INVALID_PARAMETER response after structural
-validation. An unknown command ID currently raises PacketError; the future
-dispatcher must preserve its validated header to issue UNKNOWN_COMMAND.
+validation. Strict decode raises PacketError for unknown IDs; the dispatcher
+uses `allow_unknown_command=True` to retain a structurally validated command
+header and issue correlated UNKNOWN_COMMAND rejection.
 Malformed packets are discarded/counted rather than acted upon.
 
 Run [codec tests and vectors](../../ground/ember/README.md). Firmware must
 serialize fields explicitly; do not cast a packed C struct or reuse the
 little-endian internal `comms_hk_proto.h` register map.
 
-Next: generate the [Yamcs XTCE mission database](https://docs.yamcs.org/yamcs-server-manual/mdb/loaders/xtce/)
-from this source, implement header/sequence/CRC command postprocessing and
-matching simulated endpoint, then a bounded Pico parser/dispatcher and USB
-bridge. The current live Yamcs instance still runs the upstream demonstration
-dictionary. Events, event persistence, authentication, UTC, PUS, flight
-limits and SatNOGS decoding are not implemented by this lab v1.
+The generated [Yamcs XTCE mission database](https://docs.yamcs.org/yamcs-server-manual/mdb/loaders/xtce/)
+and matching Java adapters validate downlink and fill command transaction,
+sequence, uptime and CRC. Validated responses update native command acceptance
+and completion history. Ground reception time is used for archive generation
+time; spacecraft uptime is decoded separately. Requests are bounded to 256
+outstanding transactions; correlation lives in memory. A changed IHU boot ID
+invalidates pending outcomes. Late-result reconciliation and recovery of
+pending history after a Yamcs restart remain open.
+
+The live `ember` instance runs this subset; `myproject` preserves the upstream
+demonstration. Next: bounded Pico parser/dispatcher and a USB bridge. Events,
+event persistence, authentication, UTC, PUS, flight limits and SatNOGS decoding
+are not implemented by this lab v1.

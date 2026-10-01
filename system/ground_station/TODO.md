@@ -33,7 +33,8 @@ are in the [Dustin coordination note](dustin_followup.md).
 - Ground host: provisioned Pi 5 / 8 GB, `ember-ground`, Ethernet
   `192.168.1.251`, 128 GB SD. Laptop runs the browser. Yamcs is running;
   modem performance, cooling and USB power remain to verify.
-- Software: pinned Yamcs starter verified on the Pi. Packet/radio bridge and
+- Software: Yamcs `ember` instance and simulated command loop verified on the
+  Pi; `myproject` preserves the upstream reference. Packet/radio bridge and
   GNU Radio BPSK modem remain to implement. The
   [bench v1 dictionary](../protocols/ember_bench_v1.md) uses CCSDS SPP;
   flight allocation and a possible ECSS PUS subset remain open.
@@ -102,15 +103,26 @@ Existing firmware references (separate repositories):
 - [x] Implement host encoding/decoding for `PING`, `REQUEST_STATUS`,
   `REQUEST_TELEMETRY`, `SET_PARAMETER(TELEMETRY_PERIOD)`, `HEARTBEAT`,
   `SYSTEM_STATUS`, `COMM_STATUS` and `COMMAND_RESPONSE`.
-- [ ] Implement command handlers, result lifecycle and telemetry scheduler in
-  an EMBER simulator, then the Pico endpoint. Prove invalid arguments,
-  duplicate suppression, transaction conflict and lost-response timeout.
+- [x] Implement EMBER simulator handlers, correlated result lifecycle and
+  telemetry scheduling. Verify 1000→2000 ms in archived packets, query data,
+  invalid-argument rejection and lost-response TIMEOUT/UNKNOWN on Pi/m75q.
+- [x] Verify duplicate suppression, transaction conflict, malformed/unknown
+  commands and bounded/reset cache behavior in simulated endpoint tests.
+- [ ] Implement that validated command subset and bounded parser on the Pico;
+  repeat duplicate/reset tests with hardware.
 - [ ] Generate an unsolicited simulated event, preserve it during link loss,
   and deliver/deduplicate it after recovery without an operator command.
-- [ ] Define the Yamcs mission database and matching spacecraft encoder/parser.
+- [x] Generate Yamcs EMBER mission database and Java wire offsets from JSON;
+  validate CRC/length/identity before archive and correlate native command
+  acceptance/completion history. Send SET_PARAMETER from the laptop browser.
+- [ ] Reconcile pending history after ground service restart and late results
+  after timeout; expose an identity-preserving manual retry when appropriate.
 - [ ] Implement a USB/serial-to-UDP bridge with explicit framing and separate
   debug output. Preserve the same CCSDS packet bytes across transports.
 - [ ] Prove the first acceptance test over USB with the spacecraft Pico.
+
+Software milestone evidence: [EMBER validation](ember_validation.md).
+This does not complete the USB or RF hardware acceptance tests.
 
 ## 3. Pico/SX1280 RF loop
 

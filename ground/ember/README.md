@@ -4,7 +4,10 @@
 
 `dictionary.json` is the machine-readable bench subset of Dustin's operation
 IDs. `codec.py` is a Python-standard-library encoder/decoder with no radio,
-dispatch or flight authorization. Live Yamcs still uses its upstream sample.
+dispatch or flight authorization. `simulator.py` implements the software
+GROUND_TEST endpoint. The [Yamcs lab](../yamcs/README.md) now runs an `ember`
+instance alongside the upstream sample; `generate_mdb.py` generates its
+telemetry containers, command definitions and Java wire offsets from the JSON.
 
 From the repository root:
 

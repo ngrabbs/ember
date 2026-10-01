@@ -1,13 +1,12 @@
-# Yamcs starter lab
+# Yamcs ground lab
 
 [Ground station checklist](../../system/ground_station/TODO.md) · [Ground software](../README.md)
 
-Run the upstream Yamcs simulator to prove browser access, telemetry decoding,
-archiving, and command transport before adding EMBER packets or radios. This
-is an isolated software lab: its `myproject` dictionary and sample command names
-are upstream examples, not the EMBER flight dictionary. Example commands only
-increment the simulator's receive counter; they do not execute spacecraft actions
-or return EMBER acceptance/completion reports.
+Two isolated software instances run together: `myproject` keeps the pinned
+upstream demonstration and its archive; `ember` uses the
+[bench dictionary](../ember/README.md) and an executable simulated endpoint.
+Neither connects to radios or firmware. EMBER returns correlated acceptance,
+rejection and completion reports; the upstream sample only counts commands.
 
 ## Start
 
@@ -28,6 +27,12 @@ which selects Yamcs 5.13.0. Container tags are fixed here, but image digests hav
 not yet been locked. Both images run natively on the ARM64 Pi 5; see the
 [lab inventory](../../system/ground_station/lab_inventory.md).
 
+`prepare.py` generates `ember.xml` and Java field offsets from the JSON
+dictionary, copies the tracked Java link adapters into the ignored source
+clone, and adds the `ember` instance. After changing dictionary/adapters, rerun
+`prepare.py` and `docker compose restart yamcs`; restart `ember-simulator`
+after changing its code. No archive volume is removed during an update.
+
 Default HTTP access is `http://localhost:8090`. For a remote host, tunnel from
 the laptop, substituting its username and address:
 
@@ -46,6 +51,36 @@ network; production operator access is a separate setup task. Only HTTP is
 published; both UDP directions remain inside the isolated Docker network.
 
 ## Smoke check
+
+For EMBER, open [the Pi command console](http://192.168.1.251:8090/commanding/send?c=ember__realtime&system=%2Fember).
+Select `SET_PARAMETER`, show arguments with defaults, set `parameter_id=1`
+and `value=2000` (ms), and Send. The report separates Yamcs Sent from
+EMBER_Acceptance and Completion. Inspect `ember-outcome`, transaction identity
+and result boot ID. Requested telemetry and results echo the same transaction;
+periodic telemetry uses transaction zero. `Resend this command` allocates a
+new transaction; an identity-preserving retry is not yet exposed in the UI.
+
+The automated check verifies accepted/completed 1000→2000 ms changes using
+actual archived heartbeat uptime deltas, all four commands, correlated query
+data and invalid-argument rejection. It restores the original period. The
+optional fault test suppresses one transaction's returned packets and checks
+TIMEOUT with `ember-outcome=UNKNOWN`, without automatic retries:
+
+```sh
+python3 ember_smoke.py --url http://192.168.1.251:8090 --fault-test
+```
+
+Run `--fault-test` on the Docker host. Its loopback-only control socket lives
+inside `ember-simulator` and is never published. All ordinary command and
+telemetry UDP remains on the private Compose network (10026 and 10016).
+Acceptance timeout is 5 s; terminal timeout after acceptance is 10 s.
+Outstanding correlation is bounded to 256 commands and held in memory;
+reconciliation after a Yamcs restart and late-result handling remain open.
+The simulator's last-64 transaction cache prevents duplicate execution during
+a boot; changed contents with the same identity are rejected. A simulator
+restart changes boot ID and restores the default 1000 ms period.
+
+### Upstream reference check
 
 Open the `myproject` instance and `realtime` processor. Confirm inbound link
 counts grow, packets decode, and parameters update. Issue the example
@@ -78,9 +113,10 @@ configuration with the archive when migrating an existing installation.
 command delivery using the simulator’s receive counter. Run it on the Docker
 host; use `--url http://HOST:8090` when bound to a specific LAN address.
 
-The simulator replays about one day of sample data and does not loop. It is not
+The upstream simulator replays a finite sample and does not loop. It is not
 a service for long-term operation; restart it for another smoke session. Pi
-archive retention/backup and the EMBER MDB are still on the checklist.
+archive retention/backup remain on the checklist. The EMBER simulator continues
+publishing independently of the finite upstream sample.
 
 ## Pi boot startup
 
