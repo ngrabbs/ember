@@ -91,6 +91,10 @@ KiCad work is checkpointed in commit `b3f4a0d`; this is not fabrication approval
 
 The working choice is **BPSK uplink and downlink**. Exact frequencies, rates,
 framing/coding, and spacecraft receive implementation remain to be settled.
+The Pi 5 / 8 GB runs Yamcs at `192.168.1.251:8090`, with startup and archive
+persistence verified across reboot. The [bench dictionary/codec](ground/ember/README.md),
+EMBER Yamcs definitions and simulated command loop pass on Pi/m75q. The Pico
+parser/handlers and USB loop are next; no RF hardware has been exercised.
 
 - [ ] Build the Pi-hosted command/telemetry bench module using the checklist in
       [`system/ground_station/TODO.md`](system/ground_station/TODO.md).

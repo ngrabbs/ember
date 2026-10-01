@@ -1,0 +1,15 @@
+# Ground software
+
+[System guide](../system/README.md) · [Ground station checklist](../system/ground_station/TODO.md)
+
+- [EMBER bench dictionary](ember/README.md): JSON definitions, host codec and
+  wire vectors, generated MDB and simulated endpoint; Pico adoption is next.
+- [Yamcs ground lab](yamcs/README.md): EMBER command/telemetry loop and the
+  preserved upstream reference, with reproducible software checks.
+- [Pi preparation](../system/ground_station/pi_setup.md): OS and first-boot settings.
+- [Dustin coordination](../system/ground_station/dustin_followup.md): remaining
+  operations definitions and shared protocol decisions.
+
+Application command and telemetry meanings come from the
+[operations dictionaries](../docs/architecture/operations/Ground_Operations_Command_Telemetry/README.md).
+The radio bridge and waveform implementation will carry that shared interface.

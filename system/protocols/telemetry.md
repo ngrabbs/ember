@@ -1,6 +1,15 @@
 # Telemetry protocol
 
+Use the [bench v1 dictionary](ember_bench_v1.md) for initial lab packets.
+The live `ember` Yamcs instance uses that subset alongside the upstream
+`myproject` demonstration. The flight proposal below is not yet reconciled.
+
 [System guide](../README.md) · [Data interfaces](../interfaces/data_interfaces.md)
+
+Application meanings are owned by the merged
+[operations dictionaries](../../docs/architecture/operations/Ground_Operations_Command_Telemetry/README.md).
+The framing proposals below remain unresolved; see the
+[coordination note](../ground_station/dustin_followup.md).
 
 **Draft: field groups and framing intent; encoding details pending.**
 

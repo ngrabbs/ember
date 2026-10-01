@@ -1,0 +1,19 @@
+[Unit]
+Description=EMBER Yamcs software starter
+Wants=network-online.target
+After=network-online.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=ngrabbs
+Group=ngrabbs
+WorkingDirectory=/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs
+ExecStart=/usr/bin/docker compose up -d
+ExecStop=/usr/bin/docker compose stop
+TimeoutStartSec=600
+TimeoutStopSec=90
+
+[Install]
+WantedBy=multi-user.target

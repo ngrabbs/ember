@@ -1,0 +1,42 @@
+{
+  "profile": "ember-bench-v1",
+  "schema_version": 1,
+  "byte_order": "big",
+  "max_packet_bytes": 240,
+  "apids": {"command": 256, "downlink": 257},
+  "kinds": {"command": 0, "telemetry": 1, "response": 2},
+  "endpoints": {"ground": 1, "ihu": 2, "comms": 3, "payload": 4},
+  "secondary_header": [
+    {"name": "schema_version", "type": "u8"},
+    {"name": "kind", "type": "u8"},
+    {"name": "message_id", "type": "u16"},
+    {"name": "source", "type": "u8"},
+    {"name": "target", "type": "u8"},
+    {"name": "transaction_epoch", "type": "u32"},
+    {"name": "transaction_id", "type": "u32"},
+    {"name": "source_boot_id", "type": "u32"},
+    {"name": "uptime_ms", "type": "u32", "unit": "ms"},
+    {"name": "payload_length", "type": "u16"}
+  ],
+  "enums": {
+    "mode": {"BOOT": 0, "STARTUP": 1, "COMMISSIONING": 2, "SAFE": 3, "NOMINAL": 4},
+    "configuration": {"UNKNOWN": 0, "GROUND_TEST": 1, "FLIGHT": 2},
+    "data_group": {"SYSTEM": 1, "COMMS": 48},
+    "parameter_id": {"TELEMETRY_PERIOD": 1},
+    "stage": {"ACCEPTED": 0, "REJECTED": 1, "COMPLETED": 2, "EXECUTION_FAILED": 3},
+    "reason": {"NONE": 0, "UNKNOWN_COMMAND": 1, "INVALID_PARAMETER": 2, "MODE_NOT_ALLOWED": 3, "INTERLOCK": 4, "BUSY": 5, "FAULT_ACTIVE": 6, "NOT_AVAILABLE": 7, "EXECUTION_ERROR": 8, "TRANSACTION_CONFLICT": 9}
+  },
+  "parameters": {
+    "TELEMETRY_PERIOD": {"id": 1, "type": "u32", "unit": "ms", "minimum": 100, "maximum": 60000, "default": 1000, "persistent": false}
+  },
+  "messages": [
+    {"name": "PING", "kind": "command", "id": 1, "fields": []},
+    {"name": "REQUEST_STATUS", "kind": "command", "id": 2, "fields": []},
+    {"name": "REQUEST_TELEMETRY", "kind": "command", "id": 3, "fields": [{"name": "data_group", "type": "u8", "enum": "data_group"}]},
+    {"name": "SET_PARAMETER", "kind": "command", "id": 48, "fields": [{"name": "parameter_id", "type": "u16", "enum": "parameter_id"}, {"name": "value", "type": "u32", "unit": "ms"}]},
+    {"name": "SYSTEM_STATUS", "kind": "telemetry", "id": 1, "fields": [{"name": "mode", "type": "u8", "enum": "mode"}, {"name": "configuration", "type": "u8", "enum": "configuration"}, {"name": "telemetry_period_ms", "type": "u32", "unit": "ms"}, {"name": "accepted_commands", "type": "u32"}, {"name": "rejected_commands", "type": "u32"}]},
+    {"name": "HEARTBEAT", "kind": "telemetry", "id": 5, "fields": [{"name": "mode", "type": "u8", "enum": "mode"}, {"name": "configuration", "type": "u8", "enum": "configuration"}, {"name": "telemetry_period_ms", "type": "u32", "unit": "ms"}]},
+    {"name": "COMM_STATUS", "kind": "telemetry", "id": 48, "fields": [{"name": "rx_packets", "type": "u32"}, {"name": "tx_packets", "type": "u32"}, {"name": "crc_errors", "type": "u32"}, {"name": "dropped_packets", "type": "u32"}, {"name": "rssi_dbm", "type": "i16", "unit": "dBm", "unavailable": -32768}]},
+    {"name": "COMMAND_RESPONSE", "kind": "response", "id": 49, "fields": [{"name": "command_id", "type": "u16"}, {"name": "stage", "type": "u8", "enum": "stage"}, {"name": "reason", "type": "u16", "enum": "reason"}, {"name": "parameter_id", "type": "u16"}, {"name": "value", "type": "u32"}]}
+  ]
+}
