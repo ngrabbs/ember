@@ -322,3 +322,32 @@ C3 pin 1 and solar connector positives together on `VIN_CHG`. A connector/pad
 reading of 12 V does not by itself verify an intact joint to the IC terminal.
 If pin 7 itself is at 12 V during a PEC-verified ~8.16 V report, VIN-specific
 analog/chip behavior remains under investigation. No defect is established.
+
+
+### VIN pin measurement and intervening resistor
+
+The operator measured U1 pin 7 at 8.168 V, agreeing with PEC-verified telemetry.
+This resolves the earlier suspected telemetry/meter disagreement: the measured
+12 V upstream is not the voltage present at the IC terminal. The operator then
+identified a resistor between the solar input and pin 7; its reference, value,
+exact current path and board revision are not yet established.
+
+If that resistor carries the entire previously reported 38 mA supply current,
+(12.00 - 8.168) / 0.038 gives an effective resistance of about 100.84 ohm. This
+is an inference from nonsimultaneous measurements and a current-path assumption,
+not a resistance measurement or proof the fitted part is 100 ohm. A 2.7 ohm
+resistor carrying 38 mA would drop about 0.103 V.
+
+Direct visual review of datasheet Figure 8 revealed an error in the repository
+schematic guide: the 2.5 ohm damping resistor is in series with a bulk capacitor
+in a shunt branch to ground, not in series with the main DC solar feed. The
+guide's topology/table were corrected. The earlier prose reference to a
+series solar-feed damping resistor must not be treated as correct design
+intent. This is a documentation correction only; no CAD or physical changes
+were made. The exported current schematic net already directly joins solar
+connector positives, C3 pin 1 and U1 VIN pin 7. The assembled resistor therefore
+requires reconciliation with that revision rather than blind removal.
+
+The operator was asked for its reference/marking or an unpowered resistance
+measurement. Isolation may be needed for a reliable in-circuit resistance
+reading. Charging/NTC behavior and fitted current sense calibration remain open.

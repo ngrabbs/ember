@@ -162,14 +162,17 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
 - [ ] Resolve input-voltage discrepancy (12 V supply setting vs ~8.21 V VIN)
   and NTC-pause/JEITA region 7. Supply confirmed CV / 12.00 V / 38 mA,
   meter confirms 12 V at input terminals and board feeding LTC4162.
-  Input discrepancy remains unresolved; checksum-verified readout next.
+  Pin 7 now measured 8.168 V, matching telemetry; identify intervening resistor.
 - [x] Build/test SMBus PEC verification, including corrupted data/checksum rejection.
 - [x] Flash/verify PEC image; capture three complete readouts with all word
   checksums accepted. Unexpected VIN is present in chip-returned data.
 - [x] Measure VCC2P5 (2.48 V), INTVCC (4.8 V), VOUTA (7.59 V); verify
   suspected pin 3/4 junction is intended by the exported schematic netlist.
-- [ ] Verify VIN pin 7 terminal/joint against the 12 V board measurement;
-  investigate VIN-specific discrepancy and cycling charger state.
+- [x] Confirm pin 7 at 8.168 V agrees with checksum-verified telemetry.
+- [x] Correct design guide: input damping resistor belongs in a series RC shunt
+  branch, per datasheet Figure 8, rather than in the main solar feed.
+- [ ] Identify fitted resistor between solar and pin 7 (reference/value/path);
+  reconcile assembled board with schematic, then verify input/charger behavior.
 - [ ] Document sample age and measurement limits across repeated power transitions.
 - [ ] Define the versioned EPS POWER_STATUS payload with validity and freshness;
   implement IHU telemetry transport to the ground station.

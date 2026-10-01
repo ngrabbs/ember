@@ -153,27 +153,30 @@ All four cathodes connect to the common `SOLAR_BUS` net.
 
 ### Section B: Input Impedance Compensation (Center-Left)
 
-This network is required by the LTC4162 for solar panel MPPT stability.
-Without it, the high-impedance constant-current region of the solar panel
-can cause the MPPT control loop to oscillate. See LTC4162-L datasheet
-Figure 8 and the discussion on pages 33–34.
+For high-impedance solar panels operated with MPPT, the datasheet recommends
+an input damping network to stabilize the source impedance over 1–10 kHz.
+Figure 8 places a resistor and bulk capacitor in series as a shunt branch
+from the input bus to ground. The main solar-to-VIN conductor remains direct.
+See LTC4162-L Rev A, printed pages 33–34, Figures 8–9.
 
 #### Components
 
 | Ref | Value | Package | Connection | Purpose |
 |---|---|---|---|---|
-| R1 | 2.7 Ohm, 1%, 1/4W | 0805 | Series: `SOLAR_BUS` → `VIN_CHG` | Impedance flattening (datasheet target ~2.5Ω, 2.7Ω is nearest common E24 value) |
-| C1 | 150uF, 25V, Al-polymer | Radial or SMD | `SOLAR_BUS` to `GND` | Impedance comp, parallel with panel |
+| R1 | 2.7 Ohm, 1%, 1/4W | 0805 | `SOLAR_BUS` → C1 positive terminal | Series resistor in the RC shunt branch; select value/rating for the actual network |
+| C1 | 150uF, 25V, Al-polymer | Radial or SMD | Positive to R1, negative to `GND` | Bulk capacitor in series with R1 across input |
 | C2 | 0.1uF, 50V, X7R ceramic | 0402 or 0603 | `VIN_CHG` to `GND` | HF bypass at LTC4162 VIN |
 
 #### Circuit
 
 ```
-SOLAR_BUS ──→ R1 (2.7 Ohm) ──→ VIN_CHG ──→ to LTC4162 VIN (pin 7)
-                │                     │
-               C1 (150uF)           C2 (0.1uF)
-                │                     │
-               GND                   GND
+SOLAR_BUS ─────────────────── VIN_CHG ──→ LTC4162 VIN (pin 7)
+    │                            │
+ R1 (2.7 Ohm)                C2 (0.1uF)
+    │                            │
+ C1 (150uF)                     GND
+    │
+   GND
 ```
 
 #### Note (Place → Text, next to R1/C1):
