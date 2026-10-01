@@ -157,8 +157,11 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
 - [x] Verify ADC-off battery readout is retained as raw data while engineering
   values are suppressed; confirm legacy charger CLI commands are blocked.
 - [ ] Confirm fitted RSNSB/RSNSI and compare pack/output voltage with a meter.
-- [ ] Check TELEMETRY_STATUS and CHEM_CELLS on battery and controlled input power;
-  document sample age, state transitions and measurement limits.
+- [x] Capture TELEMETRY_STATUS and CHEM_CELLS on battery and input power:
+  ADC invalid → valid, LAD chemistry, detected two cells with input present.
+- [ ] Resolve input-voltage discrepancy (12 V supply setting vs ~8.21 V VIN)
+  and NTC-pause/JEITA region 7; confirm supply mode and physical measurements.
+- [ ] Document sample age and measurement limits across repeated power transitions.
 - [ ] Define the versioned EPS POWER_STATUS payload with validity and freshness;
   implement IHU telemetry transport to the ground station.
 - [ ] Add native Yamcs EPS display and validate it against real measurements.

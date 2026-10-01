@@ -101,7 +101,7 @@ configuration and hardware before deciding to enable or modify the ADC.
 
 The assembled IHU flash was backed up and the new image verified through direct
 USB on 2026-10-01. The UART adapter alone does not provide a picotool flash backup.
-Next capture ADC-valid readings and compare voltage against a meter. Preserve
+ADC-valid input-powered readings were captured; compare voltage against a meter. Preserve
 battery/supply conditions and fitted resistor values with each measurement.
 
 The JSON console readout is a diagnostic format, not a CCSDS telemetry packet.
@@ -150,7 +150,48 @@ and `engineering=null`. See the
 [captured raw sample](evidence/ltc4162-battery-adc-off-20261001.json).
 
 The earlier valid-looking readings came from the prior configuration with
-force_telemetry_on set. Input-powered ADC-valid measurement and independent
-calibration remain open; ADC enable on battery will need a deliberate, narrowly
+force_telemetry_on set. Input-powered ADC-valid measurement is recorded below; independent
+calibration remains open. ADC enable on battery will need a deliberate, narrowly
 scoped operation if required. Do not enable the legacy write build merely to
 obtain battery telemetry, because it also changes JEITA and charger state.
+
+
+## Input-powered readout, 2026-10-01
+
+The operator applied a supply set to 12 V to the solar input, leaving the battery
+connected. Three readouts at MCU uptime 217709, 220715 and 223721 ms report
+TELEMETRY_STATUS `1` (ADC valid), CHEM_CELLS `0x20E2` (decoded LAD / two cells),
+CONFIG_BITS `0`, CHARGER_CONFIG_BITS `1`, CHARGER_STATE `32` (NTC pause),
+CHARGE_STATUS `0`, SYSTEM_STATUS `0x0067`, and JEITA region `7`.
+Full raw readouts are preserved in the
+[input-powered samples](evidence/ltc4162-input-power-20261001.json).
+
+| Measurement | Decoded range over three sequential readouts |
+|---|---|
+| Battery pack | 8.20586–8.20624 V |
+| VIN at charger | 8.21202–8.21532 V |
+| VOUT | 7.57239–7.57405 V |
+| Battery current | -40.90 to -39.14 mA |
+| Input current | 61.72–63.33 mA |
+| Chip die temperature | 22.02–22.19 °C |
+| Thermistor ADC | 784–796 raw; no battery temperature conversion |
+
+The ground decoder accepts all three samples and agrees with the IHU console
+within its display rounding. Current still assumes the unverified 10 milliohm
+sense resistors. These samples validate decoding and ADC gating, not independent
+calibration, charging operation, or new ADC conversion for every read.
+
+Two unresolved observations must carry into the next test:
+
+- The supply setting was 12 V, but decoded charger VIN is about 8.21 V.
+  Its conversion was rechecked against the official datasheet's 1.649 mV/LSB.
+  Read actual supply voltage/current and CV/CC indication, then measure input
+  terminals and the charger-side VIN test point if accessible before deciding
+  whether this is supply droop, input-path behavior, wiring or another issue.
+- Charging is paused in JEITA region 7. The datasheet identifies region 7 as an
+  out-of-range thermistor condition; this does not prove the battery is hot.
+  Die temperature is a separate measurement. Check the actual NTC/bias wiring
+  and values; do not bypass the temperature guard as part of this readout.
+
+Firmware remains observational: no ADC-force, JEITA-disable, charger-kick or
+threshold writes were issued. Routine console output was restored after capture.

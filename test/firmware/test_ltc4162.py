@@ -49,6 +49,21 @@ class ReadoutTests(unittest.TestCase):
             s=self.sample(); s['registers']['vbat']=value
             with self.assertRaises(ValueError): self.decode(s)
 
+    def test_captured_hardware_power_transition(self):
+        evidence=ROOT/'system/ground_station/evidence'
+        off=json.loads((evidence/'ltc4162-battery-adc-off-20261001.json').read_text())
+        self.assertFalse(self.decode(off)['conversion_valid'])
+        self.assertIsNone(self.decode(off)['engineering'])
+        powered=json.loads((evidence/'ltc4162-input-power-20261001.json').read_text())
+        self.assertEqual(len(powered),3)
+        for s in powered:
+            d=self.decode(s)
+            self.assertTrue(d['conversion_valid'])
+            self.assertEqual((d['chemistry'],d['detected_cells']),('LAD',2))
+            self.assertAlmostEqual(d['engineering']['battery_pack_v'],8.206,places=3)
+            self.assertLess(d['engineering']['battery_ma'],0)
+        self.assertAlmostEqual(self.decode(powered[0])['engineering']['input_v'],8.215318,places=6)
+
     def test_generated_header_is_current(self):
         with tempfile.TemporaryDirectory() as d:
             out=Path(d)/'registers.h'
