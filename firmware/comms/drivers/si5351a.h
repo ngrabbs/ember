@@ -54,6 +54,13 @@
 #define SI5351_PLL_RESET_A     (1 << 5)
 #define SI5351_PLL_RESET_B     (1 << 7)
 
+/* Device status register 0 bits (AN619 "Register 0. Device Status") */
+#define SI5351_STATUS_SYS_INIT   (1 << 7)  /* device still initializing */
+#define SI5351_STATUS_LOL_B      (1 << 6)  /* PLL B loss of lock */
+#define SI5351_STATUS_LOL_A      (1 << 5)  /* PLL A loss of lock */
+#define SI5351_STATUS_LOS_CLKIN  (1 << 4)  /* CLKIN loss of signal; C-only, reads 1 on our A part */
+#define SI5351_STATUS_REVID_MASK (3 << 0)  /* silicon revision */
+
 /*
  * Multisynth parameter block (8 registers per PLL or output divider)
  *
@@ -114,6 +121,34 @@ typedef struct {
     /* Platform-specific I2C handle. On Pico SDK this is i2c_inst_t* */
     void *i2c;
 } si5351_dev_t;
+
+/*
+ * Decoded contents of device status register 0, plus whether the part
+ * answered on the bus at all. Filled in by si5351_probe().
+ */
+typedef struct {
+    bool    present;     /* device ACKed its I2C address */
+    uint8_t raw_status;  /* register 0 as read, so nothing is lost in decode */
+    bool    sys_init;    /* still running its power-on initialization */
+    bool    lol_a;       /* PLL A is not locked */
+    bool    lol_b;       /* PLL B is not locked */
+    bool    los_clkin;   /* CLKIN loss of signal. Si5351C-only function, but
+                          * our A part reads it as 1 (observed on hardware:
+                          * status=0x11) since it has no CLKIN pin. Decoded
+                          * for completeness; do not treat it as a fault. */
+    uint8_t revid;       /* silicon revision, status[1:0] */
+} si5351_status_t;
+
+/*
+ * Read-only presence + health check. Reads device status register 0
+ * and decodes it; writes nothing, so it is safe to call at boot before
+ * the board is allowed to put RF on the antenna.
+ *
+ * Returns 0 if the device answered (out->present is then true and the
+ * decoded fields are valid), -1 if it did not (out is zeroed).
+ * `out` may not be NULL.
+ */
+int si5351_probe(si5351_dev_t *dev, si5351_status_t *out);
 
 /*
  * Initialize Si5351A: disable all outputs, set crystal load, configure

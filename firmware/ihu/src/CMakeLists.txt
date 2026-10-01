@@ -3,16 +3,23 @@
 # Layout:
 #   src/main.c              entry point + task creation
 #   src/config/pinmap.h     board pin assignments + chip config
+#   src/config/i2c0_bus.*   shared housekeeping-bus lock (EPS + comms)
 #   src/tasks/*.{c,h}       FreeRTOS task implementations
 #   src/drivers/*.{c,h}     chip drivers — LTC4162 today, MR25H40/STWD100 later
 #   src/cli/*.{c,h}         interactive command-line interface
+#   ../../shared/*.h        wire protocols shared with firmware/comms
+
+set(EMBER_SHARED_DIR ${CMAKE_CURRENT_LIST_DIR}/../../shared)
 
 add_executable(${ProjectName}
     main.c
     tasks/console_task.c
     tasks/blink_task.c
     tasks/eps_monitor_task.c
+    tasks/comms_monitor_task.c
+    config/i2c0_bus.c
     drivers/ltc4162.c
+    drivers/comms_link.c
     cli/cli.c
 )
 
@@ -31,6 +38,7 @@ pico_enable_stdio_uart(${ProjectName} 1)
 
 target_include_directories(${ProjectName} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
+    ${EMBER_SHARED_DIR}            # comms_hk_proto.h — shared with firmware/comms
     ${CMAKE_SOURCE_DIR}            # makes FreeRTOSConfig.h visible to the kernel
 )
 
