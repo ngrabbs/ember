@@ -171,8 +171,10 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
   test; build/stage the image on the Pi. Default builds retain read-only behavior.
 - [x] Reconnect IHU UART/direct USB, identify BOOTSEL device, back up and flash/verify
   the first timed test image. Operator confirmed supervised bench conditions.
-- [ ] Flash/verify corrected bench image with ADC kept running while suspended;
-  first image produced ADC-off samples and no charging test was started.
+- [x] Flash/verify corrected bench image with ADC kept running while suspended.
+- [ ] Resolve subsequent EPS recovery failure and comms-controller I²C loss;
+  confirm input off and verify charger suspension before starting any test.
+  Neither bench image has received a charge-test start command.
 - [ ] Capture charger state and signed battery current during one timed test;
   verify automatic restoration and suspended charging, then restore normal image.
 - [ ] Deferred by operator: inspect the thermistor bench wiring with solar,

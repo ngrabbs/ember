@@ -503,3 +503,18 @@ tests pass; Release rebuild succeeded. Corrected image staged on Mac and Pi as
 `2eb6095279996c7b9740a727211c44510a159672b333e148167c5245f9b416f5`.
 Awaiting another IHU BOOTSEL reset to load it. The read-only UART bridge was
 restarted after the first flash; charging remains suspended, experiment pending.
+
+
+### Corrected image flash — hardware test blocked
+
+Corrected image loaded/verified OK on IHU at USB bus 3/address 8. UART startup
+reported repeated `[eps] bench recovery FAILED; remove charge input; retrying`,
+`[comms] link DOWN — no response at 0x42`, and `eps json` returned no complete
+readout (bus/lock/PEC failure). This does not establish which transaction failed
+or that every charger setting was restored; it prevents starting the experiment.
+No `charge-test start` command was sent. Operator instructed to turn input power
+off and check for moved bus/power connections. Read-only UART bridge restarted;
+Yamcs readout_valid is 0. Installed image is the corrected bench image, not the
+normal PEC image. Full backup and normal PEC fallback remain on Pi/Mac.
+Next: establish input-off physical state, recover I²C communication and verify
+charger suspension/settings before attempting any timed charging test.
