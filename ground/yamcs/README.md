@@ -51,6 +51,13 @@ The starter has no operator authentication configured. Keep it on the bench
 network; production operator access is a separate setup task. In simulator mode only HTTP is
 published; both UDP directions remain inside the isolated Docker network.
 
+## EMBER displays
+
+[The operator overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
+shows received state, counters, heartbeat time and latest command report.
+[Display setup and interpretation](DISPLAYS.md) covers installation, native
+detail tables and the distinction between cached values and live connectivity.
+
 ## Smoke check
 
 For EMBER, open [the Pi command console](http://192.168.1.251:8090/commanding/send?c=ember__realtime&system=%2Fember).

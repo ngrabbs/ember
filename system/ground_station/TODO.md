@@ -91,7 +91,14 @@ Existing firmware references (separate repositories):
   recovery after server restart on m75q; [validation record](starter_validation.md).
 - [x] Verify Pi starter telemetry, simulator command receipt, packet archive,
   laptop browser access and archive survival across a full Pi reboot.
-- [ ] Exercise parameter plots and interactive archive replay on the Pi.
+- [x] Open native parameter plotting from the system display and verify
+  archived/live telemetry on the Pi.
+- [ ] Exercise interactive archive replay on the Pi.
+- [x] Add native EMBER overview and detail displays, with received timestamps,
+  RSSI-unavailable handling and navigation to command history;
+  [display setup](../../ground/yamcs/DISPLAYS.md).
+- [ ] Add a processor-aware freshness indication that expires appropriately
+  across the configurable telemetry period and during replay.
 
 ## 2. Packet contract and wired command loop
 

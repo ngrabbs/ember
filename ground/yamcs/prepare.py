@@ -46,6 +46,8 @@ def prepare(transport="simulator"):
     ember = ember.replace("com.example.myproject.MyPacketPreprocessor", "com.example.ember.EmberPacketPreprocessor")
     ember = ember.replace("com.example.myproject.MyCommandPostprocessor", "com.example.ember.EmberCommandPostprocessor")
     ember = ember.replace("file: mdb/xtce.xml", "file: mdb/ember.xml")
+    # EMBER displays are isolated from the upstream myproject reference.
+    ember += "\nyamcs-web:\n  displayBucket: ember_displays\n"
     (instance.parent / "yamcs.ember.yaml").write_text(ember)
     print(f"Prepared Yamcs 5.13.0 at {REVISION}; EMBER transport: {transport}.")
     print("Run: docker compose up -d")
