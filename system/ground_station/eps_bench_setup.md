@@ -220,3 +220,16 @@ near 12 V, continue ADC/reference/readout investigation. Actual input-current
 calibration also remains unresolved: the supply's 38 mA differs from the earlier
 61–63 mA decoded using an assumed 10 milliohm resistor; the readings were not
 simultaneous, so this is not yet a determined calibration error.
+
+
+### Recheck requested by operator
+
+Three additional readouts at uptime 531514–537524 ms are saved in
+[input recheck evidence](evidence/ltc4162-input-recheck-20261001.json).
+The first readout has ADC-valid cleared and its engineering values are
+suppressed. The next two are ADC-valid and report VIN 8.180689 / 8.195530 V,
+battery 8.200088 / 8.199703 V and VOUT 7.597188 / 7.595535 V. Both current words
+are zero in those two readouts. Charger state transitions from suspended to
+battery detection (`2048`), with JEITA region 7 retained. Configuration words
+remain unchanged (`0` / `1`). The VIN discrepancy persists; no physical
+charger-side VIN measurement or explanation for these transitions is available.
