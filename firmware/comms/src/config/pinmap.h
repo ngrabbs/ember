@@ -39,38 +39,40 @@
 #define COMMS_I2C_SCL_GPIO          21
 #define COMMS_I2C_HZ                (400 * 1000)  /* 400 kHz — bench-validated in bringup/si5351a_bringup_log.md */
 
-/* ── I2C1 → CSKB housekeeping bus (comms is the SLAVE) ─────── */
+/* ── I2C1 → IHU housekeeping link (BENCH ONLY) ─────────────── */
 
-/* The IHU is master on the shared CSKB housekeeping bus (H1.41
- * SDA_SYS / H1.43 SCL_SYS) and polls the EPS LTC4162 at 0x68 on it.
- * The comms board answers on the same bus at COMMS_HK_I2C_ADDR so the
- * IHU can ping it and pull a status block the same way it reads the
- * charger. Register map in firmware/shared/comms_hk_proto.h.
+/* A bench harness, not a flight interface. Read this before wiring
+ * anything or believing anything below.
  *
- * HARDWARE NOTE — this does not match schematic_guide rev 1.5.
+ * This board revision does NOT bring I2C back to the CSKB stack bus.
+ * The IHU link on the schematic is SPI (H1.21-H1.24 plus COMMS_IRQ on
+ * H1.16), per system/interfaces/comms_to_ihu.md, and the intended
+ * flight path is CAN on H1.51/H1.52 — see the Iteration 2 section of
+ * system/interfaces/board_to_board.md. Neither of those exists in
+ * firmware yet.
  *
- * The guide ties the CSKB housekeeping pair and the Si5351A to the
- * SAME net (`I2C_SDA`/`I2C_SCL`, Pico GP20/GP21). That is a two-master
- * bus: the IHU drives it as master to reach the EPS, and this board
- * drives it as master to reach the Si5351A. The RP2040 I2C block
- * cannot be master and slave at once, so serving the IHU off GP20/21
- * would mean flipping the peripheral between modes and dropping any
- * IHU transaction that lands mid-flip.
+ * What this is: a two-jumper link between two Pico modules on a desk,
+ * so the IHU has something real to talk to while the CAN transport is
+ * designed. It answers at COMMS_HK_I2C_ADDR with the register map in
+ * firmware/shared/comms_hk_proto.h. That map is also the seed for the
+ * CAN 0x300-0x3FF "communications status" message group, so the
+ * telemetry schema survives even though this transport will not.
  *
- * So the housekeeping slave gets its own peripheral and its own pins:
- * i2c1 on GP14/GP15, both previously on the J3 spare list, both i2c1
- * alternate-function pins. i2c0/GP20/21 stays master-only to the
- * Si5351A and is untouched.
+ * Bench wiring:
+ *   IHU GP4 (SDA) ── comms GP14
+ *   IHU GP5 (SCL) ── comms GP15
+ *   grounds tied
  *
- * The board delta this implies: cut H1.41/H1.43 off the `I2C_SDA`/
- * `I2C_SCL` net and route them to GP14/GP15 as a new `SDA_HK`/`SCL_HK`
- * pair. Bus pull-ups stay on the EPS side (R4/R5, 4.7k) — do not add
- * more here. On the bench today this is two jumpers from the IHU's
- * GP4/GP5 to GP14/GP15, so the firmware is testable before the board
- * respin.
+ * Why i2c1 and not i2c0: i2c0/GP20/GP21 is this board's master bus to
+ * the Si5351A. The RP2040 I2C block cannot be master and slave at the
+ * same time, so hanging the IHU off i2c0 would mean flipping the
+ * peripheral between modes and dropping any IHU transaction that
+ * arrived mid-flip. i2c1 on GP14/GP15 (both J3 spares, both i2c1
+ * alternate-function pins) keeps the two completely independent.
  *
- * R1/R2 (4.7k) on the Clock Gen sheet keep pulling up i2c0 for the
- * Si5351A and are unaffected. */
+ * NOTHING HERE IMPLIES A BOARD CHANGE. GP14/GP15 are jumper points on
+ * a Pico module, not a proposed net. Do not add pull-ups for this —
+ * the IHU's internal ones carry a desk-length link fine. */
 #define COMMS_HK_I2C_INSTANCE       i2c1
 #define COMMS_HK_I2C_SDA_GPIO       14
 #define COMMS_HK_I2C_SCL_GPIO       15
@@ -78,8 +80,8 @@
 /* Slave mode has no baud generator of its own — the master clocks the
  * bus. The RP2040 I2C block still needs a configured rate to size its
  * internal hold/setup timings, and it must be at least as fast as the
- * master will ever clock us. The IHU runs the housekeeping bus at
- * 100 kHz; 400 kHz here leaves headroom if that is raised later. */
+ * master will ever clock us. The IHU runs its bus at 100 kHz; 400 kHz
+ * here leaves headroom if that is raised later. */
 #define COMMS_HK_I2C_HZ             (400 * 1000)
 
 /* ── SPI0 → IHU link (comms is the SLAVE) ──────────────────── */

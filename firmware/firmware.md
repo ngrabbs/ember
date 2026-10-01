@@ -24,17 +24,22 @@ baseline and separates optional exploratory payload work.
 - [ ] Implement watchdog and recovery pathways
 - [ ] Define boot states (safe mode, nominal mode, high-duty mode), gated
       on the boot self-test result
-- [x] Define board health telemetry schema for the housekeeping bus —
-      IHU↔comms I2C register map, shared by both trees
+- [x] Define board health telemetry schema — IHU↔comms register map,
+      shared by both trees, written to carry over to the CAN
+      `0x300-0x3FF` message group
       ([`firmware/shared/comms_hk_proto.h`](shared/comms_hk_proto.h))
-- [ ] Define the bulk telemetry schema for the SPI transport
+- [x] Bench interim link exercising that schema (I2C over jumpers —
+      **not** a flight interface; the comms PCB has no stack I2C)
+- [ ] CAN transport: transceiver trade (can2040 PIO vs MCP2515),
+      message ID allocation, transport-agnostic link layer
 - [ ] Logging interface
 
 ### Workstream C: Bring-Up and Ground Support
 
 - [x] Implement serial CLI for board bring-up and diagnostics
 - [x] IHU-side ping and status readout for the comms board
-      (`comms`, `comms ping`, `comms raw`)
+      (`comms`, `comms ping`, `comms raw`) — transport-agnostic above
+      the driver, so it survives the move to CAN
 - [ ] Create repeatable RF bench-test helper scripts
 - [ ] Implement ground-side telemetry decode utility for captured frames
 

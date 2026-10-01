@@ -80,17 +80,44 @@ static si5351_params_t calc_params_int(uint32_t a) {
     return calc_params(a, 0, 1);
 }
 
+/* ── Probe ─────────────────────────────────────────────────── */
+
+int si5351_probe(si5351_dev_t *dev, si5351_status_t *out) {
+    memset(out, 0, sizeof(*out));
+
+    uint8_t status;
+    if (si5351_read_reg(dev, SI5351_REG_STATUS, &status) != 0) {
+        return -1;
+    }
+
+    out->present    = true;
+    out->raw_status = status;
+    out->sys_init   = (status & SI5351_STATUS_SYS_INIT)  != 0;
+    out->lol_b      = (status & SI5351_STATUS_LOL_B)     != 0;
+    out->lol_a      = (status & SI5351_STATUS_LOL_A)     != 0;
+    out->los_clkin  = (status & SI5351_STATUS_LOS_CLKIN) != 0;
+    out->revid      =  status & SI5351_STATUS_REVID_MASK;
+    return 0;
+}
+
 /* ── Initialization ────────────────────────────────────────── */
+
+/* Upper bound on the SYS_INIT poll. The part clears SYS_INIT within a
+ * few milliseconds of power-up; anything past this is a wedged device
+ * and we would rather report a failure than spin forever. */
+#define SI5351_SYS_INIT_TRIES 100
 
 int si5351_init(si5351_dev_t *dev) {
     int rc;
 
     /* Wait for Si5351 to be ready (status register bit 7 = SYS_INIT) */
     uint8_t status;
+    int tries = SI5351_SYS_INIT_TRIES;
     do {
         rc = si5351_read_reg(dev, SI5351_REG_STATUS, &status);
         if (rc != 0) return -1;
-    } while (status & 0x80);
+        if (--tries == 0) return -1;   /* stuck in SYS_INIT */
+    } while (status & SI5351_STATUS_SYS_INIT);
 
     /* Disable all outputs while configuring */
     rc = si5351_write_reg(dev, SI5351_REG_OUTPUT_EN, 0xFF);

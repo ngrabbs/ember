@@ -112,7 +112,7 @@ Full detail, including the places those two disagree, is in
 | GP4 / GP5 / GP6 / GP7 | `SPI_COMMS_MISO` / `CS_N` / `SCK` / `MOSI` | SPI0 to IHU — comms is the **slave**. Declared, not yet driven |
 | GP10 / GP11 | `TX_ACTIVE` / `RX_ACTIVE` | Status LEDs today; `TX_ACTIVE` becomes T/R switch control in the all-UHF rebuild |
 | GP12 | `3V3_IND` | Board power LED |
-| GP14 / GP15 | `SDA_HK` / `SCL_HK` | I2C1 **slave** at 0x42 — the IHU's housekeeping link. Not yet on the schematic; see below |
+| GP14 / GP15 | — | I2C1 **slave** at 0x42 — bench-only jumper link to the IHU. Not a net on this board; see below |
 | GP16 | `BPSK_DATA` | Baseband bits into the 74LVC1G86 XOR modulator |
 | GP20 / GP21 | `I2C_SDA` / `I2C_SCL` | I2C0 to the Si5351A (0x60), 4.7k pull-ups on board |
 | GP25 | — | Pico module onboard LED (not on the comms schematic) |
@@ -234,18 +234,31 @@ TinyUSB costs about 15 KB of flash.
 > to `printf` from it at all — symbol timing is the one hard real-time
 > deadline on this board.
 
-## Housekeeping link to the IHU
+## Housekeeping link to the IHU (bench interim)
 
-The IHU is master on the shared CSKB housekeeping I2C bus and already
-polls the EPS charger there. This board answers on the same bus at
-**0x42**, presenting a 32-byte register file — so from the IHU's side,
-asking the comms board how it is doing looks exactly like reading the
-charger, and a bench `i2cdetect`/`i2cdump` finds it with no custom
-tooling.
+> **This is a desk harness, not a flight interface.** This board
+> revision does not bring I2C back to the stack bus — the IHU link on
+> the schematic is SPI, and the intended flight link is CAN. See
+> [Where this is actually going](#where-this-is-actually-going) below.
+> It exists so the IHU has something real to talk to while the CAN
+> transport is designed, and so the telemetry schema gets exercised
+> before it has to be right.
 
-The register map, bus address, and byte order live in one place,
+Over two jumper wires, this board answers the IHU at **0x42** with a
+32-byte register file. From the IHU's side that looks exactly like
+reading the EPS charger it already polls, which is the point: no new
+bus-error handling, no new CLI shape, and a bench `i2cdetect`/`i2cdump`
+finds it with no custom tooling.
+
+The register map, address, and byte order live in one place,
 [`firmware/shared/comms_hk_proto.h`](../shared/comms_hk_proto.h), which
 both firmware trees include. Neither side can drift.
+
+**Bench wiring** — IHU GP4 → comms GP14 (SDA), IHU GP5 → comms GP15
+(SCL), grounds tied. No pull-ups needed; the IHU's internal ones carry
+a desk-length link. `hk=up 0 xacts` in this board's heartbeat after the
+IHU has booted means the slave is listening and the jumpers are not
+doing their job.
 
 | Offset | Size | Field | Notes |
 |---|---|---|---|
@@ -273,30 +286,34 @@ There are deliberately **no command registers**. Keying the PA belongs
 on the SPI link behind framing and a CRC, not on a housekeeping bus
 where one corrupted byte could put RF on the antenna.
 
-### Why this is on i2c1, not the I2C the schematic shows
+### Where this is actually going
 
-The schematic guide (rev 1.5) ties the CSKB housekeeping pair
-(H1.41/H1.43) and the Si5351A to the **same net**, `I2C_SDA`/`I2C_SCL`
-on GP20/GP21. That is a two-master bus: the IHU drives it to reach the
-EPS, and this board drives it to reach the Si5351A. The RP2040 I2C
-block cannot be master and slave at the same time, so serving the IHU
-off GP20/21 would mean flipping the peripheral between modes and
-dropping any IHU transaction that arrived mid-flip.
+| | Link | Pins | Status |
+|---|---|---|---|
+| Today (bench) | I2C, this page | jumpers to GP14/GP15 | working |
+| Schematic (Iteration 1) | SPI, IHU master | H1.21–H1.24 + `COMMS_IRQ` H1.16 | pins declared, no firmware |
+| Intended (Iteration 2) | CAN 2.0B, 500 kbps | H1.51/H1.52, DNP on v0.1 | not built |
 
-So the firmware puts the housekeeping slave on its own peripheral:
-**i2c1 on GP14/GP15**, both previously on the J3 spare list, both i2c1
-alternate-function pins. i2c0/GP20/21 stays master-only to the Si5351A,
-untouched.
+See [`system/interfaces/comms_to_ihu.md`](../../system/interfaces/comms_to_ihu.md)
+and [`system/interfaces/board_to_board.md`](../../system/interfaces/board_to_board.md).
+Note those docs currently describe CAN as *added alongside* SPI; the
+working intent is CAN *instead of* it. That needs reconciling.
 
-**Board delta this implies** — not yet reflected in the schematic:
-cut H1.41/H1.43 off the `I2C_SDA`/`I2C_SCL` net and route them to
-GP14/GP15 as a new `SDA_HK`/`SCL_HK` pair. Bus pull-ups stay on the EPS
-side (R4/R5, 4.7k); do not add more here. R1/R2 keep pulling up i2c0 for
-the Si5351A and are unaffected.
+The register file here is deliberately the seed for the `0x300-0x3FF`
+"communications status and queue state" CAN message group that
+`board_to_board.md` already reserves. When CAN lands, the fields keep
+their meanings and only the framing changes — which is the part of
+this work meant to outlive the transport.
 
-**On the bench today** this is two jumpers — IHU GP4/GP5 to comms
-GP14/GP15, plus a common ground — so the firmware is testable before
-any respin.
+### Why i2c1 and not the board's existing I2C
+
+i2c0 on GP20/GP21 is this board's **master** bus to the Si5351A. The
+RP2040 I2C block cannot be master and slave at the same time, so
+hanging the IHU off i2c0 would mean flipping the peripheral between
+modes and dropping any IHU transaction that arrived mid-flip. i2c1 on
+GP14/GP15 — both J3 spares, both i2c1 alternate-function pins — keeps
+the two completely independent. Nothing about this implies a board
+change; they are jumper points on a Pico module, not proposed nets.
 
 ### Checking it from the IHU console
 
@@ -324,11 +341,16 @@ On this board, the console heartbeat carries the same counter from the
 other direction:
 
 ```text
-[comms] heartbeat #12  uptime=65021 ms  tasks=5  free_heap=118904  ihu=74 xacts
+[comms] heartbeat #12  uptime=65021 ms  tasks=5  free_heap=118904  hk=up 74 xacts
 ```
 
-Still `ihu=0` after the IHU has booted means the bus is not carrying
-traffic — check the jumpers before suspecting either firmware.
+`hk=` splits the two failures that look identical from the IHU:
+
+- `hk=DOWN` — the slave never initialised. A firmware problem *on this
+  board*; the IHU is not involved.
+- `hk=up 0 xacts` — the slave is listening but has never been clocked.
+  Wiring, not firmware. Check the jumpers and the common ground before
+  suspecting either side.
 
 ## Workstreams
 
@@ -355,13 +377,15 @@ traffic — check the jumpers before suspecting either firmware.
 
 ### Workstream C: IHU link and ground support
 
-- [x] Housekeeping I2C slave — the IHU can ping this board and read its
-      status block (see below)
+- [x] Bench housekeeping slave — the IHU can ping this board and read
+      its status block over jumpers (interim; see above)
+- [ ] CAN transport (the real link) — transceiver choice, message IDs
+      in the `0x300-0x3FF` group, transport-agnostic link layer
 - [ ] SPI0 slave transport with CRC and sequence counter
 - [ ] `COMMS_IRQ` assert/clear tied to the RX FIFO and TX status
 - [ ] Promote the console to a real CLI (port `firmware/ihu/src/cli/`)
-- [x] Board health telemetry schema (housekeeping register map — the
-      bulk telemetry schema still rides the SPI link)
+- [x] Board health telemetry schema (the housekeeping register map,
+      written to carry over to the CAN `0x300` group)
 
 ## Related documents
 

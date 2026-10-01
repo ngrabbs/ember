@@ -47,17 +47,25 @@ static void console_task(void *pvParameters) {
             uint32_t uptime_ms = (uint32_t)(uptime_ticks * portTICK_PERIOD_MS);
             UBaseType_t task_count = uxTaskGetNumberOfTasks();
 
-            /* ihu= is the housekeeping-link transaction count. It is
-             * the one number here that says something about the other
-             * end of the stack: still 0 after the IHU has booted means
-             * the bus is not carrying traffic, and it needs no
-             * cooperation from the IHU to be useful. */
+            /* The hk= field reports the housekeeping link from this
+             * side, and splits the two failures that otherwise look
+             * identical from the IHU:
+             *
+             *   hk=down     the slave never initialised — a firmware
+             *               problem on THIS board
+             *   hk=0 xacts  the slave is up and listening but has
+             *               never been clocked — wiring, not firmware
+             *
+             * Without this you need the boot banner to tell them
+             * apart, and by the time anyone is debugging the link the
+             * banner has long scrolled off. */
             printf("[comms] heartbeat #%lu  uptime=%lu ms  tasks=%lu  "
-                   "free_heap=%u  ihu=%u xacts\n",
+                   "free_heap=%u  hk=%s %u xacts\n",
                    (unsigned long)tick++,
                    (unsigned long)uptime_ms,
                    (unsigned long)task_count,
                    (unsigned)xPortGetFreeHeapSize(),
+                   comms_hk_slave_is_up() ? "up" : "DOWN",
                    (unsigned)comms_hk_slave_xact_count());
         }
         vTaskDelay(pdMS_TO_TICKS(CONSOLE_PERIOD_MS));

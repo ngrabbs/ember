@@ -1,5 +1,20 @@
 /*
- * ember housekeeping I2C protocol — IHU (master) ↔ comms board (slave).
+ * ember housekeeping protocol — IHU (master) ↔ comms board (slave).
+ *
+ * ── Status: BENCH INTERIM ────────────────────────────────────────
+ *
+ * The transport here is I2C over two jumper wires between two Pico
+ * modules on a desk. It is not a flight interface and does not
+ * correspond to anything on the comms PCB, which brings SPI (not I2C)
+ * back to the stack — see system/interfaces/comms_to_ihu.md.
+ *
+ * The intended flight link is CAN on CSKB H1.51/H1.52
+ * (system/interfaces/board_to_board.md, Iteration 2), and this file is
+ * deliberately written so the SCHEMA outlives the transport: the
+ * register file below is the seed for the `0x300-0x3FF`
+ * "communications status and queue state" CAN message group that doc
+ * already reserves. When CAN lands, the fields keep their meanings and
+ * only the framing changes.
  *
  * Shared by BOTH firmware trees. firmware/ihu and firmware/comms each
  * add firmware/shared to their include path, so there is exactly one
@@ -11,10 +26,12 @@
  *
  * The IHU already speaks "write a register pointer, repeated-START,
  * read N bytes" to the LTC4162 on the EPS. Making the comms board look
- * like one more chip on the same housekeeping bus means the IHU's
- * `comms` command is the same shape as its `eps` command, the same
- * bus-error handling covers both, and a bench i2cdetect/i2cdump finds
- * the comms board without any custom tooling.
+ * like one more chip on that bus means the IHU's `comms` command is
+ * the same shape as its `eps` command, the same bus-error handling
+ * covers both, and a bench i2cdetect/i2cdump finds the comms board
+ * without any custom tooling. For a stopgap, reusing a shape that
+ * already works is worth more than a better-designed one nobody has
+ * debugged.
  *
  * ── Transaction format ───────────────────────────────────────────
  *
@@ -51,14 +68,13 @@
 /* ------------------------------------------------------------------
  * Bus address
  *
- * 7-bit. Lives on the shared CSKB housekeeping bus (H1.41 SDA_SYS /
- * H1.43 SCL_SYS) alongside the EPS LTC4162 at 0x68. 0x42 is outside
- * both I2C reserved ranges (000 0xxx and 111 1xxx) and collides with
- * nothing else in the stack:
+ * 7-bit, on the IHU's i2c0 alongside the EPS LTC4162 at 0x68. 0x42 is
+ * outside both I2C reserved ranges (000 0xxx and 111 1xxx) and
+ * collides with nothing else reachable from the IHU:
  *
- *   0x42  comms board      (this)
- *   0x60  Si5351A          (comms-board-local bus only, not on CSKB)
- *   0x68  LTC4162-L        (EPS)
+ *   0x42  comms board      (this, bench jumpers only)
+ *   0x60  Si5351A          (comms-board-local bus, never seen by the IHU)
+ *   0x68  LTC4162-L        (EPS, on the real CSKB bus)
  * ----------------------------------------------------------------*/
 #define COMMS_HK_I2C_ADDR           0x42
 

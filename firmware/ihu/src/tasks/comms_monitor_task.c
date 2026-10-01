@@ -30,6 +30,21 @@ static comms_link_status_t s_last_status;
 static comms_link_health_t s_health;
 static volatile bool       s_quiet = false;
 
+/* Last status/self-test bytes we printed an alert block for.
+ *
+ * Alerts are edge-triggered. A condition that is real but permanent —
+ * a depopulated Si5351A, a cut trace waiting on the next board rev —
+ * would otherwise print an ALERT every 5 s forever, and an alert that
+ * never stops is one nobody reads. Worse, it buries the next one.
+ *
+ * So the routine telemetry line prints every poll and the alert block
+ * prints only when something actually changes. `comms` in the CLI
+ * always shows the current state on demand, so nothing is hidden by
+ * this — it is only the unsolicited console output that goes quiet. */
+static uint8_t s_reported_status;
+static uint8_t s_reported_checks;
+static bool    s_have_reported = false;
+
 bool ihu_comms_get_latest_status(comms_link_status_t *out) {
     if (!s_health.ever_seen) {
         return false;
@@ -44,6 +59,7 @@ void ihu_comms_set_quiet(bool quiet)                { s_quiet = quiet; }
 /* ------------------------------------------------------------------
  * Pretty-printer
  * ----------------------------------------------------------------*/
+/* Routine telemetry — every poll. */
 static void print_status(const comms_link_status_t *s, uint32_t rtt_us) {
     printf("[comms] fw=v%u.%u  up=%lu s  tasks=%u  heap=%lu B  rtt=%lu us\n",
            (unsigned)(s->fw_ver >> 4), (unsigned)(s->fw_ver & 0xF),
@@ -55,24 +71,45 @@ static void print_status(const comms_link_status_t *s, uint32_t rtt_us) {
         return;
     }
 
+    /* A zero raw status means the part never ACKed, so there is no lock
+     * bit to believe. Saying "PLL unlocked" there reads as a crystal
+     * problem when the truth is the chip is not on the bus at all. */
     printf("[comms]   si5351=%s (raw=0x%02X, %s)  rx-bb=%s (%u mV)  "
            "i2c-devs=%u\n",
            comms_link_check_string(s->check_si5351), s->si5351_raw,
-           s->pll_locked ? "PLLs locked" : "PLL unlocked",
+           !s->si5351_present ? "absent"
+                              : (s->pll_locked ? "PLLs locked" : "PLL UNLOCKED"),
            comms_link_check_string(s->check_rx_bb),
            (unsigned)s->rx_bb_mv, (unsigned)s->i2c_devs);
+}
 
+/* Alerts — only when something changes. See s_reported_status above. */
+static void print_alerts(const comms_link_status_t *s) {
     /* TX_ACTIVE also drives the T/R switch, so this is the IHU's only
      * independent read on whether the comms board is putting RF on the
-     * antenna. Worth a line of its own every time it is set. */
-    if (s->tx_active) {
-        printf("[comms]   TX ACTIVE — T/R switch in transmit\n");
-    }
+     * antenna. Both edges matter: "TX started" and "TX stopped". */
+    printf("[comms]   TX %s\n",
+           s->tx_active ? "ACTIVE — T/R switch in transmit"
+                        : "idle — T/R switch in receive");
+
     if (s->wdt_reboot) {
         printf("[comms]   note: comms board last reset by WATCHDOG TIMEOUT\n");
     }
+
     if (s->fault) {
-        printf("[comms]   ALERT: comms board reports a self-test FAIL\n");
+        printf("[comms]   ALERT: comms board self-test FAIL —");
+        if (s->check_si5351 == COMMS_HK_CHECK_FAIL) {
+            printf(" si5351a not responding%s",
+                   s->i2c_devs == 0 ? " (nothing on its bus at all)" : "");
+        }
+        if (s->check_rx_bb == COMMS_HK_CHECK_FAIL) {
+            printf(" rx-baseband out of range");
+        }
+        printf("\n");
+        printf("[comms]   (repeats suppressed until this changes; "
+               "'comms' shows current state)\n");
+    } else if (s_have_reported) {
+        printf("[comms]   self-test FAIL cleared\n");
     }
 }
 
@@ -129,9 +166,29 @@ static void comms_monitor_task(void *pvParameters) {
             if (!s_quiet) {
                 print_status(&st, rtt_us);
             }
+
+            /* Alerts are edge-triggered, and deliberately NOT gated on
+             * s_quiet: `quiet` is for turning down routine telemetry
+             * while you work, not for missing the moment the board
+             * starts transmitting or a self-test flips. They are rare
+             * by construction. */
+            uint8_t checks = (uint8_t)((st.check_si5351 << 4) | st.check_rx_bb);
+            if (!s_have_reported
+                || st.status != s_reported_status
+                || checks    != s_reported_checks) {
+                print_alerts(&st);
+                s_reported_status = st.status;
+                s_reported_checks = checks;
+                s_have_reported   = true;
+            }
         } else {
             s_health.link_up = false;
             ++s_health.failures;
+
+            /* Force a fresh alert report when the board comes back:
+             * it may have rebooted into a different state while we
+             * could not see it. */
+            s_have_reported = false;
 
             /* Report the transition, then go quiet. A board that is
              * simply not plugged in should not fill the console with

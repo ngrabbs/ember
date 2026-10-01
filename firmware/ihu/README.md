@@ -27,7 +27,8 @@ Five FreeRTOS tasks are running on the bench proto:
 - **`eps-mon`** — Owns the boot bus scan, then polls the LTC4162 every
   5 s and decodes charger telemetry.
 - **`comms-mon`** — Pings the comms board every 5 s and reads its
-  status block. See [Housekeeping bus](#housekeeping-bus) below.
+  status block, over a bench jumper link. See
+  [Housekeeping bus](#housekeeping-bus) below.
 - **`cli`** — Interactive command line on the same UART.
 
 Both monitor tasks share i2c0, so every transaction now goes through
@@ -70,18 +71,26 @@ state in MRAM).
 
 ## Housekeeping bus
 
-i2c0 (GP4/GP5 → CSKB H1.41/H1.43) carries two devices:
+i2c0 (GP4/GP5) carries two devices:
 
-| Address | Device | Driver |
-|---|---|---|
-| 0x68 | EPS LTC4162-L charger | `drivers/ltc4162.{c,h}` |
-| 0x42 | Comms board | `drivers/comms_link.{c,h}` |
+| Address | Device | Driver | Link |
+|---|---|---|---|
+| 0x68 | EPS LTC4162-L charger | `drivers/ltc4162.{c,h}` | real — CSKB H1.41/H1.43 |
+| 0x42 | Comms board | `drivers/comms_link.{c,h}` | **bench jumpers only** |
+
+> The comms board is **not** on the CSKB I2C bus. That revision brings
+> SPI back to the stack, and the intended flight link is CAN on
+> H1.51/H1.52. The I2C path below is a two-wire desk harness so this
+> firmware has something real to talk to while the CAN transport is
+> designed — IHU GP4/GP5 to comms GP14/GP15, grounds tied. See
+> [`system/interfaces/comms_to_ihu.md`](../../system/interfaces/comms_to_ihu.md).
 
 The comms board presents a 32-byte register file defined in
 [`firmware/shared/comms_hk_proto.h`](../shared/comms_hk_proto.h) —
 included by both firmware trees, so the map cannot drift between them.
-The full table and the wiring notes are in the
-[comms README](../comms/README.md#housekeeping-link-to-the-ihu).
+It is written to carry over to the `0x300-0x3FF` CAN message group
+when that lands. The full table and wiring notes are in the
+[comms README](../comms/README.md#housekeeping-link-to-the-ihu-bench-interim).
 
 `comms-mon` does two things per cycle: a round-trip **ping** (write a
 32-bit token to the comms board's scratch register, read it back, check
@@ -107,9 +116,36 @@ xacts served: 74  (polls from this IHU: 37)
 ihu> comms raw        # 32-byte hex dump, for when the decode looks wrong
 ```
 
-A board that drops off the bus is reported once, on the transition, not
-once every 5 s forever. `comms` still shows the failure count and the
-age of the last good poll on demand.
+### Alerts are edge-triggered
+
+Routine telemetry prints every poll. Alerts — TX active, watchdog
+reset, self-test FAIL — print only when they *change*.
+
+That is not cosmetic. A condition can be real, correct, and permanent:
+a depopulated Si5351A, a cut trace waiting on the next board rev. An
+ALERT that fires every 5 s forever stops being read within a day, and
+then it buries the next one. So the console reports the edge and says
+it is suppressing repeats:
+
+```text
+[comms]   ALERT: comms board self-test FAIL — si5351a not responding (nothing on its bus at all)
+[comms]   (repeats suppressed until this changes; 'comms' shows current state)
+```
+
+Nothing is hidden — `comms` always shows current state on demand, and
+the per-poll telemetry line still carries `si5351=FAIL`. Only the
+unsolicited alert goes quiet. When the condition clears you get a
+`self-test FAIL cleared` line, and a link that drops and returns
+re-reports from scratch, since the board may have rebooted into a
+different state while it was unreachable.
+
+Alerts deliberately ignore `quiet`. That switch is for turning down
+routine telemetry while you work, not for missing the moment the board
+starts transmitting.
+
+A board that drops off the bus is likewise reported once, on the
+transition, not once every 5 s forever. `comms` still shows the failure
+count and the age of the last good poll on demand.
 
 ### Bus serialisation
 
@@ -202,12 +238,12 @@ so nothing under the build tree gets committed.
   charger state, alerts). MPPT configuration still open
 - [x] Implement EPS housekeeping I2C client (periodic poll)
 - [ ] Range/sanity limits on EPS telemetry
-- [x] Comms board housekeeping client — ping + status block over I2C
-- [ ] Implement IHU-comms SPI packet transport with CRC and sequence
-  counter
+- [x] Comms board housekeeping client — ping + status block (bench I2C
+  harness; the real link is CAN)
 - [x] Link heartbeat and timeout handling for the comms housekeeping link
-- [ ] Link heartbeat and timeout handling for the SPI transport
-- [ ] Add CAN transport abstraction for Iteration 2
+  (transport-agnostic — carries over to CAN)
+- [ ] Add CAN transport abstraction — now the primary IHU↔comms link,
+  not an Iteration 2 addition. `0x300-0x3FF` carries comms status
 
 ### Workstream C: Command and Telemetry Services
 
