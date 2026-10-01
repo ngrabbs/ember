@@ -19,7 +19,7 @@ reference; these are independent Git checkouts and separate Yamcs archives.
 | Image SHA-256 | `cdf4f3bfac35ae947b46e4e767f935453810549779ac3290e05a6754aee627e5` |
 | Storage | 128 GB SD, expanded root approximately 117 GiB |
 | Repository | `/home/ngrabbs/work/MSU_Cubesat/ember` |
-| Ground software branch | `feature/ground-station-lab` until PR #5 merges |
+| Ground software branch | PR #5 merged at `a21832b`; next work is `feature/ground-station-usb` |
 | Browser address | `http://192.168.1.251:8090` |
 | Time zone | America/Chicago |
 
