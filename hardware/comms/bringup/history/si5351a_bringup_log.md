@@ -1,5 +1,9 @@
 # Si5351A Bring-Up Log
 
+> **Dated record.** Measurements and audit scope apply to the recorded configuration.
+> For current work and superseded blockers, see the [comms checklist](../../TODO.md).
+
+
 ## Date: 2026-04-03
 
 ## Summary
@@ -83,7 +87,7 @@ is high with energy spread across many harmonics and spurs.
 
 Quantitative measurement of Si5351A CLK1 output power and harmonic content
 at 145.9 MHz, in support of the SA612 → ADE-1+ mixer swap (see
-[`design/rx_mixer_trade_study.md`](../design/rx_mixer_trade_study.md)). Confirms LO drive level exceeds the
+[`design/rx_mixer_trade_study.md`](../../design/rx_mixer_trade_study.md)). Confirms LO drive level exceeds the
 +7 dBm target for the passive mixer and validates the 5-pole LO LPF
 design margin against the 3rd harmonic.
 
@@ -194,4 +198,4 @@ bring-up.
 - Test code: [`bringup/si5351_test_code.py`](si5351_test_code.py)
 - Procedure: [`bringup/lo_drive_verification.md`](lo_drive_verification.md)
 - Setup: [`bringup/si5351a_breakout_bench_test.md`](si5351a_breakout_bench_test.md)
-- Trade study (why this measurement matters): [`design/rx_mixer_trade_study.md`](../design/rx_mixer_trade_study.md)
+- Trade study (why this measurement matters): [`design/rx_mixer_trade_study.md`](../../design/rx_mixer_trade_study.md)

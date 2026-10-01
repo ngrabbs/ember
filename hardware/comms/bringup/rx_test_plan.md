@@ -1,24 +1,19 @@
-# RX Chain Bring-Up Test Plan
+# RX qualification plan
 
-## Stage 1: Si5351A CLK1 (RX LO)
+[Bring-up guide](README.md) · [RX design](../design/rx_chain.md)
 
-Completed as part of TX Stage 1. See [`si5351a_bringup_log.md`](si5351a_bringup_log.md).
+**Planned for the 435 MHz ADE-1+ receiver.** The old SA612 procedure is superseded.
+Use the [prototype worksheet](rf_prototype_checklist.md) for setup and acceptance limits.
 
-- [x] CLK1 outputs 145.900 MHz at expected power level
-- [x] Enable/disable control working
+| Stage | Check |
+|---|---|
+| Input filter | Baseline and candidate S11/S21/S22 with active/bias branches isolated |
+| LNA/bias | Gain, current, RF supply leakage, stability and input/output loading |
+| Mixer LO | Actual 435 MHz drive at U10 under loading; compare with +7 dBm requirement |
+| Headroom | Blocking/compression and any proposed post-LNA pad; include TX leakage |
+| Baseband | Midpoint, filter response, gain and ADC headroom against actual circuit values |
+| End to end | Sensitivity/demodulation error criterion, switching transients and recovery |
 
-## Stage 2: SA612 Mixer
-
-_To be filled in when mixer circuit is assembled._
-
-- [ ] Verify LO injection from Si5351A CLK1
-- [ ] Inject known 145.9 MHz + offset signal, verify baseband output
-- [ ] Measure conversion gain/loss
-
-## Stage 3: Baseband Filter and Amplifier
-
-_To be filled in after mixer validation._
-
-## Stage 4: ADC Capture and Demodulation
-
-_To be filled in after analog chain validation._
+Do not qualify a proposed U9 replacement using only its gain or catalogue noise
+figure. Preserve baseline data before any component substitution, and record exact
+MPNs, supply conditions, instruments and calibration planes.

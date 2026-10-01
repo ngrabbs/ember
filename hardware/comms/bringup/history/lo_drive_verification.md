@@ -1,5 +1,9 @@
 # LO Drive Verification — TinySA Procedure
 
+> **Dated record.** Measurements and audit scope apply to the recorded configuration.
+> For current work and superseded blockers, see the [comms checklist](../../TODO.md).
+
+
 Bench procedure for measuring the Si5351A CLK1 output power at 145.9 MHz
 into a 50 Ω load using the TinySA spectrum analyzer. The output of this
 test feeds the go / no-go decision on R4 (the 33 Ω series resistor in
@@ -8,8 +12,8 @@ the ADE-1+ passive mixer.
 
 See companion docs:
 - [`si5351a_breakout_bench_test.md`](si5351a_breakout_bench_test.md) — Pico 2 + Adafruit 5640 setup code, breakout-vs-PCB circuit equivalence
-- [`../design/rx_mixer_trade_study.md`](../design/rx_mixer_trade_study.md) — design rationale (why this measurement matters)
-- [`../design/schematic_guide.md`](../design/schematic_guide.md) — Sheet 2 CLK1 design, Sheet 4 Section B.2 (LO LPF)
+- [`../../design/rx_mixer_trade_study.md`](../../design/rx_mixer_trade_study.md) — design rationale (why this measurement matters)
+- [`../../design/schematic_guide.md`](../../design/schematic_guide.md) — Sheet 2 CLK1 design, Sheet 4 Section B.2 (LO LPF)
 - `/workspace/MSU_Cubesat/100_day_challenge/docs/tool_inventory.md` — gear list and pad characterization data
 
 ---

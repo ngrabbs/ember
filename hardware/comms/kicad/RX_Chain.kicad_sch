@@ -7,6 +7,7 @@
 	(title_block
 		(title "CubeSat Comms -- RX Chain")
 		(rev "A")
+		(comment 9 "UHF/UHF revision in review - not for fabrication")
 	)
 	(lib_symbols
 		(symbol "Amplifier_Operational:MCP6022"
@@ -754,6 +755,155 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Ember_RF:PSA4-5043+"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PSA4-5043+"
+				(at 0 -7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.minicircuits.com/pdfs/PSA4-5043+.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PSA4-5043+_0_1"
+				(rectangle
+					(start -8.89 -5.08)
+					(end 8.89 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin passive line
+					(at 11.43 0 180)
+					(length 2.54)
+					(name "OUT_DC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -2.54 -7.62 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -11.43 0 0)
+					(length 2.54)
+					(name "IN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 2.54 -7.62 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "RF_Amplifier:SPF5189Z"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -1397,6 +1547,235 @@
 					(at 2.54 -5.08 90)
 					(length 2.54)
 					(name "E"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Transistor_BJT:Q_NPN_BEC"
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q"
+				(at 5.08 1.27 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "Q_NPN_BEC"
+				(at 5.08 -1.27 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "NPN transistor, base/emitter/collector"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Sim.Device" "NPN"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Sim.Pins" "1=B 2=E 3=C"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "BJT"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Q_NPN_BEC_0_1"
+				(polyline
+					(pts
+						(xy -2.54 0) (xy 0.635 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 1.905) (xy 0.635 -1.905)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.27 0)
+					(radius 2.8194)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Q_NPN_BEC_1_1"
+				(polyline
+					(pts
+						(xy 0.635 0.635) (xy 2.54 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 -0.635) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.778) (xy 1.778 -1.27) (xy 2.286 -2.286) (xy 1.27 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "B"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "E"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "C"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2230,12 +2609,6 @@
 		(uuid "6c73f7d2-ccb6-49cb-b42c-afb8203040db")
 	)
 	(junction
-		(at 162.56 195.58)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "6cd62c64-e073-4c1b-bc00-296aea21d00e")
-	)
-	(junction
 		(at 71.12 100.33)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2404,6 +2777,16 @@
 			(type default)
 		)
 		(uuid "0c120df7-bb58-49a3-b26f-1894c9d1bacf")
+	)
+	(wire
+		(pts
+			(xy 152.4 86.36) (xy 147.32 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0e2ca38b-2e81-41e9-9905-1ec64a253729")
 	)
 	(wire
 		(pts
@@ -2587,6 +2970,16 @@
 	)
 	(wire
 		(pts
+			(xy 182.88 176.53) (xy 187.96 176.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "289abfa0-12b7-4241-b403-805ad25827d9")
+	)
+	(wire
+		(pts
 			(xy 105.41 110.49) (xy 105.41 114.3)
 		)
 		(stroke
@@ -2644,6 +3037,16 @@
 			(type default)
 		)
 		(uuid "365a71f3-9c64-45dd-acdb-653449d146c6")
+	)
+	(wire
+		(pts
+			(xy 161.29 73.66) (xy 165.1 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3777f078-4b60-419d-9d35-3c47f35486fb")
 	)
 	(wire
 		(pts
@@ -2887,13 +3290,13 @@
 	)
 	(wire
 		(pts
-			(xy 157.48 73.66) (xy 165.1 73.66)
+			(xy 133.35 73.66) (xy 138.43 73.66)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "5d70e30c-60d9-412f-8a0a-c0a37667bde3")
+		(uuid "5f8c1198-b9e6-4af5-8c91-ed85bad72450")
 	)
 	(wire
 		(pts
@@ -3147,6 +3550,16 @@
 	)
 	(wire
 		(pts
+			(xy 152.4 81.28) (xy 152.4 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7f1b7c85-88fc-4f6d-ab3a-23e7a1737424")
+	)
+	(wire
+		(pts
 			(xy 124.46 184.15) (xy 132.08 184.15)
 		)
 		(stroke
@@ -3204,16 +3617,6 @@
 			(type default)
 		)
 		(uuid "958fed1d-f049-4a7c-85f6-0cb69331a3b6")
-	)
-	(wire
-		(pts
-			(xy 162.56 195.58) (xy 162.56 198.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "969b7387-5116-45ba-b7d2-88dec16f39c5")
 	)
 	(wire
 		(pts
@@ -3617,16 +4020,6 @@
 	)
 	(wire
 		(pts
-			(xy 133.35 73.66) (xy 142.24 73.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d65053af-407c-41ed-94fb-87d06440da97")
-	)
-	(wire
-		(pts
 			(xy 248.92 99.06) (xy 248.92 101.6)
 		)
 		(stroke
@@ -3707,16 +4100,6 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 173.99) (xy 182.88 179.07)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e02354e1-afbf-4ac4-9d7b-6c1bc99c76a4")
-	)
-	(wire
-		(pts
 			(xy 99.06 186.69) (xy 109.22 186.69)
 		)
 		(stroke
@@ -3744,6 +4127,16 @@
 			(type default)
 		)
 		(uuid "ea60fd55-8bf7-4195-9330-80b0db39b083")
+	)
+	(wire
+		(pts
+			(xy 182.88 173.99) (xy 182.88 176.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eaf0d172-b9ef-4fc3-bac1-8e3a0338a554")
 	)
 	(wire
 		(pts
@@ -3825,10 +4218,101 @@
 		)
 		(uuid "fe8d38cc-4b64-4add-bd54-e3c6f7f9256f")
 	)
+	(label "VREF_RX"
+		(at 187.96 176.53 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4e0c4f52-72b4-4e1f-8610-424c13c03616")
+	)
+	(label "VREF_RX"
+		(at 162.56 198.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "55f66cc2-1902-47bf-bc60-200cec3e9de1")
+	)
+	(label "VREF_RX"
+		(at 187.96 198.12 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "58184694-6205-4617-ac71-fa90bc5aa423")
+	)
+	(label "RX_AMP_IN"
+		(at 208.28 194.31 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "65d9c600-4ecf-4828-94f8-07439621fb66")
+	)
+	(label "RX_AMP_IN"
+		(at 187.96 205.74 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a0a81f8a-464a-4465-af16-ee2cc178cd6a")
+	)
+	(label "VREF_RX"
+		(at 172.72 198.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "bcaa9e7d-2d3d-4b29-87ba-266a2c193723")
+	)
+	(label "VREF_RX"
+		(at 87.63 180.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d9d29ac1-ac51-4a43-bde0-eef482e3386f")
+	)
+	(global_label "RX_IF"
+		(shape input)
+		(at 80.01 180.34 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "50edac2b-e57b-4df6-9c50-bcd4e20e04a1")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 80.01 180.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "RX_IF"
 		(shape output)
 		(at 335.28 110.49 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3852,7 +4336,6 @@
 	(global_label "CLK1_OUT"
 		(shape bidirectional)
 		(at 195.58 105.41 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3876,7 +4359,6 @@
 	(global_label "RX_IN"
 		(shape input)
 		(at 39.37 100.33 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3900,7 +4382,6 @@
 	(global_label "RX_IF"
 		(shape input)
 		(at 50.8 186.69 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3924,7 +4405,6 @@
 	(global_label "RX_BASEBAND"
 		(shape output)
 		(at 256.54 193.04 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3998,7 +4478,7 @@
 				)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
+		(property "Description" "10uF bypass on receiver mid-supply reference"
 			(at 162.56 201.93 0)
 			(hide yes)
 			(show_name no)
@@ -4066,7 +4546,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 116.84 184.15 0)
 			(hide yes)
 			(show_name no)
@@ -4077,7 +4557,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "http://ww1.microchip.com/downloads/en/devicedoc/20001685e.pdf"
+		(property "Datasheet" "https://ww1.microchip.com/downloads/en/DeviceDoc/20001685E.pdf"
 			(at 116.84 184.15 0)
 			(hide yes)
 			(show_name no)
@@ -4089,6 +4569,50 @@
 			)
 		)
 		(property "Description" "Dual Operational Amplifiers, Rail-to-Rail Input/Output, DIP-8/SOIC-8/TSSOP-8"
+			(at 116.84 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "MCP6022-I/SN"
+			(at 116.84 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Microchip Technology"
+			(at 116.84 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C57639"
+			(at 116.84 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part #" "MCP6022T-I/SN"
 			(at 116.84 184.15 0)
 			(hide yes)
 			(show_name no)
@@ -4377,6 +4901,99 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 83.82 180.34 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "14c1a76f-8700-4e6b-8012-08035e98a7e9")
+		(property "Reference" "R38"
+			(at 83.82 178.308 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100k"
+			(at 83.82 180.34 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 82.042 180.34 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 83.82 180.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "100k receiver DC bias resistor"
+			(at 83.82 180.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C25741"
+			(at 83.82 180.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "43b463ed-8712-4234-b8a4-7793001353ab")
+		)
+		(pin "1"
+			(uuid "bfcf3b2c-3bbe-47e5-821b-ffb8889d2bb8")
+		)
+		(instances
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
+					(reference "R38")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 337.82 99.06 0)
 		(unit 1)
@@ -4488,7 +5105,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 236.22 210.82 0)
 			(hide yes)
 			(show_name no)
@@ -4499,7 +5116,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "http://ww1.microchip.com/downloads/en/devicedoc/20001685e.pdf"
+		(property "Datasheet" "https://ww1.microchip.com/downloads/en/DeviceDoc/20001685E.pdf"
 			(at 236.22 210.82 0)
 			(hide yes)
 			(show_name no)
@@ -4511,6 +5128,50 @@
 			)
 		)
 		(property "Description" "Dual Operational Amplifiers, Rail-to-Rail Input/Output, DIP-8/SOIC-8/TSSOP-8"
+			(at 236.22 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "MCP6022-I/SN"
+			(at 236.22 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Microchip Technology"
+			(at 236.22 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C57639"
+			(at 236.22 210.82 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part #" "MCP6022T-I/SN"
 			(at 236.22 210.82 0)
 			(hide yes)
 			(show_name no)
@@ -5014,7 +5675,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "8.2p"
+		(property "Value" "100n"
 			(at 204.216 90.424 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5058,8 +5719,19 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C1579"
+		(property "LCSC Part #" "C1525"
 			(at 202.946 92.202 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part #" "CL05B104KO5NNNC"
+			(at 199.39 86.36 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5425,84 +6097,6 @@
 			(project "transceiver"
 				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
 					(reference "C56")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 182.88 179.07 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3b912eda-f1f1-484c-898f-cd40b7befe2a")
-		(property "Reference" "#PWR094"
-			(at 182.88 185.42 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 182.88 184.15 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 182.88 179.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 182.88 179.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 182.88 179.07 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "e8520e54-8f38-419d-9b2d-baf39809e8da")
-		)
-		(instances
-			(project "transceiver"
-				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
-					(reference "#PWR094")
 					(unit 1)
 				)
 			)
@@ -6197,7 +6791,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "XXX"
+		(property "LCSC Part #" "C53547"
 			(at 203.962 112.522 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6207,7 +6801,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part #" "XXX"
+		(property "Manufacturer Part #" "0402CG102J500NT"
 			(at 203.2 105.41 90)
 			(hide yes)
 			(show_name no)
@@ -6424,7 +7018,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1u"
+		(property "Value" "220n"
 			(at 168.148 84.582 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6435,7 +7029,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_0805_2012Metric"
+		(property "Footprint" "Ember_RF:L_Coilcraft_0805HP"
 			(at 170.18 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -6446,7 +7040,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.coilcraft.com/getmedia/c30565bc-9cf5-4393-9380-6f782e4b4cd8/0805hp.pdf"
 			(at 170.18 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -6457,7 +7051,7 @@
 				)
 			)
 		)
-		(property "Description" "Inductor"
+		(property "Description" "220 nH 5% RF choke; Coilcraft 0805HP-221XJRC; prototype selection, RF bench qualification pending"
 			(at 170.18 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -6468,8 +7062,63 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C18221300"
+		(property "LCSC Part #" ""
 			(at 169.926 86.614 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0805HP-221XJRC"
+			(at 170.18 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Coilcraft"
+			(at 170.18 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part #" "0805HP-221XJRC"
+			(at 170.18 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PinMapAudit" "design/l16_footprint_acceptance.md"
+			(at 170.18 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Prototype; RF bench qualification pending"
+			(at 170.18 81.28 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7099,6 +7748,99 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 187.96 201.93 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "94463055-de46-43e0-8bb3-1f8da3905714")
+		(property "Reference" "R39"
+			(at 189.992 201.93 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100k"
+			(at 187.96 201.93 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 186.182 201.93 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 187.96 201.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "100k receiver DC bias resistor"
+			(at 187.96 201.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C25741"
+			(at 187.96 201.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "43b463ed-8712-4234-b8a4-7793001353ac")
+		)
+		(pin "1"
+			(uuid "bfcf3b2c-3bbe-47e5-821b-ffb8889d2bb9")
+		)
+		(instances
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/8e04e994-8636-422b-bbcc-3acfa2e99d78"
+					(reference "R39")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Amplifier_Operational:MCP6022")
 		(at 215.9 191.77 0)
 		(mirror x)
@@ -7130,7 +7872,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 215.9 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -7141,7 +7883,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "http://ww1.microchip.com/downloads/en/devicedoc/20001685e.pdf"
+		(property "Datasheet" "https://ww1.microchip.com/downloads/en/DeviceDoc/20001685E.pdf"
 			(at 215.9 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -7153,6 +7895,50 @@
 			)
 		)
 		(property "Description" "Dual Operational Amplifiers, Rail-to-Rail Input/Output, DIP-8/SOIC-8/TSSOP-8"
+			(at 215.9 191.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "MCP6022-I/SN"
+			(at 215.9 191.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Microchip Technology"
+			(at 215.9 191.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C57639"
+			(at 215.9 191.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part #" "MCP6022T-I/SN"
 			(at 215.9 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -7635,7 +8421,7 @@
 		)
 	)
 	(symbol
-		(lib_id "RF_Amplifier:SPF5189Z")
+		(lib_id "Ember_RF:PSA4-5043+")
 		(at 149.86 73.66 0)
 		(unit 1)
 		(body_style 1)
@@ -7646,7 +8432,7 @@
 		(dnp no)
 		(uuid "b50b2073-fc37-44d7-82ca-39df32630d0b")
 		(property "Reference" "U9"
-			(at 152.146 77.216 0)
+			(at 149.86 68.58 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7656,7 +8442,7 @@
 			)
 		)
 		(property "Value" "PSA4-5043+"
-			(at 157.226 79.248 0)
+			(at 149.86 81.28 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7665,7 +8451,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-343_SC-70-4"
+		(property "Footprint" "Ember_RF:PSA4-5043_MMM1362"
 			(at 151.13 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -7676,7 +8462,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "www.qorvo.com/products/d/da001910"
+		(property "Datasheet" "https://www.minicircuits.com/pdfs/PSA4-5043+.pdf"
 			(at 149.86 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -7687,7 +8473,7 @@
 				)
 			)
 		)
-		(property "Description" "50MHz to 4000MHz, GaAs pHEMT low noise MMIC amplifier, SOT-89"
+		(property "Description" "Mini-Circuits PSA4-5043+ low-noise RF amplifier, MMM1362 SOT-343; pin 3 IN, pin 1 OUT/DC, pins 2/4 GND"
 			(at 149.86 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -7708,6 +8494,28 @@
 				)
 			)
 		)
+		(property "MPN" "PSA4-5043+"
+			(at 149.86 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Mini-Circuits"
+			(at 149.86 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "ab2ea5a0-3184-4e6a-9b6d-cb2849b47074")
 		)
@@ -7716,6 +8524,9 @@
 		)
 		(pin "1"
 			(uuid "8821d949-0254-48aa-a5ac-ebbacfee6f5d")
+		)
+		(pin "4"
+			(uuid "8704d108-cb18-4ccc-9813-a70de299c6d9")
 		)
 		(instances
 			(project "transceiver"
@@ -8028,7 +8839,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.minicircuits.com/pdfs/ADE-6.pdf"
+		(property "Datasheet" "https://www.minicircuits.com/pdfs/ADE-1+.pdf"
 			(at 313.055 89.535 0)
 			(hide yes)
 			(show_name no)
@@ -8039,7 +8850,84 @@
 				)
 			)
 		)
-		(property "Description" "Mixer, +7 dBm LO, 0.05 to 250 MHz, CD542"
+		(property "Description" "ADE-1+ passive double-balanced mixer, +7 dBm LO, RF/LO 0.5-500 MHz, CD636; audited pin-compatible ADE-6 symbol and PL-052 land pattern"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "ADE-1+"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Mini-Circuits"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Package" "CD636"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageHeightMax_mm" "4.11"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PinMapAudit" "design/u10_ade1_pinmap.md"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C2942210"
+			(at 320.04 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part #" "ADE-1+"
 			(at 320.04 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -9031,7 +9919,7 @@
 				)
 			)
 		)
-		(property "Value" "C"
+		(property "Value" "100n"
 			(at 176.022 76.708 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9041,7 +9929,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 177.8 72.6948 0)
 			(hide yes)
 			(show_name no)
@@ -9064,6 +9952,28 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 173.99 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C1525"
+			(at 173.99 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part #" "CL05B104KO5NNNC"
 			(at 173.99 73.66 0)
 			(hide yes)
 			(show_name no)
@@ -9110,7 +10020,7 @@
 				)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "8.2p"
 			(at 221.742 90.678 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9153,7 +10063,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C1525"
+		(property "LCSC Part #" "C1579"
 			(at 222.504 92.71 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9163,7 +10073,7 @@
 				)
 			)
 		)
-		(property "Manufacturer Part #" "CL05B104KO5NNNC"
+		(property "Manufacturer Part #" ""
 			(at 218.44 86.36 90)
 			(hide yes)
 			(show_name no)
@@ -9268,7 +10178,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Simulation_SPICE:NPN")
+		(lib_id "Transistor_BJT:Q_NPN_BEC")
 		(at 223.52 105.41 0)
 		(unit 1)
 		(body_style 1)
@@ -9311,7 +10221,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://ngspice.sourceforge.io/docs/ngspice-html-manual/manual.xhtml#cha_BJTs"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C193010.pdf"
 			(at 287.02 105.41 0)
 			(hide yes)
 			(show_name no)
@@ -9322,7 +10232,7 @@
 				)
 			)
 		)
-		(property "Description" "Bipolar transistor symbol for simulation only, substrate tied to the emitter"
+		(property "Description" "Hottech 2SC3356 SOT-23; B=1 E=2 C=3; do not substitute Renesas pinout"
 			(at 223.52 105.41 0)
 			(hide yes)
 			(show_name no)
@@ -9355,7 +10265,7 @@
 				)
 			)
 		)
-		(property "Sim.Pins" "1=C 2=B 3=E"
+		(property "Sim.Pins" "1=B 2=E 3=C"
 			(at 223.52 105.41 0)
 			(hide yes)
 			(show_name no)
@@ -9368,6 +10278,28 @@
 		)
 		(property "LCSC Part #" "C193010"
 			(at 231.14 100.584 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Guangdong Hottech"
+			(at 223.52 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part #" "2SC3356"
+			(at 223.52 105.41 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects

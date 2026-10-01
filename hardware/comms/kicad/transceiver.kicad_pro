@@ -130,7 +130,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.2,
+        "min_clearance": 0.15,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
@@ -748,6 +748,82 @@
       {
         "netclass": "PWR_HIGH",
         "pattern": "VBAT"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "ANT"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U11-RFC)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C84-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C89-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C84-Pad1)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C93-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C100-Pad1)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C55-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C60-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U9-IN)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U9-OUT_DC)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U10-RF)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U10-IF)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C86-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(C91-Pad2)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(U10-LO)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(Q4-B)"
+      },
+      {
+        "netclass": "RF",
+        "pattern": "Net-(Q4-C)"
+      },
+      {
+        "netclass": "All Nets",
+        "pattern": "+5V"
       }
     ]
   },
@@ -829,12 +905,84 @@
           "label": "Datasheet",
           "name": "Datasheet",
           "show": true
+        },
+        {
+          "group_by": false,
+          "label": "MPN",
+          "name": "MPN",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Manufacturer",
+          "name": "Manufacturer",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Manufacturer Part #",
+          "name": "Manufacturer Part #",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Device",
+          "name": "Sim.Device",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Pins",
+          "name": "Sim.Pins",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Type",
+          "name": "Sim.Type",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Voltage",
+          "name": "Voltage",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LCSC Part #",
+          "name": "LCSC Part #",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Description",
+          "name": "Description",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "#",
+          "name": "${ITEM_NUMBER}",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "AssemblyNote",
+          "name": "AssemblyNote",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Assembly Note",
+          "name": "Assembly Note",
+          "show": false
         }
       ],
       "filter_string": "",
       "group_symbols": true,
       "include_excluded_from_bom": true,
-      "name": "Default Editing",
+      "name": "",
       "sort_asc": true,
       "sort_field": "Reference"
     },
@@ -918,6 +1066,10 @@
     [
       "95253c0f-15a7-4b27-a643-2156a456084b",
       "TX Chain"
+    ],
+    [
+      "65186007-09fd-4f4e-8a9d-28ec5cceb5b5",
+      "Single Antenna RF Switch"
     ]
   ],
   "text_variables": {

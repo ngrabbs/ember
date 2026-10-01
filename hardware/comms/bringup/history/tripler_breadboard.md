@@ -1,5 +1,9 @@
 # Frequency Tripler Prototype Build
 
+> **Dated record.** Measurements and audit scope apply to the recorded configuration.
+> For current work and superseded blockers, see the [comms checklist](../../TODO.md).
+
+
 ## Objective
 Verify 3rd harmonic generation: 145.667 MHz in → 437 MHz out, using a 2N3904
 in class-C configuration. This test skips the XOR modulator (not yet available)

@@ -1,82 +1,23 @@
 # CubeSat Kit Bus (CSKB) Pin Map — Canonical
 
-## Status
+[System interfaces](../README.md) · [Connector and mechanical reference](cskb_mechanical.md)
 
-**This document is the single source of truth for this project's CubeSat
-Kit Bus pin assignments.** Every board in the stack (EPS, flight
-controller, comms, payload) MUST match the pin numbers defined here.
-If a schematic doc and this file disagree, this file wins — update the
-schematic, not this file.
+**Authority:** every board MUST use these pin numbers and canonical net names.
+If a board document disagrees, update that document. This map defines assignments;
+Iteration 2 CAN components remain DNP in v0.1.
 
-## Scope and terminology
+| Quick reference | Assignment |
+|---|---|
+| Connectors | H1 + H2, each 2×26, 2.54 mm pitch; 104 pins total |
+| SPI, I2C, controls, CAN A | [H1 assignments](#h1-pin-assignments) |
+| Power, payload controls, CAN B | [H2 assignments](#h2-pin-assignments) |
+| Connection requirements | [Rules](#rules) |
+| CAN implementation boundaries | [CAN A/B](#can-a--can-b-allocation-iteration-2) |
 
-This project uses the **Pumpkin CubeSat Kit Bus (CSKB)** as defined in the
-CubeSat Kit Motherboard Rev. E datasheet
-([`system/interfaces/DS_CSK_MB_710-00484-E.pdf`](DS_CSK_MB_710-00484-E.pdf), Pumpkin P/N 710-00484,
-doc Rev. A dated March 2012). The CSKB is delivered via **two physical
-connectors**, `H1` and `H2`, each a 2×26 0.1″ (2.54 mm) pitch socket
-(52 pins each, 104 pins total).
-
-**This is NOT PC/104.** Pumpkin's motherboard also exposes a legacy
-PC/104 system bus on separate connectors (`J1` + `J2`, 2×32 + 2×20,
-using A/B/C/D row labels), of which Pumpkin only wires +5V and GND.
-This project does not use the PC/104 system bus. The 104-pin count of
-CSKB is, per Pumpkin's own footnote, "purely coincidental" with PC/104.
-
-**Why CSKB:** future-proofing. If any subsystem is later
-replaced with a Pumpkin MBM2 / Pumpkin EPS / iSpace board that speaks
-CSKB, mechanical and electrical compatibility holds without rework.
-Decision locked 2026-04-15 by Nick Grabbs.
-
-## Connectors — mechanical
-
-Boards use **two** CSKB connectors side by side (H1 + H2),
-matching Pumpkin's layout.
-
-### Project defaults (v0.1)
-
-| Role | Boards | Samtec P/N | Type | Stacking height |
-|---|---|---|---|---|
-| Primary (stackable modules) | IHU, comms, payload | **ESQ-126-39-G-D** | 52-pin stackthrough, 0.1″ pitch | 15 mm |
-| Endpoint (bottom of stack) | EPS | **ESQ-126-37-G-D** | 52-pin non-stackthrough, 0.1″ pitch | N/A (endpoint) |
-
-**Why this split:** per Pumpkin's footnote on page 17 of the Rev. E
-datasheet, "Non-stackthrough connectors are normally fitted only on an
-MB and form an endpoint to the CubeSat Kit Bus connector stack.
-Stackthrough connectors are normally fitted to all other modules."
-EPS is the stack endpoint (acts as the motherboard), so it
-uses the non-stackthrough part; every other board uses the
-stackthrough part so it can sit anywhere in a mixed stack.
-
-**v0.1 stacking height: 15 mm between modules** — the normal CSKB
-default.
-
-### Connector options catalog (for future reference)
-
-The full Pumpkin Samtec family, so we never have to re-derive it:
-
-| # | Samtec P/N | Pins | Type | Use case |
-|---|---|---|---|---|
-| 1 | `ESQ-126-37-G-D` | 52 (2×26) | Non-stackthrough | CSKB connector for endpoint module (MB / EPS) |
-| 2 | `ESQ-126-39-G-D` | 52 (2×26) | Stackthrough | CSKB connector for all other stacked modules |
-| 3 | `SSQ-126-22-G-D` | 52 (2×26) | 10 mm extension | **Inserted between modules to increase stacking height from 15 mm to 24–25 mm.** Not a primary connector — use only if taller spacing is required (e.g., to clear a tall component). |
-| 4 | `ESQ-104-37-G-D` | 8 (2×4) | Non-stackthrough | PC/104 J1/J2 power connector (endpoint); not used here PC/104 |
-| 5 | `ESQ-104-39-G-D` | 8 (2×4) | Stackthrough | PC/104 J1/J2 power connector; not used here |
-| 6 | `SSQ-104-22-G-D` | 8 (2×4) | 10 mm extension | PC/104 J1/J2 power extension; not used here |
-| 7 | `LSS-150-02-L-DV` | 100 (2×50) | Hermaphroditic | PPM connector (H10) on Pumpkin processor modules; not used here |
-
-**When we might need #3 (SSQ-126-22-G-D):** if any board has a
-component taller than ~13 mm above its top surface, we'll need to
-insert this 10 mm extension between that board and the next, for 25 mm
-spacing on that interface. Flag this early during mechanical review.
-
-### Mechanical alignment note
-
-X/Y position of H1 and H2 on every PCB MUST match Pumpkin's
-motherboard layout (see [`DS_CSK_MB_710-00484-E.pdf`](DS_CSK_MB_710-00484-E.pdf) page 5,
-"Simplified Mechanical Layout") so a mixed stack with any Pumpkin /
-MBM2 / iSpace board mates without rework. Verify footprint position
-and H1–H2 spacing against the Pumpkin drawing before any PCB layout.
+This is the Pumpkin **CSKB**, not the separate PC/104 J1/J2 bus or PPM H10.
+The April 15, 2026 connector decision preserves Pumpkin's mechanical layout;
+electrical compatibility still requires checking each board's USER-pin usage.
+See the [mechanical reference](cskb_mechanical.md) for parts, spacing, and source drawings.
 
 ## Pin numbering convention
 
@@ -99,8 +40,8 @@ For each pin, the per-board column shows:
 
 ## H1 Pin Assignments
 
-H1 carries all of the stack's I/O, control, and user signals, plus the
-system I2C bus.
+H1 carries the stack's primary I/O and control signals, CAN A, and the
+system I2C bus. Additional USER signals and CAN B are on H2.
 
 | H1 pin | Pumpkin name | Net | EPS | IHU | Comms | Payload | Function |
 |---|---|---|---|---|---|---|---|
@@ -120,8 +61,8 @@ system I2C bus.
 | H1.48 | `USER1` | `COMMS_FAULT_N` | — | C | D | — | Comms → IHU fault indication (open-drain, active-low) |
 | H1.49 | `USER2` | `EPS_ALERT_N` | D | C | — | — | EPS `SMBALERT_N` (LTC4162) → IHU alert (open-drain, active-low) |
 | H1.50 | `USER3` | `PAYLOAD_EN` | — | D | — | C | IHU → payload enable |
-| H1.51 | `USER4` | `CAN_H` | — | B | B | B | CAN bus high (Iteration 2; DNP v0.1) |
-| H1.52 | `USER5` | `CAN_L` | — | B | B | B | CAN bus low (Iteration 2; DNP v0.1) |
+| H1.51 | `USER4` | `CAN_H` | — | B | B | B | CAN A high, primary bus (Iteration 2; DNP v0.1) |
+| H1.52 | `USER5` | `CAN_L` | — | B | B | B | CAN A low, primary bus (Iteration 2; DNP v0.1) |
 
 All other H1 pins (1–15, 17, 18, 25–28, 30, 32–40, 44–46) are
 **reserved** on v0.1 — leave unconnected on every board. They
@@ -132,8 +73,14 @@ the stack.
 
 ## H2 Pin Assignments
 
-H2 carries all of the stack's power rails plus the RBF/Separation
-switches and additional USER pins.
+<<<<<<< HEAD
+H2 carries all of the stack's power rails, reserved RBF/Separation
+switch positions, additional USER signals, and CAN B.
+=======
+H2 carries the assigned power rails and USER signals below. Pumpkin-defined
+RBF/separation-switch positions remain reserved and unconnected in v0.1;
+this table does not allocate flight interlock connections.
+>>>>>>> 9c995a2639f573ef259ec2b0bffde1811a4cdc81
 
 | H2 pin | Pumpkin name | Net | EPS | IHU | Comms | Payload | Function |
 |---|---|---|---|---|---|---|---|
@@ -149,17 +96,49 @@ switches and additional USER pins.
 | H2.46 | `VBATT` | `VBAT` | D | — | M | C | Battery bus (parallel) |
 | H2.47 | `USER6` | `PAYLOAD_FAULT_N` | — | C | — | D | Payload → IHU fault indication (open-drain, active-low). Mirrors `COMMS_FAULT_N` (H1.48) pattern. Driven low by payload on `SHUTDOWN_REQ*` from Orin module (software shutdown, thermal, undervoltage). |
 | H2.48 | `USER7` | `PAYLOAD_SLEEP_REQ_N` | — | D | — | C | IHU → payload sleep request (push-pull, active-low). IHU drives low to request the Orin enter SC7 sleep; payload routes to Orin `SLEEP/WAKE*` (SO-DIMM pin 240). |
+| H2.49 | `USER8` | `CAN_B_H` | — | B | B | B | CAN B high, redundant bus (Iteration 2; DNP v0.1) |
+| H2.50 | `USER9` | `CAN_B_L` | — | B | B | B | CAN B low, redundant bus (Iteration 2; DNP v0.1) |
 
-All other H2 pins (1–24, 33–44, 49–52) are **reserved** at
+All other H2 pins (1–24, 33–44, 51–52) are **reserved** at
 v0.1 — leave unconnected on every board. They carry Pumpkin-defined
 signals (extra IO.24–IO.47 analog inputs, RBF/Separation switches
-S0–S5 on H2.33–H2.44, USER8–USER11 on H2.49–H2.52).
+S0–S5 on H2.33–H2.44, USER10–USER11 on H2.51–H2.52).
+
+**Flight power-isolation gap:** H2.45/H2.46 distribute raw `VBAT` to the
+payload's local converter. The prototype `JP_RBF` disables only the EPS
++3V3/+5V bucks, so that action alone does not establish payload shutdown.
+Define and verify hardware isolation for this feed and any alternate feeds
+under RBF and deployment-switch actuation before flight use. See
+[Inhibit and Deployment Architecture](../../docs/architecture/inhibit_and_deployment.md).
 
 **Note on grounds:** the CSKB has three DGND pins (H2.29, H2.30, H2.32)
 and only one AGND pin (H2.31). This project treats all four as a single
 `GND` net (single-plane ground strategy) with AGND star-tied to DGND
 at the EPS board only. If a future analog subsystem needs truly
 isolated analog ground, revisit this.
+
+## CAN A / CAN B allocation (Iteration 2)
+
+The existing `CAN_H` / `CAN_L` nets on H1.51/H1.52 are **CAN A**;
+their canonical net names and pin assignments remain unchanged.
+**CAN B** uses `CAN_B_H` / `CAN_B_L` on H2.49/H2.50 as a separate
+physical bus. Both buses are planned for IHU, comms, and payload;
+the `B` direction entries describe their intended Iteration 2 roles.
+CAN interface components remain DNP in v0.1. EPS is not a CAN node
+under this allocation and continues to use its existing I2C interface.
+
+CAN B is an EMBER-specific allocation of CSKB USER8/USER9, not an
+adoption of the LibreCube pinout. Before fitting a third-party CSKB
+board, verify that its USER-pin connections do not conflict with
+EMBER's assignments. H2.51/H2.52 remain reserved and unconnected;
+this revision adds no power feeds or power redundancy.
+
+Implementing redundancy requires a separate transceiver path for each
+bus, independent termination at each bus's two physical ends, and
+defined bus-selection/failover behavior. Do not tie CAN A and CAN B
+together. Controller architecture, termination placement, timing, and
+firmware failover policy remain implementation decisions; the pin
+allocation alone does not provide operational redundancy.
 
 ## Naming aliases
 
@@ -219,8 +198,14 @@ both names refer to the same wire:
 
 ## Revision history
 
+<details>
+<summary>Pin-map revision history</summary>
+
 | Rev | Date | Author | Change |
 |---|---|---|---|
 | 0.1 | 2026-04-15 | NG | Initial canonical pin map (based on PPM H10 numbering — WRONG, superseded) |
 | 0.2 | 2026-04-15 | NG | Rebuilt against Pumpkin datasheet Rev. E: bus renamed PC/104 → CubeSat Kit Bus (CSKB); pin numbers remapped from H10 (PPM) → H1/H2 (stack bus); connector family corrected to Samtec ESQ-126 (not ESQ-130); split into H1 signal table + H2 power table; added connector options catalog and endpoint-vs-stackthrough guidance |
 | 0.3 | 2026-05-11 | NG / CC | Payload integration: H2.45/H2.46 (`VBAT`) payload column changed `M` → `C` (Orin Nano draws from VBAT, not stack +5V — see Rule 7); allocated H2.47 (`USER6`) = `PAYLOAD_FAULT_N` and H2.48 (`USER7`) = `PAYLOAD_SLEEP_REQ_N`; added `PAYLOAD_FAULT_N` pull-up to Rule 3; added Rule 7 (payload-power exception); pointed Per-board references at [`payload_carrier_pinmap.md`](../../hardware/payload_compute/design/payload_carrier_pinmap.md). |
+| 0.4 | 2026-09-21 | Codex | Allocated H2.49 (`USER8`) = `CAN_B_H` and H2.50 (`USER9`) = `CAN_B_L` for Iteration 2 (DNP v0.1); identified existing H1.51/H1.52 as CAN A without renaming nets; documented planned node roles and implementation requirements; retained H2.51/H2.52 as reserved with no power changes. |
+
+</details>

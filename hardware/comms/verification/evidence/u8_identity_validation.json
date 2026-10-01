@@ -1,0 +1,153 @@
+{
+  "date": "2026-09-09",
+  "scope": "U8 identity and metadata; bias/layout not accepted",
+  "pinmap_accepted": true,
+  "schematic_metadata_verified": true,
+  "pcb_metadata": {
+    "Reference": "U8",
+    "Value": "ADL5602ARKZ-R7",
+    "Datasheet": "https://www.analog.com/media/en/technical-documentation/data-sheets/ADL5602.pdf",
+    "Description": "ADL5602 50 MHz to 4 GHz RF/IF gain block, 20 dB nominal, 5 V, SOT-89; audited pin-compatible ADL5610 symbol",
+    "LCSC Part #": "C496494",
+    "MPN": "ADL5602ARKZ-R7",
+    "Manufacturer": "Analog Devices",
+    "PinMapAudit": "design/u8_adl5602_pinmap.md"
+  },
+  "native_package": {
+    "placed": [
+      {
+        "number": "1",
+        "position": [
+          146.0636,
+          138.3436
+        ],
+        "shape": 4,
+        "size": [
+          1.3,
+          0.9
+        ],
+        "bbox": [
+          145.4136,
+          137.8936,
+          1.3,
+          0.9
+        ],
+        "net": "TX_437"
+      },
+      {
+        "number": "2",
+        "position": [
+          146.1511,
+          139.8436
+        ],
+        "shape": 6,
+        "size": [
+          1.475,
+          0.9
+        ],
+        "bbox": [
+          145.4136,
+          138.9771,
+          4.6,
+          1.733
+        ],
+        "net": "GND"
+      },
+      {
+        "number": "3",
+        "position": [
+          146.0636,
+          141.3436
+        ],
+        "shape": 4,
+        "size": [
+          1.3,
+          0.9
+        ],
+        "bbox": [
+          145.4136,
+          140.8936,
+          1.3,
+          0.9
+        ],
+        "net": "Net-(C84-Pad1)"
+      }
+    ],
+    "library": [
+      {
+        "number": "1",
+        "position": [
+          -1.95,
+          -1.5
+        ],
+        "shape": 4,
+        "size": [
+          1.3,
+          0.9
+        ],
+        "bbox": [
+          -2.6,
+          -1.95,
+          1.3,
+          0.9
+        ],
+        "net": ""
+      },
+      {
+        "number": "2",
+        "position": [
+          -1.8625,
+          0.0
+        ],
+        "shape": 6,
+        "size": [
+          1.475,
+          0.9
+        ],
+        "bbox": [
+          -2.6,
+          -0.8665,
+          4.6,
+          1.733
+        ],
+        "net": ""
+      },
+      {
+        "number": "3",
+        "position": [
+          -1.95,
+          1.5
+        ],
+        "shape": 4,
+        "size": [
+          1.3,
+          0.9
+        ],
+        "bbox": [
+          -2.6,
+          1.05,
+          1.3,
+          0.9
+        ],
+        "net": ""
+      }
+    ]
+  },
+  "retained_copper_items_unchanged": 691,
+  "footprints_positions_and_pad_nets_unchanged": 141,
+  "standalone_export_emitted_nets_unchanged": 9,
+  "full_ERC_rerun": false,
+  "latest_geometry_DRC": {
+    "errors": 579,
+    "warnings": 252,
+    "unconnected_items": 128,
+    "note": "Prior routing check; no geometry changed in this audit."
+  },
+  "remaining": [
+    "Qualify or revise U8 bias network",
+    "Move bias components near U8 and repair RFOUT-to-C84 routing",
+    "Verify thermal ground stitching",
+    "Recompute supply budget",
+    "Audit U10"
+  ]
+}

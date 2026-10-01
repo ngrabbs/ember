@@ -1,5 +1,9 @@
 # Si5351A Breakout Bench Test — CLK1 Power Verification
 
+> **Dated record.** Measurements and audit scope apply to the recorded configuration.
+> For current work and superseded blockers, see the [comms checklist](../../TODO.md).
+
+
 Procedure for verifying Si5351A CLK1 LO drive level for the
 comms board RX chain, using the **Adafruit 5640 Si5351A breakout** and
 a **Pico 2** as the I2C host.
@@ -10,9 +14,9 @@ Also characterize the 3rd harmonic at 437.7 MHz to confirm the 5-pole LO
 LPF design is adequate.
 
 See companion docs:
-- [`../design/rx_mixer_trade_study.md`](../design/rx_mixer_trade_study.md) — why this measurement matters
-- [`../design/schematic_guide.md`](../design/schematic_guide.md) — Sheet 4 Section B.2 (LO LPF design)
-- [`../../../docs/research/`](../../../docs/research/) — TinySA / NanoVNA tool inventory
+- [`../../design/rx_mixer_trade_study.md`](../../design/rx_mixer_trade_study.md) — why this measurement matters
+- [`../../design/schematic_guide.md`](../../design/schematic_guide.md) — Sheet 4 Section B.2 (LO LPF design)
+- [`../../../docs/research/`](../../../../docs/research) — TinySA / NanoVNA tool inventory
 
 ---
 

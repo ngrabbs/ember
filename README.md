@@ -4,6 +4,8 @@
 wildfire detection instrument and its supporting ground segment, built as the
 senior capstone project for the Mississippi State University ECE department.
 
+**[Documentation start here](docs/README.md)** · [System interfaces](system/README.md) · [Open work](TODO.md)
+
 ---
 
 ## The mission

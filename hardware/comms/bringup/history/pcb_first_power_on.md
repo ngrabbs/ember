@@ -1,5 +1,9 @@
 # Comms PCB — First Power-On / Fault-Finding Log
 
+> **Dated record.** Measurements and audit scope apply to the recorded configuration.
+> For current work and superseded blockers, see the [comms checklist](../../TODO.md).
+
+
 **Board:** cubesat_communications Rev A (first fab, JLC)
 **Date:** 2026-08-15
 **Status:** ❌ Rev A non-functional — fatal schematic wiring error found. Rev B required.
@@ -20,12 +24,12 @@ runaway current and cooking the part.
 
 - **Root cause:** Q1 `L1 → base` wiring error → **rev-B one-line fix**
   (rewire L1 to the collector, ECO, re-route). See
-  [`../design/schematic_guide.md`](../design/schematic_guide.md)
+  [`../../design/schematic_guide.md`](../../design/schematic_guide.md)
   Section B (Frequency Tripler).
 - **Casualty (to confirm):** U2 (ADL5602) most likely shorted by the fault
   event → **replace on the two physical boards**.
 - **Validation:** LTspice model
-  [`../design/ltspice_simulations/tripler.asc`](../design/ltspice_simulations/tripler.asc)
+  [`../../design/ltspice_simulations/tripler.asc`](../../design/ltspice_simulations/tripler.asc)
   reproduces both the failure and the fix; FFT of the corrected circuit
   shows the intended 437 MHz tripled output.
 
@@ -115,7 +119,7 @@ hundred mW is driven to amps → smoke.
 
 ## LTspice validation
 
-Model: [`../design/ltspice_simulations/tripler.asc`](../design/ltspice_simulations/tripler.asc)
+Model: [`../design/ltspice_simulations/tripler.asc`](../../design/ltspice_simulations/tripler.asc)
 
 - **Broken circuit** (as-PCB, L1 → base), `.dc V2 0 5` or ramped `.tran`
   with `V2 = PWL(0 0 1m 5)`:
@@ -250,7 +254,7 @@ pinout trap entirely.
 
 ## LTspice tripler study — bias & drive (2026-08-15)
 
-Model: [`../design/ltspice_simulations/tripler.asc`](../design/ltspice_simulations/tripler.asc)
+Model: [`../design/ltspice_simulations/tripler.asc`](../../design/ltspice_simulations/tripler.asc)
 (fixed topology, L1 → collector).
 
 > **Model caveat:** run with LTspice's generic default NPN (`standard.bjt`:
@@ -447,7 +451,7 @@ optimization on the board. It must reject FM broadcast (88–108 MHz), the LO
 2nd harmonic (291.8 MHz), and 437 MHz TX leakage, while adding minimal
 insertion loss — because **IL before the LNA adds ~dB-for-dB to system NF.**
 
-Sim: [`../design/ltspice_simulations/rx_circuit.asc`](../design/ltspice_simulations/rx_circuit.asc)
+Sim: [`../design/ltspice_simulations/rx_circuit.asc`](../../design/ltspice_simulations/rx_circuit.asc)
 (3-pole coupled-resonator, same topology as the TX BPF; inductors modeled as
 high-Q **0402HP, Q≈40 @146 MHz** replacing the as-built C167487 multilayer).
 
@@ -590,7 +594,7 @@ in `../design/rx_mixer_trade_study.md` §11.
 Full rev-B TX chain modeled as one schematic with placed components:
 **tripler (2SC3356) → collector tank → pre-MMIC BPF → ADL5602 MMIC → post-MMIC
 BPF → 50 Ω antenna.** Reference sim:
-[`../design/ltspice_simulations/tx_circuit.asc`](../design/ltspice_simulations/tx_circuit.asc)
+[`../design/ltspice_simulations/tx_circuit.asc`](../../design/ltspice_simulations/tx_circuit.asc)
 (the MMIC is a behavioral gain block: 50 Ω in/out, +20 dB, soft P1dB via
 `tanh`, broadband; not the real device model — captures gain/impedance/
 compression, not phase/noise/DC-bias).
@@ -628,11 +632,11 @@ This sim is the worked proof of all four rev-B TX fixes together (Q1 wiring,
 
 ## Files
 
-- **KiCad implementation plan (all-UHF v2):** [`../design/kicad_implementation_plan.md`](../design/kicad_implementation_plan.md)
-- **End-to-end TX reference sim (cap-coupled cheby, CURRENT):** [`../design/ltspice_simulations/tx_circuit_cheby.asc`](../design/ltspice_simulations/tx_circuit_cheby.asc)
-- End-to-end TX sim (L-coupled, superseded): [`../design/ltspice_simulations/tx_circuit.asc`](../design/ltspice_simulations/tx_circuit.asc)
-- Schematic doc: [`../design/schematic_guide.md`](../design/schematic_guide.md)
-- Tripler LTspice model: [`../design/ltspice_simulations/tripler.asc`](../design/ltspice_simulations/tripler.asc)
-- 437 MHz BPF sims: [`437MHz_BPF_2nd_order_chebyshev.asc`](../design/ltspice_simulations/Filters/437MHz_BPF_2nd_order_chebyshev.asc) (cheby, current), [`437MHz_BPF_asbuilt.asc`](../design/ltspice_simulations/Filters/437MHz_BPF_asbuilt.asc) (L-coupled)
+- **KiCad implementation plan (all-UHF v2):** [`../design/kicad_implementation_plan.md`](../../design/kicad_implementation_plan.md)
+- **End-to-end TX reference sim (cap-coupled cheby, CURRENT):** [`../design/ltspice_simulations/tx_circuit_cheby.asc`](../../design/ltspice_simulations/tx_circuit_cheby.asc)
+- End-to-end TX sim (L-coupled, superseded): [`../design/ltspice_simulations/tx_circuit.asc`](../../design/ltspice_simulations/tx_circuit.asc)
+- Schematic doc: [`../design/schematic_guide.md`](../../design/schematic_guide.md)
+- Tripler LTspice model: [`../design/ltspice_simulations/tripler.asc`](../../design/ltspice_simulations/tripler.asc)
+- 437 MHz BPF sims: [`437MHz_BPF_2nd_order_chebyshev.asc`](../../design/ltspice_simulations/Filters/437MHz_BPF_2nd_order_chebyshev.asc) (cheby, current), [`437MHz_BPF_asbuilt.asc`](../../design/ltspice_simulations/Filters/437MHz_BPF_asbuilt.asc) (L-coupled)
 - Tripler breadboard notes: [`tripler_breadboard.md`](tripler_breadboard.md)
 - Si5351A / LO bring-up: [`si5351a_bringup_log.md`](si5351a_bringup_log.md)

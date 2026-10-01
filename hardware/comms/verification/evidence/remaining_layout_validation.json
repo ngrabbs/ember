@@ -1,0 +1,82 @@
+{
+  "source_sha256": "e318a99dcb6087cf7492e27135b0114a8aa51b25495c8cca671b6644e15b2a1d",
+  "preview_sha256": "dd868e92e75afa6c3254c5f3d2116dc826475d362d252d2a66fe063ed63c7460",
+  "moved_components": [
+    "L17",
+    "D14",
+    "U5",
+    "C65",
+    "R30",
+    "C88",
+    "C57",
+    "TP11",
+    "TP16",
+    "C61",
+    "TP12",
+    "C80",
+    "R26",
+    "C72",
+    "C81",
+    "R31"
+  ],
+  "footprints": 127,
+  "copper": 795,
+  "warnings": 120,
+  "unconnected": 0,
+  "bias_pad_membership": {
+    "/RX Chain/VREF_RX": [
+      "C72.2",
+      "R28.2",
+      "R29.1",
+      "R30.2",
+      "R38.2",
+      "R39.1"
+    ],
+    "/RX Chain/RX_AMP_IN": [
+      "C69.1",
+      "R39.2",
+      "U5.5"
+    ]
+  },
+  "restored_rf_plane_samples": 705,
+  "restored_rf_plane_missing": [],
+  "native_erc": {
+    "errors": 0,
+    "warnings": 1,
+    "excluded_warnings": 2,
+    "ignored_tests": 4
+  },
+  "full_native_parity": {
+    "nets": 181,
+    "mismatches": 0
+  },
+  "saved_board_sha256": "dd868e92e75afa6c3254c5f3d2116dc826475d362d252d2a66fe063ed63c7460",
+  "accepted_exclusions": [
+    {
+      "description": "Courtyards overlap",
+      "items": [
+        {
+          "description": "Footprint H4",
+          "pos": {
+            "x": 106.8636,
+            "y": 104.3736
+          },
+          "uuid": "3cb9d2c5-dbe7-4c8c-8227-404ddca17d99"
+        },
+        {
+          "description": "Footprint H3",
+          "pos": {
+            "x": 111.9436,
+            "y": 104.3736
+          },
+          "uuid": "59730e12-defd-4bb2-9b88-14a4b1eab542"
+        }
+      ],
+      "severity": "error",
+      "type": "courtyards_overlap"
+    }
+  ],
+  "errors": [],
+  "active_error_count": 0,
+  "exclusion_reason": "User accepts H3/H4 overlap to preserve equally spaced pins; pair-specific native KiCad exclusion saved."
+}

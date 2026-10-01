@@ -1,0 +1,433 @@
+{
+  "checkpoint": "6eaf5d6",
+  "scope": "RF filters, L16, RF return paths and PCB warning cleanup",
+  "drc": {
+    "active_errors": 0,
+    "warnings": 1,
+    "unconnected_items": 0,
+    "remaining_warning": {
+      "description": "Silkscreen clearance",
+      "items": [
+        {
+          "description": "Rectangle of H4 on Top Overlay",
+          "pos": {
+            "x": 109.4586,
+            "y": 70.978599
+          },
+          "uuid": "a23d3437-432e-4acd-8b05-8024804887d7"
+        },
+        {
+          "description": "Rectangle of H3 on Top Overlay",
+          "pos": {
+            "x": 114.5386,
+            "y": 70.978599
+          },
+          "uuid": "d6f8fb6d-e286-4c87-b81b-044cb32c016e"
+        }
+      ],
+      "severity": "warning",
+      "type": "silk_overlap"
+    }
+  },
+  "native_netlist_parity": {
+    "native_net_count": 181,
+    "pcb_pad_count": 441,
+    "mismatches": []
+  },
+  "ground": {
+    "samples": 21947,
+    "covered": 21757,
+    "uncovered": 190,
+    "uncovered_nets": {
+      "ANT": 190
+    },
+    "uncovered_explanation": "J9 plated signal-pin launch clearance; all sampled TX/RX/LO filter and amplifier return corridors covered",
+    "corridor_half_width_mm": 0.6312,
+    "longitudinal_step_mm": 0.1,
+    "lateral_step_mm": 0.0789,
+    "scope_nets": [
+      "TRIPLER_OUT",
+      "Net-(Q4-C)",
+      "Net-(C86-Pad2)",
+      "Net-(C84-Pad2)",
+      "Net-(C84-Pad1)",
+      "ANT",
+      "Net-(C93-Pad2)",
+      "Net-(U10-RF)",
+      "Net-(U10-LO)",
+      "Net-(C91-Pad2)",
+      "Net-(U9-OUT_DC)",
+      "RX_IN",
+      "Net-(C55-Pad2)",
+      "Net-(C100-Pad1)",
+      "Net-(C60-Pad2)",
+      "Net-(C89-Pad2)",
+      "Net-(U9-IN)",
+      "Net-(U11-RFC)",
+      "TX_437",
+      "TX_OUT"
+    ],
+    "RF_widths_mm": {
+      "TRIPLER_OUT": [
+        0.358
+      ],
+      "Net-(Q4-C)": [
+        0.358
+      ],
+      "Net-(C86-Pad2)": [
+        0.358
+      ],
+      "Net-(C84-Pad2)": [
+        0.358
+      ],
+      "Net-(C84-Pad1)": [
+        0.358
+      ],
+      "ANT": [
+        0.358
+      ],
+      "Net-(C93-Pad2)": [
+        0.358
+      ],
+      "Net-(U10-RF)": [
+        0.358
+      ],
+      "Net-(U10-LO)": [
+        0.358
+      ],
+      "Net-(C91-Pad2)": [
+        0.358
+      ],
+      "Net-(U9-OUT_DC)": [
+        0.358
+      ],
+      "RX_IN": [
+        0.358
+      ],
+      "Net-(C55-Pad2)": [
+        0.358
+      ],
+      "Net-(C100-Pad1)": [
+        0.358
+      ],
+      "Net-(C60-Pad2)": [
+        0.358
+      ],
+      "Net-(C89-Pad2)": [
+        0.358
+      ],
+      "Net-(U9-IN)": [
+        0.358
+      ],
+      "Net-(U11-RFC)": [
+        0.358
+      ],
+      "TX_437": [
+        0.358
+      ],
+      "TX_OUT": [
+        0.358
+      ]
+    },
+    "limitation": "Discrete zone-fill sampling; not continuous geometric proof, connector EM extraction or return-current simulation"
+  },
+  "filters": {
+    "ideal": {
+      "ideal": {
+        "peak_MHz": 428.2,
+        "peak_S21_dB": -5.0634281627524934e-05,
+        "relative_3dB_band_MHz": [
+          396.5,
+          472.1
+        ],
+        "points": {
+          "145": {
+            "S21_dB": -74.36397293159176,
+            "S11_dB": -1.5899630351776188e-07
+          },
+          "435": {
+            "S21_dB": -0.005448534591743505,
+            "S11_dB": -29.017769970509608
+          },
+          "437": {
+            "S21_dB": -0.013695667134231928,
+            "S11_dB": -25.01885722530073
+          },
+          "870": {
+            "S21_dB": -22.774503829650428,
+            "S11_dB": -0.022987025237692634
+          },
+          "1305": {
+            "S21_dB": -25.60262316743037,
+            "S11_dB": -0.01197072332540527
+          }
+        }
+      },
+      "Q40": {
+        "peak_MHz": 435.0,
+        "peak_S21_dB": -1.839241705629893,
+        "relative_3dB_band_MHz": [
+          398.2,
+          475.7
+        ],
+        "points": {
+          "145": {
+            "S21_dB": -74.32556706403729,
+            "S11_dB": -0.009389000214427026
+          },
+          "435": {
+            "S21_dB": -1.839241705629893,
+            "S11_dB": -28.07937044587288
+          },
+          "437": {
+            "S21_dB": -1.843994252717094,
+            "S11_dB": -24.859629176821507
+          },
+          "870": {
+            "S21_dB": -22.79307873522969,
+            "S11_dB": -0.040414063298250535
+          },
+          "1305": {
+            "S21_dB": -25.60650212249406,
+            "S11_dB": -0.015664105592867808
+          }
+        }
+      },
+      "Q60": {
+        "peak_MHz": 434.3,
+        "peak_S21_dB": -1.2339360369809342,
+        "relative_3dB_band_MHz": [
+          397.7,
+          474.3
+        ],
+        "points": {
+          "145": {
+            "S21_dB": -74.348956708778,
+            "S11_dB": -0.006259762502794857
+          },
+          "435": {
+            "S21_dB": -1.234471796141194,
+            "S11_dB": -29.12302266762032
+          },
+          "437": {
+            "S21_dB": -1.2416980190903957,
+            "S11_dB": -25.38715317728981
+          },
+          "870": {
+            "S21_dB": -22.786636153679027,
+            "S11_dB": -0.034609123278324494
+          },
+          "1305": {
+            "S21_dB": -25.60516817208603,
+            "S11_dB": -0.014433247514092145
+          }
+        }
+      },
+      "shunt_plus_0p3": {
+        "peak_MHz": 425.4,
+        "peak_S21_dB": -3.008528116754379e-10,
+        "relative_3dB_band_MHz": [
+          392.7,
+          465.6
+        ],
+        "points": {
+          "145": {
+            "S21_dB": -74.31472685094187,
+            "S11_dB": -1.6080947448416347e-07
+          },
+          "435": {
+            "S21_dB": -0.03776252194187006,
+            "S11_dB": -20.6261007864373
+          },
+          "437": {
+            "S21_dB": -0.07001338177571645,
+            "S11_dB": -17.96099222106125
+          },
+          "870": {
+            "S21_dB": -23.322683714025814,
+            "S11_dB": -0.020254815289383117
+          },
+          "1305": {
+            "S21_dB": -26.09730752029424,
+            "S11_dB": -0.01068039881149222
+          }
+        }
+      },
+      "L_plus_5pct": {
+        "peak_MHz": 413.7,
+        "peak_S21_dB": -1.2164140442487727e-07,
+        "relative_3dB_band_MHz": [
+          386.6,
+          459.9
+        ],
+        "points": {
+          "145": {
+            "S21_dB": -73.39713978615958,
+            "S11_dB": -1.9864166281433137e-07
+          },
+          "435": {
+            "S21_dB": -0.17073033800385576,
+            "S11_dB": -14.139821627265118
+          },
+          "437": {
+            "S21_dB": -0.2564057884619547,
+            "S11_dB": -12.41613701816534
+          },
+          "870": {
+            "S21_dB": -23.067788887614462,
+            "S11_dB": -0.021482216573170287
+          },
+          "1305": {
+            "S21_dB": -25.720673924175074,
+            "S11_dB": -0.011649284530394884
+          }
+        }
+      }
+    },
+    "distributed_before": {
+      "RX": {
+        "internal_trace_mm": 6.47999999999999,
+        "nodes": 10,
+        "edges": 6,
+        "peak_MHz": 419.0,
+        "peak_S21_dB": -0.0035779664697751347,
+        "435MHz": [
+          -0.33039950550080555,
+          -11.351601700504705
+        ],
+        "437MHz": [
+          -0.4658132178160648,
+          -9.926550095691216
+        ]
+      },
+      "TX_output": {
+        "internal_trace_mm": 19.357160800544577,
+        "nodes": 20,
+        "edges": 16,
+        "peak_MHz": 412.75,
+        "peak_S21_dB": -0.6507085501624882,
+        "435MHz": [
+          -2.447446010277738,
+          -3.6571176368464773
+        ],
+        "437MHz": [
+          -2.7934729856528726,
+          -3.2385237799010658
+        ]
+      },
+      "TX_preselector": {
+        "internal_trace_mm": 8.530901113497489,
+        "nodes": 16,
+        "edges": 12,
+        "peak_MHz": 416.75,
+        "peak_S21_dB": -0.007555807177900856,
+        "435MHz": [
+          -0.5174042551103639,
+          -9.495677173625584
+        ],
+        "437MHz": [
+          -0.695594759713235,
+          -8.297436341788739
+        ]
+      },
+      "LO": {
+        "internal_trace_mm": 6.5800000000000125,
+        "nodes": 10,
+        "edges": 6,
+        "peak_MHz": 419.0,
+        "peak_S21_dB": -0.004739334830812082,
+        "435MHz": [
+          -0.3387688944061793,
+          -11.24709128689915
+        ],
+        "437MHz": [
+          -0.4760991208232223,
+          -9.836744396952211
+        ]
+      }
+    },
+    "distributed_after": {
+      "RX": {
+        "internal_trace_mm": 6.47999999999999,
+        "nodes": 10,
+        "edges": 6,
+        "peak_MHz": 419.0,
+        "peak_S21_dB": -0.0035779664697751347,
+        "435MHz": [
+          -0.33039950550080555,
+          -11.351601700504705
+        ],
+        "437MHz": [
+          -0.4658132178160648,
+          -9.926550095691216
+        ]
+      },
+      "TX_output": {
+        "internal_trace_mm": 9.445940055448785,
+        "nodes": 16,
+        "edges": 12,
+        "peak_MHz": 409.75,
+        "peak_S21_dB": -0.00415357440041106,
+        "435MHz": [
+          -0.6136040757631677,
+          -8.802151118869885
+        ],
+        "437MHz": [
+          -0.8084410127709131,
+          -7.699311569654287
+        ]
+      },
+      "TX_preselector": {
+        "internal_trace_mm": 8.530901113497489,
+        "nodes": 16,
+        "edges": 12,
+        "peak_MHz": 416.75,
+        "peak_S21_dB": -0.007555807177900856,
+        "435MHz": [
+          -0.5174042551103639,
+          -9.495677173625584
+        ],
+        "437MHz": [
+          -0.695594759713235,
+          -8.297436341788739
+        ]
+      },
+      "LO": {
+        "internal_trace_mm": 6.5800000000000125,
+        "nodes": 10,
+        "edges": 6,
+        "peak_MHz": 419.0,
+        "peak_S21_dB": -0.004739334830812082,
+        "435MHz": [
+          -0.3387688944061793,
+          -11.24709128689915
+        ],
+        "437MHz": [
+          -0.4760991208232223,
+          -9.836744396952211
+        ]
+      }
+    },
+    "assumptions": "50 ohm source/load, ideal capacitors/inductors, lossless 50 ohm internal tracks with epsilon_eff=3.3; component pads collapsed to nearby track endpoints; excludes pad/via parasitics, ground inductance, external leads, active-device mismatch, bias branches, coupling and actual component losses"
+  },
+  "changes": {
+    "moved_components": [
+      "C94"
+    ],
+    "removed_redundant_vias": 6,
+    "moved_supply_control_vias": 3,
+    "reference_labels_repositioned": 45,
+    "undersize_board_text_fixed": 6,
+    "obsolete_testpoint_legend_corrected": true,
+    "removed_zone": "+5V_CON isolated fill zone",
+    "schematic_or_component_value_changes": false,
+    "new_rule_exclusions": false
+  },
+  "L16": {
+    "decision": "Retain Coilcraft 0805HP-221XJRC for prototype only",
+    "qualification": "OPEN: actual RF impedance under bias, stability, supply coupling; old >1.5 GHz SRF target unresolved",
+    "typical_SRF_MHz": 930,
+    "ideal_X_at_435MHz_ohm": 601.3,
+    "DCR_max_ohm_at_25C": 0.426
+  }
+}
