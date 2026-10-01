@@ -149,3 +149,13 @@ const char *ltc4162_state_string(uint16_t charger_state);
 
 /* Short human label for a raw CHARGE_STATUS value (or "off"). */
 const char *ltc4162_charge_status_string(uint16_t charge_status);
+
+#ifndef IHU_EPS_TIMED_BENCH_TEST
+#define IHU_EPS_TIMED_BENCH_TEST 0
+#endif
+/* Separate supervised bench image. Boot recovery always suspends charging;
+ * start releases it for at most 60 s, service restores saved settings.
+ * All functions fail closed in normal builds. Call service every second. */
+bool ltc4162_bench_recover(i2c_inst_t *i2c, uint8_t addr);
+bool ltc4162_bench_start(i2c_inst_t *i2c, uint8_t addr, uint32_t now_ms);
+bool ltc4162_bench_service(i2c_inst_t *i2c, uint8_t addr, uint32_t now_ms, bool stop);

@@ -84,10 +84,13 @@ static bool read_word(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint16_t *out)
 }
 
 static bool write_word(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint16_t value) {
-#if !IHU_EPS_ALLOW_CHARGER_WRITES
+#if !IHU_EPS_ALLOW_CHARGER_WRITES && !IHU_EPS_TIMED_BENCH_TEST
     (void)i2c; (void)addr; (void)reg; (void)value;
     return false;
 #else
+#if IHU_EPS_TIMED_BENCH_TEST && !IHU_EPS_ALLOW_CHARGER_WRITES
+    if (reg != 0x14 && reg != 0x29 && reg != 0x1a && reg != 0x1b && reg != 0x1f && reg != 0x24) return false;
+#endif
     uint8_t buf[3];
     buf[0] = reg;
     buf[1] = (uint8_t)(value & 0xFF);          /* LSB first */
@@ -273,4 +276,101 @@ const char *ltc4162_charge_status_string(uint16_t charge_status) {
         case LTC4162_CHARGE_STATUS_ILIM_REG:         return "ilim-reg-active";
     }
     return "unknown";
+}
+
+#if IHU_EPS_TIMED_BENCH_TEST
+static const uint8_t bench_regs[] = {0x14, 0x29, 0x1a, 0x1b, 0x1f, 0x24};
+static uint16_t bench_saved[6];
+static uint32_t bench_since;
+static bool bench_active, bench_ready;
+static bool bench_write(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint16_t v) {
+    uint16_t check;
+    return write_word(i2c,addr,reg,v) && read_word(i2c,addr,reg,&check) && check==v;
+}
+/* Lock must be held. Attempt each recovery write even if a previous one fails.
+ * Keep charging suspended if settings cannot be verified; retry next service. */
+static bool bench_restore(i2c_inst_t *i2c, uint8_t addr) {
+    bool ok=bench_write(i2c,addr,0x14,bench_saved[0]|CFG_SUSPEND_CHARGER);
+    for (unsigned n=2;n<6;++n) {
+        bool step=bench_write(i2c,addr,bench_regs[n],bench_saved[n]); ok=step&&ok;
+    }
+    bool step=bench_write(i2c,addr,0x29,bench_saved[1]); ok=step&&ok;
+    /* Saved CONFIG always has suspend set: never resume after a test. */
+    if (ok) bench_active=false;
+    return ok;
+}
+#endif
+
+bool ltc4162_bench_recover(i2c_inst_t *i2c, uint8_t addr) {
+#if !IHU_EPS_TIMED_BENCH_TEST
+    (void)i2c; (void)addr; return false;
+#else
+    if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) return false;
+    uint16_t cfg, chg;
+    bool ok=read_word(i2c,addr,0x14,&cfg) && read_word(i2c,addr,0x29,&chg);
+    if (ok) {
+        ok=bench_write(i2c,addr,0x14,cfg|CFG_SUSPEND_CHARGER);
+        /* Temperature recovery only after verified suspension. */
+        if (ok) {
+            bool a=bench_write(i2c,addr,0x1f,JEITA_T1_DEFAULT);
+            bool b=bench_write(i2c,addr,0x24,JEITA_T6_DEFAULT);
+            bool c=bench_write(i2c,addr,0x29,chg|CHG_CFG_EN_JEITA);
+            bool d=bench_write(i2c,addr,0x1a,0); /* minimum servo */
+            ok=a&&b&&c&&d;
+        }
+    }
+    bench_active=false; bench_ready=ok;
+    ihu_i2c0_unlock(); return ok;
+#endif
+}
+
+bool ltc4162_bench_start(i2c_inst_t *i2c, uint8_t addr, uint32_t now_ms) {
+#if !IHU_EPS_TIMED_BENCH_TEST
+    (void)i2c; (void)addr; (void)now_ms; return false;
+#else
+    if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) return false;
+    if (!bench_ready || bench_active) { ihu_i2c0_unlock(); return false; }
+    uint16_t chem, adc, vbat, vin, die, ntc;
+    bool ok=read_word(i2c,addr,0x43,&chem) && read_word(i2c,addr,0x4a,&adc)
+         && read_word(i2c,addr,0x3a,&vbat) && read_word(i2c,addr,0x3b,&vin)
+         && read_word(i2c,addr,0x3f,&die) && read_word(i2c,addr,0x40,&ntc);
+    /* LAD, two cells or suspended autodetection zero; ADC valid, 7..8.3 V
+     * pack, 9..12 V input, die below 45 C, no open/zero NTC ADC. */
+    ok=ok && ((chem>>8)&15)==0 && ((chem&15)==0 || (chem&15)==2)
+       && (adc&1) && vbat>=18192 && vbat<=21569 && vin>=5458 && vin<=7277
+       && die<14391 && ntc>1 && ntc<21684;
+    for (unsigned n=0;ok&&n<6;++n) ok=read_word(i2c,addr,bench_regs[n],&bench_saved[n]);
+    ok=ok && (bench_saved[0]&CFG_SUSPEND_CHARGER) && bench_saved[2]<=31 && bench_saved[3]<=31;
+    if (ok) {
+        bench_active=true; bench_since=now_ms;
+        /* Suspend stays set until every modified setting reads back. */
+        ok=bench_write(i2c,addr,0x29,bench_saved[1]&~CHG_CFG_EN_JEITA)
+           && bench_write(i2c,addr,0x1a,0)
+           && bench_write(i2c,addr,0x1b,bench_saved[3]<23 ? bench_saved[3] : 23)
+           && bench_write(i2c,addr,0x1f,0x7fff)
+           && bench_write(i2c,addr,0x24,1)
+           && bench_write(i2c,addr,0x14,bench_saved[0]&~CFG_SUSPEND_CHARGER);
+        if (!ok) { bench_ready=bench_restore(i2c,addr); }
+    }
+    ihu_i2c0_unlock(); return ok;
+#endif
+}
+
+bool ltc4162_bench_service(i2c_inst_t *i2c, uint8_t addr, uint32_t now_ms, bool stop) {
+#if !IHU_EPS_TIMED_BENCH_TEST
+    (void)i2c; (void)addr; (void)now_ms; (void)stop; return false;
+#else
+    if (!ihu_i2c0_lock(IHU_I2C0_LOCK_TIMEOUT_MS)) return false;
+    bool ok=bench_ready;
+    if (bench_active) {
+        uint16_t chem, adc, vbat, die;
+        bool healthy=read_word(i2c,addr,0x43,&chem) && read_word(i2c,addr,0x4a,&adc)
+                  && read_word(i2c,addr,0x3a,&vbat) && read_word(i2c,addr,0x3f,&die)
+                  && ((chem>>8)&15)==0 && ((chem&15)==0 || (chem&15)==2)
+                  && (adc&1) && vbat>=18192 && vbat<=21569 && die<14391;
+        if (stop || !healthy || (uint32_t)(now_ms-bench_since)>=60000u)
+            ok=bench_restore(i2c,addr);
+    }
+    ihu_i2c0_unlock(); return ok;
+#endif
 }

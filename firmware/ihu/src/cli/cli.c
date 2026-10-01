@@ -46,6 +46,7 @@ static void cmd_eps(int argc, char *argv[]);
 static void cmd_comms(int argc, char *argv[]);
 static void cmd_kick(int argc, char *argv[]);
 static void cmd_ntc_bypass(int argc, char *argv[]);
+static void cmd_charge_test(int argc, char *argv[]);
 static void cmd_quiet(int argc, char *argv[]);
 static void cmd_loud(int argc, char *argv[]);
 static void cmd_reboot(int argc, char *argv[]);
@@ -57,6 +58,7 @@ static const cli_command_t cli_commands[] = {
     { "comms",      "comms board status (comms ping | comms raw)",   cmd_comms      },
     { "kick",       "pulse suspend_charger to restart LTC4162",      cmd_kick       },
     { "ntc-bypass", "ntc-bypass on|off — widen jeita to bypass NTC", cmd_ntc_bypass },
+    { "charge-test", "charge-test start|stop: supervised 60-second bench test", cmd_charge_test },
     { "quiet",      "suppress periodic heartbeat + telemetry print", cmd_quiet      },
     { "loud",       "re-enable periodic background output",          cmd_loud       },
     { "reboot",     "soft-reset the IHU via the watchdog",           cmd_reboot     },
@@ -442,4 +444,21 @@ static void cli_task(void *pvParameters) {
 BaseType_t ihu_cli_task_start(UBaseType_t priority) {
     return xTaskCreate(cli_task, CLI_TASK_NAME,
                        CLI_TASK_STACK_WORDS, NULL, priority, NULL);
+}
+
+static void cmd_charge_test(int argc, char *argv[]) {
+#if !IHU_EPS_TIMED_BENCH_TEST
+    (void)argc; (void)argv;
+    printf("timed charging test disabled in this build\n");
+#else
+    uint32_t now=(uint32_t)(xTaskGetTickCount()*portTICK_PERIOD_MS);
+    if (argc==2 && strcmp(argv[1],"start")==0) {
+        if (ltc4162_bench_start(IHU_I2C_EPS_INSTANCE,IHU_EPS_LTC4162_ADDR,now)) {
+            watchdog_enable(5000,true);
+            printf("BENCH CHARGE TEST ACTIVE: 60s, minimum servo, <=4.10V/cell, NO BATTERY TEMPERATURE PROTECTION\n");
+        } else printf("charge-test refused or failed; inspect EPS; disconnect input if recovery failed\n");
+    } else if (argc==2 && strcmp(argv[1],"stop")==0) {
+        printf("charge-test stop: %s\n",ltc4162_bench_service(IHU_I2C_EPS_INSTANCE,IHU_EPS_LTC4162_ADDR,now,true)?"restored/suspended":"FAILED; disconnect charge input");
+    } else printf("usage: charge-test start|stop (60 seconds maximum)\n");
+#endif
 }

@@ -9,13 +9,18 @@
 #include "pico/stdlib.h"
 #include "hardware/i2c.h"
 #include "hardware/gpio.h"
+#include "hardware/watchdog.h"
 
 #include "config/pinmap.h"
 #include "config/i2c0_bus.h"
 #include "comms_hk_proto.h"   /* so the bus scan can name the comms board */
 #include "drivers/ltc4162.h"
 
+#if IHU_EPS_TIMED_BENCH_TEST
+#define EPS_POLL_PERIOD_MS      1000
+#else
 #define EPS_POLL_PERIOD_MS      5000
+#endif
 #define EPS_TASK_STACK_WORDS    768       /* printf with floats eats stack */
 #define EPS_TASK_NAME           "eps-mon"
 
@@ -136,6 +141,13 @@ static void eps_monitor_task(void *pvParameters) {
     /* Let the console task print its banner first. */
     vTaskDelay(pdMS_TO_TICKS(2000));
 
+#if IHU_EPS_TIMED_BENCH_TEST
+    while (!ltc4162_bench_recover(IHU_I2C_EPS_INSTANCE, IHU_EPS_LTC4162_ADDR)) {
+        printf("[eps] bench recovery FAILED; remove charge input; retrying\n");
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+    printf("[eps] bench recovery verified: charger suspended, JEITA restored; test requires explicit command\n");
+#endif
     i2c_bus_scan_once();
 
     if (!ltc4162_present(IHU_I2C_EPS_INSTANCE, IHU_EPS_LTC4162_ADDR)) {
@@ -181,6 +193,12 @@ static void eps_monitor_task(void *pvParameters) {
 
     uint32_t poll = 0;
     for (;;) {
+#if IHU_EPS_TIMED_BENCH_TEST
+        if (ltc4162_bench_service(IHU_I2C_EPS_INSTANCE, IHU_EPS_LTC4162_ADDR,
+                                (uint32_t)(xTaskGetTickCount()*portTICK_PERIOD_MS),false))
+            watchdog_update();
+        else printf("[eps] bench service FAILED; remove charge input\n");
+#endif
         ltc4162_telemetry_t t;
         if (ltc4162_read_telemetry(IHU_I2C_EPS_INSTANCE,
                                    IHU_EPS_LTC4162_ADDR, &t)) {

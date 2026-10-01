@@ -22,6 +22,16 @@ class ReadoutTests(unittest.TestCase):
                     str(ROOT/'test/firmware/ltc4162_driver_test.c'),'-lm','-o',binary],check=True)
                 subprocess.run([binary],check=True)
 
+    def test_timed_bench_driver(self):
+        with tempfile.TemporaryDirectory() as d:
+            binary=str(Path(d)/'bench')
+            subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',
+                '-DIHU_EPS_ALLOW_CHARGER_WRITES=0','-DIHU_EPS_TIMED_BENCH_TEST=1',
+                '-I'+str(ROOT/'test/firmware/ltc4162_mocks'),'-I'+str(ROOT/'firmware/ihu/src'),
+                '-I'+str(ROOT/'firmware/shared'),str(ROOT/'firmware/ihu/src/drivers/ltc4162.c'),
+                str(ROOT/'test/firmware/ltc4162_bench_test.c'),'-lm','-o',binary],check=True)
+            subprocess.run([binary],check=True)
+
     def sample(self):
         r={f['name']:0 for f in decoder.D['registers']}
         r.update(telemetry_status=1,chem_cells=2,vbat=21322,vin=65535,vout=4952,ibat=64947,iin=81,die_temp=13252)
