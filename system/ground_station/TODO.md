@@ -161,7 +161,10 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
   ADC invalid → valid, LAD chemistry, detected two cells with input present.
 - [ ] Resolve input-voltage discrepancy (12 V supply setting vs ~8.21 V VIN)
   and NTC-pause/JEITA region 7. Supply confirmed CV / 12.00 V / 38 mA,
-  meter confirms 12 V at input terminals; charger-side VIN measurement pending.
+  meter confirms 12 V at input terminals and board feeding LTC4162.
+  Input discrepancy remains unresolved; checksum-verified readout next.
+- [x] Build/test SMBus PEC verification, including corrupted data/checksum rejection.
+- [ ] Flash PEC image and distinguish transfer corruption from ADC/analog issues.
 - [ ] Document sample age and measurement limits across repeated power transitions.
 - [ ] Define the versioned EPS POWER_STATUS payload with validity and freshness;
   implement IHU telemetry transport to the ground station.

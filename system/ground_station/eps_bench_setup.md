@@ -233,3 +233,27 @@ are zero in those two readouts. Charger state transitions from suspended to
 battery detection (`2048`), with JEITA region 7 retained. Configuration words
 remain unchanged (`0` / `1`). The VIN discrepancy persists; no physical
 charger-side VIN measurement or explanation for these transitions is available.
+
+
+### Charger-input confirmation and checksum audit
+
+The operator subsequently confirms a good 12 V on the board feeding the LTC4162,
+measured with a digital multimeter. The several-volt difference remains
+unexplained; it is not accepted as an input-path drop without further evidence.
+
+The driver address (`0x3B`), repeated-start Read Word sequence, low/high byte
+assembly and 1.649 mV/LSB conversion match the LTC4162-L datasheet. To test
+transfer integrity independently of engineering scaling, a new image requests
+and checks the optional SMBus PEC byte on every LTC4162 word read. CRC includes
+write address, command, read address and both data bytes, using the
+[SMBus 2.0 PEC specification](https://www.smbus.org/specs/smbus20.pdf).
+Checksum failures reject the whole readout without replacing its output.
+
+The six host test methods pass with the added checksum checks. The actual C
+mock exercises a fixed golden PEC (`D0 3B D1 FF FF` → `2E`), altered data and
+altered PEC rejection in both read-only and legacy-write builds. ARM Release
+build passes. Prepared image `ihu-eps-pec-20261001.uf2` SHA-256:
+`6bd2a4462939a8955bd8dadcc135bfe4ba89e0a33715b9b5111ac0a30c1227f8`.
+This image is prepared for the next BOOTSEL load; it has not yet been tested on
+hardware. Earlier captures did not verify PEC. A valid checksum validates the
+transfer, not ADC calibration, sample freshness or analog hardware health.

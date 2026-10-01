@@ -5,6 +5,7 @@
 static uint16_t regs[128];
 static unsigned pointer, writes, reads, held;
 static int fail_reg=-1;
+static bool corrupt_pec=false, corrupt_data=false;
 static bool lock_ok=true;
 bool ihu_i2c0_lock(unsigned ms) { assert(ms==1000 && !held); if(!lock_ok)return false; held=1; return true; }
 void ihu_i2c0_unlock(void) { assert(held); held=0; }
@@ -16,9 +17,22 @@ int i2c_write_timeout_us(i2c_inst_t *i, uint8_t addr,const uint8_t *p,size_t n,b
  assert(!nostop); writes++; regs[pointer]=(uint16_t)p[1]|((uint16_t)p[2]<<8); return 3;
 }
 int i2c_read_timeout_us(i2c_inst_t *i,uint8_t addr,uint8_t *p,size_t n,bool nostop,uint32_t timeout) {
- (void)i; assert(held && addr==0x68 && n==2 && !nostop && timeout==10000); reads++;
+ (void)i; assert(held && addr==0x68 && n==3 && !nostop && timeout==10000); reads++;
  if((int)pointer==fail_reg)return -1;
- p[0]=regs[pointer]&255; p[1]=regs[pointer]>>8; return 2;
+ p[0]=regs[pointer]&255; p[1]=regs[pointer]>>8;
+ /* Independent polynomial long division over the five on-wire bytes. */
+ const uint8_t bytes[]={0xd0,(uint8_t)pointer,0xd1,p[0],p[1]};
+ unsigned crc=0;
+ for(unsigned j=0;j<sizeof bytes;++j) {
+  crc^=(unsigned)bytes[j]<<8;
+  for(unsigned k=0;k<8;++k) { crc<<=1; if(crc&0x10000u)crc^=0x10700u; }
+  crc&=0xffffu;
+ }
+ p[2]=(uint8_t)(crc>>8);
+ if(pointer==0x3b && regs[pointer]==65535) assert(p[2]==0x2e); /* golden frame */
+ if(corrupt_pec)p[2]^=1;
+ if(corrupt_data)p[0]^=1;
+ return 3;
 }
 static void close_to(float a,float b) { assert(fabsf(a-b)<.001f); }
 int main(void) {
@@ -37,6 +51,11 @@ int main(void) {
  regs[0x4a]=1; regs[0x43]=0x0402; assert(!ltc4162_read_telemetry(&i,0x68,&t));
  regs[0x43]=3; assert(!ltc4162_read_telemetry(&i,0x68,&t));
  regs[0x43]=0; assert(ltc4162_read_telemetry(&i,0x68,&t));
+ t=sentinel; corrupt_pec=true;
+ assert(!ltc4162_read_telemetry(&i,0x68,&t) && !memcmp(&t,&sentinel,sizeof t) && !held);
+ corrupt_pec=false; corrupt_data=true;
+ assert(!ltc4162_read_telemetry(&i,0x68,&t) && !memcmp(&t,&sentinel,sizeof t) && !held);
+ corrupt_data=false;
  fail_reg=0x41; memset(&raw,0x55,sizeof raw); ltc4162_raw_t old=raw;
  assert(!ltc4162_read_raw(&i,0x68,&raw) && !memcmp(&raw,&old,sizeof raw) && !held);
  fail_reg=0x39; assert(!ltc4162_present(&i,0x68) && !held); fail_reg=-1;

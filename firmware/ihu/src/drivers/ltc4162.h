@@ -133,12 +133,13 @@ bool ltc4162_kick(i2c_inst_t *i2c, uint8_t addr);
 bool ltc4162_set_ntc_bypass(i2c_inst_t *i2c, uint8_t addr, bool enabled);
 
 /* Read the observational register dictionary, including ADC validity/chemistry.
- * Output is unchanged on bus/lock failure. No charger configuration writes.
+ * Every word verifies the chip's SMBus PEC checksum.
+ * Output is unchanged on bus/lock/checksum failure. No charger configuration writes.
  * A held bus lock serializes callers, but does not freeze the chip ADC. */
 bool ltc4162_read_raw(i2c_inst_t *i2c, uint8_t addr, ltc4162_raw_t *out);
 
 /* Read all telemetry registers into `out`. Returns false on any I2C
- * transaction error, ADC not valid, non-L chemistry or nonzero cell-count
+ * transaction/checksum error, ADC not valid, non-L chemistry or nonzero cell-count
  * mismatch; in those cases `out` is left untouched. */
 bool ltc4162_read_telemetry(i2c_inst_t *i2c, uint8_t addr,
                             ltc4162_telemetry_t *out);

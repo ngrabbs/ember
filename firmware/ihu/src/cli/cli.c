@@ -93,7 +93,7 @@ static void cmd_eps(int argc, char *argv[]) {
     if (raw) {
         ltc4162_raw_t r;
         if (!ltc4162_read_raw(IHU_I2C_EPS_INSTANCE, IHU_EPS_LTC4162_ADDR, &r)) {
-            printf("[eps-readout] no complete readout (bus/lock failure)\n");
+            printf("[eps-readout] no complete readout (bus/lock/PEC failure)\n");
             return;
         }
         if (strcmp(argv[1], "json") == 0) {

@@ -52,18 +52,33 @@
  * little-endian; the reference rp2040-freertos-ihu driver got reads
  * right but had writes inverted (MSB-first), which was a bug.
  * ----------------------------------------------------------------*/
+/* SMBus PEC: CRC-8 polynomial x^8+x^2+x+1, init 0, no reflection/XOR.
+ * Include both address/direction bytes, command and low/high data bytes. */
+static uint8_t pec_byte(uint8_t crc, uint8_t byte) {
+    crc ^= byte;
+    for (unsigned bit = 0; bit < 8; ++bit)
+        crc = (uint8_t)((crc << 1) ^ ((crc & 0x80u) ? 0x07u : 0u));
+    return crc;
+}
+
 static bool read_word(i2c_inst_t *i2c, uint8_t addr, uint8_t reg, uint16_t *out) {
     /* Phase 1: write the register pointer with no stop (repeated start). */
     int w = i2c_write_timeout_us(i2c, addr, &reg, 1, true, 10000);
     if (w != 1) {
         return false;
     }
-    /* Phase 2: read 2 bytes — LTC4162 returns LSB then MSB. */
-    uint8_t buf[2];
-    int r = i2c_read_timeout_us(i2c, addr, buf, 2, false, 10000);
-    if (r != 2) {
+    /* ACK both data bytes to request the optional PEC, then NACK PEC. */
+    uint8_t buf[3];
+    int r = i2c_read_timeout_us(i2c, addr, buf, 3, false, 10000);
+    if (r != 3) {
         return false;
     }
+    uint8_t crc = pec_byte(0, (uint8_t)(addr << 1));
+    crc = pec_byte(crc, reg);
+    crc = pec_byte(crc, (uint8_t)((addr << 1) | 1u));
+    crc = pec_byte(crc, buf[0]);
+    crc = pec_byte(crc, buf[1]);
+    if (crc != buf[2]) return false;
     *out = ((uint16_t)buf[1] << 8) | (uint16_t)buf[0];
     return true;
 }
