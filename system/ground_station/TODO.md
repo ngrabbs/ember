@@ -178,8 +178,8 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
   and UART. Charger remained in NTC pause; no charging observed.
 - [ ] Independently inspect JEITA thresholds and charger DAC settings to explain
   persistent NTC pause during the attempted bypass; complete divider wiring.
-- [ ] Restore normal read-only IHU image after operator BOOTSEL reset. Corrected
-  bench image currently installed, JEITA enabled and charging suspended.
+- [x] Restore and flash-verify normal read-only IHU image after BOOTSEL reset.
+  Both I²C devices respond; Yamcs readout_valid=1, ADC off with input off.
 - [ ] Deferred by operator: inspect the thermistor bench wiring with solar,
   battery and USB disconnected. Record substitute resistor marking/value and
   its two connected nodes; verify a bias resistor connects NTCBIAS pin 9 to

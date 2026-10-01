@@ -553,3 +553,19 @@ read-only image requires another operator BOOTSEL reset; it remains pending.
 Next diagnosis should independently read the configured JEITA thresholds and
 actual charger DAC settings, and complete the NTC bias/substitute resistor
 wiring rather than assuming the software override removed NTC protection.
+
+
+### Normal firmware restored
+
+After operator BOOTSEL reset, IHU flash ID `E663682593923F31` was confirmed
+at USB bus 3/address 9. Normal `ihu-eps-pec-20261001.uf2` hash matched
+`6bd2a4462939a8955bd8dadcc135bfe4ba89e0a33715b9b5111ac0a30c1227f8`;
+load/verify returned OK and application rebooted. UART confirmed read-only
+diagnostics and both I²C devices at 0x42/0x68. The readout now reports CONFIG 0,
+CHARGER_CONFIG 1, state 256, CHEM_CELLS 224 and TELEMETRY_STATUS 0, with
+ADC words zero. These are charger reset/default settings, not the prior
+bench CONFIG 44; do not claim the explicit suspend bit remains asserted.
+With input off and force telemetry off, engineering values are unavailable.
+Yamcs confirms readout_valid 1 / adc_valid 0 and UART bridge is running.
+Evidence retained in `evidence/eps-after-normal-restore-20261001.txt`.
+No temporary override is running; normal firmware cannot issue charger writes.
