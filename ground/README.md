@@ -3,8 +3,9 @@
 [System guide](../system/README.md) · [Ground station checklist](../system/ground_station/TODO.md)
 
 - [EMBER bench dictionary](ember/README.md): JSON definitions, host codec and
-  wire vectors; Yamcs/firmware integration is next.
-- [Yamcs starter lab](yamcs/README.md): reproducible, isolated software smoke test.
+  wire vectors, generated MDB and simulated endpoint; Pico adoption is next.
+- [Yamcs ground lab](yamcs/README.md): EMBER command/telemetry loop and the
+  preserved upstream reference, with reproducible software checks.
 - [Pi preparation](../system/ground_station/pi_setup.md): OS and first-boot settings.
 - [Dustin coordination](../system/ground_station/dustin_followup.md): remaining
   operations definitions and shared protocol decisions.
