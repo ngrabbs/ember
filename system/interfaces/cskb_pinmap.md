@@ -73,14 +73,9 @@ the stack.
 
 ## H2 Pin Assignments
 
-<<<<<<< HEAD
-H2 carries all of the stack's power rails, reserved RBF/Separation
-switch positions, additional USER signals, and CAN B.
-=======
 H2 carries the assigned power rails and USER signals below. Pumpkin-defined
 RBF/separation-switch positions remain reserved and unconnected in v0.1;
 this table does not allocate flight interlock connections.
->>>>>>> 9c995a2639f573ef259ec2b0bffde1811a4cdc81
 
 | H2 pin | Pumpkin name | Net | EPS | IHU | Comms | Payload | Function |
 |---|---|---|---|---|---|---|---|
