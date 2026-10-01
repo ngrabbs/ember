@@ -2,6 +2,11 @@
 
 [System guide](../README.md) · [Data interfaces](../interfaces/data_interfaces.md)
 
+Application meanings are owned by the merged
+[operations dictionaries](../../docs/architecture/operations/Ground_Operations_Command_Telemetry/README.md).
+The framing proposals below remain unresolved; see the
+[coordination note](../ground_station/dustin_followup.md).
+
 **Draft: field groups and framing intent; encoding details pending.**
 
 Proposed fields: **version byte → message type → source subsystem → sequence counter →

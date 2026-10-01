@@ -1,6 +1,7 @@
 # Development baseline across macOS and m75q
 
 Recorded 2026-10-01. These are distinct Git checkouts, not synchronized copies.
+PRs #2, #3, and #4 are merged; both hosts fast-forwarded `main` to `ebeec2f`.
 
 | Role | Location |
 |---|---|
@@ -29,11 +30,11 @@ Use Git branches and PRs to exchange changes, not directory mirroring.
   Pico application, IHU housekeeping client, bus serialization, and shared schema
   that were absent from current `main`. I2C between the two Picos is a bench
   harness; the flight transport still needs implementation.
-- The macOS integration branch includes that m75q branch plus the ground-station
-  plan and conflict-marker repairs. The corresponding PRs are stacked: firmware
-  and payload baseline first, then ground-station/environment documentation.
-- Existing command/telemetry PR #2 is separate work. Coordinate its protocol
-  definitions with the lab before freezing packet IDs or field layouts.
+- PR #3 merged the firmware/payload baseline; PR #4 merged the ground-station
+  plan, environment documentation and conflict-marker repairs.
+- PR #2 merged the command/telemetry Draft 0.2. Adopt its application meanings
+  and coordinate the [remaining definitions](../ground_station/dustin_followup.md)
+  before freezing packet IDs or field layouts.
 
 The firmware retains legacy clock-generator bring-up settings, including a
 145.9 MHz RX-LO value. These are not an approved UHF receiver configuration.
@@ -73,9 +74,8 @@ root-owned on the host. No container images or SDK installation were changed.
   mechanical, or fabrication acceptance. The older root TODO has other historical
   subsystem status notes that require checking before reuse.
 
-Both machines can build/work from the combined integration branch while PRs
-are reviewed. After approval, merge in dependency order, then fast-forward
-each machine's `main`. Never discard local edits to make a pull succeed.
+Both hosts now have the merged `main` baseline. New ground software work uses
+`feature/ground-station-lab`. Never discard local edits to make a pull succeed.
 
 m75q fetches GitHub over HTTPS to avoid its current SSH host-key failure.
 Its configured push URL remains SSH; pushes for this reconciliation are made

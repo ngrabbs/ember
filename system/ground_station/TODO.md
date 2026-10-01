@@ -13,10 +13,15 @@ endpoint and receives, displays, and archives telemetry. Operate it from a
 laptop browser over the local network. Develop this before the flight comms
 board is finished, then reuse the packet interface with that board.
 
-First acceptance test: issue `SET_TELEMETRY_PERIOD` from the ground web UI,
+First acceptance test: issue `SET_PARAMETER(TELEMETRY_PERIOD, value)` from the ground web UI,
 receive correlated acceptance and completion reports, and observe the new
 interval in archived telemetry. Also demonstrate rejection of an invalid
 command and timeout handling when its response is lost.
+
+Merged baseline: `ebeec2f` includes PRs #2, #3, and #4. Adopt Dustin’s
+[operations dictionaries](../../docs/architecture/operations/Ground_Operations_Command_Telemetry/README.md)
+for application meanings and preliminary IDs. Remaining repairs and deliverables
+are in the [Dustin coordination note](dustin_followup.md).
 
 ## Current direction and open decisions
 
@@ -64,14 +69,17 @@ Existing firmware references (separate repositories):
 
 ## 1. Ground module and host
 
-- [ ] Select the Pi, record RAM, and install a supported 64-bit Linux OS.
+- [ ] Select the Pi, record RAM, and install a supported 64-bit Linux OS using
+  the [Pi preparation guide](pi_setup.md).
 - [ ] Assemble a panel with cooling, storage, power distribution, USB, Ethernet,
   Pico/radio mounting, and labelled RF connections.
 - [ ] Confirm USB power budget; use a suitable supply or powered hub as needed.
 - [ ] Set hostname, network access, and a browser-accessible Yamcs service.
 - [ ] Configure restart-on-boot, logs, telemetry retention, and archive backup.
-- [ ] Run the Yamcs starter simulator and verify commands, plots, archive/replay,
-  and access from the laptop before inserting hardware.
+- [x] Add a pinned, reproducible [Yamcs starter lab](../../ground/yamcs/README.md)
+  with isolated simulator and persistent archive storage.
+- [ ] Run the starter on the selected Pi and verify commands, plots, archive/replay,
+  and laptop access before inserting hardware. m75q is the interim software host.
 
 ## 2. Packet contract and wired command loop
 
@@ -81,8 +89,11 @@ Existing firmware references (separate repositories):
   and failed responses. Define timeout, retry, duplicate, and reset behavior.
 - [ ] Define uplink authorization/authentication and replay handling for the
   flight path; document how the lab exercises those checks.
-- [ ] Implement `PING`, `GET_HOUSEKEEPING`, and `SET_TELEMETRY_PERIOD`; add
-  heartbeat, housekeeping, and command-result telemetry.
+- [ ] Implement the dictionary subset: `PING`, `REQUEST_STATUS`,
+  `REQUEST_TELEMETRY`, and `SET_PARAMETER` with `TELEMETRY_PERIOD`; add
+  `HEARTBEAT`, `SYSTEM_STATUS`, `COMM_STATUS`, and correlated command results.
+- [ ] Generate an unsolicited simulated event, preserve it during link loss,
+  and deliver/deduplicate it after recovery without an operator command.
 - [ ] Define the Yamcs mission database and matching spacecraft encoder/parser.
 - [ ] Implement a USB/serial-to-UDP bridge with explicit framing and separate
   debug output. Preserve the same CCSDS packet bytes across transports.

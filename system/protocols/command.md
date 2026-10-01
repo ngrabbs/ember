@@ -2,6 +2,11 @@
 
 [System guide](../README.md) · [Data interfaces](../interfaces/data_interfaces.md)
 
+Application meanings are owned by the merged
+[operations dictionaries](../../docs/architecture/operations/Ground_Operations_Command_Telemetry/README.md).
+The framing proposals below remain unresolved; see the
+[coordination note](../ground_station/dustin_followup.md).
+
 **Draft: packet model and handling policy; encoding details pending.**
 
 Proposed fields: **version byte → command ID → target subsystem → argument length →
@@ -12,8 +17,10 @@ and concrete command IDs remain unspecified.
 
 1. Comms decodes the uplink and forwards commands to IHU, the acceptance authority.
 2. IHU requires a valid CRC and known schema; unknown commands return an explicit error.
-3. Return an immediate transport ACK/NACK for validity, then an execution ACK/status
-   after handling. Use bounded retries on timeout; limits remain to be defined.
+3. Distinguish transport delivery from IHU acceptance ACK/NACK and execution
+   results. A timeout means the outcome is unknown. Draft 0.2 uses manual resend
+   after status verification for state-changing commands; automatic retries
+   are not enabled. Correlation and duplicate/reset rules need final definition.
 4. Dispatch over the destination's [documented transport](../interfaces/board_to_board.md).
    Record safety-critical mode changes in the event log.
 
