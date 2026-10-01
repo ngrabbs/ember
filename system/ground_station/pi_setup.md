@@ -2,6 +2,8 @@
 
 [Ground station checklist](TODO.md) · [Ground software](../../ground/README.md)
 
+The installed Pi and verified settings are in the [lab inventory](lab_inventory.md).
+
 Flash **Raspberry Pi OS Lite (64-bit)** with Raspberry Pi Imager. The current
 Debian 13 Trixie image supports Pi 4 and Pi 5. Use a Pi 5 with at least 4 GB RAM
 and cooling if available; Pi 4 is suitable for initial software tests. Radio
@@ -30,8 +32,9 @@ df -h /
 
 Expect `aarch64`. Record model, RAM, username and IP in the lab inventory before
 installing services. Run normal OS updates, then install Git, Python 3 and Docker
-Engine with its Compose plugin using the supported Debian instructions. We will
-verify that step on the actual Pi, including ARM64 images, before starting Yamcs.
+Engine with its Compose plugin using the
+[official Debian repository instructions](https://docs.docker.com/engine/install/debian/).
+The installed Pi passed native ARM64 image and starter checks.
 
 Start with the [software starter](../../ground/yamcs/README.md). The laptop is
 the browser client; the Pi will host ground services. Direct SDR USB attachment

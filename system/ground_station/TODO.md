@@ -69,19 +69,22 @@ Existing firmware references (separate repositories):
 
 ## 1. Ground module and host
 
-- [ ] Select the Pi, record RAM, and install a supported 64-bit Linux OS using
-  the [Pi preparation guide](pi_setup.md).
+- [x] Select and provision the Pi 5 / 8 GB with 64-bit Trixie, static Ethernet,
+  key-only SSH and verified sudo; [lab inventory](lab_inventory.md).
 - [ ] Assemble a panel with cooling, storage, power distribution, USB, Ethernet,
   Pico/radio mounting, and labelled RF connections.
 - [ ] Confirm USB power budget; use a suitable supply or powered hub as needed.
-- [ ] Set hostname, network access, and a browser-accessible Yamcs service.
-- [ ] Configure restart-on-boot, logs, telemetry retention, and archive backup.
+- [x] Set hostname, network access, and browser-accessible Yamcs on the Pi: 
+  `http://192.168.1.251:8090`.
+- [x] Configure startup on boot and bounded container logs; verify a full Pi reboot.
+- [ ] Configure telemetry retention and archive backup.
 - [x] Add a pinned, reproducible [Yamcs starter lab](../../ground/yamcs/README.md)
   with isolated simulator and persistent archive storage.
 - [x] Verify starter telemetry, sample command receipt, packet archiving and
   recovery after server restart on m75q; [validation record](starter_validation.md).
 - [ ] Run the starter on the selected Pi and verify commands, plots, archive/replay,
-  and laptop access before inserting hardware. m75q is the interim software host.
+  and laptop access before inserting hardware. Pi telemetry/command/archive and
+  laptop access pass; plotting and interactive replay remain to exercise.
 
 ## 2. Packet contract and wired command loop
 

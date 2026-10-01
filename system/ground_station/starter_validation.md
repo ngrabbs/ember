@@ -23,9 +23,33 @@ was flashed, attached, or commanded; the containers have no radio/device mounts.
 
 This proves the starter deployment and bidirectional software transport. EMBER
 ACK/NACK and completion reports, its mission database, Pico wired/RF paths,
-Pi ARM64 deployment and resource budget, operator authentication, archive backup,
+full modem resource budget, operator authentication, archive backup,
 and plots/replay remain to be exercised. The starter preprocessor uses current
 server time; spacecraft timestamps/time quality remain undefined.
 
-Interim browser address: `http://192.168.1.252:8090`. The selected Pi will replace
-this development host after [OS preparation](pi_setup.md).
+Primary browser address: `http://192.168.1.251:8090`. The m75q starter at
+`http://192.168.1.252:8090` remains an independent reference instance.
+
+## Dedicated Pi validation
+
+2026-10-01: [Pi 5 / 8 GB inventory](lab_inventory.md), Docker Engine 29.8.2,
+Compose 5.5.1, native ARM64 images. `sudo -n id` returns root. The same smoke
+checks pass on `192.168.1.251:8090`, including actual simulator command receipt.
+The laptop browser opens the Pi's realtime console.
+
+A full Pi reboot was performed. `ember-ground-starter.service` came up without
+manual intervention, both containers restarted, the previously recorded packet
+remained retrievable with the same timestamp/sequence identity, and the command
+and telemetry checks passed again. The service's `active (exited)` state is
+expected for the Compose oneshot unit.
+
+After restart, an illustrative idle/simulator snapshot showed 754 MiB host RAM
+used and 7.1 GiB available, approximately 418 MiB combined Java RSS (Maven and
+Yamcs), temperature 49.4°C and `get_throttled=0x0`. Docker reports memory and swap
+limit support unavailable on this OS configuration, so its zero memory counters
+are not usable measurements; host memory/RSS were used instead. This is not an
+SDR modem load or long-duration cooling/storage benchmark.
+
+Starter source and runtime keys remain local; archive data is in the dedicated
+Docker volume. Pi reboot recovery is verified; off-device archive backup,
+retention policy, plotting and interactive replay remain open.
