@@ -108,7 +108,7 @@ failure. No automatic retries. Check status before manually resending a
 state-changing command. A retry preserves transaction identity and semantic
 command contents; packet sequence/uptime/CRC may change.
 
-Implemented simulated endpoint cache: retain the last 64 transactions during a boot,
+Implemented simulator and Pico endpoint cache: retain the last 64 transactions during a boot,
 keyed by ground source, epoch and ID. Exact command/target/arguments repeats
 return cached outcomes without executing again; changed contents with the
 same identity return TRANSACTION_CONFLICT. Cache eviction or endpoint reset
@@ -142,6 +142,12 @@ invalidates pending outcomes. Late-result reconciliation and recovery of
 pending history after a Yamcs restart remain open.
 
 The live `ember` instance runs this subset; `myproject` preserves the upstream
-demonstration. Next: bounded Pico parser/dispatcher and a USB bridge. Events,
+demonstration. The dedicated Pico parser/dispatcher and Pi USB bridge now implement the same
+subset. USB uses COBS with a zero delimiter: up to 240 packet bytes become
+at most 242 stream bytes. Partial frames expire after 500 ms; malformed and
+oversized frames discard through the next delimiter. Debug text uses UART0,
+never the binary USB stream. The Pico COMM_STATUS TX count measures packets
+handed to the bounded SDK USB writer, not confirmed delivery. See
+[hardware validation](../ground_station/usb_validation.md). Events,
 event persistence, authentication, UTC, PUS, flight limits and SatNOGS decoding
 are not implemented by this lab v1.

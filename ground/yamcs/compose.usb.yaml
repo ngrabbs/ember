@@ -1,0 +1,12 @@
+# Pi hardware mode. Select through COMPOSE_FILE in the local .env.
+services:
+  yamcs:
+    depends_on: !override
+      simulator:
+        condition: service_started
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "127.0.0.1:10016:10016/udp"
+  ember-simulator:
+    profiles: ["simulator-reference"]

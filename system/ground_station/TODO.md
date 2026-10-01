@@ -38,8 +38,8 @@ starting with the [one-Pico USB hookup](usb_bench_setup.md).
   `192.168.1.251`, 128 GB SD. Laptop runs the browser. Yamcs is running;
   modem performance, cooling and USB power remain to verify.
 - Software: Yamcs `ember` instance and simulated command loop verified on the
-  Pi; `myproject` preserves the upstream reference. Packet/radio bridge and
-  GNU Radio BPSK modem remain to implement. The
+  Pi; `myproject` preserves the upstream reference. USB packet bridge and Pico endpoint are verified; the
+  radio bridge and GNU Radio BPSK modem remain to implement. The
   [bench v1 dictionary](../protocols/ember_bench_v1.md) uses CCSDS SPP;
   flight allocation and a possible ECSS PUS subset remain open.
 - First hardware transport: direct USB from Pi to one spare RP2040 Pico.
@@ -113,9 +113,9 @@ Existing firmware references (separate repositories):
   invalid-argument rejection and lost-response TIMEOUT/UNKNOWN on Pi/m75q.
 - [x] Verify duplicate suppression, transaction conflict, malformed/unknown
   commands and bounded/reset cache behavior in simulated endpoint tests.
-- [ ] Implement that validated command subset and bounded parser on the Pico;
+- [x] Implement that validated command subset and bounded parser on the Pico;
   repeat duplicate/reset tests with hardware.
-- [ ] Connect and identify a spare RP2040 Pico on the Pi USB host; record its
+- [x] Connect and identify a spare RP2040 Pico on the Pi USB host; record its
   model/USB identity and load the dedicated USB bench build when ready.
   Existing IHU firmware uses UART stdio with USB CDC disabled.
 - [ ] Generate an unsolicited simulated event, preserve it during link loss,
@@ -125,12 +125,14 @@ Existing firmware references (separate repositories):
   acceptance/completion history. Send SET_PARAMETER from the laptop browser.
 - [ ] Reconcile pending history after ground service restart and late results
   after timeout; expose an identity-preserving manual retry when appropriate.
-- [ ] Implement a USB/serial-to-UDP bridge with explicit framing and separate
+- [x] Implement a USB/serial-to-UDP bridge with explicit framing and separate
   debug output. Preserve the same CCSDS packet bytes across transports.
-- [ ] Prove the first acceptance test over USB with the spacecraft Pico.
+- [x] Prove the first acceptance test over USB with the spacecraft Pico.
 
-Software milestone evidence: [EMBER validation](ember_validation.md).
-This does not complete the USB or RF hardware acceptance tests.
+Evidence: [software validation](ember_validation.md) and
+[USB hardware validation](usb_validation.md). USB acceptance is complete; RF
+acceptance remains open. Next: record the existing SX1280 wiring/settings and
+build the two-Pico RF transport using the same packet interface.
 
 ## 3. Pico/SX1280 RF loop
 

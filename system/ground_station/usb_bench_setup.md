@@ -1,58 +1,72 @@
 # First USB hardware loop
 
-[Ground checklist](TODO.md) · [Bench packet contract](../protocols/ember_bench_v1.md)
+[Ground checklist](TODO.md) · [Bench packet contract](../protocols/ember_bench_v1.md) · [Validation](usb_validation.md)
 
-PR #5 is merged into `main` at `a21832b`. The next iteration is
-`feature/ground-station-usb`: replace the Python spacecraft simulator with a
-single RP2040 Pico endpoint while preserving the Yamcs dictionary and CCSDS
-packet bytes. USB bench firmware and the bridge are still to implement.
+The Pi now runs Yamcs → host USB/UDP bridge → standalone RP2040 Pico → Yamcs.
+The dedicated endpoint replaces the EMBER simulator; `myproject` remains the
+upstream reference. Packet bytes/dictionary are unchanged across the transport.
 
-## Connect now
+## Current hookup
 
-1. Use one spare **RP2040 Raspberry Pi Pico**, or Pico W with its model recorded
-   before building. This is the simulated spacecraft/IHU endpoint for this test.
-2. Connect a **USB-A to micro-USB data cable** from any Pi 5 USB-A port to the
-   Pico's micro-USB socket. USB supplies both power and data. Leave the Pi on
-   its existing power supply and Ethernet connection.
-3. Keep this first endpoint as a standalone Pico; no RF module, SDR, second
-   Pico, or GPIO interconnect is needed to prove the wired command loop.
-4. To verify the cable/bootloader, hold **BOOTSEL while connecting** the Pico.
-   It should appear as the `RPI-RP2` USB storage device. Release BOOTSEL after
-   connection. Entering this mode alone does not replace the installed firmware.
-   The [official Pico getting-started guide](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf)
-   describes the USB/UF2 bootloader workflow.
+- Pi 5, Ethernet `192.168.1.251`, browser `http://192.168.1.251:8090`.
+- One RP2040 Raspberry Pi Pico, revision B2, 2 MiB flash.
+- USB-A to micro-USB **data cable**, Pi USB host to Pico. USB powers the Pico.
+- Stable identity: `/dev/serial/by-id/usb-Raspberry_Pi_Pico_E663682593753535-if00`.
+  Do not assume its current `ttyACM0` name will persist.
 
-The Pi is the USB host; m75q remains the firmware build machine. We can transfer
-the resulting UF2 to the Pi for installation. A USB serial port is expected
-only after firmware providing CDC is loaded; the current IHU build intentionally
-disables CDC in `firmware/ihu/src/CMakeLists.txt` and uses UART stdio.
+The Pi retains its own supply. No SDR, radio module, second Pico or GPIO
+interconnect is required for this milestone. The next transport uses two
+Pico/SX1280 endpoints; record the known-working radio wiring before changing it.
 
-## Optional debug connection
+## Build and flash
 
-A USB-to-UART adapter with **3.3 V logic** can connect to another Pi USB port.
-This is a separate debug stream, not the binary packet transport:
+m75q remains the build machine. From its repository, run
+`sh tools/build_usb_bench.sh`. Transfer
+`firmware/usb_bench/build/ember_usb_bench.uf2` to the Pi, verifying its hash.
+For the deployed endpoint, stop the bridge before flashing/probing:
 
-| Pico | Adapter |
-|---|---|
-| GP0 / pin 1, UART TX | RX |
-| GP1 / pin 2, UART RX (optional input) | TX |
-| GND / pin 3 | GND |
+```sh
+sudo systemctl stop ember-usb-bridge
+sudo picotool reboot -u -f
+# Wait for BOOTSEL re-enumeration before loading.
+sudo picotool load -v /home/ngrabbs/ember_usb_bench.uf2
+sudo picotool reboot
+```
 
-Use only the signal/ground wires; Pico power comes from its micro-USB connection.
-The existing UART console uses 115200 8N1. A debug adapter is optional for the
-first test and can be added if needed during firmware bring-up.
+For another Pico, hold BOOTSEL while plugging in the data cable. Identify it
+with `sudo picotool info -a` and save its existing flash **before** loading a
+replacement (`sudo picotool save -a /home/ngrabbs/pico-before-ember-usb.uf2`).
+Do not overwrite the existing backup. The original signal-generator firmware
+on this Pico is preserved on Pi and Mac; paths/hashes are in the inventory.
+Existing IHU firmware disables CDC and is not the USB bench application.
 
-## Work remaining before packets flow
+## Probe and run
 
-- Add a dedicated Pico SDK USB bench application, with bounded stream framing,
-  CCSDS length/CRC validation, command handlers, transaction cache and telemetry
-  scheduling. Keep debug text off the binary USB packet stream.
-- Implement the Pi serial/UDP bridge and identify the device by its stable
-  USB identity rather than assuming `/dev/ttyACM0` permanently names it.
-- Explicitly switch the EMBER instance from its isolated simulator to the bridge;
-  retain the simulator as a reproducible reference configuration.
-- Repeat PING, requested status/telemetry, telemetry-period change, invalid
-  argument, duplicate/conflict, timeout and endpoint-reset tests against hardware.
-- Record the Pico model, USB identity, firmware commit/build and test results.
+After application re-enumeration, from the repository root:
 
-The two-Pico SX1280 transport and SDR/UHF BPSK tests follow this wired milestone.
+```sh
+python3 ground/ember/usb_probe.py --device /dev/serial/by-id/usb-Raspberry_Pi_Pico_E663682593753535-if00 --reset-test
+sudo systemctl start ember-usb-bridge
+python3 ground/yamcs/ember_smoke.py --url http://192.168.1.251:8090 --transport usb --fault-test
+```
+
+Direct probe requires the bridge stopped and checks the sole attached Pico.
+`--reset-test` invokes `sudo -n picotool reboot -f`. It verifies a new boot ID,
+cleared cache/counters and the default period. The Yamcs smoke checks both
+periods through archived heartbeat uptimes and restores the original setting.
+The local fault injection suppresses returned results, giving an UNKNOWN
+timeout even though the command can have executed. Never automatically retry
+an uncertain command; inspect state first.
+
+[The Yamcs README](../../ground/yamcs/README.md#pi-usb-transport) documents `.env`,
+`.usb.env`, service installation and software-reference fallback. The bridge
+service is enabled and reconnects only the configured identity after USB
+re-enumeration. Stop both bridge and starter to stop the whole lab.
+
+## Optional UART debug
+
+Use a USB/UART adapter with 3.3 V logic: Pico GP0 / pin1 TX → adapter RX,
+GP1 / pin2 RX → adapter TX (optional), GND / pin3 → GND. Connect signal/ground
+only; Pico power comes from micro-USB. UART0 is 115200 8N1 and emits a boot
+banner. Debug output stays off the binary USB stream. No UART command console
+is implemented by this dedicated endpoint.

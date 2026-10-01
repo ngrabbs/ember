@@ -4,6 +4,7 @@ import base64
 import json
 from pathlib import Path
 import subprocess
+import socket
 import sys
 import time
 from urllib.parse import quote, urlencode
@@ -100,11 +101,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default="http://127.0.0.1:8090")
     parser.add_argument("--fault-test", action="store_true", help="Run on Docker host to suppress one transaction's results")
+    parser.add_argument("--transport", choices=("simulator", "usb"), default="simulator")
     args = parser.parse_args()
     lab = Lab(args.url)
     links = {link["name"]: link for link in lab.api("/api/links/ember")["links"]}
-    if "ember-simulator:10026" not in links["udp-out"]["detailedStatus"]:
-        raise SystemExit("Refusing commands: destination is not isolated EMBER simulator")
+    destination = "ember-simulator:10026" if args.transport == "simulator" else "host.docker.internal:10026"
+    if destination not in links["udp-out"]["detailedStatus"]:
+        raise SystemExit("Refusing commands: destination does not match selected bench transport")
     if lab.parameter("SYSTEM_STATUS_configuration").get("stringValue") != "GROUND_TEST":
         raise SystemExit("Refusing commands: endpoint not identified as GROUND_TEST")
     original = lab.parameter("HEARTBEAT_telemetry_period_ms")["uint32Value"]
@@ -128,8 +131,14 @@ def main():
         print("PASS: invalid period rejected with reason INVALID_PARAMETER; valid period retained")
         if args.fault_test:
             arm = "import socket; s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM); s.settimeout(3); s.sendto(b'drop-results-once',('127.0.0.1',10027)); assert s.recv(64)==b'armed'"
-            subprocess.run(["docker", "compose", "exec", "-T", "ember-simulator", "python", "-c", arm],
-                           cwd=Path(__file__).resolve().parent, check=True)
+            if args.transport == "simulator":
+                subprocess.run(["docker", "compose", "exec", "-T", "ember-simulator", "python", "-c", arm],
+                               cwd=Path(__file__).resolve().parent, check=True)
+            else:
+                with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as control:
+                    control.settimeout(3)
+                    control.sendto(b"drop-results-once", ("127.0.0.1", 10027))
+                    assert control.recv(64) == b"armed"
             ticket = lab.issue("PING")
             attributes = lab.outcome(ticket, "UNKNOWN")
             assert attributes["CommandComplete_Status"]["stringValue"] == "TIMEOUT"

@@ -1,0 +1,18 @@
+[Unit]
+Description=EMBER Pico USB packet bridge
+Requires=docker.service
+Wants=ember-ground-starter.service
+After=docker.service ember-ground-starter.service
+
+[Service]
+User=ngrabbs
+Group=ngrabbs
+SupplementaryGroups=dialout
+EnvironmentFile=/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs/.usb.env
+WorkingDirectory=/home/ngrabbs/work/MSU_Cubesat/ember/ground/ember
+ExecStart=/usr/bin/python3 -u usb_bridge.py --device ${EMBER_USB_DEVICE} --bind ${EMBER_USB_BIND}
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

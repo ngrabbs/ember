@@ -26,3 +26,21 @@ and enum checks; structural decode alone does not authorize execution.
 firmware work. The tests verify CRC against the standard check value, fixed
 wire bytes, corruption, framing mismatches, sequence wrap boundaries,
 transaction identities, and invalid parameter handling.
+
+## USB hardware endpoint
+
+`generate_c.py` generates C wire constants from the same dictionary. The
+standalone [Pico application](../../firmware/usb_bench/README.md) serializes
+fields explicitly and implements the command subset and last-64 cache.
+`tests/ground/test_firmware.py` compiles the actual C protocol/framing core on
+the host and decodes its output with the Python codec; a host C compiler is
+required for those tests.
+
+`framing.py` and firmware C framing implement COBS with a zero delimiter,
+bounded to 240 decoded bytes / 242 stream bytes. `usb_bridge.py` requires
+pyserial and an exact stable device path, forwards valid packets between USB
+and Yamcs UDP, reconnects only that identity and never automatically retries
+an uncertain command. `usb_probe.py` checks hardware duplicates, conflict,
+invalid/unknown commands, CRC, oversized/partial frames and optional reset.
+Stop the bridge before direct probing; its exclusive serial port cannot be
+shared. See [USB setup](../../system/ground_station/usb_bench_setup.md).
