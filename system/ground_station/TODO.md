@@ -166,8 +166,10 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
 - [x] Build/test SMBus PEC verification, including corrupted data/checksum rejection.
 - [x] Flash/verify PEC image; capture three complete readouts with all word
   checksums accepted. Unexpected VIN is present in chip-returned data.
-- [ ] Measure VCC2P5, INTVCC and VOUTA to chip ground; investigate the remaining
-  ADC/analog discrepancy and cycling charger state.
+- [x] Measure VCC2P5 (2.48 V), INTVCC (4.8 V), VOUTA (7.59 V); verify
+  suspected pin 3/4 junction is intended by the exported schematic netlist.
+- [ ] Verify VIN pin 7 terminal/joint against the 12 V board measurement;
+  investigate VIN-specific discrepancy and cycling charger state.
 - [ ] Document sample age and measurement limits across repeated power transitions.
 - [ ] Define the versioned EPS POWER_STATUS payload with validity and freshness;
   implement IHU telemetry transport to the ground station.

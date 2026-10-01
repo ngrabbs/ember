@@ -294,3 +294,31 @@ The next requested physical readings are VCC2P5 (pin 8, nominal 2.5 V), INTVCC
 the chip ground. Use bypass capacitors/test points when accessible. These pin
 functions are defined on datasheet page 10 (PDF page index 9). Their readings
 are not yet available; no ADC/reference or chip defect is established.
+
+
+### Physical rail readings and suspected pin 3/4 junction
+
+The operator measured VCC2P5 (pin 8) = 2.48 V, INTVCC (pin 2) = 4.8 V,
+and VOUTA (pin 3) = 7.59 V, and supplied a microscope photograph pointing to
+a possible connection between pins 3 and 4. The two internal rails are near
+nominal; these DC readings do not exclude ripple or intermittent supply faults.
+The measured VOUTA agrees with the approximately 7.60 V VOUT ADC readout,
+so a common scale error across all voltage channels is not supported.
+
+A read-only XML netlist export of the repository schematic confirms U1 pins
+3 (VOUTA), 4 (CLN), 27 and 28 (VOUT) share `/Solar_Charger/VOUT_PP`, together
+with C4/C5, RS1 pin 2 and Q2 drain-side pads. The design guide independently
+connects VOUTA to CLN. Therefore a pin 3-to-4 connection is intentional for
+this design and should not be removed merely because it appears bridged.
+The photograph alone does not establish physical pin numbering or whether
+the visible junction is copper, solder or contamination. No CAD edits or
+physical repair were performed. The export warns of annotation errors; this
+connectivity check is not a full design validation or confirmation that the
+assembled board matches this repository revision.
+
+Next discriminating VIN check: meter at U1 VIN pin 7 itself (or verify the
+pin-to-pad joint), using chip ground. The exported net places VIN pin 7,
+C3 pin 1 and solar connector positives together on `VIN_CHG`. A connector/pad
+reading of 12 V does not by itself verify an intact joint to the IC terminal.
+If pin 7 itself is at 12 V during a PEC-verified ~8.16 V report, VIN-specific
+analog/chip behavior remains under investigation. No defect is established.
