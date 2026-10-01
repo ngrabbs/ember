@@ -172,11 +172,14 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
 - [x] Reconnect IHU UART/direct USB, identify BOOTSEL device, back up and flash/verify
   the first timed test image. Operator confirmed supervised bench conditions.
 - [x] Flash/verify corrected bench image with ADC kept running while suspended.
-- [ ] Resolve subsequent EPS recovery failure and comms-controller I²C loss;
-  confirm input off and verify charger suspension before starting any test.
-  Neither bench image has received a charge-test start command.
-- [ ] Capture charger state and signed battery current during one timed test;
-  verify automatic restoration and suspended charging, then restore normal image.
+- [x] Resolve EPS recovery/comms I²C loss: operator had disconnected battery
+  and input. Battery reconnection restored communication and suspended telemetry.
+- [x] Capture one 60-second test and automatic restoration/suspension in Yamcs
+  and UART. Charger remained in NTC pause; no charging observed.
+- [ ] Independently inspect JEITA thresholds and charger DAC settings to explain
+  persistent NTC pause during the attempted bypass; complete divider wiring.
+- [ ] Restore normal read-only IHU image after operator BOOTSEL reset. Corrected
+  bench image currently installed, JEITA enabled and charging suspended.
 - [ ] Deferred by operator: inspect the thermistor bench wiring with solar,
   battery and USB disconnected. Record substitute resistor marking/value and
   its two connected nodes; verify a bias resistor connects NTCBIAS pin 9 to

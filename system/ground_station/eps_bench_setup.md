@@ -518,3 +518,38 @@ Yamcs readout_valid is 0. Installed image is the corrected bench image, not the
 normal PEC image. Full backup and normal PEC fallback remain on Pi/Mac.
 Next: establish input-off physical state, recover I²C communication and verify
 charger suspension/settings before attempting any timed charging test.
+
+
+### Timed test completed — no charging observed
+
+Operator clarified that both input and battery had been unplugged; no wiring
+had moved. After reconnecting the battery only, EPS communication recovered
+automatically: CONFIG 44, CHARGER_CONFIG 1, state 256, ADC valid, VBAT 8.175 V.
+The comms controller responded again. The prior recovery failures occurred with
+unpowered peripherals, rather than proving a bus defect.
+
+Operator then restored the supervised 11 V / 150 mA limited input. Pre-start
+UART: VIN 10.676 V, VBAT 8.184 V, die raw 13385, NTC raw 515, ADC valid,
+CONFIG 44 and state 256. One `charge-test start` command was issued and returned
+the active 60-second banner. Immediate UART showed battery detection followed
+by NTC pause. Yamcs capture covers the full window and after it: CONFIG 12 and
+CHARGER_CONFIG 0 during the override, but state stayed 32 and charge status 0.
+VBAT stayed 8.184–8.185 V; signed IBAT stayed approximately -1.6 to -4.1 mA
+(using unverified 10 mOhm scaling). There was no evidence of charging.
+
+At the first fresh dashboard readout after timeout (monitor +62 s), CONFIG
+returned to 44, CHARGER_CONFIG to 1, state to 256. A separate final UART
+readout confirmed those settings, ADC validity and VBAT 8.185 V. Restoration
+writes verify their readbacks inside the driver; threshold register values are
+not exported in the current telemetry and were not independently captured.
+The cause of persistent NTC pause despite the attempted widened thresholds is
+unresolved; do not claim this bypass is effective. No second test was started.
+
+Evidence: `evidence/eps-charge-test-20261001.json` stores timestamped complete
+Yamcs parameter responses; matching `-start-` and `-end-` text captures retain
+UART banner and final readout. Bridge restored. The corrected bench image is
+still installed with charging suspended and JEITA enabled. Restoring the normal
+read-only image requires another operator BOOTSEL reset; it remains pending.
+Next diagnosis should independently read the configured JEITA thresholds and
+actual charger DAC settings, and complete the NTC bias/substitute resistor
+wiring rather than assuming the software override removed NTC protection.
