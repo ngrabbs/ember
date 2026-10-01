@@ -90,7 +90,7 @@ flow and archive remain present; its packet-specific boot/uptime bindings match
 that Pico instead of the EPS wrapper. Native dashboard layout, status, voltages,
 current signs and all six cards were inspected in the laptop browser.
 
-Interactive archive replay, retention/backups, sense-resistor verification,
+Retention/backups, sense-resistor verification,
 thermistor wiring and flight-native packet transport remain separate TODOs.
 
 The native VIN chart was verified through EPS.par → VIN → Chart. Numeric

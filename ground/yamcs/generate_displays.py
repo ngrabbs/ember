@@ -157,7 +157,7 @@ def generate(destination):
     label('No battery thermistor fitted. Die temperature is not battery temperature. No charger commands are sent.',28,608,1055,24,11)
     button('Ground overview','Overview.opi',28,250); button('EPS raw / quality','EPS.par',297,250)
     scripted('No packet received','POWER_STATUS_readout_count','sample-time.js',575,662,500,25,12)
-    label('Readout age is UART observation age, not ADC conversion age. Expired values must be treated as unknown.',28,711,1055,24,11)
+    label('Use selected processor time; replay link status describes archived data. Readout age is not ADC age.',28,711,1055,24,11)
     ET.indent(display)
     ET.ElementTree(display).write(destination/'EPS.opi',encoding='utf-8',xml_declaration=True)
     groups={'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}

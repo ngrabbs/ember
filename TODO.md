@@ -98,8 +98,8 @@ parser/handlers and USB loop now pass on hardware, including duplicate, reset
 and timeout checks. Real IHU EPS telemetry now reaches a read-only native
 Yamcs dashboard through the UART adapter, with validity, expiration, raw data
 and archived plots; see [EPS setup](system/ground_station/eps_yamcs_setup.md).
-While radios are unavailable, interactive replay and archive retention/backup
-are next. The two-Pico SX1280 RF loop and UHF BPSK validation remain open.
+Interactive replay is verified; archive retention/backup is next while radios
+are unavailable. The two-Pico SX1280 RF loop and UHF BPSK validation remain open.
 
 - [ ] Build the Pi-hosted command/telemetry bench module using the checklist in
       [`system/ground_station/TODO.md`](system/ground_station/TODO.md).

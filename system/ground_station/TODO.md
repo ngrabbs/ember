@@ -95,7 +95,8 @@ Existing firmware references (separate repositories):
   laptop browser access and archive survival across a full Pi reboot.
 - [x] Open native parameter plotting from the system display and verify
   archived/live telemetry on the Pi.
-- [ ] Exercise interactive archive replay on the Pi.
+- [x] Exercise interactive archive replay on the Pi: play/pause, forward/backward
+  seek, historical EPS values and frozen replay clock; [verification](archive_replay.md).
 - [x] Add native EMBER overview and detail displays, with received timestamps,
   RSSI-unavailable handling and navigation to command history;
   [display setup](../../ground/yamcs/DISPLAYS.md).
@@ -141,8 +142,7 @@ Existing firmware references (separate repositories):
 Evidence: [software validation](ember_validation.md) and
 [USB hardware validation](usb_validation.md). USB acceptance is complete; RF
 acceptance remains open. While radios are unavailable, the real IHU EPS now
-feeds Yamcs through its UART adapter. Next software work: exercise interactive
-archive replay, configure retention/backup, then extend the wired IHU command
+feeds Yamcs through its UART adapter. Next software work: configure retention/backup, then extend the wired IHU command
 path with correlated results without enabling charger writes.
 
 ## IHU/EPS bench while RF hardware is unavailable

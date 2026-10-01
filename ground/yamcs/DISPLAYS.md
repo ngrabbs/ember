@@ -87,7 +87,7 @@ response fields cached until another response arrives; check command history.
   the overview shows its COMPLETED / NONE response and report timestamp.
 - System table navigation and received values/timestamps verified in browser;
   clicking telemetry period opens the native chart with an archived/live1000ms
-  trace. Interactive processor replay remains a separate checklist item.
+  trace. Interactive processor replay is now verified; see the [replay procedure](../../system/ground_station/archive_replay.md).
 - Overview RSSI sentinel shows Unavailable; missing response samples use an
   unfilled placeholder rather than fabricated success.
 - Installation is idempotent and preserves previous changed object bytes.
@@ -101,4 +101,6 @@ uses a ground wrapper session; the overview and system/comms tables now bind
 packet-specific boot/uptime aliases so EPS cannot overwrite the spare Pico's
 identity. UART disconnect and bridge-stop checks verify numeric suppression
 and INVALID/EXPIRED indications. These EPS freshness checks are verified in
-realtime; interactive replay remains on the checklist.
+realtime; interactive replay now verifies play/pause and forward/backward seek.
+The quality label describes the packet link, including during replay; use the
+selected processor clock, not laptop wall time. See the [replay procedure](../../system/ground_station/archive_replay.md).
