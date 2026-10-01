@@ -10,7 +10,7 @@ from pathlib import Path
 import struct
 
 DICTIONARY = json.loads(Path(__file__).with_name("dictionary.json").read_text())
-TYPES = {"u8": "B", "u16": "H", "u32": "I", "i16": "h"}
+TYPES = {"u8": "B", "u16": "H", "u32": "I", "i16": "h", "i32": "i"}
 
 
 class PacketError(ValueError):

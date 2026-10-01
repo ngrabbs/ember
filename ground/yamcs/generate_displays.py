@@ -97,7 +97,7 @@ def generate(destination):
     label('Mode',48,215,275); value('SYSTEM_STATUS_mode',48,241)
     label('Configuration',48,300,275); value('SYSTEM_STATUS_configuration',48,326,size=22)
     label('Telemetry period',48,385,275); value('HEARTBEAT_telemetry_period_ms',48,411)
-    label('Boot ID',48,478,275); value('source_boot_id',48,504,size=20)
+    label('Boot ID',48,478,275); value('HEARTBEAT_source_boot_id',48,504,size=20)
 
     label('02  /  ENDPOINT COUNTERS',400,169,300,28,13,BLUE,True)
     for title,pv,y in [('Commands received','COMM_STATUS_rx_packets',215),('Packets handed to USB','COMM_STATUS_tx_packets',286),('CRC errors','COMM_STATUS_crc_errors',357),('Dropped frames / packets','COMM_STATUS_dropped_packets',428)]:
@@ -116,7 +116,7 @@ def generate(destination):
 
     label('Last heartbeat received',28,603,215,h=24,size=12)
     scripted('No sample received','HEARTBEAT_telemetry_period_ms','sample-time.js',242,603,387,size=13)
-    label('Uptime',745,603,90,h=24,size=12); value('uptime_ms',835,599,250,34,size=17)
+    label('Uptime',745,603,90,h=24,size=12); value('HEARTBEAT_uptime_ms',835,599,250,34,size=17)
     button('System details','System.par',28,164)
     button('Comms details','Comms.par',208,164)
     button('Command reports','Command-reports.par',388,164)
@@ -126,15 +126,46 @@ def generate(destination):
         color(e,'background_color','#30445e'); color(e,'foreground_color',WHITE); font(e,12,True)
         actions=e.find('actions'); a=ET.SubElement(actions,'action',type='OPEN_WEBPAGE'); prop(a,'hyperlink',url)
     label('BENCH DATA • values can remain cached after link loss; compare heartbeat time with mission time.',28,707,1070,h=24,size=11)
+    button('EPS dashboard','EPS.opi',928,164)
+    # Replace the last navigation button with EPS; link details remain in the sidebar.
+    for e in list(display):
+        if e.tag == 'widget' and e.findtext('name') == 'Link status': display.remove(e)
     ET.indent(display)
     ET.ElementTree(display).write(destination/'Overview.opi',encoding='utf-8',xml_declaration=True)
-    header=['source_boot_id','uptime_ms','transaction_epoch','transaction_id','packet_sequence_raw']
-    groups={'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS'], 'Command-reports.par':['COMMAND_RESPONSE']}
+    display = ET.Element('display', typeId='org.csstudio.opibuilder.Display', version='1.0.0')
+    for key, val in {'widget_type':'Display','name':'EMBER IHU EPS','width':1120,'height':750,'show_grid':False,'auto_zoom_to_fit_all':True}.items(): prop(display,key,val)
+    color(display,'background_color',BG)
+    for tag in ('scripts','rules','actions'): ET.SubElement(display,tag)
+    label('EMBER / IHU EPS',28,20,900,48,30,WHITE,True)
+    label('READ-ONLY UART / PI PACKET WRAPPER / 2 SERIES CELLS',28,76,1050,25,13,ORANGE,True)
+    box(28,120,1064,95)
+    scripted('Waiting for EPS telemetry','POWER_STATUS_readout_valid','eps-quality.js',48,137,1020,35,17)
+    scripted('No readout received','POWER_STATUS_readout_age_ms','eps-age.js',48,178,1020,24,12)
+    for x,y,title,pv in [(28,237,'Charger VIN','input_mv'),(390,237,'Battery pack','battery_mv'),(752,237,'Power-path output','output_mv'),(28,375,'Input current *','input_ua'),(390,375,'Battery current *','battery_ua'),(752,375,'Charger die temperature','die_temp_mc')]:
+        box(x,y,340,120); label(title,x+20,y+15,300,24,13,BLUE,True)
+        e=label('Unavailable',x+20,y+49,300,47,26,WHITE,True)
+        path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/eps-value.js',checkConnect='false',sfe='false',seoe='false')
+        for n in ('POWER_STATUS_'+pv,'POWER_STATUS_conversion_valid'):
+            ET.SubElement(path,'pv',trig='true').text='/ember/'+n
+    label('Charger state (bitmask)',28,526,240); value('POWER_STATUS_raw_charger_state',267,521,110,34,19)
+    label('JEITA region',399,526,140); value('POWER_STATUS_raw_jeita_region',545,521,100,34,19)
+    label('ADC valid',761,526,110); value('POWER_STATUS_adc_valid',893,521,100,34,19)
+    label('* Current uses assumed 10 mOhm sense resistors. Confirm fitted values before relying on it.',28,575,1055,24,12,ORANGE)
+    label('No battery thermistor fitted. Die temperature is not battery temperature. No charger commands are sent.',28,608,1055,24,11)
+    button('Ground overview','Overview.opi',28,250); button('EPS raw / quality','EPS.par',297,250)
+    scripted('No packet received','POWER_STATUS_readout_count','sample-time.js',575,662,500,25,12)
+    label('Readout age is UART observation age, not ADC conversion age. Expired values must be treated as unknown.',28,711,1055,24,11)
+    ET.indent(display)
+    ET.ElementTree(display).write(destination/'EPS.opi',encoding='utf-8',xml_declaration=True)
+    groups={'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
     for filename,names in groups.items():
-        parameters=[] if filename=='Command-reports.par' else ['/ember/'+n for n in header]
+        parameters=[]
+        # Pin header provenance to each message rather than the last packet of any kind.
         for m in D['messages']:
             if m['name'] in names:
                 parameters += ['/ember/'+m['name']+'_'+f['name'] for f in m['fields']]
+                if filename not in ('EPS.par','Command-reports.par'):
+                    parameters += ['/ember/'+m['name']+'_'+n for n in ('source_boot_id','uptime_ms')]
         # The common header is replaced by every packet. Omit it from response
         # tables: only native command history provides correlated outcomes.
         obj={'$schema':'https://yamcs.org/schema/parameter-table.schema.json','scroll':filename=='Command-reports.par','bufferSize':40,'parameters':parameters}
@@ -142,7 +173,7 @@ def generate(destination):
     scripts=destination/'scripts'; scripts.mkdir(exist_ok=True)
     for p in (ROOT/'display-scripts').glob('*.js'):
         shutil.copy2(p,scripts/p.name)
-    print('Generated EMBER overview and three native parameter tables:',destination)
+    print('Generated EMBER overview, EPS display and native parameter tables:',destination)
 
 
 if __name__=='__main__':
