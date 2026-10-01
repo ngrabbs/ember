@@ -161,9 +161,10 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
   ADC invalid → valid, LAD chemistry, detected two cells with input present.
 - [x] Resolve suspected VIN decoding discrepancy: pin 7 measured 8.168 V and
   later 10.7 V, agreeing with PEC-verified telemetry at both operating points.
-- [ ] Confirm current supply voltage/current and exact resistor repair; investigate
-  remaining input-path drops separately from telemetry accuracy.
-- [ ] Confirm fitted thermistor/bias circuit and resolve NTC-pause/JEITA region 7.
+- [x] Confirm input resistor replaced by jumper; supply 11 V / pin 7 10.69 V,
+  consistent with the reported input blocking diode. Supply current pending.
+- [ ] Resolve NTC-pause/JEITA region 7: no real thermistor fitted; identify
+  bench substitute value/wiring and confirm complete NTCBIAS-to-NTC divider.
 - [x] Build/test SMBus PEC verification, including corrupted data/checksum rejection.
 - [x] Flash/verify PEC image; capture three complete readouts with all word
   checksums accepted. Unexpected VIN is present in chip-returned data.

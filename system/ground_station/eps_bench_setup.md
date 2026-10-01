@@ -387,3 +387,43 @@ Charging remains inhibited by the thermistor qualification path. Raw thermistor
 words are 536–588, without a fitted-thermistor/bias model to convert them into
 battery temperature. Presence and values of the actual battery thermistor are
 requested. The firmware still makes no charger configuration changes.
+
+
+### Input repair confirmed; thermistor divider pending
+
+The operator confirms the lifted input resistor was replaced by a wire jumper.
+A blocking diode is present between the solar supply connection and pin 7;
+the supply now reads 11 V and pin 7 approximately 10.69 V. The approximately
+0.31 V difference is consistent with a forward-biased blocking diode at this
+operating point. This resolves the reported supply-to-VIN discrepancy after
+the input repair. Resistor reference and reconciliation with the assembled
+board revision are still pending; no CAD modification was performed.
+
+No battery thermistor is fitted. The operator installed a substitute resistor,
+but its value and wiring are not yet confirmed. The exported schematic nets
+contain no connections to U1 pins 9 or 10, so the presence of a complete
+on-board NTC divider must not be assumed from the current repository design.
+Bench wiring must be inspected and measured directly.
+
+The expected circuit is:
+
+```text
+NTCBIAS (pin 9) -- Rbias -- NTC (pin 10) -- Rthermistor -- GND
+```
+
+The datasheet requires Rbias to match the thermistor's nominal resistance.
+For a controlled room-temperature substitute, equal known Rbias and dummy
+resistance produce a midpoint reading. For example, 10 kohm / 10 kohm gives
+about 0.6 V at NTC while the 1.2 V bias is active and a raw ADC near 10914.
+This simulates a nominal-temperature resistance and does not measure battery
+temperature. Qualifying the divider may enable charging without a software
+write; a dummy resistor is a supervised bench setup, not battery thermal sensing.
+
+Next requested checks with all power disconnected: identify the substitute's
+marking/value and its two connected nodes, and measure/identify the resistor
+between pins 9 and 10. In-circuit resistance can include other paths. Once the
+wiring is established, read the raw thermistor ADC and JEITA region again.
+NTCBIAS is applied during measurement; low-power telemetry is sampled roughly
+every five seconds, so a DMM may average the bias pulses. A low average meter
+voltage alone does not prove the bias output is defective. JEITA remains enabled
+and firmware configuration writes remain disabled.
