@@ -164,7 +164,10 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
   meter confirms 12 V at input terminals and board feeding LTC4162.
   Input discrepancy remains unresolved; checksum-verified readout next.
 - [x] Build/test SMBus PEC verification, including corrupted data/checksum rejection.
-- [ ] Flash PEC image and distinguish transfer corruption from ADC/analog issues.
+- [x] Flash/verify PEC image; capture three complete readouts with all word
+  checksums accepted. Unexpected VIN is present in chip-returned data.
+- [ ] Measure VCC2P5, INTVCC and VOUTA to chip ground; investigate the remaining
+  ADC/analog discrepancy and cycling charger state.
 - [ ] Document sample age and measurement limits across repeated power transitions.
 - [ ] Define the versioned EPS POWER_STATUS payload with validity and freshness;
   implement IHU telemetry transport to the ground station.

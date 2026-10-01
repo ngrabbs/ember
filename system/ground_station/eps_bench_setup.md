@@ -254,6 +254,43 @@ mock exercises a fixed golden PEC (`D0 3B D1 FF FF` → `2E`), altered data and
 altered PEC rejection in both read-only and legacy-write builds. ARM Release
 build passes. Prepared image `ihu-eps-pec-20261001.uf2` SHA-256:
 `6bd2a4462939a8955bd8dadcc135bfe4ba89e0a33715b9b5111ac0a30c1227f8`.
-This image is prepared for the next BOOTSEL load; it has not yet been tested on
-hardware. Earlier captures did not verify PEC. A valid checksum validates the
+This image was subsequently loaded and checked on hardware as recorded below.
+Earlier captures did not verify PEC. A valid checksum validates the
 transfer, not ADC calibration, sample freshness or analog hardware health.
+
+
+### Checksum-enabled image hardware validation
+
+The IHU was again identified in BOOTSEL by flash ID `E663682593923F31`.
+The prepared PEC image hash matched, and `picotool load -v -x` passed flash
+verification. UART confirms the new build booted, both I2C devices remain
+available, and read-only charger configuration is preserved.
+
+Three complete JSON readouts at uptime 9826, 12833 and 15840 ms are saved in
+[PEC-enabled input samples](evidence/ltc4162-pec-input-20261001.json).
+All 19 words in each readout passed firmware PEC verification. ADC-valid is
+set, LAD chemistry and detected two cells are retained, CONFIG_BITS is `0` and
+CHARGER_CONFIG_BITS is `1`. Decoded ranges:
+
+| Field | Range |
+|---|---|
+| Battery pack | 8.19509–8.19586 V |
+| VIN | 8.15431–8.16090 V |
+| VOUT | 7.59719–7.60049 V |
+| Battery/input current | 0 mA in these three readouts |
+| Die temperature | 24.517–24.560 °C |
+
+Charger state alternates between battery detection and suspended. An additional
+raw dump contains nonzero current words, so zero current in these three samples
+is not assumed a permanent condition. The ground decoder agrees with the
+accepted raw words. Routine UART output was restored. The separate USB packet
+bridge remains active and the Yamcs instance remains RUNNING.
+
+This establishes that the unexpected VIN words arrived with matching chip PEC,
+not that their analog accuracy is correct or that every transfer is reliable.
+Do not calibrate the VIN scale against one supply setting to hide the discrepancy.
+The next requested physical readings are VCC2P5 (pin 8, nominal 2.5 V), INTVCC
+(pin 2, nominal 5 V), and VOUTA (pin 3, analog system supply), all relative to
+the chip ground. Use bypass capacitors/test points when accessible. These pin
+functions are defined on datasheet page 10 (PDF page index 9). Their readings
+are not yet available; no ADC/reference or chip defect is established.
