@@ -116,7 +116,8 @@ int si5351_init(si5351_dev_t *dev) {
     do {
         rc = si5351_read_reg(dev, SI5351_REG_STATUS, &status);
         if (rc != 0) return -1;
-        if (--tries == 0) return -1;   /* stuck in SYS_INIT */
+        if ((status & SI5351_STATUS_SYS_INIT) && --tries == 0)
+            return -1;   /* still initializing after the final allowed read */
     } while (status & SI5351_STATUS_SYS_INIT);
 
     /* Disable all outputs while configuring */

@@ -108,7 +108,7 @@ static void print_alerts(const comms_link_status_t *s) {
         printf("\n");
         printf("[comms]   (repeats suppressed until this changes; "
                "'comms' shows current state)\n");
-    } else if (s_have_reported) {
+    } else if (s_have_reported && (s_reported_status & COMMS_HK_ST_FAULT)) {
         printf("[comms]   self-test FAIL cleared\n");
     }
 }
