@@ -195,3 +195,28 @@ Two unresolved observations must carry into the next test:
 
 Firmware remains observational: no ADC-force, JEITA-disable, charger-kick or
 threshold writes were issued. Routine console output was restored after capture.
+
+
+### Supply and meter follow-up
+
+The operator confirmed the bench supply is in CV mode at 12.00 V / 0.038 A,
+and a multimeter reads 12 V at the solar-input terminals. This rules out supply
+current limiting as the explanation for the earlier input discrepancy at that
+measurement time. A subsequent direct `eps raw` read at roughly 442 s MCU uptime
+still reports VIN `4950` (8.16255 V), ADC valid, LAD/two cells, JEITA region 7,
+CONFIG_BITS `0` and CHARGER_CONFIG_BITS `1`. Charger state is now `256`
+(suspended), so the earlier NTC-pause state is not assumed permanent.
+
+VIN register address `0x3B`, little-endian read assembly and 1.649 mV/LSB scaling
+were rechecked. The design guide describes connector blocking diodes and a
+2.7 ohm series resistor upstream of `VIN_CHG`; this is design documentation,
+not verification of the fitted board. At 38 mA the documented resistor alone
+would drop only about 0.103 V, not several volts. Do not adjust the decoder to
+match the supply setting without measuring the charger-side node.
+
+Next requested measurement: charger-side VIN decoupling capacitor/test point
+to board ground. If it is near 8 V, inspect the intervening input path. If it is
+near 12 V, continue ADC/reference/readout investigation. Actual input-current
+calibration also remains unresolved: the supply's 38 mA differs from the earlier
+61–63 mA decoded using an assumed 10 milliohm resistor; the readings were not
+simultaneous, so this is not yet a determined calibration error.
