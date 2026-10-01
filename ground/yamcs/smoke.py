@@ -32,10 +32,14 @@ def main():
     if "simulator:10025" not in destination:
         raise SystemExit("This smoke check requires the isolated Compose starter simulator.")
     before_tm = int(info["udp-in"]["dataInCount"])
-    time.sleep(3)
-    after = links()
-    if int(after["udp-in"]["dataInCount"]) <= before_tm:
-        raise SystemExit("Telemetry count did not grow.")
+    deadline = time.monotonic() + 30
+    while True:
+        time.sleep(1)
+        after = links()
+        if int(after["udp-in"]["dataInCount"]) > before_tm:
+            break
+        if time.monotonic() >= deadline:
+            raise SystemExit("Telemetry count did not grow within 30 seconds.")
     print("PASS: inbound telemetry count grows.")
 
     archived = api("/api/archive/myproject/packets?limit=1").get("packets", [])

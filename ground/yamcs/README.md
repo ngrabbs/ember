@@ -25,7 +25,8 @@ First startup downloads Java/Maven dependencies and compiles Yamcs; allow severa
 minutes. The simulator waits for Yamcs readiness before sending packets. Source is pinned to
 [upstream quickstart commit 61e9416](https://github.com/yamcs/quickstart/tree/61e94169687f8729832c754e0813bf90271e4800),
 which selects Yamcs 5.13.0. Container tags are fixed here, but image digests have
-not yet been locked. Both images must be checked on the selected ARM64 Pi.
+not yet been locked. Both images run natively on the ARM64 Pi 5; see the
+[lab inventory](../../system/ground_station/lab_inventory.md).
 
 Default HTTP access is `http://localhost:8090`. For a remote host, tunnel from
 the laptop, substituting its username and address:
@@ -79,4 +80,22 @@ host; use `--url http://HOST:8090` when bound to a specific LAN address.
 
 The simulator replays about one day of sample data and does not loop. It is not
 a service for long-term operation; restart it for another smoke session. Pi
-boot startup, retention/backup, and the EMBER MDB are still on the checklist.
+archive retention/backup and the EMBER MDB are still on the checklist.
+
+## Pi boot startup
+
+The supplied systemd unit assumes user `ngrabbs`, Docker group membership, and
+checkout `/home/ngrabbs/work/MSU_Cubesat/ember`. Adjust those paths for a different
+host. It starts Compose after Docker and network readiness and stops the lab
+cleanly at shutdown. Container restart policies also recover exited processes.
+
+```sh
+sudo install -m 0644 ember-ground-starter.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now ember-ground-starter
+systemctl status ember-ground-starter
+```
+
+Use `sudo systemctl stop ember-ground-starter` to stop the whole lab intentionally.
+Its `active (exited)` state means Compose startup finished; inspect container
+health and run the smoke check to verify the application itself.
