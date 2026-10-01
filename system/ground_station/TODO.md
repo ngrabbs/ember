@@ -74,7 +74,7 @@ Existing firmware references (separate repositories):
 - [ ] Assemble a panel with cooling, storage, power distribution, USB, Ethernet,
   Pico/radio mounting, and labelled RF connections.
 - [ ] Confirm USB power budget; use a suitable supply or powered hub as needed.
-- [x] Set hostname, network access, and browser-accessible Yamcs on the Pi: 
+- [x] Set hostname, network access, and browser-accessible Yamcs on the Pi:
   `http://192.168.1.251:8090`.
 - [x] Configure startup on boot and bounded container logs; verify a full Pi reboot.
 - [ ] Configure telemetry retention and archive backup.

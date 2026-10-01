@@ -18,7 +18,7 @@ baseline and exchange subsequent work through that branch.
 | Telemetry and command path recover after server restart | Pass; repeated smoke check succeeds |
 
 The sample test is `SwitchVoltageOn(Battery=1)` in the upstream dictionary.
-No voltage is switched: the upstream receiver only counts commands. No hardware
+No voltage is switched: the upstream receiver only counts commands. No spacecraft hardware
 was flashed, attached, or commanded; the containers have no radio/device mounts.
 
 This proves the starter deployment and bidirectional software transport. EMBER
