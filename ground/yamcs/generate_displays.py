@@ -74,6 +74,9 @@ def generate(destination):
         scripts=e.find('scripts')
         path=ET.SubElement(scripts,'path',pathString='scripts/'+script,checkConnect='true',sfe='false',seoe='false')
         ET.SubElement(path,'pv',trig='true').text='/ember/'+pv
+        if script == 'eps-quality.js':
+            for n in ('conversion_valid','link'):
+                ET.SubElement(path,'pv',trig='true').text='/ember/POWER_STATUS_'+n
 
     def box(x,y,w,h):
         e=widget('Rectangle','Panel',x,y,w,h)
@@ -132,10 +135,10 @@ def generate(destination):
         if e.tag == 'widget' and e.findtext('name') == 'Link status': display.remove(e)
     ET.indent(display)
     ET.ElementTree(display).write(destination/'Overview.opi',encoding='utf-8',xml_declaration=True)
-    display = ET.Element('display', typeId='org.csstudio.opibuilder.Display', version='1.0.0')
-    for key, val in {'widget_type':'Display','name':'EMBER IHU EPS','width':1120,'height':750,'show_grid':False,'auto_zoom_to_fit_all':True}.items(): prop(display,key,val)
-    color(display,'background_color',BG)
-    for tag in ('scripts','rules','actions'): ET.SubElement(display,tag)
+    display = ET.fromstring(ET.tostring(display))
+    for e in list(display):
+        if e.tag == 'widget': display.remove(e)
+    prop(display,'name','EMBER IHU EPS')
     label('EMBER / IHU EPS',28,20,900,48,30,WHITE,True)
     label('READ-ONLY UART / PI PACKET WRAPPER / 2 SERIES CELLS',28,76,1050,25,13,ORANGE,True)
     box(28,120,1064,95)
@@ -147,9 +150,9 @@ def generate(destination):
         path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/eps-value.js',checkConnect='false',sfe='false',seoe='false')
         for n in ('POWER_STATUS_'+pv,'POWER_STATUS_conversion_valid'):
             ET.SubElement(path,'pv',trig='true').text='/ember/'+n
-    label('Charger state (bitmask)',28,526,240); value('POWER_STATUS_raw_charger_state',267,521,110,34,19)
-    label('JEITA region',399,526,140); value('POWER_STATUS_raw_jeita_region',545,521,100,34,19)
-    label('ADC valid',761,526,110); value('POWER_STATUS_adc_valid',893,521,100,34,19)
+    label('Last charger state (bits)',28,526,240); value('POWER_STATUS_raw_charger_state',267,521,110,34,19)
+    label('Last JEITA region',399,526,140); value('POWER_STATUS_raw_jeita_region',545,521,100,34,19)
+    label('Last ADC valid',761,526,110); value('POWER_STATUS_adc_valid',893,521,100,34,19)
     label('* Current uses assumed 10 mOhm sense resistors. Confirm fitted values before relying on it.',28,575,1055,24,12,ORANGE)
     label('No battery thermistor fitted. Die temperature is not battery temperature. No charger commands are sent.',28,608,1055,24,11)
     button('Ground overview','Overview.opi',28,250); button('EPS raw / quality','EPS.par',297,250)

@@ -92,6 +92,9 @@ class EPS(unittest.TestCase):
             root=ET.parse(Path(d)/'ember.xml').getroot();ns={'x':'http://www.omg.org/spec/XTCE/20180204'}
             term=root.find(".//x:FloatParameterType[@name='POWER_STATUS_input_mv_type']//x:Term",ns)
             self.assertEqual(float(term.attrib['coefficient']),.001)
+            validity=root.find(".//x:FloatParameterType[@name='POWER_STATUS_input_mv_type']/x:ValidRange",ns)
+            self.assertEqual(validity.attrib['validRangeAppliesToCalibrated'],'false')
+            self.assertEqual(int(validity.attrib['minExclusive']),UNAVAILABLE)
             rate=root.find(".//x:SequenceContainer[@name='POWER_STATUS']/x:DefaultRateInStream",ns)
             self.assertEqual(float(rate.attrib['minimumValue']),1)
             c=root.find(".//x:SequenceContainer[@name='HEARTBEAT']",ns)
