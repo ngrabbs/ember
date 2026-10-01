@@ -3,6 +3,8 @@
 Updated 2026-10-01. This checklist owns the ground station lab build; the
 [root TODO](../../TODO.md) links here. Packet specifications belong in
 [command](../protocols/command.md) and [telemetry](../protocols/telemetry.md).
+Host locations and Pico build commands are recorded in the
+[development baseline](../integration/development_baseline.md).
 
 ## Objective and first acceptance test
 
@@ -45,6 +47,8 @@ command and timeout handling when its response is lost.
 - [x] Checkpoint the current comms KiCad project, including the RF-switch
   sheet, board, project configuration, and local libraries: commit `b3f4a0d`.
   This preserves the saved files; it is not an ERC/DRC or fabrication approval.
+- [ ] Reconcile the three remaining Mac checkpoint CAD differences with newer
+  GitHub `main` through native KiCad/Konnect review before adopting them.
 - [ ] Record the known-working Pico wiring, firmware version, radio settings,
   and a reproducible transmit/receive test before changing radio code.
 
