@@ -1,41 +1,50 @@
 # EMBER Ground Operations Console
-**Status:** Draft 0.1
 
-The console should allow the operator to view spacecraft mode/configuration, health, power, temperatures, faults, payload, communications, and storage; send permitted commands; receive ACK/NACK; view command results and detection/mode events; and review command/telemetry history.
+**Status:** Draft 0.2
 
-## Command Controls
-The console should prevent obviously invalid commands based on reported mode, without replacing onboard validation.
+The Ground Operations Console provides the primary human interface to EMBER.
 
-```text
-CURRENT MODE: SAFE
+The console is primarily used to monitor spacecraft health and mission activity, display alerts and events, review telemetry and historical data, and provide operator command capability when manual interaction is required.
 
-REQUEST STATUS       AVAILABLE
-REQUEST TELEMETRY    CONDITIONAL
-PAYLOAD CAPTURE      DISABLED
-FIRE OBSERVATION     DISABLED
-RETURN TO NOMINAL    CONDITIONAL
-REBOOT IHU           CONDITIONAL
-```
+Normal EMBER mission operation does not require continuous operator input.
 
-## Example Status Display
+## Primary Console Functions
+
+The console should allow the operator to:
+
+- Monitor current spacecraft mode and configuration
+- Monitor spacecraft health, power, temperatures, faults, payload, communications, and storage
+- Receive and display periodic telemetry
+- Receive and prominently display significant event messages
+- Alert the operator to fire detections and spacecraft faults
+- View telemetry age and communication status
+- Review historical telemetry and event information
+- Send permitted operator commands
+- Request current status or telemetry on demand
+- Receive and display ACK/NACK responses
+- Track command transaction status
+- Review command, telemetry, and event logs
+
+## Monitoring and Status
+
+The console should provide an at-a-glance view of current spacecraft condition.
+
 ```text
 EMBER GROUND OPERATIONS
+
 --------------------------------
-MODE:            NOMINAL
-CONFIGURATION:   FLIGHT
-SYSTEM HEALTH:   OK
-POWER:           OK
-PAYLOAD:         IDLE
-COMMUNICATIONS:  CONNECTED
-STORAGE:         OK
-FAULTS:          NONE
+
+MODE:             NOMINAL
+CONFIGURATION:    FLIGHT
+SYSTEM HEALTH:    OK
+
+POWER:            OK
+PAYLOAD:          IDLE
+COMMUNICATIONS:   CONNECTED
+STORAGE:          OK
+FAULTS:           NONE
+
 --------------------------------
-Last Telemetry:  14:32:08
-```
 
-The console should clearly distinguish SAFE entry, faults, command rejection, mode changes, communications/payload faults, and fire-detection events. Final GUI and storage details are TBD.
-
-## Draft 0.1 Behavior
-The console should identify stale/unknown telemetry instead of presenting old values as current; prominently display `GROUND TEST` versus `FLIGHT`; show command transaction states; translate NACK reason codes into human-readable information; and distinguish ground-interface connectivity from confirmed spacecraft communication.
-
-Selected higher-consequence commands require explicit operator confirmation. Normal operation uses human-readable commands and parameters rather than raw command IDs.
+Last Telemetry:   14:32:08
+Telemetry Age:    4 sec
