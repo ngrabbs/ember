@@ -351,3 +351,39 @@ requires reconciliation with that revision rather than blind removal.
 The operator was asked for its reference/marking or an unpowered resistance
 measurement. Isolation may be needed for a reliable in-circuit resistance
 reading. Charging/NTC behavior and fitted current sense calibration remain open.
+
+
+### Isolated resistor and recovered VIN reading
+
+The operator identified the intervening resistor marking as `2R70` (2.70 ohm),
+reported 259 ohm in circuit with power removed, and approximately 109 ohm after
+lifting it. An isolated resistor reading on its terminals is inconsistent with
+its marked value. The earlier inferred approximately 101 ohm path resistance
+is consistent in magnitude, but nonsimultaneous voltage/current readings do not
+establish an exact resistance or exclude joint problems.
+
+The operator subsequently reported 10.7 V at pin 7. Exact rework (replacement
+versus jumper) and the new supply voltage/current are pending confirmation.
+Three PEC-verified, ADC-valid readouts agree with that meter reading:
+
+| Field | Range |
+|---|---|
+| VIN | 10.677275–10.680573 V |
+| VOUT | 10.063464–10.066770 V |
+| Battery pack | 8.183542–8.184311 V |
+| Battery current | -3.372 to -1.466 mA, assuming 10 milliohm RSNSB |
+| Input current | 90.452–93.971 mA, assuming 10 milliohm RSNSI |
+| Die temperature | 26.5595–26.6025 °C |
+
+[Captured samples](evidence/ltc4162-input-10v7-20261001.json) have ADC-valid set,
+LAD chemistry, two detected cells, CONFIG_BITS `0`, CHARGER_CONFIG_BITS `1`,
+charger state `32` (NTC pause), charge status `0`, and JEITA region `7`.
+VIN now agrees with the physical terminal measurement at two operating points
+(8.168 V and approximately 10.7 V); the prior suspected VIN decoding discrepancy
+is resolved. This does not establish full calibration or explain any remaining
+drop from the supply, whose present reading has not been reported.
+
+Charging remains inhibited by the thermistor qualification path. Raw thermistor
+words are 536–588, without a fitted-thermistor/bias model to convert them into
+battery temperature. Presence and values of the actual battery thermistor are
+requested. The firmware still makes no charger configuration changes.

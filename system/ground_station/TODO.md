@@ -159,10 +159,11 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
 - [ ] Confirm fitted RSNSB/RSNSI and compare pack/output voltage with a meter.
 - [x] Capture TELEMETRY_STATUS and CHEM_CELLS on battery and input power:
   ADC invalid → valid, LAD chemistry, detected two cells with input present.
-- [ ] Resolve input-voltage discrepancy (12 V supply setting vs ~8.21 V VIN)
-  and NTC-pause/JEITA region 7. Supply confirmed CV / 12.00 V / 38 mA,
-  meter confirms 12 V at input terminals and board feeding LTC4162.
-  Pin 7 now measured 8.168 V, matching telemetry; identify intervening resistor.
+- [x] Resolve suspected VIN decoding discrepancy: pin 7 measured 8.168 V and
+  later 10.7 V, agreeing with PEC-verified telemetry at both operating points.
+- [ ] Confirm current supply voltage/current and exact resistor repair; investigate
+  remaining input-path drops separately from telemetry accuracy.
+- [ ] Confirm fitted thermistor/bias circuit and resolve NTC-pause/JEITA region 7.
 - [x] Build/test SMBus PEC verification, including corrupted data/checksum rejection.
 - [x] Flash/verify PEC image; capture three complete readouts with all word
   checksums accepted. Unexpected VIN is present in chip-returned data.
@@ -171,8 +172,9 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
 - [x] Confirm pin 7 at 8.168 V agrees with checksum-verified telemetry.
 - [x] Correct design guide: input damping resistor belongs in a series RC shunt
   branch, per datasheet Figure 8, rather than in the main solar feed.
-- [ ] Identify fitted resistor between solar and pin 7 (reference/value/path);
-  reconcile assembled board with schematic, then verify input/charger behavior.
+- [x] Identify resistor marking 2R70; operator reports ~109 ohm isolated,
+  inconsistent with 2.7 ohm marking.
+- [ ] Reconcile fitted resistor/reference and actual repair with schematic revision.
 - [ ] Document sample age and measurement limits across repeated power transitions.
 - [ ] Define the versioned EPS POWER_STATUS payload with validity and freshness;
   implement IHU telemetry transport to the ground station.
