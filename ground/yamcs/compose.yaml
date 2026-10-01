@@ -21,8 +21,9 @@ services:
       options: {max-size: "10m", max-file: "3"}
   simulator:
     image: python:3.12-slim
+    network_mode: service:yamcs
     working_dir: /simulator
-    command: ["python", "-u", "simulator.py", "--tm_host", "yamcs", "--tc_host", "0.0.0.0"]
+    command: ["python", "-u", "simulator.py"]
     volumes:
       - ./.runtime/quickstart:/simulator:ro
     depends_on:
