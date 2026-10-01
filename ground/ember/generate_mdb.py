@@ -37,6 +37,11 @@ def generate(destination):
             polynomial = node(node(encoding, "DefaultCalibrator"), "PolynomialCalibrator")
             node(polynomial, "Term", coefficient=field["scale"], exponent=1)
             if "unavailable" in field:
+                context = node(node(encoding, "ContextCalibratorList"), "ContextCalibrator")
+                node(node(context, "ContextMatch"), "Comparison",
+                     parameterRef="POWER_STATUS_conversion_valid", value=0)
+                polynomial = node(node(context, "Calibrator"), "PolynomialCalibrator")
+                node(polynomial, "Term", coefficient="NaN", exponent=0)
                 node(ptype, "ValidRange", validRangeAppliesToCalibrated=False,
                      minExclusive=field["unavailable"], maxInclusive=2147483647)
         if enum:

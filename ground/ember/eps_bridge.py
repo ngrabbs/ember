@@ -54,8 +54,8 @@ class State:
         if type(cells) is not int or not 1 <= cells <= 8:
             raise ValueError('confirmed cell count must be 1..8')
         import math
-        if not all(math.isfinite(r) and 0 < r <= 100 for r in (rsnsb, rsnsi)):
-            raise ValueError('sense resistance must be finite, positive and <=100 ohms')
+        if not all(math.isfinite(r) and 0.00001 <= r <= 100 for r in (rsnsb, rsnsi)):
+            raise ValueError('sense resistance must be finite and 0.00001..100 ohms')
         self.cells, self.rsnsb, self.rsnsi, self.verified = cells, rsnsb, rsnsi, verified
         self.session = session or secrets.randbelow(0xffffffff) + 1
         self.started = time.monotonic()

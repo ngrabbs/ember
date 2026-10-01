@@ -20,6 +20,11 @@ class EPS(unittest.TestCase):
     def state(self):
         return State(cells=2, rsnsb=.01, rsnsi=.01, session=123)
 
+    def test_configuration_bounds(self):
+        for r in (0, -1, float('nan'), float('inf'), 0.0000001, 101):
+            with self.assertRaises(ValueError):
+                State(cells=2, rsnsb=r, rsnsi=.01)
+
     def test_real_packet(self):
         s = self.state()
         self.assertTrue(s.accept(json.dumps(SAMPLE).encode(), 10))
@@ -95,6 +100,8 @@ class EPS(unittest.TestCase):
             validity=root.find(".//x:FloatParameterType[@name='POWER_STATUS_input_mv_type']/x:ValidRange",ns)
             self.assertEqual(validity.attrib['validRangeAppliesToCalibrated'],'false')
             self.assertEqual(int(validity.attrib['minExclusive']),UNAVAILABLE)
+            missing=root.find(".//x:FloatParameterType[@name='POWER_STATUS_input_mv_type']//x:ContextCalibrator//x:Term",ns)
+            self.assertEqual(missing.attrib['coefficient'],'NaN')
             rate=root.find(".//x:SequenceContainer[@name='POWER_STATUS']/x:DefaultRateInStream",ns)
             self.assertEqual(float(rate.attrib['minimumValue']),1)
             c=root.find(".//x:SequenceContainer[@name='HEARTBEAT']",ns)
