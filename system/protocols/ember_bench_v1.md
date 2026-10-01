@@ -5,8 +5,9 @@ The [JSON dictionary](../../ground/ember/dictionary.json) is the source for IDs,
 field types, enum values and units. Dustin's merged operations documents own
 application meanings; this subset preserves their command and telemetry IDs.
 New numeric parameter, stage, endpoint and reason values here need his review.
-The codec does not dispatch commands or authenticate uplink. The simulated
-GROUND_TEST endpoint dispatches the bench subset; Pico firmware is unchanged.
+The codec does not dispatch commands or authenticate uplink. The simulated and spare-Pico GROUND_TEST endpoints dispatch the bench subset.
+The real IHU EPS diagnostic path uses an observational Pi wrapper; see the
+[POWER_STATUS payload v1](eps_power_status_v1.md) for provenance and quality.
 
 ## Envelope
 
@@ -151,3 +152,6 @@ handed to the bounded SDK USB writer, not confirmed delivery. See
 [hardware validation](../ground_station/usb_validation.md). Events,
 event persistence, authentication, UTC, PUS, flight limits and SatNOGS decoding
 are not implemented by this lab v1.
+
+POWER_STATUS (telemetry 0x10) now has a versioned observational payload; see
+[EPS packet semantics](eps_power_status_v1.md). No EPS charger commands are added.

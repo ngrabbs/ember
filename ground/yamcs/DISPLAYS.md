@@ -11,13 +11,18 @@ application or a desktop-only profile. Laptop browser access is sufficient.
   endpoint RX/TX/CRC/drop counters, RSSI, latest response stage/reason/command/
   parameter/value, last heartbeat reception time and uptime. Click a numeric
   value to open its native parameter history/plotting page.
-- **System.par:** editable native table of state, heartbeat and common header,
+- **System.par:** editable native table of state, heartbeat and packet-specific boot/uptime,
   with generation time, raw/engineering values and acquisition status.
-- **Comms.par:** packet/error counters and raw RSSI, plus common header.
+- **Comms.par:** packet/error counters and raw RSSI, plus packet-specific boot/uptime.
 - **Command-reports.par:** scrolling live response-field samples with a bounded
   40-row buffer. This is not a transaction log; native **Command history** owns
   correlated acceptance/completion, rejected and UNKNOWN/timeout outcomes.
-- Buttons open these tables, the native command console/history and link status.
+- **EPS.opi:** actual IHU VIN/battery/output voltage, provisional signed current,
+  die temperature, readout/ADC quality, readout age and last raw charger status.
+  It hides engineering values on invalid readout or expired packets.
+- **EPS.par:** all 19 raw words plus engineering fields, quality, provenance and
+  current-conversion assumptions; use native parameter history for plots.
+- Buttons open these tables, the EPS dashboard and native command console/history.
   Navigation buttons do not issue commands.
 
 ## Install and update
@@ -36,7 +41,7 @@ Use m75q's URL on m75q. `generate_displays.py` builds into ignored
 `.runtime/ember-displays`; table fields come from the bench dictionary.
 The installer creates the bucket if absent, skips unchanged files, backs up
 any modified existing object under `.runtime/display-backups/TIMESTAMP/`, and
-verifies uploaded bytes by downloading them again. It only installs the six
+verifies uploaded bytes by downloading them again. It only installs its generated
 managed objects; unrelated displays are preserved. Rerunning installation
 replaces managed files, so preserve/adopt browser table edits in source first.
 Modified files are backed up locally, but that directory is not an archive
@@ -52,8 +57,9 @@ panel was checked at 60% scale. No custom browser renderer is installed.
 
 These are **latest received** snapshots. Yamcs can retain values while the
 physical endpoint is disconnected. Compare last-heartbeat time with mission
-time, and check packet/link counts before treating values as current. No
-calculated freshness alarm or physical-link connectivity lamp is implemented.
+time, and check packet/link counts before treating values as current. The spare Pico overview still relies on heartbeat time. EPS has separate
+readout validity, serial-link status and Yamcs expiration handling; see
+[EPS validation](../../system/ground_station/eps_yamcs_setup.md).
 When replaying, the samples/time follow the selected processor; do not compare
 replayed sample time with the laptop's wall clock.
 
@@ -89,3 +95,10 @@ response fields cached until another response arrives; check command history.
 References: [Yamcs display support](https://docs.yamcs.org/yamcs-server-manual/web-interface/telemetry/),
 [instance display bucket configuration](https://docs.yamcs.org/yamcs-server-manual/web-interface/configuration/).
 The renderer/format was checked against Yamcs5.13.0 source and @yamcs/opi1.3.3.
+
+The real IHU EPS path was subsequently deployed and validated. POWER_STATUS
+uses a ground wrapper session; the overview and system/comms tables now bind
+packet-specific boot/uptime aliases so EPS cannot overwrite the spare Pico's
+identity. UART disconnect and bridge-stop checks verify numeric suppression
+and INVALID/EXPIRED indications. These EPS freshness checks are verified in
+realtime; interactive replay remains on the checklist.

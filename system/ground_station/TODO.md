@@ -24,8 +24,10 @@ for application meanings and preliminary IDs. Remaining repairs and deliverables
 are in the [Dustin coordination note](dustin_followup.md).
 
 PR #5 is now merged at `a21832b`: the Pi/Yamcs dictionary and simulated loop
-are the established lab baseline. Next branch: `feature/ground-station-usb`,
-starting with the [one-Pico USB hookup](usb_bench_setup.md).
+are the established lab baseline. PR #6 is merged at `583ac9a`: the spare
+Pico USB command loop and native overview are verified. Draft PR #7 adds the
+read-only IHU/EPS diagnostics and live [EPS Yamcs path](eps_yamcs_setup.md) on
+`feature/ihu-eps-definitions`.
 
 ## Current direction and open decisions
 
@@ -138,8 +140,10 @@ Existing firmware references (separate repositories):
 
 Evidence: [software validation](ember_validation.md) and
 [USB hardware validation](usb_validation.md). USB acceptance is complete; RF
-acceptance remains open. Next: record the existing SX1280 wiring/settings and
-build the two-Pico RF transport using the same packet interface.
+acceptance remains open. While radios are unavailable, the real IHU EPS now
+feeds Yamcs through its UART adapter. Next software work: exercise interactive
+archive replay, configure retention/backup, then extend the wired IHU command
+path with correlated results without enabling charger writes.
 
 ## IHU/EPS bench while RF hardware is unavailable
 
@@ -182,9 +186,18 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
   inconsistent with 2.7 ohm marking.
 - [ ] Reconcile fitted resistor/reference and actual repair with schematic revision.
 - [ ] Document sample age and measurement limits across repeated power transitions.
-- [ ] Define the versioned EPS POWER_STATUS payload with validity and freshness;
-  implement IHU telemetry transport to the ground station.
-- [ ] Add native Yamcs EPS display and validate it against real measurements.
+- [x] Define observational EPS POWER_STATUS payload v1 (Dustin ID 0x10),
+  provenance/validity/readout age and read-only IHU UART-to-UDP transport;
+  [packet contract](../protocols/eps_power_status_v1.md).
+- [x] Add native Yamcs EPS dashboard/raw table; verify real VIN, battery/output
+  voltage, signed current, die temperature and raw status;
+  [setup and validation](eps_yamcs_setup.md).
+- [x] Verify UART disconnect/reconnect, bridge-stop expiration, INVALID/EXPIRED
+  handling and archive survival across Yamcs restart; preserve API evidence.
+- [ ] Move host-packaged EPS observations to a native IHU packet link when the
+  IHU command/telemetry transport is ready; preserve explicit provenance.
+- [ ] Extend safe wired IHU commands with transaction identity and acceptance/
+  completion reports; do not route raw Yamcs commands into the diagnostic CLI.
 
 ## 3. Pico/SX1280 RF loop
 

@@ -76,7 +76,7 @@ class State:
             if type(uptime) is not int or not 0 <= uptime <= 0xffffffff:
                 raise ValueError('bad IHU readout uptime')
             decoded = decode(sample, cells=self.cells, rsnsb_ohms=self.rsnsb, rsnsi_ohms=self.rsnsi)
-        except (ValueError, KeyError, TypeError, AttributeError, UnicodeError):
+        except (ValueError, KeyError, TypeError, AttributeError, UnicodeError, RecursionError):
             self.link = 'INVALID_READOUT'
             return False
         self.sample, self.decoded, self.last_at = sample, decoded, now

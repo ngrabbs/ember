@@ -80,7 +80,7 @@ class EPS(unittest.TestCase):
         for k,v in [('uptime_ms',True),('uptime_ms',-1),('profile','wrong'),('registers',[])]:
             sample=copy.deepcopy(SAMPLE);sample[k]=v;bad.append(json.dumps(sample).encode())
         sample=copy.deepcopy(SAMPLE);del sample['registers']['vin'];bad.append(json.dumps(sample).encode())
-        bad += [b'{"profile":"x","profile":"y"}', b'{garbage}', b'{"uptime_ms":NaN}']
+        bad += [b'{"profile":"x","profile":"y"}', b'{garbage}', b'{"uptime_ms":NaN}', b'{"r":'+b'['*1001+b'0'+b']'*1001+b'}']
         for line in bad:
             s=self.state();self.assertFalse(s.accept(line,10));self.assertIsNone(s.last_at)
         self.assertTrue(self.state().accept(b'IHU> '+json.dumps(SAMPLE).encode(),10))

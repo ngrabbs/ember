@@ -44,3 +44,13 @@ an uncertain command. `usb_probe.py` checks hardware duplicates, conflict,
 invalid/unknown commands, CRC, oversized/partial frames and optional reset.
 Stop the bridge before direct probing; its exclusive serial port cannot be
 shared. See [USB setup](../../system/ground_station/usb_bench_setup.md).
+
+## Real IHU EPS observations
+
+`eps_bridge.py` exclusively polls `eps json` on the IHU UART adapter and sends
+POWER_STATUS (0x10) to Yamcs UDP 10017. This is explicitly a Pi-generated
+wrapper; there is no EPS uplink or charger configuration path. The dictionary
+adds signed i32 fixed-point engineering fields, all 19 raw words, readout
+quality/age and bridge provenance. Yamcs scales engineering values and marks
+unavailable sentinels INVALID. See the [packet contract](../../system/protocols/eps_power_status_v1.md)
+and [Pi setup/validation](../../system/ground_station/eps_yamcs_setup.md).
