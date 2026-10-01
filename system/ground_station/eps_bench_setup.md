@@ -482,3 +482,24 @@ stop the exclusive UART bridge to issue the start command, restart it, capture
 VIN/VBAT/IBAT and charger flags for the full window, and verify restored
 CHARGER_CONFIG/CONFIG (JEITA enabled and suspend set). Restore the normal image
 after the experiment; retain evidence even if no charging current is observed.
+
+
+### First flash and ADC correction
+
+IHU BOOTSEL identity `E663682593923F31` confirmed at USB bus 3/address 7.
+Full pre-test backup `ihu-before-timed-test-20261001.uf2` saved on Pi and Mac,
+SHA-256 `3c37b8a03ea2646aa184b9930eccdd2f8829ddcf19a773e43493593a0730ce8a`.
+The initial timed image loaded with flash verification OK. Startup UART readout
+reported CONFIG 32, CHARGER_CONFIG 1 and charger state 256 (suspended), but
+TELEMETRY_STATUS 0, zero ADC registers and CHEM_CELLS 224. No charge-test start
+command was issued; the preconditions would reject this sample.
+
+Corrected recovery enables force_telemetry_on and high-speed telemetry while
+keeping suspend asserted (CONFIG 44 before/after test; CONFIG 12 during test,
+if no other original flags are set). This enables pre-start checks while
+suspended and prompt health measurements throughout the window. Seven host
+tests pass; Release rebuild succeeded. Corrected image staged on Mac and Pi as
+`ihu-eps-timed-test-adc-20261001.uf2`, SHA-256
+`2eb6095279996c7b9740a727211c44510a159672b333e148167c5245f9b416f5`.
+Awaiting another IHU BOOTSEL reset to load it. The read-only UART bridge was
+restarted after the first flash; charging remains suspended, experiment pending.

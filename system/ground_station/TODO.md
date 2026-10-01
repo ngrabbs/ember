@@ -169,9 +169,10 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
   consistent with the reported input blocking diode. Supply current pending.
 - [x] Implement and host-test a separately enabled 60-second NTC bench charge
   test; build/stage the image on the Pi. Default builds retain read-only behavior.
-- [ ] Reconnect IHU UART/direct USB, identify BOOTSEL device, and flash/verify
-  the timed test image. Confirm room-temperature battery and supervised bench
-  supply at 11 V / 150 mA limit before starting.
+- [x] Reconnect IHU UART/direct USB, identify BOOTSEL device, back up and flash/verify
+  the first timed test image. Operator confirmed supervised bench conditions.
+- [ ] Flash/verify corrected bench image with ADC kept running while suspended;
+  first image produced ADC-off samples and no charging test was started.
 - [ ] Capture charger state and signed battery current during one timed test;
   verify automatic restoration and suspended charging, then restore normal image.
 - [ ] Deferred by operator: inspect the thermistor bench wiring with solar,
