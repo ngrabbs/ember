@@ -1,0 +1,73 @@
+[
+  {
+    "input": {
+      "name": "SET_PARAMETER",
+      "sequence": 0,
+      "source": 1,
+      "target": 2,
+      "transaction_epoch": 287454020,
+      "transaction_id": 1,
+      "source_boot_id": 1432778632,
+      "uptime_ms": 1000,
+      "payload": {
+        "parameter_id": 1,
+        "value": 2000
+      }
+    },
+    "hex": "1900c000001f010000300102112233440000000155667788000003e800060001000007d0829b"
+  },
+  {
+    "input": {
+      "name": "HEARTBEAT",
+      "sequence": 16383,
+      "source": 2,
+      "target": 1,
+      "source_boot_id": 7,
+      "uptime_ms": 1000,
+      "payload": {
+        "mode": 3,
+        "configuration": 1,
+        "telemetry_period_ms": 2000
+      }
+    },
+    "hex": "0901ffff001f010100050201000000000000000000000007000003e800060301000007d0c2b9"
+  },
+  {
+    "input": {
+      "name": "COMMAND_RESPONSE",
+      "sequence": 0,
+      "source": 2,
+      "target": 1,
+      "transaction_epoch": 287454020,
+      "transaction_id": 1,
+      "source_boot_id": 7,
+      "uptime_ms": 1100,
+      "payload": {
+        "command_id": 48,
+        "stage": 2,
+        "reason": 0,
+        "parameter_id": 1,
+        "value": 2000
+      }
+    },
+    "hex": "0901c00000240102003102011122334400000001000000070000044c000b00300200000001000007d0cdb1"
+  },
+  {
+    "input": {
+      "name": "COMM_STATUS",
+      "sequence": 1,
+      "source": 3,
+      "target": 1,
+      "source_boot_id": 8,
+      "uptime_ms": 1200,
+      "payload": {
+        "rx_packets": 1,
+        "tx_packets": 2,
+        "crc_errors": 0,
+        "dropped_packets": 0,
+        "rssi_dbm": -32768
+      }
+    },
+    "hex": "0901c001002b010100300301000000000000000000000008000004b0001200000001000000020000000000000000800073f5"
+  }
+]

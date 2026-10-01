@@ -4,10 +4,11 @@
 
 Application meanings are owned by the merged
 [operations dictionaries](../../docs/architecture/operations/Ground_Operations_Command_Telemetry/README.md).
-The framing proposals below remain unresolved; see the
+The [bench v1 contract](ember_bench_v1.md) defines the initial host codec.
+Flight framing and authorization remain unresolved; see the
 [coordination note](../ground_station/dustin_followup.md).
 
-**Draft: packet model and handling policy; encoding details pending.**
+**Legacy flight draft below; use bench v1 for the lab implementation.**
 
 Proposed fields: **version byte → command ID → target subsystem → argument length →
 arguments → sequence counter → CRC**. Remaining field widths, byte order, CRC parameters,

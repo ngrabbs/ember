@@ -7,6 +7,15 @@ categories, command names, preliminary IDs, onboard validation authority,
 transport/acceptance/completion distinction, timeout-as-unknown policy, and
 independent autonomous telemetry/event flow. No final wire format is implied.
 
+## Bench proposal now available
+
+Review the [bench v1 contract](../protocols/ember_bench_v1.md) and
+[JSON dictionary](../../ground/ember/dictionary.json). Existing application
+IDs are preserved; parameter/stage/reason/endpoint numeric values and
+TELEMETRY_PERIOD limits are new lab proposals. Please confirm these semantics
+and correlated result rules, or identify corrections before firmware adoption.
+Only the host codec is implemented so far; the live Yamcs example is unchanged.
+
 ## Request for Dustin
 
 Please finish the following operations definitions so we can implement the

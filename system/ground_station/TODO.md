@@ -30,12 +30,13 @@ are in the [Dustin coordination note](dustin_followup.md).
 - BPSK in both directions is the current working choice. Frequencies,
   symbol rates, coding, framing, and the spacecraft receiver implementation
   still need to be settled.
-- Candidate ground host: an existing Raspberry Pi 4 or 5, preferably Pi 5
-  with active cooling and SSD storage. Laptop runs the browser; Pi runs the
-  ground services and SDR modem. Verify actual memory and power availability.
-- Proposed software: Yamcs, a small packet/radio bridge, and GNU Radio for
-  BPSK. CCSDS SPP is the proposed packet envelope; decide and document whether
-  to use a tailored ECSS PUS service subset.
+- Ground host: provisioned Pi 5 / 8 GB, `ember-ground`, Ethernet
+  `192.168.1.251`, 128 GB SD. Laptop runs the browser. Yamcs is running;
+  modem performance, cooling and USB power remain to verify.
+- Software: pinned Yamcs starter verified on the Pi. Packet/radio bridge and
+  GNU Radio BPSK modem remain to implement. The
+  [bench v1 dictionary](../protocols/ember_bench_v1.md) uses CCSDS SPP;
+  flight allocation and a possible ECSS PUS subset remain open.
 - Initial transport: two RP2040 Pico + SX1280 endpoints, reusing the existing
   2.4 GHz work. LoRa transport tests command/telemetry behavior; it does not
   validate the flight BPSK waveform. SX1280 and RFM95W are not native BPSK modems.
@@ -82,21 +83,28 @@ Existing firmware references (separate repositories):
   with isolated simulator and persistent archive storage.
 - [x] Verify starter telemetry, sample command receipt, packet archiving and
   recovery after server restart on m75q; [validation record](starter_validation.md).
-- [ ] Run the starter on the selected Pi and verify commands, plots, archive/replay,
-  and laptop access before inserting hardware. Pi telemetry/command/archive and
-  laptop access pass; plotting and interactive replay remain to exercise.
+- [x] Verify Pi starter telemetry, simulator command receipt, packet archive,
+  laptop browser access and archive survival across a full Pi reboot.
+- [ ] Exercise parameter plots and interactive archive replay on the Pi.
 
 ## 2. Packet contract and wired command loop
 
-- [ ] Specify APIDs, byte order, schema version, length validation, packet-size
-  limits, timestamp format/time quality, units, and sequence-counter behavior.
-- [ ] Specify command IDs/arguments and correlated accepted, rejected, completed,
-  and failed responses. Define timeout, retry, duplicate, and reset behavior.
+- [x] Define bench APIDs, byte order, schema version, length/size checks,
+  uptime, units and sequence behavior; add a host codec and literal vectors
+  in [ground/ember](../../ground/ember/README.md).
+- [x] Draft bench arguments, correlated acceptance/rejection/completion/execution
+  failure and timeout/retry/duplicate/reset rules in the
+  [contract](../protocols/ember_bench_v1.md).
+- [ ] Review bench parameter/stage/reason IDs and semantics with Dustin;
+  freeze flight APIDs, timestamps and packet limits separately.
 - [ ] Define uplink authorization/authentication and replay handling for the
   flight path; document how the lab exercises those checks.
-- [ ] Implement the dictionary subset: `PING`, `REQUEST_STATUS`,
-  `REQUEST_TELEMETRY`, and `SET_PARAMETER` with `TELEMETRY_PERIOD`; add
-  `HEARTBEAT`, `SYSTEM_STATUS`, `COMM_STATUS`, and correlated command results.
+- [x] Implement host encoding/decoding for `PING`, `REQUEST_STATUS`,
+  `REQUEST_TELEMETRY`, `SET_PARAMETER(TELEMETRY_PERIOD)`, `HEARTBEAT`,
+  `SYSTEM_STATUS`, `COMM_STATUS` and `COMMAND_RESPONSE`.
+- [ ] Implement command handlers, result lifecycle and telemetry scheduler in
+  an EMBER simulator, then the Pico endpoint. Prove invalid arguments,
+  duplicate suppression, transaction conflict and lost-response timeout.
 - [ ] Generate an unsolicited simulated event, preserve it during link loss,
   and deliver/deduplicate it after recovery without an operator command.
 - [ ] Define the Yamcs mission database and matching spacecraft encoder/parser.

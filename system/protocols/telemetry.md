@@ -1,5 +1,9 @@
 # Telemetry protocol
 
+Use the [bench v1 dictionary](ember_bench_v1.md) for initial lab packets.
+The live Yamcs starter still uses upstream demonstration telemetry; the
+flight proposal below is not yet reconciled with this bench profile.
+
 [System guide](../README.md) · [Data interfaces](../interfaces/data_interfaces.md)
 
 Application meanings are owned by the merged
