@@ -1,5 +1,9 @@
 # COMMS CAN Feather UART bench
 
+This UART-only project is preserved as the proven baseline/recovery source.
+The deployed COMMS Feather now runs the [CAN bench bridge](../can_feather_bench/README.md),
+which adds the new IHU CAN link and forwards its heartbeat through Walter.
+
 Standalone Pico SDK application for the Adafruit RP2040 CAN Bus Feather.
 This is not the existing UHF/FreeRTOS COMMS firmware and does not replace its
 board profile. It uses USB CDC for console/logs, UART0 GPIO0 TX / GPIO1 RX at

@@ -128,9 +128,9 @@ through an SDR eNodeB/EPC. Ordinary LTE attach by SIM7600 is a separate baseline
 ## 6. Firmware and EMBER integration
 
 The [COMMS MCU–Walter checklist](../../system/interfaces/comms_walter.md) owns
-controller/UART integration and the IHU I2C-to-CAN migration. Keep the existing
-IHU–COMMS housekeeping link while adding a separate packet service; it cannot
-already carry arbitrary telemetry or commands. LTE reliability remains shelved.
+controller/UART integration and the IHU I2C-to-CAN migration. The legacy I2C link
+is status/ping only; the new CAN Feather bench now forwards an IHU heartbeat.
+Full IHU/EPS housekeeping/application migration remains open. LTE reliability remains shelved.
 
 - [ ] Develop in firmware/walter with a pinned toolchain and WalterModem library.
 - [x] Preserve/verify Walter's ESP32 flash and install a pinned standalone
@@ -138,7 +138,8 @@ already carry arbitrary telemetry or commands. LTE reliability remains shelved.
       See [responder procedure](../../firmware/walter_uart_bench/README.md).
 - [x] Demonstrate COMMS Feather ↔ Walter physical UART round trip: ten of ten
       exact diagnostic PING/PONG replies; no additional RX bytes over five seconds idle.
-      Framed telemetry service, IHU forwarding, and LTE packet firmware remain open.
+      Production telemetry service and LTE packet firmware remain open; later CAN
+      forwarding milestone is recorded below.
 - [x] Build a shared bounded COBS/CRC diagnostic envelope with correlated replies;
       install/readback-verify Feather and test BUSY/missing-peer timeout behavior.
 - [x] Install framed Walter peer, verify upload hashes and USB behavior with modem held reset.
@@ -146,6 +147,13 @@ already carry arbitrary telemetry or commands. LTE reliability remains shelved.
       19 exact packet echoes plus HELLO, synthetic heartbeat identity preserved,
       version/type rejection, and recovery immediately after each CRC/overflow/gap fault.
       Echo preserves opaque packets; it is not modem submission or IHU forwarding.
+- [x] Replace the IHU bench module with a CAN Feather, preserve/verify both
+      controller flash images, and prove physical CAN HELLO/echo at 500 kbit/s.
+- [x] Forward ten hardware-IHU heartbeat packets via CAN → COMMS → Walter UART
+      echo and back to IHU, with identity/sequence/CRC preserved and no new
+      IHU-side CAN/fragment/timeout errors. [Evidence](../../system/ground_station/evidence/ihu-comms-walter-can-20261002.json).
+- [ ] Integrate CAN into the full IHU/EPS and COMMS applications; add real sensor
+      telemetry, periodic streaming, ground ingestion, and separately qualified uplink handling.
 - [ ] Implement bounded queues, sequence numbers, reconnect/backoff, and watchdogs.
 - [ ] Define modem startup, radio enable, shutdown, and sleep/wake behavior.
 - [ ] Integrate EMBER telemetry encoding and ground ingestion.

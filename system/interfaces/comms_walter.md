@@ -1,7 +1,11 @@
 # COMMS MCU and Walter transport
 
-Status: agreed architecture and draft packet interface, 2026-10-02.
-Firmware forwarding and board integration are not implemented yet.
+Status: CAN Feather bench forwarding demonstrated, 2026-10-02; production
+radio packet service and complete board/application integration remain open.
+The new IHU MCU is also an Adafruit RP2040 CAN Bus Feather. Two onboard MCP25625
+controllers now carry bench packets over a single 500 kbit/s CAN harness.
+[Implementation and evidence](../../firmware/can_feather_bench/README.md) show
+10/10 IHU-generated heartbeats through COMMS → Walter echo and back to IHU.
 
 The RP2040 on the IHU board is the **IHU MCU**. The RP2040 on the communications
 board is the **COMMS MCU** (Communications Controller). Walter's ESP32 manages
@@ -14,8 +18,9 @@ IHU MCU <-- internal packet transport --> COMMS MCU <-- framed UART --> Walter
                                             +-- UHF radio transport (future)
 ```
 
-The existing internal link is an I2C housekeeping/ping interface over bench
-jumpers. The intended internal packet transport is CAN. These are independent
+The legacy internal link is an I2C housekeeping/ping interface over bench
+jumpers. The new Feather bench packet transport is CAN; migration of the full
+IHU/EPS/UHF applications remains pending. These are independent
 of the COMMS–Walter UART and of the ground-facing LTE/UHF link.
 
 ## Selected COMMS module and proposed wiring
@@ -145,6 +150,13 @@ policy. UHF remains safe at boot while the Walter path is being exercised.
 - [x] Inspect existing I2C firmware and distinguish housekeeping from packet transport.
 - [x] Record CAN as the intended internal transport and Walter/UHF as external transports.
 - [x] Select COMMS module and propose UART/power mapping from vendor pinouts.
+- [x] Select the same CAN Feather for the new IHU; preserve/verify both flash
+      images and bring up their onboard MCP25625 controllers at 500 kbit/s.
+- [x] Demonstrate physical CAN HELLO/echo with 1–240-byte payloads; reverse
+      COMMS-initiated HELLO/echo passed too. Single bench bus only, not CAN A/B.
+- [x] Demonstrate 10/10 hardware-IHU heartbeat packets through CAN → COMMS →
+      Walter framed echo and back, preserving complete packet identity/CRC.
+      [Evidence](../ground_station/evidence/ihu-comms-walter-can-20261002.json).
 - [x] Detect Feather BOOTSEL, preserve/verify its full flash, and install a
       standalone USB/UART diagnostic image; [build and hardware results](../../firmware/comms_feather_bench/README.md).
       USB commands passed; initial probes preceded installation of Walter's peer.
@@ -179,10 +191,13 @@ policy. UHF remains safe at boot while the Walter path is being exercised.
       passthrough source/build or recovery image before replacement.
 - [ ] Bench-wire COMMS–Walter and prove a packet/return-packet loop without RF,
       including corruption, overflow, timeout, unplug, and either-controller reset.
-- [ ] Add an IHU packet path: choose a separately versioned interim I2C mailbox
-      or implement CAN first. Preserve the existing v1 housekeeping/ping contract.
-- [ ] Define CAN controller/transceiver implementation, IDs, fragmentation,
-      reassembly bounds, timeouts, arbitration priorities, and A/B policy.
+- [ ] Integrate the selected CAN packet path into the full IHU/COMMS applications.
+      CAN is proven in standalone bench images; preserve the legacy housekeeping
+      field meanings and restore the IHU's EPS/supervisor responsibilities.
+- [ ] Qualify production CAN IDs, fragmentation/reassembly, queue limits,
+      arbitration priorities, bus-off/reset recovery, and A/B hardware/policy.
+      The selected MCP25625 bench implementation and bounded transport are proven;
+      debug-range IDs and short-run tests do not qualify the full spacecraft bus.
 - [ ] Demonstrate IHU → COMMS → Walter → ground telemetry with original packet
       identity, then ground → Walter → COMMS → IHU and a correlated result.
 - [ ] Connect decoded telemetry/results to Yamcs and retain a recorded/replayed

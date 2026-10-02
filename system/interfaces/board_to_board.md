@@ -2,19 +2,22 @@
 
 [System guide](../README.md) · [Canonical pin map](cskb_pinmap.md)
 
-**Status: staged interconnect plan; CAN settings below are provisional.**
-IHU and comms each use an RP2040. EPS is currently charger/regulation hardware,
-not a full digital node. RP2040 has no native CAN peripheral; the proposed CAN
-implementation choice remains open (PIO CAN or external controller, with
-appropriate transceivers). The internal controller names are IHU MCU and COMMS MCU.
+**Status: single-bus CAN Feather bench demonstrated; flight interconnect and A/B remain planned.**
+IHU and COMMS now each use an Adafruit RP2040 CAN Bus Feather for this bench,
+with onboard MCP25625 controllers/transceivers. A 500 kbit/s CAN harness has
+carried an IHU-generated heartbeat through COMMS to Walter and back.
+[Implementation/evidence](../../firmware/can_feather_bench/README.md).
+EPS is currently charger/regulation hardware, not a full CAN node. RP2040 has
+no native CAN peripheral; the selected bench boards supply external controllers.
 
 ## Bus roles
 
 | Bus | Role | Initial connection |
 |---|---|---|
-| I2C | Current housekeeping | IHU ↔ EPS; separate bench jumper interface to COMMS at 0x42 for status/ping |
+| I2C | Legacy housekeeping firmware | IHU ↔ EPS; separate bench jumper interface to COMMS at 0x42 for status/ping |
 | SPI | Existing comms PCB allocation/older plan | Stack signals assigned; packet firmware not implemented |
-| CAN A/B | Intended internal packet/control/status transport | IHU MCU ↔ COMMS MCU, then payload nodes |
+| CAN | Implemented standalone bench packet transport | CAN Feather IHU MCU ↔ CAN Feather COMMS MCU; one physical harness |
+| CAN A/B | Intended redundant internal transport | Additional hardware/failover qualification remains open |
 | UART | Debug and bring-up logs | Debug host ↔ board |
 
 EPS may join CAN only after a digital controller is added. Refer to the pin map
@@ -31,12 +34,12 @@ for exact signals; both CAN buses are DNP in v0.1.
 ## Provisional CAN settings
 
 - Classic CAN 2.0B; default target 500 kbps.
-- PIO CAN versus external controller selection remains open; MCP2515 is one
-  existing candidate, not a selected implementation.
+- MCP25625 controllers/transceivers are selected and exercised on both CAN
+  Feathers for the single-bus bench. Production A/B controller allocation remains open.
 - Each bus is linear with its own 120 Ω termination at both physical ends and
   a ground reference. The [pin map](cskb_pinmap.md) defines A/B allocations;
   it adds no switched supply.
-- Controller count, selection, and failover policy remain open. Do not connect
+- Redundant controller count and failover policy remain open. Do not connect
   CAN A and CAN B together or assume that a failed node can always be isolated.
 
 | Proposed ID range | Message group |
