@@ -168,7 +168,9 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       [Evidence](../../system/ground_station/evidence/ihu-eps-battery-adc-20261002.json).
 - [x] Build native EPS POWER_STATUS packet encoding and matching CAN/UART services;
       verify fixed-point/raw fields against real EPS captures in the ground codec.
-- [ ] Flash matching COMMS update and prove real EPS packets through Walter echo.
+- [x] Flash/readback-verify matching COMMS v2 update; local loopback, physical
+      CAN HELLO and exact128-byte echo pass with zero CAN/fragment errors.
+- [ ] Prove real EPS packets through COMMS and Walter echo with USB back on IHU.
 - [x] Prepare isolated Yamcs ember-lte input on loopback UDP10018 and bounded
       native packet receiver for EPC UDP51000. Running, with zero radio packets.
 - [ ] Receive real EPS packets over LTE and byte-match them in Yamcs archive/display.

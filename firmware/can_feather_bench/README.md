@@ -166,7 +166,7 @@ Prepared artifacts on 2026-10-02:
 | Image | SHA-256 | Hardware state |
 |---|---|---|
 | IHU v2 UF2 | `3290196ccb7859b1c3069fd717a619a9995986fc18f036baafaece2a2f15fd1e` | Flashed/readback verified; EPS ADC-valid and CAN HELLO pass |
-| COMMS v2 UF2 | `e1a708fa17fef613d007cfbe19aef0f6d8756bbdf18d3c9fcdcf637357594be6` | Built; USB move needed for flash |
+| COMMS v2 UF2 | `e1a708fa17fef613d007cfbe19aef0f6d8756bbdf18d3c9fcdcf637357594be6` | Flashed/readback verified; CAN loopback, HELLO and 128-byte echo pass |
 | Walter LTE application bin | `851ef9b67618c3cbf33e7a2af56d2637e30ed1c8ca04246d1869162bbe493669` | Built; not flashed |
 
 IHU v2 boot3148122192 read EPS with ADC-valid1 and confirmed the still-running
@@ -176,6 +176,14 @@ Run `ground/ember/can_chain.py --eps --port IHU_SERIAL --output RUN_DIRECTORY`
 after COMMS is updated and its CAN mode set to normal. This checks ten native
 ADC-valid EPS returns plus five sized CAN echoes and HELLO. Without `--eps` it
 checks the heartbeat baseline. Neither mode activates LTE.
+
+COMMS v2 hardware update completed: boot1790982730, IHU peer3148122192.
+Local loopback, physical CAN HELLO and an exact128-byte CAN echo passed;
+TEC/REC/EFLG and CAN/fragment/timeout errors remained zero. Left COMMS in normal
+CAN mode with Walter powered separately; UART chain had not been exercised in
+this post-flash check (`walter_peer=0`, `chain_ok=0`).
+[COMMS post-flash evidence](../../system/ground_station/evidence/comms-eps-v2-flash-check-20261002.json).
+Real EPS chain test now awaits USB on IHU; Walter LTE upload still follows.
 
 ```text
 IHU heartbeat -- CAN --> COMMS -- framed UART --> Walter bench echo
