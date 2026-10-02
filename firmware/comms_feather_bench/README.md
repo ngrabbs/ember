@@ -98,6 +98,17 @@ with no recognized peer acknowledgment. That byte does not prove correct wiring.
 No Walter firmware was flashed and no modem/RF command was issued.
 
 Private build/flash/USB evidence is under `~/work/ember-comms-feather/` on m75q.
-Next: install the matching Walter ESP32 UART responder, then prove both directions
-and reset/framing behavior before adding telemetry packet forwarding. No IHU
-packet transport or CAN operation is demonstrated by this application.
+After installing the [Walter responder](../walter_uart_bench/README.md), USB was
+moved back to this Feather while Walter remained separately powered. Probes
+3–12 each returned exactly `EMBER_UART_PONG v1 N\n` with the matching identifier:
+10/10 successful diagnostic round trips. TX bytes increased 42 → 255 and RX bytes
+95704 → 95917, exactly 213 bytes in each direction. The initial RX count includes
+earlier unclassified bytes from before this run; it is not a clean-session count
+or a reliability measurement. A subsequent five-second idle check left both
+counts unchanged and produced no unsolicited USB logs.
+
+Private evidence: `/media/ngrabbs/BACKUP-A/ember-walter-bridge/feather-roundtrip.log`,
+`feather-roundtrip.json`, and `feather-idle.log` on m75q. The host decoded bounded
+UART RX hex chunks and compared the complete reply bytes against each request.
+This confirms both UART directions at 115200 8N1. Reset/framing behavior, telemetry
+packet forwarding, IHU packet transport, and CAN operation remain untested.

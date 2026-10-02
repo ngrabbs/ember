@@ -90,11 +90,18 @@ and errors, with `modem=HELD_RESET`. Opening USB reset this ESP32 application
 report describes firmware intent, not an independent electrical measurement.
 
 Build, package, original backup verification, flash, and USB logs are private
-under the m75q task directory above. Physical UART PING/PONG verification
-requires moving USB back to the powered Feather while keeping Walter powered
-through its selected supply. Follow the existing USB/VIN power-isolation plan.
-Use Feather `probe` and decode its UART RX hex log; a matching PONG identifier
-proves the diagnostic round trip. UART submission alone does not.
+under the m75q task directory above. After moving USB back to the powered Feather
+and keeping Walter separately powered, ten probes (identifiers 3–12) returned
+ten exact `EMBER_UART_PONG v1 N\n` replies. The host decoded Feather UART RX hex
+chunks and compared complete reply bytes to each expected identifier. Both
+directions carried 213 bytes, with no additional RX bytes during a subsequent
+five-second idle check. Logs: `feather-roundtrip.log`, `feather-roundtrip.json`,
+and `feather-idle.log`. This verifies the physical UART diagnostic, not the
+planned framed packet service or LTE telemetry. Reset and fault tests remain open.
+
+To repeat, follow the USB/VIN power-isolation plan, connect USB to Feather, send
+`probe`, and decode its UART RX hex log. A matching PONG identifier proves the
+diagnostic round trip; UART submission alone does not.
 
 Modem reset polarity was checked against the pinned
 [QuickSpot passthrough source](https://github.com/QuickSpot/walter-arduino/blob/c30b707f8d64b49daec80de6bccfc80c04e42d58/examples/passthrough/passthrough.ino).
