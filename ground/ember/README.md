@@ -27,6 +27,11 @@ firmware work. The tests verify CRC against the standard check value, fixed
 wire bytes, corruption, framing mismatches, sequence wrap boundaries,
 transaction identities, and invalid parameter handling.
 
+`session.py` records a bounded HEARTBEAT/POWER_STATUS archive window from Yamcs
+and replays its validated packets locally with recorded receive times and
+source context. See [session recording and replay](../../system/ground_station/telemetry_sessions.md)
+for commands, the demonstrated 60-packet session, and quality/time limitations.
+
 ## USB hardware endpoint
 
 `generate_c.py` generates C wire constants from the same dictionary. The

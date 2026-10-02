@@ -106,6 +106,11 @@ docker compose logs --tail 5 simulator
 
 ## Stop and retain data
 
+For a portable, bounded housekeeping session with local decoded replay, use
+the [record/replay procedure](../../system/ground_station/telemetry_sessions.md).
+It exports raw packets and original metadata from this archive without changing
+the running services. Offline replay is separate from the live Yamcs processor.
+
 ```sh
 docker compose stop
 docker compose start

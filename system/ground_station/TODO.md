@@ -1,6 +1,6 @@
 # Ground station lab TODO
 
-Updated 2026-10-01. This checklist owns the ground station lab build; the
+Updated 2026-10-02. This checklist owns the ground station lab build; the
 [root TODO](../../TODO.md) links here. Packet specifications belong in
 [command](../protocols/command.md) and [telemetry](../protocols/telemetry.md).
 Host locations and Pico build commands are recorded in the
@@ -77,6 +77,16 @@ Existing firmware references (separate repositories):
   packet operation still needs a reproducible demonstration.
 
 ## 1. Ground module and host
+
+- [x] Export and locally replay a bounded, decoded housekeeping session with
+      source context and original receive times: 30 live Pico heartbeats plus
+      30 EPS-quality packets; [session evidence](telemetry_sessions.md).
+- [x] Observe IHU/EPS UART recovery after the user restored power; a second
+      30-second session contains 30 current readouts without a service restart.
+- [x] Identify current EPS power/ADC state: user confirmed battery only, VIN off;
+      CONFIG_BITS zero leaves forced telemetry off, ADC-valid zero.
+- [ ] Obtain current engineering EPS measurements under an explicit measurement
+      setup; use input power or a narrowly scoped battery-only ADC-control path.
 
 - [x] Select and provision the Pi 5 / 8 GB with 64-bit Trixie, static Ethernet,
   key-only SSH and verified sudo; [lab inventory](lab_inventory.md).
