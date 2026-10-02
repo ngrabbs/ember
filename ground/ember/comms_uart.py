@@ -49,14 +49,20 @@ class Console:
         self.transcript.append(f'> {text}\n{result}')
         return result
 
+    @staticmethod
+    def require_match(reply, outcome):
+        submitted = re.findall(r'SUBMITTED request=(\d+)', reply)
+        completed = re.findall(r'RESULT request=(\d+) outcome=' + outcome + r'\b', reply)
+        assert len(submitted) == 1 and completed == submitted, reply
+
     def hello(self):
         reply = self.command('hello')
-        assert 'outcome=HELLO_CONFIRMED' in reply, reply
+        self.require_match(reply, 'HELLO_CONFIRMED')
         return reply
 
     def echo(self, payload):
         reply = self.command('packet ' + payload.hex())
-        assert 'outcome=BENCH_ECHO_MATCHED' in reply, reply
+        self.require_match(reply, 'BENCH_ECHO_MATCHED')
         assert f'type=113 size={len(payload)} hex={payload.hex()}' in reply, reply
         return reply
 
@@ -69,7 +75,7 @@ def run(port, output):
         first = c.command('status')
         assert 'fw=uart-framed-v1' in first and 'id=DF637882D39E4426' in first, first
         boot = int(re.search(r' boot=(\d+)', first)[1])
-        initial_unknown = int(re.search(r' unknown=(\d+)', first)[1])
+        initial = {name: int(value) for name, value in re.findall(r' (\w+)=(\d+)\b', first)}
         c.hello()
         for size in (1, 2, 32, 239, 240):
             for pattern in ('zeros', 'nonzero', 'ascending'):
@@ -80,8 +86,9 @@ def run(port, output):
         telemetry = encode('HEARTBEAT', sequence=7, source=DICTIONARY['endpoints']['ihu'], target=DICTIONARY['endpoints']['ground'],
                            source_boot_id=0x10203040, uptime_ms=123456,
                            payload={'mode': 3, 'configuration': 1, 'telemetry_period_ms': 1000})
-        c.echo(telemetry)
-        results['synthetic_heartbeat'] = decode(telemetry)
+        returned = c.echo(telemetry)
+        returned_hex = re.search(r'type=113 size=\d+ hex=([0-9a-f]+)', returned)[1]
+        results['synthetic_heartbeat'] = decode(bytes.fromhex(returned_hex))
         # Raw bench injection is separate from real pending requests.
         for request, version, kind, reason in ((900, 2, 0x70, 1), (901, 1, 0x33, 2)):
             reply = c.command('raw ' + envelope(kind, boot, boot, request, b'x', version).hex())
@@ -91,15 +98,23 @@ def run(port, output):
         # Corrupt CRC and too-large stream are silent drops, then a valid echo must recover.
         reply = c.command('raw ' + envelope(0x70, boot, boot, 902, b'x', corrupt=True).hex())
         assert 'RAW_SENT bench_only=1' in reply and 'RX_FRAME' not in reply, reply
+        c.echo(bytes(range(240)))
         reply = c.command('raw ' + (bytes([1])*263).hex())
         assert 'RAW_SENT bench_only=1' in reply and 'RX_FRAME' not in reply, reply
+        c.echo(bytes(range(240)))
         # Truncated frame expires after 250 ms; discard until delimiter, then recover.
         reply = c.command('raw ' + envelope(0x70, boot, boot, 903, b'x')[:8].hex(), .4)
         assert 'RAW_SENT bench_only=1' in reply and 'RX_FRAME' not in reply, reply
         c.echo(bytes(range(240)))
         results['fault_recovery'] = ['bad_crc', 'encoded_overflow', 'truncated_gap']
         final = c.command('status')
-        assert 'pending=0' in final and f'unknown={initial_unknown}' in final, final
+        last = {name: int(value) for name, value in re.findall(r' (\w+)=(\d+)\b', final)}
+        assert last['pending'] == 0 and last['unknown'] == initial['unknown'], final
+        assert last['boot'] == initial['boot'] and last['matched'] - initial['matched'] == 20, final
+        assert last['unsolicited'] - initial['unsolicited'] == 2, final
+        results['matched_transactions'] = 20
+        results['echoes'] = 19
+        results['passed'] = True
         results['final_status'] = final.strip()
         results['scope'] = 'Bench echo only; synthetic IHU packet; no IHU forwarding or modem/RF delivery'
         print(json.dumps(results, indent=2))

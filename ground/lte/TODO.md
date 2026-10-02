@@ -142,7 +142,9 @@ already carry arbitrary telemetry or commands. LTE reliability remains shelved.
 - [x] Build a shared bounded COBS/CRC diagnostic envelope with correlated replies;
       install/readback-verify Feather and test BUSY/missing-peer timeout behavior.
 - [x] Install framed Walter peer, verify upload hashes and USB behavior with modem held reset.
-- [ ] Run [paired packet/fault checks](../../firmware/comms_transport/README.md) with USB on Feather.
+- [x] Run [paired packet/fault checks](../../firmware/comms_transport/README.md) with USB on Feather:
+      19 exact packet echoes plus HELLO, synthetic heartbeat identity preserved,
+      version/type rejection, and recovery immediately after each CRC/overflow/gap fault.
       Echo preserves opaque packets; it is not modem submission or IHU forwarding.
 - [ ] Implement bounded queues, sequence numbers, reconnect/backoff, and watchdogs.
 - [ ] Define modem startup, radio enable, shutdown, and sleep/wake behavior.
