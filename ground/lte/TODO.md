@@ -3,6 +3,11 @@
 Updated 2026-10-02. Bench success is the immediate goal. Spacecraft items are
 later validation gates, not prerequisites for getting practical LTE experience.
 
+LTE reliability work shelved after two further bounded trials on 2026-10-02;
+neither registered or submitted UDP. Preserve the current seven-candidate build
+and resume from the RLC/dedicated-downlink checkpoint below. Application telemetry
+using the existing EMBER dictionary and Yamcs is the next priority.
+
 ## 1. Inventory and preserve the previous experiment
 
 - [x] Locate the previous srsRAN checkout, version, and built eNB/EPC.
