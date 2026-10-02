@@ -160,8 +160,15 @@ policy. UHF remains safe at boot while the Walter path is being exercised.
       with old I2C/Si5351 GPIOs and allocate the UHF controls.
 - [ ] Inventory remaining COMMS and Walter pins; verify electrical compatibility,
       power budget, reset/enable wiring, and antenna clearance before PCB placement.
-- [ ] Freeze UART wire envelope, versions, lengths, numeric IDs, statuses,
-      session/request correlation, queue bounds, and framing vectors.
+- [x] Define and implement the shared v1 diagnostic UART envelope: full COBS,
+      240-byte opaque payloads, outer CRC, boot/request identities, HELLO,
+      bench echo, and correlated rejection. [Wire specification and tests](../../firmware/comms_transport/README.md).
+- [x] Build both framed images and install/verify Feather; demonstrate missing-peer
+      timeout, BUSY rejection, and pending-slot recovery on hardware.
+- [ ] Install the matching framed Walter image, then run paired boundary/pattern,
+      synthetic EMBER packet, rejection, corruption, overflow, and gap-recovery checks.
+- [ ] Freeze production UART message IDs, transport outcomes, bounded queues,
+      and framing vectors for SEND_PACKET/TX_RESULT/RX_PACKET/RX_RESULT.
 - [ ] Add a transport-independent COMMS packet service and Walter adapter.
 - [ ] Add Walter application firmware with bounded modem lifecycle, separate
       COMMS UART, receive forwarding, and observable errors; preserve current

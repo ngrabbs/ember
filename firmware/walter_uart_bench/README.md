@@ -13,16 +13,20 @@ Native USB hardware CDC carries console logs independently of UART0. ESP32
 ROM boot output can still appear on UART0 during reset; this diagnostic is not
 the future binary framing protocol.
 
-USB commands: `status` and `help`, terminated by newline. Unknown commands and
-overlong lines are rejected. UART accepts `EMBER_UART_PING v1 N\n`, with N a
-one-to-ten-digit decimal identifier, and replies `EMBER_UART_PONG v1 N\n`.
-It sends nothing automatically. Lines use bounded 80-byte buffers; invalid
-UART lines increment the error counter. Status reports RX/TX bytes, ping/error
-counts, uptime, and the application's modem reset state. Counters wrap at 32 bits.
+The current source is `uart-framed-v1`, implementing the shared
+[bounded COBS/CRC bench envelope](../comms_transport/README.md). It responds to
+HELLO and opaque BENCH_ECHO requests, preserving request origin/identity and
+payload bytes while reporting its own boot/session identity. It rejects
+unsupported versions/types explicitly after CRC/structure validation. Malformed,
+corrupt, oversized, and incomplete streams are discarded with counters and
+resynchronization. There are no per-frame USB logs to block UART progress.
+USB commands are `status` and `help`, terminated by newline; the command buffer
+is 32 bytes, with unknown and overlong commands rejected.
 
-This proves neither packet forwarding nor LTE delivery. It has no IHU link,
-CAN service, queues, application CRC, or reconnect logic. Sustained UART traffic,
-FIFO overruns, and USB logging backpressure are not qualified.
+This is not the future modem packet service. It has no IHU link, CAN service,
+modem queues, radio enable, or reconnect logic. Sustained UART traffic, FIFO
+behavior, and independent controller resets are not yet qualified. The historical
+text PING results below precede this framed implementation.
 
 ## Build and install
 
@@ -33,7 +37,10 @@ with Xtensa GCC `8.4.0+2021r2-patch5`. Application source builds with
 to 16 MB flash, DIO, and native USB; the default partition table uses only the
 initial portion of flash. This diagnostic does not use PSRAM or WalterModem.
 
-On m75q, source is copied to a separate project beneath the external disk:
+On m75q, source is copied to a separate project beneath the external disk.
+Copy the sibling `comms_transport` directory beside `project` too; both images
+compile the same header. The standalone PlatformIO build resolves that relative
+include from the project directory:
 
 ```sh
 TASK_BASE=/media/ngrabbs/BACKUP-A/ember-walter-bridge
@@ -107,3 +114,6 @@ Modem reset polarity was checked against the pinned
 [QuickSpot passthrough source](https://github.com/QuickSpot/walter-arduino/blob/c30b707f8d64b49daec80de6bccfc80c04e42d58/examples/passthrough/passthrough.ino).
 Physical header mapping is from the
 [Walter datasheet](https://www.quickspot.io/datasheet/walter_datasheet.pdf).
+
+The framed source builds successfully; its current installation/paired-test
+status and binary hash are tracked in [transport evidence](../comms_transport/README.md).

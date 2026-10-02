@@ -13,30 +13,30 @@ this is not a direct Sequans modem connection. See the
 [carrier/interface plan](../../system/interfaces/comms_walter.md) for power entry,
 USB power isolation, and reserved pins.
 
-USB console commands, each terminated with newline:
+The current image is `uart-framed-v1`; it supersedes the initial text PING
+image described in the historical evidence below. It includes the shared
+[COBS/CRC UART bench service](../comms_transport/README.md).
 
-- `status`: board/role/version/flash identity, UART settings, byte/probe counters,
-  and uptime (32-bit milliseconds, wraps).
-- `help`: command list.
-- `probe`: transmit diagnostic ASCII `EMBER_UART_PING v1 N\n`, where N increments.
-  Reports UART submission, not peer acknowledgment or telemetry delivery.
-
-UART receive bytes are counted and logged in bounded hexadecimal chunks.
-No UART data is transmitted automatically at boot or when USB opens. Unknown
-commands are rejected; an overlong command is discarded through its delimiter.
-USB output is bounded to a 20 ms SDK write timeout. UART FIFO overruns and
-high-rate logging performance are not qualified. This text diagnostic is not
-the future framed packet-service wire protocol.
+USB commands, each terminated by newline: `status`, `help`, `hello`, `echo N`
+(1–240 byte pattern), `packet HEX` (opaque bench packet), and `raw HEX` (bounded
+fault injection). `hello` establishes Walter's boot identity before packets.
+Only one request can be pending. Replies are checked for correlation and exact
+payload; a timeout reports UNKNOWN and requires a fresh handshake. USB input is
+bounded to 559 bytes, overlong/NUL-containing lines are discarded through their
+delimiter, and UART reception uses the shared bounded COBS reader. No UART frames
+are sent automatically at startup. The USB write timeout remains 20 ms; sustained
+UART throughput/FIFO behavior is not qualified. No IHU or modem delivery is implied.
 
 ## Build
 
 Requires Pico SDK and the ARM GCC toolchain. On m75q's existing container,
-copy this directory to a separate work tree rather than overwriting its
+copy this directory and its sibling `comms_transport` to a separate work tree rather than overwriting its
 repository. The tested source/build trees are:
 
 ```text
 host:      ~/work/MSU_Cubesat/ember-comms-feather/src
 container: /workspace/MSU_Cubesat/ember-comms-feather/src
+shared:    /workspace/MSU_Cubesat/ember-comms-feather/comms_transport
 build:     /workspace/MSU_Cubesat/ember-comms-feather/build
 ```
 
@@ -112,3 +112,8 @@ Private evidence: `/media/ngrabbs/BACKUP-A/ember-walter-bridge/feather-roundtrip
 UART RX hex chunks and compared the complete reply bytes against each request.
 This confirms both UART directions at 115200 8N1. Reset/framing behavior, telemetry
 packet forwarding, IHU packet transport, and CAN operation remain untested.
+
+The framed image build/flash and missing-peer timeout checks are recorded in
+[the transport evidence](../comms_transport/README.md). The original full-flash
+backup remains the recovery image; the text diagnostic round trip above is
+historical evidence, not a result for the new binary envelope.

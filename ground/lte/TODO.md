@@ -139,6 +139,10 @@ already carry arbitrary telemetry or commands. LTE reliability remains shelved.
 - [x] Demonstrate COMMS Feather ↔ Walter physical UART round trip: ten of ten
       exact diagnostic PING/PONG replies; no additional RX bytes over five seconds idle.
       Framed telemetry service, IHU forwarding, and LTE packet firmware remain open.
+- [x] Build a shared bounded COBS/CRC diagnostic envelope with correlated replies;
+      install/readback-verify Feather and test BUSY/missing-peer timeout behavior.
+- [ ] Install framed Walter peer and run [paired packet/fault checks](../../firmware/comms_transport/README.md).
+      Echo preserves opaque packets; it is not modem submission or IHU forwarding.
 - [ ] Implement bounded queues, sequence numbers, reconnect/backoff, and watchdogs.
 - [ ] Define modem startup, radio enable, shutdown, and sleep/wake behavior.
 - [ ] Integrate EMBER telemetry encoding and ground ingestion.
