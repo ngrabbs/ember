@@ -63,3 +63,9 @@ With all six candidates, the same `ce300tx20diag` profile delivered ten numbered
 UDP payloads after a Service Request restored the bearer. It remains a bench
 profile with unresolved context release and uplink failure. See
 [first telemetry results](../../results/2026-10-02-uplink-telemetry.md).
+
+`ce300tx20rrcdiag` changes only RLC and RRC logging from info to debug, allowing
+SRB maximum-retransmission and RRC release events to be correlated. The latest
+seven-patch trial still experienced those failures. See
+[release trace](../../results/2026-10-02-repeatability-release.md). Debug logging
+adds overhead and this profile is for diagnosis.

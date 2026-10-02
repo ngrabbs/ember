@@ -3,8 +3,9 @@
 Base: `29d5fa7d38bb1ee8935ef7ae30a396d53772ea4f`.
 Pi source branch: `ember/lte-m-msg3-cleanup`. Source changes are preserved here
 as cumulative patches; EMBER does not vendor the OAI checkout.
-Current Pi state has all six applied, in this order: Msg3 cleanup, Msg4 retry,
-single-transmission RAR release, rejection lifecycle, CCCH wait, and uplink HARQ selection. Reverse
+Current Pi state has all seven applied, in this order: Msg3 cleanup, Msg4 retry,
+single-transmission RAR release, rejection lifecycle, CCCH wait, uplink HARQ selection,
+and dedicated downlink retry MCS retention. Reverse
 in the opposite order and rebuild to restore the baseline. No upstream commits,
 pushes, or PRs were made.
 
@@ -181,3 +182,26 @@ Initial context release and later uplink failure still occurred. This is the
 first telemetry demonstration, not a stable-link qualification or proof that
 this patch alone accounts for the improvement. All six patches reverse and
 reapply in order. See [uplink and telemetry results](../results/2026-10-02-uplink-telemetry.md).
+
+## Dedicated BL/CE downlink retry MCS retention candidate
+
+`oai-lte-m-dl-retry-mcs.patch` applies after the six candidates above. At entry
+to each UE's dedicated BL/CE scheduling path, load the saved HARQ-process MCS.
+New transmissions still calculate their MCS from payload size. Previously the
+function's local MCS started at zero and was not restored for retransmissions,
+then overwrote the saved MCS and changed the PDSCH transport-block length.
+This two-line change preserves the existing payload, NDI, and RV handling.
+
+```sh
+git apply --check /path/to/EMBER/ground/lte/patches/oai-lte-m-dl-retry-mcs.patch
+git apply /path/to/EMBER/ground/lte/patches/oai-lte-m-dl-retry-mcs.patch
+cmake --build build-lte --target lte-softmodem -j3
+```
+
+The target rebuilt and the incremental patch applied after the reconstructed
+six-patch source. There is no new scheduler unit test covering MCS/TBS retention.
+A bounded RF trial still reached SRB2 maximum retransmissions and released its
+context. This is a code correction candidate, not a demonstrated stability fix.
+All seven patches reverse/reapply in order and the 16 affected reconstructed
+files match the Pi source.
+See [repeatability and release trace](../results/2026-10-02-repeatability-release.md).

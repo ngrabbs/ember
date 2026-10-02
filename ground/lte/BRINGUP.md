@@ -389,3 +389,21 @@ ssh ngrabbs@ember-ground.local \
 Compare matching run IDs/sequences inside GTP-U with SGi and receiver output;
 total GTP packet count can include unrelated traffic. Confirm Walter's CFUN 0
 restoration and both network process exits after every trial.
+
+For a bounded retry/queue-settling experiment, add `--send-retries 3
+--settle-seconds 15` to the Walter command and use `--enable-seconds 120`.
+Retries apply only to completed pre-prompt `operation not supported` errors,
+with a two-second wait and at most three additional attempts. Payload submission,
+generic errors, and pending responses are never automatically retried. The
+settling wait is capped by the remaining enable deadline and does not prove
+that the modem queue drained. These controls do not fix the network's observed
+signaling-bearer failures. See [repeat results](results/2026-10-02-repeatability-release.md).
+
+The current Pi has seven candidates, including downlink retry MCS retention.
+For release tracing, select `enb.band13.emtc.ce300tx20rrcdiag.conf`; it adds
+RLC/RRC debug logging to the same RF settings. Keep the selected patch set and
+profile explicit in every result. Run sender retry checks locally with:
+
+```sh
+python3 -m unittest discover -s ground/lte/scripts/tests -v
+```

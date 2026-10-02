@@ -50,6 +50,10 @@ later validation gates, not prerequisites for getting practical LTE experience.
       TX gain +10 completed attach/bearer, but UL failure preceded UDP submission.
       The HARQ correction trial delivered ten packets after a Service Request;
       initial radio-context release and later uplink failure still need tracing.
+      Repeat trace identified SRB2 max retransmissions followed by RRC release.
+      Dedicated downlink retry MCS correction did not eliminate that failure.
+- [ ] Trace dedicated downlink HARQ/PUCCH feedback, RLC STATUS handling, and
+      stale reestablishment contexts; qualify the seventh scheduler candidate.
 - [x] Capture dedicated uplink grants, HARQ/CRC outcomes, socket status at the
       send error, and GTP/SGi packets to separate radio scheduling from socket issues.
       Found process-0 grants with legacy process-1/5 MAC receive updates; candidate
@@ -97,6 +101,8 @@ later validation gates, not prerequisites for getting practical LTE experience.
       First demonstrated burst: ten of ten 128-byte packets, in order, zero
       observed duplicates, 13.2-second receive span. Stable/repeatable operation
       remains outstanding; this trial restored its bearer through a Service Request.
+      Follow-up repeats delivered zero or nine packets; bounded pre-prompt sender
+      retries help some reconnects but do not establish reliability.
 - [ ] Record payload size, offered rate, duration, received count, loss,
       duplicate/out-of-order packets, RTT, and modem signal metrics.
 - [ ] Establish time synchronization before claiming one-way latency.

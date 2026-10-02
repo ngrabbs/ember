@@ -14,6 +14,7 @@ An orbital link is a later experiment, with its own timing, Doppler, power, and 
 - [RAR release and first completed Walter attach](results/2026-10-02-rar-release.md)
 - [Six-to-eight-foot separation comparison](results/2026-10-02-separated-antennas.md)
 - [First end-to-end Walter UDP telemetry](results/2026-10-02-uplink-telemetry.md)
+- [Repeatability and signaling-bearer release trace](results/2026-10-02-repeatability-release.md)
 - [Experimental OAI patches](patches/README.md)
 - [OAI candidate config and build record](configs/oai/README.md)
 - [Recovered ordinary LTE configs](configs/srsran-4g/)
@@ -42,6 +43,11 @@ The new RAR release candidate removed the observed pool assertion in bounded
 trials; subsequent trials completed attach and assigned 172.16.0.2. Reestablishment
 lifecycle failures and PHY simulator regression remain unresolved.
 Thingy interface work is deferred.
+
+Subsequent repeats delivered zero or nine packets. Debug logging traced context
+release to signaling-bearer maximum retransmissions. The current seventh
+candidate preserves dedicated downlink retransmission MCS, but has not removed
+the failure. First-burst delivery is demonstrated; reliable operation is not.
 
 OAI is the first open-source LTE-M candidate to evaluate. Its historical eMTC
 work demonstrated commercial modems, including Sequans, but had single-UE,
