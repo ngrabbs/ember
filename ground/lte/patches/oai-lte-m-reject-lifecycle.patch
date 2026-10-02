@@ -1,0 +1,16 @@
+diff --git a/openair2/LAYER2/MAC/eNB_scheduler_RA.c b/openair2/LAYER2/MAC/eNB_scheduler_RA.c
+--- a/openair2/LAYER2/MAC/eNB_scheduler_RA.c
++++ b/openair2/LAYER2/MAC/eNB_scheduler_RA.c
+@@ -1243,6 +1243,12 @@
+     LOG_D(MAC,"[eNB %d][RAPROC] Frame %d, Subframe %d: state:IDLE\n", module_idP, frameP, subframeP);
+     UE_id = find_UE_id(module_idP, ra->rnti);
+     DevAssert(UE_id != -1);
++    /* A reestablishment reject is Msg4 too; its ACK does not configure the temporary UE. */
++    if (ra->rach_resource_type > 0 && UE_info->UE_sched_ctrl[UE_id].ue_reestablishment_reject_timer > 0) {
++      LOG_I(MAC, "BL/CE reestablishment reject acknowledged; retaining unconfigured UE for timed release\n");
++      cancel_ra_proc(module_idP, CC_idP, frameP, ra->rnti);
++      return;
++    }
+     mac->UE_info.UE_template[UE_PCCID(module_idP, UE_id)][UE_id].configured = true;
+     mac->UE_info.UE_template[UE_PCCID(module_idP, UE_id)][UE_id].pusch_repetition_levels=ra->pusch_repetition_levels;
+     cancel_ra_proc(module_idP, CC_idP, frameP, ra->rnti);

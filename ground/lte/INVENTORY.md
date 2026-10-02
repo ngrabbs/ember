@@ -87,6 +87,8 @@ measured synchronization and the OAI LTE-M scheduler failures.
 
 On 2026-10-02, with Thingy powered down, experimental OAI Msg3 cleanup and
 Msg4 retry patches reached Walter RRC Setup Complete, accepted SIM authentication,
-and NAS Security Mode Complete. DLSCH allocation failure still interrupted attach.
-Walter remains stopped in CFUN 0. See
-[authentication results](results/2026-10-02-msg4-authentication.md).
+and NAS Security Mode Complete. Additional RAR release and lifecycle candidates
+are applied on the Pi. Walter subsequently completed LTE-M attach and reported
+registration; modem PDP context 1 returned 172.16.0.2. UDP delivery and PHY
+regression remain unresolved. Walter is restored to CFUN 0 after each bounded
+trial. See [latest results](results/2026-10-02-rar-release.md).

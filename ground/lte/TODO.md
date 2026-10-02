@@ -30,14 +30,22 @@ later validation gates, not prerequisites for getting practical LTE experience.
       Controlled Walter ON decoded UL CCCH and generated RRCConnectionSetup;
       patched MAC-debug run recorded Msg4 DTX before the retransmission assert.
       A bounded Msg4 retry candidate now produced a retry, ACK, and RRC Setup
-      Complete. Lifecycle CTest covers 11 cases; RF exhaustion and broader
-      repetition/mode coverage remain outstanding.
+      Complete. Lifecycle CTest covers 11 cases; a later RF run exercised exhausted Msg4
+      retries and cleanup. Broader repetition/mode coverage remains outstanding.
 - [ ] Investigate UE ULSCH allocation and failed-RA cleanup assertions.
       Experimental Msg3 cleanup patch built and exercised: ten BR contexts
       released, eleven responses handled, then the separate Msg4 assertion.
       Longer regression and automated coverage remain outstanding.
-- [ ] Trace DLSCH allocation/release and retained RAR contexts. Three newer runs
-      aborted on the eight-context downlink pool, including during authentication.
+- [x] Trace DLSCH allocation/release and retained RAR contexts.
+      Trace found seven retained RAR slots plus one system-information slot.
+- [ ] Qualify the single-transmission CE-A RAR release candidate.
+      Unit coverage and bounded RF runs exceeded the eight-slot pool without
+      allocation assertions. PHY simulation timed out/returned zero throughput;
+      a pinned-PDSCH comparison also failed. Full regression remains unresolved.
+- [ ] Validate reestablishment rejection and asynchronous CCCH lifecycle fixes.
+      Candidates built; CCCH wait/timeout path exercised without the old assertion.
+      Rejection-ACK guard has not been exercised in the newer live trials.
+- [ ] Diagnose repeated reestablishment after attach and make the data link stable.
 - [ ] Investigate OAI shutdown segmentation fault after the low-TX run.
 - [ ] Establish bench RF connections, attenuation, gains, and operating band.
       Band 13 at six-inch separation now reaches a Walter-correlated CE0 request;
@@ -51,7 +59,8 @@ later validation gates, not prerequisites for getting practical LTE experience.
 - [x] Initialize OAI UHD backend with LibreSDR/custom FPGA; independently detect PSS/SSS.
 - [ ] Reproduce single-UE Cat-M1 operation; record supported CE/repetition modes.
 - [x] Select srsEPC and verify S1 setup with OAI.
-- [ ] Verify conventional IP bearer setup after UE registration.
+- [x] Verify IP bearer setup after UE registration: Attach Complete, RRC
+      Reconfiguration Complete, Initial Context Setup Response, Modify Bearer.
 - [x] Add exercised experimental OAI LTE-M config and bounded launch commands.
 - [ ] If OAI fails, document the failing layer and compare repair, commercial
       software, and srsRAN implementation effort before choosing a path.
@@ -71,11 +80,15 @@ later validation gates, not prerequisites for getting practical LTE experience.
 - [ ] Establish Thingy firmware identity/AT interface for a controlled comparison (deferred).
 - [ ] Distinguish cell acquisition, RRC,
       authentication, and bearer-setup failures.
-- [ ] Achieve Cat-M1 registration, authentication, and an assigned IP address.
+- [x] Achieve Cat-M1 registration, authentication, and an assigned IP address.
+      Walter reported registered and active PDP context 1 at 172.16.0.2.
 
 ## 5. Bench telemetry acceptance
 
-- [ ] Send numbered, timestamped UDP packets from Walter to a ground receiver.
+- [ ] Deliver numbered, timestamped UDP packets from Walter to a ground receiver.
+      Sender/receiver helpers added and exercised. Two gain-35 trials completed
+      attach but accepted only one modem send each; no packet reached the receiver.
+      Reestablishment and socket-state errors remain unresolved.
 - [ ] Record payload size, offered rate, duration, received count, loss,
       duplicate/out-of-order packets, RTT, and modem signal metrics.
 - [ ] Establish time synchronization before claiming one-way latency.

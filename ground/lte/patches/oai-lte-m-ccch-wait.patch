@@ -1,0 +1,21 @@
+diff --git a/openair2/LAYER2/MAC/eNB_scheduler_RA.c b/openair2/LAYER2/MAC/eNB_scheduler_RA.c
+--- a/openair2/LAYER2/MAC/eNB_scheduler_RA.c
++++ b/openair2/LAYER2/MAC/eNB_scheduler_RA.c
+@@ -685,7 +685,16 @@
+         ra->msg4_rrc_sdu_length = mac_rrc_data_req(module_idP, CC_idP, frameP, CCCH,
+                                                  UE_RNTI(module_idP, UE_id), 1,
+                                                  &cc[CC_idP].CCCH_pdu.payload[0], 0);
+-      AssertFatal (ra->msg4_rrc_sdu_length > 0, "[MAC][eNB Scheduler] CCCH not allocated\n");
++      if (ra->msg4_rrc_sdu_length <= 0) {
++        /* RRC may still be processing CCCH; bound waiting as in the ordinary LTE Msg4 path. */
++        if (++ra->Msg4_delay_cnt >= 10) {
++          LOG_W(MAC, "BL/CE Msg4 CCCH response timed out; releasing temporary UE\n");
++          put_UE_in_freelist(module_idP, ra->rnti, true);
++          cancel_ra_proc(module_idP, CC_idP, frameP, ra->rnti);
++        }
++        return;
++      }
++      ra->Msg4_delay_cnt = 0;
+       LOG_D (MAC, "[eNB %d][RAPROC] CC_id %d Frame %d, subframeP %d: UE_id %d, rrc_sdu_length %d, dl_req->num_pdu %d\n", module_idP, CC_idP, frameP, subframeP, UE_id, ra->msg4_rrc_sdu_length,
+              dl_req_body->number_pdu);
+       // MPDCCH configuration for Msg4

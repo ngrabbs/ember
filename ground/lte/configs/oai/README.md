@@ -41,3 +41,12 @@ from 200 to 300. These are controlled diagnostics to investigate false detection
 and context pressure. They reached Msg4/RRC and accepted SIM authentication,
 but OAI still aborted on downlink allocation before completed attach. See
 [latest results](../../results/2026-10-02-msg4-authentication.md).
+
+With the newer candidates, `ce300tx30diag` changes only `att_tx` from 40 to 30
+relative to `ce300diag`. It recorded completed Walter attach and registration.
+`ce300tx30rx15diag` changes only `att_rx` from 30 to 50 relative to that profile,
+reducing logged UHD RX gain from 35 to 15. This checks gain sensitivity at the
+six-inch bench separation. Neither profile establishes calibrated RF power.
+Use all five patches in order and keep the profile explicit in every result.
+See [RAR/lifecycle results](../../results/2026-10-02-rar-release.md). A completed
+attach alone does not prove telemetry delivery or stability.

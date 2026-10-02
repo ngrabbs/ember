@@ -13,7 +13,9 @@ for path in args.logs:
     released = set()
     counts = dict(ccch_decodes=0, harq0_dtx=0, slot_exhaustion=0, msg4_assert=0,
                   msg4_retries=0, msg4_exhausted=0, msg4_acknowledged=0,
-                  rrc_setup_complete=0, downlink_exhaustion=0)
+                  rrc_setup_complete=0, downlink_exhaustion=0,
+                  reestablishment_reject_acknowledged=0, missing_dedicated_config=0,
+                  ccch_response_timeouts=0)
     exit_code = None
     with path.open(errors='replace') as source:
         for line in source:
@@ -32,6 +34,9 @@ for path in args.logs:
             counts['msg4_acknowledged'] += 'Msg4 acknowledged' in line
             counts['rrc_setup_complete'] += 'processing LTE_RRCConnectionSetupComplete' in line
             counts['downlink_exhaustion'] += 'no free or exiting dlsch_context' in line
+            counts['reestablishment_reject_acknowledged'] += 'BL/CE reestablishment reject acknowledged' in line
+            counts['missing_dedicated_config'] += 'UE_template->physicalConfigDedicated is null' in line
+            counts['ccch_response_timeouts'] += 'BL/CE Msg4 CCCH response timed out' in line
             match = re.search(r'EXIT code=(-?\d+)', line)
             if match:
                 exit_code = int(match.group(1))

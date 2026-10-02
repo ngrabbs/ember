@@ -1,10 +1,10 @@
 # LTE bench bring-up runbook
 
-Status: OAI and srsEPC are built on the Pi; S1 setup works. Experimental Msg3
-cleanup and Msg4 retry patches reached Msg4 ACK, RRC Setup Complete, accepted
-SIM authentication, and NAS Security Mode Complete. Downlink-context exhaustion
-still interrupts attach. Walter remains unregistered. See
-[latest results](results/2026-10-02-msg4-authentication.md).
+Status: OAI and srsEPC are built on the Pi; S1 setup works. Walter completed
+LTE-M attach and reported registration, with IP 172.16.0.2 and bearer setup.
+Experimental RAR release avoids the observed downlink-pool failure in bounded
+runs. Reestablishment stability, PHY simulator regression, and UDP delivery
+remain unresolved. See [latest results](results/2026-10-02-rar-release.md).
 
 ## 1. Access and inventory
 
@@ -316,3 +316,52 @@ tests with TX attenuation 40, MAC-debug logging, and increased PRACH detection
 thresholds. Stage without `.example` and select with `--config`. They are
 diagnostic profiles, not validated defaults. The [latest results](results/2026-10-02-msg4-authentication.md)
 list their exact differences and authentication milestones.
+
+## Numbered UDP bench trial
+
+This uses Walter's existing serial passthrough and modem socket commands; no
+firmware flashing is needed. The commands follow the pinned vendor
+[Walter socket implementation](https://github.com/QuickSpot/walter-arduino/blob/c30b707f8d64b49daec80de6bccfc80c04e42d58/src/proto/WalterSocket.cpp).
+Only the modem sends to the EPC gateway; the M75q does not send test datagrams
+to the ground receiver. Payloads are JSON with run ID, sequence, and M75q UTC
+send timestamp, padded to 128 bytes. Host clocks have not been validated for
+one-way latency.
+
+Stage the helpers and selected diagnostic profile from the repository root:
+
+```sh
+scp ground/lte/scripts/udp-bench-receiver.py ngrabbs@ember-ground.local:work/ember-lte/
+scp ground/lte/scripts/walter-radio-check.py ngrabbs@192.168.1.252:work/ember-lte/
+scp ground/lte/configs/oai/enb.band13.emtc.ce300tx30diag.conf.example \
+  ngrabbs@ember-ground.local:work/ember-lte/configs/enb.band13.emtc.ce300tx30diag.conf
+```
+
+Confirm no prior receiver, eNodeB/EPC, or serial client is running. Use a new
+run ID for each trial. In three terminals, start the receiver first, then the
+cell, then enable Walter after steady-state operation is reported:
+
+```sh
+ssh ngrabbs@ember-ground.local \
+  'python3 ~/work/ember-lte/udp-bench-receiver.py udp-example --count 10 --seconds 150'
+ssh ngrabbs@ember-ground.local \
+  'python3 ~/work/ember-lte/run-radio-check.py udp-example --seconds 140 --config enb.band13.emtc.ce300tx30diag.conf'
+ssh ngrabbs@192.168.1.252 \
+  'python3 ~/work/ember-lte/walter-radio-check.py --enable-seconds 100 --udp-count 10 --run-id udp-example'
+```
+
+After registration, the sender queries PDP/IP state and CSQ, configures UDP
+socket 1 on PDP context 1, and sends to 172.16.0.1:51000 from local port 51001.
+It waits for each data prompt, sends exactly 128 bytes, and waits for the final
+result before the next command. It requests a one-second pause between sends;
+actual spacing also includes command/response time. A rejected or pending
+command stops the trial. Recovery reopens/reset the passthrough, confirms
+CFUN 0, and restores the full standard band list.
+
+Compare modem-accepted sends with receiver sequence numbers, not the requested
+count alone. A modem `OK` does not prove delivery. The receiver reports unique
+packets, missing sequence numbers against the requested count, duplicates,
+out-of-order arrivals, byte lengths, source IPs, and receive span. It stops when
+all expected packets arrive or its deadline expires; duplicates after that stop
+are unobserved. Sender failures and unsent packets must not be presented as
+measured packet loss. This initial test does not measure RTT, downlink telemetry,
+or one-way latency. Keep complete logs private and save sanitized counts here.

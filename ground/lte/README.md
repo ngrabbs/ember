@@ -11,6 +11,7 @@ An orbital link is a later experiment, with its own timing, Doppler, power, and 
 - [Independent HackRF/LTE-M access results](results/2026-10-01-hackrf-lte.md)
 - [Controlled Walter OFF/ON and Msg3 cleanup results](results/2026-10-02-walter-control.md)
 - [Msg4 retry and accepted SIM authentication](results/2026-10-02-msg4-authentication.md)
+- [RAR release and first completed Walter attach](results/2026-10-02-rar-release.md)
 - [Experimental OAI patches](patches/README.md)
 - [OAI candidate config and build record](configs/oai/README.md)
 - [Recovered ordinary LTE configs](configs/srsran-4g/)
@@ -19,20 +20,23 @@ An orbital link is a later experiment, with its own timing, Doppler, power, and 
 ## Current status
 
 Hardware access, custom-FPGA UHD initialization, receive streaming, and Walter
-AT communication are verified. LTE-M attach is **not**
-verified. The recovered srsRAN 4G configuration is an ordinary LTE baseline from
+AT communication are verified. Walter completed LTE-M attach on 2026-10-02,
+with modem registration and EPC bearer setup recorded. IP telemetry delivery
+is still under test. The recovered srsRAN 4G configuration is an ordinary LTE baseline from
 an earlier SIM7600 setup; it cannot by itself connect Walter's Cat-M1 radio.
 OAI and srsEPC are now built on the Pi, hardware S1 setup succeeds, and bounded
 OTA attempts are documented. HackRF independently detects expected-cell LTE synchronization. During Walter
 attempts, OAI exercised LTE-M random access and RRC setup generation, then hit
-scheduler/resource assertions. Registration and a telemetry bearer remain
-unverified.
+scheduler/resource assertions. Initial trials did not complete registration; newer trials reached Attach Complete
+and RRC Reconfiguration Complete. UDP delivery remains unverified.
 
 The 2026-10-02 OFF/ON comparison with Thingy powered down strongly attributes
 the decoded CE0 connection request to Walter. Experimental OAI patches now
 release abandoned Msg3 contexts and retry Msg4. Live tests reached Msg4 ACK,
 RRC Setup Complete, accepted SIM authentication, and NAS Security Mode Complete.
-Downlink-context exhaustion interrupts attach before a usable telemetry bearer.
+The new RAR release candidate removed the observed pool assertion in bounded
+trials; subsequent trials completed attach and assigned 172.16.0.2. Reestablishment
+lifecycle failures and PHY simulator regression remain unresolved.
 Thingy interface work is deferred.
 
 OAI is the first open-source LTE-M candidate to evaluate. Its historical eMTC
