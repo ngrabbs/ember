@@ -59,6 +59,11 @@ already; give it real loads and it answers the question immediately.
 
 ## Communications — flight radio + ground station
 
+LTE-M is an additional spacecraft-channel bench experiment: Walter as UE and
+an SDR eNodeB/EPC on the ground. Hardware inventory and modem AT access are
+verified; LTE-M attach is pending. The owned checklist and bring-up procedure
+are in [ground/lte](ground/lte/README.md).
+
 The active front. Board is KiCad, project at
 [`hardware/comms/kicad/`](hardware/comms/kicad/), plan at
 [`hardware/comms/design/kicad_implementation_plan.md`](hardware/comms/design/kicad_implementation_plan.md).
