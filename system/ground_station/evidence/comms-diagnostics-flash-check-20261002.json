@@ -1,0 +1,27 @@
+{
+  "date_utc": "2026-10-02",
+  "uf2_sha256": "01bc62d7e6ed7b7491f526503107f5e61a9fbe6fec7a534e7e257cac16e88c55",
+  "flash": "picotool readback verification OK",
+  "records": [
+    {
+      "command": "status",
+      "response": "STATUS role=COMMS_MCU fw=can-bench-v2 id=DF637882D39E4426 boot=2609393284 peer=0 can_ready=1 mode=80 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=0 tx_fail=0 tx_timeout=0 rx=0 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=0 unknown=0 busy_drops=0 pending=0 uptime_ms=11742 walter_peer=0 chain_active=0 chain_ok=0 chain_unknown=0"
+    },
+    {
+      "command": "normal",
+      "response": "CAN_NORMAL ready=1"
+    },
+    {
+      "command": "hello",
+      "response": "SUBMITTED request=1 type=1 bytes=0\r\nRESULT request=1 outcome=CAN_HELLO_CONFIRMED peer=536364973 bytes=0 hex="
+    },
+    {
+      "command": "ping 128",
+      "response": "SUBMITTED request=2 type=112 bytes=128\r\nRESULT request=2 outcome=CAN_ECHO_MATCHED peer=536364973 bytes=128 hex=000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f"
+    },
+    {
+      "command": "status",
+      "response": "STATUS role=COMMS_MCU fw=can-bench-v2 id=DF637882D39E4426 boot=2609393284 peer=536364973 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=44 tx_fail=0 tx_timeout=0 rx=44 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=2 unknown=0 busy_drops=0 pending=0 uptime_ms=20159 walter_peer=0 chain_active=0 chain_ok=0 chain_unknown=0"
+    }
+  ]
+}
