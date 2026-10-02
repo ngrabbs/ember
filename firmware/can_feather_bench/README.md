@@ -6,9 +6,10 @@ builds `ember_ihu_can_bench.uf2` and `ember_comms_can_bench.uf2` from one source
 with distinct roles. It replaces neither the complete FreeRTOS IHU/EPS application
 nor the UHF COMMS application. The IHU role now supports manual read-only EPS
 register observation and explicit battery-only ADC enable; it does not change
-charging policy, activate UHF,
-control LTE radio state, execute flight commands, or implement CAN redundancy.
-Walter retains the installed framed diagnostic with its modem held in reset.
+charging policy, activate UHF, execute flight commands, or implement CAN redundancy.
+Version2 adds native EPS packet forwarding and explicit bounded Walter LTE requests.
+COMMS and Walter hardware updates and full EPS forwarding tests remain pending;
+Walter still has the installed framed diagnostic with its modem held in reset.
 
 User confirmed H-to-H, L-to-L, and common ground, with both terminators present
 and 60 ohms measured across the bus. This qualifies the bench harness, not the
@@ -99,8 +100,9 @@ Each word uses a repeated start and verifies SMBus PEC; a failed read returns
 `EPS_READ outcome=FAILED` and the failed register instead of a partial JSON
 readout. All successful raw words are preserved, including invalid/warming ADC
 status. This command is rejected while a CAN request/transmission is pending.
-Reads make no configuration writes and do not yet forward EPS packets
-through CAN or LTE. Native EPS packet forwarding is the next integration step.
+Reads make no configuration writes. Version2 adds `eps telemetry` for native EPS
+packets through CAN/UART echo and `eps lte` for modem submission; those paths
+require the matching COMMS/Walter updates and hardware qualification below.
 
 The I2C1 reader-enabled IHU image was built and flash-readback verified on
 2026-10-02. Three consecutive hardware reads returned all 19 registers with
@@ -131,6 +133,49 @@ COMMS boot `4252110043` after flashing.
 [Battery-only evidence](../../system/ground_station/evidence/ihu-eps-battery-adc-20261002.json).
 Installed UF2 SHA-256:
 `596e450977b203cea339b74621f6173f5d82a5766e6cac613570a20d7ba2f811`.
+
+## Version2 native EPS / LTE integration (qualification pending)
+
+`eps telemetry` reads all19 PEC-checked registers, then builds a128-byte native
+POWER_STATUS packet and sends it through the same CAN CHAIN/ECHO path. Common
+boot, sequence and uptime originate on IHU. Payload provenance2 identifies
+IHU_NATIVE; bridge_session_id0 explicitly means no Pi wrapper. readout_count
+counts complete EPS reads packaged by this command or `eps lte`; console-only
+`eps json` reads do not increment it. No packet is emitted after a failed read.
+Engineering values are present only for ADC-valid compatible chemistry/cells;
+otherwise INT32_MIN is used. Sense resistor values remain unverified assumptions.
+Reads are sequential and do not imply atomic or new ADC conversions.
+
+`lte N` admits a bounded RF window (0 stops, maximum120 seconds); `lte status`
+queries Walter's state; `eps lte` reads EPS and requests a single UDP submission.
+These require [Walter LTE bench firmware](../walter_lte_bench/README.md).
+CAN types74/75 RF window,76/77 send/modem-accepted,78/79 status.
+COMMS maps them to distinct UART application types, not diagnostic ECHO.
+IHU prints RF_WINDOW_ACCEPTED or MODEM_ACCEPTED, neither claiming ground receipt.
+Packet responses preserve exact bytes; status response is16 bytes with correlated
+boot/request identity. One chain request remains active; no automatic retries.
+COMMS bounds UART sends17s, IHU bounds application sends22s. Other requests retain
+2s/5s bounds. The fragment layer and diagnostic heartbeat transport are unchanged.
+
+Builds and host codec/modem mocks pass. Existing CAN heartbeat hardware evidence
+does not qualify these new EPS/LTE paths. Flash COMMS, prove real EPS echo with
+the current Walter, then flash Walter, test radio-off status and bounded RF.
+
+Prepared artifacts on 2026-10-02:
+
+| Image | SHA-256 | Hardware state |
+|---|---|---|
+| IHU v2 UF2 | `3290196ccb7859b1c3069fd717a619a9995986fc18f036baafaece2a2f15fd1e` | Flashed/readback verified; EPS ADC-valid and CAN HELLO pass |
+| COMMS v2 UF2 | `e1a708fa17fef613d007cfbe19aef0f6d8756bbdf18d3c9fcdcf637357594be6` | Built; USB move needed for flash |
+| Walter LTE application bin | `851ef9b67618c3cbf33e7a2af56d2637e30ed1c8ca04246d1869162bbe493669` | Built; not flashed |
+
+IHU v2 boot3148122192 read EPS with ADC-valid1 and confirmed the still-running
+COMMS v1 boot4252110043 over CAN.
+[Pre-COMMS-update evidence](../../system/ground_station/evidence/ihu-eps-v2-pre-comms-20261002.json).
+Run `ground/ember/can_chain.py --eps --port IHU_SERIAL --output RUN_DIRECTORY`
+after COMMS is updated and its CAN mode set to normal. This checks ten native
+ADC-valid EPS returns plus five sized CAN echoes and HELLO. Without `--eps` it
+checks the heartbeat baseline. Neither mode activates LTE.
 
 ```text
 IHU heartbeat -- CAN --> COMMS -- framed UART --> Walter bench echo

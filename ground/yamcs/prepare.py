@@ -28,6 +28,8 @@ def prepare(transport="simulator"):
     text = text.replace("secretKey: changeme", "secretKey: " + secrets.token_hex(32))
     if "  - ember\n" not in text:
         text = text.replace("  - myproject\n", "  - myproject\n  - ember\n")
+    if "  - ember-lte\n" not in text:
+        text = text.replace("  - ember\n", "  - ember\n  - ember-lte\n")
     config.write_text(text)
     instance = SOURCE / "src/main/yamcs/etc/yamcs.myproject.yaml"
     instance.write_text(instance.read_text().replace("host: localhost", "host: simulator"))
@@ -51,6 +53,17 @@ def prepare(transport="simulator"):
     # EMBER displays are isolated from the upstream myproject reference.
     ember += "\nyamcs-web:\n  displayBucket: ember_displays\n"
     (instance.parent / "yamcs.ember.yaml").write_text(ember)
+    # Isolate radio packets from Pi-generated EPS wrappers and USB telemetry.
+    # Same MDB/displays, separate archive, processor and sequence tracker; no TC link.
+    lte = ember[:ember.index("\ndataLinks:")] + """
+dataLinks:
+  - name: eps-lte-in
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tm_realtime
+    port: 10018
+    packetPreprocessorClassName: com.example.ember.EmberPacketPreprocessor
+""" + ember[ember.index("\nmdb:"):]
+    (instance.parent / "yamcs.ember-lte.yaml").write_text(lte)
     print(f"Prepared Yamcs 5.13.0 at {REVISION}; EMBER transport: {transport}.")
     print("Run: docker compose up -d")
 

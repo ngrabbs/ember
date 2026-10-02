@@ -132,7 +132,11 @@ controller/UART integration and the IHU I2C-to-CAN migration. The legacy I2C lin
 is status/ping only; the new CAN Feather bench now forwards an IHU heartbeat.
 Full IHU/EPS housekeeping/application migration remains open. LTE reliability remains shelved.
 
-- [ ] Develop in firmware/walter with a pinned toolchain and WalterModem library.
+- [x] Build experimental Walter LTE sender with the pinned Arduino toolchain,
+      local nonblocking AT state machine, bounded RF windows and distinct outcomes.
+      [Implementation and limits](../../firmware/walter_lte_bench/README.md).
+- [ ] Flash and qualify Walter LTE sender on hardware; vendor-library integration
+      remains a separate choice from this local AT bench application.
 - [x] Preserve/verify Walter's ESP32 flash and install a pinned standalone
       COMMS UART diagnostic with its modem held in reset; USB checks passed.
       See [responder procedure](../../firmware/walter_uart_bench/README.md).
@@ -162,6 +166,12 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       verified and three complete ADC-valid reads. Approximately 8.108 V pack,
       8.089 V output and 21.46 °C die. Current sense values remain unverified.
       [Evidence](../../system/ground_station/evidence/ihu-eps-battery-adc-20261002.json).
+- [x] Build native EPS POWER_STATUS packet encoding and matching CAN/UART services;
+      verify fixed-point/raw fields against real EPS captures in the ground codec.
+- [ ] Flash matching COMMS update and prove real EPS packets through Walter echo.
+- [x] Prepare isolated Yamcs ember-lte input on loopback UDP10018 and bounded
+      native packet receiver for EPC UDP51000. Running, with zero radio packets.
+- [ ] Receive real EPS packets over LTE and byte-match them in Yamcs archive/display.
 - [ ] Integrate CAN into the full IHU/EPS and COMMS applications; add real sensor
       telemetry, periodic streaming, ground ingestion, and separately qualified uplink handling.
 - [ ] Implement bounded queues, sequence numbers, reconnect/backoff, and watchdogs.

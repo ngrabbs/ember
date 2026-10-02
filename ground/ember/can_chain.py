@@ -11,12 +11,12 @@ def numeric_status(text):
     return {key: int(value) for key, value in re.findall(r' (\w+)=(\d+)\b', text)}
 
 
-def run(port, output):
+def run(port, output, eps=False):
     c = Console(port)
     results = {'passed': False}
     try:
         first = c.command('status')
-        assert 'role=IHU_MCU fw=can-bench-v1' in first and 'can_ready=1' in first, first
+        assert 'role=IHU_MCU fw=can-bench-v2' in first and 'can_ready=1' in first, first
         initial = numeric_status(first)
         boot = initial['boot']
         assert initial['pending'] == 0 and boot, first
@@ -35,22 +35,27 @@ def run(port, output):
         results['can_echoes'] = 5
         packets = []
         for _ in range(10):
-            reply = c.command('telemetry', .8)
+            reply = c.command('eps telemetry' if eps else 'telemetry', .8)
             c.require_match(reply, 'WALTER_BENCH_RETURN')
             returned = re.search(r'bytes=(\d+) hex=([0-9a-f]+)', reply)
             assert returned, reply
             raw = bytes.fromhex(returned[2])
             assert len(raw) == int(returned[1]), reply
             packet = decode(raw)
-            assert packet['name'] == 'HEARTBEAT', packet
+            assert packet['name'] == ('POWER_STATUS' if eps else 'HEARTBEAT'), packet
             assert packet['header']['source'] == DICTIONARY['endpoints']['ihu'], packet
             assert packet['header']['target'] == DICTIONARY['endpoints']['ground'], packet
             assert packet['header']['source_boot_id'] == boot, packet
+            if eps:
+                p=packet['payload']
+                assert (p['provenance'],p['bridge_session_id'],p['readout_valid'])==(2,0,1),packet
+                assert p['adc_valid']==1 and p['conversion_valid']==1,packet
+                if packets:assert p['readout_count']==packets[-1]['payload']['readout_count']+1,packet
             if packets:
                 assert packet['sequence'] == (packets[-1]['sequence']+1) % 16384, packet
                 assert packet['header']['uptime_ms'] > packets[-1]['header']['uptime_ms'], packet
             packets.append(packet)
-        results['ihu_heartbeat_returns'] = packets
+        results['ihu_eps_returns' if eps else 'ihu_heartbeat_returns'] = packets
         final = c.command('status')
         last = numeric_status(final)
         assert last['boot'] == boot and last['pending'] == 0, final
@@ -59,7 +64,8 @@ def run(port, output):
             assert last[name] == initial[name], (name, first, final)
         assert 'eflg=00' in final and last['tec'] == 0 and last['rec'] == 0, final
         results['final_status'] = final.strip()
-        results['scope'] = 'Hardware IHU generates manual bench heartbeat; CAN to COMMS; UART to Walter echo; UART/CAN return to IHU. No EPS readings, LTE delivery, or flight command handling.'
+        results['scope'] = ('Hardware IHU reads EPS via PEC-checked I2C and generates native POWER_STATUS' if eps else
+                            'Hardware IHU generates manual bench heartbeat') + '; CAN to COMMS; UART to Walter echo; UART/CAN return to IHU. No LTE delivery or flight command handling.'
         results['passed'] = True
         print(json.dumps(results, indent=2))
     finally:
@@ -73,5 +79,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--port', required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--eps',action='store_true',help='Verify real ADC-valid EPS packets instead of heartbeat')
     args = parser.parse_args()
-    run(args.port, args.output)
+    run(args.port, args.output,args.eps)

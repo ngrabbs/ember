@@ -34,6 +34,17 @@ clone, and adds the `ember` instance. After changing dictionary/adapters, rerun
 `prepare.py` and `docker compose restart yamcs`; restart `ember-simulator`
 after changing its code. No archive volume is removed during an update.
 
+It also prepares the isolated `ember-lte` instance, sharing the dictionary and
+display bucket while keeping its archive/processor separate. Only `eps-lte-in`
+UDP10018 is configured there, without a TC data link. The USB Compose override
+publishes this port on loopback. `ground/ember/lte_receiver.py` accepts native
+POWER_STATUS packets at EPC UDP51000 from Walter172.16.0.2:51001, verifies the
+wire/provenance, and forwards the original bytes. The
+[LTE EPS display](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember-lte__realtime)
+remains empty until actual radio packets arrive; existing `ember` USB/Pi wrappers
+cannot populate it. Receiver capture and byte-matched Yamcs archive checks are
+required before claiming full LTE delivery.
+
 Default HTTP access is `http://localhost:8090`. For a remote host, tunnel from
 the laptop, substituting its username and address:
 

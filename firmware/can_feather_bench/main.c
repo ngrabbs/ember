@@ -8,14 +8,16 @@
 #include "hardware/uart.h"
 #include "mcp25625.h"
 #include "wire.h"
+#include "lte_link.h"
 #if ROLE_IHU
 #include "eps_readout.h"
+#include "power_packet.h"
 #endif
 #define LOG(...) do {if(stdio_usb_connected())printf(__VA_ARGS__);} while(0)
 #define ROLE_NAME (ROLE_IHU?"IHU_MCU":"COMMS_MCU")
 #define TX_ID (ROLE_IHU?CF_IHU_ID:CF_COMMS_ID)
 #define RX_ID (ROLE_IHU?CF_COMMS_ID:CF_IHU_ID)
-#define REQUEST_TIMEOUT 5000
+#define REQUEST_TIMEOUT 22000
 static mcp_state can;
 static cf_reader fragments;
 static ul_reader can_reader;
@@ -33,11 +35,12 @@ static uint32_t walter_peer,uart_id,chain_ok,chain_unknown;
 static struct {bool active;ul_packet incoming,uart;uint32_t started;} chain;
 #else
 static uint16_t telemetry_sequence;
+static uint32_t eps_readout_count;
 #endif
 static uint32_t now_ms(void) {return to_ms_since_boot(get_absolute_time());}
 static void status(void) {
     char id[2*PICO_UNIQUE_BOARD_ID_SIZE_BYTES+1];pico_get_unique_board_id_string(id,sizeof(id));
-    LOG("STATUS role=%s fw=can-bench-v1 id=%s boot=%" PRIu32 " peer=%" PRIu32
+    LOG("STATUS role=%s fw=can-bench-v2 id=%s boot=%" PRIu32 " peer=%" PRIu32
         " can_ready=%d mode=%02x cnf=%02x,%02x,%02x bitrate=500000 tec=%u rec=%u eflg=%02x"
         " tx_ok=%" PRIu32 " tx_fail=%" PRIu32 " tx_timeout=%" PRIu32 " rx=%" PRIu32
         " rx_bad=%" PRIu32 " rx_overflow=%" PRIu32 " fragments_bad=%" PRIu32 " fragments_timeout=%" PRIu32
@@ -84,18 +87,21 @@ static void send_error(const ul_packet *p,uint8_t reason) {
     out.size=1;out.payload[0]=reason;if(!queue(&out))++busy_drops;
 }
 #if !ROLE_IHU
-static bool valid_heartbeat(const ul_packet *p) {
+static bool valid_telemetry(const ul_packet *p) {
     const uint8_t *b=p->payload;size_t n=p->size;
-    return n==W_PAYLOAD+W_SIZE_HEARTBEAT+2 && ul_u16(b)==W_TM_IDENTITY && (ul_u16(b+2)>>14)==3 &&
+    if(n<W_PAYLOAD+2)return false;
+    uint16_t id=ul_u16(b+W_MESSAGE_ID);
+    size_t payload=id==W_ID_HEARTBEAT?W_SIZE_HEARTBEAT:id==W_ID_POWER_STATUS?W_SIZE_POWER_STATUS:0;
+    return payload && n==W_PAYLOAD+payload+2 && ul_u16(b)==W_TM_IDENTITY && (ul_u16(b+2)>>14)==3 &&
         (size_t)ul_u16(b+4)+7==n && b[W_SCHEMA_VERSION]==W_VERSION && b[W_KIND]==W_KINDS_TELEMETRY &&
-        ul_u16(b+W_MESSAGE_ID)==W_ID_HEARTBEAT && b[W_SOURCE]==W_ENDPOINTS_IHU && b[W_TARGET]==W_ENDPOINTS_GROUND &&
-        ul_u32(b+W_SOURCE_BOOT_ID)==p->sender && ul_u16(b+W_PAYLOAD_LENGTH)==W_SIZE_HEARTBEAT &&
+        b[W_SOURCE]==W_ENDPOINTS_IHU && b[W_TARGET]==W_ENDPOINTS_GROUND &&
+        ul_u32(b+W_SOURCE_BOOT_ID)==p->sender && ul_u16(b+W_PAYLOAD_LENGTH)==payload &&
         ul_crc(b,n-2)==ul_u16(b+n-2);
 }
 static void uart_submit(uint8_t type) {
     memset(&chain.uart,0,sizeof(chain.uart));chain.uart.version=1;chain.uart.type=type;
     chain.uart.sender=boot;chain.uart.origin=boot;chain.uart.request=++uart_id;
-    if(type==UL_ECHO) {chain.uart.size=chain.incoming.size;memcpy(chain.uart.payload,chain.incoming.payload,chain.incoming.size);}
+    if(type!=UL_HELLO) {chain.uart.size=chain.incoming.size;memcpy(chain.uart.payload,chain.incoming.payload,chain.incoming.size);}
     uint8_t wire[UL_WIRE_MAX];size_t n=ul_encode(&chain.uart,wire);
     uart_putc_raw(uart0,0);uart_write_blocking(uart0,wire,n);chain.started=now_ms();
 }
@@ -103,49 +109,64 @@ static void chain_fail(uint8_t reason) {
     send_error(&chain.incoming,reason);chain.active=false;walter_peer=0;++chain_unknown;
     LOG("CHAIN outcome=UNKNOWN reason=%u\n",reason);
 }
+static uint8_t chain_uart_type(void) {
+    return chain.incoming.type==CF_RF_WINDOW?UL_RF_WINDOW:chain.incoming.type==CF_SEND_PACKET?UL_SEND_PACKET:chain.incoming.type==CF_LINK_STATUS?UL_LINK_STATUS:UL_ECHO;
+}
 static void uart_receive(const ul_packet *p) {
     if(!chain.active || p->version!=1 || p->origin!=boot || p->request!=chain.uart.request)return;
     bool hello=chain.uart.type==UL_HELLO;
-    if(p->type!=(hello?UL_HELLO_ACK:UL_ECHO_ACK) || p->size!=chain.uart.size ||
-       (!hello && p->sender!=walter_peer) || memcmp(p->payload,chain.uart.payload,p->size)) {
+    if(!hello && p->sender==walter_peer && p->type==UL_ERROR && p->size==1) {chain_fail(p->payload[0]);return;}
+    uint8_t expected=hello?UL_HELLO_ACK:chain.uart.type==UL_RF_WINDOW?UL_RF_WINDOW_ACK:
+        chain.uart.type==UL_SEND_PACKET?UL_MODEM_ACCEPTED:chain.uart.type==UL_LINK_STATUS?UL_LINK_STATUS_ACK:UL_ECHO_ACK;
+    bool health=chain.uart.type==UL_LINK_STATUS;
+    if(p->type!=expected || p->size!=(health?16:chain.uart.size) ||
+       (!hello && p->sender!=walter_peer) || (!health && memcmp(p->payload,chain.uart.payload,p->size))) {
         chain_fail(CF_LINK_UNKNOWN);return;
     }
-    if(hello) {walter_peer=p->sender;uart_submit(UL_ECHO);return;}
-    ul_packet out=chain.incoming;out.type=CF_CHAIN_ACK;out.sender=boot;
+    if(hello) {walter_peer=p->sender;uart_submit(chain_uart_type());return;}
+    ul_packet out=chain.incoming;out.type=out.type==CF_RF_WINDOW?CF_RF_WINDOW_ACK:
+        out.type==CF_SEND_PACKET?CF_MODEM_ACCEPTED:out.type==CF_LINK_STATUS?CF_LINK_STATUS_ACK:CF_CHAIN_ACK;out.sender=boot;
+    if(health) {out.size=p->size;memcpy(out.payload,p->payload,p->size);}
     if(!queue(&out)) {chain_fail(CF_BUSY);return;}
     chain.active=false;++chain_ok;
-    LOG("CHAIN request=%" PRIu32 " outcome=WALTER_BENCH_RETURN bytes=%u walter=%" PRIu32 "\n",out.request,out.size,walter_peer);
+    LOG("CHAIN request=%" PRIu32 " outcome=%s bytes=%u walter=%" PRIu32 "\n",out.request,
+        out.type==CF_RF_WINDOW_ACK?"RF_WINDOW_ACCEPTED":out.type==CF_MODEM_ACCEPTED?"MODEM_ACCEPTED":out.type==CF_LINK_STATUS_ACK?"LTE_STATUS":"WALTER_BENCH_RETURN",out.size,walter_peer);
 }
 #endif
 static void receive(const ul_packet *p) {
     if(pending.active && p->origin==boot && p->request==pending.packet.request) {
         bool hello=pending.packet.type==UL_HELLO;
-        uint8_t expected=hello?UL_HELLO_ACK:pending.packet.type==CF_CHAIN?CF_CHAIN_ACK:UL_ECHO_ACK;
+        uint8_t expected=hello?UL_HELLO_ACK:pending.packet.type==CF_CHAIN?CF_CHAIN_ACK:
+            pending.packet.type==CF_RF_WINDOW?CF_RF_WINDOW_ACK:pending.packet.type==CF_SEND_PACKET?CF_MODEM_ACCEPTED:pending.packet.type==CF_LINK_STATUS?CF_LINK_STATUS_ACK:UL_ECHO_ACK;
         if(p->version!=1 || (!hello && p->sender!=peer)) {
             pending.active=false;peer=0;++unknown;LOG("RESULT outcome=UNKNOWN reason=PEER_RESET_OR_VERSION\n");return;
         }
         if(p->type==UL_ERROR && p->size==1) {
             pending.active=false;
-            bool uncertain=p->payload[0]==CF_LINK_UNKNOWN;
+            bool uncertain=p->payload[0]==CF_LINK_UNKNOWN || p->payload[0]==UL_ERR_MODEM_UNKNOWN;
             if(uncertain) {++unknown;peer=0;}
             LOG("RESULT request=%" PRIu32 " outcome=%s reason=%u\n",p->request,uncertain?"UNKNOWN_REMOTE_LINK":"PEER_REJECTED",p->payload[0]);return;
         }
-        if(p->type!=expected || p->size!=pending.packet.size || memcmp(p->payload,pending.packet.payload,p->size))return;
+        bool health=pending.packet.type==CF_LINK_STATUS;
+        if(p->type!=expected || p->size!=(health?16:pending.packet.size) || (!health && memcmp(p->payload,pending.packet.payload,p->size)))return;
+        if(health)LOG("LTE_STATUS state=%u step=%u error=%u registered=%u window_ms=%" PRIu32 " modem_accepted=%" PRIu32 " rejected=%" PRIu32 "\n",p->payload[0],p->payload[1],p->payload[2],p->payload[3],ul_u32(p->payload+4),ul_u32(p->payload+8),ul_u32(p->payload+12));
         if(hello)peer=p->sender;
         pending.active=false;++matched;
         LOG("RESULT request=%" PRIu32 " outcome=%s peer=%" PRIu32 " bytes=%u hex=",p->request,
-            hello?"CAN_HELLO_CONFIRMED":p->type==CF_CHAIN_ACK?"WALTER_BENCH_RETURN":"CAN_ECHO_MATCHED",peer,p->size);
+            hello?"CAN_HELLO_CONFIRMED":p->type==CF_RF_WINDOW_ACK?"RF_WINDOW_ACCEPTED":
+            p->type==CF_MODEM_ACCEPTED?"MODEM_ACCEPTED":p->type==CF_LINK_STATUS_ACK?"LTE_STATUS":p->type==CF_CHAIN_ACK?"WALTER_BENCH_RETURN":"CAN_ECHO_MATCHED",peer,p->size);
         for(size_t i=0;i<p->size;++i) {LOG("%02x",p->payload[i]);}
         LOG("\n");return;
     }
-    if(p->type==UL_HELLO_ACK || p->type==UL_ECHO_ACK || p->type==CF_CHAIN_ACK || p->type==UL_ERROR)return;
+    if(p->type==UL_HELLO_ACK || p->type==UL_ECHO_ACK || p->type==CF_CHAIN_ACK ||
+       p->type==CF_RF_WINDOW_ACK || p->type==CF_MODEM_ACCEPTED || p->type==CF_LINK_STATUS_ACK || p->type==UL_ERROR)return;
     if(p->version!=1) {send_error(p,UL_ERR_VERSION);return;}
     if(p->origin!=p->sender) {send_error(p,UL_ERR_REQUEST);return;}
 #if !ROLE_IHU
-    if(p->type==CF_CHAIN) {
+    if(p->type==CF_CHAIN || p->type==CF_SEND_PACKET || p->type==CF_RF_WINDOW || p->type==CF_LINK_STATUS) {
         if(chain.active || output.active || uart_id>=UINT32_MAX-1) {send_error(p,CF_BUSY);return;}
-        if(!valid_heartbeat(p)) {send_error(p,CF_BAD_PACKET);return;}
-        chain.active=true;chain.incoming=*p;uart_submit(walter_peer?UL_ECHO:UL_HELLO);return;
+        if(p->type==CF_RF_WINDOW?(p->size!=4 || ul_u32(p->payload)>120):p->type==CF_LINK_STATUS?p->size!=0:!valid_telemetry(p)) {send_error(p,CF_BAD_PACKET);return;}
+        chain.active=true;chain.incoming=*p;uart_submit(walter_peer?chain_uart_type():UL_HELLO);return;
     }
 #endif
     ul_packet reply;ul_reply(p,boot,&reply);if(!queue(&reply))++busy_drops;
@@ -177,6 +198,16 @@ static void eps_adc(bool enable) {
     if(pending.active || output.active || can.pending) {LOG("REJECT reason=BUSY\n");return;}
     uint16_t before=0,after=0;bool ok=eps_force_adc(enable,&before,&after);
     LOG("EPS_ADC outcome=%s requested=%d config_before=%04x config_after=%04x\n",ok?"VERIFIED":"UNKNOWN",enable,before,after);
+}
+static void eps_telemetry(bool lte) {
+    if(pending.active || output.active || can.pending || !peer || (mcp_register(0x0e)&0xe0)) {
+        LOG("REJECT reason=BUSY_OR_CAN_NOT_READY\n");return;
+    }
+    ltc4162_raw_t raw;uint8_t failed=0;
+    if(!eps_read(&raw,&failed)) {LOG("EPS_READ outcome=FAILED register=%02x reason=I2C_OR_PEC\n",failed);return;}
+    uint8_t packet[W_PAYLOAD+W_SIZE_POWER_STATUS+2];
+    size_t n=power_packet(packet,&raw,boot,telemetry_sequence,now_ms(),++eps_readout_count);
+    telemetry_sequence=(telemetry_sequence+1)&0x3fff;submit(lte?CF_SEND_PACKET:CF_CHAIN,packet,n);
 }
 static void heartbeat(void) {
     uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2]={0};size_t size=sizeof(p);
@@ -213,8 +244,16 @@ static void command(const char *s) {
     else if(!strcmp(s,"eps json"))eps_json();
     else if(!strcmp(s,"eps adc on"))eps_adc(true);
     else if(!strcmp(s,"eps adc off"))eps_adc(false);
+    else if(!strcmp(s,"eps telemetry"))eps_telemetry(false);
+    else if(!strcmp(s,"eps lte"))eps_telemetry(true);
+    else if(!strcmp(s,"lte status"))submit(CF_LINK_STATUS,NULL,0);
+    else if(!strncmp(s,"lte ",4)) {
+        char *end;unsigned long seconds=strtoul(s+4,&end,10);
+        if(!s[4] || *end || seconds>120) {LOG("REJECT reason=RF_WINDOW_RANGE\n");return;}
+        uint8_t p[4];ul_p32(p,seconds);submit(CF_RF_WINDOW,p,4);
+    }
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json | eps adc on/off":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json | eps adc on/off | eps telemetry | lte N | lte status | eps lte":"");
     else if(*s)LOG("ERROR unknown command\n");
 }
 int main(void) {
@@ -238,7 +277,7 @@ int main(void) {
         // timestamp would look like a full timer wrap and expire the new request.
         now=now_ms();
         ul_expire(&uart_reader,now);
-        if(chain.active && (uint32_t)(now-chain.started)>=UL_REQUEST_MS)chain_fail(CF_LINK_UNKNOWN);
+        if(chain.active && (uint32_t)(now-chain.started)>=(chain.uart.type==UL_SEND_PACKET?17000:UL_REQUEST_MS))chain_fail(CF_LINK_UNKNOWN);
 #endif
         for(unsigned i=0;i<2 && mcp_receive(&can,&frame);++i) {
             if(loopback_test && frame.id==0x712) {
@@ -248,7 +287,7 @@ int main(void) {
             } else if(cf_feed(&fragments,&frame,RX_ID,now) && envelope_from_fragments(now,&packet))receive(&packet);
         }
         cf_expire(&fragments,now);pump_tx(now);
-        if(pending.active && (uint32_t)(now-pending.started)>=REQUEST_TIMEOUT) {
+        if(pending.active && (uint32_t)(now-pending.started)>=(pending.packet.type==CF_SEND_PACKET?REQUEST_TIMEOUT:5000)) {
             LOG("RESULT request=%" PRIu32 " outcome=UNKNOWN reason=TIMEOUT\n",pending.packet.request);
             pending.active=false;peer=0;++unknown;
         }
