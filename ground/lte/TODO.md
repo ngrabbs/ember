@@ -3,16 +3,12 @@
 Updated 2026-10-02. Bench success is the immediate goal. Spacecraft items are
 later validation gates, not prerequisites for getting practical LTE experience.
 
-Native EPS controller transport is proven (10/10 echoed packets). The first
-full radio trial reached EPC Attach Complete, but Walter's application stayed
-REGISTER and submitted no EPS packets. Ground delivery and Yamcs archive proof
-remain outstanding. Registration parsing and unsolicited-update handling have
-been repaired, host-tested and flashed with esptool hash verification. The
-updated application recognized registration and opened the UDP socket on hardware.
-One EPS datagram traversed LTE/EPC, but had a leading LF and lost final byte.
-The receiver rejected it correctly; a CR-only AT termination fix is built,
-host-tested and flashed with verified image hashes. Packet-byte comparison
-and dashboard verification are pending the next run with USB on IHU.
+Native EPS controller transport and the full LTE uplink are proven on the bench.
+Trial native-eps-20261002-05 delivered one 128-byte IHU-native EPS packet over
+CAN → COMMS UART → Walter LTE-M → LibreSDR/OAI → EPC → Yamcs ember-lte.
+IHU, radio UDP and archived bytes match exactly; paused replay displays measured
+values. Earlier windows failed, so repeatability and continuous telemetry remain
+open. Walter is OFF and both network applications stopped after this trial.
 
 ## 1. Inventory and preserve the previous experiment
 
@@ -203,8 +199,13 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [x] Build and host-test CR-only AT terminator fix.
 - [x] Flash CR-only AT terminator fix; image hashes and startup OFF verified.
       [Evidence](../../system/ground_station/evidence/walter-cr-only-flash-check-20261002.json).
-- [ ] Verify exact packet bytes over LTE after CR-only terminator fix.
-- [ ] Receive real EPS packets over LTE and byte-match them in Yamcs archive/display.
+- [x] Verify exact packet bytes over LTE after CR-only terminator fix.
+- [x] Receive real EPS packets over LTE and byte-match them in Yamcs archive/display.
+      One packet, sequence15, native IHU provenance, all128 bytes unchanged;
+      battery8.060V, output8.042V, die21.894°C. Paused replay verified visually.
+      [Evidence](../../system/ground_station/evidence/native-eps-lte-20261002-05.json).
+- [ ] Qualify repeated full-chain transmissions and add periodic EPS streaming;
+      single-packet success does not establish LTE reliability.
 - [ ] Integrate CAN into the full IHU/EPS and COMMS applications; add real sensor
       telemetry, periodic streaming, ground ingestion, and separately qualified uplink handling.
 - [ ] Implement bounded queues, sequence numbers, reconnect/backoff, and watchdogs.

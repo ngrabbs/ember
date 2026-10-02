@@ -87,3 +87,33 @@ terms are established; its source path and checksum are in the inventory.
 - [Amarisoft radio capabilities](https://www2.amarisoft.com/technology)
 - [Walter documentation](https://github.com/QuickSpot/walter-documentation)
 - [LTE-M satellite adaptations research](https://arxiv.org/abs/2103.14169)
+
+## Native EPS uplink milestone — 2026-10-02
+
+Real battery-only EPS telemetry crossed IHU CAN Feather → COMMS CAN Feather →
+Walter → LTE-M/LibreSDR OAI → srsEPC → native UDP receiver → Yamcs `ember-lte`.
+Trial `native-eps-20261002-05` received POWER_STATUS sequence15 with all128
+bytes matching the IHU submission and Yamcs archive. Voltage and temperature
+values are ADC-valid; current conversions still use unverified sense resistors.
+This is one successful packet following failed windows, not a reliability result.
+
+[Packet and archive proof](../../system/ground_station/evidence/native-eps-lte-20261002-05.json).
+[Dashboard screenshot](../../system/ground_station/evidence/native-eps-lte-replay-20261002.png).
+The [paused replay dashboard](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember-lte__eps-lte-proof)
+is held at the archived reception; it does not transmit hardware commands.
+[Realtime dashboard](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember-lte__realtime)
+expires between bursts. Replay processors are session state; recreate after
+server restart using Yamcs [Create Processor](https://docs.yamcs.org/yamcs-http-api/processing/create-processor/)
+and [Edit Processor](https://docs.yamcs.org/yamcs-http-api/processing/edit-processor/).
+The evidence JSON records the replay window and request. Use `eps_lte_trial.py`
+with `--count 1 --seconds 120 --settle 15` while the bounded ground cell and
+`lte_receiver.py` are running. Receiver validation and archive matching are
+separate steps. Never inject host-generated EPS packets to claim RF success.
+
+Two firmware fixes preceded this result: accept CEREG spacing variants and
+unsolicited updates, and terminate modem AT commands with CR only. The previous
+CR+LF send produced an exact leading-LF/last-byte-loss datagram, rejected by the
+receiver. Keep IHU/COMMS/Walter powered during USB cable changes; flashing Walter
+changes its boot identity and the first controller query may reject the old
+cached peer. Refresh HELLO/status before opening a radio window. After the run,
+Walter OFF/window zero and the network process exits were verified.

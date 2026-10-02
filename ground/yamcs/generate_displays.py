@@ -140,7 +140,7 @@ def generate(destination):
         if e.tag == 'widget': display.remove(e)
     prop(display,'name','EMBER IHU EPS')
     label('EMBER / IHU EPS',28,20,900,48,30,WHITE,True)
-    label('READ-ONLY UART / PI PACKET WRAPPER / 2 SERIES CELLS',28,76,1050,25,13,ORANGE,True)
+    label('READ-ONLY EPS / IHU POWER_STATUS / 2 SERIES CELLS',28,76,1050,25,13,ORANGE,True)
     box(28,120,1064,95)
     scripted('Waiting for EPS telemetry','POWER_STATUS_readout_valid','eps-quality.js',48,137,1020,35,17)
     scripted('No readout received','POWER_STATUS_readout_age_ms','eps-age.js',48,178,1020,24,12)
