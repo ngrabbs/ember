@@ -165,8 +165,10 @@ policy. UHF remains safe at boot while the Walter path is being exercised.
       bench echo, and correlated rejection. [Wire specification and tests](../../firmware/comms_transport/README.md).
 - [x] Build both framed images and install/verify Feather; demonstrate missing-peer
       timeout, BUSY rejection, and pending-slot recovery on hardware.
-- [ ] Install the matching framed Walter image, then run paired boundary/pattern,
-      synthetic EMBER packet, rejection, corruption, overflow, and gap-recovery checks.
+- [x] Install the matching framed Walter image: upload hashes and USB checks passed;
+      modem held reset, no UART traffic observed during the check.
+- [ ] Run paired boundary/pattern, synthetic EMBER packet, rejection, corruption,
+      overflow, and gap-recovery checks with USB back on Feather.
 - [ ] Freeze production UART message IDs, transport outcomes, bounded queues,
       and framing vectors for SEND_PACKET/TX_RESULT/RX_PACKET/RX_RESULT.
 - [ ] Add a transport-independent COMMS packet service and Walter adapter.

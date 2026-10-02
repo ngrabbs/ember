@@ -117,7 +117,13 @@ Feather UF2 SHA-256:
 `b45d81ef73d59b0b9d48bfc8c41de22e1f38fdd2cf171dc55b28821b4820828a`.
 Built Walter binary SHA-256:
 `268875a1a0cd98776607696c47f86e05d78319456436d278b997e1b9dbedc7b9`.
-Walter framed installation and paired tests are pending a USB cable move.
+Walter framed image was installed with all written-region hashes verified.
+Its USB status/help, unknown-command rejection, overlong-command rejection,
+nonzero consistent boot identity, and growing uptime passed. Both sampled
+statuses reported zero UART traffic/parser faults and `modem=HELD_RESET`.
+Opening USB reset the application (first sampled uptime 301 ms). Paired packet
+tests are pending moving USB back to Feather while Walter remains powered.
 Private logs are under `/media/ngrabbs/BACKUP-A/ember-walter-bridge/` on m75q:
 `feather-framed-build.log`, `walter-framed-build.log`,
-`feather-framed-flash.log`, and `feather-framed-no-peer.log`.
+`feather-framed-flash.log`, `feather-framed-no-peer.log`,
+`walter-framed-flash.log`, and `walter-framed-usb.log`.
