@@ -207,7 +207,13 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [x] Measure ten independent full-chain attempts with firmware/profile fixed:
       six deliveries, two modem rejections, two accepted without reception;
       all ten OFF confirmations. [Results](results/2026-10-02-eps-reliability.md).
-- [ ] Expose exact modem rejection code and registration/socket state at send.
+- [x] Build/test cached diagnostics carrying exact numeric/text CME detail,
+      registration transitions, send prompt/OK flags and historical socket-open
+      acceptance. All34 host tests and all three hardware-target builds pass.
+- [x] Flash/readback-verify diagnostic IHU image; CAN HELLO and ADC-valid EPS read pass.
+- [ ] Flash matching COMMS and Walter diagnostic images; verify96-byte return
+      over physical CAN/UART, then run bounded instrumented radio trials.
+- [ ] Add separately bounded live socket-state probes if cached evidence is insufficient.
 - [ ] Trace accepted-but-undelivered uplinks/bearer failures in OAI.
 - [ ] Add bounded queues, recovery/backoff and duplicate handling; then rerun
       qualification and add periodic EPS streaming. Ten-run result is6/10,

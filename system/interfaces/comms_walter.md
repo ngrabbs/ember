@@ -210,3 +210,45 @@ LTE attach/telemetry has been demonstrated, but repeatability is unresolved and
 reliability work is shelved. Local UART/packet-service development can proceed
 independently. The [LTE checklist](../../ground/lte/TODO.md) retains RF work;
 this checklist owns the controller/transport integration.
+
+## Cached LTE diagnostics v1
+
+Diagnostic-capable bench images add `UL_LINK_DIAG`0x16/ACK0x17 and
+`CF_LINK_DIAG`0x7a/ACK0x7b. Request payload is empty; reply is96bytes,
+identity/CRC protected and correlated through the existing UART/CAN envelopes.
+IHU CLI: `lte diagnostics`. Existing LINK_STATUS16-byte format is unchanged.
+All three boards need the matching additive service; older images cannot carry
+it. The read is cached only: it does not issue AT commands or enable RF.
+
+| Bytes | Meaning |
+| --- | --- |
+| 0–15 | Existing status: current state/step/error/registered, remaining window, accepted/rejected counters |
+| 16 | Diagnostic version1 |
+| 17 | Last observed CEREG status, retained across OFF;255 means unknown |
+| 18 | CEREG snapshot immediately before the last send |
+| 19 | CEREG snapshot at last failure;255 if none |
+| 20 | Last AT command ID |
+| 21–22 | Failure command ID and application state |
+| 23 | Flags: bit0 send prompt, bit1 final send OK, bit2 failure, bit3 socket-open OK observed, bit5 error text truncated |
+| 24–27 | Numeric CME error, big-endian u32;0xffffffff if none/nonnumeric |
+| 28–31 | Last send time since RF admission, milliseconds |
+| 32–35 | Observed registered-to-unregistered CEREG transitions in this window |
+| 36–39 | Last CEREG observation time since RF admission, milliseconds |
+| 40–43 | COMMS-to-Walter UART send request ID; distinct from IHU request ID |
+| 44 | Error text length,0..47 |
+| 45 | Error kind:0 none,1 ERROR,2 numeric CME,3 text CME |
+| 46–47 | Reserved zero |
+| 48–95 | NUL-terminated bounded error detail, never a general AT transcript |
+
+AT command IDs:1 AT,2 CMEE,3 CFUN,4 band selection,5 APN,6 CEREG,
+7 COPS,8 SQNSCFG,9 SQNSD,10 SQNSSENDEXT;255 other. Firmware retains
+CMEE2, so some modem errors are verbose text rather than numeric codes.
+Diagnostics reset on admission of a new nonzero RF window. Explicit stop and
+failure shutdown retain the previous window's evidence; a Walter ESP32 reboot
+loses this RAM cache. Current OFF is distinct from historical registration or
+socket-open flags. A socket-open OK is evidence of past command acceptance,
+not a current socket-state query. No live SQNSS/CGACT probes are implemented.
+
+`eps_lte_trial.py --diagnostics` samples before/after send and after stop,
+validates request correlation and decodes this payload. Leave the option off
+for old firmware. The original ten-run measurement remains unchanged.

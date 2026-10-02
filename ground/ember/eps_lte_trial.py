@@ -6,6 +6,7 @@ import re
 import time
 from comms_uart import Console
 from codec import decode
+from lte_diagnostics import decode_diagnostics
 
 def run(args):
     c=Console(args.port);result={'modem_accepted':[],'status':[],'status_timing':[],'scope':'Modem acceptance only; correlate ground receiver and Yamcs separately.'}
@@ -17,6 +18,14 @@ def run(args):
             if any(line.startswith('RESULT ') or line.startswith('REJECT ') for line in lines) and output.endswith('\n'):break
         c.transcript.append('> '+text+'\n'+output)
         return output
+    def diagnostics(stage):
+        if not args.diagnostics:return
+        response=command('lte diagnostics')
+        Console.require_match(response,'LTE_DIAG')
+        match=re.search(r'bytes=96 hex=([0-9a-f]+)',response)
+        parsed=decode_diagnostics(bytes.fromhex(match[1]))
+        result.setdefault('diagnostics',[]).append({'stage':stage,'decoded':parsed})
+        print('DIAGNOSTICS '+json.dumps(parsed),flush=True)
     try:
         first=c.command('status');result['initial_status']=first.strip()
         Console.require_match(command('hello'),'CAN_HELLO_CONFIRMED')
@@ -41,6 +50,7 @@ def run(args):
         if ready:
             for _ in range(args.count):
                 if time.monotonic()>=end:break
+                diagnostics('before_send')
                 response=command('eps lte',22)
                 if 'outcome=MODEM_ACCEPTED' not in response:
                     result['send_failure']=response.strip();print(response.strip(),flush=True);break
@@ -49,6 +59,7 @@ def run(args):
                 packet=decode(bytes.fromhex(match[2]));assert packet['name']=='POWER_STATUS'
                 result['modem_accepted'].append(dict(hex=match[2],decoded=packet,elapsed_s=round(time.monotonic()-admitted,3)))
                 print('MODEM_ACCEPTED EPS sequence='+str(packet['sequence']),flush=True)
+                diagnostics('after_send')
                 time.sleep(1)
             if result['modem_accepted'] and 'send_failure' not in result:
                 time.sleep(min(args.settle,max(0,end-time.monotonic())))
@@ -56,6 +67,7 @@ def run(args):
         try:
             command('hello');result['stop']=command('lte 0').strip()
             result['final_modem_status']=command('lte status').strip()
+            diagnostics('after_stop')
             result['final_status']=c.command('status').strip()
         finally:
             c.serial.close();args.output.mkdir(parents=True,exist_ok=True)
@@ -68,6 +80,7 @@ if __name__=='__main__':
     parser.add_argument('--port',required=True)
     parser.add_argument('--seconds',type=int,default=90)
     parser.add_argument('--count',type=int,default=10)
+    parser.add_argument('--diagnostics',action='store_true',help='Requires diagnostic-capable firmware on all three boards.')
     parser.add_argument('--settle',type=int,default=10,help='Wait after final modem acceptance before stopping RF (seconds).')
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args()

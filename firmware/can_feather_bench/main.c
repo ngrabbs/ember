@@ -110,22 +110,23 @@ static void chain_fail(uint8_t reason) {
     LOG("CHAIN outcome=UNKNOWN reason=%u\n",reason);
 }
 static uint8_t chain_uart_type(void) {
-    return chain.incoming.type==CF_RF_WINDOW?UL_RF_WINDOW:chain.incoming.type==CF_SEND_PACKET?UL_SEND_PACKET:chain.incoming.type==CF_LINK_STATUS?UL_LINK_STATUS:UL_ECHO;
+    return chain.incoming.type==CF_RF_WINDOW?UL_RF_WINDOW:chain.incoming.type==CF_SEND_PACKET?UL_SEND_PACKET:chain.incoming.type==CF_LINK_STATUS?UL_LINK_STATUS:chain.incoming.type==CF_LINK_DIAG?UL_LINK_DIAG:UL_ECHO;
 }
 static void uart_receive(const ul_packet *p) {
     if(!chain.active || p->version!=1 || p->origin!=boot || p->request!=chain.uart.request)return;
     bool hello=chain.uart.type==UL_HELLO;
     if(!hello && p->sender==walter_peer && p->type==UL_ERROR && p->size==1) {chain_fail(p->payload[0]);return;}
     uint8_t expected=hello?UL_HELLO_ACK:chain.uart.type==UL_RF_WINDOW?UL_RF_WINDOW_ACK:
-        chain.uart.type==UL_SEND_PACKET?UL_MODEM_ACCEPTED:chain.uart.type==UL_LINK_STATUS?UL_LINK_STATUS_ACK:UL_ECHO_ACK;
-    bool health=chain.uart.type==UL_LINK_STATUS;
-    if(p->type!=expected || p->size!=(health?16:chain.uart.size) ||
+        chain.uart.type==UL_SEND_PACKET?UL_MODEM_ACCEPTED:chain.uart.type==UL_LINK_STATUS?UL_LINK_STATUS_ACK:chain.uart.type==UL_LINK_DIAG?UL_LINK_DIAG_ACK:UL_ECHO_ACK;
+    bool diag=chain.uart.type==UL_LINK_DIAG;
+    bool health=chain.uart.type==UL_LINK_STATUS || diag;
+    if(p->type!=expected || p->size!=(health?(diag?LTE_DIAG_SIZE:16):chain.uart.size) ||
        (!hello && p->sender!=walter_peer) || (!health && memcmp(p->payload,chain.uart.payload,p->size))) {
         chain_fail(CF_LINK_UNKNOWN);return;
     }
     if(hello) {walter_peer=p->sender;uart_submit(chain_uart_type());return;}
     ul_packet out=chain.incoming;out.type=out.type==CF_RF_WINDOW?CF_RF_WINDOW_ACK:
-        out.type==CF_SEND_PACKET?CF_MODEM_ACCEPTED:out.type==CF_LINK_STATUS?CF_LINK_STATUS_ACK:CF_CHAIN_ACK;out.sender=boot;
+        out.type==CF_SEND_PACKET?CF_MODEM_ACCEPTED:out.type==CF_LINK_STATUS?CF_LINK_STATUS_ACK:out.type==CF_LINK_DIAG?CF_LINK_DIAG_ACK:CF_CHAIN_ACK;out.sender=boot;
     if(health) {out.size=p->size;memcpy(out.payload,p->payload,p->size);}
     if(!queue(&out)) {chain_fail(CF_BUSY);return;}
     chain.active=false;++chain_ok;
@@ -137,7 +138,7 @@ static void receive(const ul_packet *p) {
     if(pending.active && p->origin==boot && p->request==pending.packet.request) {
         bool hello=pending.packet.type==UL_HELLO;
         uint8_t expected=hello?UL_HELLO_ACK:pending.packet.type==CF_CHAIN?CF_CHAIN_ACK:
-            pending.packet.type==CF_RF_WINDOW?CF_RF_WINDOW_ACK:pending.packet.type==CF_SEND_PACKET?CF_MODEM_ACCEPTED:pending.packet.type==CF_LINK_STATUS?CF_LINK_STATUS_ACK:UL_ECHO_ACK;
+            pending.packet.type==CF_RF_WINDOW?CF_RF_WINDOW_ACK:pending.packet.type==CF_SEND_PACKET?CF_MODEM_ACCEPTED:pending.packet.type==CF_LINK_STATUS?CF_LINK_STATUS_ACK:pending.packet.type==CF_LINK_DIAG?CF_LINK_DIAG_ACK:UL_ECHO_ACK;
         if(p->version!=1 || (!hello && p->sender!=peer)) {
             pending.active=false;peer=0;++unknown;LOG("RESULT outcome=UNKNOWN reason=PEER_RESET_OR_VERSION\n");return;
         }
@@ -147,25 +148,28 @@ static void receive(const ul_packet *p) {
             if(uncertain) {++unknown;peer=0;}
             LOG("RESULT request=%" PRIu32 " outcome=%s reason=%u\n",p->request,uncertain?"UNKNOWN_REMOTE_LINK":"PEER_REJECTED",p->payload[0]);return;
         }
-        bool health=pending.packet.type==CF_LINK_STATUS;
-        if(p->type!=expected || p->size!=(health?16:pending.packet.size) || (!health && memcmp(p->payload,pending.packet.payload,p->size)))return;
+        bool diag=pending.packet.type==CF_LINK_DIAG;
+        bool health=pending.packet.type==CF_LINK_STATUS || diag;
+        if(p->type!=expected || p->size!=(health?(diag?LTE_DIAG_SIZE:16):pending.packet.size) || (!health && memcmp(p->payload,pending.packet.payload,p->size)))return;
         if(health)LOG("LTE_STATUS state=%u step=%u error=%u registered=%u window_ms=%" PRIu32 " modem_accepted=%" PRIu32 " rejected=%" PRIu32 "\n",p->payload[0],p->payload[1],p->payload[2],p->payload[3],ul_u32(p->payload+4),ul_u32(p->payload+8),ul_u32(p->payload+12));
+        if(diag)LOG("LTE_DIAG version=%u last_cereg=%u send_cereg=%u failure_cereg=%u command=%u failure_command=%u failure_state=%u flags=%u cme=%" PRIu32 " send_elapsed_ms=%" PRIu32 " registration_losses=%" PRIu32 " last_cereg_ms=%" PRIu32 " uart_send_request=%" PRIu32 " error_kind=%u\n",
+            p->payload[16],p->payload[17],p->payload[18],p->payload[19],p->payload[20],p->payload[21],p->payload[22],p->payload[23],ul_u32(p->payload+24),ul_u32(p->payload+28),ul_u32(p->payload+32),ul_u32(p->payload+36),ul_u32(p->payload+40),p->payload[45]);
         if(hello)peer=p->sender;
         pending.active=false;++matched;
         LOG("RESULT request=%" PRIu32 " outcome=%s peer=%" PRIu32 " bytes=%u hex=",p->request,
             hello?"CAN_HELLO_CONFIRMED":p->type==CF_RF_WINDOW_ACK?"RF_WINDOW_ACCEPTED":
-            p->type==CF_MODEM_ACCEPTED?"MODEM_ACCEPTED":p->type==CF_LINK_STATUS_ACK?"LTE_STATUS":p->type==CF_CHAIN_ACK?"WALTER_BENCH_RETURN":"CAN_ECHO_MATCHED",peer,p->size);
+            p->type==CF_MODEM_ACCEPTED?"MODEM_ACCEPTED":p->type==CF_LINK_STATUS_ACK?"LTE_STATUS":p->type==CF_LINK_DIAG_ACK?"LTE_DIAG":p->type==CF_CHAIN_ACK?"WALTER_BENCH_RETURN":"CAN_ECHO_MATCHED",peer,p->size);
         for(size_t i=0;i<p->size;++i) {LOG("%02x",p->payload[i]);}
         LOG("\n");return;
     }
     if(p->type==UL_HELLO_ACK || p->type==UL_ECHO_ACK || p->type==CF_CHAIN_ACK ||
-       p->type==CF_RF_WINDOW_ACK || p->type==CF_MODEM_ACCEPTED || p->type==CF_LINK_STATUS_ACK || p->type==UL_ERROR)return;
+       p->type==CF_RF_WINDOW_ACK || p->type==CF_MODEM_ACCEPTED || p->type==CF_LINK_STATUS_ACK || p->type==CF_LINK_DIAG_ACK || p->type==UL_ERROR)return;
     if(p->version!=1) {send_error(p,UL_ERR_VERSION);return;}
     if(p->origin!=p->sender) {send_error(p,UL_ERR_REQUEST);return;}
 #if !ROLE_IHU
-    if(p->type==CF_CHAIN || p->type==CF_SEND_PACKET || p->type==CF_RF_WINDOW || p->type==CF_LINK_STATUS) {
+    if(p->type==CF_CHAIN || p->type==CF_SEND_PACKET || p->type==CF_RF_WINDOW || p->type==CF_LINK_STATUS || p->type==CF_LINK_DIAG) {
         if(chain.active || output.active || uart_id>=UINT32_MAX-1) {send_error(p,CF_BUSY);return;}
-        if(p->type==CF_RF_WINDOW?(p->size!=4 || ul_u32(p->payload)>120):p->type==CF_LINK_STATUS?p->size!=0:!valid_telemetry(p)) {send_error(p,CF_BAD_PACKET);return;}
+        if(p->type==CF_RF_WINDOW?(p->size!=4 || ul_u32(p->payload)>120):(p->type==CF_LINK_STATUS || p->type==CF_LINK_DIAG)?p->size!=0:!valid_telemetry(p)) {send_error(p,CF_BAD_PACKET);return;}
         chain.active=true;chain.incoming=*p;uart_submit(walter_peer?chain_uart_type():UL_HELLO);return;
     }
 #endif
@@ -246,6 +250,7 @@ static void command(const char *s) {
     else if(!strcmp(s,"eps adc off"))eps_adc(false);
     else if(!strcmp(s,"eps telemetry"))eps_telemetry(false);
     else if(!strcmp(s,"eps lte"))eps_telemetry(true);
+    else if(!strcmp(s,"lte diagnostics"))submit(CF_LINK_DIAG,NULL,0);
     else if(!strcmp(s,"lte status"))submit(CF_LINK_STATUS,NULL,0);
     else if(!strncmp(s,"lte ",4)) {
         char *end;unsigned long seconds=strtoul(s+4,&end,10);
@@ -253,7 +258,7 @@ static void command(const char *s) {
         uint8_t p[4];ul_p32(p,seconds);submit(CF_RF_WINDOW,p,4);
     }
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json | eps adc on/off | eps telemetry | lte N | lte status | eps lte":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json | eps adc on/off | eps telemetry | lte N | lte status | lte diagnostics | eps lte":"");
     else if(*s)LOG("ERROR unknown command\n");
 }
 int main(void) {
