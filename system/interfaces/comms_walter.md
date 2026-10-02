@@ -148,6 +148,12 @@ policy. UHF remains safe at boot while the Walter path is being exercised.
 - [x] Detect Feather BOOTSEL, preserve/verify its full flash, and install a
       standalone USB/UART diagnostic image; [build and hardware results](../../firmware/comms_feather_bench/README.md).
       USB commands passed; two UART probes submitted, no peer acknowledgment yet.
+- [x] Preserve and verify Walter's complete ESP32 flash and build the standalone
+      UART responder with the modem held in reset; [procedure](../../firmware/walter_uart_bench/README.md).
+- [x] Install/check Walter responder over USB: upload hashes verified; status,
+      help, unknown/overlong rejection, and growing uptime passed, with modem held reset.
+- [ ] Move USB to Feather and prove matching PING/PONG identifiers over the
+      physical UART in both directions; neither device has confirmed a peer yet.
 - [ ] Port the COMMS board profile to the CAN Feather; resolve CAN/LED conflicts
       with old I2C/Si5351 GPIOs and allocate the UHF controls.
 - [ ] Inventory remaining COMMS and Walter pins; verify electrical compatibility,

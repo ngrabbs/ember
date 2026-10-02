@@ -1,8 +1,10 @@
 # Walter LTE-M firmware
 
-Reserved for the spacecraft-side Walter application. No application source has
-been imported or developed here yet. The attached board currently runs a modem
-AT passthrough application whose source/build provenance is not yet located.
+Reserved for the spacecraft-side Walter LTE application. The separate
+[UART bench responder](../walter_uart_bench/README.md) now supplies the initial
+COMMS link diagnostic, with the modem held in reset. The previous AT passthrough
+has a verified full-flash recovery image; its source/build provenance remains
+unknown. The responder does not provide LTE or telemetry forwarding.
 
 Intended placement: Walter alongside the **COMMS MCU** on the communications
 assembly. The COMMS MCU is the spacecraft communications endpoint; Walter
@@ -10,7 +12,7 @@ manages LTE-M beneath it. The **IHU MCU** supplies telemetry and retains command
 authority. Current IHU–COMMS I2C firmware is status/ping only; CAN is the intended
 internal packet transport. See the
 [controller interface draft and owned TODO](../../system/interfaces/comms_walter.md).
-UART pins and forwarding firmware are not assigned/implemented yet.
+The diagnostic uses ESP32 GPIO44 RX / GPIO43 TX. Packet forwarding remains open.
 
 Bench procedures and the implementation checklist live in
 [ground/lte](../../ground/lte/README.md).

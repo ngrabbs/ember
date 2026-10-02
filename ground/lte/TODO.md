@@ -133,6 +133,10 @@ IHU–COMMS housekeeping link while adding a separate packet service; it cannot
 already carry arbitrary telemetry or commands. LTE reliability remains shelved.
 
 - [ ] Develop in firmware/walter with a pinned toolchain and WalterModem library.
+- [x] Preserve/verify Walter's ESP32 flash and install a pinned standalone
+      COMMS UART diagnostic with its modem held in reset; USB checks passed.
+      See [responder procedure](../../firmware/walter_uart_bench/README.md).
+      Physical UART round-trip and LTE packet firmware remain outstanding.
 - [ ] Implement bounded queues, sequence numbers, reconnect/backoff, and watchdogs.
 - [ ] Define modem startup, radio enable, shutdown, and sleep/wake behavior.
 - [ ] Integrate EMBER telemetry encoding and ground ingestion.
