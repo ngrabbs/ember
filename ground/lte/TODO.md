@@ -16,31 +16,38 @@ later validation gates, not prerequisites for getting practical LTE experience.
 
 ## 2. Ground radio bring-up
 
-- [ ] Install UHD tools on the Pi; record version and image compatibility.
-- [ ] Stage the custom FPGA image privately and verify checksum.
-- [ ] Confirm reliable USB connection; test a USB 3 cable/port if needed.
-- [ ] Run UHD discovery/probe using the explicit custom image, without an eNodeB.
-- [ ] Record radio serial, driver/firmware/FPGA versions, clock configuration.
-- [ ] Verify timed streaming at the required rate without under/overruns.
+- [x] Install UHD tools on the Pi; record version and image compatibility.
+- [x] Stage the custom FPGA image privately and verify checksum.
+- [x] Confirm reliable USB connection; test a USB 3 cable/port if needed.
+- [x] Run UHD discovery/probe using the explicit custom image, without an eNodeB.
+- [x] Record radio serial, driver/firmware/FPGA versions, clock configuration.
+- [x] Verify receive-only streaming at 15.36 Msps for 10 s without overruns.
+- [ ] Verify full-duplex timed streaming and eNodeB processing performance.
+- [x] Confirm antennas attached to all LibreSDR connectors.
+- [ ] Independently observe/decode DL RF; test whether OAI advertises 999/70.
+- [ ] Investigate OAI shutdown segmentation fault after the low-TX run.
 - [ ] Establish bench RF connections, attenuation, gains, and operating band.
+      Tried band 13 at six-inch separation; Walter scan saw Verizon, not 999/70.
 - [ ] Decide whether the Pi or x1c hosts the first LTE-M eNodeB based on driver
       support and measured real-time performance.
 
 ## 3. LTE-M stack feasibility
 
-- [ ] Pin an OAI revision and inspect eMTC build/configuration paths.
-- [ ] Verify OAI's RF backend can operate this LibreSDR/custom FPGA combination.
+- [x] Pin an OAI revision and inspect eMTC build/configuration paths.
+- [x] Initialize OAI UHD backend with LibreSDR/custom FPGA (RF waveform still unverified).
 - [ ] Reproduce single-UE Cat-M1 operation; record supported CE/repetition modes.
-- [ ] Select EPC and verify compatibility for conventional IP bearer setup.
-- [ ] Add a reviewed LTE-M config once it is actually exercised.
+- [x] Select srsEPC and verify S1 setup with OAI.
+- [ ] Verify conventional IP bearer setup after UE registration.
+- [x] Add exercised experimental OAI LTE-M config and bounded launch commands.
 - [ ] If OAI fails, document the failing layer and compare repair, commercial
       software, and srsRAN implementation effort before choosing a path.
 
 ## 4. Walter and SIM
 
-- [ ] Confirm antenna or conducted RF connection and stable board power.
-- [ ] Confirm SIM presence/readiness in the required modem functionality state.
-- [ ] Match Walter's SIM to the private HSS record locally.
+- [x] Confirm LTE/GPS antennas attached to Walter; LibreSDR antennas present.
+- [ ] Confirm antenna connector routing, separation, and stable board power.
+- [x] Confirm SIM readiness in no-RF mode (CPIN READY).
+- [x] Match Walter's SIM to the private HSS record locally (record 4).
 - [ ] Verify PLMN, authentication algorithm, OP/OPc, SQN, APN, and bands.
 - [ ] Use the vendor AT reference matching UE8.2.1.0 to inspect/select LTE-M.
 - [ ] Record registration states and distinguish cell acquisition, RRC,

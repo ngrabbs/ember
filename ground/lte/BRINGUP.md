@@ -1,7 +1,10 @@
 # LTE bench bring-up runbook
 
-Status: inventory and AT queries have been performed. The installation, radio
-probe, eNodeB startup, and LTE-M attach steps below have **not** been executed.
+Status: OAI and srsEPC are built on the Pi. Simulated and hardware S1 setup
+succeeded. Bounded OTA attempts have not registered Walter. Single-thread
+processing and RX attenuation 30 eliminated the earlier observed timing errors
+and false random-access detections in the subsequent run. This is an experimental
+configuration, not a validated telemetry link. See [results](results/2026-10-01-ground-radio.md).
 
 ## 1. Access and inventory
 
@@ -21,7 +24,7 @@ lsusb -t
 command -v uhd_find_devices uhd_usrp_probe
 ```
 
-The current SDR enumerates as B210 at 480 Mbps. Enumeration alone does not
+The SDR enumerates at 480 Mbps before controller firmware loads, then at 5000 Mbps. Enumeration alone does not
 verify its FPGA, streaming, or RF operation. Start with discovery/probe.
 
 ## 2. Install radio utilities and stage the image
@@ -49,6 +52,10 @@ On the Pi:
 
 ```sh
 sha256sum ~/work/ember-lte/images/usrp_b210_fpga.bin
+uhd_images_downloader --types "^b2xx_common_fw_default$" --install-location "$HOME/work/ember-lte/images"
+sudo udevadm control --reload-rules
+sudo udevadm trigger --subsystem-match=usb --attr-match=idVendor=2500
+export UHD_IMAGES_DIR="$HOME/work/ember-lte/images"
 uhd_find_devices
 uhd_usrp_probe --args "type=b200,fpga=$HOME/work/ember-lte/images/usrp_b210_fpga.bin"
 ```
@@ -126,18 +133,62 @@ Sequans AT reference for the installed firmware before changing functionality,
 RAT, bands, PLMN, or APN. Do not assume USB is a direct modem interface: the
 ESP32 passthrough bridges it to the modem UART.
 
-Latest results: GM02SP, UE8.2.1.0, CFUN 0, CPIN ERROR, CEREG 1,0. Determine SIM
-readiness in the appropriate functionality state; no SIM failure is diagnosed.
-Compare IMSI/authentication details locally with the private HSS database.
-Do not put those credentials in shell command history or tracked files.
+Latest verified state: GM02SP UE8.2.1.0, LTE-M selected, SIM READY in CFUN 4
+(no RF), and IMSI matched privately to HSS record 4. The user has attached LTE
+and GPS antennas. APN context 1 is now `srsapn`. CFUN 0 is the stopped state.
+Do not publish the subscriber credentials.
 
 ## 5. Bring up LTE-M
 
-There is no verified LTE-M launch configuration here yet. Use the
-[TODO](TODO.md) to pin an OAI revision, verify eMTC operation and UHD hardware
-support, and choose an EPC. Store the working config and exact build/launch
-commands once reproduced. A narrower legacy LTE bandwidth does not enable
-Cat-M1, and these srsRAN configs must not be presented as Walter-ready.
+Build both applications using [BUILD.md](configs/oai/BUILD.md). Stage the OAI
+example as `~/work/ember-lte/configs/enb.band13.emtc.conf`, alongside `epc.conf`
+and the private HSS database. Run `scripts/smoke-s1.py` first: this uses simulated
+radio, does not transmit, and validates S1 setup only.
+
+After checking antennas, band and bench RF setup, a bounded hardware attempt
+uses two terminals on the Pi:
+
+```sh
+cd ~/work/ember-lte/configs
+sudo timeout --signal=INT --kill-after=5 150 \
+  ../srsRAN_4G/build-epc/srsepc/src/srsepc epc.conf
+```
+
+```sh
+cd ~/work/ember-lte/openairinterface5g/build-lte
+sudo env UHD_IMAGES_DIR=/home/ngrabbs/work/ember-lte/images \
+  timeout --signal=INT --kill-after=5 140 ./lte-softmodem \
+  -O /home/ngrabbs/work/ember-lte/configs/enb.band13.emtc.conf \
+  --parallel-config PARALLEL_SINGLE_THREAD --worker-config WORKER_DISABLE
+```
+
+This starts RF transmission. The current candidate is band 13, DL 751 MHz,
+UL 782 MHz, 50 PRB, PLMN 999/70. The logged UHD gains are TX 29.75 dB and
+RX 35 dB; these values do not establish radiated power. Preserve logs privately.
+Timeout exit 124 is expected. Verify processes stopped afterward.
+
+On Walter, wait 12 seconds after opening the serial port, then issue each command
+only after its final OK/ERROR response:
+
+```text
+AT+CMEE=2
+AT+CFUN=0
+AT+CGDCONT=1,"IP","srsapn"
+AT+CEREG=2
+AT+CFUN=1
+AT+COPS=1,2,"99970"
+AT+CEREG?
+AT+CSQ
+AT+CGATT?
+AT+CGPADDR=1
+AT+CFUN=0
+```
+
+Allow network selection a long bounded timeout. If it remains pending, do not
+stack other commands behind it. Reopen/reset the passthrough and explicitly
+confirm CFUN 0 before leaving the hardware unattended. Signal value 99 and
+CESQ 255 mean unknown/unavailable, not measured signal strength. A smaller
+ordinary LTE bandwidth does not enable Cat-M1.
 
 Acceptance sequence:
 
@@ -150,3 +201,10 @@ Acceptance sequence:
 
 Record versions, payload/rate/duration, loss, RTT, signal metrics, and recovery
 behavior. Label historical, newly measured, and simulated evidence separately.
+
+## Repeating the receive-only checks
+
+Copy `scripts/probe-radio.sh` and `scripts/benchmark-rx.sh` to the Pi and run
+them there. Both verify the custom FPGA checksum and select it explicitly.
+The benchmark exercises one RX channel at 15.36 Msps for 10 seconds. It does
+not verify full-duplex operation or eNodeB real-time performance.
