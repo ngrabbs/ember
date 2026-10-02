@@ -4,6 +4,7 @@
 #include "uart_link.h"
 #include "lte_link.h"
 #include "wire.h"
+#include "cereg.h"
 static HardwareSerial comms(0),modem(1);
 static ul_reader reader;
 static uint32_t boot,peer,deadline,wait_until,at_started,at_timeout,requests,accepted,rejected;
@@ -11,6 +12,8 @@ enum State {OFF,BOOT_WAIT,CONFIGURE,REGISTER,SOCKET_CONFIG,SOCKET_OPEN,READY,SEN
 static State state=OFF;
 static unsigned step;
 static uint8_t last_error,registered;
+static uint8_t cereg_status=255;
+static char modem_line[192];static size_t line_used;static bool line_discard;
 static bool at_busy,payload_sent,send_pending;
 static char response[2048];static size_t used;
 static ul_packet pending;
@@ -24,11 +27,22 @@ static void reply(const ul_packet &request,uint8_t type,uint8_t reason=0) {
 }
 static void off(void) {
     gpio_hold_dis(GPIO_NUM_45);digitalWrite(45,LOW);gpio_hold_en(GPIO_NUM_45);
-    at_busy=false;state=OFF;registered=0;
+    at_busy=false;state=OFF;registered=0;cereg_status=255;line_used=0;line_discard=false;
     if(send_pending) {reply(pending,UL_ERROR,UL_ERR_MODEM_UNKNOWN);send_pending=false;}
 }
+static void observe_modem_byte(char ch) {
+        if(ch=='\r' || ch=='\n') {
+            if(!line_discard && line_used) {
+                modem_line[line_used]=0;
+                if(parse_cereg(modem_line,&cereg_status))registered=(cereg_status==1 || cereg_status==5);
+            }
+            line_used=0;line_discard=false;
+        } else if(!line_discard) {
+            if(line_used+1<sizeof(modem_line))modem_line[line_used++]=ch;else line_discard=true;
+        }
+}
 static void at(const char *command,uint32_t timeout=6000) {
-    while(modem.available())modem.read();
+    while(modem.available())observe_modem_byte((char)modem.read());
     used=0;response[0]=0;at_started=millis();at_timeout=timeout;at_busy=true;payload_sent=false;
     modem.print(command);modem.print("\r\n");
 }
@@ -68,7 +82,7 @@ static void receive(const ul_packet &p) {
         if(!seconds) {off();reply(p,UL_RF_WINDOW_ACK);return;}
         if(state!=OFF) {reply(p,UL_ERROR,UL_ERR_BUSY);return;}
         deadline=millis()+seconds*1000;wait_until=millis()+12000;step=0;state=BOOT_WAIT;
-        last_error=0;registered=0;
+        last_error=0;registered=0;cereg_status=255;line_used=0;line_discard=false;
         gpio_hold_dis(GPIO_NUM_45);digitalWrite(45,HIGH);gpio_hold_en(GPIO_NUM_45);
         reply(p,UL_RF_WINDOW_ACK);return;
     }
@@ -91,8 +105,7 @@ static void final_response(bool ok) {
     if(!ok) {last_error=1;off();return;}
     if(state==CONFIGURE)configuration();
     else if(state==REGISTER) {
-        if(strstr(response,"+CEREG: 2,1") || strstr(response,"+CEREG: 2,5")) {
-            registered=1;
+        if(registered) {
             state=SOCKET_CONFIG;at("AT+SQNSCFG=1,1,300,90,100,1");
         } else wait_until=millis()+3000;
     } else if(state==SOCKET_CONFIG) {
@@ -102,9 +115,14 @@ static void final_response(bool ok) {
 static void poll_modem(uint32_t now) {
     if(state!=OFF && due(now,deadline)) {last_error=2;off();return;}
     if(state==BOOT_WAIT && due(now,wait_until)) {state=CONFIGURE;configuration();}
-    if(state==REGISTER && !at_busy && due(now,wait_until))at("AT+CEREG?");
+    if(state==REGISTER && !at_busy) {
+        if(registered) {state=SOCKET_CONFIG;at("AT+SQNSCFG=1,1,300,90,100,1");}
+        else if(due(now,wait_until))at("AT+CEREG?");
+    }
     for(unsigned i=0;i<256 && modem.available();++i) {
-        char ch=(char)modem.read();if(!at_busy)continue;
+        char ch=(char)modem.read();
+        observe_modem_byte(ch);
+        if(!at_busy)continue;
         if(used+1>=sizeof(response)) {last_error=3;off();return;}
         response[used++]=ch;response[used]=0;
         if(state==SEND && !payload_sent && ch=='>') {modem.write(pending.payload,pending.size);payload_sent=true;}
@@ -116,9 +134,9 @@ static void poll_modem(uint32_t now) {
     if(at_busy && (uint32_t)(millis()-at_started)>=at_timeout) {last_error=4;off();}
 }
 static void status(void) {
-    Serial.printf("STATUS role=WALTER_LTE_BENCH boot=%lu peer=%lu state=%u radio_window_ms=%lu requests=%lu "
+    Serial.printf("STATUS role=WALTER_LTE_BENCH fw=lte-bench-v2 boot=%lu peer=%lu state=%u cereg=%u radio_window_ms=%lu requests=%lu "
         "modem_accepted=%lu rejected=%lu cobs=%lu crc=%lu overflow=%lu gaps=%lu\n",
-        (unsigned long)boot,(unsigned long)peer,(unsigned)state,
+        (unsigned long)boot,(unsigned long)peer,(unsigned)state,(unsigned)cereg_status,
         (unsigned long)(state==OFF?0:deadline-millis()),(unsigned long)requests,(unsigned long)accepted,
         (unsigned long)rejected,(unsigned long)reader.framing_errors,(unsigned long)reader.crc_errors,
         (unsigned long)reader.overflows,(unsigned long)reader.gaps);

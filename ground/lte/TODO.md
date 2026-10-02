@@ -3,10 +3,11 @@
 Updated 2026-10-02. Bench success is the immediate goal. Spacecraft items are
 later validation gates, not prerequisites for getting practical LTE experience.
 
-LTE reliability work shelved after two further bounded trials on 2026-10-02;
-neither registered or submitted UDP. Preserve the current seven-candidate build
-and resume from the RLC/dedicated-downlink checkpoint below. Application telemetry
-using the existing EMBER dictionary and Yamcs is the next priority.
+Native EPS controller transport is proven (10/10 echoed packets). The first
+full radio trial reached EPC Attach Complete, but Walter's application stayed
+REGISTER and submitted no EPS packets. Ground delivery and Yamcs archive proof
+remain outstanding. Registration parsing and unsolicited-update handling have
+been repaired and host-tested; the updated Walter image awaits flashing.
 
 ## 1. Inventory and preserve the previous experiment
 
@@ -182,6 +183,12 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       CAN/fragment/timeout errors. [Evidence](../../system/ground_station/evidence/ihu-comms-walter-eps-can-20261002.json).
 - [x] Prepare isolated Yamcs ember-lte input on loopback UDP10018 and bounded
       native packet receiver for EPC UDP51000. Running, with zero radio packets.
+- [x] Run first bounded native EPS LTE trial; record EPC Attach Complete,
+      application REGISTER, zero submissions/receptions and confirmed RF OFF.
+      [Evidence](../../system/ground_station/evidence/native-eps-lte-20261002-01.json).
+- [x] Fix Walter CEREG response spacing and preserve unsolicited registration
+      updates, including bytes drained between commands; build and host tests pass.
+- [ ] Flash registration fix and retry with receiver/radio windows aligned.
 - [ ] Receive real EPS packets over LTE and byte-match them in Yamcs archive/display.
 - [ ] Integrate CAN into the full IHU/EPS and COMMS applications; add real sensor
       telemetry, periodic streaming, ground ingestion, and separately qualified uplink handling.

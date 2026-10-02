@@ -15,6 +15,21 @@ static void ok(const char *body="\r\nOK\r\n") {
     modem.input=body;poll_modem(test_time);
 }
 int main(void) {
+    uint8_t registration=255;
+    for(const char *text:{"+CEREG:2,1","+CEREG: 2, 1","+CEREG: 1,\"1234\",\"abcdef\",7"}) {
+        assert(parse_cereg(text,&registration) && registration==1);
+    }
+    assert(parse_cereg("+CEREG:2,5",&registration) && registration==5);
+    assert(parse_cereg("+CEREG: 2,2",&registration) && registration==2);
+    assert(!parse_cereg("AT+CEREG?",&registration));
+    assert(!parse_cereg("+CEREG: garbage",&registration));
+    modem.input="\r\n+CEREG: 1,\"1234\",\"abcdef\",7\r\n";
+    at("AT");assert(registered==1 && cereg_status==1);
+    off();state=REGISTER;wait_until=100;deadline=1000;
+    modem.input="\r\n+CEREG:5\r\n";poll_modem(0);
+    assert(registered==1 && cereg_status==5 && !at_busy);
+    poll_modem(0);assert(state==SOCKET_CONFIG && at_busy);
+    off();
     setup();assert(state==OFF && test_reset==LOW);
     auto p=request(UL_HELLO);receive(p);assert(returned().type==UL_HELLO_ACK);
     p=request(UL_RF_WINDOW);p.size=4;ul_p32(p.payload,120);receive(p);
@@ -22,7 +37,7 @@ int main(void) {
     uint32_t initial=deadline;receive(p);assert(returned().payload[0]==UL_ERR_BUSY && deadline==initial);
     test_time=12000;poll_modem(test_time);assert(at_busy && state==CONFIGURE);
     for(unsigned i=0;i<8;++i)ok();assert(state==REGISTER && !at_busy);
-    poll_modem(test_time);ok("\r\n+CEREG: 2,1\r\n\r\nOK\r\n");assert(state==SOCKET_CONFIG);
+    poll_modem(test_time);ok("\r\n+CEREG:2, 1\r\n\r\nOK\r\n");assert(state==SOCKET_CONFIG);
     ok();assert(state==SOCKET_OPEN);ok();assert(state==READY);
     auto query=request(UL_LINK_STATUS);receive(query);auto health=returned();
     assert(health.type==UL_LINK_STATUS_ACK && health.size==16 && health.payload[0]==READY && health.payload[3]==1);
