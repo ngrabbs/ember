@@ -213,8 +213,10 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [x] Flash/readback-verify diagnostic IHU image; CAN HELLO and ADC-valid EPS read pass.
 - [x] Flash/readback-verify matching COMMS diagnostics; CAN HELLO and128-byte
       echo pass with zero errors.
-- [ ] Flash matching Walter diagnostic image; verify96-byte return over physical
-      CAN/UART, then run bounded instrumented radio trials.
+- [x] Flash matching Walter diagnostic image; all written hashes verified,
+      application SHA matches prepared build, USB startup OFF/window zero.
+- [ ] Verify96-byte diagnostic return over physical CAN/UART with USB on IHU,
+      then run bounded instrumented radio trials.
 - [ ] Add separately bounded live socket-state probes if cached evidence is insufficient.
 - [ ] Trace accepted-but-undelivered uplinks/bearer failures in OAI.
 - [ ] Add bounded queues, recovery/backoff and duplicate handling; then rerun
