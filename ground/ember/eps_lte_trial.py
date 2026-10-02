@@ -8,7 +8,7 @@ from comms_uart import Console
 from codec import decode
 
 def run(args):
-    c=Console(args.port);result={'modem_accepted':[],'status':[],'scope':'Modem acceptance only; correlate ground receiver and Yamcs separately.'}
+    c=Console(args.port);result={'modem_accepted':[],'status':[],'status_timing':[],'scope':'Modem acceptance only; correlate ground receiver and Yamcs separately.'}
     def command(text,timeout=5):
         c.serial.write(text.encode()+b'\n');c.serial.flush();output='';end=time.monotonic()+timeout
         while time.monotonic()<end:
@@ -21,17 +21,20 @@ def run(args):
         first=c.command('status');result['initial_status']=first.strip()
         Console.require_match(command('hello'),'CAN_HELLO_CONFIRMED')
         enabled=command('lte '+str(args.seconds));Console.require_match(enabled,'RF_WINDOW_ACCEPTED')
-        end=time.monotonic()+args.seconds-18
+        admitted=time.monotonic()
+        end=admitted+args.seconds-18
         ready=False
         while time.monotonic()<end:
             response=command('lte status')
             Console.require_match(response,'LTE_STATUS')
             result['status'].append(response.strip())
+            result['status_timing'].append({'elapsed_s':round(time.monotonic()-admitted,3),'response':response.strip()})
             print(response.split('RESULT ')[0].strip(),flush=True)
             match=re.search(r'LTE_STATUS state=(\d+)',response)
             if not match:break
             state=int(match[1])
-            if state==6:ready=True;break
+            if state==6:
+                ready=True;result['ready_elapsed_s']=round(time.monotonic()-admitted,3);break
             if state==0:break
             time.sleep(2)
         result['ready']=ready
@@ -44,7 +47,7 @@ def run(args):
                 Console.require_match(response,'MODEM_ACCEPTED')
                 match=re.search(r'bytes=(\d+) hex=([0-9a-f]+)',response)
                 packet=decode(bytes.fromhex(match[2]));assert packet['name']=='POWER_STATUS'
-                result['modem_accepted'].append(dict(hex=match[2],decoded=packet))
+                result['modem_accepted'].append(dict(hex=match[2],decoded=packet,elapsed_s=round(time.monotonic()-admitted,3)))
                 print('MODEM_ACCEPTED EPS sequence='+str(packet['sequence']),flush=True)
                 time.sleep(1)
             if result['modem_accepted'] and 'send_failure' not in result:

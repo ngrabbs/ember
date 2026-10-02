@@ -3,12 +3,12 @@
 Updated 2026-10-02. Bench success is the immediate goal. Spacecraft items are
 later validation gates, not prerequisites for getting practical LTE experience.
 
-Native EPS controller transport and the full LTE uplink are proven on the bench.
-Trial native-eps-20261002-05 delivered one 128-byte IHU-native EPS packet over
-CAN → COMMS UART → Walter LTE-M → LibreSDR/OAI → EPC → Yamcs ember-lte.
-IHU, radio UDP and archived bytes match exactly; paused replay displays measured
-values. Earlier windows failed, so repeatability and continuous telemetry remain
-open. Walter is OFF and both network applications stopped after this trial.
+Native EPS full-chain uplink is proven, and the ten-run bench test is complete:
+**6/10 delivered**, with all128 bytes matching IHU submission, UDP reception
+and Yamcs archive. Two sends were rejected; two were accepted without reception.
+All ten sessions reached socket READY and verified modem OFF. Controller CAN
+error counters stayed zero. Continuous delivery and recovery remain open.
+[Results](results/2026-10-02-eps-reliability.md).
 
 ## 1. Inventory and preserve the previous experiment
 
@@ -204,8 +204,14 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       One packet, sequence15, native IHU provenance, all128 bytes unchanged;
       battery8.060V, output8.042V, die21.894°C. Paused replay verified visually.
       [Evidence](../../system/ground_station/evidence/native-eps-lte-20261002-05.json).
-- [ ] Qualify repeated full-chain transmissions and add periodic EPS streaming;
-      single-packet success does not establish LTE reliability.
+- [x] Measure ten independent full-chain attempts with firmware/profile fixed:
+      six deliveries, two modem rejections, two accepted without reception;
+      all ten OFF confirmations. [Results](results/2026-10-02-eps-reliability.md).
+- [ ] Expose exact modem rejection code and registration/socket state at send.
+- [ ] Trace accepted-but-undelivered uplinks/bearer failures in OAI.
+- [ ] Add bounded queues, recovery/backoff and duplicate handling; then rerun
+      qualification and add periodic EPS streaming. Ten-run result is6/10,
+      not a reliable or continuous telemetry qualification.
 - [ ] Integrate CAN into the full IHU/EPS and COMMS applications; add real sensor
       telemetry, periodic streaming, ground ingestion, and separately qualified uplink handling.
 - [ ] Implement bounded queues, sequence numbers, reconnect/backoff, and watchdogs.
