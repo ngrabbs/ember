@@ -173,6 +173,11 @@ static void eps_json(void) {
 #undef PRINT
     LOG("}}\n");
 }
+static void eps_adc(bool enable) {
+    if(pending.active || output.active || can.pending) {LOG("REJECT reason=BUSY\n");return;}
+    uint16_t before=0,after=0;bool ok=eps_force_adc(enable,&before,&after);
+    LOG("EPS_ADC outcome=%s requested=%d config_before=%04x config_after=%04x\n",ok?"VERIFIED":"UNKNOWN",enable,before,after);
+}
 static void heartbeat(void) {
     uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2]={0};size_t size=sizeof(p);
     ul_p16(p,W_TM_IDENTITY);ul_p16(p+2,(uint16_t)(0xc000|telemetry_sequence));
@@ -206,8 +211,10 @@ static void command(const char *s) {
 #if ROLE_IHU
     else if(!strcmp(s,"telemetry"))heartbeat();
     else if(!strcmp(s,"eps json"))eps_json();
+    else if(!strcmp(s,"eps adc on"))eps_adc(true);
+    else if(!strcmp(s,"eps adc off"))eps_adc(false);
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json | eps adc on/off":"");
     else if(*s)LOG("ERROR unknown command\n");
 }
 int main(void) {

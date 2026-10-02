@@ -5,7 +5,8 @@ onboard MCP25625 CAN controllers/transceivers. This standalone Pico SDK project
 builds `ember_ihu_can_bench.uf2` and `ember_comms_can_bench.uf2` from one source,
 with distinct roles. It replaces neither the complete FreeRTOS IHU/EPS application
 nor the UHF COMMS application. The IHU role now supports manual read-only EPS
-register observation; it does not write the EPS, activate UHF,
+register observation and explicit battery-only ADC enable; it does not change
+charging policy, activate UHF,
 control LTE radio state, execute flight commands, or implement CAN redundancy.
 Walter retains the installed framed diagnostic with its modem held in reset.
 
@@ -92,22 +93,44 @@ emission; there is no periodic telemetry scheduler in this image. These are
 controller-generated bench health fields, not EPS sensor readings.
 
 IHU `eps json` reads the 19-register LTC4162-L profile at address `0x68`,
-100 kHz I2C0, **D4/GPIO4 SDA and D5/GPIO5 SCL**, with common ground. These
-are different from the Feather's labeled SDA/SCL pads (GPIO2/3).
+100 kHz I2C1, **SDA/GPIO2 and SCL/GPIO3**, with common ground.
+This uses the Feather's labeled I2C pads; the earlier D4/D5 profile has been replaced.
 Each word uses a repeated start and verifies SMBus PEC; a failed read returns
 `EPS_READ outcome=FAILED` and the failed register instead of a partial JSON
 readout. All successful raw words are preserved, including invalid/warming ADC
 status. This command is rejected while a CAN request/transmission is pending.
-It makes no charger configuration writes and does not yet forward EPS packets
+Reads make no configuration writes and do not yet forward EPS packets
 through CAN or LTE. Native EPS packet forwarding is the next integration step.
 
-The reader-enabled IHU image was built and flash-readback verified on 2026-10-02;
-UF2 SHA-256 `bc2720b9d6471c4193d83a512ab7a26cfd141715763aaeda041de6ad59462d8b`.
-After flashing, IHU boot `613337324` confirmed CAN HELLO with COMMS boot
-`4252110043`. Hardware EPS reads remain pending SDA/SCL wiring confirmation.
+The I2C1 reader-enabled IHU image was built and flash-readback verified on
+2026-10-02. Three consecutive hardware reads returned all 19 registers with
+valid PEC. The charger reported `telemetry_status=0` and zero ADC words;
+these are unavailable engineering measurements. No charger writes were made.
+IHU boot `2021172893` also confirmed CAN HELLO with COMMS boot `4252110043`.
+[Captured readouts and status](../../system/ground_station/evidence/ihu-eps-i2c1-20261002.json).
 Host EPS tests cover valid reads, an independently computed PEC/golden frame,
 corrupt data rejection, all-or-nothing output on a late failed register, and
 recovery; pointer-only writes are asserted. COMMS firmware was not reflashed.
+
+`eps adc on` / `eps adc off` explicitly read-modify-write only CONFIG_BITS
+`force_telemetry_on` bit2, then verify the whole register. Other bits, including
+sampling speed and charge policy, are preserved. No automatic configuration
+writes occur at boot; commands are rejected during pending CAN work. A failed
+write/readback reports UNKNOWN rather than claiming a verified state.
+This overrides the chip's normal battery-only ADC shutdown. The existing
+low-speed mode remains about five seconds between ADC cycles, so a successful
+register read does not necessarily represent a new conversion.
+See [ADI datasheet, pages 18/21/39](https://www.analog.com/media/en/technical-documentation/data-sheets/LTC4162-L.pdf).
+
+Battery-only hardware check subsequently verified CONFIG_BITS `0000` → `0004`
+and three PEC-valid readouts with ADC-valid=1: approximately 8.108 V pack (2S
+configuration), 8.089 V output and 21.46 °C charger die temperature. Current
+scaling retains the unverified 10 mOhm resistor assumption. ADC override is left
+enabled for the telemetry bench. IHU boot `117567991` confirmed CAN HELLO with
+COMMS boot `4252110043` after flashing.
+[Battery-only evidence](../../system/ground_station/evidence/ihu-eps-battery-adc-20261002.json).
+Installed UF2 SHA-256:
+`596e450977b203cea339b74621f6173f5d82a5766e6cac613570a20d7ba2f811`.
 
 ```text
 IHU heartbeat -- CAN --> COMMS -- framed UART --> Walter bench echo

@@ -153,9 +153,15 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       echo and back to IHU, with identity/sequence/CRC preserved and no new
       IHU-side CAN/fragment/timeout errors. [Evidence](../../system/ground_station/evidence/ihu-comms-walter-can-20261002.json).
 - [x] Build the CAN Feather IHU's manual read-only EPS register reader with PEC
-      validation and D4/D5 I2C0 mapping; eight EPS driver/decoder tests pass.
-- [ ] Verify the new IHU's physical EPS connection and complete PEC-valid reads.
-      Waiting for SDA/SCL wiring; ADC validity and current power state remain to check.
+      validation and Feather SDA/GPIO2, SCL/GPIO3 I2C1 mapping; eight EPS tests pass.
+- [x] Verify the new IHU's physical EPS connection and complete PEC-valid reads.
+      Three complete 19-register readouts passed PEC; CAN HELLO still passes.
+      [Evidence](../../system/ground_station/evidence/ihu-eps-i2c1-20261002.json).
+- [x] Obtain ADC-valid voltage/current/temperature readings on the new IHU.
+      Battery-only ADC enable changed only CONFIG_BITS bit2, with readback
+      verified and three complete ADC-valid reads. Approximately 8.108 V pack,
+      8.089 V output and 21.46 °C die. Current sense values remain unverified.
+      [Evidence](../../system/ground_station/evidence/ihu-eps-battery-adc-20261002.json).
 - [ ] Integrate CAN into the full IHU/EPS and COMMS applications; add real sensor
       telemetry, periodic streaming, ground ingestion, and separately qualified uplink handling.
 - [ ] Implement bounded queues, sequence numbers, reconnect/backoff, and watchdogs.
