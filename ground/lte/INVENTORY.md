@@ -70,3 +70,17 @@ not the latest SIM state.
 
 See [2026-10-01 results](results/2026-10-01-ground-radio.md) for successful
 custom FPGA initialization, USB 3 operation, and the receive-only benchmark.
+
+## Independent receiver and comparison UE
+
+On M75q, HackRF One (VID/PID 1d50:6089, serial suffix 31805783) is now available
+as an independent receive-only instrument. Firmware 2024.02.1, host tools
+2023.01.1. Raw I/Q lives on `/media/ngrabbs/BACKUP-A/ember-lte/captures`.
+
+Thingy:91 X enumerates as Nordic USB 1915:910a, with by-id serial interfaces
+ending `if01` and `if04`. Neither answered the short AT probe; application/modem
+firmware and SIM state remain unknown. No flashing was performed. Walter's tty
+number changed after reconnect; always use its stable Espressif by-id path.
+
+See [independent RF/access results](results/2026-10-01-hackrf-lte.md) for
+measured synchronization and the OAI LTE-M scheduler failures.

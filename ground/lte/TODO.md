@@ -24,7 +24,10 @@ later validation gates, not prerequisites for getting practical LTE experience.
 - [x] Verify receive-only streaming at 15.36 Msps for 10 s without overruns.
 - [ ] Verify full-duplex timed streaming and eNodeB processing performance.
 - [x] Confirm antennas attached to all LibreSDR connectors.
-- [ ] Independently observe/decode DL RF; test whether OAI advertises 999/70.
+- [x] Independently observe LibreSDR TX tone and expected-cell PSS/SSS with HackRF.
+- [ ] Obtain CRC-validated MIB and decode LTE-M broadcast/PLMN.
+- [ ] Repair/reproduce CE Msg4 feedback and retransmission behavior.
+- [ ] Investigate UE ULSCH allocation and failed-RA cleanup assertions.
 - [ ] Investigate OAI shutdown segmentation fault after the low-TX run.
 - [ ] Establish bench RF connections, attenuation, gains, and operating band.
       Tried band 13 at six-inch separation; Walter scan saw Verizon, not 999/70.
@@ -50,7 +53,9 @@ later validation gates, not prerequisites for getting practical LTE experience.
 - [x] Match Walter's SIM to the private HSS record locally (record 4).
 - [ ] Verify PLMN, authentication algorithm, OP/OPc, SQN, APN, and bands.
 - [ ] Use the vendor AT reference matching UE8.2.1.0 to inspect/select LTE-M.
-- [ ] Record registration states and distinguish cell acquisition, RRC,
+- [x] Record initial registration states and identify OAI random-access/RRC failures.
+- [ ] Establish Thingy firmware identity/AT interface for a controlled comparison.
+- [ ] Distinguish cell acquisition, RRC,
       authentication, and bearer-setup failures.
 - [ ] Achieve Cat-M1 registration, authentication, and an assigned IP address.
 

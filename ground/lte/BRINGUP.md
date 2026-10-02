@@ -208,3 +208,43 @@ Copy `scripts/probe-radio.sh` and `scripts/benchmark-rx.sh` to the Pi and run
 them there. Both verify the custom FPGA checksum and select it explicitly.
 The benchmark exercises one RX channel at 15.36 Msps for 10 seconds. It does
 not verify full-duplex operation or eNodeB real-time performance.
+
+## Independent RF diagnostics
+
+See [HackRF results](results/2026-10-01-hackrf-lte.md). The latest experiments
+reached LTE synchronization and exercised LTE-M random access, then encountered
+OAI scheduler/resource assertions. A completed attach is still outstanding.
+
+On M75q, with the eNodeB already running and its readiness confirmed:
+
+```sh
+mkdir -p /media/ngrabbs/BACKUP-A/ember-lte/captures
+umask 077
+hackrf_transfer -r /media/ngrabbs/BACKUP-A/ember-lte/captures/lte-on.cs8 \
+  -f 751000000 -s 16000000 -n 32000000 -a 0 -p 0 -l 32 -g 32
+```
+
+This is two seconds of receive-only I/Q. Capture another sample after the cell
+stops, at identical receiver settings. Remove DC before comparing spectra and
+check ADC rail clipping. Keep raw I/Q outside Git. Use the large external drive
+rather than M75q's nearly full root filesystem.
+
+On the Pi, `scripts/check-tx-rx.py --transmit` runs a bounded tone self-check;
+`--tx-gain 49.75 --duration 5` reproduces the longer test. It transmits at
+751.125 MHz, uses the custom FPGA, and leaves no continuous TX running. Its
+same-radio measurement includes internal coupling and is not calibrated power.
+
+The offline helper expects cf32 at 1.92 Msps. Build on the Pi:
+
+```sh
+task_srs="$HOME/work/ember-lte/srsRAN_4G"
+cc -O2 -I "$task_srs/lib/include" -I "$task_srs/build-epc/lib/include" \
+  "$HOME/work/ember-lte/decode-mib-file.c" \
+  "$task_srs/build-epc/lib/src/phy/libsrsran_phy.a" \
+  -lfftw3f -lstdc++ -lm -lpthread -o "$HOME/work/ember-lte/decode-mib-file"
+timeout 12 "$HOME/work/ember-lte/decode-mib-file" input-1m92.cf32 0
+```
+
+Only result 1 establishes CRC-validated PBCH/MIB decoding. This helper has not
+yet obtained that result on the short HackRF capture. Frequency correction must
+be measured for the capture, not assumed to always be 6.8 kHz.

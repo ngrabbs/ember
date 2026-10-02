@@ -8,6 +8,7 @@ An orbital link is a later experiment, with its own timing, Doppler, power, and 
 - [Bench and spacecraft TODO](TODO.md)
 - [Observed equipment and software](INVENTORY.md)
 - [Ground-radio test results](results/2026-10-01-ground-radio.md)
+- [Independent HackRF/LTE-M access results](results/2026-10-01-hackrf-lte.md)
 - [OAI candidate config and build record](configs/oai/README.md)
 - [Recovered ordinary LTE configs](configs/srsran-4g/)
 - [Walter firmware location](../../firmware/walter/README.md)
@@ -19,7 +20,10 @@ AT communication are verified. LTE-M attach is **not**
 verified. The recovered srsRAN 4G configuration is an ordinary LTE baseline from
 an earlier SIM7600 setup; it cannot by itself connect Walter's Cat-M1 radio.
 OAI and srsEPC are now built on the Pi, hardware S1 setup succeeds, and bounded
-OTA attempts are documented. Walter has not yet acquired the test network.
+OTA attempts are documented. HackRF independently detects expected-cell LTE synchronization. During Walter
+attempts, OAI exercised LTE-M random access and RRC setup generation, then hit
+scheduler/resource assertions. Registration and a telemetry bearer remain
+unverified.
 
 OAI is the first open-source LTE-M candidate to evaluate. Its historical eMTC
 work demonstrated commercial modems, including Sequans, but had single-UE,
