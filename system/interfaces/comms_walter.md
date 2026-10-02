@@ -18,6 +18,53 @@ The existing internal link is an I2C housekeeping/ping interface over bench
 jumpers. The intended internal packet transport is CAN. These are independent
 of the COMMS–Walter UART and of the ground-facing LTE/UHF link.
 
+## Selected COMMS module and proposed wiring
+
+User selected the **Adafruit RP2040 CAN Bus Feather** on 2026-10-02. This changes
+the COMMS board pin profile; the old Pico firmware pin assignments are not a
+drop-in match. The existing I2C baseline below describes the previous firmware,
+not approved wiring for the Feather.
+
+Proposed power entry: stack regulated 5 V to the Feather's **USB** power pad
+and stack GND to GND. This pad shares USB VBUS. Adafruit identifies direct pad
+power as technically possible but does not recommend it because a connected
+computer can be back-powered. Provide carrier power selection/isolation before
+using stack power alongside USB debugging. Do not apply 5 V to BAT or 3V;
+3V is the onboard regulator output. Direct 3.3 V injection bypasses that
+regulator and is not the selected approach.
+
+Walter takes stack 5 V separately through VIN (physical pin 28), with GND at
+pin 27. Its 3V3 OUT pin is an output. Do not power Walter through its USB-C
+connector and VIN simultaneously; vendor documentation says they are directly
+connected. Check regulator capacity/transients for both modules; Walter is not
+powered through the Feather's 3V output.
+
+| Proposed signal | Feather | Walter |
+| --- | --- | --- |
+| COMMS → Walter data | TX / RP2040 GPIO0, UART0 TX | IO44/RX0, physical pin 2 |
+| Walter → COMMS data | RX / RP2040 GPIO1, UART0 RX | IO43/TX0, physical pin 3 |
+| Logic reference | GND | GND, physical pin 27 |
+
+Use 3.3 V UART logic, initially 115200 8N1. This is the ESP32 application UART,
+not the Sequans modem test-point UART; Walter firmware must implement the
+packet service here while separately managing its modem. UART0 boot/console
+output must be handled during framing startup and application logs directed to
+USB. Optional COMMS-controlled Walter RESET (physical pin 1, active low) needs
+a separately allocated GPIO and open-drain release behavior; it is not yet assigned.
+
+The Feather's onboard CAN uses SPI GPIO14/15/8 plus GPIO16/17/18/19/22/23.
+The old COMMS housekeeping GP14/15 therefore conflicts with CAN, and the old
+Si5351 GP20/21 conflicts with the Feather's NeoPixel power/data. Port those
+assignments deliberately before loading the comms firmware. Interim I2C can
+use Feather SDA GPIO2 / SCL GPIO3 (i2c1), subject to reviewing the remaining
+radio/control assignments and the IHU harness. CAN termination and the IHU-side
+CAN controller/transceiver still need implementation/verification.
+
+Sources: [Feather pinout](https://learn.adafruit.com/adafruit-rp2040-can-bus-feather/pinouts),
+[power management](https://learn.adafruit.com/adafruit-rp2040-can-bus-feather/power-management),
+[Walter datasheet](https://www.quickspot.io/datasheet/walter_datasheet.pdf).
+This is a proposed carrier mapping, not a schematic edit or tested hookup.
+
 ## Observed firmware baseline
 
 The tracked firmware establishes the present interface:
@@ -97,7 +144,10 @@ policy. UHF remains safe at boot while the Walter path is being exercised.
 - [x] Name the IHU MCU and COMMS MCU and define their authority boundaries.
 - [x] Inspect existing I2C firmware and distinguish housekeeping from packet transport.
 - [x] Record CAN as the intended internal transport and Walter/UHF as external transports.
-- [ ] Inventory available COMMS and Walter pins; verify electrical compatibility,
+- [x] Select COMMS module and propose UART/power mapping from vendor pinouts.
+- [ ] Port the COMMS board profile to the CAN Feather; resolve CAN/LED conflicts
+      with old I2C/Si5351 GPIOs and allocate the UHF controls.
+- [ ] Inventory remaining COMMS and Walter pins; verify electrical compatibility,
       power budget, reset/enable wiring, and antenna clearance before PCB placement.
 - [ ] Freeze UART wire envelope, versions, lengths, numeric IDs, statuses,
       session/request correlation, queue bounds, and framing vectors.
