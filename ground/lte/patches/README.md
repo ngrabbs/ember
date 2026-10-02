@@ -3,8 +3,8 @@
 Base: `29d5fa7d38bb1ee8935ef7ae30a396d53772ea4f`.
 Pi source branch: `ember/lte-m-msg3-cleanup`. Source changes are preserved here
 as cumulative patches; EMBER does not vendor the OAI checkout.
-Current Pi state has all five applied, in this order: Msg3 cleanup, Msg4 retry,
-single-transmission RAR release, rejection lifecycle, and CCCH wait. Reverse
+Current Pi state has all six applied, in this order: Msg3 cleanup, Msg4 retry,
+single-transmission RAR release, rejection lifecycle, CCCH wait, and uplink HARQ selection. Reverse
 in the opposite order and rebuild to restore the baseline. No upstream commits,
 pushes, or PRs were made.
 
@@ -150,5 +150,34 @@ git apply /path/to/EMBER/ground/lte/patches/oai-lte-m-ccch-wait.patch
 cmake --build build-lte --target lte-softmodem -j2
 ```
 
-All five candidates are applied on the Pi and apply sequentially to the pinned
-base. Reverse CCCH wait first when restoring earlier candidates.
+These first five candidates apply sequentially to the pinned base. Reverse
+CCCH wait before restoring the earlier four; reverse the sixth candidate below first.
+
+## BL/CE uplink receive HARQ selection candidate
+
+`oai-lte-m-ul-harq.patch` applies after the five candidates above. The dedicated
+BL/CE scheduler and PHY receive path select HARQ process 0. MAC `rx_sdu`
+previously recomputed the ordinary LTE process from frame/subframe, updating
+processes 1 or 5 in the bench logs. It now uses process 0 when the UE template
+identifies BL/CE, preserving legacy selection for ordinary LTE and the existing
+unknown-UE/Msg3 path. This matches the current single-process implementation;
+it does not implement multiple LTE-M HARQ processes or repetition support.
+
+```sh
+git apply --check /path/to/EMBER/ground/lte/patches/oai-lte-m-ul-harq.patch
+git apply /path/to/EMBER/ground/lte/patches/oai-lte-m-ul-harq.patch
+cmake --build build-lte --target lte-softmodem -j3
+cmake -S openair2/LAYER2/MAC/tests -B build-mac-tests -GNinja
+cmake --build build-mac-tests
+ctest --test-dir build-mac-tests --output-on-failure
+```
+
+Both registered MAC tests completed successfully. The new test calls the
+production selector across all eight legacy process indices and four nonzero
+CE resource types, with assertions enabled. It does not exercise the entire
+receive callback or waveform. A bounded radio trial delivered ten numbered UDP
+packets through GTP-U and SGi after a Service Request restored the bearer.
+Initial context release and later uplink failure still occurred. This is the
+first telemetry demonstration, not a stable-link qualification or proof that
+this patch alone accounts for the improvement. All six patches reverse and
+reapply in order. See [uplink and telemetry results](../results/2026-10-02-uplink-telemetry.md).

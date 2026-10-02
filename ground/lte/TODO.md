@@ -48,8 +48,12 @@ later validation gates, not prerequisites for getting practical LTE experience.
 - [ ] Diagnose post-attach uplink failure/reestablishment and make the data link stable.
       Six-to-eight-foot comparison completed: same gain did not complete setup;
       TX gain +10 completed attach/bearer, but UL failure preceded UDP submission.
-- [ ] Capture dedicated uplink grants, HARQ/CRC outcomes, socket status at the
+      The HARQ correction trial delivered ten packets after a Service Request;
+      initial radio-context release and later uplink failure still need tracing.
+- [x] Capture dedicated uplink grants, HARQ/CRC outcomes, socket status at the
       send error, and GTP/SGi packets to separate radio scheduling from socket issues.
+      Found process-0 grants with legacy process-1/5 MAC receive updates; candidate
+      correction built/unit-tested. Ten matching payloads verified in GTP-U and SGi.
 - [ ] Investigate OAI shutdown segmentation fault after the low-TX run.
 - [ ] Establish bench RF connections, attenuation, gains, and operating band.
       Band 13 at six-inch separation now reaches a Walter-correlated CE0 request;
@@ -89,10 +93,10 @@ later validation gates, not prerequisites for getting practical LTE experience.
 
 ## 5. Bench telemetry acceptance
 
-- [ ] Deliver numbered, timestamped UDP packets from Walter to a ground receiver.
-      Sender/receiver helpers added and exercised. Two gain-35 trials completed
-      attach but accepted only one modem send each; no packet reached the receiver.
-      Reestablishment and socket-state errors remain unresolved.
+- [x] Deliver numbered, timestamped UDP packets from Walter to a ground receiver.
+      First demonstrated burst: ten of ten 128-byte packets, in order, zero
+      observed duplicates, 13.2-second receive span. Stable/repeatable operation
+      remains outstanding; this trial restored its bearer through a Service Request.
 - [ ] Record payload size, offered rate, duration, received count, loss,
       duplicate/out-of-order packets, RTT, and modem signal metrics.
 - [ ] Establish time synchronization before claiming one-way latency.

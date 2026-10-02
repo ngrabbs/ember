@@ -365,3 +365,27 @@ all expected packets arrive or its deadline expires; duplicates after that stop
 are unobserved. Sender failures and unsent packets must not be presented as
 measured packet loss. This initial test does not measure RTT, downlink telemetry,
 or one-way latency. Keep complete logs private and save sanitized counts here.
+
+For the first demonstrated telemetry configuration, apply all six patches in
+order and select `enb.band13.emtc.ce300tx20diag.conf`; see the
+[first UDP results](results/2026-10-02-uplink-telemetry.md). This is not yet a
+repeatable or stable-link acceptance result.
+
+Add `--socket-diagnostics` to the Walter command for optional `SQNSS?` queries
+before/after sends and registration/PDP queries after a completed send error.
+A completed error from a status query is recorded without aborting the send
+loop; a pending response still stops commands. This modem returned status-query
+errors even while UDP packets were successfully delivered.
+
+For packet-path diagnosis, install `tcpdump` on the Pi and start a bounded
+capture before starting the cell, in a separate terminal. Use a fresh run ID
+and keep the capture private:
+
+```sh
+ssh ngrabbs@ember-ground.local \
+  'umask 077; sudo -n timeout --signal=INT --kill-after=5 160 tcpdump -i any -nn -s 0 -U -w ~/work/ember-lte/private/udp-example.pcap "udp port 2152 or udp port 51000"'
+```
+
+Compare matching run IDs/sequences inside GTP-U with SGi and receiver output;
+total GTP packet count can include unrelated traffic. Confirm Walter's CFUN 0
+restoration and both network process exits after every trial.

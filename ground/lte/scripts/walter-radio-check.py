@@ -11,6 +11,8 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--enable-seconds', type=int, default=0)
 parser.add_argument('--udp-count', type=int, default=0)
 parser.add_argument('--run-id', default='ember-bench')
+parser.add_argument('--socket-diagnostics', action='store_true',
+                    help='Read socket and registration state around sends; never query after a pending command')
 args = parser.parse_args()
 if not 0 <= args.udp_count <= 30: parser.error('Use 0..30 UDP packets')
 if not re.fullmatch(r'[a-zA-Z0-9_-]{1,32}', args.run_id): parser.error('Use a simple run ID')
@@ -39,6 +41,12 @@ def command(cmd, timeout=6, payload=None):
     if not payload_sent: raise RuntimeError('No data prompt for ' + cmd)
     return output
 
+def socket_status():
+    try:
+        command('AT+SQNSS?')
+    except RuntimeError:
+        emit('SOCKET_DIAGNOSTIC rejected; continuing after final error response')
+
 time.sleep(12); s.reset_input_buffer()
 try:
     command('AT'); command('AT+CMEE=2'); command('AT+CFUN=0')
@@ -55,6 +63,7 @@ try:
                 command('AT+SQNSCFG=1,1,300,90,100,1')
                 command('AT+SQNSD=1,1,51000,"172.16.0.1",0,51001,1,0,0', timeout=15)
                 sent = 0
+                if args.socket_diagnostics: socket_status()
                 for seq in range(args.udp_count):
                     if time.monotonic() >= deadline:
                         raise TimeoutError('Radio-enable deadline reached during telemetry')
@@ -62,8 +71,19 @@ try:
                         sent_utc=datetime.now(timezone.utc).isoformat(timespec='milliseconds')),
                         separators=(',', ':')).encode().ljust(128, b' ')
                     if len(packet) != 128: raise ValueError('Payload exceeds 128 bytes')
-                    command('AT+SQNSSENDEXT=1,128,0', timeout=15, payload=packet)
+                    try:
+                        command('AT+SQNSSENDEXT=1,128,0', timeout=15, payload=packet)
+                    except RuntimeError:
+                        emit('UDP_SUMMARY ' + json.dumps(dict(run=args.run_id, modem_accepted=sent,
+                            requested=args.udp_count, payload_bytes=128, stopped_on_rejection=True)))
+                        if args.socket_diagnostics:
+                            for query in ('AT+SQNSS?', 'AT+CEREG?', 'AT+CGACT?'):
+                                try: command(query)
+                                except RuntimeError: continue
+                                except TimeoutError: break
+                        raise
                     sent += 1; emit('UDP modem-accepted seq=' + str(seq))
+                    if args.socket_diagnostics: socket_status()
                     if seq + 1 < args.udp_count: time.sleep(1)
                 command('AT+SQNSH=1')
                 emit('UDP_SUMMARY ' + json.dumps(dict(run=args.run_id, modem_accepted=sent,

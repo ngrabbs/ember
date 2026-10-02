@@ -58,3 +58,8 @@ RX remains 35). It completed attach and bearer setup, but UDP delivery still
 failed after uplink-failure reporting. This is an experimental comparison,
 not a calibrated-power setting or demonstrated stable telemetry profile.
 See [separated-antenna results](../../results/2026-10-02-separated-antennas.md).
+
+With all six candidates, the same `ce300tx20diag` profile delivered ten numbered
+UDP payloads after a Service Request restored the bearer. It remains a bench
+profile with unresolved context release and uplink failure. See
+[first telemetry results](../../results/2026-10-02-uplink-telemetry.md).

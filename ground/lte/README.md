@@ -13,6 +13,7 @@ An orbital link is a later experiment, with its own timing, Doppler, power, and 
 - [Msg4 retry and accepted SIM authentication](results/2026-10-02-msg4-authentication.md)
 - [RAR release and first completed Walter attach](results/2026-10-02-rar-release.md)
 - [Six-to-eight-foot separation comparison](results/2026-10-02-separated-antennas.md)
+- [First end-to-end Walter UDP telemetry](results/2026-10-02-uplink-telemetry.md)
 - [Experimental OAI patches](patches/README.md)
 - [OAI candidate config and build record](configs/oai/README.md)
 - [Recovered ordinary LTE configs](configs/srsran-4g/)
@@ -22,14 +23,16 @@ An orbital link is a later experiment, with its own timing, Doppler, power, and 
 
 Hardware access, custom-FPGA UHD initialization, receive streaming, and Walter
 AT communication are verified. Walter completed LTE-M attach on 2026-10-02,
-with modem registration and EPC bearer setup recorded. IP telemetry delivery
-is still under test. The recovered srsRAN 4G configuration is an ordinary LTE baseline from
+with modem registration and EPC bearer setup recorded. A subsequent trial
+delivered ten numbered 128-byte UDP packets through GTP-U and SGi to the ground
+receiver. Repeatability and radio stability remain under test. The recovered srsRAN 4G configuration is an ordinary LTE baseline from
 an earlier SIM7600 setup; it cannot by itself connect Walter's Cat-M1 radio.
 OAI and srsEPC are now built on the Pi, hardware S1 setup succeeds, and bounded
 OTA attempts are documented. HackRF independently detects expected-cell LTE synchronization. During Walter
 attempts, OAI exercised LTE-M random access and RRC setup generation, then hit
 scheduler/resource assertions. Initial trials did not complete registration; newer trials reached Attach Complete
-and RRC Reconfiguration Complete. UDP delivery remains unverified.
+and RRC Reconfiguration Complete. The first UDP burst was received in order
+without missing sequences or duplicates within its observation window.
 
 The 2026-10-02 OFF/ON comparison with Thingy powered down strongly attributes
 the decoded CE0 connection request to Walter. Experimental OAI patches now
