@@ -11,7 +11,9 @@ args = parser.parse_args()
 for path in args.logs:
     responses = []
     released = set()
-    counts = dict(ccch_decodes=0, msg4_dtx=0, slot_exhaustion=0, msg4_assert=0)
+    counts = dict(ccch_decodes=0, harq0_dtx=0, slot_exhaustion=0, msg4_assert=0,
+                  msg4_retries=0, msg4_exhausted=0, msg4_acknowledged=0,
+                  rrc_setup_complete=0, downlink_exhaustion=0)
     exit_code = None
     with path.open(errors='replace') as source:
         for line in source:
@@ -22,9 +24,14 @@ for path in args.logs:
             if match:
                 released.add(match.group(1))
             counts['ccch_decodes'] += 'Decoding UL CCCH' in line
-            counts['msg4_dtx'] += 'Received 4 for harq_pid 0' in line
+            counts['harq0_dtx'] += 'Received 4 for harq_pid 0' in line
             counts['slot_exhaustion'] += 'No existing UE ULSCH' in line
             counts['msg4_assert'] += 'Msg4 Retransmissions not handled' in line
+            counts['msg4_retries'] += 'Scheduling BL/CE Msg4 retry' in line
+            counts['msg4_exhausted'] += 'BL/CE Msg4 retries exhausted' in line
+            counts['msg4_acknowledged'] += 'Msg4 acknowledged' in line
+            counts['rrc_setup_complete'] += 'processing LTE_RRCConnectionSetupComplete' in line
+            counts['downlink_exhaustion'] += 'no free or exiting dlsch_context' in line
             match = re.search(r'EXIT code=(-?\d+)', line)
             if match:
                 exit_code = int(match.group(1))

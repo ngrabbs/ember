@@ -29,10 +29,15 @@ later validation gates, not prerequisites for getting practical LTE experience.
 - [ ] Repair/reproduce CE Msg4 feedback and retransmission behavior.
       Controlled Walter ON decoded UL CCCH and generated RRCConnectionSetup;
       patched MAC-debug run recorded Msg4 DTX before the retransmission assert.
+      A bounded Msg4 retry candidate now produced a retry, ACK, and RRC Setup
+      Complete. Lifecycle CTest covers 11 cases; RF exhaustion and broader
+      repetition/mode coverage remain outstanding.
 - [ ] Investigate UE ULSCH allocation and failed-RA cleanup assertions.
       Experimental Msg3 cleanup patch built and exercised: ten BR contexts
       released, eleven responses handled, then the separate Msg4 assertion.
       Longer regression and automated coverage remain outstanding.
+- [ ] Trace DLSCH allocation/release and retained RAR contexts. Three newer runs
+      aborted on the eight-context downlink pool, including during authentication.
 - [ ] Investigate OAI shutdown segmentation fault after the low-TX run.
 - [ ] Establish bench RF connections, attenuation, gains, and operating band.
       Band 13 at six-inch separation now reaches a Walter-correlated CE0 request;
@@ -61,6 +66,8 @@ later validation gates, not prerequisites for getting practical LTE experience.
 - [ ] Use the vendor AT reference matching UE8.2.1.0 to inspect/select LTE-M.
 - [x] Record initial registration states and identify OAI random-access/RRC failures.
 - [x] Compare Walter OFF/ON with Thingy powered down and preserve failure evidence.
+- [x] Decode RRC Setup Complete, accepted SIM authentication, and NAS Security Mode Complete.
+- [ ] Repeat cold-start SQN resynchronization through completed authentication.
 - [ ] Establish Thingy firmware identity/AT interface for a controlled comparison (deferred).
 - [ ] Distinguish cell acquisition, RRC,
       authentication, and bearer-setup failures.

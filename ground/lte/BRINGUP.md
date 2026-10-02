@@ -1,11 +1,10 @@
 # LTE bench bring-up runbook
 
-Status: OAI and srsEPC are built on the Pi; S1 setup works. A controlled Walter
-OFF/ON test reached UL CCCH and RRCConnectionSetup, then OAI asserted on missing
-BL/CE Msg4 retransmission support. An experimental Msg3 cleanup patch reclaimed
-failed-access contexts and avoided the previously observed slot exhaustion in
-one bounded run. Walter remains unregistered. See
-[controlled results](results/2026-10-02-walter-control.md).
+Status: OAI and srsEPC are built on the Pi; S1 setup works. Experimental Msg3
+cleanup and Msg4 retry patches reached Msg4 ACK, RRC Setup Complete, accepted
+SIM authentication, and NAS Security Mode Complete. Downlink-context exhaustion
+still interrupts attach. Walter remains unregistered. See
+[latest results](results/2026-10-02-msg4-authentication.md).
 
 ## 1. Access and inventory
 
@@ -299,8 +298,9 @@ expected manual-selection state from the bench preparation.
 
 Pi logs are private and UTC-stamped. Use unique run labels to avoid overwriting
 evidence. Existing labels from 2026-10-02 are recorded in the results document.
-An assertion is not a successful timeout; the current Msg4 assertion is
-expected to remain even with the [cleanup patch](patches/README.md).
+An assertion is not a successful timeout. The Msg3-only patch retains the Msg4
+assertion; the newer [Msg4 candidate](patches/README.md#msg4-retry-candidate)
+replaces that path with bounded retries. Downlink allocation failures remain.
 
 ```sh
 ssh ngrabbs@ember-ground.local \
@@ -310,3 +310,9 @@ ssh ngrabbs@ember-ground.local \
 To reproduce the cleanup comparison, make a runtime copy with only
 `mac_log_level="debug"` changed and select it using `--config` on the Pi
 helper. Keep the runtime profile and source patch state explicit in results.
+
+The tracked `ceonlydiag` and `ce300diag` example profiles preserve subsequent
+tests with TX attenuation 40, MAC-debug logging, and increased PRACH detection
+thresholds. Stage without `.example` and select with `--config`. They are
+diagnostic profiles, not validated defaults. The [latest results](results/2026-10-02-msg4-authentication.md)
+list their exact differences and authentication milestones.

@@ -84,3 +84,9 @@ number changed after reconnect; always use its stable Espressif by-id path.
 
 See [independent RF/access results](results/2026-10-01-hackrf-lte.md) for
 measured synchronization and the OAI LTE-M scheduler failures.
+
+On 2026-10-02, with Thingy powered down, experimental OAI Msg3 cleanup and
+Msg4 retry patches reached Walter RRC Setup Complete, accepted SIM authentication,
+and NAS Security Mode Complete. DLSCH allocation failure still interrupted attach.
+Walter remains stopped in CFUN 0. See
+[authentication results](results/2026-10-02-msg4-authentication.md).

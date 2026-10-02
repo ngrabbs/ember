@@ -21,7 +21,7 @@ os.umask(0o077)
 base = Path.home() / 'work/ember-lte'
 logs = base / 'logs'
 logs.mkdir(exist_ok=True)
-pattern = re.compile(r'ALL RUs ready|steady-state|Assertion|Msg4 Retransmissions|No existing UE ULSCH|Decoding UL CCCH|Generating RRCConnectionSetup|Generating RAR BR|S1 Setup Response|Bye')
+pattern = re.compile(r'ALL RUs ready|steady-state|Assertion|Msg4 Retransmissions|No existing UE ULSCH|Decoding UL CCCH|Generating RRCConnectionSetup|Generating RAR BR|S1 Setup Response|Scheduling BL/CE Msg4 retry|BL/CE Msg4 retries exhausted|Msg4 acknowledged|Bye')
 lock = threading.Lock()
 def stamp():
     return datetime.now(timezone.utc).isoformat(timespec='milliseconds')

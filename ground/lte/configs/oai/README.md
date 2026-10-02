@@ -34,3 +34,10 @@ It remains experimental: OAI aborts on CE Msg4 retransmission and Walter has
 not registered. For MAC-only debug, change `mac_log_level` to `"debug"`; leave
 PHY logging at info. See [controlled results](../../results/2026-10-02-walter-control.md)
 and [experimental cleanup patch](../../patches/README.md).
+
+The `ceonlydiag` and `ce300diag` profiles use attenuation 40, MAC-debug logging,
+and ordinary-LTE PRACH threshold 1000. `ce300diag` also increases CE0 threshold
+from 200 to 300. These are controlled diagnostics to investigate false detection
+and context pressure. They reached Msg4/RRC and accepted SIM authentication,
+but OAI still aborted on downlink allocation before completed attach. See
+[latest results](../../results/2026-10-02-msg4-authentication.md).
