@@ -10,8 +10,9 @@ remain outstanding. Registration parsing and unsolicited-update handling have
 been repaired, host-tested and flashed with esptool hash verification. The
 updated application recognized registration and opened the UDP socket on hardware.
 One EPS datagram traversed LTE/EPC, but had a leading LF and lost final byte.
-The receiver rejected it correctly; a CR-only AT termination fix is built and
-host-tested, awaiting Walter flash and a packet-byte comparison retry.
+The receiver rejected it correctly; a CR-only AT termination fix is built,
+host-tested and flashed with verified image hashes. Packet-byte comparison
+and dashboard verification are pending the next run with USB on IHU.
 
 ## 1. Inventory and preserve the previous experiment
 
@@ -200,7 +201,9 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       identify exact LF-prefix/last-byte-loss corruption. Receiver rejects it.
       [Byte comparison](../../system/ground_station/evidence/native-eps-lte-20261002-03.json).
 - [x] Build and host-test CR-only AT terminator fix.
-- [ ] Flash CR-only AT terminator fix and verify exact packet bytes over LTE.
+- [x] Flash CR-only AT terminator fix; image hashes and startup OFF verified.
+      [Evidence](../../system/ground_station/evidence/walter-cr-only-flash-check-20261002.json).
+- [ ] Verify exact packet bytes over LTE after CR-only terminator fix.
 - [ ] Receive real EPS packets over LTE and byte-match them in Yamcs archive/display.
 - [ ] Integrate CAN into the full IHU/EPS and COMMS applications; add real sensor
       telemetry, periodic streaming, ground ingestion, and separately qualified uplink handling.
