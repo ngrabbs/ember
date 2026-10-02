@@ -9,12 +9,15 @@ assembles system state and payload data for downlink through comms.
 | Owner | Responsibility |
 |---|---|
 | IHU | Command acceptance/sequencing, subsystem dispatch, system telemetry |
-| Comms | RF framing/modulation and uplink/downlink transport |
+| COMMS MCU | Packet queues, Walter/UHF transport selection, uplink/downlink forwarding and local radio control |
 | EPS | Charger and rail-health observability fields |
 | Payload | Mission data and payload status |
 
-Use I2C and alert GPIO for EPS housekeeping, SPI for IHU–comms data, and planned
-CAN A/B for Iteration 2 control/status. Pin assignments live in the
+Use I2C and alert GPIO for EPS housekeeping. The implemented IHU–COMMS I2C
+jumper link provides status/ping only; CAN is the intended internal packet
+transport. SPI remains an existing hardware allocation from the older plan.
+Walter uses a separate proposed framed UART to the COMMS MCU; see the
+[integration contract and checklist](comms_walter.md). Pin assignments live in the
 [canonical map](cskb_pinmap.md).
 
 | Provisional queue | Minimum target |

@@ -36,12 +36,21 @@ baseline and separates optional exploratory payload work.
 
 ### Workstream C: Bring-Up and Ground Support
 
+The communications-board RP2040 is the **COMMS MCU**; the IHU-board RP2040 is
+the **IHU MCU**. Their current I2C link is housekeeping/ping only. CAN is the
+intended internal packet transport. Walter provides the initial external
+transport while UHF is developed, behind the same COMMS packet service.
+The [integration checklist](../system/interfaces/comms_walter.md) owns UART
+framing, queues, forwarding, and controller-reset validation.
+
 - [x] Implement serial CLI for board bring-up and diagnostics
 - [x] IHU-side ping and status readout for the comms board
       (`comms`, `comms ping`, `comms raw`) — transport-agnostic above
       the driver, so it survives the move to CAN
 - [ ] Create repeatable RF bench-test helper scripts
 - [ ] Implement ground-side telemetry decode utility for captured frames
+- [ ] Implement COMMS–Walter packet forwarding and an IHU packet transport,
+      then replace the external adapter with UHF without changing packet meanings
 
 ## Baseline Exit Criteria
 

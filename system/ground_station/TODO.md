@@ -31,6 +31,13 @@ read-only IHU/EPS diagnostics and live [EPS Yamcs path](eps_yamcs_setup.md) on
 
 ## Current direction and open decisions
 
+- The **IHU MCU** and **COMMS MCU** are separate RP2040 controllers. Existing
+  I2C jumper firmware supports COMMS housekeeping/ping; CAN is the intended
+  internal packet transport. Walter will provide an external LTE-M path behind
+  the COMMS packet service while UHF is developed. The
+  [owned integration checklist](../interfaces/comms_walter.md) tracks the
+  UART contract, packet/return-packet bench, and IHU/CAN migration.
+
 - Flight comms is **UHF uplink / UHF downlink**. VHF references describe an
   obsolete design; do not use them as requirements for this build.
 - BPSK in both directions is the current working choice. Frequencies,

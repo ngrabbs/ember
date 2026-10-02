@@ -24,8 +24,11 @@ parameters still need definition.
 | IHU | Mode, reset reason, watchdog events, uptime |
 | Payload | Status and selected science/experiment metadata |
 
-IHU–comms telemetry uses SPI; Iteration 2 CAN carries subsystem status.
-Comms owns RF downlink framing. Apply link-level packet checksums, an end-to-end
+IHU–COMMS presently has an I2C status/ping bench link; packet forwarding remains
+to implement. CAN is the intended internal packet transport. The COMMS MCU
+will forward application packets through Walter LTE-M or UHF; see the
+[integration checklist](../interfaces/comms_walter.md). COMMS owns external
+link framing. Apply link-level packet checksums, an end-to-end
 payload CRC, and a sequence counter for drops/reordering.
 
 **Versioning proposal:** a semantic schema version in the header, with compatible

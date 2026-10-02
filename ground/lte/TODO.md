@@ -127,6 +127,11 @@ through an SDR eNodeB/EPC. Ordinary LTE attach by SIM7600 is a separate baseline
 
 ## 6. Firmware and EMBER integration
 
+The [COMMS MCU–Walter checklist](../../system/interfaces/comms_walter.md) owns
+controller/UART integration and the IHU I2C-to-CAN migration. Keep the existing
+IHU–COMMS housekeeping link while adding a separate packet service; it cannot
+already carry arbitrary telemetry or commands. LTE reliability remains shelved.
+
 - [ ] Develop in firmware/walter with a pinned toolchain and WalterModem library.
 - [ ] Implement bounded queues, sequence numbers, reconnect/backoff, and watchdogs.
 - [ ] Define modem startup, radio enable, shutdown, and sleep/wake behavior.

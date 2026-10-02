@@ -4,6 +4,14 @@ Reserved for the spacecraft-side Walter application. No application source has
 been imported or developed here yet. The attached board currently runs a modem
 AT passthrough application whose source/build provenance is not yet located.
 
+Intended placement: Walter alongside the **COMMS MCU** on the communications
+assembly. The COMMS MCU is the spacecraft communications endpoint; Walter
+manages LTE-M beneath it. The **IHU MCU** supplies telemetry and retains command
+authority. Current IHU–COMMS I2C firmware is status/ping only; CAN is the intended
+internal packet transport. See the
+[controller interface draft and owned TODO](../../system/interfaces/comms_walter.md).
+UART pins and forwarding firmware are not assigned/implemented yet.
+
 Bench procedures and the implementation checklist live in
 [ground/lte](../../ground/lte/README.md).
 
