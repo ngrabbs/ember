@@ -12,6 +12,7 @@ An orbital link is a later experiment, with its own timing, Doppler, power, and 
 - [Controlled Walter OFF/ON and Msg3 cleanup results](results/2026-10-02-walter-control.md)
 - [Msg4 retry and accepted SIM authentication](results/2026-10-02-msg4-authentication.md)
 - [RAR release and first completed Walter attach](results/2026-10-02-rar-release.md)
+- [Six-to-eight-foot separation comparison](results/2026-10-02-separated-antennas.md)
 - [Experimental OAI patches](patches/README.md)
 - [OAI candidate config and build record](configs/oai/README.md)
 - [Recovered ordinary LTE configs](configs/srsran-4g/)

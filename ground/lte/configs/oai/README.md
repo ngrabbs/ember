@@ -50,3 +50,11 @@ six-inch bench separation. Neither profile establishes calibrated RF power.
 Use all five patches in order and keep the profile explicit in every result.
 See [RAR/lifecycle results](../../results/2026-10-02-rar-release.md). A completed
 attach alone does not prove telemetry delivery or stability.
+
+At the reported six-to-eight-foot antenna separation, `ce300tx30diag` decoded
+connection requests but did not complete RRC setup in one trial. The follow-up
+`ce300tx20diag` changes only TX attenuation from 30 to 20 (logged gain 69.75;
+RX remains 35). It completed attach and bearer setup, but UDP delivery still
+failed after uplink-failure reporting. This is an experimental comparison,
+not a calibrated-power setting or demonstrated stable telemetry profile.
+See [separated-antenna results](../../results/2026-10-02-separated-antennas.md).

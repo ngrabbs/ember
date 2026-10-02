@@ -45,7 +45,11 @@ later validation gates, not prerequisites for getting practical LTE experience.
 - [ ] Validate reestablishment rejection and asynchronous CCCH lifecycle fixes.
       Candidates built; CCCH wait/timeout path exercised without the old assertion.
       Rejection-ACK guard has not been exercised in the newer live trials.
-- [ ] Diagnose repeated reestablishment after attach and make the data link stable.
+- [ ] Diagnose post-attach uplink failure/reestablishment and make the data link stable.
+      Six-to-eight-foot comparison completed: same gain did not complete setup;
+      TX gain +10 completed attach/bearer, but UL failure preceded UDP submission.
+- [ ] Capture dedicated uplink grants, HARQ/CRC outcomes, socket status at the
+      send error, and GTP/SGi packets to separate radio scheduling from socket issues.
 - [ ] Investigate OAI shutdown segmentation fault after the low-TX run.
 - [ ] Establish bench RF connections, attenuation, gains, and operating band.
       Band 13 at six-inch separation now reaches a Walter-correlated CE0 request;

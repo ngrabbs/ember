@@ -92,3 +92,9 @@ are applied on the Pi. Walter subsequently completed LTE-M attach and reported
 registration; modem PDP context 1 returned 172.16.0.2. UDP delivery and PHY
 regression remain unresolved. Walter is restored to CFUN 0 after each bounded
 trial. See [latest results](results/2026-10-02-rar-release.md).
+
+On 2026-10-02 the user increased Walter–LibreSDR antenna separation to roughly
+six to eight feet. The gain-35, TX-59.75 run did not complete RRC setup. A
+follow-up at TX gain 69.75, with RX still 35, completed attach and bearer setup
+but delivered no UDP packet. All tests were bounded and Walter was restored to
+CFUN 0. See [separation comparison](results/2026-10-02-separated-antennas.md).
