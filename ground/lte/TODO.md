@@ -7,7 +7,8 @@ Native EPS controller transport is proven (10/10 echoed packets). The first
 full radio trial reached EPC Attach Complete, but Walter's application stayed
 REGISTER and submitted no EPS packets. Ground delivery and Yamcs archive proof
 remain outstanding. Registration parsing and unsolicited-update handling have
-been repaired and host-tested; the updated Walter image awaits flashing.
+been repaired, host-tested and flashed with esptool hash verification. The
+updated application starts with the modem OFF; the physical LTE retry is pending.
 
 ## 1. Inventory and preserve the previous experiment
 
@@ -188,7 +189,9 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       [Evidence](../../system/ground_station/evidence/native-eps-lte-20261002-01.json).
 - [x] Fix Walter CEREG response spacing and preserve unsolicited registration
       updates, including bytes drained between commands; build and host tests pass.
-- [ ] Flash registration fix and retry with receiver/radio windows aligned.
+- [x] Flash registration fix, verify image hashes and USB startup OFF/window zero.
+      [Evidence](../../system/ground_station/evidence/walter-registration-v2-flash-check-20261002.json).
+- [ ] Retry with receiver/radio windows aligned and USB on IHU.
 - [ ] Receive real EPS packets over LTE and byte-match them in Yamcs archive/display.
 - [ ] Integrate CAN into the full IHU/EPS and COMMS applications; add real sensor
       telemetry, periodic streaming, ground ingestion, and separately qualified uplink handling.
