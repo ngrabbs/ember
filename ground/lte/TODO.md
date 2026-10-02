@@ -152,6 +152,10 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [x] Forward ten hardware-IHU heartbeat packets via CAN → COMMS → Walter UART
       echo and back to IHU, with identity/sequence/CRC preserved and no new
       IHU-side CAN/fragment/timeout errors. [Evidence](../../system/ground_station/evidence/ihu-comms-walter-can-20261002.json).
+- [x] Build the CAN Feather IHU's manual read-only EPS register reader with PEC
+      validation and D4/D5 I2C0 mapping; eight EPS driver/decoder tests pass.
+- [ ] Verify the new IHU's physical EPS connection and complete PEC-valid reads.
+      Waiting for SDA/SCL wiring; ADC validity and current power state remain to check.
 - [ ] Integrate CAN into the full IHU/EPS and COMMS applications; add real sensor
       telemetry, periodic streaming, ground ingestion, and separately qualified uplink handling.
 - [ ] Implement bounded queues, sequence numbers, reconnect/backoff, and watchdogs.

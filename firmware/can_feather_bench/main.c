@@ -8,6 +8,9 @@
 #include "hardware/uart.h"
 #include "mcp25625.h"
 #include "wire.h"
+#if ROLE_IHU
+#include "eps_readout.h"
+#endif
 #define LOG(...) do {if(stdio_usb_connected())printf(__VA_ARGS__);} while(0)
 #define ROLE_NAME (ROLE_IHU?"IHU_MCU":"COMMS_MCU")
 #define TX_ID (ROLE_IHU?CF_IHU_ID:CF_COMMS_ID)
@@ -159,6 +162,17 @@ static void submit(uint8_t type,const uint8_t *payload,size_t size) {
     pending.active=true;pending.started=now_ms();LOG("SUBMITTED request=%" PRIu32 " type=%u bytes=%zu\n",request_id,type,size);
 }
 #if ROLE_IHU
+static void eps_json(void) {
+    if(pending.active || output.active || can.pending) {LOG("REJECT reason=BUSY\n");return;}
+    ltc4162_raw_t raw;uint8_t failed=0;
+    if(!eps_read(&raw,&failed)) {LOG("EPS_READ outcome=FAILED register=%02x reason=I2C_OR_PEC\n",failed);return;}
+    LOG("{\"profile\":\"ltc4162-l-readout-v1\",\"uptime_ms\":%" PRIu32 ",\"registers\":{",now_ms());
+    bool first=true;
+#define PRINT(name,address) LOG("%s\"" #name "\":%u",first?"":",",raw.name);first=false;
+    LTC4162_READOUT_REGISTERS(PRINT)
+#undef PRINT
+    LOG("}}\n");
+}
 static void heartbeat(void) {
     uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2]={0};size_t size=sizeof(p);
     ul_p16(p,W_TM_IDENTITY);ul_p16(p+2,(uint16_t)(0xc000|telemetry_sequence));
@@ -191,12 +205,16 @@ static void command(const char *s) {
 }
 #if ROLE_IHU
     else if(!strcmp(s,"telemetry"))heartbeat();
+    else if(!strcmp(s,"eps json"))eps_json();
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json":"");
     else if(*s)LOG("ERROR unknown command\n");
 }
 int main(void) {
     stdio_init_all();boot=get_rand_32();if(!boot)boot=1;mcp_init(&can);
+#if ROLE_IHU
+    eps_bus_init();
+#endif
 #if !ROLE_IHU
     uart_init(uart0,115200);gpio_set_function(0,GPIO_FUNC_UART);gpio_set_function(1,GPIO_FUNC_UART);
     gpio_pull_up(1);uart_set_hw_flow(uart0,false,false);uart_set_format(uart0,8,1,UART_PARITY_NONE);uart_set_fifo_enabled(uart0,true);

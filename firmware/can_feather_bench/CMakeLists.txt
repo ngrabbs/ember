@@ -25,7 +25,7 @@ foreach(role IN ITEMS ihu comms)
         target_compile_definitions(ember_${role}_can_bench PRIVATE ROLE_IHU=0)
     endif()
     target_compile_options(ember_${role}_can_bench PRIVATE -Wall -Wextra -Werror)
-    target_link_libraries(ember_${role}_can_bench pico_stdlib pico_unique_id pico_rand hardware_uart hardware_spi)
+    target_link_libraries(ember_${role}_can_bench pico_stdlib pico_unique_id pico_rand hardware_uart hardware_spi hardware_i2c)
     pico_enable_stdio_usb(ember_${role}_can_bench 1)
     pico_enable_stdio_uart(ember_${role}_can_bench 0)
     target_compile_definitions(ember_${role}_can_bench PRIVATE

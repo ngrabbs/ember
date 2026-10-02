@@ -4,7 +4,8 @@ The new IHU MCU and COMMS MCU both use Adafruit RP2040 CAN Bus Feathers with
 onboard MCP25625 CAN controllers/transceivers. This standalone Pico SDK project
 builds `ember_ihu_can_bench.uf2` and `ember_comms_can_bench.uf2` from one source,
 with distinct roles. It replaces neither the complete FreeRTOS IHU/EPS application
-nor the UHF COMMS application. It does not read/write the EPS, activate UHF,
+nor the UHF COMMS application. The IHU role now supports manual read-only EPS
+register observation; it does not write the EPS, activate UHF,
 control LTE radio state, execute flight commands, or implement CAN redundancy.
 Walter retains the installed framed diagnostic with its modem held in reset.
 
@@ -89,6 +90,24 @@ HEARTBEAT with IHU source, ground target, its own boot ID, sequence, uptime,
 inner CRC, and fixed SAFE/GROUND_TEST bench fields. Period=0 identifies manual
 emission; there is no periodic telemetry scheduler in this image. These are
 controller-generated bench health fields, not EPS sensor readings.
+
+IHU `eps json` reads the 19-register LTC4162-L profile at address `0x68`,
+100 kHz I2C0, **D4/GPIO4 SDA and D5/GPIO5 SCL**, with common ground. These
+are different from the Feather's labeled SDA/SCL pads (GPIO2/3).
+Each word uses a repeated start and verifies SMBus PEC; a failed read returns
+`EPS_READ outcome=FAILED` and the failed register instead of a partial JSON
+readout. All successful raw words are preserved, including invalid/warming ADC
+status. This command is rejected while a CAN request/transmission is pending.
+It makes no charger configuration writes and does not yet forward EPS packets
+through CAN or LTE. Native EPS packet forwarding is the next integration step.
+
+The reader-enabled IHU image was built and flash-readback verified on 2026-10-02;
+UF2 SHA-256 `bc2720b9d6471c4193d83a512ab7a26cfd141715763aaeda041de6ad59462d8b`.
+After flashing, IHU boot `613337324` confirmed CAN HELLO with COMMS boot
+`4252110043`. Hardware EPS reads remain pending SDA/SCL wiring confirmation.
+Host EPS tests cover valid reads, an independently computed PEC/golden frame,
+corrupt data rejection, all-or-nothing output on a late failed register, and
+recovery; pointer-only writes are asserted. COMMS firmware was not reflashed.
 
 ```text
 IHU heartbeat -- CAN --> COMMS -- framed UART --> Walter bench echo
