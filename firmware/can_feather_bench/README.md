@@ -8,8 +8,9 @@ nor the UHF COMMS application. The IHU role now supports manual read-only EPS
 register observation and explicit battery-only ADC enable; it does not change
 charging policy, activate UHF, execute flight commands, or implement CAN redundancy.
 Version2 adds native EPS packet forwarding and explicit bounded Walter LTE requests.
-COMMS and Walter hardware updates and full EPS forwarding tests remain pending;
-Walter still has the installed framed diagnostic with its modem held in reset.
+Both CAN Feathers are updated and native EPS forwarding through Walter echo
+passed. Walter still has the installed framed diagnostic with its modem held
+in reset; its LTE hardware update and RF qualification remain pending.
 
 User confirmed H-to-H, L-to-L, and common ground, with both terminators present
 and 60 ohms measured across the bus. This qualifies the bench harness, not the
@@ -183,7 +184,16 @@ TEC/REC/EFLG and CAN/fragment/timeout errors remained zero. Left COMMS in normal
 CAN mode with Walter powered separately; UART chain had not been exercised in
 this post-flash check (`walter_peer=0`, `chain_ok=0`).
 [COMMS post-flash evidence](../../system/ground_station/evidence/comms-eps-v2-flash-check-20261002.json).
-Real EPS chain test now awaits USB on IHU; Walter LTE upload still follows.
+The subsequent real EPS chain test passed: ten native128-byte POWER_STATUS
+returns (sequences0–9, readout_count1–10), ADC/conversion-valid1, IHU boot3148122192
+and COMMS boot1790982730. CRC/header/identity/sequence/engineering quality checks
+passed along with five sized CAN echoes and HELLO. IHU matched count increased
+by16; CAN/fragment/timeout/BUSY/UNKNOWN errors remained zero. Battery8.099–8.100 V,
+output about8.080 V, die21.464 °C; current scaling remains provisional.
+[Real EPS evidence](../../system/ground_station/evidence/ihu-comms-walter-eps-can-20261002.json).
+This verifies actual EPS reads through CAN and UART echo, not LTE reception.
+COMMS post-chain counters were not independently sampled with USB on IHU.
+Walter LTE upload still follows.
 
 ```text
 IHU heartbeat -- CAN --> COMMS -- framed UART --> Walter bench echo

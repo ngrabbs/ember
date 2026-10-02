@@ -170,7 +170,10 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       verify fixed-point/raw fields against real EPS captures in the ground codec.
 - [x] Flash/readback-verify matching COMMS v2 update; local loopback, physical
       CAN HELLO and exact128-byte echo pass with zero CAN/fragment errors.
-- [ ] Prove real EPS packets through COMMS and Walter echo with USB back on IHU.
+- [x] Prove real EPS packets through COMMS and Walter echo with USB back on IHU.
+      Ten of ten native128-byte POWER_STATUS returns, ADC/conversion-valid1,
+      source boot/sequence/raw registers preserved; no additional IHU-side
+      CAN/fragment/timeout errors. [Evidence](../../system/ground_station/evidence/ihu-comms-walter-eps-can-20261002.json).
 - [x] Prepare isolated Yamcs ember-lte input on loopback UDP10018 and bounded
       native packet receiver for EPC UDP51000. Running, with zero radio packets.
 - [ ] Receive real EPS packets over LTE and byte-match them in Yamcs archive/display.
