@@ -145,6 +145,9 @@ policy. UHF remains safe at boot while the Walter path is being exercised.
 - [x] Inspect existing I2C firmware and distinguish housekeeping from packet transport.
 - [x] Record CAN as the intended internal transport and Walter/UHF as external transports.
 - [x] Select COMMS module and propose UART/power mapping from vendor pinouts.
+- [x] Detect Feather BOOTSEL, preserve/verify its full flash, and install a
+      standalone USB/UART diagnostic image; [build and hardware results](../../firmware/comms_feather_bench/README.md).
+      USB commands passed; two UART probes submitted, no peer acknowledgment yet.
 - [ ] Port the COMMS board profile to the CAN Feather; resolve CAN/LED conflicts
       with old I2C/Si5351 GPIOs and allocate the UHF controls.
 - [ ] Inventory remaining COMMS and Walter pins; verify electrical compatibility,

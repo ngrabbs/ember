@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.13)
+if(NOT PICO_SDK_PATH)
+    set(PICO_SDK_PATH $ENV{PICO_SDK_PATH})
+endif()
+set(PICO_BOARD ember_can_feather)
+list(APPEND PICO_BOARD_HEADER_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/boards)
+include(${PICO_SDK_PATH}/external/pico_sdk_import.cmake)
+project(ember_comms_feather_bench C CXX ASM)
+set(CMAKE_C_STANDARD 11)
+pico_sdk_init()
+add_executable(ember_comms_feather_bench main.c)
+target_compile_options(ember_comms_feather_bench PRIVATE -Wall -Wextra -Werror)
+target_link_libraries(ember_comms_feather_bench pico_stdlib pico_unique_id hardware_uart)
+pico_enable_stdio_usb(ember_comms_feather_bench 1)
+pico_enable_stdio_uart(ember_comms_feather_bench 0)
+target_compile_definitions(ember_comms_feather_bench PRIVATE
+    PICO_STDIO_USB_STDOUT_TIMEOUT_US=20000
+    PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS=0
+    PICO_STDIO_USB_ENABLE_RESET_VIA_BAUD_RATE=0)
+pico_set_program_name(ember_comms_feather_bench "EMBER COMMS Feather Bench")
+pico_set_program_version(ember_comms_feather_bench "uart-bench-v1")
+pico_add_extra_outputs(ember_comms_feather_bench)

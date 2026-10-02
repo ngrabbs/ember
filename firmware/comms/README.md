@@ -303,6 +303,11 @@ MCU**, distinct from the **IHU MCU**. It will own packet forwarding and select
 Walter LTE-M or UHF behind one application-facing packet service. See the
 [COMMS–Walter contract and owned TODO](../../system/interfaces/comms_walter.md).
 
+A separate [CAN Feather USB/UART diagnostic image](../comms_feather_bench/README.md)
+is now built and flashed on the m75q-attached module. It does not run this
+firmware's UHF tasks or conflicting pin assignments; peer/UART wiring validation
+awaits matching Walter firmware.
+
 The register file here is deliberately the seed for the `0x300-0x3FF`
 "communications status and queue state" CAN message group that
 `board_to_board.md` already reserves. When CAN lands, the fields keep
