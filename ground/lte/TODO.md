@@ -223,6 +223,12 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [ ] Trace accepted-but-undelivered uplinks/bearer failures in OAI.
 - [ ] Trace SRB2 dedicated downlink allocation/HARQ association and ULSCH context
       allocation/cleanup during reconnects; preserve assertions until explained.
+- [x] Add and bench-test optional CE/context metadata trace; verify MAC block
+      fit and MCS/NDI retention, and capture reestablishment before SRB2 exhaustion.
+      One recovered EPS packet byte-matches the ground receiver and Yamcs.
+      [Results](results/2026-10-02-ce-context.md).
+- [ ] Inspect SRB2 activation/security, uplink STATUS scheduling/decoding and
+      post-reconfiguration PHY transition; reproduce pool-full with owner dump.
 - [ ] Capture a hardware modem rejection with exact CME diagnostics; add
       registration-aware send admission before recovery qualification.
 - [ ] Add bounded queues, recovery/backoff and duplicate handling; then rerun

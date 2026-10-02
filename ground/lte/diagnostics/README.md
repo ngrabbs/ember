@@ -44,3 +44,31 @@ This leaves all seven production candidates applied. Do not discard unrelated
 source changes with `git reset` or `git checkout`. See the
 [recorded results](../results/2026-10-02-rlc-status.md) for tested limits and the
 remaining failure checkpoint.
+
+## Dedicated CE scheduler and uplink context trace
+
+`oai-ce-context-trace.patch` adds metadata for MAC SDU sizes/header offsets,
+MPDCCH MCS/NDI/RV, PDSCH sizes and scheduled feedback time, the corresponding
+PHY HARQ parameters, uplink HARQ activation, and pool ownership on exhaustion.
+It leaves scheduling, cleanup and assertions unchanged. No payload bytes are
+logged. `TRACE_UL_ALLOC` means activation when no matching **active HARQ mask**
+exists; it does not imply allocation of new memory or a new persistent UE.
+
+Apply both optional patches after the seven candidates and rebuild:
+
+```sh
+git apply --check ../oai-ce-context-trace.patch
+git apply ../oai-ce-context-trace.patch
+git apply --check ../oai-rlc-status-trace.patch
+git apply ../oai-rlc-status-trace.patch
+cmake --build build-lte --target lte-softmodem -j3
+```
+
+The recorded context trial clones the existing RX35 RLC-debug profile, changing
+only MAC debug to info to reduce general logging. Targeted CE/context metadata
+uses info logging; the older RLC metadata needs RLC debug. Keep PHY at its normal
+logging level. Raw upstream logs remain private.
+
+After the bounded run and confirmed modem OFF, reverse the RLC trace and then
+the CE/context trace, rebuild, and compare the binary with the saved baseline.
+The [context results](../results/2026-10-02-ce-context.md) record this restoration.
