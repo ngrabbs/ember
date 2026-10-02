@@ -215,10 +215,16 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       echo pass with zero errors.
 - [x] Flash matching Walter diagnostic image; all written hashes verified,
       application SHA matches prepared build, USB startup OFF/window zero.
-- [ ] Verify96-byte diagnostic return over physical CAN/UART with USB on IHU,
-      then run bounded instrumented radio trials.
+- [x] Verify96-byte diagnostic return over physical CAN/UART with USB on IHU,
+      then run bounded instrumented radio trials. Three accepted EPS packets,
+      zero ground receptions; SRB2 SN0 retry exhaustion captured.
+      [Results](results/2026-10-02-eps-diagnostics.md).
 - [ ] Add separately bounded live socket-state probes if cached evidence is insufficient.
 - [ ] Trace accepted-but-undelivered uplinks/bearer failures in OAI.
+- [ ] Trace SRB2 dedicated downlink allocation/HARQ association and ULSCH context
+      allocation/cleanup during reconnects; preserve assertions until explained.
+- [ ] Capture a hardware modem rejection with exact CME diagnostics; add
+      registration-aware send admission before recovery qualification.
 - [ ] Add bounded queues, recovery/backoff and duplicate handling; then rerun
       qualification and add periodic EPS streaming. Ten-run result is6/10,
       not a reliable or continuous telemetry qualification.

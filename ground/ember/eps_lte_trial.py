@@ -65,7 +65,13 @@ def run(args):
                 time.sleep(min(args.settle,max(0,end-time.monotonic())))
     finally:
         try:
-            command('hello');result['stop']=command('lte 0').strip()
+            command('hello')
+            try:
+                diagnostics('before_stop')
+            except Exception as exc:
+                result['before_stop_diagnostic_error']=str(exc)
+            finally:
+                result['stop']=command('lte 0').strip()
             result['final_modem_status']=command('lte status').strip()
             diagnostics('after_stop')
             result['final_status']=c.command('status').strip()
