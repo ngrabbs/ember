@@ -9,6 +9,8 @@ An orbital link is a later experiment, with its own timing, Doppler, power, and 
 - [Observed equipment and software](INVENTORY.md)
 - [Ground-radio test results](results/2026-10-01-ground-radio.md)
 - [Independent HackRF/LTE-M access results](results/2026-10-01-hackrf-lte.md)
+- [Controlled Walter OFF/ON and Msg3 cleanup results](results/2026-10-02-walter-control.md)
+- [Experimental OAI patches](patches/README.md)
 - [OAI candidate config and build record](configs/oai/README.md)
 - [Recovered ordinary LTE configs](configs/srsran-4g/)
 - [Walter firmware location](../../firmware/walter/README.md)
@@ -24,6 +26,11 @@ OTA attempts are documented. HackRF independently detects expected-cell LTE sync
 attempts, OAI exercised LTE-M random access and RRC setup generation, then hit
 scheduler/resource assertions. Registration and a telemetry bearer remain
 unverified.
+
+The 2026-10-02 OFF/ON comparison with Thingy powered down strongly attributes
+the decoded CE0 connection request to Walter. An experimental OAI cleanup patch
+released abandoned Msg3 contexts; the next blocker is Msg4 DTX followed by the
+unimplemented BL/CE retransmission path. Thingy interface work is deferred.
 
 OAI is the first open-source LTE-M candidate to evaluate. Its historical eMTC
 work demonstrated commercial modems, including Sequans, but had single-UE,

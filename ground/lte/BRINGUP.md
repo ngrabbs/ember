@@ -1,10 +1,11 @@
 # LTE bench bring-up runbook
 
-Status: OAI and srsEPC are built on the Pi. Simulated and hardware S1 setup
-succeeded. Bounded OTA attempts have not registered Walter. Single-thread
-processing and RX attenuation 30 eliminated the earlier observed timing errors
-and false random-access detections in the subsequent run. This is an experimental
-configuration, not a validated telemetry link. See [results](results/2026-10-01-ground-radio.md).
+Status: OAI and srsEPC are built on the Pi; S1 setup works. A controlled Walter
+OFF/ON test reached UL CCCH and RRCConnectionSetup, then OAI asserted on missing
+BL/CE Msg4 retransmission support. An experimental Msg3 cleanup patch reclaimed
+failed-access contexts and avoided the previously observed slot exhaustion in
+one bounded run. Walter remains unregistered. See
+[controlled results](results/2026-10-02-walter-control.md).
 
 ## 1. Access and inventory
 
@@ -248,3 +249,64 @@ timeout 12 "$HOME/work/ember-lte/decode-mib-file" input-1m92.cf32 0
 Only result 1 establishes CRC-validated PBCH/MIB decoding. This helper has not
 yet obtained that result on the short HackRF capture. Frequency correction must
 be measured for the capture, not assumed to always be 6.8 kHz.
+
+## Controlled Walter OFF/ON tests
+
+These helpers reproduce the 2026-10-02 comparison and transmit when the Pi
+helper runs. They assume the already built binaries, private EPC configuration,
+custom FPGA image, and current bench setup. Keep Thingy powered down.
+From the EMBER repository root on the Mac:
+
+```sh
+scp ground/lte/scripts/run-radio-check.py ground/lte/scripts/summarize-ra-log.py \
+  ngrabbs@ember-ground.local:work/ember-lte/
+scp ground/lte/scripts/walter-radio-check.py \
+  ngrabbs@192.168.1.252:work/ember-lte/
+scp ground/lte/configs/oai/enb.band13.emtc.tx30.conf.example \
+  ngrabbs@ember-ground.local:work/ember-lte/configs/enb.band13.emtc.tx30.conf
+```
+
+Confirm no prior eNodeB/EPC or serial client is running. First prepare Walter
+OFF and wait for `CFUN 0 confirmed`, then run the baseline:
+
+```sh
+ssh ngrabbs@192.168.1.252 'python3 ~/work/ember-lte/walter-radio-check.py'
+ssh ngrabbs@ember-ground.local \
+  'python3 ~/work/ember-lte/run-radio-check.py control-off --seconds 40'
+```
+
+For ON, start the Pi command in terminal 1. After its steady-state message,
+run terminal 2. Wait for both to finish before starting another test:
+
+```sh
+# Terminal 1
+ssh ngrabbs@ember-ground.local \
+  'python3 ~/work/ember-lte/run-radio-check.py control-on --seconds 90'
+```
+
+```sh
+# Terminal 2
+ssh ngrabbs@192.168.1.252 \
+  'python3 ~/work/ember-lte/walter-radio-check.py --enable-seconds 35'
+```
+
+The serial helper resets the existing passthrough on opening, waits 12 seconds,
+then sets CFUN 0, band 13, APN, and enables RF for the bounded interval. It
+restores the full standard band list and confirms CFUN 0 afterward. This
+requires the current GM02SP passthrough and persisted manual PLMN selection;
+it is not a generic Walter firmware installer. Its COPS query must show the
+expected manual-selection state from the bench preparation.
+
+Pi logs are private and UTC-stamped. Use unique run labels to avoid overwriting
+evidence. Existing labels from 2026-10-02 are recorded in the results document.
+An assertion is not a successful timeout; the current Msg4 assertion is
+expected to remain even with the [cleanup patch](patches/README.md).
+
+```sh
+ssh ngrabbs@ember-ground.local \
+  'python3 ~/work/ember-lte/summarize-ra-log.py ~/work/ember-lte/logs/control-on-oai.log'
+```
+
+To reproduce the cleanup comparison, make a runtime copy with only
+`mac_log_level="debug"` changed and select it using `--config` on the Pi
+helper. Keep the runtime profile and source patch state explicit in results.

@@ -1,6 +1,6 @@
 # LTE-M bench and spacecraft channel TODO
 
-Updated 2026-10-01. Bench success is the immediate goal. Spacecraft items are
+Updated 2026-10-02. Bench success is the immediate goal. Spacecraft items are
 later validation gates, not prerequisites for getting practical LTE experience.
 
 ## 1. Inventory and preserve the previous experiment
@@ -27,17 +27,23 @@ later validation gates, not prerequisites for getting practical LTE experience.
 - [x] Independently observe LibreSDR TX tone and expected-cell PSS/SSS with HackRF.
 - [ ] Obtain CRC-validated MIB and decode LTE-M broadcast/PLMN.
 - [ ] Repair/reproduce CE Msg4 feedback and retransmission behavior.
+      Controlled Walter ON decoded UL CCCH and generated RRCConnectionSetup;
+      patched MAC-debug run recorded Msg4 DTX before the retransmission assert.
 - [ ] Investigate UE ULSCH allocation and failed-RA cleanup assertions.
+      Experimental Msg3 cleanup patch built and exercised: ten BR contexts
+      released, eleven responses handled, then the separate Msg4 assertion.
+      Longer regression and automated coverage remain outstanding.
 - [ ] Investigate OAI shutdown segmentation fault after the low-TX run.
 - [ ] Establish bench RF connections, attenuation, gains, and operating band.
-      Tried band 13 at six-inch separation; Walter scan saw Verizon, not 999/70.
+      Band 13 at six-inch separation now reaches a Walter-correlated CE0 request;
+      earlier scans saw Verizon only. RF power/attenuation remains uncalibrated.
 - [ ] Decide whether the Pi or x1c hosts the first LTE-M eNodeB based on driver
       support and measured real-time performance.
 
 ## 3. LTE-M stack feasibility
 
 - [x] Pin an OAI revision and inspect eMTC build/configuration paths.
-- [x] Initialize OAI UHD backend with LibreSDR/custom FPGA (RF waveform still unverified).
+- [x] Initialize OAI UHD backend with LibreSDR/custom FPGA; independently detect PSS/SSS.
 - [ ] Reproduce single-UE Cat-M1 operation; record supported CE/repetition modes.
 - [x] Select srsEPC and verify S1 setup with OAI.
 - [ ] Verify conventional IP bearer setup after UE registration.
@@ -54,7 +60,8 @@ later validation gates, not prerequisites for getting practical LTE experience.
 - [ ] Verify PLMN, authentication algorithm, OP/OPc, SQN, APN, and bands.
 - [ ] Use the vendor AT reference matching UE8.2.1.0 to inspect/select LTE-M.
 - [x] Record initial registration states and identify OAI random-access/RRC failures.
-- [ ] Establish Thingy firmware identity/AT interface for a controlled comparison.
+- [x] Compare Walter OFF/ON with Thingy powered down and preserve failure evidence.
+- [ ] Establish Thingy firmware identity/AT interface for a controlled comparison (deferred).
 - [ ] Distinguish cell acquisition, RRC,
       authentication, and bearer-setup failures.
 - [ ] Achieve Cat-M1 registration, authentication, and an assigned IP address.

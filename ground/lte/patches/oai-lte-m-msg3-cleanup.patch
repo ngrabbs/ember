@@ -1,0 +1,15 @@
+diff --git a/openair2/LAYER2/MAC/eNB_scheduler_ulsch.c b/openair2/LAYER2/MAC/eNB_scheduler_ulsch.c
+index 364990d..d7cdb3b 100644
+--- a/openair2/LAYER2/MAC/eNB_scheduler_ulsch.c
++++ b/openair2/LAYER2/MAC/eNB_scheduler_ulsch.c
+@@ -332,7 +332,9 @@ rx_sdu(const module_id_t enb_mod_idP,
+         hi_dci0_req->header.message_id = NFAPI_HI_DCI0_REQUEST;
+       } else {
+         if (ra->rach_resource_type > 0) {
+-          cancel_ra_proc(enb_mod_idP, CC_idP, frameP, current_rnti);        // TODO: Currently we don't support retransmission of Msg3 ( If in error Cancel RA procedure and reattach)
++          // Release the temporary PHY context when abandoning a BL/CE Msg3 attempt.
++          put_UE_in_freelist(enb_mod_idP, current_rnti, true);
++          cancel_ra_proc(enb_mod_idP, CC_idP, frameP, current_rnti);
+         } else {
+           // first_rb = UE_template_ptr->first_rb_ul[harq_pid]; // UE_id = -1 !!!!
+           ra->msg3_round++;
