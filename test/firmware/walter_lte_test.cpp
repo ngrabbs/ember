@@ -44,6 +44,8 @@ int main(void) {
     p=request(UL_SEND_PACKET);ltc4162_raw_t raw={};raw.telemetry_status=1;raw.vbat=21071;
     p.size=power_packet(p.payload,&raw,77,1,456,1);receive(p);
     assert(state==SEND && send_pending && !payload_sent);
+    assert(modem.output.size()>=1 && modem.output.back()=='\r');
+    assert(modem.output.find("AT+SQNSSENDEXT=1,128,0\r\n")==std::string::npos);
     auto other=p;other.request=11;receive(other);assert(returned().payload[0]==UL_ERR_BUSY);
     modem.output.clear();ok("\r\n> ");assert(payload_sent && modem.output==std::string((char*)p.payload,p.size));
     ok();auto ack=returned();assert(ack.type==UL_MODEM_ACCEPTED && ack.request==p.request && ack.origin==99);

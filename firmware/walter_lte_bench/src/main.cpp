@@ -44,7 +44,8 @@ static void observe_modem_byte(char ch) {
 static void at(const char *command,uint32_t timeout=6000) {
     while(modem.available())observe_modem_byte((char)modem.read());
     used=0;response[0]=0;at_started=millis();at_timeout=timeout;at_busy=true;payload_sent=false;
-    modem.print(command);modem.print("\r\n");
+    // CR terminates AT commands; a following LF can become binary send data.
+    modem.print(command);modem.print("\r");
 }
 static void configuration(void) {
     static const char *const commands[]={"AT","AT+CMEE=2","AT+CFUN=0",

@@ -47,6 +47,8 @@ def run(args):
                 result['modem_accepted'].append(dict(hex=match[2],decoded=packet))
                 print('MODEM_ACCEPTED EPS sequence='+str(packet['sequence']),flush=True)
                 time.sleep(1)
+            if result['modem_accepted'] and 'send_failure' not in result:
+                time.sleep(min(args.settle,max(0,end-time.monotonic())))
     finally:
         try:
             command('hello');result['stop']=command('lte 0').strip()
@@ -63,7 +65,8 @@ if __name__=='__main__':
     parser.add_argument('--port',required=True)
     parser.add_argument('--seconds',type=int,default=90)
     parser.add_argument('--count',type=int,default=10)
+    parser.add_argument('--settle',type=int,default=10,help='Wait after final modem acceptance before stopping RF (seconds).')
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args()
-    if not 30<=args.seconds<=120 or not 1<=args.count<=10:parser.error('seconds30..120, count1..10')
+    if not 30<=args.seconds<=120 or not 1<=args.count<=10 or not 0<=args.settle<=15:parser.error('seconds30..120, count1..10')
     run(args)

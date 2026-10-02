@@ -8,7 +8,10 @@ full radio trial reached EPC Attach Complete, but Walter's application stayed
 REGISTER and submitted no EPS packets. Ground delivery and Yamcs archive proof
 remain outstanding. Registration parsing and unsolicited-update handling have
 been repaired, host-tested and flashed with esptool hash verification. The
-updated application starts with the modem OFF; the physical LTE retry is pending.
+updated application recognized registration and opened the UDP socket on hardware.
+One EPS datagram traversed LTE/EPC, but had a leading LF and lost final byte.
+The receiver rejected it correctly; a CR-only AT termination fix is built and
+host-tested, awaiting Walter flash and a packet-byte comparison retry.
 
 ## 1. Inventory and preserve the previous experiment
 
@@ -191,7 +194,13 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       updates, including bytes drained between commands; build and host tests pass.
 - [x] Flash registration fix, verify image hashes and USB startup OFF/window zero.
       [Evidence](../../system/ground_station/evidence/walter-registration-v2-flash-check-20261002.json).
-- [ ] Retry with receiver/radio windows aligned and USB on IHU.
+- [x] Retry aligned radio/receiver windows; registration and modem acceptance pass.
+      [First send trial](../../system/ground_station/evidence/native-eps-lte-20261002-02.json).
+- [x] Capture native EPS UDP through LTE/EPC with a 10-second send settle;
+      identify exact LF-prefix/last-byte-loss corruption. Receiver rejects it.
+      [Byte comparison](../../system/ground_station/evidence/native-eps-lte-20261002-03.json).
+- [x] Build and host-test CR-only AT terminator fix.
+- [ ] Flash CR-only AT terminator fix and verify exact packet bytes over LTE.
 - [ ] Receive real EPS packets over LTE and byte-match them in Yamcs archive/display.
 - [ ] Integrate CAN into the full IHU/EPS and COMMS applications; add real sensor
       telemetry, periodic streaming, ground ingestion, and separately qualified uplink handling.
