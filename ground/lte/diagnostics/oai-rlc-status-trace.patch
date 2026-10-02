@@ -1,0 +1,66 @@
+diff --git a/openair2/LAYER2/MAC/eNB_scheduler_primitives.c b/openair2/LAYER2/MAC/eNB_scheduler_primitives.c
+index e683c15..54ebd6b 100644
+--- a/openair2/LAYER2/MAC/eNB_scheduler_primitives.c
++++ b/openair2/LAYER2/MAC/eNB_scheduler_primitives.c
+@@ -4048,6 +4048,9 @@ extract_harq(module_id_t mod_idP,
+           LOG_D(MAC, "Received %d for harq_pid %d\n",
+                 pdu[0],
+                 harq_pid);
++          if (UE_info->UE_template[pCCid][UE_id].rach_resource_type > 0)
++            LOG_I(MAC, "TRACE_DL_HARQ frame %d sf %d rnti %x pid %d feedback %d round %d\n",
++                  frameP, subframeP, rnti, harq_pid, pdu[0], sched_ctl->round[CC_idP][harq_pid]);
+           RA_t *ra = &eNB->common_channels[CC_idP].ra[0];
+ 
+           for (uint8_t ra_i = 0; ra_i < NB_RA_PROC_MAX; ra_i++) {
+diff --git a/openair2/LAYER2/rlc_v2/rlc_entity_am.c b/openair2/LAYER2/rlc_v2/rlc_entity_am.c
+index 64dc32f..5633a41 100644
+--- a/openair2/LAYER2/rlc_v2/rlc_entity_am.c
++++ b/openair2/LAYER2/rlc_v2/rlc_entity_am.c
+@@ -325,6 +325,8 @@ static void consider_retransmission(rlc_entity_am_t *entity,
+     rlc_tx_pdu_segment_t *cur)
+ {
+   cur->retx_count++;
++  LOG_D(RLC, "TRACE_RLC_RETX entity %p sn %d count %d vt_a %d vt_s %d\n",
++        entity, cur->sn, cur->retx_count, entity->vt_a, entity->vt_s);
+ 
+   /* let's report max RETX reached for all retx_count >= max_retx_threshold
+    * (specs say to report if retx_count == max_retx_threshold).
+@@ -710,6 +712,8 @@ control:
+   e1 = rlc_pdu_decoder_get_bits(&decoder, 1); R(decoder);
+ 
+   /* let's try to parse the control PDU once to check consistency */
++  LOG_D(RLC, "TRACE_RLC_STATUS entity %p ack_sn %d nack_list %d vt_a %d vt_s %d poll_sn %d\n",
++        entity, ack_sn, e1, entity->vt_a, entity->vt_s, entity->poll_sn);
+   control_decoder = decoder;
+   control_e1 = e1;
+   while (control_e1) {
+@@ -753,6 +757,8 @@ control:
+       so_start = 0;
+       so_end = -1;
+     }
++    LOG_D(RLC, "TRACE_RLC_NACK entity %p sn %d so_start %d so_end %d\n",
++          entity, nack_sn, so_start, so_end);
+     process_received_nack(entity, nack_sn, so_start, so_end);
+ 
+     /* 36.322 5.2.2.2 says to stop t_poll_retransmit if a ACK or NACK is
+diff --git a/openair2/LAYER2/rlc_v2/rlc_oai_api.c b/openair2/LAYER2/rlc_v2/rlc_oai_api.c
+index 8f2ec5f..668f634 100644
+--- a/openair2/LAYER2/rlc_v2/rlc_oai_api.c
++++ b/openair2/LAYER2/rlc_v2/rlc_oai_api.c
+@@ -78,6 +78,7 @@ void mac_rlc_data_ind     (
+ 
+   if (rb != NULL) {
+     rb->set_time(rb, rlc_current_time);
++    LOG_D(RLC, "TRACE_RLC_RX rnti %x lcid %d entity %p bytes %d\n", rntiP, channel_idP, rb, tb_sizeP);
+     rb->recv_pdu(rb, buffer_pP, tb_sizeP);
+   } else {
+     LOG_E(RLC, "fatal: no RB found (rnti %x channel ID %d)\n", rnti, channel_id);
+@@ -127,6 +128,8 @@ tbs_size_t mac_rlc_data_req(
+     rb->set_time(rb, rlc_current_time);
+     maxsize = tb_sizeP;
+     ret = rb->generate_pdu(rb, buffer_pP, maxsize);
++    if (ret > 0)
++      LOG_D(RLC, "TRACE_RLC_TX rnti %x lcid %d entity %p bytes %d\n", rntiP, channel_idP, rb, ret);
+   } else {
+     LOG_E(RLC, "%s:%d:%s: fatal: data req for unknown RB\n", __FILE__, __LINE__, __FUNCTION__);
+     exit(1);

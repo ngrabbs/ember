@@ -69,3 +69,13 @@ SRB maximum-retransmission and RRC release events to be correlated. The latest
 seven-patch trial still experienced those failures. See
 [release trace](../../results/2026-10-02-repeatability-release.md). Debug logging
 adds overhead and this profile is for diagnosis.
+
+`ce300tx20rlctrace` changes only MAC logging from debug to info relative to
+`ce300tx20rrcdiag`, retaining RLC/RRC debug logs. `ce300tx20rx25rlctrace`
+changes only RX attenuation from 30 to 40, reducing calculated UHD RX gain
+from 35 to 25. TX gain stays 69.75. These profiles were exercised with all seven
+candidates and temporary [metadata tracing](../../diagnostics/README.md).
+The RX25 trial processed three RLC STATUS acknowledgments, then exhausted SRB1
+retries at the RRC Security Mode Command. Neither profile completed modem
+registration or sent UDP in these trials; no gain repair is established.
+See [RLC results](../../results/2026-10-02-rlc-status.md).

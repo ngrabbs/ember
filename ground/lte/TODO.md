@@ -54,6 +54,12 @@ later validation gates, not prerequisites for getting practical LTE experience.
       Dedicated downlink retry MCS correction did not eliminate that failure.
 - [ ] Trace dedicated downlink HARQ/PUCCH feedback, RLC STATUS handling, and
       stale reestablishment contexts; qualify the seventh scheduler candidate.
+      Metadata tracing observed three processed STATUS acknowledgments and NAS
+      security completion, followed by missing acknowledgment of the RRC Security
+      Mode Command (SN 3) and SRB1 retry exhaustion. RX gain 25 did not establish
+      registration. All 49 existing RLC-v2 tests passed; RF cause remains open.
+- [ ] Correlate SN 3's dedicated MPDCCH/PDSCH parameters and HARQ/PUCCH feedback;
+      reproduce the failing PHY simulator case on a fully clean pinned baseline.
 - [x] Capture dedicated uplink grants, HARQ/CRC outcomes, socket status at the
       send error, and GTP/SGi packets to separate radio scheduling from socket issues.
       Found process-0 grants with legacy process-1/5 MAC receive updates; candidate

@@ -407,3 +407,11 @@ profile explicit in every result. Run sender retry checks locally with:
 ```sh
 python3 -m unittest discover -s ground/lte/scripts/tests -v
 ```
+
+For optional per-bearer STATUS and compact CE HARQ tracing, use the separate
+[diagnostic procedure](diagnostics/README.md). Its two profiles lower MAC log
+volume and optionally reduce RX gain by 10 dB. Apply the temporary trace only
+after all seven candidates, and reverse it/rebuild when finished. The ordinary
+RA summarizer's debug-only DTX count is unavailable with these MAC-info profiles.
+See [RLC trace results](results/2026-10-02-rlc-status.md) for the observed failure
+at the RRC Security Mode Command.

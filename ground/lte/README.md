@@ -15,6 +15,8 @@ An orbital link is a later experiment, with its own timing, Doppler, power, and 
 - [Six-to-eight-foot separation comparison](results/2026-10-02-separated-antennas.md)
 - [First end-to-end Walter UDP telemetry](results/2026-10-02-uplink-telemetry.md)
 - [Repeatability and signaling-bearer release trace](results/2026-10-02-repeatability-release.md)
+- [RLC acknowledgment and RRC security transition trace](results/2026-10-02-rlc-status.md)
+- [Optional RLC/HARQ diagnostic procedure](diagnostics/README.md)
 - [Experimental OAI patches](patches/README.md)
 - [OAI candidate config and build record](configs/oai/README.md)
 - [Recovered ordinary LTE configs](configs/srsran-4g/)
@@ -48,6 +50,12 @@ Subsequent repeats delivered zero or nine packets. Debug logging traced context
 release to signaling-bearer maximum retransmissions. The current seventh
 candidate preserves dedicated downlink retransmission MCS, but has not removed
 the failure. First-burst delivery is demonstrated; reliable operation is not.
+
+A later metadata trace observed three processed RLC STATUS acknowledgments,
+accepted authentication, and NAS Security Mode Complete. The next RRC Security
+Mode Command exhausted SRB1 retries without an observed RLC acknowledgment.
+All 49 existing RLC-v2 tests passed; this does not qualify RF or PHY behavior.
+Temporary instrumentation was removed and the seven-candidate build restored.
 
 OAI is the first open-source LTE-M candidate to evaluate. Its historical eMTC
 work demonstrated commercial modems, including Sequans, but had single-UE,
