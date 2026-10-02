@@ -137,6 +137,12 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       [Implementation and limits](../../firmware/walter_lte_bench/README.md).
 - [ ] Flash and qualify Walter LTE sender on hardware; vendor-library integration
       remains a separate choice from this local AT bench application.
+      Upload completed with verified hashes; USB confirms OFF/window0. CAN/UART
+      status and LTE qualification follow with USB back on IHU.
+- [x] Investigate Walter GPS/Galileo and IHU-requested GNSS service; record
+      radio-sharing constraints, result fields and asynchronous/cache design.
+      [Research and GNSS TODO](../../system/interfaces/walter_gnss.md).
+- [ ] Implement and bench-test IHU GNSS requests/results after LTE bring-up.
 - [x] Preserve/verify Walter's ESP32 flash and install a pinned standalone
       COMMS UART diagnostic with its modem held in reset; USB checks passed.
       See [responder procedure](../../firmware/walter_uart_bench/README.md).

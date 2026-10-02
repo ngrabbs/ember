@@ -4,7 +4,14 @@ Experimental standalone application using the same pinned PlatformIO 6.1.18,
 espressif32 6.10.0 / Arduino 2.0.17 toolchain as the UART responder. Uses local
 nonblocking AT orchestration, not the WalterModem library. Generated wire offsets
 come from `ground/ember/dictionary.json`; preserve the repository directory layout.
-Build passed; hardware upload, modem bring-up and LTE delivery remain pending.
+Build passed; hardware upload hashes were verified on 2026-10-02. USB status
+reported boot2026087229, stateOFF, radio window0 and zero modem-accepted packets.
+[Radio-off USB check](../../system/ground_station/evidence/walter-lte-usb-off-20261002.json).
+CAN/UART application status and modem/LTE delivery qualification remain pending.
+Application SHA-256 `851ef9b67618c3cbf33e7a2af56d2637e30ed1c8ca04246d1869162bbe493669`.
+
+[GNSS research and proposed IHU service](../../system/interfaces/walter_gnss.md)
+is separate from this application; GPS/Galileo acquisition is not implemented here.
 
 COMMS UART0: Walter RX44/TX43, 115200 8N1. Modem UART1: RX14/TX48,
 CTS47/RTS21, hardware flow control. GPIO45 active-low reset holds the modem off
