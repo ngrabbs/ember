@@ -39,7 +39,7 @@ def compare(host, received, archive):
     submitted = [p['hex'] for p in host.get('modem_accepted', [])]
     radio = [p['hex'] for p in received.get('packets', [])]
     stored = {base64.b64decode(p['packet']).hex()
-              for p in archive.get('packets', archive.get('packet', []))}
+              for p in archive.get('packets') or archive.get('packet', [])}
     # A successful run needs its own submitted packet in both independent sinks.
     exact = len(submitted) == len(radio) == 1 and submitted[0] == radio[0]
     archived = exact and radio[0] in stored
@@ -51,14 +51,24 @@ def compare(host, received, archive):
                 success=bool(archived and off), ready_elapsed_s=host.get('ready_elapsed_s'))
 
 
+def radio_exit_status(log):
+    """The wrapper can exit zero even when its eNodeB child aborts."""
+    return {name: int(matches[-1]) if matches else None
+            for name in ('oai', 'epc')
+            for matches in [re.findall(r'\b'+name+r' exit=(-?\d+)\b', log)]}
+
+
 def run(args):
     args.output.mkdir(parents=True, exist_ok=True)
     report = dict(started_utc=utc(), profile=PROFILE, requested=10, trials=[],
+                  diagnostics=args.diagnostics,
                   method='One fresh EPS packet per separate cell/modem window; '
                   '120-second modem window, 15-second settle, no send retries.')
     previous=args.output/'report.json'
     if previous.exists():
         report=json.loads(previous.read_text())
+        if report.get('diagnostics', False) != args.diagnostics:
+            raise ValueError('Resume must preserve the diagnostic setting')
     for number in range(len(report['trials'])+1, 11):
         label = f'{args.label}-{number:02d}'
         print(f'BEGIN {number}/10 {label}', flush=True)
@@ -99,6 +109,7 @@ def run(args):
             host_proc = launch(IHU_HOST,
                 f'cd {REMOTE}/host-tests && python3 -u eps_lte_trial.py '
                 f'--seconds 120 --count 1 --settle 15 --port {PORT} '
+                + ('--diagnostics ' if args.diagnostics else '') +
                 f'--output {REMOTE}/{label}', 'host')
             record['host_exit'] = host_proc.wait(timeout=145)
             host = remote_json(IHU_HOST, f'{REMOTE}/{label}/trial.json')
@@ -111,10 +122,12 @@ def run(args):
             received = remote_json(GROUND, f'/home/ngrabbs/work/ember-lte/logs/{label}-received.json')
             archive = json.load(urlopen(API+'archive/ember-lte/packets?name=/ember/POWER_STATUS&limit=100', timeout=10))
             record.update(compare(host, received, archive))
-            record['normal_process_exits'] = (record['host_exit']==0 and record['receiver_exit']==0 and record['radio_exit']==0 and record['capture_exit']==124)
+            record['radio_children'] = radio_exit_status((directory/'radio.log').read_text())
+            record['delivery_success'] = record['success']
+            record['normal_process_exits'] = (record['host_exit']==0 and record['receiver_exit']==0 and record['radio_exit']==0 and record['capture_exit']==124 and record['radio_children']=={'oai':124,'epc':124})
             record['success'] = record['success'] and record['normal_process_exits']
             record['ground_receiver'] = received
-            record['matching_archive'] = [p for p in archive.get('packets', [])
+            record['matching_archive'] = [p for p in archive.get('packets') or archive.get('packet', [])
                 if base64.b64decode(p['packet']).hex() in [x['hex'] for x in received.get('packets', [])]]
         except Exception as error:
             record['error'] = str(error)
@@ -150,6 +163,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--label', required=True)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--diagnostics', action='store_true', help='Capture cached modem diagnostics consistently in every run.')
     args = parser.parse_args()
     if not re.fullmatch(r'[a-zA-Z0-9_-]+', args.label):
         parser.error('Label must contain only letters, digits, underscores and hyphens')
