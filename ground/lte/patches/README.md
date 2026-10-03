@@ -3,9 +3,10 @@
 Base: `29d5fa7d38bb1ee8935ef7ae30a396d53772ea4f`.
 Pi source branch: `ember/lte-m-msg3-cleanup`. Source changes are preserved here
 as cumulative patches; EMBER does not vendor the OAI checkout.
-Current Pi state has all seven applied, in this order: Msg3 cleanup, Msg4 retry,
+The earlier bench baseline has seven applied, in this order: Msg3 cleanup, Msg4 retry,
 single-transmission RAR release, rejection lifecycle, CCCH wait, uplink HARQ selection,
-and dedicated downlink retry MCS retention. Reverse
+and dedicated downlink retry MCS retention. The Pi now also has the new-bearer
+security candidate below, applied eighth. Reverse
 in the opposite order and rebuild to restore the baseline. No upstream commits,
 pushes, or PRs were made.
 
@@ -205,3 +206,28 @@ context. This is a code correction candidate, not a demonstrated stability fix.
 All seven patches reverse/reapply in order and the 16 affected reconstructed
 files match the Pi source.
 See [repeatability and release trace](../results/2026-10-02-repeatability-release.md).
+
+## New-bearer PDCP security initialization candidate
+
+`oai-new-bearer-security.patch` applies after the seven candidates above.
+At RRC reconfiguration completion, it passes the negotiated ciphering/integrity
+algorithms with the already-derived keys to the existing PDCP configuration API.
+Previously that call passed mode255, which leaves security unchanged even on
+newly allocated SRB2/DRB entities. Their zero-initialized state therefore remained
+inactive. The patch initializes the new bearers without resetting PDCP sequence
+numbers or disabling security.
+
+```sh
+git apply --check /path/to/EMBER/ground/lte/patches/oai-new-bearer-security.patch
+git apply /path/to/EMBER/ground/lte/patches/oai-new-bearer-security.patch
+cmake --build build-lte --target lte-softmodem -j3
+```
+
+A metadata comparison captured inactive SRB2 security on the old build, then
+active SRB2 security with integrity algorithm2 on the candidate. SRB2 STATUS
+ACK_SN1 appeared and three real EPS packets reached the receiver and Yamcs
+unchanged. This is bounded bench evidence; the independent reliability series
+still needs repeating. The three existing MAC/PHY helper tests do not exercise
+PDCP security. Full PHY regression and the separate ULSCH-pool failure remain
+open. Temporary diagnostics are separate from this candidate.
+See [security comparison](../results/2026-10-02-srb2-security.md).

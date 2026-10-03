@@ -399,7 +399,11 @@ settling wait is capped by the remaining enable deadline and does not prove
 that the modem queue drained. These controls do not fix the network's observed
 signaling-bearer failures. See [repeat results](results/2026-10-02-repeatability-release.md).
 
-The current Pi has seven candidates, including downlink retry MCS retention.
+The current Pi has eight candidates, including downlink retry MCS retention and
+new-bearer PDCP security initialization. The normal binary SHA-256 is
+`5c5de8e17db509b35823f401b99c7fdbe28144307da0be24fbc777c569768e11`.
+See the [security comparison](results/2026-10-02-srb2-security.md) for six EPS
+deliveries across two windows; repeat reliability before qualifying this build.
 For release tracing, select `enb.band13.emtc.ce300tx20rrcdiag.conf`; it adds
 RLC/RRC debug logging to the same RF settings. Keep the selected patch set and
 profile explicit in every result. Run sender retry checks locally with:
@@ -411,7 +415,7 @@ python3 -m unittest discover -s ground/lte/scripts/tests -v
 For optional per-bearer STATUS and compact CE HARQ tracing, use the separate
 [diagnostic procedure](diagnostics/README.md). Its two profiles lower MAC log
 volume and optionally reduce RX gain by 10 dB. Apply the temporary trace only
-after all seven candidates, and reverse it/rebuild when finished. The ordinary
+after the selected candidate set, and reverse it/rebuild when finished. The ordinary
 RA summarizer's debug-only DTX count is unavailable with these MAC-info profiles.
 See [RLC trace results](results/2026-10-02-rlc-status.md) for the observed failure
 at the RRC Security Mode Command.

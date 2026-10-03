@@ -1,8 +1,8 @@
 # Optional RLC/HARQ metadata trace
 
 `oai-rlc-status-trace.patch` is temporary instrumentation relative to the pinned
-OAI revision with all seven [production candidates](../patches/README.md)
-applied. It records RLC entity/bearer mapping, PDU lengths, retransmission state,
+OAI revision with the first seven [production candidates](../patches/README.md)
+applied. It also applies with the eighth security candidate. It records RLC entity/bearer mapping, PDU lengths, retransmission state,
 decoded STATUS fields, and compact CE downlink HARQ feedback. It does not print
 PDU payloads. Normal OAI debug logs can still contain subscriber identities and
 authentication material; keep full logs private.
@@ -40,7 +40,8 @@ git diff --check
 cmake --build build-lte --target lte-softmodem -j3
 ```
 
-This leaves all seven production candidates applied. Do not discard unrelated
+This preserves the selected production candidates, including the eighth security
+candidate when present. Do not discard unrelated
 source changes with `git reset` or `git checkout`. See the
 [recorded results](../results/2026-10-02-rlc-status.md) for tested limits and the
 remaining failure checkpoint.

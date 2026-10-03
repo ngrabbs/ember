@@ -48,7 +48,7 @@ lifecycle failures and PHY simulator regression remain unresolved.
 Thingy interface work is deferred.
 
 Subsequent repeats delivered zero or nine packets. Debug logging traced context
-release to signaling-bearer maximum retransmissions. The current seventh
+release to signaling-bearer maximum retransmissions. The seventh
 candidate preserves dedicated downlink retransmission MCS, but has not removed
 the failure. First-burst delivery is demonstrated; reliable operation is not.
 
@@ -59,10 +59,16 @@ All 49 existing RLC-v2 tests passed; this does not qualify RF or PHY behavior.
 Temporary instrumentation was removed and the seven-candidate build restored.
 
 Two further identical bounded trials did not register or submit UDP packets.
-LTE reliability work is now shelved at the user's request to prioritize
-application telemetry. The radio is off; configs and diagnostics preserve the
-restart point. Earlier received telemetry remains demonstrated, with stability
-and repeatability outstanding.
+LTE reliability work was briefly shelved to prioritize application telemetry,
+then resumed with native EPS packets and a ten-run series that delivered6/10.
+
+The latest security comparison found newly added SRB2/DRB PDCP entities left
+with security inactive. The eighth candidate initializes their negotiated
+security settings. SRB2 acknowledgment returned, and six real EPS packets
+byte-matched the source, ground receiver and Yamcs across two windows, including
+one with temporary traces removed. The normal eight-candidate build is retained;
+Walter/radio processes are off. Repeat independent reliability trials before
+calling the link reliable. See [security results](results/2026-10-02-srb2-security.md).
 
 OAI is the first open-source LTE-M candidate to evaluate. Its historical eMTC
 work demonstrated commercial modems, including Sequans, but had single-UE,

@@ -231,7 +231,12 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       post-reconfiguration PHY transition; reproduce pool-full with owner dump.
 - [x] Capture baseline SRB2 ADD/MODIFY with security mode255, inactive security
       and no container before SRB2 exhaustion; prepare negotiated-security fix.
-- [ ] Bench-verify new-bearer security initialization and rerun reliability.
+- [x] Bench-verify new-bearer security initialization: active SRB2 integrity2,
+      STATUS ACK_SN1, six exact EPS deliveries/Yamcs matches across two windows.
+      Temporary traces removed; normal eight-candidate build retained.
+      [Results](results/2026-10-02-srb2-security.md).
+- [ ] Repeat ten independent reliability attempts with the fixed security build
+      and profile unchanged; two three-packet windows are only preliminary evidence.
 - [ ] Define operational CAN startup/recovery after reset; current bench images
       require the normal-mode console command on both Feathers after power cycling.
 - [ ] Capture a hardware modem rejection with exact CME diagnostics; add
