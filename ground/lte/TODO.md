@@ -1,6 +1,6 @@
 # LTE-M bench and spacecraft channel TODO
 
-Updated 2026-10-02. Bench success is the immediate goal. Spacecraft items are
+Updated 2026-10-03. Bench success is the immediate goal. Spacecraft items are
 later validation gates, not prerequisites for getting practical LTE experience.
 
 Native EPS full-chain uplink is proven. The latest fixed-security ten-run bench
@@ -9,6 +9,16 @@ all checks. One send lost registration and was rejected; one successful delivery
 had a controller diagnostic reply failure. All ten confirmed Walter OFF; no
 network process crashed. The preceding series delivered6/10. Continuous delivery
 and recovery remain open. [Latest results](results/2026-10-02-eps-security-reliability.md).
+
+LTE testing paused at the user's request on 2026-10-03. Last hardware proof:
+[controlled outage and recovery](results/2026-10-02-queue-outage.md), three retained
+EPS packets recovered byte-exactly into Yamcs after explicit RF stop/reopen.
+The test ended with Walter OFF and FIFO empty/disabled. At pause, no eNodeB/EPC
+was running on the ground station; M75q had no USB serial device for a fresh
+Walter check. Resume by confirming board power/USB identity, restoring both CAN
+controllers to normal mode if reset, refreshing HELLO/status, and verifying EPS
+ADC and Walter OFF before starting a new bounded test. Next planned milestone:
+a bounded periodic EPS burst. Automatic recovery remains open.
 
 ## 1. Inventory and preserve the previous experiment
 
