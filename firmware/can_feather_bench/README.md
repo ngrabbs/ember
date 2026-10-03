@@ -311,3 +311,14 @@ heartbeat returns through Walter, decoded IHU boot/sequence/uptime, and no new
 CAN/fragment errors or application timeouts. Output includes full USB transcript
 and decoded JSON. Fault injection, independent reset/recovery, live EPS integration,
 periodic streaming, Yamcs ingestion, CAN B, UHF, and LTE delivery remain future work.
+
+## Opt-in EPS FIFO candidate
+
+The IHU bench harness can stage four actual EPS packets with `eps enqueue`.
+`lte queue on/off/status/drop` controls a volatile FIFO; it never starts RF.
+Only explicit pre-submission NOT_READY/BUSY is retried, at most three send
+attempts. Uncertain outcomes, modem rejection and expiry hold the original
+packet for inspection. Enqueue refuses active CAN exchanges. Queue retirement
+means modem acceptance; independently validate reception/archive.
+[Policy, tests and deployment record](../../ground/lte/results/2026-10-02-queue-preparation.md).
+The operational queue belongs in COMMS; this is bench harness staging.

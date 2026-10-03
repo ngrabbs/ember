@@ -252,3 +252,14 @@ not a current socket-state query. No live SQNSS/CGACT probes are implemented.
 `eps_lte_trial.py --diagnostics` samples before/after send and after stop,
 validates request correlation and decodes this payload. Leave the option off
 for old firmware. The original ten-run measurement remains unchanged.
+
+## Bench FIFO preparation — 2026-10-02
+
+The IHU bench harness now offers an opt-in volatile FIFO over the existing
+SEND_PACKET/STATUS relay; no wire identifiers changed. It retains original
+native bytes and uses current registration plus remaining RF time for admission.
+Only definitive pre-submission NOT_READY/BUSY can retry automatically. Ambiguous
+submission/rejection is held, and modem final OK remains distinct from ground
+receipt. This is temporary bench policy; operational transport queue ownership
+remains COMMS as described above. See the
+[policy and deployment record](../../ground/lte/results/2026-10-02-queue-preparation.md).

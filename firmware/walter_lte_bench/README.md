@@ -55,7 +55,10 @@ milliseconds remaining, modem-accepted count, rejection count, all big endian.
 States0–7: OFF, BOOT_WAIT, CONFIGURE, REGISTER, SOCKET_CONFIG, SOCKET_OPEN,
 READY, SEND (READY=6, SEND=7).
 Errors0none/1modem rejection/2window deadline/3response overflow/4AT timeout.
-Registration is the last successful CEREG query, not continuous radio health.
+Registration reflects observed CEREG replies/URCs, not continuous radio health.
+The admission candidate drains pending URCs and requires current registration
+before send; READY without registration triggers bounded CEREG polling.
+[Candidate and deployment record](../../ground/lte/results/2026-10-02-queue-preparation.md).
 USB accepts `status` and `off`; raw modem responses/SIM details are not printed.
 
 The host mock tests prompt/payload/final-OK correlation, BUSY, bounded windows,

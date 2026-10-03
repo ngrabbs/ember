@@ -244,7 +244,14 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       require the normal-mode console command on both Feathers after power cycling.
 - [x] Capture a hardware modem rejection with exact CME diagnostics: attempt6
       lost registration before send, then text CME `operation not supported`.
-- [ ] Add registration-aware send admission before recovery qualification.
+- [x] Implement/test registration-aware Walter admission and an opt-in four-packet
+      IHU bench FIFO with bounded pre-submission retry/backoff and held uncertainty.
+      Radio-off capacity/retention test passed; deployment/OTA recovery are separate.
+      [Preparation](results/2026-10-02-queue-preparation.md).
+- [ ] Install Walter admission candidate; verify queued hardware EPS bytes at
+      ground and Yamcs after an explicit radio-off wait and bounded RF window.
+- [ ] Qualify registration-loss/recovery on hardware; add final-ACK handling
+      before treating a modem-accepted packet as end-to-end delivered.
 - [ ] Add bounded queues, recovery/backoff and duplicate handling; then rerun
       qualification and add periodic EPS streaming. Latest delivery result is9/10 (8/10 complete passes),
       not a reliable or continuous telemetry qualification.

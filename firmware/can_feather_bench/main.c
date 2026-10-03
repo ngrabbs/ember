@@ -12,6 +12,7 @@
 #if ROLE_IHU
 #include "eps_readout.h"
 #include "power_packet.h"
+#include "lte_queue.h"
 #endif
 #define LOG(...) do {if(stdio_usb_connected())printf(__VA_ARGS__);} while(0)
 #define ROLE_NAME (ROLE_IHU?"IHU_MCU":"COMMS_MCU")
@@ -36,6 +37,9 @@ static struct {bool active;ul_packet incoming,uart;uint32_t started;} chain;
 #else
 static uint16_t telemetry_sequence;
 static uint32_t eps_readout_count;
+static lq_state telemetry_queue;
+static bool queue_owned;
+static bool queue_send_ready;
 #endif
 static uint32_t now_ms(void) {return to_ms_since_boot(get_absolute_time());}
 static void status(void) {
@@ -134,15 +138,35 @@ static void uart_receive(const ul_packet *p) {
         out.type==CF_RF_WINDOW_ACK?"RF_WINDOW_ACCEPTED":out.type==CF_MODEM_ACCEPTED?"MODEM_ACCEPTED":out.type==CF_LINK_STATUS_ACK?"LTE_STATUS":"WALTER_BENCH_RETURN",out.size,walter_peer);
 }
 #endif
+#if ROLE_IHU
+static void queued_reply(const ul_packet *p,bool valid) {
+    if(!queue_owned)return;
+    queue_owned=false;
+    if(!valid) {lq_hold(&telemetry_queue,LQ_HOLD_UNKNOWN);return;}
+    if(p->type==CF_LINK_STATUS_ACK) {
+        if(telemetry_queue.enabled)queue_send_ready=lq_status(&telemetry_queue,p->payload,now_ms());
+        else telemetry_queue.state=LQ_IDLE;
+    } else if(p->type==CF_MODEM_ACCEPTED)lq_result(&telemetry_queue,0,now_ms());
+    else if(p->type==UL_ERROR) {
+        if(telemetry_queue.state==LQ_SEND)lq_result(&telemetry_queue,p->payload[0],now_ms());
+        else lq_hold(&telemetry_queue,LQ_HOLD_UNKNOWN);
+    }
+}
+#define QUEUED_REPLY(p,valid) queued_reply(p,valid)
+#else
+#define QUEUED_REPLY(p,valid) ((void)0)
+#endif
 static void receive(const ul_packet *p) {
     if(pending.active && p->origin==boot && p->request==pending.packet.request) {
         bool hello=pending.packet.type==UL_HELLO;
         uint8_t expected=hello?UL_HELLO_ACK:pending.packet.type==CF_CHAIN?CF_CHAIN_ACK:
             pending.packet.type==CF_RF_WINDOW?CF_RF_WINDOW_ACK:pending.packet.type==CF_SEND_PACKET?CF_MODEM_ACCEPTED:pending.packet.type==CF_LINK_STATUS?CF_LINK_STATUS_ACK:pending.packet.type==CF_LINK_DIAG?CF_LINK_DIAG_ACK:UL_ECHO_ACK;
         if(p->version!=1 || (!hello && p->sender!=peer)) {
+            QUEUED_REPLY(p,false);
             pending.active=false;peer=0;++unknown;LOG("RESULT outcome=UNKNOWN reason=PEER_RESET_OR_VERSION\n");return;
         }
         if(p->type==UL_ERROR && p->size==1) {
+            QUEUED_REPLY(p,true);
             pending.active=false;
             bool uncertain=p->payload[0]==CF_LINK_UNKNOWN || p->payload[0]==UL_ERR_MODEM_UNKNOWN;
             if(uncertain) {++unknown;peer=0;}
@@ -155,6 +179,7 @@ static void receive(const ul_packet *p) {
         if(diag)LOG("LTE_DIAG version=%u last_cereg=%u send_cereg=%u failure_cereg=%u command=%u failure_command=%u failure_state=%u flags=%u cme=%" PRIu32 " send_elapsed_ms=%" PRIu32 " registration_losses=%" PRIu32 " last_cereg_ms=%" PRIu32 " uart_send_request=%" PRIu32 " error_kind=%u\n",
             p->payload[16],p->payload[17],p->payload[18],p->payload[19],p->payload[20],p->payload[21],p->payload[22],p->payload[23],ul_u32(p->payload+24),ul_u32(p->payload+28),ul_u32(p->payload+32),ul_u32(p->payload+36),ul_u32(p->payload+40),p->payload[45]);
         if(hello)peer=p->sender;
+        QUEUED_REPLY(p,true);
         pending.active=false;++matched;
         LOG("RESULT request=%" PRIu32 " outcome=%s peer=%" PRIu32 " bytes=%u hex=",p->request,
             hello?"CAN_HELLO_CONFIRMED":p->type==CF_RF_WINDOW_ACK?"RF_WINDOW_ACCEPTED":
@@ -213,6 +238,37 @@ static void eps_telemetry(bool lte) {
     size_t n=power_packet(packet,&raw,boot,telemetry_sequence,now_ms(),++eps_readout_count);
     telemetry_sequence=(telemetry_sequence+1)&0x3fff;submit(lte?CF_SEND_PACKET:CF_CHAIN,packet,n);
 }
+static void queue_status(void) {
+    lq_packet *front=lq_front(&telemetry_queue);
+    LOG("LTE_QUEUE enabled=%d count=%u capacity=%u state=%u hold=%u attempts=%u accepted=%" PRIu32 " full=%" PRIu32 " retries=%" PRIu32 "\n",
+        telemetry_queue.enabled,telemetry_queue.count,LQ_CAPACITY,telemetry_queue.state,telemetry_queue.hold,
+        front?front->attempts:0,telemetry_queue.accepted,telemetry_queue.full,telemetry_queue.retries);
+}
+static void eps_enqueue(void) {
+    // EPS reads are synchronous; do not stall an in-flight CAN exchange.
+    if(pending.active || output.active || can.pending) {LOG("REJECT reason=BUSY\n");return;}
+    if(telemetry_queue.count==LQ_CAPACITY) {++telemetry_queue.full;LOG("REJECT reason=LTE_QUEUE_FULL\n");return;}
+    ltc4162_raw_t raw;uint8_t failed=0;
+    if(!eps_read(&raw,&failed)) {LOG("EPS_READ outcome=FAILED register=%02x reason=I2C_OR_PEC\n",failed);return;}
+    uint8_t packet[W_PAYLOAD+W_SIZE_POWER_STATUS+2];
+    size_t n=power_packet(packet,&raw,boot,telemetry_sequence,now_ms(),++eps_readout_count);
+    if(!lq_push(&telemetry_queue,packet,n,now_ms())) {LOG("REJECT reason=LTE_QUEUE\n");return;}
+    LOG("EPS_QUEUED sequence=%u count=%u bytes=%zu hex=",telemetry_sequence,telemetry_queue.count,n);
+    for(size_t i=0;i<n;++i)LOG("%02x",packet[i]);
+    LOG("\n");telemetry_sequence=(telemetry_sequence+1)&0x3fff;
+}
+static void queue_pump(uint32_t now) {
+    if(!telemetry_queue.enabled || pending.active || output.active || can.pending ||
+       !peer || (mcp_register(0x0e)&0xe0))return;
+    if(queue_send_ready) {
+        queue_send_ready=false;
+        // If disabled between status and submission, retain without sending.
+        lq_packet *front=lq_front(&telemetry_queue);
+        if(front) {submit(CF_SEND_PACKET,front->bytes,front->size);queue_owned=pending.active;}
+    } else if(lq_poll(&telemetry_queue,now)) {submit(CF_LINK_STATUS,NULL,0);queue_owned=pending.active;}
+    if((telemetry_queue.state==LQ_SEND || telemetry_queue.state==LQ_STATUS) && !queue_owned)
+        lq_hold(&telemetry_queue,LQ_HOLD_UNKNOWN);
+}
 static void heartbeat(void) {
     uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2]={0};size_t size=sizeof(p);
     ul_p16(p,W_TM_IDENTITY);ul_p16(p+2,(uint16_t)(0xc000|telemetry_sequence));
@@ -250,6 +306,17 @@ static void command(const char *s) {
     else if(!strcmp(s,"eps adc off"))eps_adc(false);
     else if(!strcmp(s,"eps telemetry"))eps_telemetry(false);
     else if(!strcmp(s,"eps lte"))eps_telemetry(true);
+    else if(!strcmp(s,"eps enqueue"))eps_enqueue();
+    else if(!strcmp(s,"lte queue status"))queue_status();
+    else if(!strcmp(s,"lte queue on")) {telemetry_queue.enabled=true;queue_status();}
+    else if(!strcmp(s,"lte queue off")) {
+        telemetry_queue.enabled=false;
+        if(queue_send_ready) {queue_send_ready=false;telemetry_queue.state=LQ_IDLE;}
+        queue_status();
+    } else if(!strcmp(s,"lte queue drop")) {
+        if(!lq_drop(&telemetry_queue))LOG("REJECT reason=QUEUE_EMPTY_OR_ACTIVE\n");
+        else queue_status();
+    }
     else if(!strcmp(s,"lte diagnostics"))submit(CF_LINK_DIAG,NULL,0);
     else if(!strcmp(s,"lte status"))submit(CF_LINK_STATUS,NULL,0);
     else if(!strncmp(s,"lte ",4)) {
@@ -258,7 +325,7 @@ static void command(const char *s) {
         uint8_t p[4];ul_p32(p,seconds);submit(CF_RF_WINDOW,p,4);
     }
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json | eps adc on/off | eps telemetry | lte N | lte status | lte diagnostics | eps lte":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json | eps adc on/off | eps telemetry | lte N | lte status | lte diagnostics | eps lte | eps enqueue | lte queue on/off/status/drop":"");
     else if(*s)LOG("ERROR unknown command\n");
 }
 int main(void) {
@@ -293,9 +360,13 @@ int main(void) {
         }
         cf_expire(&fragments,now);pump_tx(now);
         if(pending.active && (uint32_t)(now-pending.started)>=(pending.packet.type==CF_SEND_PACKET?REQUEST_TIMEOUT:5000)) {
+            QUEUED_REPLY(NULL,false);
             LOG("RESULT request=%" PRIu32 " outcome=UNKNOWN reason=TIMEOUT\n",pending.packet.request);
             pending.active=false;peer=0;++unknown;
         }
+#if ROLE_IHU
+        queue_pump(now_ms());
+#endif
         for(unsigned i=0;i<40;++i) {
             int ch=getchar_timeout_us(0);if(ch==PICO_ERROR_TIMEOUT)break;
             if(ch=='\r' || ch=='\n') {if(discard)LOG("ERROR command too long\n");else {line[used]=0;command(line);}used=0;discard=false;}

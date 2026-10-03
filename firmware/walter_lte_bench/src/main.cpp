@@ -133,7 +133,11 @@ static void receive(const ul_packet &p) {
     if(p.type==UL_SEND_PACKET) {
         if(!valid_packet(p)) {reply(p,UL_ERROR,UL_ERR_PAYLOAD);return;}
         if(send_pending) {reply(p,UL_ERROR,UL_ERR_BUSY);return;}
-        if(state!=READY || at_busy || (int32_t)(deadline-millis())<16000) {reply(p,UL_ERROR,UL_ERR_NOT_READY);return;}
+        if(at_busy) {reply(p,UL_ERROR,UL_ERR_NOT_READY);return;}
+        // Consume pending registration URCs before admission. at() also drains
+        // UART input; checking before that drain admitted stale READY sends.
+        while(modem.available())observe_modem_byte((char)modem.read());
+        if(state!=READY || !registered || at_busy || (int32_t)(deadline-millis())<16000) {reply(p,UL_ERROR,UL_ERR_NOT_READY);return;}
         diagnostic[18]=cereg_status;diagnostic[23]&=8;
         diagnostic[19]=255;diagnostic[21]=diagnostic[22]=diagnostic[44]=diagnostic[45]=0;
         memset(diagnostic+48,0,48);ul_p32(diagnostic+24,UINT32_MAX);
@@ -160,6 +164,7 @@ static void final_response(bool ok) {
     } else if(state==SOCKET_CONFIG) {
         state=SOCKET_OPEN;at("AT+SQNSD=1,1,51000,\"172.16.0.1\",0,51001,1,0,0",15000);
     } else if(state==SOCKET_OPEN) {diagnostic[23]|=8;state=READY;}
+    else if(state==READY)wait_until=millis()+3000;
 }
 static void poll_modem(uint32_t now) {
     if(state!=OFF && due(now,deadline)) {failure_snapshot();last_error=2;off();return;}
@@ -168,6 +173,9 @@ static void poll_modem(uint32_t now) {
         if(registered) {state=SOCKET_CONFIG;at("AT+SQNSCFG=1,1,300,90,100,1");}
         else if(due(now,wait_until))at("AT+CEREG?");
     }
+    // Recover cached registration during a READY window without submitting
+    // telemetry. RF deadline remains fixed, including these bounded queries.
+    if(state==READY && !registered && !at_busy && due(now,wait_until))at("AT+CEREG?");
     for(unsigned i=0;i<256 && modem.available();++i) {
         char ch=(char)modem.read();
         observe_modem_byte(ch);

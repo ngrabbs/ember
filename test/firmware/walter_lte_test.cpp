@@ -53,6 +53,15 @@ int main(void) {
     query=request(UL_LINK_DIAG);receive(query);health=returned();
     assert(health.type==UL_LINK_DIAG_ACK && health.size==LTE_DIAG_SIZE && health.payload[16]==1);
     assert(health.payload[18]==1 && (health.payload[23]&11)==11);
+    // READY is stale after a queued registration-loss URC: no send AT command.
+    modem.output.clear();modem.input="\r\n+CEREG:2,2\r\n";
+    receive(other);assert(returned().payload[0]==UL_ERR_NOT_READY);
+    assert(state==READY && !registered && !send_pending && modem.output.empty());
+    // Bounded registration polling can make the next explicit send admissible.
+    poll_modem(test_time);assert(at_busy && modem.output=="AT+CEREG?\r");
+    modem.output.clear();receive(other);assert(returned().payload[0]==UL_ERR_NOT_READY);
+    assert(at_busy && modem.output.empty());
+    ok("\r\n+CEREG:2,1\r\n\r\nOK\r\n");assert(registered && !at_busy);
     receive(other);assert(send_pending);test_time=deadline;poll_modem(test_time);
     auto failure=returned();assert(failure.type==UL_ERROR && failure.payload[0]==UL_ERR_MODEM_UNKNOWN);
     assert(state==OFF && test_reset==LOW && !send_pending);
