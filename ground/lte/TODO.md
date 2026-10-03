@@ -3,12 +3,12 @@
 Updated 2026-10-02. Bench success is the immediate goal. Spacecraft items are
 later validation gates, not prerequisites for getting practical LTE experience.
 
-Native EPS full-chain uplink is proven, and the ten-run bench test is complete:
-**6/10 delivered**, with all128 bytes matching IHU submission, UDP reception
-and Yamcs archive. Two sends were rejected; two were accepted without reception.
-All ten sessions reached socket READY and verified modem OFF. Controller CAN
-error counters stayed zero. Continuous delivery and recovery remain open.
-[Results](results/2026-10-02-eps-reliability.md).
+Native EPS full-chain uplink is proven. The latest fixed-security ten-run bench
+series delivered **9/10** byte-exact128-byte packets into Yamcs; **8/10** passed
+all checks. One send lost registration and was rejected; one successful delivery
+had a controller diagnostic reply failure. All ten confirmed Walter OFF; no
+network process crashed. The preceding series delivered6/10. Continuous delivery
+and recovery remain open. [Latest results](results/2026-10-02-eps-security-reliability.md).
 
 ## 1. Inventory and preserve the previous experiment
 
@@ -235,14 +235,18 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       STATUS ACK_SN1, six exact EPS deliveries/Yamcs matches across two windows.
       Temporary traces removed; normal eight-candidate build retained.
       [Results](results/2026-10-02-srb2-security.md).
-- [ ] Repeat ten independent reliability attempts with the fixed security build
-      and profile unchanged; two three-packet windows are only preliminary evidence.
+- [x] Repeat ten independent reliability attempts with the fixed security build
+      and profile unchanged:9/10 exact deliveries,8/10 complete passes, all OFF.
+      [Results](results/2026-10-02-eps-security-reliability.md).
+- [ ] Trace cached diagnostic UNKNOWN_REMOTE_LINK reason6 after a successful
+      send; attempt4 increased IHU unknown-reply counter without losing telemetry.
 - [ ] Define operational CAN startup/recovery after reset; current bench images
       require the normal-mode console command on both Feathers after power cycling.
-- [ ] Capture a hardware modem rejection with exact CME diagnostics; add
-      registration-aware send admission before recovery qualification.
+- [x] Capture a hardware modem rejection with exact CME diagnostics: attempt6
+      lost registration before send, then text CME `operation not supported`.
+- [ ] Add registration-aware send admission before recovery qualification.
 - [ ] Add bounded queues, recovery/backoff and duplicate handling; then rerun
-      qualification and add periodic EPS streaming. Ten-run result is6/10,
+      qualification and add periodic EPS streaming. Latest delivery result is9/10 (8/10 complete passes),
       not a reliable or continuous telemetry qualification.
 - [ ] Integrate CAN into the full IHU/EPS and COMMS applications; add real sensor
       telemetry, periodic streaming, ground ingestion, and separately qualified uplink handling.

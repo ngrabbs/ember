@@ -25,6 +25,13 @@ An orbital link is a later experiment, with its own timing, Doppler, power, and 
 
 ## Current status
 
+Latest native EPS reliability series after the SRB2 security correction:
+**9/10** exact packets in Yamcs, **8/10** complete passes, all ten Walter OFF
+confirmations and normal network process deadlines. Remaining failures were a
+registration-loss send rejection and a controller diagnostic reply error.
+[Ten-run evidence and next work](results/2026-10-02-eps-security-reliability.md).
+
+
 Hardware access, custom-FPGA UHD initialization, receive streaming, and Walter
 AT communication are verified. Walter completed LTE-M attach on 2026-10-02,
 with modem registration and EPC bearer setup recorded. A subsequent trial

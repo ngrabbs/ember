@@ -63,3 +63,7 @@ attach trials. Repeat the ten-run reliability series with this fixed build/profi
 before adding queued telemetry. The separate ULSCH-pool issue and full PHY
 simulation regression remain open; these successes do not establish flight,
 continuous-operation or downlink-command qualification.
+
+The subsequent fixed-build [ten-run series](2026-10-02-eps-security-reliability.md)
+delivered9/10 packets;8/10 passed every check. All confirmed OFF. Registration
+loss and a controller diagnostic query failure remain; recovery is not qualified.
