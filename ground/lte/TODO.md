@@ -252,8 +252,14 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       ground and Yamcs after an explicit radio-off wait and bounded RF window:
       3/3 exact FIFO matches, no retries/holds/new CAN errors, queue empty and RF OFF.
       [Results](results/2026-10-02-queued-eps.md).
-- [ ] Qualify registration-loss/recovery on hardware; add final-ACK handling
-      before treating a modem-accepted packet as end-to-end delivered.
+- [x] Exercise deliberate cell outage after a confirmed baseline; observe real
+      registration loss despite READY, retain3 hardware packets with zero attempts,
+      and recover all original bytes via an explicit new RF window/Yamcs match.
+      [Results](results/2026-10-02-queue-outage.md).
+- [ ] Qualify same-window reconnect or autonomous controller RF reopening;
+      current outage recovery requires explicit RF stop/reopen.
+- [ ] Add ground application acknowledgments before queue retirement means
+      end-to-end delivery; do not automatically replay uncertain submissions.
 - [ ] Add bounded queues, recovery/backoff and duplicate handling; then rerun
       qualification and add periodic EPS streaming. Latest delivery result is9/10 (8/10 complete passes),
       not a reliable or continuous telemetry qualification.

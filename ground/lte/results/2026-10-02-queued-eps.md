@@ -72,3 +72,7 @@ After cell steady state, on M75q run `eps_queue_trial.py --count 3 --seconds 120
 PRIVATE_DIRECTORY` from the staged host-tests directory. Compare each saved
 queued packet with the receiver and Yamcs archive, and check child process exits
 separately from the wrapper. Raw radio logs/pcaps remain private on the Pi.
+
+A subsequent [controlled cell outage](2026-10-02-queue-outage.md) exercised actual
+registration loss and recovered three retained packets after explicit RF
+stop/reopen; same-window/automatic recovery remains open.

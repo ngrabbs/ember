@@ -31,8 +31,11 @@ confirmations and normal network process deadlines. Remaining failures were a
 registration-loss send rejection and a controller diagnostic reply error.
 [Ten-run evidence and next work](results/2026-10-02-eps-security-reliability.md).
 The newer admission/queue candidates also passed [three queued EPS deliveries](results/2026-10-02-queued-eps.md)
-after radio-off retention, with exact Yamcs matches. Forced registration-loss
-recovery and continuous telemetry remain open.
+after radio-off retention, with exact Yamcs matches. A subsequent
+[deliberate cell outage](results/2026-10-02-queue-outage.md) observed real
+registration loss, retained3 packets without sending, and delivered the same
+bytes after explicit RF stop/reopen. Autonomous recovery and continuous telemetry
+remain open.
 
 
 Hardware access, custom-FPGA UHD initialization, receive streaming, and Walter
