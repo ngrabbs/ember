@@ -6,6 +6,8 @@ senior capstone project for the Mississippi State University ECE department.
 
 **[Documentation start here](docs/README.md)** · [System interfaces](system/README.md) · [Open work](TODO.md)
 
+**Team reading:** [Telemetry: from a subsystem to the ground](docs/architecture/telemetry_data_flow.md) — read before implementing subsystem telemetry.
+
 ---
 
 ## The mission
