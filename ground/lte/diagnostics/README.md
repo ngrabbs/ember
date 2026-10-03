@@ -72,3 +72,18 @@ logging level. Raw upstream logs remain private.
 After the bounded run and confirmed modem OFF, reverse the RLC trace and then
 the CE/context trace, rebuild, and compare the binary with the saved baseline.
 The [context results](../results/2026-10-02-ce-context.md) record this restoration.
+
+## PDCP security state trace
+
+`oai-pdcp-security-trace.patch` logs ADD/MODIFY requests and the resulting bearer
+security state: RNTI, SRB/DRB flag, bearer ID, action, requested mode, algorithm
+IDs, activation flag and whether the RRC security container exists. It does not
+log keys, key hashes, payloads or security-container addresses. Apply after the
+production candidates and rebuild; it can be combined with the RLC trace.
+Reverse the optional trace and rebuild after the bounded comparison. Full
+upstream logs still belong in private storage.
+
+Mode255 is the existing API's "leave security unchanged" sentinel. A newly
+allocated PDCP entity starts with inactive security. A missing container alone
+does not prove incorrect security when negotiated algorithms are null; correlate
+with the selected algorithms, activation state and RRC stage.

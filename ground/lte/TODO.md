@@ -229,6 +229,11 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       [Results](results/2026-10-02-ce-context.md).
 - [ ] Inspect SRB2 activation/security, uplink STATUS scheduling/decoding and
       post-reconfiguration PHY transition; reproduce pool-full with owner dump.
+- [x] Capture baseline SRB2 ADD/MODIFY with security mode255, inactive security
+      and no container before SRB2 exhaustion; prepare negotiated-security fix.
+- [ ] Bench-verify new-bearer security initialization and rerun reliability.
+- [ ] Define operational CAN startup/recovery after reset; current bench images
+      require the normal-mode console command on both Feathers after power cycling.
 - [ ] Capture a hardware modem rejection with exact CME diagnostics; add
       registration-aware send admission before recovery qualification.
 - [ ] Add bounded queues, recovery/backoff and duplicate handling; then rerun
