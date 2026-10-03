@@ -4,6 +4,7 @@
 
 | Work | Reference |
 |---|---|
+| Implement subsystem telemetry | [Telemetry data flow and developer workflow](../architecture/telemetry_data_flow.md) |
 | Housekeeping build and runtime | [IHU firmware](../../firmware/ihu/README.md) |
 | Communications control and bring-up | [Firmware roadmap](../../firmware/firmware.md) |
 | Spacecraft mode-manager behavior | [Operations draft](../architecture/operations/README.md) |

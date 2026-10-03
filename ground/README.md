@@ -2,6 +2,7 @@
 
 [System guide](../system/README.md) · [Ground station checklist](../system/ground_station/TODO.md)
 
+- [Telemetry data flow](../docs/architecture/telemetry_data_flow.md): shared team reading, battery voltage/current walkthroughs, and definition ownership.
 - [LTE-M telemetry bench](lte/README.md): Walter UE, LibreSDR/eNodeB inventory,
   recovered LTE configs, bring-up runbook, and spacecraft-channel checklist.
 - [EMBER bench dictionary](ember/README.md): JSON definitions, host codec and

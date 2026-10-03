@@ -8,6 +8,12 @@ EMBER is designed to operate autonomously during normal mission operations. Grou
 
 Ground communications are shared with Flight Communications, and the exact division of responsibilities will continue to be refined as the design develops.
 
+## Shared team reading
+
+[Telemetry: from a subsystem to the ground](../../telemetry_data_flow.md) explains
+the implemented bench data path, definition files, Yamcs decoding, and the workflow
+for adding subsystem telemetry. Read it alongside the application dictionaries below.
+
 ## Design Documents
 
 1. [Subsystem Overview](01-subsystem-overview.md)
