@@ -62,8 +62,10 @@ Both final candidate images are installed and verified. Walter rebooted with
 boot2175643340, modem OFF/window0, zero accepted/rejected packets and zero
 framing errors. Four flash segments passed hash verification.
 [Deployment evidence](../../../system/ground_station/evidence/lte-queue-preparation-20261003/deployment.json).
-Queued OTA/Yamcs qualification awaits the IHU USB connection; the earlier
-ten-run test used the old admission firmware, not this candidate.
+The [subsequent queued OTA test](2026-10-02-queued-eps.md) delivered all three
+original packets into Yamcs, after radio-off retention, and confirmed OFF. The
+earlier ten-run test used the old admission firmware, not this candidate. Forced
+registration-loss recovery remains unqualified.
 
 The private8MB IHU pre-queue flash backup was saved and verified on M75q:
 `/media/ngrabbs/BACKUP-A/ember-walter-bridge/ihu-before-queue-20261003.uf2`,
@@ -78,3 +80,6 @@ EPS packets, exercises radio-off retention, enables one RF window and queue
 service, collects exact FIFO modem acceptances, disables service and requests OFF.
 It saves packet identities for independent byte comparison against UDP/Yamcs.
 It will not discard preexisting queue contents or claim modem OK as reception.
+
+The final IHU active-CAN enqueue guard subsequently passed on hardware;
+[guard evidence](../../../system/ground_station/evidence/lte-queue-preparation-20261003/final-guard.json).

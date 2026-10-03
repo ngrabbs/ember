@@ -248,8 +248,10 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       IHU bench FIFO with bounded pre-submission retry/backoff and held uncertainty.
       Radio-off capacity/retention test passed; deployment/OTA recovery are separate.
       [Preparation](results/2026-10-02-queue-preparation.md).
-- [ ] Install Walter admission candidate; verify queued hardware EPS bytes at
-      ground and Yamcs after an explicit radio-off wait and bounded RF window.
+- [x] Install Walter admission candidate; verify queued hardware EPS bytes at
+      ground and Yamcs after an explicit radio-off wait and bounded RF window:
+      3/3 exact FIFO matches, no retries/holds/new CAN errors, queue empty and RF OFF.
+      [Results](results/2026-10-02-queued-eps.md).
 - [ ] Qualify registration-loss/recovery on hardware; add final-ACK handling
       before treating a modem-accepted packet as end-to-end delivered.
 - [ ] Add bounded queues, recovery/backoff and duplicate handling; then rerun
