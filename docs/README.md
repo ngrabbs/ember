@@ -9,7 +9,8 @@ past reasoning and must not be used as an implementation requirement.
 
 1. [Project scope](architecture/project_scope.md) — what we are building and how we will validate it.
 2. [System overview](architecture/system_overview.md) — subsystem responsibilities, power, and data flow.
-3. [Operating modes](architecture/operations/README.md) — proposed behavior, transitions, and permissions.
+3. [Telemetry: from a subsystem to the ground](architecture/telemetry_data_flow.md) — shared reading before implementing subsystem telemetry; worked hardware examples, definitions, and ground decoding.
+4. [Operating modes](architecture/operations/README.md) — proposed behavior, transitions, and permissions.
 
 ## Find what you need
 

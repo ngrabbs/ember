@@ -23,6 +23,9 @@ See [project scope](project_scope.md) for mission goals and validation scope.
   allocated for Iteration 2 control/status traffic. See the
   [interconnect plan](../../system/interfaces/board_to_board.md).
 
+For the implemented EPS/CAN/LTE bench path, worked examples, and definition ownership,
+read [Telemetry: from a subsystem to the ground](telemetry_data_flow.md).
+
 ## Operating behavior
 
 The [operations draft](operations/README.md) proposes BOOT, STARTUP,
