@@ -5,6 +5,13 @@
 **Dated candidate evidence from September 9, 2026.** Quantities below are historical
 observations, not live stock today. Candidates remain unapplied and unqualified.
 
+## October 3 disposition (supersedes candidate actions below)
+
+Retain U9 PSA4-5043+ / C5240848; live stock is available. D15 is now
+PESD5V0F1BLD,315 / C478204 and L16 is 0805HP-221XGRC / C40877572, saved in
+schematic and PCB. [Current acceptance and limitations](../verification/components/prototype_parts_2026-10-03.md).
+The following September observations are historical, not current action items.
+
 ## Agreed transmitter scope — 2026-09-09
 
 User confirmed keeping the existing low-power transmitter rather than targeting 1–2 W. Retain the ADL5602 power-stage architecture. Approximate +20 dBm (~100 mW) amplifier compression capability is not a clean-output specification; actual antenna output is expected in the tens of milliwatts and must be measured with filter/switch losses and drive level included.

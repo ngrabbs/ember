@@ -1,0 +1,416 @@
+{
+  "date": "2026-10-03",
+  "board_sha256": "2d0cf2674d98ab18b7c9d78103155492a41ae450d77406092a1374bfa8f19e5b",
+  "schematic_sha256": "498cc255eb767d616d760b0dca64a45af925849a8a74104a3ece14837a758a5e",
+  "native_erc": {
+    "errors": 0,
+    "warnings": 2,
+    "ignored_tests": 4,
+    "warning_reason": "Existing MCP25625 symbol tri_state library differences"
+  },
+  "drc": {
+    "categories_not_reported": [],
+    "design_rule_violations": 11,
+    "errors": 0,
+    "filtered_count": 11,
+    "schematic_parity": 0,
+    "severity_filter": "warning",
+    "shown": 11,
+    "total_violations": 11,
+    "truncated": false,
+    "unconnected_items": 0,
+    "violations": [
+      {
+        "description": "Drilled hole too close to other hole (board setup constraints min 0.5995 mm; actual 0.5698 mm)",
+        "items": [
+          {
+            "description": "Via [+3V3] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 121.8636,
+              "y": 103.3536
+            },
+            "uuid": "07aed6f1-3316-4fe5-a0b8-4bdb87939cd5"
+          },
+          {
+            "description": "Via [+3V3] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 122.4836,
+              "y": 103.9636
+            },
+            "uuid": "6349e0a6-1dd8-43ea-b462-cc5e6bdd5a60"
+          }
+        ],
+        "pos": {
+          "x": 121.8636,
+          "y": 103.3536
+        },
+        "rule": "hole_to_hole",
+        "severity": "warning"
+      },
+      {
+        "description": "Drilled hole too close to other hole (board setup constraints min 0.5995 mm; actual 0.3001 mm)",
+        "items": [
+          {
+            "description": "Via [+3V3] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 121.8636,
+              "y": 103.3536
+            },
+            "uuid": "07aed6f1-3316-4fe5-a0b8-4bdb87939cd5"
+          },
+          {
+            "description": "Via [+3V3] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 121.8536,
+              "y": 103.9536
+            },
+            "uuid": "e764a21c-43cf-4831-9ab0-b53cebc47071"
+          }
+        ],
+        "pos": {
+          "x": 121.8636,
+          "y": 103.3536
+        },
+        "rule": "hole_to_hole",
+        "severity": "warning"
+      },
+      {
+        "description": "Drilled hole too close to other hole (board setup constraints min 0.5995 mm; actual 0.3301 mm)",
+        "items": [
+          {
+            "description": "Via [+3V3] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 122.4836,
+              "y": 103.9636
+            },
+            "uuid": "6349e0a6-1dd8-43ea-b462-cc5e6bdd5a60"
+          },
+          {
+            "description": "Via [+3V3] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 121.8536,
+              "y": 103.9536
+            },
+            "uuid": "e764a21c-43cf-4831-9ab0-b53cebc47071"
+          }
+        ],
+        "pos": {
+          "x": 122.4836,
+          "y": 103.9636
+        },
+        "rule": "hole_to_hole",
+        "severity": "warning"
+      },
+      {
+        "description": "Drilled hole too close to other hole (board setup constraints min 0.5995 mm; actual 0.4700 mm)",
+        "items": [
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 122.99,
+              "y": 114.73
+            },
+            "uuid": "45eb194b-9784-4dea-8e15-a9cc9a7495a6"
+          },
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 123.76,
+              "y": 114.73
+            },
+            "uuid": "df54d9da-1113-4d9c-a3d5-7176989f7ec7"
+          }
+        ],
+        "pos": {
+          "x": 122.99,
+          "y": 114.73
+        },
+        "rule": "hole_to_hole",
+        "severity": "warning"
+      },
+      {
+        "description": "Drilled hole too close to other hole (board setup constraints min 0.5995 mm; actual 0.5215 mm)",
+        "items": [
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 122.99,
+              "y": 114.73
+            },
+            "uuid": "45eb194b-9784-4dea-8e15-a9cc9a7495a6"
+          },
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 122.94,
+              "y": 113.91
+            },
+            "uuid": "5aa39f94-073b-49b3-bba4-ea7bbe39899e"
+          }
+        ],
+        "pos": {
+          "x": 122.99,
+          "y": 114.73
+        },
+        "rule": "hole_to_hole",
+        "severity": "warning"
+      },
+      {
+        "description": "Drilled hole too close to other hole (board setup constraints min 0.5995 mm; actual 0.5200 mm)",
+        "items": [
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 122.94,
+              "y": 113.91
+            },
+            "uuid": "5aa39f94-073b-49b3-bba4-ea7bbe39899e"
+          },
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 123.76,
+              "y": 113.91
+            },
+            "uuid": "8e3a2d97-51e1-4609-956b-3c18eb1dd1b9"
+          }
+        ],
+        "pos": {
+          "x": 122.94,
+          "y": 113.91
+        },
+        "rule": "hole_to_hole",
+        "severity": "warning"
+      },
+      {
+        "description": "Drilled hole too close to other hole (board setup constraints min 0.5995 mm; actual 0.5200 mm)",
+        "items": [
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 124.53,
+              "y": 114.73
+            },
+            "uuid": "5b2f4814-527d-444e-9eca-dc4ac5656f7e"
+          },
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 124.53,
+              "y": 113.91
+            },
+            "uuid": "b61012bb-32c8-4eb9-bc93-2b0237c5c8fd"
+          }
+        ],
+        "pos": {
+          "x": 124.53,
+          "y": 114.73
+        },
+        "rule": "hole_to_hole",
+        "severity": "warning"
+      },
+      {
+        "description": "Drilled hole too close to other hole (board setup constraints min 0.5995 mm; actual 0.4700 mm)",
+        "items": [
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 124.53,
+              "y": 114.73
+            },
+            "uuid": "5b2f4814-527d-444e-9eca-dc4ac5656f7e"
+          },
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 123.76,
+              "y": 114.73
+            },
+            "uuid": "df54d9da-1113-4d9c-a3d5-7176989f7ec7"
+          }
+        ],
+        "pos": {
+          "x": 124.53,
+          "y": 114.73
+        },
+        "rule": "hole_to_hole",
+        "severity": "warning"
+      },
+      {
+        "description": "Drilled hole too close to other hole (board setup constraints min 0.5995 mm; actual 0.4700 mm)",
+        "items": [
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 123.76,
+              "y": 113.91
+            },
+            "uuid": "8e3a2d97-51e1-4609-956b-3c18eb1dd1b9"
+          },
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 124.53,
+              "y": 113.91
+            },
+            "uuid": "b61012bb-32c8-4eb9-bc93-2b0237c5c8fd"
+          }
+        ],
+        "pos": {
+          "x": 123.76,
+          "y": 113.91
+        },
+        "rule": "hole_to_hole",
+        "severity": "warning"
+      },
+      {
+        "description": "Drilled hole too close to other hole (board setup constraints min 0.5995 mm; actual 0.5200 mm)",
+        "items": [
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 123.76,
+              "y": 113.91
+            },
+            "uuid": "8e3a2d97-51e1-4609-956b-3c18eb1dd1b9"
+          },
+          {
+            "description": "Via [+5V] on Top Layer - Bottom Layer",
+            "pos": {
+              "x": 123.76,
+              "y": 114.73
+            },
+            "uuid": "df54d9da-1113-4d9c-a3d5-7176989f7ec7"
+          }
+        ],
+        "pos": {
+          "x": 123.76,
+          "y": 113.91
+        },
+        "rule": "hole_to_hole",
+        "severity": "warning"
+      },
+      {
+        "description": "Silkscreen clearance",
+        "items": [
+          {
+            "description": "Rectangle of H1 on Top Overlay",
+            "pos": {
+              "x": 109.3486,
+              "y": 137.7686
+            },
+            "uuid": "0986cb10-312d-406c-824d-95de08f86667"
+          },
+          {
+            "description": "Rectangle of H2 on Top Overlay",
+            "pos": {
+              "x": 104.2686,
+              "y": 137.7686
+            },
+            "uuid": "f32bac2b-f6dd-4d7d-8fe8-048bd4f427f7"
+          }
+        ],
+        "pos": {
+          "x": 109.3486,
+          "y": 137.7686
+        },
+        "rule": "silk_overlap",
+        "severity": "warning"
+      }
+    ],
+    "warnings": 11
+  },
+  "native_parity": {
+    "native_net_count": 209,
+    "pcb_pad_count": 556,
+    "mismatches": []
+  },
+  "native_node_count": 551,
+  "asserted_mute_nodes": {
+    "/TX Chain/RF_TX_BPSK_RAW": [
+      "U14.1",
+      "U7.4"
+    ],
+    "/TX Chain/RF_TX_BPSK_145": [
+      "C73.2",
+      "U14.4"
+    ],
+    "TX_ACTIVE": [
+      "D10.2",
+      "J6.14",
+      "R35.1",
+      "U13.2",
+      "U14.2"
+    ]
+  },
+  "mechanical_fixed_positions_unchanged": true,
+  "rf_plane_screen": {
+    "method": "Sample rasterized exported In1 filled-plane polygon only; no source-board parsing. Excludes all via/pad primitives. Raster 0.01 mm/pixel, alpha >=250 required. Conservative geometry screen, not EM extraction.",
+    "corridor_half_width_mm": 0.6312,
+    "longitudinal_step_max_mm": 0.1,
+    "lateral_step_mm": 0.0789,
+    "samples": 20587,
+    "missing_count": 189,
+    "missing_by_net": {
+      "ANT": 189
+    },
+    "per_net_samples": {
+      "Net-(U9-IN)": 289,
+      "TRIPLER_OUT": 1377,
+      "Net-(Q4-C)": 1479,
+      "Net-(C86-Pad2)": 663,
+      "Net-(C84-Pad2)": 748,
+      "Net-(C84-Pad1)": 1258,
+      "ANT": 1003,
+      "Net-(C93-Pad2)": 969,
+      "Net-(U10-RF)": 1717,
+      "Net-(U10-LO)": 969,
+      "Net-(C91-Pad2)": 646,
+      "Net-(U9-OUT_DC)": 1377,
+      "RX_IN": 2091,
+      "Net-(C55-Pad2)": 697,
+      "Net-(C100-Pad1)": 714,
+      "Net-(C60-Pad2)": 748,
+      "Net-(C89-Pad2)": 680,
+      "Net-(U11-RFC)": 255,
+      "TX_437": 1105,
+      "TX_OUT": 1802
+    },
+    "summed_net_lengths_mm": {
+      "Net-(U9-IN)": 1.2086770807820084,
+      "TRIPLER_OUT": 6.475467034327466,
+      "Net-(Q4-C)": 7.745317459305173,
+      "Net-(C86-Pad2)": 3.3400000000000034,
+      "Net-(C84-Pad2)": 3.4417024589426273,
+      "Net-(C84-Pad1)": 6.813820348372384,
+      "ANT": 4.9963899778332515,
+      "Net-(C93-Pad2)": 4.758018940333203,
+      "Net-(U10-RF)": 9.207394770954002,
+      "Net-(U10-LO)": 5.0405109355333035,
+      "Net-(C91-Pad2)": 3.240000000000009,
+      "Net-(U9-OUT_DC)": 7.109536085401898,
+      "RX_IN": 11.478379682130491,
+      "Net-(C55-Pad2)": 3.1197056274847546,
+      "Net-(C100-Pad1)": 3.2027068477904077,
+      "Net-(C60-Pad2)": 3.131421356237262,
+      "Net-(C89-Pad2)": 3.072515891865793,
+      "Net-(U11-RFC)": 1.2207842712474517,
+      "TX_437": 5.484523128565864,
+      "TX_OUT": 9.984412119635795
+    }
+  },
+  "new_mute_gate": {
+    "reference": "U14",
+    "MPN": "SN74LVC1G08DBVR",
+    "LCSC": "C7666"
+  },
+  "new_bypass": {
+    "reference": "C115",
+    "MPN": "CL05B104KO5NNNC",
+    "LCSC": "C1525",
+    "value": "100nF 16V X7R 0402"
+  },
+  "remaining_validation": "Firmware unchanged. Prototype 145.667 MHz waveform, RF off leakage, startup/reset/watchdog and TX/RX sequencing need validation.",
+  "raw_gate_trace_length_mm": 2.487594296149555,
+  "gate_to_C73_net_copper_length_mm": 1.295867012437067
+}

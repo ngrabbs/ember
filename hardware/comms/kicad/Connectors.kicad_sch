@@ -2840,6 +2840,10 @@
 		(uuid "e9fc02f3-375f-4002-b1b1-b89eb8f14b92")
 	)
 	(no_connect
+		(at 139.7 93.98)
+		(uuid "ea59d0d5-701e-406a-8b57-5e92fca340de")
+	)
+	(no_connect
 		(at 254 137.16)
 		(uuid "eecc130b-4464-4ba8-a457-875c49b67585")
 	)
@@ -3223,66 +3227,6 @@
 		)
 		(uuid "0e5bcc41-4b30-42f0-bec1-996d9a838f02")
 	)
-	(label "+3V3"
-		(at 276.86 109.22 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "2d4b8295-a2a8-410c-9c88-05540bcb6865")
-	)
-	(label "GND"
-		(at 238.76 111.76 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "5e255e1a-f011-4bd8-8980-9b7c17badd37")
-	)
-	(label "GND"
-		(at 276.86 111.76 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "944f66e7-8a4c-4202-985f-a80638026aa0")
-	)
-	(label "GND"
-		(at 238.76 114.3 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "97bf902b-6279-463f-a00b-bca8dbc6d2be")
-	)
-	(label "GND"
-		(at 276.86 114.3 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9e9e9ccc-8102-4d27-8250-d6711f3a9dea")
-	)
-	(label "+3V3"
-		(at 238.76 109.22 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "be37a094-9ff1-4ed9-a9ef-93ccd2863224")
-	)
 	(label "VBAT"
 		(at 276.86 132.08 0)
 		(effects
@@ -3293,10 +3237,53 @@
 		)
 		(uuid "f2abcaf2-428e-463c-82c6-8831dcbfb149")
 	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 276.86 111.76 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "0710e3a4-cc05-46de-860f-2c99652e5110")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 276.86 111.76 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 276.86 114.3 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "0746b76d-7c40-4cd5-add7-bdedbdb8b19e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 276.86 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "BPSK_DATA"
 		(shape bidirectional)
 		(at 106.68 167.64 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3320,7 +3307,6 @@
 	(global_label "RX_IF"
 		(shape bidirectional)
 		(at 106.68 182.88 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3341,19 +3327,18 @@
 			)
 		)
 	)
-	(global_label "CAN_A_H"
+	(global_label "GND"
 		(shape bidirectional)
-		(at 121.92 78.74 180)
-		(fields_autoplaced yes)
+		(at 238.76 111.76 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "4b550b4f-7f7e-4ea0-818e-f88f10959381")
+		(uuid "3a740943-b69c-4258-9ef0-e80554e25d53")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 109.7801 78.74 0)
+			(at 238.76 111.76 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3361,23 +3346,65 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify right)
 			)
 		)
 	)
-	(global_label "CAN_B_L"
+	(global_label "+3V3"
+		(shape bidirectional)
+		(at 238.76 109.22 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3ef45f79-4af5-4bb5-be88-d9c0e234fde2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 238.76 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "CAN_A_P"
+		(shape bidirectional)
+		(at 121.92 78.74 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5dbb425b-a8ad-4617-89aa-98c71f876f76")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 121.92 78.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
+	(global_label "CAN_B_N"
 		(shape bidirectional)
 		(at 144.78 76.2 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "4de40447-4c28-42a3-898a-bae0359b3f31")
+		(uuid "5f589260-d7f0-4d0f-abd2-a897f2bdb712")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 156.7989 76.2 0)
+			(at 144.78 76.2 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3385,14 +3412,34 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape bidirectional)
+		(at 238.76 114.3 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6896f5c3-6234-48c9-9218-4725d6d2aaf7")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 238.76 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 	)
 	(global_label "TX_437"
 		(shape bidirectional)
 		(at 106.68 177.8 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3413,10 +3460,31 @@
 			)
 		)
 	)
+	(global_label "CAN_B_P"
+		(shape bidirectional)
+		(at 144.78 78.74 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "70c492ed-dba4-4c8d-8a6a-0ad36dd40b8e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 144.78 78.74 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "+5V_CON"
 		(shape input)
 		(at 151.13 165.1 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3440,7 +3508,6 @@
 	(global_label "+5V_CON"
 		(shape input)
 		(at 281.94 106.68 0)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3464,7 +3531,6 @@
 	(global_label "ANT"
 		(shape bidirectional)
 		(at 262.89 170.18 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3488,7 +3554,6 @@
 	(global_label "TRIPLER_OUT"
 		(shape bidirectional)
 		(at 106.68 172.72 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3509,34 +3574,9 @@
 			)
 		)
 	)
-	(global_label "CAN_A_L"
-		(shape bidirectional)
-		(at 121.92 76.2 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "bc136b3a-3389-44ad-8f52-fa39c53798a7")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 110.0825 76.2 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-	)
 	(global_label "RX_BASEBAND"
 		(shape bidirectional)
 		(at 106.68 187.96 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3557,10 +3597,31 @@
 			)
 		)
 	)
+	(global_label "+3V3"
+		(shape bidirectional)
+		(at 276.86 109.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c91e55df-e1c2-42f9-9396-1ca5cc367c82")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 276.86 109.22 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(global_label "+5V_CON"
 		(shape input)
 		(at 238.76 106.68 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3581,19 +3642,18 @@
 			)
 		)
 	)
-	(global_label "CAN_B_H"
+	(global_label "CAN_A_N"
 		(shape bidirectional)
-		(at 144.78 78.74 0)
-		(fields_autoplaced yes)
+		(at 121.92 76.2 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
-		(uuid "e538778e-5f98-41d1-a2c7-a5e4437abcad")
+		(uuid "ec11eb16-1e69-415c-bd04-d0d24c343175")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 157.1013 78.74 0)
+			(at 121.92 76.2 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3601,14 +3661,12 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
 	)
 	(global_label "CLK0_OUT"
 		(shape bidirectional)
 		(at 106.68 162.56 180)
-		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3696,6 +3754,39 @@
 				)
 			)
 		)
+		(property "Assembly" "PCB feature"
+			(at 110.49 162.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Assembly Notes" "Bare copper test pad; no purchased component."
+			(at 110.49 162.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "N/A"
+			(at 110.49 162.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "f9e8cd86-9d1e-4ac7-a4cf-e4430d79280c")
 		)
@@ -3765,6 +3856,39 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 110.49 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Assembly" "PCB feature"
+			(at 110.49 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Assembly Notes" "Bare copper test pad; no purchased component."
+			(at 110.49 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "N/A"
 			(at 110.49 172.72 0)
 			(hide yes)
 			(show_name no)
@@ -4217,6 +4341,39 @@
 				)
 			)
 		)
+		(property "Assembly" "PCB feature"
+			(at 110.49 177.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Assembly Notes" "Bare copper test pad; no purchased component."
+			(at 110.49 177.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "N/A"
+			(at 110.49 177.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "0d212be6-90cb-453e-9440-d831f7a71ca9")
 		)
@@ -4546,7 +4703,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.molex.com/en-us/products/part-detail/734151471"
 			(at 269.24 170.18 0)
 			(hide yes)
 			(show_name no)
@@ -4558,6 +4715,61 @@
 			)
 		)
 		(property "Description" "small coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)"
+			(at 269.24 170.18 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C588477"
+			(at 269.24 170.18 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "734151471"
+			(at 269.24 170.18 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Molex"
+			(at 269.24 170.18 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part #" "734151471"
+			(at 269.24 170.18 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Prototype selection; see verification/components/prototype_parts_2026-10-03.md"
 			(at 269.24 170.18 0)
 			(hide yes)
 			(show_name no)
@@ -4640,6 +4852,39 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 110.49 182.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Assembly" "PCB feature"
+			(at 110.49 182.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Assembly Notes" "Bare copper test pad; no purchased component."
+			(at 110.49 182.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "N/A"
 			(at 110.49 182.88 0)
 			(hide yes)
 			(show_name no)
@@ -4985,6 +5230,39 @@
 				)
 			)
 		)
+		(property "Assembly" "PCB feature"
+			(at 110.49 167.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Assembly Notes" "Bare copper test pad; no purchased component."
+			(at 110.49 167.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "N/A"
+			(at 110.49 167.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "b3307520-0a74-4135-9735-5b3b0b1f6706")
 		)
@@ -5132,6 +5410,39 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 110.49 187.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Assembly" "PCB feature"
+			(at 110.49 187.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Assembly Notes" "Bare copper test pad; no purchased component."
+			(at 110.49 187.96 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "N/A"
 			(at 110.49 187.96 0)
 			(hide yes)
 			(show_name no)

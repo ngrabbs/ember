@@ -6,18 +6,23 @@
 for the intended build and assembly allowance. LCSC-only stock and cached catalogue
 counts are insufficient. Preserve intentional DNP parts.
 
-The latest ordering-field record leaves **J9, L16, and D15** unresolved; **U9**
-needs replacement separately. Stock observations in the evidence folder are dated
-snapshots, not current availability or reservations.
+**Canonical embedded property: `LCSC Part #`.** All 147 purchasable placements
+now carry a C-number in schematic and PCB, including DNP headers. Six bare
+copper test pads use `N/A`; mounting holes are board geometry. Keep ordering
+identity separate from DNP and hand-solder assembly choices.
 
-| Item | Remaining decision |
-|---|---|
-| U9 | Qualify TQP3M9036 candidate with package, bias/coupling, stability and mixer headroom |
-| L16 | Choose with the final U9 network; current J and candidate G tolerance variants are not identical |
-| D15 | Qualify exact replacement package, RF loading, standoff/mismatch and ESD ratings |
-| J9 | Verify Molex 73415-1471 drawing and board fit before completing ordering fields |
-| Filter tuning | 9.1 pF baseline; 8.2/7.5 pF candidates require distinct exact parts and measurements |
-| Build quantity | Recheck scarce filter inductors and stack sockets against quantity plus allowance |
+[Current field audit and full BOM](evidence/lcsc_property_audit_2026-10-03.md)
+records new selections and verification. L16, D15 and J9 exact ordering fields
+are complete; U9 PSA4-5043+ is retained with October 3 stock evidence.
+[RF prototype acceptance and limits](../verification/components/prototype_parts_2026-10-03.md).
+
+All 55 original codes were checked against live JLCPCB rows October 3. The two
+stock shortages and green LED package question are now resolved by qualified
+substitutions: C90642 inductors, C882826 regulator, C125094 LEDs. The mixer is retained
+per user decision; its six-piece stock snapshot remains an order-time risk.
+[Current stock and assembly audit](evidence/stock_assembly_audit_2026-10-03.md).
+Verify the selected service's assembly allowance. Confirm the order's assembly service and filter-part selections.
+No purchases or reservations have been made.
 
 C526972 was resolved in the earlier catalogue audit as **YAGEO CC0402BRNPO9BN9R1**.
 Older model notes calling its identity unknown are superseded; exact RF models and
@@ -29,5 +34,5 @@ live procurement acceptance still need work.
 - [Connector/IC-field completion](evidence/bom_field_completion.md)
 - [Dated full audit](evidence/jlcpcb_bom_audit.md) and [live-stock snapshot](evidence/jlcpcb_live_audit.md)
 
-Regenerate the native netlist before exporting the manufacturing BOM. This cleanup
-has not refreshed stock, applied substitutions, or generated a fabrication release.
+Regenerate the native netlist before exporting the manufacturing BOM. The audit BOM is not a fabrication release; generate a filtered assembly BOM
+and verify the vendor preview before ordering.

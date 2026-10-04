@@ -1,0 +1,64 @@
+{
+  "pin_net_assertions": "PASS",
+  "unchanged_component_properties": "PASS",
+  "new_references": [
+    "#PWR01043",
+    "#PWR01044",
+    "#PWR01045",
+    "#PWR01046",
+    "#PWR01047",
+    "#PWR01048",
+    "C116",
+    "C117",
+    "C118",
+    "R46",
+    "U15"
+  ],
+  "removed_references": [
+    "D8"
+  ],
+  "relocated_reference": "#FLG04: +5V to +5V_CON",
+  "component_count": 30,
+  "expected_pin_nets": {
+    "U15": {
+      "1": "PWR_EN",
+      "2": "GND",
+      "3": "~",
+      "4": "GND",
+      "5": "+5V_CON",
+      "6": "+5V",
+      "7": "PWR_DVDT",
+      "8": "GND",
+      "9": "GND",
+      "10": "~"
+    },
+    "R46": {
+      "1": "+5V_CON",
+      "2": "PWR_EN"
+    },
+    "C116": {
+      "1": "PWR_DVDT",
+      "2": "GND"
+    },
+    "C117": {
+      "1": "+5V_CON",
+      "2": "GND"
+    },
+    "C118": {
+      "1": "+5V",
+      "2": "GND"
+    },
+    "#FLG04": {
+      "1": "+5V_CON"
+    }
+  },
+  "shorts": {
+    "short_count": 0,
+    "shorts": []
+  },
+  "orphans": {
+    "orphan_count": 0,
+    "orphans": [],
+    "tolerance": 0.05
+  }
+}

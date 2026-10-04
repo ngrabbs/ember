@@ -11,6 +11,207 @@
 		(comment 9 "UHF/UHF revision in review - not for fabrication")
 	)
 	(lib_symbols
+		(symbol "74xGxx:74LVC1G08"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -5.08 7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "74LVC1G08"
+				(at 7.62 -7.62 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g08.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Single AND Gate, Low-Voltage CMOS"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "Single Gate AND LVC CMOS"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT?23* Texas?R-PDSO-G5?DCK* Texas?R-PDSO-N5?DRL* Texas?X2SON*0.8x0.8mm*P0.48mm*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "74LVC1G08_0_1"
+				(arc
+					(start 0 5.08)
+					(mid 5.0579 0)
+					(end 0 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -5.08) (xy -7.62 -5.08) (xy -7.62 5.08) (xy 0 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "74LVC1G08_1_1"
+				(pin input line
+					(at -15.24 2.54 0)
+					(length 7.62)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 -2.54 0)
+					(length 7.62)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -10.16 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 12.7 0 180)
+					(length 7.62)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 10.16 270)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "74xGxx:74LVC1G86"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -1798,8 +1999,8 @@
 		)
 	)
 	(rectangle
-		(start 71.12 100.33)
-		(end 152.4 150.9522)
+		(start 54.61 74.93)
+		(end 135.89 125.5522)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -1811,8 +2012,8 @@
 		(uuid "7a29e541-67d3-4922-85a2-30a9e0bd513f")
 	)
 	(rectangle
-		(start 204.47 181.61)
-		(end 299.72 217.17)
+		(start 261.62 172.72)
+		(end 356.87 208.28)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -1824,8 +2025,8 @@
 		(uuid "cdb3883b-8c1c-4bff-8d2c-75f05248b8a0")
 	)
 	(rectangle
-		(start 158.75 86.36)
-		(end 260.35 148.59)
+		(start 184.15 63.5)
+		(end 285.75 125.73)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -1837,8 +2038,8 @@
 		(uuid "d27659eb-847c-45d7-b3be-5385d347f421")
 	)
 	(rectangle
-		(start 193.04 161.1122)
-		(end 73.66 222.0722)
+		(start 250.19 152.2222)
+		(end 130.81 213.1822)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -1850,8 +2051,8 @@
 		(uuid "dedda01c-d454-4efb-a9fd-74734dc9a9e4")
 	)
 	(rectangle
-		(start 267.97 107.95)
-		(end 358.14 143.51)
+		(start 293.37 85.09)
+		(end 383.54 120.65)
 		(stroke
 			(width 0.254)
 			(type solid)
@@ -1864,7 +2065,7 @@
 	)
 	(text "Tripler"
 		(exclude_from_sim no)
-		(at 161.036 85.344 0)
+		(at 186.436 62.484 0)
 		(effects
 			(font
 				(size 3.048 3.048)
@@ -1875,7 +2076,7 @@
 	)
 	(text "MMIC Amplifier"
 		(exclude_from_sim no)
-		(at 73.66 161.1122 0)
+		(at 130.81 152.2222 0)
 		(effects
 			(font
 				(size 3.048 3.048)
@@ -1886,7 +2087,7 @@
 	)
 	(text "BPSK Modulator"
 		(exclude_from_sim no)
-		(at 71.12 99.822 0)
+		(at 54.61 74.422 0)
 		(effects
 			(font
 				(size 3.048 3.048)
@@ -1897,7 +2098,7 @@
 	)
 	(text "Output Band-Pass Filter"
 		(exclude_from_sim no)
-		(at 204.724 181.356 0)
+		(at 261.874 172.466 0)
 		(effects
 			(font
 				(size 3.048 3.048)
@@ -1908,7 +2109,7 @@
 	)
 	(text "TX CHAIN"
 		(exclude_from_sim no)
-		(at 74.93 55.88 0)
+		(at 29.21 26.67 0)
 		(effects
 			(font
 				(size 3.048 3.048)
@@ -1917,9 +2118,20 @@
 		)
 		(uuid "d77a314f-3908-43cf-8f55-acc61be3af37")
 	)
+	(text "TX_ACTIVE low forces the tripler drive low.\nR35 provides the existing 10k reset pull-down.\nCLK1 / receive LO is unaffected.\nVerify 145.667 MHz waveform and off-state leakage on prototype."
+		(exclude_from_sim no)
+		(at 149.86 134.62 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e71a3ecd-2ff4-43c2-af4f-57e3e7869f21")
+	)
 	(text "437 MHz Band-Pass Filter"
 		(exclude_from_sim no)
-		(at 267.208 107.696 0)
+		(at 292.608 84.836 0)
 		(effects
 			(font
 				(size 3.048 3.048)
@@ -1928,9 +2140,21 @@
 		)
 		(uuid "eb2b6779-4824-4013-9683-f308ff434911")
 	)
+	(text "Hardware TX mute"
+		(exclude_from_sim no)
+		(at 149.098 78.994 0)
+		(effects
+			(font
+				(size 2 2)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "ef5079af-b6f1-4ff5-9bca-89dbfc6411bb")
+	)
 	(text_box "ADL5602: 50 Ohm matched input/output, 20 dB gain, DC to 4 GHz. 3-pin SOT-89 -- NO separate VCC pin.  DC bias enters through the RFOUT pin (pin 3) via bias tee inductor L5 .  This is standard for MMIC gain blocks.  L5 (RFC) feeds DC while presenting high impedance at RF.  Expected output: -7 dBm (tripler) + 20 dB (MMIC) ~+13 dBm at 437 MHz.  May need an attenuator pad if output exceeds amateur power limits or if the MMIC saturates -- check P1dB in datasheet."
 		(exclude_from_sim no)
-		(at 74.93 162.0793 0)
+		(at 132.08 153.1893 0)
 		(size 68.58 18.2607)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
@@ -1952,7 +2176,7 @@
 	)
 	(text_box "TX CHAIN - 437 MHz BPSK downlink transmitter.  The carrier from the Si5351A (145.67 MHz) is BPSK-modulated by the 74LVC1G86 XOR gate, then frequency-tripled to 437 MHz by a class-C biased 2SC3356 transistor. A 2-pole cap-coupled Chebyshev BPF selects the 3rd harmonic and rejects the fundamental and 2nd harmonic.  The ADL5602 MMIC provides ~20 dB gain to bring the signal to ~+11.9 dBm output.  BPSK phase states are preserved through odd-order multiplication: 3 x 180* = 540* = 180*"
 		(exclude_from_sim no)
-		(at 74.93 55.88 0)
+		(at 29.21 26.67 0)
 		(size 142.24 20.32)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
@@ -1974,7 +2198,7 @@
 	)
 	(text_box "Class-C frequency tripler. R27 (47K Ohm) biases the transistor below cutoff -- it only conducts on positive input peaks, generating strong harmonic content.  47kOhm was empirically optimized on the breadboard prototype: -7.4 dBm at 437 MHz with 2N3904 (vs -12.2 dBm at 10kOhm). 2SC3356 is the flight transistor, dropping into the MMBT3904 footprint; 2N3904 (ft=300MHz) validated during bring-up.  RFC L1 provides DC bias path while presenting high impedance at RF.  SRF of L1 must be well above 437 MHz -- Coilcraft 0805CS-221XJRC (SRF ~1.5GHz). Supply is +5V for maximum collector swing and harmonic output."
 		(exclude_from_sim no)
-		(at 205.74 115.57 0)
+		(at 231.14 92.71 0)
 		(size 53.34 28.4838)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
@@ -1996,7 +2220,7 @@
 	)
 	(text_box "437 MHz BPF: 2-pole capacitively-coupled Chebyshev (2 LC resonators +\n  series coupling cap + I/O coupling caps). Moderate bandwidth (~tens of MHz),\n  deliberately NOT narrow -- wide keeps IL low and holds 437 in-band despite\n  tuning/temperature drift. Target IL <2 dB at 437 (sim ~1.3 dB). Two of these\n  cascade: pre-MMIC and post-MMIC.\n\n  ALL capacitors MUST be C0G/NP0 dielectric -- X7R has voltage-dependent\n  capacitance that detunes the filter and generates intermodulation products\n  at RF.\n\n  Starting values -- tune with VNA during bring-up. Tune IN-CHAIN, not on a\n  50-ohm bench sweep: the tripler tank's source impedance shifts the center\n  (a 50-ohm sweep mis-predicts it). Resonator tuning pads add capacitance =\n  lower center (add-only direction).\n\n  Rejection at the antenna (full chain = both BPFs + collector tank):\n    145.67 MHz (fundamental)  >40 dB   (far out, easy)\n    291.3 MHz  (2nd harmonic)  >30 dB   (crushed, ~-69 dBc achieved)\n    582.7 MHz  (4th harmonic)  >20 dB   <- WATCH ITEM: the 2-pole's weak\n                                            high side (~-13 dB per stage,\n                                            ~-37 dBc in the full chain)"
 		(exclude_from_sim no)
-		(at 266.7 58.42 0)
+		(at 292.1 35.56 0)
 		(size 82.55 44.8409)
 		(margins 0.9525 0.9525 0.9525 0.9525)
 		(stroke
@@ -2017,170 +2241,164 @@
 		(uuid "f6407350-ed34-4a56-b163-b1c519baa528")
 	)
 	(junction
-		(at 149.86 172.72)
+		(at 207.01 163.83)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "0b1cd205-fc97-42c4-840a-ed0a0becc08b")
 	)
 	(junction
-		(at 227.33 200.66)
+		(at 284.48 191.77)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "0dacca6f-b460-4342-b77c-3ce2e821975b")
 	)
 	(junction
-		(at 326.39 128.27)
+		(at 351.79 105.41)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "16cc6541-8de1-4e5a-af69-ef23ba3de776")
 	)
 	(junction
-		(at 261.62 200.66)
+		(at 318.77 191.77)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "1ba936c9-2bf2-48ed-8bf5-7e7926d03481")
 	)
 	(junction
-		(at 190.5 106.68)
+		(at 215.9 83.82)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "1d2595c4-f7fe-4178-9199-d1743a75d14b")
 	)
 	(junction
-		(at 318.77 114.3)
+		(at 344.17 91.44)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "290d092b-b057-4ae6-b851-e0435895b69b")
 	)
 	(junction
-		(at 297.18 114.3)
+		(at 322.58 91.44)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "31a7dbfe-5d35-4b50-a293-13d0ca24dc01")
 	)
 	(junction
-		(at 175.26 191.77)
+		(at 232.41 182.88)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "41d95565-9f71-4555-a6d6-6a5f7c97f356")
 	)
 	(junction
-		(at 105.41 127)
+		(at 88.9 101.6)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "504e5531-d29c-4666-b452-9d0d1543027e")
 	)
 	(junction
-		(at 308.61 130.81)
+		(at 334.01 107.95)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "6817b322-fe21-4512-a135-ea50bfb7041f")
 	)
 	(junction
-		(at 149.86 124.46)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "69230417-54d8-4487-adc8-63502da9013f")
-	)
-	(junction
-		(at 172.72 124.46)
+		(at 198.12 101.6)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "6cf40a77-b619-4d96-965e-3e786335f768")
 	)
 	(junction
-		(at 160.02 172.72)
+		(at 217.17 163.83)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "752f7041-4412-4c85-954e-9adaee4bc533")
 	)
 	(junction
-		(at 290.83 128.27)
+		(at 316.23 105.41)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "8033615e-3ace-417f-8f99-43e16acb5a86")
 	)
 	(junction
-		(at 215.9 100.33)
+		(at 241.3 77.47)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "852f87bf-1217-4ecd-8345-6172a0a0eb47")
 	)
 	(junction
-		(at 284.48 114.3)
+		(at 309.88 91.44)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "88b1c680-3e30-47e4-9945-8d8b515e02a2")
 	)
 	(junction
-		(at 331.47 114.3)
+		(at 356.87 91.44)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "90880531-fa58-4a57-8d18-4e007b0e0f6e")
 	)
 	(junction
-		(at 190.5 95.25)
+		(at 215.9 72.39)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "a237965d-68fb-494f-a026-9fc6300ece64")
 	)
 	(junction
-		(at 228.6 114.3)
+		(at 254 91.44)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "a52a6a14-9235-4e36-8a39-51ccdbc758a2")
 	)
 	(junction
-		(at 123.19 110.49)
+		(at 106.68 85.09)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ad42c7dc-6acd-403c-8e4e-54436f5912d3")
 	)
 	(junction
-		(at 149.86 200.66)
+		(at 207.01 191.77)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "bcce67df-4c58-4a3b-85c1-c9463cf3a512")
 	)
 	(junction
-		(at 190.5 114.3)
+		(at 215.9 91.44)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c37bf5e5-dd0d-432e-9171-3db0d2ae5961")
 	)
 	(junction
-		(at 269.24 186.69)
+		(at 326.39 177.8)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c9e6919a-2df5-4f80-b622-80edd6e8d3f5")
 	)
 	(junction
-		(at 256.54 186.69)
+		(at 313.69 177.8)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "cfecda14-378c-44b8-9a82-eaa8a24922a4")
 	)
 	(junction
-		(at 245.11 203.2)
+		(at 302.26 194.31)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d978c57c-98f7-455f-bf5c-52e9715bf121")
 	)
 	(junction
-		(at 222.25 186.69)
+		(at 279.4 177.8)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ec31eb0c-d4f7-41a1-b7c2-7837ed337d75")
 	)
 	(junction
-		(at 234.95 186.69)
+		(at 292.1 177.8)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ee336b1d-bdc5-4119-8474-c38913a88e1e")
 	)
 	(wire
 		(pts
-			(xy 222.25 200.66) (xy 227.33 200.66)
+			(xy 279.4 191.77) (xy 284.48 191.77)
 		)
 		(stroke
 			(width 0)
@@ -2190,7 +2408,7 @@
 	)
 	(wire
 		(pts
-			(xy 213.36 186.69) (xy 222.25 186.69)
+			(xy 270.51 177.8) (xy 279.4 177.8)
 		)
 		(stroke
 			(width 0)
@@ -2200,7 +2418,7 @@
 	)
 	(wire
 		(pts
-			(xy 120.65 208.28) (xy 120.65 212.09)
+			(xy 177.8 199.39) (xy 177.8 203.2)
 		)
 		(stroke
 			(width 0)
@@ -2210,7 +2428,7 @@
 	)
 	(wire
 		(pts
-			(xy 318.77 114.3) (xy 318.77 116.84)
+			(xy 344.17 91.44) (xy 344.17 93.98)
 		)
 		(stroke
 			(width 0)
@@ -2220,7 +2438,7 @@
 	)
 	(wire
 		(pts
-			(xy 331.47 114.3) (xy 336.55 114.3)
+			(xy 356.87 91.44) (xy 361.95 91.44)
 		)
 		(stroke
 			(width 0)
@@ -2230,7 +2448,7 @@
 	)
 	(wire
 		(pts
-			(xy 344.17 114.3) (xy 347.98 114.3)
+			(xy 369.57 91.44) (xy 373.38 91.44)
 		)
 		(stroke
 			(width 0)
@@ -2240,7 +2458,7 @@
 	)
 	(wire
 		(pts
-			(xy 200.66 95.25) (xy 215.9 95.25)
+			(xy 226.06 72.39) (xy 241.3 72.39)
 		)
 		(stroke
 			(width 0)
@@ -2250,7 +2468,7 @@
 	)
 	(wire
 		(pts
-			(xy 207.01 106.68) (xy 207.01 100.33)
+			(xy 232.41 83.82) (xy 232.41 77.47)
 		)
 		(stroke
 			(width 0)
@@ -2260,7 +2478,7 @@
 	)
 	(wire
 		(pts
-			(xy 318.77 128.27) (xy 326.39 128.27)
+			(xy 344.17 105.41) (xy 351.79 105.41)
 		)
 		(stroke
 			(width 0)
@@ -2270,7 +2488,7 @@
 	)
 	(wire
 		(pts
-			(xy 228.6 114.3) (xy 228.6 110.49)
+			(xy 254 91.44) (xy 254 87.63)
 		)
 		(stroke
 			(width 0)
@@ -2280,7 +2498,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 172.72) (xy 160.02 172.72)
+			(xy 207.01 163.83) (xy 217.17 163.83)
 		)
 		(stroke
 			(width 0)
@@ -2290,7 +2508,7 @@
 	)
 	(wire
 		(pts
-			(xy 105.41 127) (xy 107.95 127)
+			(xy 88.9 101.6) (xy 91.44 101.6)
 		)
 		(stroke
 			(width 0)
@@ -2300,7 +2518,7 @@
 	)
 	(wire
 		(pts
-			(xy 222.25 196.85) (xy 222.25 200.66)
+			(xy 279.4 187.96) (xy 279.4 191.77)
 		)
 		(stroke
 			(width 0)
@@ -2310,7 +2528,7 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 203.2) (xy 245.11 203.2)
+			(xy 284.48 194.31) (xy 302.26 194.31)
 		)
 		(stroke
 			(width 0)
@@ -2320,7 +2538,7 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 181.61) (xy 175.26 191.77)
+			(xy 232.41 172.72) (xy 232.41 182.88)
 		)
 		(stroke
 			(width 0)
@@ -2330,7 +2548,17 @@
 	)
 	(wire
 		(pts
-			(xy 234.95 186.69) (xy 234.95 189.23)
+			(xy 179.07 101.6) (xy 185.42 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "20c213de-0c9a-4294-830f-2cd9bc949233")
+	)
+	(wire
+		(pts
+			(xy 292.1 177.8) (xy 292.1 180.34)
 		)
 		(stroke
 			(width 0)
@@ -2340,7 +2568,7 @@
 	)
 	(wire
 		(pts
-			(xy 105.41 110.49) (xy 107.95 110.49)
+			(xy 88.9 85.09) (xy 91.44 85.09)
 		)
 		(stroke
 			(width 0)
@@ -2350,7 +2578,7 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 173.99) (xy 175.26 172.72)
+			(xy 232.41 165.1) (xy 232.41 163.83)
 		)
 		(stroke
 			(width 0)
@@ -2360,7 +2588,7 @@
 	)
 	(wire
 		(pts
-			(xy 87.63 121.92) (xy 107.95 121.92)
+			(xy 71.12 96.52) (xy 91.44 96.52)
 		)
 		(stroke
 			(width 0)
@@ -2370,7 +2598,7 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 200.66) (xy 227.33 203.2)
+			(xy 284.48 191.77) (xy 284.48 194.31)
 		)
 		(stroke
 			(width 0)
@@ -2380,7 +2608,7 @@
 	)
 	(wire
 		(pts
-			(xy 276.86 114.3) (xy 284.48 114.3)
+			(xy 302.26 91.44) (xy 309.88 91.44)
 		)
 		(stroke
 			(width 0)
@@ -2390,7 +2618,17 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 93.98) (xy 190.5 95.25)
+			(xy 166.37 91.44) (xy 166.37 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2c1f49fc-040e-4352-90bf-20a5fc4f8103")
+	)
+	(wire
+		(pts
+			(xy 215.9 71.12) (xy 215.9 72.39)
 		)
 		(stroke
 			(width 0)
@@ -2400,7 +2638,7 @@
 	)
 	(wire
 		(pts
-			(xy 172.72 124.46) (xy 172.72 127)
+			(xy 198.12 101.6) (xy 198.12 104.14)
 		)
 		(stroke
 			(width 0)
@@ -2410,7 +2648,7 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 203.2) (xy 261.62 203.2)
+			(xy 302.26 194.31) (xy 318.77 194.31)
 		)
 		(stroke
 			(width 0)
@@ -2420,7 +2658,7 @@
 	)
 	(wire
 		(pts
-			(xy 172.72 124.46) (xy 182.88 124.46)
+			(xy 198.12 101.6) (xy 208.28 101.6)
 		)
 		(stroke
 			(width 0)
@@ -2430,7 +2668,7 @@
 	)
 	(wire
 		(pts
-			(xy 123.19 134.62) (xy 123.19 142.24)
+			(xy 106.68 109.22) (xy 106.68 116.84)
 		)
 		(stroke
 			(width 0)
@@ -2440,7 +2678,7 @@
 	)
 	(wire
 		(pts
-			(xy 261.62 200.66) (xy 261.62 203.2)
+			(xy 318.77 191.77) (xy 318.77 194.31)
 		)
 		(stroke
 			(width 0)
@@ -2450,7 +2688,7 @@
 	)
 	(wire
 		(pts
-			(xy 331.47 124.46) (xy 331.47 128.27)
+			(xy 356.87 101.6) (xy 356.87 105.41)
 		)
 		(stroke
 			(width 0)
@@ -2460,7 +2698,17 @@
 	)
 	(wire
 		(pts
-			(xy 199.39 186.69) (xy 205.74 186.69)
+			(xy 143.51 123.19) (xy 143.51 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "36684413-3eb7-4de6-8f3d-90ba421dae4c")
+	)
+	(wire
+		(pts
+			(xy 256.54 177.8) (xy 262.89 177.8)
 		)
 		(stroke
 			(width 0)
@@ -2470,7 +2718,7 @@
 	)
 	(wire
 		(pts
-			(xy 167.64 124.46) (xy 172.72 124.46)
+			(xy 193.04 101.6) (xy 198.12 101.6)
 		)
 		(stroke
 			(width 0)
@@ -2480,7 +2728,7 @@
 	)
 	(wire
 		(pts
-			(xy 115.57 110.49) (xy 123.19 110.49)
+			(xy 99.06 85.09) (xy 106.68 85.09)
 		)
 		(stroke
 			(width 0)
@@ -2490,7 +2738,7 @@
 	)
 	(wire
 		(pts
-			(xy 207.01 100.33) (xy 215.9 100.33)
+			(xy 232.41 77.47) (xy 241.3 77.47)
 		)
 		(stroke
 			(width 0)
@@ -2500,7 +2748,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 95.25) (xy 193.04 95.25)
+			(xy 215.9 72.39) (xy 218.44 72.39)
 		)
 		(stroke
 			(width 0)
@@ -2510,7 +2758,7 @@
 	)
 	(wire
 		(pts
-			(xy 105.41 137.16) (xy 105.41 142.24)
+			(xy 88.9 111.76) (xy 88.9 116.84)
 		)
 		(stroke
 			(width 0)
@@ -2520,7 +2768,7 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 191.77) (xy 186.69 191.77)
+			(xy 232.41 182.88) (xy 243.84 182.88)
 		)
 		(stroke
 			(width 0)
@@ -2530,7 +2778,7 @@
 	)
 	(wire
 		(pts
-			(xy 215.9 100.33) (xy 215.9 105.41)
+			(xy 241.3 77.47) (xy 241.3 82.55)
 		)
 		(stroke
 			(width 0)
@@ -2540,7 +2788,7 @@
 	)
 	(wire
 		(pts
-			(xy 222.25 186.69) (xy 234.95 186.69)
+			(xy 279.4 177.8) (xy 292.1 177.8)
 		)
 		(stroke
 			(width 0)
@@ -2550,7 +2798,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 114.3) (xy 228.6 114.3)
+			(xy 215.9 91.44) (xy 254 91.44)
 		)
 		(stroke
 			(width 0)
@@ -2560,7 +2808,7 @@
 	)
 	(wire
 		(pts
-			(xy 199.39 200.66) (xy 199.39 186.69)
+			(xy 256.54 191.77) (xy 256.54 177.8)
 		)
 		(stroke
 			(width 0)
@@ -2570,7 +2818,7 @@
 	)
 	(wire
 		(pts
-			(xy 105.41 127) (xy 105.41 129.54)
+			(xy 88.9 101.6) (xy 88.9 104.14)
 		)
 		(stroke
 			(width 0)
@@ -2580,7 +2828,7 @@
 	)
 	(wire
 		(pts
-			(xy 261.62 200.66) (xy 256.54 200.66)
+			(xy 318.77 191.77) (xy 313.69 191.77)
 		)
 		(stroke
 			(width 0)
@@ -2590,7 +2838,7 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 200.66) (xy 234.95 200.66)
+			(xy 284.48 191.77) (xy 292.1 191.77)
 		)
 		(stroke
 			(width 0)
@@ -2600,7 +2848,7 @@
 	)
 	(wire
 		(pts
-			(xy 308.61 130.81) (xy 308.61 135.89)
+			(xy 334.01 107.95) (xy 334.01 113.03)
 		)
 		(stroke
 			(width 0)
@@ -2610,7 +2858,7 @@
 	)
 	(wire
 		(pts
-			(xy 290.83 128.27) (xy 290.83 130.81)
+			(xy 316.23 105.41) (xy 316.23 107.95)
 		)
 		(stroke
 			(width 0)
@@ -2620,7 +2868,7 @@
 	)
 	(wire
 		(pts
-			(xy 130.81 200.66) (xy 149.86 200.66)
+			(xy 187.96 191.77) (xy 207.01 191.77)
 		)
 		(stroke
 			(width 0)
@@ -2630,7 +2878,7 @@
 	)
 	(wire
 		(pts
-			(xy 200.66 106.68) (xy 207.01 106.68)
+			(xy 226.06 83.82) (xy 232.41 83.82)
 		)
 		(stroke
 			(width 0)
@@ -2640,7 +2888,7 @@
 	)
 	(wire
 		(pts
-			(xy 284.48 128.27) (xy 290.83 128.27)
+			(xy 309.88 105.41) (xy 316.23 105.41)
 		)
 		(stroke
 			(width 0)
@@ -2650,7 +2898,7 @@
 	)
 	(wire
 		(pts
-			(xy 284.48 114.3) (xy 284.48 116.84)
+			(xy 309.88 91.44) (xy 309.88 93.98)
 		)
 		(stroke
 			(width 0)
@@ -2660,7 +2908,7 @@
 	)
 	(wire
 		(pts
-			(xy 234.95 196.85) (xy 234.95 200.66)
+			(xy 292.1 187.96) (xy 292.1 191.77)
 		)
 		(stroke
 			(width 0)
@@ -2670,7 +2918,7 @@
 	)
 	(wire
 		(pts
-			(xy 269.24 186.69) (xy 276.86 186.69)
+			(xy 326.39 177.8) (xy 334.01 177.8)
 		)
 		(stroke
 			(width 0)
@@ -2680,7 +2928,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 114.3) (xy 190.5 119.38)
+			(xy 215.9 91.44) (xy 215.9 96.52)
 		)
 		(stroke
 			(width 0)
@@ -2690,17 +2938,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 129.54) (xy 149.86 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "66d34276-d830-4c70-b669-54ac92106e82")
-	)
-	(wire
-		(pts
-			(xy 172.72 134.62) (xy 172.72 139.7)
+			(xy 198.12 111.76) (xy 198.12 116.84)
 		)
 		(stroke
 			(width 0)
@@ -2710,7 +2948,7 @@
 	)
 	(wire
 		(pts
-			(xy 215.9 95.25) (xy 215.9 100.33)
+			(xy 241.3 72.39) (xy 241.3 77.47)
 		)
 		(stroke
 			(width 0)
@@ -2720,7 +2958,17 @@
 	)
 	(wire
 		(pts
-			(xy 297.18 124.46) (xy 297.18 128.27)
+			(xy 148.59 104.14) (xy 151.13 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6efe0380-0af2-4491-a2d2-c5b421a56f14")
+	)
+	(wire
+		(pts
+			(xy 322.58 101.6) (xy 322.58 105.41)
 		)
 		(stroke
 			(width 0)
@@ -2730,7 +2978,7 @@
 	)
 	(wire
 		(pts
-			(xy 290.83 128.27) (xy 297.18 128.27)
+			(xy 316.23 105.41) (xy 322.58 105.41)
 		)
 		(stroke
 			(width 0)
@@ -2740,7 +2988,7 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 191.77) (xy 175.26 191.77)
+			(xy 217.17 182.88) (xy 232.41 182.88)
 		)
 		(stroke
 			(width 0)
@@ -2750,7 +2998,7 @@
 	)
 	(wire
 		(pts
-			(xy 318.77 114.3) (xy 331.47 114.3)
+			(xy 344.17 91.44) (xy 356.87 91.44)
 		)
 		(stroke
 			(width 0)
@@ -2760,7 +3008,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 177.8) (xy 149.86 172.72)
+			(xy 207.01 168.91) (xy 207.01 163.83)
 		)
 		(stroke
 			(width 0)
@@ -2770,7 +3018,7 @@
 	)
 	(wire
 		(pts
-			(xy 87.63 127) (xy 90.17 127)
+			(xy 71.12 101.6) (xy 73.66 101.6)
 		)
 		(stroke
 			(width 0)
@@ -2780,7 +3028,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 200.66) (xy 199.39 200.66)
+			(xy 207.01 191.77) (xy 256.54 191.77)
 		)
 		(stroke
 			(width 0)
@@ -2790,7 +3038,7 @@
 	)
 	(wire
 		(pts
-			(xy 222.25 186.69) (xy 222.25 189.23)
+			(xy 279.4 177.8) (xy 279.4 180.34)
 		)
 		(stroke
 			(width 0)
@@ -2800,7 +3048,17 @@
 	)
 	(wire
 		(pts
-			(xy 326.39 128.27) (xy 331.47 128.27)
+			(xy 119.38 99.06) (xy 151.13 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "85903b1b-aa9b-4a50-a13d-900699fca12b")
+	)
+	(wire
+		(pts
+			(xy 351.79 105.41) (xy 356.87 105.41)
 		)
 		(stroke
 			(width 0)
@@ -2810,17 +3068,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 124.46) (xy 160.02 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8742d766-ea2e-416f-974c-529b55ffa4a7")
-	)
-	(wire
-		(pts
-			(xy 284.48 124.46) (xy 284.48 128.27)
+			(xy 309.88 101.6) (xy 309.88 105.41)
 		)
 		(stroke
 			(width 0)
@@ -2830,7 +3078,7 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 172.72) (xy 160.02 173.99)
+			(xy 217.17 163.83) (xy 217.17 165.1)
 		)
 		(stroke
 			(width 0)
@@ -2840,7 +3088,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 105.41) (xy 190.5 106.68)
+			(xy 215.9 82.55) (xy 215.9 83.82)
 		)
 		(stroke
 			(width 0)
@@ -2850,7 +3098,7 @@
 	)
 	(wire
 		(pts
-			(xy 284.48 114.3) (xy 297.18 114.3)
+			(xy 309.88 91.44) (xy 322.58 91.44)
 		)
 		(stroke
 			(width 0)
@@ -2860,7 +3108,7 @@
 	)
 	(wire
 		(pts
-			(xy 312.42 114.3) (xy 318.77 114.3)
+			(xy 337.82 91.44) (xy 344.17 91.44)
 		)
 		(stroke
 			(width 0)
@@ -2870,7 +3118,7 @@
 	)
 	(wire
 		(pts
-			(xy 256.54 186.69) (xy 269.24 186.69)
+			(xy 313.69 177.8) (xy 326.39 177.8)
 		)
 		(stroke
 			(width 0)
@@ -2880,7 +3128,7 @@
 	)
 	(wire
 		(pts
-			(xy 105.41 113.03) (xy 105.41 110.49)
+			(xy 88.9 87.63) (xy 88.9 85.09)
 		)
 		(stroke
 			(width 0)
@@ -2890,7 +3138,7 @@
 	)
 	(wire
 		(pts
-			(xy 318.77 124.46) (xy 318.77 128.27)
+			(xy 344.17 101.6) (xy 344.17 105.41)
 		)
 		(stroke
 			(width 0)
@@ -2900,7 +3148,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 168.91) (xy 149.86 172.72)
+			(xy 207.01 160.02) (xy 207.01 163.83)
 		)
 		(stroke
 			(width 0)
@@ -2910,7 +3158,7 @@
 	)
 	(wire
 		(pts
-			(xy 228.6 114.3) (xy 269.24 114.3)
+			(xy 254 91.44) (xy 294.64 91.44)
 		)
 		(stroke
 			(width 0)
@@ -2920,7 +3168,7 @@
 	)
 	(wire
 		(pts
-			(xy 297.18 114.3) (xy 297.18 116.84)
+			(xy 322.58 91.44) (xy 322.58 93.98)
 		)
 		(stroke
 			(width 0)
@@ -2930,7 +3178,7 @@
 	)
 	(wire
 		(pts
-			(xy 284.48 186.69) (xy 288.29 186.69)
+			(xy 341.63 177.8) (xy 345.44 177.8)
 		)
 		(stroke
 			(width 0)
@@ -2940,7 +3188,17 @@
 	)
 	(wire
 		(pts
-			(xy 175.26 172.72) (xy 160.02 172.72)
+			(xy 166.37 111.76) (xy 166.37 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9d2d24c8-aae7-4613-a03a-06c208fb6da5")
+	)
+	(wire
+		(pts
+			(xy 232.41 163.83) (xy 217.17 163.83)
 		)
 		(stroke
 			(width 0)
@@ -2950,7 +3208,7 @@
 	)
 	(wire
 		(pts
-			(xy 297.18 114.3) (xy 304.8 114.3)
+			(xy 322.58 91.44) (xy 330.2 91.44)
 		)
 		(stroke
 			(width 0)
@@ -2960,7 +3218,7 @@
 	)
 	(wire
 		(pts
-			(xy 269.24 196.85) (xy 269.24 200.66)
+			(xy 326.39 187.96) (xy 326.39 191.77)
 		)
 		(stroke
 			(width 0)
@@ -2970,17 +3228,7 @@
 	)
 	(wire
 		(pts
-			(xy 135.89 124.46) (xy 149.86 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "aa4b5bdc-4374-4512-8e90-f9e409eda75d")
-	)
-	(wire
-		(pts
-			(xy 123.19 110.49) (xy 123.19 114.3)
+			(xy 106.68 85.09) (xy 106.68 88.9)
 		)
 		(stroke
 			(width 0)
@@ -2990,7 +3238,7 @@
 	)
 	(wire
 		(pts
-			(xy 256.54 186.69) (xy 256.54 189.23)
+			(xy 313.69 177.8) (xy 313.69 180.34)
 		)
 		(stroke
 			(width 0)
@@ -3000,7 +3248,7 @@
 	)
 	(wire
 		(pts
-			(xy 331.47 114.3) (xy 331.47 116.84)
+			(xy 356.87 91.44) (xy 356.87 93.98)
 		)
 		(stroke
 			(width 0)
@@ -3010,7 +3258,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 106.68) (xy 190.5 114.3)
+			(xy 215.9 83.82) (xy 215.9 91.44)
 		)
 		(stroke
 			(width 0)
@@ -3020,7 +3268,7 @@
 	)
 	(wire
 		(pts
-			(xy 256.54 196.85) (xy 256.54 200.66)
+			(xy 313.69 187.96) (xy 313.69 191.77)
 		)
 		(stroke
 			(width 0)
@@ -3030,7 +3278,7 @@
 	)
 	(wire
 		(pts
-			(xy 97.79 127) (xy 105.41 127)
+			(xy 81.28 101.6) (xy 88.9 101.6)
 		)
 		(stroke
 			(width 0)
@@ -3040,7 +3288,7 @@
 	)
 	(wire
 		(pts
-			(xy 308.61 130.81) (xy 326.39 130.81)
+			(xy 334.01 107.95) (xy 351.79 107.95)
 		)
 		(stroke
 			(width 0)
@@ -3050,7 +3298,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 95.25) (xy 190.5 97.79)
+			(xy 215.9 72.39) (xy 215.9 74.93)
 		)
 		(stroke
 			(width 0)
@@ -3060,7 +3308,7 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 181.61) (xy 160.02 191.77)
+			(xy 217.17 172.72) (xy 217.17 182.88)
 		)
 		(stroke
 			(width 0)
@@ -3070,7 +3318,7 @@
 	)
 	(wire
 		(pts
-			(xy 123.19 110.49) (xy 123.19 107.95)
+			(xy 106.68 85.09) (xy 106.68 82.55)
 		)
 		(stroke
 			(width 0)
@@ -3080,7 +3328,7 @@
 	)
 	(wire
 		(pts
-			(xy 290.83 130.81) (xy 308.61 130.81)
+			(xy 316.23 107.95) (xy 334.01 107.95)
 		)
 		(stroke
 			(width 0)
@@ -3090,7 +3338,7 @@
 	)
 	(wire
 		(pts
-			(xy 326.39 128.27) (xy 326.39 130.81)
+			(xy 351.79 105.41) (xy 351.79 107.95)
 		)
 		(stroke
 			(width 0)
@@ -3100,7 +3348,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 185.42) (xy 149.86 200.66)
+			(xy 207.01 176.53) (xy 207.01 191.77)
 		)
 		(stroke
 			(width 0)
@@ -3110,7 +3358,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 129.54) (xy 190.5 139.7)
+			(xy 215.9 106.68) (xy 215.9 116.84)
 		)
 		(stroke
 			(width 0)
@@ -3120,7 +3368,7 @@
 	)
 	(wire
 		(pts
-			(xy 261.62 200.66) (xy 269.24 200.66)
+			(xy 318.77 191.77) (xy 326.39 191.77)
 		)
 		(stroke
 			(width 0)
@@ -3130,7 +3378,7 @@
 	)
 	(wire
 		(pts
-			(xy 269.24 186.69) (xy 269.24 189.23)
+			(xy 326.39 177.8) (xy 326.39 180.34)
 		)
 		(stroke
 			(width 0)
@@ -3140,7 +3388,7 @@
 	)
 	(wire
 		(pts
-			(xy 186.69 191.77) (xy 186.69 193.04)
+			(xy 243.84 182.88) (xy 243.84 184.15)
 		)
 		(stroke
 			(width 0)
@@ -3150,7 +3398,7 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 203.2) (xy 245.11 208.28)
+			(xy 302.26 194.31) (xy 302.26 199.39)
 		)
 		(stroke
 			(width 0)
@@ -3160,7 +3408,7 @@
 	)
 	(wire
 		(pts
-			(xy 228.6 110.49) (xy 232.41 110.49)
+			(xy 254 87.63) (xy 257.81 87.63)
 		)
 		(stroke
 			(width 0)
@@ -3170,17 +3418,17 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 129.54) (xy 149.86 129.54)
+			(xy 143.51 130.81) (xy 143.51 133.35)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "eea0fe60-9efc-459d-9b6a-e18c61c6b0c6")
+		(uuid "ee1dded1-c263-47cb-8eeb-dbee158a6d0b")
 	)
 	(wire
 		(pts
-			(xy 234.95 186.69) (xy 241.3 186.69)
+			(xy 292.1 177.8) (xy 298.45 177.8)
 		)
 		(stroke
 			(width 0)
@@ -3190,7 +3438,7 @@
 	)
 	(wire
 		(pts
-			(xy 107.95 200.66) (xy 115.57 200.66)
+			(xy 165.1 191.77) (xy 172.72 191.77)
 		)
 		(stroke
 			(width 0)
@@ -3200,7 +3448,7 @@
 	)
 	(wire
 		(pts
-			(xy 190.5 106.68) (xy 193.04 106.68)
+			(xy 215.9 83.82) (xy 218.44 83.82)
 		)
 		(stroke
 			(width 0)
@@ -3210,7 +3458,7 @@
 	)
 	(wire
 		(pts
-			(xy 248.92 186.69) (xy 256.54 186.69)
+			(xy 306.07 177.8) (xy 313.69 177.8)
 		)
 		(stroke
 			(width 0)
@@ -3218,19 +3466,9 @@
 		)
 		(uuid "fe64b90b-8785-4d0e-86c9-eac30e8637e0")
 	)
-	(label "RF_TX_BPSK_145"
-		(at 146.05 129.54 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "dbd7701f-19cb-4818-82c5-226ee58690d8")
-	)
 	(global_label "CLK0_OUT"
 		(shape output)
-		(at 87.63 121.92 180)
+		(at 71.12 96.52 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3239,7 +3477,7 @@
 		)
 		(uuid "2c1e357b-deb9-4988-89c4-7529d0034be0")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 75.271 121.92 0)
+			(at 58.761 96.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3253,7 +3491,7 @@
 	)
 	(global_label "TX_OUT"
 		(shape output)
-		(at 288.29 186.69 0)
+		(at 345.44 177.8 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3262,7 +3500,7 @@
 		)
 		(uuid "36d36555-79b9-447b-b4ee-e46411e7aafe")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 298.0485 186.69 0)
+			(at 355.1985 177.8 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3276,7 +3514,7 @@
 	)
 	(global_label "BPSK_DATA"
 		(shape output)
-		(at 87.63 127 180)
+		(at 71.12 101.6 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3285,7 +3523,7 @@
 		)
 		(uuid "4341f510-15c4-4607-a2e0-630038857daa")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 74.2429 127 0)
+			(at 57.7329 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3299,7 +3537,7 @@
 	)
 	(global_label "TRIPLER_OUT"
 		(shape bidirectional)
-		(at 232.41 110.49 0)
+		(at 257.81 87.63 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3308,7 +3546,7 @@
 		)
 		(uuid "60f5b284-babd-4a12-9f57-a7454abfb2a4")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 248.6622 110.49 0)
+			(at 274.0622 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3322,7 +3560,7 @@
 	)
 	(global_label "TX_437"
 		(shape input)
-		(at 107.95 200.66 180)
+		(at 165.1 191.77 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3331,7 +3569,7 @@
 		)
 		(uuid "a7bb4795-6df3-4704-aa17-1305f4670fb1")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 98.1916 200.66 0)
+			(at 155.3416 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3345,7 +3583,7 @@
 	)
 	(global_label "TX_437"
 		(shape output)
-		(at 347.98 114.3 0)
+		(at 373.38 91.44 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3354,7 +3592,7 @@
 		)
 		(uuid "b78fb9f2-1561-41d7-a53a-3c4f34ec4daa")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 357.7384 114.3 0)
+			(at 383.1384 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3366,9 +3604,31 @@
 			)
 		)
 	)
+	(global_label "TX_ACTIVE"
+		(shape input)
+		(at 148.59 104.14 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "fe21dda8-08e2-4aa1-b9e3-2e5781f60f14")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 148.59 104.14 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:GND")
-		(at 105.41 113.03 0)
+		(at 88.9 87.63 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3379,7 +3639,7 @@
 		(fields_autoplaced yes)
 		(uuid "0623fb79-6fda-4749-8c47-f6cbba606361")
 		(property "Reference" "#PWR078"
-			(at 105.41 119.38 0)
+			(at 88.9 93.98 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3390,7 +3650,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 105.41 118.11 0)
+			(at 88.9 92.71 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3400,7 +3660,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 105.41 113.03 0)
+			(at 88.9 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3411,7 +3671,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 105.41 113.03 0)
+			(at 88.9 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3422,7 +3682,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 105.41 113.03 0)
+			(at 88.9 87.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3446,7 +3706,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 297.18 120.65 0)
+		(at 322.58 97.79 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3456,7 +3716,7 @@
 		(dnp no)
 		(uuid "075138b8-e539-47b7-8402-6a90b7e0c4c9")
 		(property "Reference" "C96"
-			(at 299.974 119.634 0)
+			(at 325.374 96.774 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3467,7 +3727,7 @@
 			)
 		)
 		(property "Value" "9.1p"
-			(at 299.974 121.412 0)
+			(at 325.374 98.552 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3478,7 +3738,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 298.1452 124.46 0)
+			(at 323.5452 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3489,7 +3749,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 297.18 120.65 0)
+			(at 322.58 97.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3500,7 +3760,7 @@
 			)
 		)
 		(property "Description" "50V 9.1pF NP0 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
-			(at 297.18 120.65 0)
+			(at 322.58 97.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3511,7 +3771,7 @@
 			)
 		)
 		(property "LCSC Part #" "C526972"
-			(at 303.784 122.936 0)
+			(at 329.184 100.076 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3537,7 +3797,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 245.11 186.69 90)
+		(at 302.26 177.8 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3547,7 +3807,7 @@
 		(dnp no)
 		(uuid "09ef07b1-e022-478c-86e3-7b1757e733ba")
 		(property "Reference" "C89"
-			(at 248.158 188.214 90)
+			(at 305.308 179.324 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3557,7 +3817,7 @@
 			)
 		)
 		(property "Value" "1.6p"
-			(at 248.666 189.992 90)
+			(at 305.816 181.102 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3567,7 +3827,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 248.92 185.7248 0)
+			(at 306.07 176.8348 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3578,7 +3838,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 245.11 186.69 0)
+			(at 302.26 177.8 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3589,7 +3849,7 @@
 			)
 		)
 		(property "Description" "1.6pF 50V C0G 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
-			(at 245.11 186.69 0)
+			(at 302.26 177.8 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3600,7 +3860,7 @@
 			)
 		)
 		(property "LCSC Part #" "C161311"
-			(at 248.666 192.024 90)
+			(at 305.816 183.134 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3626,7 +3886,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 160.02 177.8 180)
+		(at 217.17 168.91 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3636,7 +3896,7 @@
 		(dnp no)
 		(uuid "16278e2e-dbed-44b3-a72d-972c3a9bc16d")
 		(property "Reference" "C71"
-			(at 162.56 180.086 0)
+			(at 219.71 171.196 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3646,7 +3906,7 @@
 			)
 		)
 		(property "Value" "100n"
-			(at 163.068 182.118 0)
+			(at 220.218 173.228 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3656,7 +3916,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 159.0548 173.99 0)
+			(at 216.2048 165.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3667,7 +3927,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 160.02 177.8 0)
+			(at 217.17 168.91 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3678,7 +3938,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 160.02 177.8 0)
+			(at 217.17 168.91 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3689,7 +3949,7 @@
 			)
 		)
 		(property "LCSC Part #" "C1525"
-			(at 163.83 184.15 0)
+			(at 220.98 175.26 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3699,7 +3959,7 @@
 			)
 		)
 		(property "Manufacturer Part #" "CL05B104KO5NNNC"
-			(at 160.02 177.8 90)
+			(at 217.17 168.91 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3725,8 +3985,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:L")
-		(at 222.25 193.04 0)
+		(lib_id "power:GND")
+		(at 143.51 133.35 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3734,31 +3994,30 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "23e6f012-86cb-4a63-91dc-38ef89ff2815")
-		(property "Reference" "L19"
-			(at 223.52 191.7699 0)
+		(uuid "238785bf-e946-4938-b889-2d33d39957ef")
+		(property "Reference" "#PWR0304"
+			(at 143.51 139.7 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "10n"
-			(at 223.52 193.548 0)
+		(property "Value" "GND"
+			(at 143.51 137.16 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_0402_1005Metric"
-			(at 222.25 193.04 0)
+		(property "Footprint" ""
+			(at 143.51 133.35 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3769,7 +4028,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 222.25 193.04 0)
+			(at 143.51 133.35 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3779,8 +4038,8 @@
 				)
 			)
 		)
-		(property "Description" "Coilcraft - 1.3A 10nH 110mΩ 4.7GHz 62@900MHz Wire-wound chip inductor ±2% 0402 Inductors (SMD) ROHS"
-			(at 222.25 193.04 0)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 143.51 133.35 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3790,8 +4049,108 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C40976557"
-			(at 228.854 195.58 0)
+		(pin "1"
+			(uuid "f10d36ac-7d2b-4622-bb59-3bb1dad947c3")
+		)
+		(instances
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR0304")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:L")
+		(at 279.4 184.15 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "23e6f012-86cb-4a63-91dc-38ef89ff2815")
+		(property "Reference" "L19"
+			(at 280.67 182.8799 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10n"
+			(at 280.67 184.658 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Inductor_SMD:L_0402_1005Metric"
+			(at 279.4 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://doc.platan.ru/pdf/datasheets/murata/LQW15AN_00.pdf"
+			(at 279.4 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "10 nH 2% wirewound RF inductor, 0402, 500 mA, SRF >=5.5 GHz"
+			(at 279.4 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C90642"
+			(at 286.004 186.69 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "LQW15AN10NG00D"
+			(at 279.4 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Murata Electronics"
+			(at 279.4 184.15 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3817,7 +4176,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 273.05 114.3 90)
+		(at 298.45 91.44 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3827,7 +4186,7 @@
 		(dnp no)
 		(uuid "245f0516-0670-4e91-a4d9-9ec4f5e2f5df")
 		(property "Reference" "C93"
-			(at 276.606 116.078 90)
+			(at 302.006 93.218 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3837,7 +4196,7 @@
 			)
 		)
 		(property "Value" "3.9p"
-			(at 276.606 118.11 90)
+			(at 302.006 95.25 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3847,7 +4206,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 276.86 113.3348 0)
+			(at 302.26 90.4748 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3858,7 +4217,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 273.05 114.3 0)
+			(at 298.45 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3869,7 +4228,7 @@
 			)
 		)
 		(property "Description" "3.9pF 50V C0G 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
-			(at 273.05 114.3 0)
+			(at 298.45 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3880,7 +4239,7 @@
 			)
 		)
 		(property "LCSC Part #" "C1566"
-			(at 278.638 120.142 90)
+			(at 304.038 97.282 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3906,7 +4265,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 308.61 114.3 90)
+		(at 334.01 91.44 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -3916,7 +4275,7 @@
 		(dnp no)
 		(uuid "252e2723-cb1d-45c7-ba58-3e23e7ef560b")
 		(property "Reference" "C98"
-			(at 311.658 115.824 90)
+			(at 337.058 92.964 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3926,7 +4285,7 @@
 			)
 		)
 		(property "Value" "1.6p"
-			(at 312.166 117.602 90)
+			(at 337.566 94.742 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3936,7 +4295,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 312.42 113.3348 0)
+			(at 337.82 90.4748 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3947,7 +4306,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 308.61 114.3 0)
+			(at 334.01 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3958,7 +4317,7 @@
 			)
 		)
 		(property "Description" "1.6pF 50V C0G 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
-			(at 308.61 114.3 0)
+			(at 334.01 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3969,7 +4328,7 @@
 			)
 		)
 		(property "LCSC Part #" "C161311"
-			(at 312.166 119.634 90)
+			(at 337.566 96.774 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -3995,7 +4354,7 @@
 	)
 	(symbol
 		(lib_id "Device:L")
-		(at 149.86 181.61 0)
+		(at 207.01 172.72 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4005,7 +4364,7 @@
 		(dnp no)
 		(uuid "29a940b2-6e4f-4b4c-b124-e1457ab0a3a1")
 		(property "Reference" "L15"
-			(at 151.13 180.3399 0)
+			(at 208.28 171.4499 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4016,7 +4375,7 @@
 			)
 		)
 		(property "Value" "220n"
-			(at 151.13 182.118 0)
+			(at 208.28 173.228 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4027,7 +4386,7 @@
 			)
 		)
 		(property "Footprint" "Inductor_SMD:L_0805_2012Metric"
-			(at 149.86 181.61 0)
+			(at 207.01 172.72 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4038,7 +4397,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 149.86 181.61 0)
+			(at 207.01 172.72 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4049,7 +4408,7 @@
 			)
 		)
 		(property "Description" "Inductor"
-			(at 149.86 181.61 0)
+			(at 207.01 172.72 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4060,7 +4419,7 @@
 			)
 		)
 		(property "LCSC Part #" "C337958"
-			(at 155.448 183.896 0)
+			(at 212.598 175.006 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4086,7 +4445,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 280.67 186.69 90)
+		(at 143.51 127 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4094,29 +4453,31 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "370a477a-c37a-4235-a64c-10180a056181")
-		(property "Reference" "C94"
-			(at 284.226 188.468 90)
+		(uuid "2d83943b-c954-4c59-b111-3246b21c9c14")
+		(property "Reference" "C115"
+			(at 144.145 124.46 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Value" "3.9p"
-			(at 284.226 190.5 90)
+		(property "Value" "100n"
+			(at 144.145 129.54 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 284.48 185.7248 0)
+			(at 143.51 127 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4127,7 +4488,207 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 280.67 186.69 0)
+			(at 143.51 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 143.51 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C1525"
+			(at 143.51 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL05B104KO5NNNC"
+			(at 143.51 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Samsung Electro-Mechanics"
+			(at 143.51 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C1525"
+			(at 143.51 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "de714753-21b3-4f33-a409-354ceaccfa95")
+		)
+		(pin "2"
+			(uuid "faf75b08-e7ca-43d9-a10c-ee67d5856e5d")
+		)
+		(instances
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "C115")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 166.37 85.09 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "341c596f-e393-4335-b44f-aa1c005e3c3f")
+		(property "Reference" "#PWR0301"
+			(at 166.37 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 166.37 81.534 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 166.37 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 166.37 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 166.37 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a6c0f854-ad1c-4596-ab22-f5e18d016477")
+		)
+		(instances
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR0301")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 337.82 177.8 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "370a477a-c37a-4235-a64c-10180a056181")
+		(property "Reference" "C94"
+			(at 341.376 179.578 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "3.9p"
+			(at 341.376 181.61 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 341.63 176.8348 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 337.82 177.8 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4138,7 +4699,7 @@
 			)
 		)
 		(property "Description" "3.9pF 50V C0G 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
-			(at 280.67 186.69 0)
+			(at 337.82 177.8 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4149,7 +4710,7 @@
 			)
 		)
 		(property "LCSC Part #" "C1566"
-			(at 286.258 192.532 90)
+			(at 343.408 183.642 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4175,7 +4736,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 163.83 124.46 270)
+		(at 189.23 101.6 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4185,7 +4746,7 @@
 		(dnp no)
 		(uuid "38a5b560-7b8b-4fef-b242-1e60f5cd5eac")
 		(property "Reference" "C73"
-			(at 164.084 128.016 90)
+			(at 189.484 105.156 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4195,7 +4756,7 @@
 			)
 		)
 		(property "Value" "100n"
-			(at 164.846 129.794 90)
+			(at 190.246 106.934 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4205,7 +4766,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 160.02 125.4252 0)
+			(at 185.42 102.5652 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4216,7 +4777,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 163.83 124.46 0)
+			(at 189.23 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4227,7 +4788,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 163.83 124.46 0)
+			(at 189.23 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4238,7 +4799,7 @@
 			)
 		)
 		(property "LCSC Part #" "C1525"
-			(at 165.354 131.826 90)
+			(at 190.754 108.966 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4248,7 +4809,7 @@
 			)
 		)
 		(property "Manufacturer Part #" "CL05B104KO5NNNC"
-			(at 163.83 124.46 90)
+			(at 189.23 101.6 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4275,7 +4836,7 @@
 	)
 	(symbol
 		(lib_id "Transistor_BJT:Q_NPN_BEC")
-		(at 187.96 124.46 0)
+		(at 213.36 101.6 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4285,7 +4846,7 @@
 		(dnp no)
 		(uuid "3a497ce4-8c44-4e0d-b1cd-73d533bc7333")
 		(property "Reference" "Q3"
-			(at 193.04 123.698 0)
+			(at 218.44 100.838 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4296,7 +4857,7 @@
 			)
 		)
 		(property "Value" "2SC3356"
-			(at 193.04 125.7299 0)
+			(at 218.44 102.8699 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4307,7 +4868,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 251.46 124.46 0)
+			(at 276.86 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4318,7 +4879,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C193010.pdf"
-			(at 251.46 124.46 0)
+			(at 276.86 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4329,7 +4890,7 @@
 			)
 		)
 		(property "Description" "Hottech 2SC3356 SOT-23; B=1 E=2 C=3; do not substitute Renesas pinout"
-			(at 187.96 124.46 0)
+			(at 213.36 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4340,7 +4901,7 @@
 			)
 		)
 		(property "Sim.Device" "NPN"
-			(at 187.96 124.46 0)
+			(at 213.36 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4351,7 +4912,7 @@
 			)
 		)
 		(property "Sim.Type" "GUMMELPOON"
-			(at 187.96 124.46 0)
+			(at 213.36 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4362,7 +4923,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=B 2=E 3=C"
-			(at 187.96 124.46 0)
+			(at 213.36 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4373,7 +4934,7 @@
 			)
 		)
 		(property "LCSC Part #" "C193010"
-			(at 197.866 127.508 0)
+			(at 223.266 104.648 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4383,7 +4944,7 @@
 			)
 		)
 		(property "Manufacturer" "Guangdong Hottech"
-			(at 187.96 124.46 0)
+			(at 213.36 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4394,7 +4955,7 @@
 			)
 		)
 		(property "Manufacturer Part #" "2SC3356"
-			(at 187.96 124.46 0)
+			(at 213.36 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4424,7 +4985,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 123.19 142.24 0)
+		(at 106.68 116.84 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4435,7 +4996,7 @@
 		(fields_autoplaced yes)
 		(uuid "3b74ed4d-ad58-4651-884a-edbbf47e0f46")
 		(property "Reference" "#PWR082"
-			(at 123.19 148.59 0)
+			(at 106.68 123.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4446,7 +5007,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 123.19 147.32 0)
+			(at 106.68 121.92 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4456,7 +5017,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 123.19 142.24 0)
+			(at 106.68 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4467,7 +5028,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 123.19 142.24 0)
+			(at 106.68 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4478,7 +5039,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 123.19 142.24 0)
+			(at 106.68 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4502,7 +5063,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 172.72 139.7 0)
+		(at 198.12 116.84 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4513,7 +5074,7 @@
 		(fields_autoplaced yes)
 		(uuid "3e590446-af55-47e9-8226-79c3fa5934bd")
 		(property "Reference" "#PWR089"
-			(at 172.72 146.05 0)
+			(at 198.12 123.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4524,7 +5085,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 172.72 144.78 0)
+			(at 198.12 121.92 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4534,7 +5095,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 172.72 139.7 0)
+			(at 198.12 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4545,7 +5106,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 172.72 139.7 0)
+			(at 198.12 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4556,7 +5117,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 172.72 139.7 0)
+			(at 198.12 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4580,7 +5141,7 @@
 	)
 	(symbol
 		(lib_id "RF_Amplifier:ADL5610")
-		(at 123.19 200.66 0)
+		(at 180.34 191.77 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4590,7 +5151,7 @@
 		(dnp no)
 		(uuid "3fe352d7-5851-478d-9895-929247f8faf4")
 		(property "Reference" "U8"
-			(at 123.19 190.5 0)
+			(at 180.34 181.61 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4600,7 +5161,7 @@
 			)
 		)
 		(property "Value" "ADL5602ARKZ-R7"
-			(at 123.19 193.04 0)
+			(at 180.34 184.15 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4610,7 +5171,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-89-3"
-			(at 124.46 190.5 0)
+			(at 181.61 181.61 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4621,7 +5182,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/ADL5602.pdf"
-			(at 123.19 200.66 0)
+			(at 180.34 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4632,7 +5193,7 @@
 			)
 		)
 		(property "Description" "ADL5602 50 MHz to 4 GHz RF/IF gain block, 20 dB nominal, 5 V, SOT-89; audited pin-compatible ADL5610 symbol"
-			(at 123.19 200.66 0)
+			(at 180.34 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4643,7 +5204,7 @@
 			)
 		)
 		(property "LCSC Part #" "C496494"
-			(at 126.746 206.756 0)
+			(at 183.896 197.866 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4653,7 +5214,7 @@
 			)
 		)
 		(property "MPN" "ADL5602ARKZ-R7"
-			(at 123.19 200.66 0)
+			(at 180.34 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4664,7 +5225,7 @@
 			)
 		)
 		(property "Manufacturer" "Analog Devices"
-			(at 123.19 200.66 0)
+			(at 180.34 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4675,7 +5236,7 @@
 			)
 		)
 		(property "PinMapAudit" "design/u8_adl5602_pinmap.md"
-			(at 123.19 200.66 0)
+			(at 180.34 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4705,7 +5266,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 215.9 105.41 0)
+		(at 241.3 82.55 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4716,7 +5277,7 @@
 		(fields_autoplaced yes)
 		(uuid "4b93d8b2-8981-4b78-a3bb-5de292cca64b")
 		(property "Reference" "#PWR0106"
-			(at 215.9 111.76 0)
+			(at 241.3 88.9 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4727,7 +5288,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 215.9 110.49 0)
+			(at 241.3 87.63 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4737,7 +5298,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 215.9 105.41 0)
+			(at 241.3 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4748,7 +5309,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 215.9 105.41 0)
+			(at 241.3 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4759,7 +5320,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 215.9 105.41 0)
+			(at 241.3 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4782,8 +5343,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 196.85 106.68 90)
+		(lib_id "power:GND")
+		(at 166.37 115.57 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4791,31 +5352,30 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "64823e20-599e-41f2-b2ef-4caa1c0f50ba")
-		(property "Reference" "C81"
-			(at 201.168 108.204 90)
+		(uuid "6072484b-857a-4930-8603-ffd86fc25dc6")
+		(property "Reference" "#PWR0302"
+			(at 166.37 121.92 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "8.2p"
-			(at 202.946 109.982 90)
+		(property "Value" "GND"
+			(at 166.37 119.38 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 200.66 105.7148 0)
+		(property "Footprint" ""
+			(at 166.37 115.57 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4826,7 +5386,85 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 196.85 106.68 0)
+			(at 166.37 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 166.37 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2b8d8772-e8bb-49c4-b3df-c0ea6796749e")
+		)
+		(instances
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR0302")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 222.25 83.82 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "64823e20-599e-41f2-b2ef-4caa1c0f50ba")
+		(property "Reference" "C81"
+			(at 226.568 85.344 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "8.2p"
+			(at 228.346 87.122 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 226.06 82.8548 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 222.25 83.82 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4837,7 +5475,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 196.85 106.68 0)
+			(at 222.25 83.82 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4848,7 +5486,7 @@
 			)
 		)
 		(property "LCSC Part #" "C1579"
-			(at 201.93 112.014 90)
+			(at 227.33 89.154 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4874,7 +5512,7 @@
 	)
 	(symbol
 		(lib_id "Device:L")
-		(at 318.77 120.65 0)
+		(at 344.17 97.79 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4884,7 +5522,7 @@
 		(dnp no)
 		(uuid "6556250e-a671-4793-ae2a-c30a301427a1")
 		(property "Reference" "L24"
-			(at 320.04 119.3799 0)
+			(at 345.44 96.5199 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4895,7 +5533,7 @@
 			)
 		)
 		(property "Value" "10n"
-			(at 320.04 121.158 0)
+			(at 345.44 98.298 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4906,7 +5544,7 @@
 			)
 		)
 		(property "Footprint" "Inductor_SMD:L_0402_1005Metric"
-			(at 318.77 120.65 0)
+			(at 344.17 97.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4916,8 +5554,8 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
-			(at 318.77 120.65 0)
+		(property "Datasheet" "https://doc.platan.ru/pdf/datasheets/murata/LQW15AN_00.pdf"
+			(at 344.17 97.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4927,8 +5565,8 @@
 				)
 			)
 		)
-		(property "Description" "Coilcraft - 1.3A 10nH 110mΩ 4.7GHz 62@900MHz Wire-wound chip inductor ±2% 0402 Inductors (SMD) ROHS"
-			(at 318.77 120.65 0)
+		(property "Description" "10 nH 2% wirewound RF inductor, 0402, 500 mA, SRF >=5.5 GHz"
+			(at 344.17 97.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4938,8 +5576,30 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C40976557"
-			(at 325.12 122.936 0)
+		(property "LCSC Part #" "C90642"
+			(at 350.52 100.076 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "LQW15AN10NG00D"
+			(at 344.17 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Murata Electronics"
+			(at 344.17 97.79 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4965,7 +5625,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 93.98 127 90)
+		(at 77.47 101.6 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4975,7 +5635,7 @@
 		(dnp no)
 		(uuid "6a0bd469-0ad5-4561-a8d7-f8cb4aa37f65")
 		(property "Reference" "R25"
-			(at 93.98 129.032 90)
+			(at 77.47 103.632 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4985,7 +5645,7 @@
 			)
 		)
 		(property "Value" "100R"
-			(at 93.98 130.556 90)
+			(at 77.47 105.156 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4995,7 +5655,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 93.98 128.778 90)
+			(at 77.47 103.378 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5006,7 +5666,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 93.98 127 0)
+			(at 77.47 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5017,7 +5677,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 93.98 127 0)
+			(at 77.47 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5028,7 +5688,7 @@
 			)
 		)
 		(property "LCSC Part #" "C844713"
-			(at 94.488 132.08 90)
+			(at 77.978 106.68 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5054,7 +5714,7 @@
 	)
 	(symbol
 		(lib_id "Device:L")
-		(at 190.5 101.6 0)
+		(at 215.9 78.74 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5064,7 +5724,7 @@
 		(dnp no)
 		(uuid "6d3fb03a-cc45-40fc-9f38-ad0f9b4d1409")
 		(property "Reference" "L17"
-			(at 185.42 99.314 0)
+			(at 210.82 76.454 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5075,7 +5735,7 @@
 			)
 		)
 		(property "Value" "15n"
-			(at 184.658 101.6 0)
+			(at 210.058 78.74 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5086,7 +5746,7 @@
 			)
 		)
 		(property "Footprint" "Inductor_SMD:L_0402_1005Metric"
-			(at 190.5 101.6 0)
+			(at 215.9 78.74 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5097,7 +5757,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 190.5 101.6 0)
+			(at 215.9 78.74 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5108,7 +5768,7 @@
 			)
 		)
 		(property "Description" "1.1A 115mΩ 15nH 3.9GHz 62@900MHz Wire-wound chip inductor ±5% 0402 Inductors (SMD) ROHS"
-			(at 190.5 101.6 0)
+			(at 215.9 78.74 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5119,7 +5779,7 @@
 			)
 		)
 		(property "LCSC Part #" "C39750903"
-			(at 184.15 103.632 0)
+			(at 209.55 80.772 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5145,7 +5805,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 105.41 142.24 0)
+		(at 88.9 116.84 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5156,7 +5816,7 @@
 		(fields_autoplaced yes)
 		(uuid "75778b3b-8918-471b-be28-bb44b186b802")
 		(property "Reference" "#PWR079"
-			(at 105.41 148.59 0)
+			(at 88.9 123.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5167,7 +5827,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 105.41 147.32 0)
+			(at 88.9 121.92 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5177,7 +5837,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 105.41 142.24 0)
+			(at 88.9 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5188,7 +5848,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 105.41 142.24 0)
+			(at 88.9 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5199,7 +5859,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 105.41 142.24 0)
+			(at 88.9 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5223,7 +5883,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 105.41 133.35 0)
+		(at 88.9 107.95 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5233,7 +5893,7 @@
 		(dnp no)
 		(uuid "7a42e378-2600-453c-a596-0e2969a6aa13")
 		(property "Reference" "C65"
-			(at 107.696 135.89 0)
+			(at 91.186 110.49 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5243,7 +5903,7 @@
 			)
 		)
 		(property "Value" "10p"
-			(at 107.696 137.668 0)
+			(at 91.186 112.268 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5253,7 +5913,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 106.3752 137.16 0)
+			(at 89.8652 111.76 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5264,7 +5924,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 105.41 133.35 0)
+			(at 88.9 107.95 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5275,7 +5935,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 105.41 133.35 0)
+			(at 88.9 107.95 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5286,7 +5946,7 @@
 			)
 		)
 		(property "LCSC Part #" "C32949"
-			(at 109.474 139.7 0)
+			(at 92.964 114.3 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5312,7 +5972,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 123.19 107.95 0)
+		(at 106.68 82.55 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5323,7 +5983,7 @@
 		(fields_autoplaced yes)
 		(uuid "84103a62-191d-469e-86ce-657342366d8f")
 		(property "Reference" "#PWR081"
-			(at 123.19 111.76 0)
+			(at 106.68 86.36 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5334,7 +5994,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 123.19 102.87 0)
+			(at 106.68 77.47 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5344,7 +6004,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 123.19 107.95 0)
+			(at 106.68 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5355,7 +6015,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 123.19 107.95 0)
+			(at 106.68 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5366,7 +6026,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 123.19 107.95 0)
+			(at 106.68 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5390,7 +6050,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 245.11 208.28 0)
+		(at 302.26 199.39 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5401,7 +6061,7 @@
 		(fields_autoplaced yes)
 		(uuid "8bb5d292-190b-447d-ad7e-e43c75eb25f4")
 		(property "Reference" "#PWR0110"
-			(at 245.11 214.63 0)
+			(at 302.26 205.74 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5412,7 +6072,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 245.11 213.36 0)
+			(at 302.26 204.47 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5422,7 +6082,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 245.11 208.28 0)
+			(at 302.26 199.39 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5433,7 +6093,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 245.11 208.28 0)
+			(at 302.26 199.39 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5444,7 +6104,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 245.11 208.28 0)
+			(at 302.26 199.39 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5467,8 +6127,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:L")
-		(at 284.48 120.65 0)
+		(lib_id "power:+3V3")
+		(at 143.51 119.38 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5476,31 +6136,30 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "8e8b057d-41bb-40cf-8d98-8b90f5bde226")
-		(property "Reference" "L23"
-			(at 285.75 119.3799 0)
+		(uuid "8e2f2c93-d7ad-441c-954e-eda13cc4e38c")
+		(property "Reference" "#PWR0303"
+			(at 143.51 123.19 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "10n"
-			(at 285.75 121.158 0)
+		(property "Value" "+3V3"
+			(at 143.51 115.824 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_0402_1005Metric"
-			(at 284.48 120.65 0)
+		(property "Footprint" ""
+			(at 143.51 119.38 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5511,7 +6170,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 284.48 120.65 0)
+			(at 143.51 119.38 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5521,8 +6180,8 @@
 				)
 			)
 		)
-		(property "Description" "Coilcraft - 1.3A 10nH 110mΩ 4.7GHz 62@900MHz Wire-wound chip inductor ±2% 0402 Inductors (SMD) ROHS"
-			(at 284.48 120.65 0)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 143.51 119.38 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5532,8 +6191,108 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C40976557"
-			(at 290.83 123.19 0)
+		(pin "1"
+			(uuid "a5255225-025d-4aeb-b128-408bb142a13f")
+		)
+		(instances
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "#PWR0303")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:L")
+		(at 309.88 97.79 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "8e8b057d-41bb-40cf-8d98-8b90f5bde226")
+		(property "Reference" "L23"
+			(at 311.15 96.5199 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10n"
+			(at 311.15 98.298 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Inductor_SMD:L_0402_1005Metric"
+			(at 309.88 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://doc.platan.ru/pdf/datasheets/murata/LQW15AN_00.pdf"
+			(at 309.88 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "10 nH 2% wirewound RF inductor, 0402, 500 mA, SRF >=5.5 GHz"
+			(at 309.88 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C90642"
+			(at 316.23 100.33 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "LQW15AN10NG00D"
+			(at 309.88 97.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Murata Electronics"
+			(at 309.88 97.79 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5559,7 +6318,7 @@
 	)
 	(symbol
 		(lib_id "Device:L")
-		(at 256.54 193.04 0)
+		(at 313.69 184.15 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5569,7 +6328,7 @@
 		(dnp no)
 		(uuid "902bd9bb-3ec9-47b2-a222-88fc50560dad")
 		(property "Reference" "L21"
-			(at 257.81 191.7699 0)
+			(at 314.96 182.8799 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5580,7 +6339,7 @@
 			)
 		)
 		(property "Value" "10n"
-			(at 257.81 193.548 0)
+			(at 314.96 184.658 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5591,7 +6350,7 @@
 			)
 		)
 		(property "Footprint" "Inductor_SMD:L_0402_1005Metric"
-			(at 256.54 193.04 0)
+			(at 313.69 184.15 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5601,8 +6360,8 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
-			(at 256.54 193.04 0)
+		(property "Datasheet" "https://doc.platan.ru/pdf/datasheets/murata/LQW15AN_00.pdf"
+			(at 313.69 184.15 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5612,8 +6371,8 @@
 				)
 			)
 		)
-		(property "Description" "Coilcraft - 1.3A 10nH 110mΩ 4.7GHz 62@900MHz Wire-wound chip inductor ±2% 0402 Inductors (SMD) ROHS"
-			(at 256.54 193.04 0)
+		(property "Description" "10 nH 2% wirewound RF inductor, 0402, 500 mA, SRF >=5.5 GHz"
+			(at 313.69 184.15 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5623,8 +6382,30 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C40976557"
-			(at 263.144 195.58 0)
+		(property "LCSC Part #" "C90642"
+			(at 320.294 186.69 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "LQW15AN10NG00D"
+			(at 313.69 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Murata Electronics"
+			(at 313.69 184.15 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5650,7 +6431,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 172.72 130.81 0)
+		(at 198.12 107.95 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5660,7 +6441,7 @@
 		(dnp no)
 		(uuid "92d396c1-4a38-4bbf-85a3-372d9791fbcd")
 		(property "Reference" "R27"
-			(at 174.498 129.032 0)
+			(at 199.898 106.172 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5671,7 +6452,7 @@
 			)
 		)
 		(property "Value" "47k"
-			(at 174.498 130.81 0)
+			(at 199.898 107.95 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5682,7 +6463,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 170.942 130.81 90)
+			(at 196.342 107.95 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5693,7 +6474,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 172.72 130.81 0)
+			(at 198.12 107.95 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5704,7 +6485,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 172.72 130.81 0)
+			(at 198.12 107.95 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5715,7 +6496,7 @@
 			)
 		)
 		(property "LCSC Part #" "C144710"
-			(at 179.07 132.588 0)
+			(at 204.47 109.728 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5741,7 +6522,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 190.5 93.98 0)
+		(at 215.9 71.12 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5752,7 +6533,7 @@
 		(fields_autoplaced yes)
 		(uuid "9cf35472-efe0-46f1-b89a-58eb23b1cb34")
 		(property "Reference" "#PWR098"
-			(at 190.5 97.79 0)
+			(at 215.9 74.93 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5763,7 +6544,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 190.5 88.9 0)
+			(at 215.9 66.04 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5773,7 +6554,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 190.5 93.98 0)
+			(at 215.9 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5784,7 +6565,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 190.5 93.98 0)
+			(at 215.9 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5795,7 +6576,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 190.5 93.98 0)
+			(at 215.9 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5819,7 +6600,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 209.55 186.69 90)
+		(at 266.7 177.8 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5829,7 +6610,7 @@
 		(dnp no)
 		(uuid "a02cad69-edc3-43c3-a20d-2c1e2f7fdf8b")
 		(property "Reference" "C84"
-			(at 213.106 188.468 90)
+			(at 270.256 179.578 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5839,7 +6620,7 @@
 			)
 		)
 		(property "Value" "3.9p"
-			(at 213.106 190.5 90)
+			(at 270.256 181.61 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5849,7 +6630,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 213.36 185.7248 0)
+			(at 270.51 176.8348 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5860,7 +6641,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 209.55 186.69 0)
+			(at 266.7 177.8 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5871,7 +6652,7 @@
 			)
 		)
 		(property "Description" "3.9pF 50V C0G 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
-			(at 209.55 186.69 0)
+			(at 266.7 177.8 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5882,7 +6663,7 @@
 			)
 		)
 		(property "LCSC Part #" "C1566"
-			(at 215.138 192.532 90)
+			(at 272.288 183.642 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5908,7 +6689,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 331.47 120.65 0)
+		(at 356.87 97.79 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -5918,7 +6699,7 @@
 		(dnp no)
 		(uuid "a372b3d7-5311-4740-98dd-0f1d7160d208")
 		(property "Reference" "C100"
-			(at 334.264 119.634 0)
+			(at 359.664 96.774 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5929,7 +6710,7 @@
 			)
 		)
 		(property "Value" "9.1p"
-			(at 334.264 121.412 0)
+			(at 359.664 98.552 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5940,7 +6721,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 332.4352 124.46 0)
+			(at 357.8352 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5951,7 +6732,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 331.47 120.65 0)
+			(at 356.87 97.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5962,7 +6743,7 @@
 			)
 		)
 		(property "Description" "50V 9.1pF NP0 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
-			(at 331.47 120.65 0)
+			(at 356.87 97.79 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5973,7 +6754,7 @@
 			)
 		)
 		(property "LCSC Part #" "C526972"
-			(at 338.074 122.936 0)
+			(at 363.474 100.076 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5999,7 +6780,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 111.76 110.49 270)
+		(at 95.25 85.09 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6009,7 +6790,7 @@
 		(dnp no)
 		(uuid "a724d958-1d1a-44a4-9232-de48fd12587f")
 		(property "Reference" "C66"
-			(at 115.062 112.268 90)
+			(at 98.552 86.868 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6019,7 +6800,7 @@
 			)
 		)
 		(property "Value" "100n"
-			(at 115.824 114.046 90)
+			(at 99.314 88.646 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6029,7 +6810,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 107.95 111.4552 0)
+			(at 91.44 86.0552 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6040,7 +6821,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 111.76 110.49 0)
+			(at 95.25 85.09 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6051,7 +6832,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 111.76 110.49 0)
+			(at 95.25 85.09 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6062,7 +6843,7 @@
 			)
 		)
 		(property "LCSC Part #" "C1525"
-			(at 116.332 115.824 90)
+			(at 99.822 90.424 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6072,7 +6853,7 @@
 			)
 		)
 		(property "Manufacturer Part #" "CL05B104KO5NNNC"
-			(at 111.76 110.49 90)
+			(at 95.25 85.09 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6099,7 +6880,7 @@
 	)
 	(symbol
 		(lib_id "74xGxx:74LVC1G86")
-		(at 123.19 124.46 0)
+		(at 106.68 99.06 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6109,7 +6890,7 @@
 		(dnp no)
 		(uuid "a8a13e7b-8059-4657-a12b-a5004f051694")
 		(property "Reference" "U7"
-			(at 134.62 118.0398 0)
+			(at 118.11 92.6398 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6119,7 +6900,7 @@
 			)
 		)
 		(property "Value" "74LVC1G86"
-			(at 134.62 120.5798 0)
+			(at 118.11 95.1798 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6129,7 +6910,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
-			(at 123.19 124.46 0)
+			(at 106.68 99.06 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6140,7 +6921,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g86.pdf"
-			(at 123.19 124.46 0)
+			(at 106.68 99.06 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6151,7 +6932,7 @@
 			)
 		)
 		(property "Description" "Single XOR Gate, Low-Voltage CMOS"
-			(at 123.19 124.46 0)
+			(at 106.68 99.06 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6162,7 +6943,7 @@
 			)
 		)
 		(property "LCSC Part #" "C402161"
-			(at 133.858 126.492 0)
+			(at 117.348 101.092 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6172,7 +6953,7 @@
 			)
 		)
 		(property "MPN" "SN74LVC1G86DBVR"
-			(at 123.19 124.46 0)
+			(at 106.68 99.06 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6183,7 +6964,7 @@
 			)
 		)
 		(property "Manufacturer" "Texas Instruments"
-			(at 123.19 124.46 0)
+			(at 106.68 99.06 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6219,7 +7000,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 186.69 193.04 0)
+		(at 243.84 184.15 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6230,7 +7011,7 @@
 		(fields_autoplaced yes)
 		(uuid "adfc9d59-2f2c-4a91-ac3f-11c3434736c4")
 		(property "Reference" "#PWR096"
-			(at 186.69 199.39 0)
+			(at 243.84 190.5 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6241,7 +7022,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 186.69 198.12 0)
+			(at 243.84 189.23 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6251,7 +7032,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 186.69 193.04 0)
+			(at 243.84 184.15 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6262,7 +7043,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 186.69 193.04 0)
+			(at 243.84 184.15 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6273,7 +7054,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 186.69 193.04 0)
+			(at 243.84 184.15 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6297,7 +7078,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 340.36 114.3 90)
+		(at 365.76 91.44 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6307,7 +7088,7 @@
 		(dnp no)
 		(uuid "b29ad7f8-c1d6-44d6-b293-e83cc3c104fc")
 		(property "Reference" "C101"
-			(at 343.916 116.078 90)
+			(at 369.316 93.218 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6317,7 +7098,7 @@
 			)
 		)
 		(property "Value" "3.9p"
-			(at 343.916 118.11 90)
+			(at 369.316 95.25 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6327,7 +7108,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 344.17 113.3348 0)
+			(at 369.57 90.4748 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6338,7 +7119,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 340.36 114.3 0)
+			(at 365.76 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6349,7 +7130,7 @@
 			)
 		)
 		(property "Description" "3.9pF 50V C0G 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
-			(at 340.36 114.3 0)
+			(at 365.76 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6360,7 +7141,7 @@
 			)
 		)
 		(property "LCSC Part #" "C1566"
-			(at 345.948 120.142 90)
+			(at 371.348 97.282 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6386,7 +7167,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 175.26 177.8 180)
+		(at 232.41 168.91 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6396,7 +7177,7 @@
 		(dnp no)
 		(uuid "cefcfdd8-08ca-43cd-9707-db819225d35c")
 		(property "Reference" "C76"
-			(at 177.8 180.086 0)
+			(at 234.95 171.196 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6406,7 +7187,7 @@
 			)
 		)
 		(property "Value" "10u"
-			(at 178.054 181.864 0)
+			(at 235.204 172.974 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6416,7 +7197,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-			(at 174.2948 173.99 0)
+			(at 231.4448 165.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6427,7 +7208,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 175.26 177.8 0)
+			(at 232.41 168.91 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6438,7 +7219,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 175.26 177.8 0)
+			(at 232.41 168.91 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6449,7 +7230,7 @@
 			)
 		)
 		(property "LCSC Part #" "C15850"
-			(at 179.832 183.896 0)
+			(at 236.982 175.006 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6474,8 +7255,140 @@
 		)
 	)
 	(symbol
+		(lib_id "74xGxx:74LVC1G08")
+		(at 166.37 101.6 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "d8f4d7db-21ce-42d6-91dc-55158e32918c")
+		(property "Reference" "U14"
+			(at 161.29 93.98 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SN74LVC1G08DBVR"
+			(at 173.99 109.22 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+			(at 166.37 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g08.pdf"
+			(at 166.37 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Single AND Gate, Low-Voltage CMOS"
+			(at 166.37 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C7666"
+			(at 166.37 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "SN74LVC1G08DBVR"
+			(at 166.37 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 166.37 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C7666"
+			(at 166.37 101.6 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "326e6e3b-c426-4e7c-ad92-ca65bc2ea706")
+		)
+		(pin "2"
+			(uuid "a7936701-a432-4619-9fff-db7165c0fe17")
+		)
+		(pin "3"
+			(uuid "0e034682-757a-46b2-bac0-afd7e2055f15")
+		)
+		(pin "4"
+			(uuid "25d4b5d0-ac8d-46f9-8392-e13c72228a80")
+		)
+		(pin "5"
+			(uuid "d6deb988-4804-42c2-9a07-98dd533d3a11")
+		)
+		(instances
+			(project "transceiver"
+				(path "/c034ea61-6551-4f92-af2a-65337e5cc22a/95253c0f-15a7-4b27-a643-2156a456084b"
+					(reference "U14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
-		(at 269.24 193.04 0)
+		(at 326.39 184.15 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6485,7 +7398,7 @@
 		(dnp no)
 		(uuid "dfe6782b-68a1-4bff-a0da-66795903310f")
 		(property "Reference" "C92"
-			(at 272.034 192.024 0)
+			(at 329.184 183.134 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6496,7 +7409,7 @@
 			)
 		)
 		(property "Value" "9.1p"
-			(at 272.034 193.802 0)
+			(at 329.184 184.912 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6507,7 +7420,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 270.2052 196.85 0)
+			(at 327.3552 187.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6518,7 +7431,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 269.24 193.04 0)
+			(at 326.39 184.15 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6529,7 +7442,7 @@
 			)
 		)
 		(property "Description" "50V 9.1pF NP0 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
-			(at 269.24 193.04 0)
+			(at 326.39 184.15 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6540,7 +7453,7 @@
 			)
 		)
 		(property "LCSC Part #" "C526972"
-			(at 276.352 195.58 0)
+			(at 333.502 186.69 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6566,7 +7479,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 120.65 212.09 0)
+		(at 177.8 203.2 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6577,7 +7490,7 @@
 		(fields_autoplaced yes)
 		(uuid "e4ee2969-9a74-4c7a-ae8b-010cc7cb453c")
 		(property "Reference" "#PWR057"
-			(at 120.65 218.44 0)
+			(at 177.8 209.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6588,7 +7501,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 120.65 217.17 0)
+			(at 177.8 208.28 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6598,7 +7511,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 120.65 212.09 0)
+			(at 177.8 203.2 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6609,7 +7522,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 120.65 212.09 0)
+			(at 177.8 203.2 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6620,7 +7533,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 120.65 212.09 0)
+			(at 177.8 203.2 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6644,7 +7557,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 190.5 139.7 0)
+		(at 215.9 116.84 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6655,7 +7568,7 @@
 		(fields_autoplaced yes)
 		(uuid "e538e950-fbea-44f4-a1ac-876c49bc5edd")
 		(property "Reference" "#PWR099"
-			(at 190.5 146.05 0)
+			(at 215.9 123.19 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6666,7 +7579,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 190.5 144.78 0)
+			(at 215.9 121.92 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6676,7 +7589,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 190.5 139.7 0)
+			(at 215.9 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6687,7 +7600,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 190.5 139.7 0)
+			(at 215.9 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6698,7 +7611,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 190.5 139.7 0)
+			(at 215.9 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6722,7 +7635,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 149.86 168.91 0)
+		(at 207.01 160.02 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6733,7 +7646,7 @@
 		(fields_autoplaced yes)
 		(uuid "e5917836-1b86-4ac0-82a9-7fbd8be15c97")
 		(property "Reference" "#PWR083"
-			(at 149.86 172.72 0)
+			(at 207.01 163.83 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6744,7 +7657,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 149.86 163.83 0)
+			(at 207.01 154.94 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6754,7 +7667,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 149.86 168.91 0)
+			(at 207.01 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6765,7 +7678,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 149.86 168.91 0)
+			(at 207.01 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6776,7 +7689,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 149.86 168.91 0)
+			(at 207.01 160.02 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6800,7 +7713,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 308.61 135.89 0)
+		(at 334.01 113.03 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6811,7 +7724,7 @@
 		(fields_autoplaced yes)
 		(uuid "e9ea8f45-cc38-43ef-bd53-1ddd4e3be472")
 		(property "Reference" "#PWR0117"
-			(at 308.61 142.24 0)
+			(at 334.01 119.38 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6822,7 +7735,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 308.61 140.97 0)
+			(at 334.01 118.11 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6832,7 +7745,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 308.61 135.89 0)
+			(at 334.01 113.03 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6843,7 +7756,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 308.61 135.89 0)
+			(at 334.01 113.03 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6854,7 +7767,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 308.61 135.89 0)
+			(at 334.01 113.03 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6878,7 +7791,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 234.95 193.04 0)
+		(at 292.1 184.15 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6888,7 +7801,7 @@
 		(dnp no)
 		(uuid "ee96f5f9-524e-4212-8285-da95da5e9a8d")
 		(property "Reference" "C87"
-			(at 237.744 192.024 0)
+			(at 294.894 183.134 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6899,7 +7812,7 @@
 			)
 		)
 		(property "Value" "9.1p"
-			(at 237.744 193.802 0)
+			(at 294.894 184.912 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6910,7 +7823,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 235.9152 196.85 0)
+			(at 293.0652 187.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6921,7 +7834,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 234.95 193.04 0)
+			(at 292.1 184.15 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6932,7 +7845,7 @@
 			)
 		)
 		(property "Description" "50V 9.1pF NP0 0402 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
-			(at 234.95 193.04 0)
+			(at 292.1 184.15 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6943,7 +7856,7 @@
 			)
 		)
 		(property "LCSC Part #" "C526972"
-			(at 241.554 195.326 0)
+			(at 298.704 186.436 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6969,7 +7882,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 196.85 95.25 270)
+		(at 222.25 72.39 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -6979,7 +7892,7 @@
 		(dnp no)
 		(uuid "f7a73856-4ae0-4e69-83e7-22ee9619f77a")
 		(property "Reference" "C80"
-			(at 199.898 96.774 90)
+			(at 225.298 73.914 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6989,7 +7902,7 @@
 			)
 		)
 		(property "Value" "100n"
-			(at 200.66 98.806 90)
+			(at 226.06 75.946 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6999,7 +7912,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 193.04 96.2152 0)
+			(at 218.44 73.3552 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7010,7 +7923,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 196.85 95.25 0)
+			(at 222.25 72.39 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7021,7 +7934,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 196.85 95.25 0)
+			(at 222.25 72.39 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7032,7 +7945,7 @@
 			)
 		)
 		(property "LCSC Part #" "C1525"
-			(at 201.168 100.838 90)
+			(at 226.568 77.978 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7042,7 +7955,7 @@
 			)
 		)
 		(property "Manufacturer Part #" "CL05B104KO5NNNC"
-			(at 196.85 95.25 90)
+			(at 222.25 72.39 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

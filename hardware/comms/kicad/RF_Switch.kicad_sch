@@ -4,6 +4,9 @@
 	(generator_version "10.0")
 	(uuid "5b4b852f-2ed9-484f-bec5-daf81378143a")
 	(paper "A4")
+	(title_block
+		(comment 9 "UHF/UHF revision in review - not for fabrication")
+	)
 	(lib_symbols
 		(symbol "74xGxx:74LVC1G17"
 			(exclude_from_sim no)
@@ -868,6 +871,200 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Regulator_Linear:TLV73330PDBV"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at -3.81 5.715 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TLV73330PDBV"
+				(at 0 5.715 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+				(at 0 8.255 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+				)
+			)
+			(property "Datasheet" "http://www.ti.com/lit/ds/symlink/tlv733p.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "300mA Capacitor-Free Low Dropout Voltage Regulator, Fixed Output 3.0V, SOT-23-5"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "300mA LDO Regulator Fixed Positive Capacitor-Free"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT?23*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "TLV73330PDBV_0_1"
+				(rectangle
+					(start -5.08 4.445)
+					(end 5.08 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "TLV73330PDBV_1_1"
+				(pin power_in line
+					(at -7.62 2.54 0)
+					(length 2.54)
+					(name "IN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -7.62 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -7.62 0 0)
+					(length 2.54)
+					(name "EN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin no_connect line
+					(at 5.08 0 180)
+					(length 2.54)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 7.62 2.54 180)
+					(length 2.54)
+					(name "OUT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Regulator_Linear:TLV75530PDBV"
 			(pin_names
 				(offset 0.254)
@@ -1546,6 +1743,12 @@
 		(color 0 0 0 0)
 		(uuid "79ddc227-c942-4f25-bd8a-88c4e9908ab2")
 	)
+	(junction
+		(at 40.64 48.26)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "da49bad4-6fc8-4ea9-8418-1397507ab8af")
+	)
 	(no_connect
 		(at 76.2 50.8)
 		(uuid "b17b0b3f-fbf4-4616-9747-d88e4a7b9536")
@@ -1593,6 +1796,16 @@
 			(type default)
 		)
 		(uuid "1914eb5a-65a2-4460-b29d-d7c930826136")
+	)
+	(wire
+		(pts
+			(xy 66.04 128.27) (xy 66.04 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "19b57bb9-2b0d-4ac1-a0d1-7d923f8136b1")
 	)
 	(wire
 		(pts
@@ -1676,6 +1889,16 @@
 	)
 	(wire
 		(pts
+			(xy 40.64 128.27) (xy 40.64 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "771822fb-bd89-4fda-9942-0c86a8f487d7")
+	)
+	(wire
+		(pts
 			(xy 124.46 48.26) (xy 124.46 50.8)
 		)
 		(stroke
@@ -1726,6 +1949,16 @@
 	)
 	(wire
 		(pts
+			(xy 40.64 48.26) (xy 39.37 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b0c4a412-4f5c-45b9-8bbb-9fd5c1d2a3be")
+	)
+	(wire
+		(pts
 			(xy 101.6 87.63) (xy 101.6 82.55)
 		)
 		(stroke
@@ -1763,6 +1996,16 @@
 			(type default)
 		)
 		(uuid "d026712a-8cb4-4fef-9483-6bd7b5c96f49")
+	)
+	(wire
+		(pts
+			(xy 101.6 128.27) (xy 101.6 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d069385c-c5ac-4799-8adc-e2883661727f")
 	)
 	(wire
 		(pts
@@ -1806,7 +2049,7 @@
 	)
 	(wire
 		(pts
-			(xy 40.64 48.26) (xy 40.64 43.18)
+			(xy 39.37 48.26) (xy 39.37 43.18)
 		)
 		(stroke
 			(width 0)
@@ -1997,7 +2240,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Regulator_Linear:TLV75530PDBV")
+		(lib_id "Regulator_Linear:TLV73330PDBV")
 		(at 71.12 50.8 0)
 		(unit 1)
 		(body_style 1)
@@ -2017,7 +2260,7 @@
 				)
 			)
 		)
-		(property "Value" "TLV75530PDBVR"
+		(property "Value" "TLV73330PDBVR"
 			(at 71.12 45.085 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2039,7 +2282,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/tlv755p.pdf"
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tlv733p.pdf"
 			(at 71.12 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -2050,7 +2293,7 @@
 				)
 			)
 		)
-		(property "Description" "500mA Low Dropout Voltage Regulator, Fixed Output 3.0V, SOT-23-5"
+		(property "Description" "3.0 V 300 mA LDO, SOT-23-5"
 			(at 71.12 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -2061,7 +2304,7 @@
 				)
 			)
 		)
-		(property "MPN" "TLV75530PDBVR"
+		(property "MPN" "TLV73330PDBVR"
 			(at 71.12 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -2072,7 +2315,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C507268"
+		(property "LCSC Part #" "C882826"
 			(at 71.12 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -2083,7 +2326,18 @@
 				)
 			)
 		)
-		(property "Manufacturer Part #" "TLV75530PDBVR"
+		(property "Manufacturer Part #" "TLV73330PDBVR"
+			(at 71.12 50.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
 			(at 71.12 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -2120,7 +2374,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 101.6 127 0)
+		(at 101.6 128.27 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -2130,7 +2384,7 @@
 		(dnp no)
 		(uuid "1fa4f2b6-d83b-4cbd-9627-29c6313a41a7")
 		(property "Reference" "#PWR009"
-			(at 101.6 133.35 0)
+			(at 101.6 134.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2141,7 +2395,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 101.6 130.81 0)
+			(at 101.6 132.08 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2151,7 +2405,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 101.6 127 0)
+			(at 101.6 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2162,7 +2416,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 101.6 127 0)
+			(at 101.6 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2173,7 +2427,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 101.6 127 0)
+			(at 101.6 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2410,7 +2664,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 40.64 43.18 0)
+		(at 39.37 43.18 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -2420,7 +2674,7 @@
 		(dnp no)
 		(uuid "2cdfd484-179f-4a5a-a5f1-120499e7adfa")
 		(property "Reference" "#PWR001"
-			(at 40.64 46.99 0)
+			(at 39.37 46.99 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2431,7 +2685,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 40.64 39.624 0)
+			(at 39.37 39.624 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -2441,7 +2695,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 40.64 43.18 0)
+			(at 39.37 43.18 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2452,7 +2706,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 40.64 43.18 0)
+			(at 39.37 43.18 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2463,7 +2717,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 40.64 43.18 0)
+			(at 39.37 43.18 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3220,7 +3474,7 @@
 				)
 			)
 		)
-		(property "Value" "PESD5V0F1BRLD"
+		(property "Value" "PESD5V0F1BLD"
 			(at 144.78 134.62 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -3241,7 +3495,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/PESD5V0F1BRLD.pdf"
+		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/PESD5V0F1BLD.pdf"
 			(at 142.24 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -3263,7 +3517,7 @@
 				)
 			)
 		)
-		(property "MPN" "PESD5V0F1BRLD"
+		(property "MPN" "PESD5V0F1BLD,315"
 			(at 142.24 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -3275,6 +3529,39 @@
 			)
 		)
 		(property "Manufacturer" "Nexperia"
+			(at 142.24 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part #" "C478204"
+			(at 142.24 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer Part #" "PESD5V0F1BLD,315"
+			(at 142.24 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Prototype selection; see verification/components/prototype_parts_2026-10-03.md"
 			(at 142.24 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -4464,7 +4751,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 66.04 127 0)
+		(at 66.04 128.27 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4474,7 +4761,7 @@
 		(dnp no)
 		(uuid "e42f2e2a-0c50-4091-bf9a-9f2d19674010")
 		(property "Reference" "#PWR008"
-			(at 66.04 133.35 0)
+			(at 66.04 134.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4485,7 +4772,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 66.04 130.81 0)
+			(at 66.04 132.08 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4495,7 +4782,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 66.04 127 0)
+			(at 66.04 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4506,7 +4793,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 66.04 127 0)
+			(at 66.04 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4517,7 +4804,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 66.04 127 0)
+			(at 66.04 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4541,7 +4828,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 40.64 127 0)
+		(at 40.64 128.27 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4551,7 +4838,7 @@
 		(dnp no)
 		(uuid "f3d273e5-792e-4820-8b44-02be7436ee7f")
 		(property "Reference" "#PWR007"
-			(at 40.64 133.35 0)
+			(at 40.64 134.62 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4562,7 +4849,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 40.64 130.81 0)
+			(at 40.64 132.08 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4572,7 +4859,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 40.64 127 0)
+			(at 40.64 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4583,7 +4870,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 40.64 127 0)
+			(at 40.64 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4594,7 +4881,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 40.64 127 0)
+			(at 40.64 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

@@ -14,16 +14,19 @@ it does not claim fresh circuit verification or measured RF acceptance.
 | RX | Input filter → PSA4-5043+ LNA → ADE-1+ mixer → MCP6022 baseband → RP2040 ADC |
 | Antenna | PE4259 switch, common-port DC block and bidirectional ESD protection |
 | Power | Stack +5V/+3V3; local 3.0 V switch supply |
-| Stack data | IHU–comms SPI plus housekeeping I2C and control/status signals |
-| Future control | CAN A/B assigned for Iteration 2 in the system pin map; allocation does not imply board implementation |
+| Stack data | CAN A/B through two MCP25625 controllers; shared Pico SPI0 master with separate CS/IRQ/reset/standby |
+| Layout status | Routing complete; DRC 0 errors / 0 unconnected; firmware port and final fabrication checks remain open |
 
 The low-power ADL5602 TX architecture is selected; a 1–2 W redesign is outside
 this baseline. Actual antenna power, spectral purity, receive performance, and
 mismatch tolerance need measurement.
 
-**Unresolved component work:** U9 replacement, its L16 bias network, D15 protection,
-and J9 mechanical acceptance. TQP3M9036 is a U9 candidate only; do not describe it
-as installed. Filter tuning candidates likewise remain unapplied.
+**Prototype parts selected:** L16 0805HP-221XGRC / C40877572, D15
+PESD5V0F1BLD,315 / C478204, J9 Molex 734151471 / C588477. J9 clearance is
+confirmed. Retain the audited PSA4-5043+ at U9; October 3 live stock makes the
+TQP3M9036 replacement unnecessary. [Acceptance and operating limits](../verification/components/prototype_parts_2026-10-03.md)
+retain L16 stability/bias and D15 RF-voltage checks for bench bring-up.
+Filter tuning candidates remain unapplied.
 
 Use the [TX](tx_chain.md), [RX](rx_chain.md), and
 [antenna](single_antenna_integration.md) pages for circuit boundaries, and the
