@@ -6,6 +6,7 @@ This directory records the Rev A audit and the isolated Rev B controller study. 
 - [STM32 GP candidate verification](stm32_gp_candidate_verification.md): package-specific pin mapping and manufacturer-pattern checks.
 - [CAN and oscillator package candidates](controller_package_candidates.md): package review and historical verification snapshots.
 - [Current controller support draft](controller_support_draft.md): decoupling, reset and control-pin bias, exact endpoint verification and remaining work.
+- [CAN TVS candidate verification](can_tvs_candidate_verification.md): verified lead/pad identity, unresolved land-pattern acceptance and fault review; controller population remains pending.
 - [Current CAN stack-interface draft](controller_can_interface_draft.md): separate bus nets, optional termination and protection placement gates.
 - [SWD access checkpoint](controller_debug_draft.md): logical debugger interface, endpoint checks and diagnostic disagreement.
 - [Candidate library status](../libraries/README.md): active draft IDs and acceptance limits.

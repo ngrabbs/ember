@@ -1,0 +1,188 @@
+(export
+	(version "E")
+	(design
+		(source "/Users/nick/Documents/ChatGPT/EMBER/eps-rev-b-study/tvs-check-2026-10-04/tvs_check.kicad_sch")
+		(date "2026-10-04T08:38:36")
+		(tool "Eeschema 10.0.0")
+		(sheet
+			(number "1")
+			(name "/")
+			(tstamps "/")
+			(title_block
+				(title)
+				(company)
+				(rev)
+				(date)
+				(source "tvs_check.kicad_sch")
+				(comment
+					(number "1")
+					(value "")
+				)
+				(comment
+					(number "2")
+					(value "")
+				)
+				(comment
+					(number "3")
+					(value "")
+				)
+				(comment
+					(number "4")
+					(value "")
+				)
+				(comment
+					(number "5")
+					(value "")
+				)
+				(comment
+					(number "6")
+					(value "")
+				)
+				(comment
+					(number "7")
+					(value "")
+				)
+				(comment
+					(number "8")
+					(value "")
+				)
+				(comment
+					(number "9")
+					(value "")
+				)
+			)
+		)
+	)
+	(components
+		(comp
+			(ref "D1")
+			(value "PESD2CANFD24V-T")
+			(footprint "Package_TO_SOT_SMD:SOT-23")
+			(datasheet "https://assets.nexperia.com/documents/data-sheet/PESD2CANFD24V-T.pdf")
+			(fields
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23")
+				(field
+					(name "Datasheet") "https://assets.nexperia.com/documents/data-sheet/PESD2CANFD24V-T.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "Ember_EPS_Protection")
+				(part "PESD2CANFD24V_T_DRAFT")
+				(description "")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "tvs_check.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "475a94cc-ba23-46d2-8fb1-67147a0bf335")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+					)
+				)
+			)
+		)
+	)
+	(groups)
+	(variants)
+	(libparts
+		(libpart
+			(lib "Ember_EPS_Protection")
+			(part "PESD2CANFD24V_T_DRAFT")
+			(docs "https://assets.nexperia.com/documents/data-sheet/PESD2CANFD24V-T.pdf")
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "PESD2CANFD24V-T")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet") "https://assets.nexperia.com/documents/data-sheet/PESD2CANFD24V-T.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "K1_BUS")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "K2_BUS")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "CC_RETURN")
+					(type "passive")
+				)
+			)
+		)
+	)
+	(libraries
+		(library
+			(logical "Ember_EPS_Protection")
+			(uri "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/libraries/Ember_EPS_Protection.kicad_sym")
+		)
+	)
+	(nets
+		(net
+			(code "1")
+			(name "unconnected-(D1-CC_RETURN-Pad3)")
+			(class "Default")
+			(node
+				(ref "D1")
+				(pin "3")
+				(pinfunction "CC_RETURN_3")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "2")
+			(name "unconnected-(D1-K1_BUS-Pad1)")
+			(class "Default")
+			(node
+				(ref "D1")
+				(pin "1")
+				(pinfunction "K1_BUS_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "3")
+			(name "unconnected-(D1-K2_BUS-Pad2)")
+			(class "Default")
+			(node
+				(ref "D1")
+				(pin "2")
+				(pinfunction "K2_BUS_2")
+				(pintype "passive")
+			)
+		)
+	)
+)

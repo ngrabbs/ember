@@ -11,3 +11,7 @@ These symbols and manufacturer-derived land patterns were created through Konnec
 Earlier versions remain as superseded study trials. CAN v2 was an unsuccessful orientation trial; use v3 for continued validation. Placed scratch instances have explicit footprint assignments, but library defaults for Footprint and Description still need completion through Konnect before library acceptance.
 
 See the [verification index](../verification/README.md) for manufacturer references, exported pad checks and electrical limitations. Pin/pad readback and visual review do not establish assembly acceptance, final board fit or fabrication readiness.
+
+## Protection study
+
+`Ember_EPS_Protection.kicad_sym` adds `PESD2CANFD24V_T_DRAFT` for a separate disposable TVS study. Pin/pad identity is checked against a standard SOT-23 comparison; land-pattern/assembly and electrical acceptance remain open. The symbol is not placed in the controller circuit. See [candidate verification](../verification/can_tvs_candidate_verification.md).
