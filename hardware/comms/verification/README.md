@@ -9,16 +9,30 @@ repair logs are available in Git history.
 
 ## Latest recorded state
 
-The latest ordering-field pass records **0 DRC errors, 1 existing header-silkscreen
-warning, 0 unconnected items**. The earlier RF review checked 181 native nets
-against the PCB. Native ERC exclusions and the header courtyard exception remain
-part of those records. RF performance, physical fit, and final sourcing remain open.
-No checks were rerun during documentation cleanup.
+Latest: [top-ground stitching and RF impedance review](ground_stitching_rf_review.md).
+100 new GND vias verified on three ground layers; DRC remains 0 errors /
+0 unconnected / 1 warning. RF impedance acceptance has the explicit open
+items recorded in that review.
 
-- [RF review and warning disposition](rf_review_435mhz.md)
-- [Baseband bias/filter and header exception](baseband_and_header_review.md)
-- [Latest ordering-field validation](../bom/evidence/remaining_field_completion.md)
-- [Numerical RF review evidence](evidence/rf_review_validation.json)
+[Power-plane cleanup and DRC evidence](evidence/power_plane_cleanup_2026-10-03.json).
+
+The October 3 saved PCB has **0 non-excluded DRC errors, 0 unconnected items,
+and 1 warning**: the fixed H1/H2 silkscreen-outline overlap. Five specific
+PC/104 courtyard exclusions are restored; no header or mounting-hole position
+was changed. The user's restored In2.Cu +3V3 plane now replaces approximately
+193 mm of redundant outer-layer power routing. Local supply connections remain.
+CLK0 trace width/clearance and remaining power-via spacing findings are fixed.
+
+All 209 native schematic nets (551 nodes) match the PCB pad assignments with
+zero mismatches. The fresh DRC separately checks routed continuity. The GUI
+initially showed four cached mounting-hole library differences absent from the
+fresh saved-board check; these were not globally ignored.
+
+[Hardware TX mute and open checks](tx_startup_inhibit_review.md).
+The latest RF corridor screen found a return-corridor edge intrusion near
+TRIPLER_OUT, in addition to the antenna launch. It is not impedance or RF
+qualification. Final electrical, RF, parts/mechanics
+and manufacturing acceptance remain open. This is **not fabrication approval**.
 
 ## Component and connector audits
 
@@ -35,3 +49,5 @@ No checks were rerun during documentation cleanup.
 The older [Samtec mating-face audit](components/samtec_pad_audit.md) is background;
 its numbering and J6/J7 socket selection were superseded for these board instances.
 Use the later alignment record and preserve J6/J7/J8 as DNP pin headers.
+
+- [J9 drawing, RF exceptions and proposed fabrication requirements](j9_launch_and_fabrication_requirements.md) — October 3, 2026.

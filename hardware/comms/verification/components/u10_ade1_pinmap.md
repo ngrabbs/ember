@@ -38,3 +38,12 @@ The Schematic Editor was subsequently found open on RF_Switch with an unsaved ma
 - The linked STEP model is Mini-Circuits_CD542.step. CD542 height is 2.84 mm max; CD636 is 4.11 mm max. Preserve the accepted XY land pattern, but replace/verify the 3D representation and use 4.11 mm for mechanical clearance. Current 3D-model clearance is not accepted.
 - Layout/mixer-port routing and ground transitions remain open. Verify LO amplitude at the mixer, termination, conversion loss and filter response under actual operating conditions.
 - RX input chain to place: C55 → L12/C56 → C60 → L13/C64 → C67 → U9. C56/L12/C60/L13/C64/C67 remain in the unplaced group. U9 output couples through C75 to U10 RF and takes DC bias through L16. This pass did not move or route these parts.
+
+## October 3 prototype clearance disposition
+
+The user subsequently confirmed that this is the top board, with no board
+above and ample clearance. Accept overhead stack clearance for the documented
+4.11 mm maximum CD636 case in this prototype. The CD542 3D model remains
+shorter and is not accepted for future enclosure design. XY land acceptance
+and all pin mappings remain unchanged. Current RF routing is complete; earlier
+unplaced-component notes above are historical, not current blockers.

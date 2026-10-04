@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-03",
+  "parts": {
+    "J9": {
+      "value": "Conn_Coaxial_Small",
+      "fields": {
+        "Reference": "J9",
+        "Value": "Conn_Coaxial_Small",
+        "Datasheet": "https://www.molex.com/en-us/products/part-detail/734151471",
+        "Description": "small coaxial connector (BNC, SMA, SMB, SMC, Cinch/RCA, LEMO, ...)",
+        "LCSC Part #": "C588477",
+        "MPN": "734151471",
+        "Manufacturer": "Molex",
+        "Manufacturer Part #": "734151471",
+        "Qualification": "Prototype selection; see verification/components/prototype_parts_2026-10-03.md"
+      }
+    },
+    "L16": {
+      "value": "220n",
+      "fields": {
+        "Reference": "L16",
+        "Value": "220n",
+        "Datasheet": "https://www.coilcraft.com/getmedia/c30565bc-9cf5-4393-9380-6f782e4b4cd8/0805hp.pdf",
+        "Description": "220 nH 2% RF choke; Coilcraft 0805HP-221XGRC; RF bench qualification pending",
+        "LCSC Part #": "C40877572",
+        "Manufacturer": "Coilcraft",
+        "MPN": "0805HP-221XGRC",
+        "Manufacturer Part #": "0805HP-221XGRC",
+        "Qualification": "Prototype selection; see verification/components/prototype_parts_2026-10-03.md",
+        "PinMapAudit": "verification/components/l16_footprint_acceptance.md"
+      }
+    },
+    "D15": {
+      "value": "PESD5V0F1BLD",
+      "fields": {
+        "Reference": "D15",
+        "Value": "PESD5V0F1BLD",
+        "Datasheet": "https://assets.nexperia.com/documents/data-sheet/PESD5V0F1BLD.pdf",
+        "Description": "Bidirectional transient-voltage-suppression diode",
+        "MPN": "PESD5V0F1BLD,315",
+        "Manufacturer": "Nexperia",
+        "LCSC Part #": "C478204",
+        "Manufacturer Part #": "PESD5V0F1BLD,315",
+        "Qualification": "Prototype selection; see verification/components/prototype_parts_2026-10-03.md"
+      }
+    }
+  },
+  "drc": {
+    "categories_not_reported": [],
+    "design_rule_violations": 1,
+    "errors": 0,
+    "filtered_count": 1,
+    "schematic_parity": 0,
+    "severity_filter": "warning",
+    "shown": 1,
+    "total_violations": 1,
+    "truncated": false,
+    "unconnected_items": 0,
+    "violations": [
+      {
+        "description": "Silkscreen clearance",
+        "items": [
+          {
+            "description": "Rectangle of H1 on Top Overlay",
+            "pos": {
+              "x": 109.3486,
+              "y": 137.7686
+            },
+            "uuid": "0986cb10-312d-406c-824d-95de08f86667"
+          },
+          {
+            "description": "Rectangle of H2 on Top Overlay",
+            "pos": {
+              "x": 104.2686,
+              "y": 137.7686
+            },
+            "uuid": "f32bac2b-f6dd-4d7d-8fe8-048bd4f427f7"
+          }
+        ],
+        "pos": {
+          "x": 109.3486,
+          "y": 137.7686
+        },
+        "rule": "silk_overlap",
+        "severity": "warning"
+      }
+    ],
+    "warnings": 1
+  },
+  "native_pad_parity": {
+    "native_net_count": 209,
+    "pcb_pad_count": 556,
+    "mismatches": []
+  },
+  "native_update_report": " unit metadata.\nUpdate TP3 unit metadata.\nUpdate U7 unit metadata.\nUpdate TP2 unit metadata.\nUpdate TP1 unit metadata.\nUpdate R25 unit metadata.\nUpdate L16 fields.\nUpdate J9 fields.\nUpdate C115 unit metadata.\nUpdate C66 unit metadata.\nUpdate U14 unit metadata.\nUpdate C65 unit metadata.\nUpdate C2 unit metadata.\nChange D15 value from PESD5V0F1BRLD to PESD5V0F1BLD.\nUpdate D15 fields.\n\n\nInfo: Total warnings: 0, errors: 0.\n"
+}

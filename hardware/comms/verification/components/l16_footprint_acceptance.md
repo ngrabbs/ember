@@ -30,3 +30,9 @@ This selection **does not satisfy the old >1.5 GHz SRF target**, and no requirem
 L16 was moved to (158.3,129.55), 0 degrees, and C75 to (158.9,131.75), 0 degrees, to accommodate the larger manufacturer pads. Six RF segments were replaced with six adjusted segments. Retained copper and all pad nets are unchanged; other footprint fields and placements are unchanged. The L16 footprint UUID and schematic path were preserved. Both schematic and PCB specify 220n / Coilcraft / 0805HP-221XJRC / Ember_RF:L_Coilcraft_0805HP. The obsolete LCSC code was cleared. The saved schematic component export verifies these purchasing fields; it is not a fresh full ERC or proof that the known CLI hierarchy/net-export discrepancy is resolved. Live Konnect pad readback confirms pad 1 +5V at (157.23,129.55) and pad 2 OUT/DC at (159.37,129.55).
 
 Main DRC remains 501 errors, 202 warnings and 101 unconnected items. New copper has no violations; L16/C75 have no new placement, clearance or label violations in the main project. Ground sampling includes the new routes plus the preceding RX/adjusted-bias paths: 3,460 samples all contact filled L2 GND. The 141-footprint, 738-copper-item board is still not fabrication-ready.
+
+## October 3 sourcing update
+
+Selected same-package 0805HP-221XGRC (G=2%) / C40877572 instead of the J=5%
+variant. Physical mapping is unchanged. The historical SRF target is not met;
+see [current prototype disposition](prototype_parts_2026-10-03.md).

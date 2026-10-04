@@ -7,6 +7,11 @@ board feels too crowded to keep ground solid.
 
 ---
 
+**October 3 review:** the current [ground-stitching and impedance review](../verification/ground_stitching_rf_review.md)
+supersedes historical claims of completed impedance acceptance below. The
+0.358 mm value remains a design target, pending a fresh vendor solver result
+and final fabrication stackup agreement.
+
 ## The core rule
 
 > **No slot, no antipad bridge, no break in the ground plane may cross
@@ -121,7 +126,7 @@ top pour at the same potential as the inner plane, prevents resonant
 cavities between layers.
 
 Spacing rule: ≤ λ/20 at the highest frequency you care about.
-- At 437 MHz in FR4 (εr ≈ 4.3): λ ≈ 330 mm in air, ~160 mm in FR4 →
+- At 437 MHz in FR4 (εr ≈ 4.3): λ ≈ 686 mm in air, ~331 mm in FR4 →
   **stitch every ~5–8 mm**
 - At 145 MHz: looser, ~15 mm acceptable, but keep at 5 mm for
   consistency
@@ -133,7 +138,9 @@ an RF section. Purpose is **isolation** — keeping one RF zone's signal
 out of another.
 
 Spacing rule: ≤ λ/10 at the highest frequency to be isolated.
-- At 437 MHz in FR4: **vias every ~15 mm or tighter** for a real fence
+- At 437 MHz in FR4, λ/10 is about 33 mm; use substantially tighter spacing
+  for practical RF boundaries and harmonics. This board uses approximately
+  3–4 mm placement targets where geometry permits, not a guaranteed shielding specification.
 
 For the board you want **both**:
 - Stitching throughout each RF zone (general ground integrity)
