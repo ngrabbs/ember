@@ -15,3 +15,7 @@ See the [verification index](../verification/README.md) for manufacturer referen
 ## Protection study
 
 `Ember_EPS_Protection.kicad_sym` adds `PESD2CANFD24V_T_DRAFT` for a separate disposable TVS study. Pin/pad identity is checked against a standard SOT-23 comparison; land-pattern/assembly and electrical acceptance remain open. The symbol is not placed in the controller circuit. See [candidate verification](../verification/can_tvs_candidate_verification.md).
+
+## Power-stage study
+
+`Ember_EPS_Power.kicad_sym` and `Ember_EPS_Power.pretty` add the active `LMR51635XDDCR_DRAFT_v2` symbol and `TI_DDC0006A_SOT23_6_DRAFT` footprint. Six physical leads/pads are checked against TI’s top-view pin map and example lands through exports and disposable renders. Version 1 is superseded. Default symbol Footprint/Description and assembly settings remain incomplete; explicit scratch instance fields are present. See the [essential buck draft](../verification/essential_buck_stage_draft.md). These libraries are not registered into Rev A.
