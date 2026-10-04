@@ -2,6 +2,8 @@
 
 2026-10-04. Added through Konnect to the disposable controller study. The fabricated Rev A files are unchanged. This extends the [controller support checkpoint](controller_support_draft.md).
 
+This debug-only checkpoint is historical; see the [CAN-interface extension](controller_can_interface_draft.md) for the latest verification status.
+
 ## Logical interface
 
 J1 is a generic five-contact logical placeholder with no assigned footprint or accepted physical connector. Its numbering is provisional and does not claim compatibility with a standard debugger cable. Select a low-profile connector or pogo/test-pad interface, then review the adapter, mating view, orientation and physical pad map before placement.
