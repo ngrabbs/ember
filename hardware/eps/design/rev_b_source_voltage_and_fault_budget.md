@@ -20,6 +20,8 @@ Use the module coefficient directly; do not multiply it by the module's internal
 | −20°C | 30.772 V |
 | −40°C | 32.164 V |
 
+Each voltage case is for one face with four series modules. The faces connect in parallel through blocking diodes, so their voltages do not add. Rotation changes illumination and available current/power; protection still covers an illuminated cold string approaching open circuit at low load.
+
 These are linear estimates using published typical parameters. They exclude manufacturing spread, orbital spectrum/irradiance changes, wiring transients and temperature-coefficient uncertainty. Do not extrapolate below −40°C as an accepted source specification. No guaranteed blocking-diode drop is subtracted: at light load/open circuit, its voltage drop cannot provide a fixed protective margin.
 
 [TI TPS6293x Rev D](https://www.ti.com/lit/ds/symlink/tps62933f.pdf), printed page 5, specifies 30 V recommended maximum VIN and 32 V absolute maximum. The typical calculation crosses those levels at approximately −8.91°C and −37.64°C respectively. The latter is a source estimate, not proof of the voltage on a measured Rev A VIN pin. It is sufficient to reject unconditional reuse of the 30 V stages with 4S strings. Buck EN removes switching permission, not voltage at VIN.
@@ -69,6 +71,10 @@ For an ideal stiff differential voltage across one 120 Ω termination, `P = V²/
 The PESD2CANFD24V-T candidate has 24 V stand-off. A solar fault can exceed it continuously; the pulse rating does not establish sustained survival, fault removal or safe ground current. Select the bus protection only after specifying source impedance/energy and the continuous-fault response. Include connector-adjacent return inductance and both powered/unpowered transceiver states. Consider a suitable higher stand-off CAN protection device or fault isolation as alternatives; prove transient protection with the chosen transceiver and layout before selecting either. The candidate remains outside the controller circuit.
 
 The battery source-switch reference also needs a terminal-by-terminal voltage matrix: its 30 V rating follows the normal battery domain only. A fault applying solar to its downstream terminal could exceed that class. Do not claim that its off-state or reverse-current behavior protects against every cross-domain fault.
+
+## Conversion follow-up — 2026-10-04
+
+The [candidate study](rev_b_regulator_and_ov_candidates.md) carries forward a 3.3 V buck and 5 V buck-boost to preserve the operator-selected low-battery COMMS recovery requirement. It also identifies the LTC4367 cold-reconnect hysteresis constraint. Complete circuits and OV thresholds remain open.
 
 ## Next implementation gates
 

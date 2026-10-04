@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-04",
+  "status": "development candidate study; no selected complete stage or accepted OV thresholds",
+  "operator_requirement": "Preserve regulated 5 V for COMMS recovery down to provisional documented 5 V pack floor",
+  "source_wiring": "four modules in series per face; face strings parallel through blocking diodes; voltage does not sum between faces",
+  "candidate_sources": [
+    {
+      "part": "LMR51635XDDCR",
+      "url": "https://www.ti.com/lit/ds/symlink/lmr51635.pdf",
+      "revision": "SLUSF64B Rev B Jan 2025",
+      "local_sha256": "e1f7a10d36b45dc96764b8719848380f1e1177fdfd6879728942237b4777513c",
+      "rendered_review_pages": [
+        3,
+        4
+      ]
+    },
+    {
+      "part": "LM5177DCPR",
+      "url": "https://www.ti.com/lit/ds/symlink/lm5177.pdf",
+      "revision": "SNVSBU4F Rev F Jan 2025",
+      "local_sha256": "046505c9d73312adc5dc6348448e1be5745d5e7b5b754b78c8613b27b194718c",
+      "rendered_review_pages": [
+        7,
+        8
+      ],
+      "implementation_gate": "apparent naming and frequency text discrepancies in sections 7.3.5/7.3.6; do not infer 2.5 MHz capability"
+    },
+    {
+      "part": "LTC4367 family",
+      "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4367.pdf",
+      "revision": "Rev D",
+      "review": "manufacturer web text; local PDF download failed"
+    },
+    {
+      "part": "LTC2965 family",
+      "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/2965fc.pdf",
+      "revision": "Rev C",
+      "review": "manufacturer web text"
+    }
+  ],
+  "calculations": {
+    "ideal_5V_buck_input_at_96pct_duty_V": 5.208333333333334,
+    "lmr51635_3V3_feedback": {
+      "reference_V": 0.8,
+      "top_ohm": 31800,
+      "bottom_ohm": 10200,
+      "nominal_output_V": 3.2941176470588234
+    },
+    "buck_ripple_example": {
+      "input_V": 35,
+      "output_V": 3.3,
+      "inductance_H": 5.6e-06,
+      "frequency_Hz": 400000,
+      "ripple_peak_to_peak_A": 1.3343112244897959
+    },
+    "five_volt_current_example": {
+      "output_V": 5,
+      "output_A": 2,
+      "input_V": 5,
+      "assumed_efficiency": 0.9,
+      "input_A": 2.2222222222222223
+    },
+    "ltc4367_ov_sensitivity": {
+      "not_a_threshold_selection": true,
+      "divider_top_ohm": 660000,
+      "divider_bottom_ohm": 10000,
+      "resistor_initial_fraction": 0.001,
+      "pin_leakage_max_abs_A": 1e-08,
+      "OV_comparator_min_max_V": [
+        0.4925,
+        0.5075
+      ],
+      "hysteresis_min_max_V": [
+        0.02,
+        0.032
+      ],
+      "nominal_trip_V": 33.5,
+      "conservative_trip_bounds_V": [
+        32.925948345054955,
+        34.076163657057045
+      ],
+      "conservative_reconnect_bounds_V": [
+        30.78616812527473,
+        32.7335210144144
+      ],
+      "remaining_static_headroom_to_35V_V": 0.9238363429429555,
+      "typical_cold_Voc_V": 32.164,
+      "cold_reconnect_guaranteed": false,
+      "excluded": [
+        "resistor drift",
+        "array tolerance and AM0",
+        "dynamic overshoot",
+        "arbitrary FET gate turn-off",
+        "correlation between IC threshold and hysteresis corners"
+      ]
+    }
+  }
+}

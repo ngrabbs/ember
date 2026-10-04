@@ -16,6 +16,8 @@ The [source voltage and fault budget](rev_b_source_voltage_and_fault_budget.md) 
 
 The [BMS and temperature specification](rev_b_bms_and_temperature_spec.md) defines the 2S protection circuit boundary, three independent sensors, configuration/readback requirements and simulator verification sequence. It explicitly assigns TS1 and TS2 to cell protection and keeps charger and BMS thermistor models separate.
 
+The [regulator and OV candidate study](rev_b_regulator_and_ov_candidates.md) carries forward LMR51635XDDCR for 3.3 V and LM5177DCPR for 5 V evaluation. The operator selected regulated 5 V for COMMS recovery down to the provisional 5 V pack floor, so the 5 V stage is buck-boost. Complete stages, fit and cutoff trip/reset windows remain unaccepted.
+
 ## Agreed requirements
 
 | Subject | Working requirement |
@@ -53,7 +55,7 @@ flowchart TD
     INTERLOCK -. Hardware off control .-> SOLCUT
     CHARGER --> PP[VOUT_PP]
     PP --> BUCK33[3.3 V converter]
-    PP --> BUCK5[5 V converter]
+    PP --> BUCK5[5 V buck-boost converter]
     BUCK33 --> MCU[EPS MCU and CAN A B]
     BUCK33 --> IHU[IHU essential supply]
     BUCK33 --> LOAD33[Managed 3.3 V loads]
