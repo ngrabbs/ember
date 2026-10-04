@@ -9,6 +9,13 @@
 #   src/cli/*.{c,h}         interactive command-line interface
 #   ../../shared/*.h        wire protocols shared with firmware/comms
 
+option(IHU_EPS_ALLOW_CHARGER_WRITES "Enable legacy charger configuration and CLI writes" OFF)
+
+option(IHU_EPS_TIMED_BENCH_TEST "Enable supervised 60-second low-current NTC bench test" OFF)
+if(IHU_EPS_TIMED_BENCH_TEST AND IHU_EPS_ALLOW_CHARGER_WRITES)
+    message(FATAL_ERROR "Timed bench test must not enable legacy charger writes")
+endif()
+
 set(EMBER_SHARED_DIR ${CMAKE_CURRENT_LIST_DIR}/../../shared)
 
 add_executable(${ProjectName}
@@ -52,3 +59,7 @@ target_link_libraries(${ProjectName}
 
 # Generate .uf2, .bin, .hex, .elf, .map alongside the binary.
 pico_add_extra_outputs(${ProjectName})
+
+target_compile_definitions(${ProjectName} PRIVATE
+    IHU_EPS_ALLOW_CHARGER_WRITES=$<BOOL:${IHU_EPS_ALLOW_CHARGER_WRITES}>
+    IHU_EPS_TIMED_BENCH_TEST=$<BOOL:${IHU_EPS_TIMED_BENCH_TEST}>)

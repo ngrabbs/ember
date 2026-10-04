@@ -1,0 +1,491 @@
+{
+  "paused_after_seek": {
+    "processor": {
+      "instance": "ember",
+      "name": "ember-eps-review",
+      "type": "Archive",
+      "creator": "guest",
+      "hasAlarms": false,
+      "hasCommanding": false,
+      "state": "RUNNING",
+      "replayRequest": {
+        "endAction": "STOP",
+        "speed": {
+          "type": "REALTIME",
+          "param": 1.0
+        },
+        "packetRequest": {},
+        "eventRequest": {},
+        "commandHistoryRequest": {},
+        "ppRequest": {},
+        "start": "2026-10-01T23:11:19.831Z",
+        "stop": "2026-10-01T23:12:50.273Z",
+        "reverse": false,
+        "autostart": true
+      },
+      "replayState": "PAUSED",
+      "services": [
+        {
+          "instance": "ember",
+          "name": "ReplayService",
+          "state": "RUNNING",
+          "className": "org.yamcs.tctm.ReplayService",
+          "processor": "ember-eps-review"
+        },
+        {
+          "instance": "ember",
+          "name": "AlgorithmManager",
+          "state": "RUNNING",
+          "className": "org.yamcs.algorithms.AlgorithmManager",
+          "processor": "ember-eps-review"
+        }
+      ],
+      "persistent": true,
+      "time": "2026-10-01T23:12:43.831Z",
+      "replay": true,
+      "checkCommandClearance": false,
+      "protected": false,
+      "overrideAlgorithmsEnabled": false
+    },
+    "parameters": {
+      "readout_valid": {
+        "id": {
+          "name": "POWER_STATUS_readout_valid",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "UINT32",
+          "uint32Value": 1
+        },
+        "engValue": {
+          "type": "UINT32",
+          "uint32Value": 1
+        },
+        "acquisitionTime": "2026-10-01T23:12:43.553Z",
+        "generationTime": "2026-10-01T23:12:43.553Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "conversion_valid": {
+        "id": {
+          "name": "POWER_STATUS_conversion_valid",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "UINT32",
+          "uint32Value": 1
+        },
+        "engValue": {
+          "type": "UINT32",
+          "uint32Value": 1
+        },
+        "acquisitionTime": "2026-10-01T23:12:43.553Z",
+        "generationTime": "2026-10-01T23:12:43.553Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "readout_age_ms": {
+        "id": {
+          "name": "POWER_STATUS_readout_age_ms",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "UINT32",
+          "uint32Value": 4005
+        },
+        "engValue": {
+          "type": "UINT32",
+          "uint32Value": 4005
+        },
+        "acquisitionTime": "2026-10-01T23:12:43.553Z",
+        "generationTime": "2026-10-01T23:12:43.553Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "battery_mv": {
+        "id": {
+          "name": "POWER_STATUS_battery_mv",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "SINT32",
+          "sint32Value": 8185
+        },
+        "engValue": {
+          "type": "FLOAT",
+          "floatValue": 8.185
+        },
+        "acquisitionTime": "2026-10-01T23:12:43.553Z",
+        "generationTime": "2026-10-01T23:12:43.553Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "input_mv": {
+        "id": {
+          "name": "POWER_STATUS_input_mv",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "SINT32",
+          "sint32Value": 10679
+        },
+        "engValue": {
+          "type": "FLOAT",
+          "floatValue": 10.679
+        },
+        "acquisitionTime": "2026-10-01T23:12:43.553Z",
+        "generationTime": "2026-10-01T23:12:43.553Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "battery_ua": {
+        "id": {
+          "name": "POWER_STATUS_battery_ua",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "SINT32",
+          "sint32Value": -2199
+        },
+        "engValue": {
+          "type": "FLOAT",
+          "floatValue": -2.199
+        },
+        "acquisitionTime": "2026-10-01T23:12:43.553Z",
+        "generationTime": "2026-10-01T23:12:43.553Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "raw_config_bits": {
+        "id": {
+          "name": "POWER_STATUS_raw_config_bits",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "UINT32",
+          "uint32Value": 44
+        },
+        "engValue": {
+          "type": "UINT32",
+          "uint32Value": 44
+        },
+        "acquisitionTime": "2026-10-01T23:12:43.553Z",
+        "generationTime": "2026-10-01T23:12:43.553Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "raw_charger_config_bits": {
+        "id": {
+          "name": "POWER_STATUS_raw_charger_config_bits",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "UINT32",
+          "uint32Value": 1
+        },
+        "engValue": {
+          "type": "UINT32",
+          "uint32Value": 1
+        },
+        "acquisitionTime": "2026-10-01T23:12:43.553Z",
+        "generationTime": "2026-10-01T23:12:43.553Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "raw_charger_state": {
+        "id": {
+          "name": "POWER_STATUS_raw_charger_state",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "UINT32",
+          "uint32Value": 256
+        },
+        "engValue": {
+          "type": "UINT32",
+          "uint32Value": 256
+        },
+        "acquisitionTime": "2026-10-01T23:12:43.553Z",
+        "generationTime": "2026-10-01T23:12:43.553Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "readout_count": {
+        "id": {
+          "name": "POWER_STATUS_readout_count",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "UINT32",
+          "uint32Value": 1
+        },
+        "engValue": {
+          "type": "UINT32",
+          "uint32Value": 1
+        },
+        "acquisitionTime": "2026-10-01T23:12:43.553Z",
+        "generationTime": "2026-10-01T23:12:43.553Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      }
+    }
+  },
+  "paused_time_recheck": {
+    "instance": "ember",
+    "name": "ember-eps-review",
+    "type": "Archive",
+    "creator": "guest",
+    "hasAlarms": false,
+    "hasCommanding": false,
+    "state": "RUNNING",
+    "replayRequest": {
+      "endAction": "STOP",
+      "speed": {
+        "type": "REALTIME",
+        "param": 1.0
+      },
+      "packetRequest": {},
+      "eventRequest": {},
+      "commandHistoryRequest": {},
+      "ppRequest": {},
+      "start": "2026-10-01T23:11:19.831Z",
+      "stop": "2026-10-01T23:12:50.273Z",
+      "reverse": false,
+      "autostart": true
+    },
+    "replayState": "PAUSED",
+    "services": [
+      {
+        "instance": "ember",
+        "name": "ReplayService",
+        "state": "RUNNING",
+        "className": "org.yamcs.tctm.ReplayService",
+        "processor": "ember-eps-review"
+      },
+      {
+        "instance": "ember",
+        "name": "AlgorithmManager",
+        "state": "RUNNING",
+        "className": "org.yamcs.algorithms.AlgorithmManager",
+        "processor": "ember-eps-review"
+      }
+    ],
+    "persistent": true,
+    "time": "2026-10-01T23:12:43.831Z",
+    "replay": true,
+    "checkCommandClearance": false,
+    "protected": false,
+    "overrideAlgorithmsEnabled": false
+  },
+  "realtime_still_running": {
+    "instance": "ember",
+    "name": "realtime",
+    "type": "realtime",
+    "creator": "System",
+    "hasAlarms": true,
+    "hasCommanding": true,
+    "state": "RUNNING",
+    "services": [
+      {
+        "instance": "ember",
+        "name": "StreamTmPacketProvider",
+        "state": "RUNNING",
+        "className": "org.yamcs.StreamTmPacketProvider",
+        "processor": "realtime"
+      },
+      {
+        "instance": "ember",
+        "name": "StreamTcCommandReleaser",
+        "state": "RUNNING",
+        "className": "org.yamcs.StreamTcCommandReleaser",
+        "processor": "realtime"
+      },
+      {
+        "instance": "ember",
+        "name": "StreamParameterProvider",
+        "state": "RUNNING",
+        "className": "org.yamcs.tctm.StreamParameterProvider",
+        "processor": "realtime"
+      },
+      {
+        "instance": "ember",
+        "name": "AlgorithmManager",
+        "state": "RUNNING",
+        "className": "org.yamcs.algorithms.AlgorithmManager",
+        "processor": "realtime"
+      },
+      {
+        "instance": "ember",
+        "name": "LocalParameterManager",
+        "state": "RUNNING",
+        "className": "org.yamcs.parameter.LocalParameterManager",
+        "processor": "realtime"
+      }
+    ],
+    "persistent": true,
+    "time": "2026-10-01T23:22:08.273Z",
+    "replay": false,
+    "checkCommandClearance": false,
+    "protected": true,
+    "overrideAlgorithmsEnabled": false
+  },
+  "paused_after_backward_seek": {
+    "processor": {
+      "instance": "ember",
+      "name": "ember-eps-review",
+      "type": "Archive",
+      "creator": "guest",
+      "hasAlarms": false,
+      "hasCommanding": false,
+      "state": "RUNNING",
+      "replayRequest": {
+        "endAction": "STOP",
+        "speed": {
+          "type": "REALTIME",
+          "param": 1.0
+        },
+        "packetRequest": {},
+        "eventRequest": {},
+        "commandHistoryRequest": {},
+        "ppRequest": {},
+        "start": "2026-10-01T23:11:19.831Z",
+        "stop": "2026-10-01T23:12:50.273Z",
+        "reverse": false,
+        "autostart": true
+      },
+      "replayState": "PAUSED",
+      "services": [
+        {
+          "instance": "ember",
+          "name": "ReplayService",
+          "state": "RUNNING",
+          "className": "org.yamcs.tctm.ReplayService",
+          "processor": "ember-eps-review"
+        },
+        {
+          "instance": "ember",
+          "name": "AlgorithmManager",
+          "state": "RUNNING",
+          "className": "org.yamcs.algorithms.AlgorithmManager",
+          "processor": "ember-eps-review"
+        }
+      ],
+      "persistent": true,
+      "time": "2026-10-01T23:11:32.156Z",
+      "replay": true,
+      "checkCommandClearance": false,
+      "protected": false,
+      "overrideAlgorithmsEnabled": false
+    },
+    "parameters": {
+      "raw_config_bits": {
+        "id": {
+          "name": "POWER_STATUS_raw_config_bits",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "UINT32",
+          "uint32Value": 12
+        },
+        "engValue": {
+          "type": "UINT32",
+          "uint32Value": 12
+        },
+        "acquisitionTime": "2026-10-01T23:11:32.156Z",
+        "generationTime": "2026-10-01T23:11:32.156Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "raw_charger_config_bits": {
+        "id": {
+          "name": "POWER_STATUS_raw_charger_config_bits",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "UINT32",
+          "uint32Value": 0
+        },
+        "engValue": {
+          "type": "UINT32",
+          "uint32Value": 0
+        },
+        "acquisitionTime": "2026-10-01T23:11:32.156Z",
+        "generationTime": "2026-10-01T23:11:32.156Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "raw_charger_state": {
+        "id": {
+          "name": "POWER_STATUS_raw_charger_state",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "UINT32",
+          "uint32Value": 32
+        },
+        "engValue": {
+          "type": "UINT32",
+          "uint32Value": 32
+        },
+        "acquisitionTime": "2026-10-01T23:11:32.156Z",
+        "generationTime": "2026-10-01T23:11:32.156Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "input_mv": {
+        "id": {
+          "name": "POWER_STATUS_input_mv",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "SINT32",
+          "sint32Value": 10677
+        },
+        "engValue": {
+          "type": "FLOAT",
+          "floatValue": 10.677
+        },
+        "acquisitionTime": "2026-10-01T23:11:32.156Z",
+        "generationTime": "2026-10-01T23:11:32.156Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "battery_mv": {
+        "id": {
+          "name": "POWER_STATUS_battery_mv",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "SINT32",
+          "sint32Value": 8185
+        },
+        "engValue": {
+          "type": "FLOAT",
+          "floatValue": 8.185
+        },
+        "acquisitionTime": "2026-10-01T23:11:32.156Z",
+        "generationTime": "2026-10-01T23:11:32.156Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      },
+      "battery_ua": {
+        "id": {
+          "name": "POWER_STATUS_battery_ua",
+          "namespace": "/ember"
+        },
+        "rawValue": {
+          "type": "SINT32",
+          "sint32Value": -3665
+        },
+        "engValue": {
+          "type": "FLOAT",
+          "floatValue": -3.665
+        },
+        "acquisitionTime": "2026-10-01T23:11:32.156Z",
+        "generationTime": "2026-10-01T23:11:32.156Z",
+        "acquisitionStatus": "ACQUIRED",
+        "expireMillis": "1900"
+      }
+    }
+  }
+}

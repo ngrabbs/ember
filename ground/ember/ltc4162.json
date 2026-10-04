@@ -1,0 +1,37 @@
+{
+  "profile": "ltc4162-l-readout-v1",
+  "source": "https://www.analog.com/media/en/technical-documentation/data-sheets/LTC4162-L.pdf",
+  "revision": "Rev A",
+  "word_byte_order": "little",
+  "address_7bit": 104,
+  "registers": [
+    {"name":"config_bits", "address":20},
+    {"name":"charger_config_bits", "address":41},
+    {"name":"charger_state", "address":52},
+    {"name":"charge_status", "address":53},
+    {"name":"limit_alerts", "address":54},
+    {"name":"charger_state_alerts", "address":55},
+    {"name":"charge_status_alerts", "address":56},
+    {"name":"system_status", "address":57},
+    {"name":"vbat", "address":58, "signed":true, "scale":0.0001924, "unit":"V/cell"},
+    {"name":"vin", "address":59, "signed":true, "scale":0.001649, "unit":"V"},
+    {"name":"vout", "address":60, "signed":true, "scale":0.001653, "unit":"V"},
+    {"name":"ibat", "address":61, "signed":true, "sense_voltage_lsb_uv":1.466},
+    {"name":"iin", "address":62, "signed":true, "sense_voltage_lsb_uv":1.466},
+    {"name":"die_temp", "address":63, "signed":true, "scale":0.0215, "offset":-264.4, "unit":"degC"},
+    {"name":"thermistor_voltage", "address":64, "signed":true},
+    {"name":"bsr", "address":65},
+    {"name":"jeita_region", "address":66},
+    {"name":"chem_cells", "address":67},
+    {"name":"telemetry_status", "address":74}
+  ],
+  "chemistries":{"0":"LAD", "1":"L42", "2":"L41", "3":"L40", "4":"FAD", "5":"FFS", "6":"FST", "8":"SST", "9":"SAD"},
+  "notes":[
+    "These are observational readout fields; this profile grants no register writes.",
+    "ADC telemetry_status bit0 indicates warmup validity, not a per-poll sample counter.",
+    "chem_cells bits11:8 report chip chemistry; bits3:0 cell count can be zero when charger disabled.",
+    "Battery pack conversion requires confirmed board cell count and sense resistor values.",
+    "No battery temperature without the populated thermistor/bias values and thermistor model.",
+    "BSR requires a completed measurement and bsr_questionable evaluation; this path never starts BSR."
+  ]
+}

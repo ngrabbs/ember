@@ -8,5 +8,6 @@ services:
       - "host.docker.internal:host-gateway"
     ports:
       - "127.0.0.1:10016:10016/udp"
+      - "127.0.0.1:10017:10017/udp"
   ember-simulator:
     profiles: ["simulator-reference"]

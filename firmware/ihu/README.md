@@ -34,6 +34,24 @@ Five FreeRTOS tasks are running on the bench proto:
 Both monitor tasks share i2c0, so every transaction now goes through
 the bus lock in [`src/config/i2c0_bus.h`](src/config/i2c0_bus.h).
 
+## EPS observational build
+
+The default build disables charger configuration writes
+(`IHU_EPS_ALLOW_CHARGER_WRITES=OFF`). It preserves the current ADC, JEITA and
+charger settings. `eps raw` and `eps json` observe the 19-register dictionary;
+`eps` reports engineering values only after a successful valid poll. ADC-invalid,
+non-L chemistry, mismatched detected cells, or a failed read invalidate the
+previous snapshot. `kick` and `ntc-bypass` are blocked in this build.
+
+The optional `-DIHU_EPS_ALLOW_CHARGER_WRITES=ON` restores legacy initialization,
+including JEITA disable and charger restart. Use only for a controlled bench
+that explicitly needs that behavior. Current scaling requires confirmed sense
+resistors; voltage conversion uses configured series cells. USB CDC remains
+disabled: the bench console uses a 3.3 V USB UART adapter.
+
+See [IHU/EPS bench setup](../../system/ground_station/eps_bench_setup.md) for
+hardware evidence, build/decoder commands and the remaining Yamcs integration.
+
 ## Project Layout
 
 ```text
@@ -157,8 +175,8 @@ returns plausible-looking wrong numbers.
 
 So i2c0 is brought up once in `main()` and every logical transaction
 runs between `ihu_i2c0_lock()` and `ihu_i2c0_unlock()`. "Logical"
-means the whole sequence that has to be coherent — all eight LTC4162
-telemetry registers, or the read-modify-write in `ltc4162_kick()` —
+means the whole sequence that has to be coherent — the LTC4162 observational
+register set, or the read-modify-write in `ltc4162_kick()` —
 not each individual SDK call. Both drivers take the lock internally,
 so callers do not have to think about it.
 

@@ -1,0 +1,18 @@
+[Unit]
+Description=EMBER read-only IHU EPS UART bridge
+Requires=docker.service
+Wants=ember-ground-starter.service
+After=docker.service ember-ground-starter.service
+
+[Service]
+User=ngrabbs
+Group=ngrabbs
+SupplementaryGroups=dialout
+EnvironmentFile=/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs/.eps.env
+WorkingDirectory=/home/ngrabbs/work/MSU_Cubesat/ember/ground/ember
+ExecStart=/usr/bin/python3 -u eps_bridge.py --device ${EMBER_EPS_DEVICE} --cells ${EMBER_EPS_CELLS} --rsnsb-ohms ${EMBER_EPS_RSNSB_OHMS} --rsnsi-ohms ${EMBER_EPS_RSNSI_OHMS}
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
