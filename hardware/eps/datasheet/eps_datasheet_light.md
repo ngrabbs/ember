@@ -55,13 +55,13 @@ title: ""
 
 - **LTC4162-L** Multi-Cell MPPT Li-ion Step-Down Charger
   - Up to **3.2 A** charge current
-  - **35 V** absolute max input
+  - **35 V** maximum charging input; **36 V** absolute maximum
   - I\textsuperscript{2}C telemetry: V\textsubscript{IN}, V\textsubscript{BAT}, I\textsubscript{CHG}, T\textsubscript{BAT}, SoC, state register
 - **TPS62933F** synchronous bucks (×2, one per output rail)
   - **3.8–30 V** input range, up to **3 A** continuous
   - Per-rail EN/UVLO programmable via resistor divider
   - 200 kHz – 2.2 MHz programmable switching
-- Solar Voc up to ~28 V (4S cold), Vmp ~22 V — full margin to LTC4162 35 V ceiling
+- Solar 4S Voc is 27.64 V at 25°C; typical temperature calculation gives 32.164 V at −40°C. Cold/AM0 maximum and transients remain unqualified; see the [Rev B voltage study](../design/rev_b_source_voltage_and_fault_budget.md). Existing PDF exports predate this correction.
 - Schottky-OR'd solar inputs (per-panel STPS1L30MF blocking + per-cell-array bypass)
 
 ### SWaP

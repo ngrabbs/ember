@@ -1,0 +1,326 @@
+{
+  "date": "2026-10-04",
+  "status": "typical calculation; not qualified maximum or measured assembly",
+  "sources": {
+    "solar_pdf": "hardware/eps/components/SM141K10TF/SM141K10TF DATA SHEET 202105.pdf",
+    "solar_sha256": "d6af492be7b8fbf5599d4b96a19c3433c86c43705a99655bb7fd7f0e5209a432",
+    "solar_printed_revision": "Dec. 2024, Preliminary; filename says 202105",
+    "solar_page": 1,
+    "netlist": "hardware/eps/verification/evidence/2026-10-03_saved_schematic/eps.xml",
+    "netlist_sha256": "89dd0d36cd91671e7ef7e0ac04e647309a7bfdf52aa47afab38ae6be74998e77"
+  },
+  "inputs": {
+    "module_Voc_typ_V": 6.91,
+    "module_dVoc_dT_typ_V_per_K": -0.0174,
+    "reference_temperature_C": 25,
+    "series_count": 4,
+    "qualified_AM0_factor": null,
+    "module_tolerance_max": null,
+    "measured_transient_max_V": null
+  },
+  "temperature_cases": [
+    {
+      "temperature_C": 90,
+      "module_Voc_typ_V": 5.779,
+      "four_series_Voc_typ_V": 23.116
+    },
+    {
+      "temperature_C": 25,
+      "module_Voc_typ_V": 6.91,
+      "four_series_Voc_typ_V": 27.64
+    },
+    {
+      "temperature_C": 0,
+      "module_Voc_typ_V": 7.345,
+      "four_series_Voc_typ_V": 29.38
+    },
+    {
+      "temperature_C": -20,
+      "module_Voc_typ_V": 7.693,
+      "four_series_Voc_typ_V": 30.772
+    },
+    {
+      "temperature_C": -40,
+      "module_Voc_typ_V": 8.041,
+      "four_series_Voc_typ_V": 32.164
+    }
+  ],
+  "buck": {
+    "recommended_max_V": 30,
+    "absolute_max_V": 32,
+    "typical_30V_crossing_C": -8.90804597701149,
+    "typical_32V_crossing_C": -37.643678160919535
+  },
+  "charger": {
+    "charging_input_max_V": 35,
+    "VIN_absolute_max_V": 36,
+    "headroom_at_typical_minus40_V": 2.8359999999999985
+  },
+  "termination_120ohm_stiff_source_scenarios": [
+    {
+      "differential_V": 8.4,
+      "current_A": 0.07,
+      "power_W": 0.588
+    },
+    {
+      "differential_V": 32.164,
+      "current_A": 0.26803333333333335,
+      "power_W": 8.621024133333334
+    }
+  ],
+  "saved_capacitor_membership": [
+    {
+      "ref": "C3",
+      "saved_value": "04025C104KAT2A",
+      "connected_pins": [
+        {
+          "net": "/Solar_Charger/VIN_CHG",
+          "ref": "C3",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C3",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C9",
+      "saved_value": "EEEFK1H151P",
+      "connected_pins": [
+        {
+          "net": "GND",
+          "ref": "C9",
+          "pin": "2",
+          "pinfunction": "-_2",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C10",
+      "saved_value": "CL32A226KAJNNNE",
+      "connected_pins": [
+        {
+          "net": "+3V3",
+          "ref": "C10",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C10",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C12",
+      "saved_value": "CL21B103KBANNNC",
+      "connected_pins": [
+        {
+          "net": "/Regulation/VOUT_PP",
+          "ref": "C12",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C12",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C13",
+      "saved_value": "CL21B103KBANNNC",
+      "connected_pins": [
+        {
+          "net": "/Regulation/VOUT_PP",
+          "ref": "C13",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C13",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C18",
+      "saved_value": "CL32A226KAJNNNE",
+      "connected_pins": [
+        {
+          "net": "+5V",
+          "ref": "C18",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C18",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C19",
+      "saved_value": "CL32A226KAJNNNE",
+      "connected_pins": [
+        {
+          "net": "+5V",
+          "ref": "C19",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C19",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C21",
+      "saved_value": "GCM32EC7YA106KA03L",
+      "connected_pins": [
+        {
+          "net": "/Regulation/VOUT_PP",
+          "ref": "C21",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C21",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C22",
+      "saved_value": "GCM32EC7YA106KA03L",
+      "connected_pins": [
+        {
+          "net": "/Regulation/VOUT_PP",
+          "ref": "C22",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C22",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C29",
+      "saved_value": "C0805C106K8PACTU",
+      "connected_pins": [
+        {
+          "net": "+3V3",
+          "ref": "C29",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C29",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C30",
+      "saved_value": "EMK105B7104KV-F",
+      "connected_pins": [
+        {
+          "net": "+3V3",
+          "ref": "C30",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C30",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C31",
+      "saved_value": "C0805C106K8PACTU",
+      "connected_pins": [
+        {
+          "net": "+5V",
+          "ref": "C31",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C31",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        }
+      ]
+    },
+    {
+      "ref": "C32",
+      "saved_value": "EMK105B7104KV-F",
+      "connected_pins": [
+        {
+          "net": "+5V",
+          "ref": "C32",
+          "pin": "1",
+          "pinfunction": "1_1",
+          "pintype": "passive"
+        },
+        {
+          "net": "GND",
+          "ref": "C32",
+          "pin": "2",
+          "pinfunction": "2_2",
+          "pintype": "passive"
+        }
+      ]
+    }
+  ]
+}

@@ -12,6 +12,8 @@ Its controller circuit definition selects two essential-3.3-V TCAN3413DR transce
 
 The [source-isolation study](rev_b_source_isolation_study.md) recommends evaluating separate back-to-back P-channel pairs with direct hardware interlock control. It includes preliminary loss calculations and identifies depleted-pack recovery, inrush and cold solar voltage as unresolved acceptance gates.
 
+The [source voltage and fault budget](rev_b_source_voltage_and_fault_budget.md) derives a typical 32.164 V cold 4S Voc and recommends higher-voltage buck stages plus autonomous solar OV isolation inside the RBF boundary. Exact limits, circuit selections and fault-energy coordination remain open.
+
 The [BMS and temperature specification](rev_b_bms_and_temperature_spec.md) defines the 2S protection circuit boundary, three independent sensors, configuration/readback requirements and simulator verification sequence. It explicitly assigns TS1 and TS2 to cell protection and keeps charger and BMS thermistor models separate.
 
 ## Agreed requirements
