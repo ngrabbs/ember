@@ -129,6 +129,10 @@ The exact BQ40Z50 family revision, protection FETs, shunt, balancing implementat
 
 ## Estimated circuit envelopes
 
+The table below is the initial additions-only estimate. The [2026-10-04 sizing checkpoint](rev_b_power_stage_sizing_and_fit.md) supersedes the converter reservations in the drawing: 432 mm² for the 3.3 V buck and 768 mm² for the 5 V buck-boost, a combined increase of 624 mm². The revised CAN rectangle is 336 mm² (16 mm² larger). The initial 2336/2920 mm² totals below exclude those changes and must not be treated as the current full-board budget.
+
+The operator reports 16 mm top standoff. Usable height still requires the upper board’s underside geometry, reference faces and tolerances. Holder and underside clearance remain open.
+
 These are engineering allowances for front-side layout, not dimensions from a completed BOM. They include nearby passives and local routing allowance. They exclude the existing charger/bucks and most existing connectors. The estimate assumes three initial managed load groups; shared stack rails still require coordinated local switching on consuming boards.
 
 | Addition | Reserved envelope | Area | Included |
@@ -160,7 +164,7 @@ Two layers remains an option if cost requires it, but it should be selected afte
 1. Build a provisional BQ40Z50 2S circuit and commissioning specification from the selected family revision's reference, including independent temperature sensing and fault recovery.
 2. Select battery/solar isolation topology and load switches after defining voltage/current envelopes, inrush and RBF contact behavior.
 3. Select CAN transceivers and the oscillator; check reset states, electrical compatibility and power-off behavior.
-4. Obtain holder geometry, board-to-cell clearance, available component height and stack spacing. Confirm harness access and whether the current saved outline includes all required mounting features.
+4. Obtain holder geometry and board-to-cell clearance; reconcile the reported 16 mm top standoff with upper-board underside protrusions and mechanical tolerances. Confirm harness access and whether the current saved outline includes all required mounting features.
 5. Check the complete BOM's actual courtyards against a proposed placement before schematic or fabrication freeze.
 
 The present outcome is a feasible pin budget and plausible circuit-area budget. Physical fit, final parts, startup recovery and flight inhibit acceptance remain unverified.

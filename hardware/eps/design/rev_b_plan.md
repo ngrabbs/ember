@@ -18,11 +18,14 @@ The [BMS and temperature specification](rev_b_bms_and_temperature_spec.md) defin
 
 The [regulator and OV candidate study](rev_b_regulator_and_ov_candidates.md) carries forward LMR51635XDDCR for 3.3 V and LM5177DCPR for 5 V evaluation. The operator selected regulated 5 V for COMMS recovery down to the provisional 5 V pack floor, so the 5 V stage is buck-boost. Complete stages, fit and cutoff trip/reset windows remain unaccepted.
 
+The [power-stage sizing and fit checkpoint](rev_b_power_stage_sizing_and_fit.md) records illustrative rail-current cases, passive/FET constraints and larger converter reservations. It incorporates the operator’s 16 mm top standoff; usable height and complete stage ratings remain unverified.
+
 ## Agreed requirements
 
 | Subject | Working requirement |
 |---|---|
 | Packaging | One EPS PCB; no battery protection daughterboard. Preserve a removable pack and the existing mechanical envelope. |
+| Top spacing | Operator reports 16 mm standoff above EPS before the next board. Confirm reference faces, underside protrusions and tolerance before assigning usable component height. |
 | Storage | 2S2P LG MJ1 baseline. Current pack uses a printed holder, directly soldered wires, and XT30. New pack construction should use professionally welded tabs. |
 | Current | Operator estimates battery load at 2 A or more. Continuous, peak, startup, and charge currents remain unmeasured. This is not a 2 A cutoff specification. |
 | Power isolation | RBF insertion shuts down powered spacecraft functions, including charger and EPS MCU. Deployment switches also enforce hardware shutdown while stowed. |

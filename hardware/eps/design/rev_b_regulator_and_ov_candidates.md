@@ -4,6 +4,8 @@ Study dated 2026-10-04. The operator selected **preserving regulated 5 V for COM
 
 Leading development candidates are **LMR51635XDDCR for 3.3 V** and **LM5177DCPR for 5 V**. Solar OV selection remains open after checking cutoff hysteresis. No KiCad source changed and no complete power stage is accepted. [Voltage envelope](rev_b_source_voltage_and_fault_budget.md) · [BOM handoff](rev_b_bom_and_schematic_checklist.md) · [Calculation evidence](../verification/evidence/2026-10-04_regulator_ov_candidates.json)
 
+The [subsequent sizing and fit checkpoint](rev_b_power_stage_sizing_and_fit.md) expands complete converter reservations to 1200 mm² and records the operator’s 16 mm top standoff. It checks illustrative 2 A rail cases, identifies inductor and low-gate-voltage constraints, and documents the LM5177 EVM’s 78.7 kΩ RT resistor for 400 kHz development. Complete stages remain unaccepted.
+
 ## Conversion choices
 
 | Candidate | Manufacturer limits / configuration | EPS disposition |
