@@ -28,6 +28,8 @@ TI's [TCAN3413 datasheet](https://www.ti.com/lit/ds/symlink/tcan3413.pdf), secti
 
 The oscillator EN input is pulled up rather than left floating. Source-series damping remains to be added/evaluated, and HSE input levels, capacitive load, startup time and the full CAN timing budget remain open.
 
+This support-only checkpoint is historical; see the [current SWD extension](controller_debug_draft.md) for the latest 13-net verification and ERC status.
+
 ## Verification
 
 Saved KiCad netlist comparison passed for 11 named nets with exactly their intended component endpoints: +3V3 (24), GND (17), reset (2), oscillator enable (2), A/B TX and STB (3 each), A/B RX (2 each) and HSE (2). Konnect reports zero floating wire endpoints and zero merged named nets. The rendered A3 sheet was inspected, and capacitor/power-symbol positions were adjusted to remove label clashes.

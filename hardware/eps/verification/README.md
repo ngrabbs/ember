@@ -6,17 +6,18 @@ This directory records the Rev A audit and the isolated Rev B controller study. 
 - [STM32 GP candidate verification](stm32_gp_candidate_verification.md): package-specific pin mapping and manufacturer-pattern checks.
 - [CAN and oscillator package candidates](controller_package_candidates.md): package review and historical verification snapshots.
 - [Current controller support draft](controller_support_draft.md): decoupling, reset and control-pin bias, exact endpoint verification and remaining work.
+- [Current SWD access draft](controller_debug_draft.md): logical debugger interface, endpoint checks and diagnostic disagreement.
 - [Candidate library status](../libraries/README.md): active draft IDs and acceptance limits.
 
 ## Current result
 
-The saved controller-support netlist matches the intended endpoints on all 11 named nets. Konnect reports zero floating wire endpoints and zero merged named nets. Manufacturer-pattern exports were checked for all 44 pads across the MCU, two CAN transceivers and oscillator.
+The current controller-debug netlist matches the intended endpoints on all 13 named nets. The earlier support-only checkpoint covered 11 nets. Konnect reports zero floating wire endpoints and zero merged named nets. Manufacturer-pattern exports were checked for all 44 pads across the MCU, two CAN transceivers and oscillator.
 
-Current ERC reports **26 errors**: 25 unconnected pins and one undriven supply. Earlier signal-only ERC results are historical. Debug access, remaining MCU interfaces, CAN connector/termination/protection, source isolation, regulation, final parts and layout remain unfinished. No bench or firmware qualification has run.
+Current ERC reports **24 errors**; its unconnected/power classification disagrees with component-query coverage as documented in the SWD report. The earlier 26-error support-only and 48-error signal-only results are historical. The physical debug connector and recovery tests, remaining MCU interfaces, CAN connector/termination/protection, source isolation, regulation, final parts and layout remain unfinished. No bench or firmware qualification has run.
 
 ## Review previews
 
-![Controller support draft](previews/controller_support.png)
+![Current controller debug draft](previews/controller_debug.png)
 
 [Controller support PDF](previews/package_check_controller-support-draft_1791114867.pdf).
 
