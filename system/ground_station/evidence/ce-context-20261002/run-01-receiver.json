@@ -1,0 +1,76 @@
+{
+  "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+  "received": 1,
+  "requested": 1,
+  "rejected": 0,
+  "duplicates": 0,
+  "packets": [
+    {
+      "received_utc": "2026-10-02T22:10:22.633792+00:00",
+      "peer": [
+        "172.16.0.2",
+        51001
+      ],
+      "hex": "0901c004007901010010020100000000000000001ff847ad0015521c00600102020101010102000000000000000000050015521c0000000000001f5a0000000800001f49fffe14a900002783000055710000271000002710000400010100000000000000000000a1517a000512edfca60045340323d80000000300e00001497c",
+      "decoded": {
+        "name": "POWER_STATUS",
+        "sequence": 4,
+        "header": {
+          "schema_version": 1,
+          "kind": 1,
+          "message_id": 16,
+          "source": 2,
+          "target": 1,
+          "transaction_epoch": 0,
+          "transaction_id": 0,
+          "source_boot_id": 536364973,
+          "uptime_ms": 1397276,
+          "payload_length": 96
+        },
+        "payload": {
+          "payload_version": 1,
+          "provenance": 2,
+          "link": 2,
+          "readout_present": 1,
+          "readout_valid": 1,
+          "conversion_valid": 1,
+          "adc_valid": 1,
+          "configured_cells": 2,
+          "detected_cells": 0,
+          "sense_values_verified": 0,
+          "bridge_session_id": 0,
+          "readout_count": 5,
+          "ihu_readout_uptime_ms": 1397276,
+          "readout_age_ms": 0,
+          "battery_mv": 8026,
+          "input_mv": 8,
+          "output_mv": 8009,
+          "battery_ua": -125783,
+          "input_ua": 10115,
+          "die_temp_mc": 21873,
+          "rsnsb_microohms": 10000,
+          "rsnsi_microohms": 10000,
+          "raw_config_bits": 4,
+          "raw_charger_config_bits": 1,
+          "raw_charger_state": 256,
+          "raw_charge_status": 0,
+          "raw_limit_alerts": 0,
+          "raw_charger_state_alerts": 0,
+          "raw_charge_status_alerts": 0,
+          "raw_system_status": 161,
+          "raw_vbat": 20858,
+          "raw_vin": 5,
+          "raw_vout": 4845,
+          "raw_ibat": 64678,
+          "raw_iin": 69,
+          "raw_die_temp": 13315,
+          "raw_thermistor_voltage": 9176,
+          "raw_bsr": 0,
+          "raw_jeita_region": 3,
+          "raw_chem_cells": 224,
+          "raw_telemetry_status": 1
+        }
+      }
+    }
+  ]
+}

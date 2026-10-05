@@ -1,0 +1,306 @@
+[
+  {
+    "id": "F01",
+    "status": "Corrected",
+    "priority": "High",
+    "disposition": "Updated",
+    "documents": [
+      "docs/architecture/system_overview.md",
+      "system/integration/integration_plan.md",
+      "system/integration/system_tests.md",
+      "hardware/ihu/README.md",
+      "hardware/ihu/design/overview.md",
+      "hardware/ihu/design/interfaces.md"
+    ],
+    "finding": "Summaries treated SPI as the active packet path and CAN as a later phase.",
+    "action": "Distinguish existing SPI allocation, legacy I2C status/ping, implemented single-bus CAN bench, and unfinished production CAN A/B.",
+    "evidence": [
+      "system/interfaces/board_to_board.md",
+      "system/interfaces/comms_to_ihu.md",
+      "firmware/can_feather_bench/main.c"
+    ]
+  },
+  {
+    "id": "F02",
+    "status": "Corrected",
+    "priority": "High",
+    "disposition": "Updated",
+    "documents": [
+      "firmware/ihu/README.md"
+    ],
+    "finding": "IHU README treated Yamcs integration as remaining work and mixed intended mission responsibilities with implemented CLI.",
+    "action": "Link the deployed UART wrapper and operator guide; state that FreeRTOS and CAN Feather are separate applications; preserve unimplemented runtime milestones.",
+    "evidence": [
+      "firmware/ihu/src/cli/cli.c",
+      "firmware/ihu/src/CMakeLists.txt",
+      "system/ground_station/eps_yamcs_setup.md"
+    ]
+  },
+  {
+    "id": "F03",
+    "status": "Corrected",
+    "priority": "High",
+    "disposition": "Retain as mission draft; scope clarified",
+    "documents": [
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/README.md",
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/02-command-dictionary.md",
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/03-command-responses.md",
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/05-ground-console.md",
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/09-command-telemetry-protocol.md"
+    ],
+    "finding": "Mission proposals could be mistaken for the available Yamcs command set.",
+    "action": "Keep mission draft; add explicit bench links and availability limits rather than deleting planned commands.",
+    "evidence": [
+      "ground/ember/dictionary.json",
+      "firmware/usb_bench/protocol.c",
+      "ground/ember/simulator.py"
+    ]
+  },
+  {
+    "id": "F04",
+    "status": "Corrected",
+    "priority": "Normal",
+    "disposition": "Updated",
+    "documents": [
+      "system/protocols/README.md",
+      "system/protocols/telemetry.md",
+      "system/protocols/ember_bench_v1.md",
+      "system/protocols/eps_power_status_v1.md",
+      "system/interfaces/data_interfaces.md"
+    ],
+    "finding": "Protocol index called all wire formats drafts; telemetry described CAN packet forwarding as absent.",
+    "action": "Index implemented contracts separately from flight proposals and document UART-wrapper versus native CAN/LTE provenance. Unpublished UHF configuration is deferred.",
+    "evidence": [
+      "ground/ember/dictionary.json",
+      "ground/yamcs/prepare.py",
+      "firmware/can_feather_bench/power_packet.h"
+    ]
+  },
+  {
+    "id": "F05",
+    "status": "Corrected",
+    "priority": "Normal",
+    "disposition": "Updated",
+    "documents": [
+      "docs/firmware/rtos_design.md",
+      "firmware/firmware.md"
+    ],
+    "finding": "RTOS summary called communications runtime undecided; roadmap still had CAN controller trade and forwarding as wholly future.",
+    "action": "Document FreeRTOS communications application and separate standalone Pico SDK bench; retain production integration tasks.",
+    "evidence": [
+      "firmware/comms/README.md",
+      "firmware/comms/src/main.c",
+      "firmware/can_feather_bench/CMakeLists.txt"
+    ]
+  },
+  {
+    "id": "F06",
+    "status": "Corrected",
+    "priority": "High",
+    "disposition": "Updated; old milestones retained",
+    "documents": [
+      "firmware/can_feather_bench/README.md"
+    ],
+    "finding": "CAN README introduction contradicted later native EPS/LTE milestones and presented older UF2 hashes as current.",
+    "action": "Correct published native EPS/LTE status and date earlier image hashes. Automatic cadence and SDRB/UHF additions remain local and are excluded until their source is published.",
+    "evidence": [
+      "firmware/can_feather_bench/main.c"
+    ]
+  },
+  {
+    "id": "F07",
+    "status": "Corrected",
+    "priority": "Normal",
+    "disposition": "Updated; old source review retained",
+    "documents": [
+      "firmware/walter/README.md",
+      "firmware/walter_lte_bench/README.md"
+    ],
+    "finding": "Walter entry point said forwarding was future despite implemented bench sender and later LTE evidence.",
+    "action": "Link current bench application and evidence; explicitly date initial radio-off/vendor review narrative.",
+    "evidence": [
+      "firmware/walter_lte_bench/src/main.cpp",
+      "ground/lte/README.md"
+    ]
+  },
+  {
+    "id": "F08",
+    "status": "Corrected",
+    "priority": "Normal",
+    "disposition": "Archived in place",
+    "documents": [
+      "system/integration/development_baseline.md"
+    ],
+    "finding": "October 1 record asserted hosts shared a baseline and branch state, which cannot serve as a current synchronization claim.",
+    "action": "Mark historical; retain build/reconciliation provenance and update referring label.",
+    "evidence": [
+      "system/integration/development_baseline.md"
+    ]
+  },
+  {
+    "id": "F09",
+    "status": "Corrected",
+    "priority": "Normal",
+    "disposition": "Formatting repaired",
+    "documents": [
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/01-subsystem-overview.md",
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/02-command-dictionary.md",
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/03-command-responses.md",
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/04-telemetry-dictionary.md",
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/05-ground-console.md",
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/06-ground-test.md",
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/07-interfaces.md",
+      "docs/architecture/operations/Ground_Operations_Command_Telemetry/README.md"
+    ],
+    "finding": "Eight mission-draft files ended inside unclosed fenced examples.",
+    "action": "Close the existing code fences, preserving draft text.",
+    "evidence": [
+      "tools/documentation_audit.py"
+    ]
+  },
+  {
+    "id": "F10",
+    "status": "Corrected",
+    "priority": "Normal",
+    "disposition": "Updated links; evidence retained",
+    "documents": [
+      "docs/architecture/inhibit_and_deployment.md"
+    ],
+    "finding": "startup_sequence.md was missing; the broader local audit also found broken links in a copied UHF runbook.",
+    "action": "Record the missing startup diagram as unfinished and point to existing transitions. Copied UHF snapshot repairs are excluded from this PR.",
+    "evidence": [
+      "tools/documentation_audit.py"
+    ]
+  },
+  {
+    "id": "F11",
+    "status": "Corrected",
+    "priority": "Normal",
+    "disposition": "Updated",
+    "documents": [
+      "docs/architecture/project_scope.md"
+    ],
+    "finding": "Scope said modem work was no longer tracked despite active Walter telemetry bench.",
+    "action": "Separate superseded direct-to-cell mission payload from recorded LTE-M ground transport experiment.",
+    "evidence": [
+      "ground/lte/README.md",
+      "docs/research/k_line_detection.md"
+    ]
+  },
+  {
+    "id": "F12",
+    "status": "Partly resolved; hardware reconciliation open",
+    "priority": "High",
+    "disposition": "Scope clarified; engineering review pending",
+    "documents": [
+      "hardware/eps/README.md",
+      "hardware/eps/design/overview.md",
+      "hardware/eps/design/interfaces.md"
+    ],
+    "finding": "EPS summaries use TPSM5D1806 while Rev A troubleshooting describes TPS62933; newer Rev B planning exists in another active worktree.",
+    "action": "Add revision/configuration qualification and remove unsupported broad regulator-validation wording; reconcile targets, actual hardware and Rev B requirements during engineering review.",
+    "evidence": [
+      "hardware/eps/bringup/phase1_validation.md",
+      "hardware/eps/bringup/tps62933_ltspice_debug_guide.md",
+      "hardware/eps/design/overview.md"
+    ]
+  },
+  {
+    "id": "F13",
+    "status": "Corrected",
+    "priority": "Normal",
+    "disposition": "Updated",
+    "documents": [
+      "README.md",
+      "TODO.md"
+    ],
+    "finding": "Repository status described hardware as a future semester and transport TODO narrative lagged later bench milestones.",
+    "action": "Use concrete recorded demonstrations and retain production integration/reliability gates.",
+    "evidence": [
+      "system/ground_station/usb_validation.md",
+      "firmware/can_feather_bench/README.md"
+    ]
+  },
+  {
+    "id": "F14",
+    "status": "Open",
+    "priority": "Normal",
+    "disposition": "Retain; scope decision pending",
+    "documents": [
+      "hardware/payload_exp_sband_tx/README.md",
+      "hardware/payload_exp_sband_tx/sband_payload_architecture_trade_study.md",
+      "hardware/payload_exp_sband_tx/fpga/README.md",
+      "hardware/payload_compute/README.md",
+      "docs/architecture/project_scope.md"
+    ],
+    "finding": "Experimental S-band declares engineering-model/nonflight scope while top-level framing is CubeSat-class instrument; Jetson carrier and Pi optical instrument are separate contexts.",
+    "action": "Keep experiment and carrier references; decide active project scope before archiving whole workstreams. Already superseded S-band alternatives remain historical, not current requirements.",
+    "evidence": [
+      "docs/architecture/hardware_overview.md",
+      "hardware/payload_exp_sband_tx/README.md",
+      "hardware/payload_compute/README.md"
+    ]
+  },
+  {
+    "id": "F15",
+    "status": "Open",
+    "priority": "Normal",
+    "disposition": "Retain; engineering review pending",
+    "documents": [
+      "analysis/power/README.md",
+      "analysis/orbit/stk_power_export_guide.md",
+      "analysis/link_budget/README.md",
+      "hardware/comms/design/rf_layout_guidelines.md",
+      "hardware/conventions/kicad_jlcpcb_design_rules.md",
+      "hardware/eps/design/schematic_guide.md",
+      "hardware/eps/design/layout_guide.md"
+    ],
+    "finding": "Detailed budgets, design instructions, stackups and hardware numerical limits have not been requalified against all active design branches.",
+    "action": "Reconcile configuration-specific assumptions, exports and measured results before treating these as current build/fabrication requirements. Do not infer readiness from old documents or selected parts.",
+    "evidence": [
+      "hardware/comms/verification/README.md",
+      "hardware/comms/releases/README.md",
+      "system/interfaces/cskb_pinmap.md"
+    ]
+  },
+  {
+    "id": "F16",
+    "status": "Open",
+    "priority": "Normal",
+    "disposition": "Retain as planning/reference",
+    "documents": [
+      "rf/filters/144mhz_bpf/README.md",
+      "rf/README.md",
+      "analysis/trade_studies/README.md",
+      "test/rf/tx_validation.md",
+      "test/rf/rx_validation.md",
+      "test/rf/spectral_analysis.md"
+    ],
+    "finding": "Several folders are placeholders; the 144 MHz filter topic belongs to a different configuration than the current all-UHF design.",
+    "action": "Do not present placeholders as implemented features. Retain references; archive the VHF workspace only after checking for unique design/measurement artifacts.",
+    "evidence": [
+      "hardware/comms/README.md",
+      "docs/comms/README.md"
+    ]
+  },
+  {
+    "id": "F17",
+    "status": "Completed",
+    "priority": "High",
+    "disposition": "New operator guides",
+    "documents": [
+      "docs/user/README.md",
+      "docs/user/ihu-debug-uart.md",
+      "docs/user/ihu-can-console.md",
+      "docs/user/yamcs.md"
+    ],
+    "finding": "No single operator route explained both IHU applications, all supported commands and endpoint-specific Yamcs capability.",
+    "action": "Add source-linked command references, output examples, failure meanings, ownership, freshness and replay procedures.",
+    "evidence": [
+      "firmware/ihu/src/cli/cli.c",
+      "firmware/can_feather_bench/main.c",
+      "ground/ember/dictionary.json",
+      "ground/yamcs/ember-java/EmberResults.java"
+    ]
+  }
+]

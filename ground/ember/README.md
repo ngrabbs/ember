@@ -1,5 +1,8 @@
 # EMBER bench dictionary and codec
 
+For day-to-day commanding, responses, displays and replay, start with the
+[Yamcs operator guide](../../docs/user/yamcs.md).
+
 [Contract](../../system/protocols/ember_bench_v1.md) · [Ground checklist](../../system/ground_station/TODO.md)
 
 `dictionary.json` is the machine-readable bench subset of Dustin's operation
@@ -26,6 +29,11 @@ and enum checks; structural decode alone does not authorize execution.
 firmware work. The tests verify CRC against the standard check value, fixed
 wire bytes, corruption, framing mismatches, sequence wrap boundaries,
 transaction identities, and invalid parameter handling.
+
+`session.py` records a bounded HEARTBEAT/POWER_STATUS archive window from Yamcs
+and replays its validated packets locally with recorded receive times and
+source context. See [session recording and replay](../../system/ground_station/telemetry_sessions.md)
+for commands, the demonstrated 60-packet session, and quality/time limitations.
 
 ## USB hardware endpoint
 

@@ -1,5 +1,13 @@
 # IHU–COMMS CAN Feather bench
 
+**Current application summary, reviewed 2026-10-04:** native EPS readout,
+single-bus CAN forwarding and recorded bounded LTE delivery are implemented
+in the standalone bench. Manual telemetry and the opt-in native EPS timer are available. Automatic
+emission defaults off; the timer skips busy or unavailable transport periods. The [USB console guide](../../docs/user/ihu-can-console.md)
+owns operator syntax. Production FreeRTOS command integration and CAN A/B
+remain open. Version/flash tables below are dated milestones; identify the
+correct application version and its recorded validation before flashing.
+
 The new IHU MCU and COMMS MCU both use Adafruit RP2040 CAN Bus Feathers with
 onboard MCP25625 CAN controllers/transceivers. This standalone Pico SDK project
 builds `ember_ihu_can_bench.uf2` and `ember_comms_can_bench.uf2` from one source,
@@ -8,9 +16,10 @@ nor the UHF COMMS application. The IHU role now supports manual read-only EPS
 register observation and explicit battery-only ADC enable; it does not change
 charging policy, activate UHF, execute flight commands, or implement CAN redundancy.
 Version2 adds native EPS packet forwarding and explicit bounded Walter LTE requests.
-Both CAN Feathers are updated and native EPS forwarding through Walter echo
-passed. Walter still has the installed framed diagnostic with its modem held
-in reset; its LTE hardware update and RF qualification remain pending.
+Both CAN Feathers have recorded native EPS forwarding through Walter echo.
+Walter LTE upload and later bounded delivery trials are recorded in the
+[LTE evidence index](../../ground/lte/README.md). Those trials do not qualify
+continuous RF reliability.
 
 User confirmed H-to-H, L-to-L, and common ground, with both terminators present
 and 60 ohms measured across the bus. This qualifies the bench harness, not the
@@ -90,9 +99,8 @@ One request can be pending; timeout is five seconds, then a fresh HELLO is requi
 
 IHU additionally accepts `telemetry`. The IHU itself generates a 38-byte EMBER
 HEARTBEAT with IHU source, ground target, its own boot ID, sequence, uptime,
-inner CRC, and fixed SAFE/GROUND_TEST bench fields. The period field is zero
-when automatic EPS cadence is off, or its configured period when enabled.
-`telemetry` emits a manual HEARTBEAT; `telem on` schedules EPS POWER_STATUS. These are
+inner CRC, and fixed SAFE/GROUND_TEST bench fields. Period=0 identifies manual
+emission with the EPS timer disabled; an enabled timer reports its configured period. These are
 controller-generated bench health fields, not EPS sensor readings.
 
 IHU `eps json` reads the 19-register LTC4162-L profile at address `0x68`,
@@ -111,7 +119,7 @@ The I2C1 reader-enabled IHU image was built and flash-readback verified on
 valid PEC. The charger reported `telemetry_status=0` and zero ADC words;
 these are unavailable engineering measurements. No charger writes were made.
 IHU boot `2021172893` also confirmed CAN HELLO with COMMS boot `4252110043`.
-[Captured readouts and status](https://github.com/ngrabbs/ember/blob/feature/lte-m-bench/system/ground_station/evidence/ihu-eps-i2c1-20261002.json).
+[Captured readouts and status](../../system/ground_station/evidence/ihu-eps-i2c1-20261002.json).
 Host EPS tests cover valid reads, an independently computed PEC/golden frame,
 corrupt data rejection, all-or-nothing output on a late failed register, and
 recovery; pointer-only writes are asserted. COMMS firmware was not reflashed.
@@ -132,7 +140,7 @@ configuration), 8.089 V output and 21.46 °C charger die temperature. Current
 scaling retains the unverified 10 mOhm resistor assumption. ADC override is left
 enabled for the telemetry bench. IHU boot `117567991` confirmed CAN HELLO with
 COMMS boot `4252110043` after flashing.
-[Battery-only evidence](https://github.com/ngrabbs/ember/blob/feature/lte-m-bench/system/ground_station/evidence/ihu-eps-battery-adc-20261002.json).
+[Battery-only evidence](../../system/ground_station/evidence/ihu-eps-battery-adc-20261002.json).
 Installed UF2 SHA-256:
 `596e450977b203cea339b74621f6173f5d82a5766e6cac613570a20d7ba2f811`.
 
@@ -150,7 +158,7 @@ Reads are sequential and do not imply atomic or new ADC conversions.
 
 `lte N` admits a bounded RF window (0 stops, maximum120 seconds); `lte status`
 queries Walter's state; `eps lte` reads EPS and requests a single UDP submission.
-These require [Walter LTE bench firmware](https://github.com/ngrabbs/ember/blob/feature/lte-m-bench/firmware/walter_lte_bench/README.md).
+These require [Walter LTE bench firmware](../walter_lte_bench/README.md).
 CAN types74/75 RF window,76/77 send/modem-accepted,78/79 status.
 COMMS maps them to distinct UART application types, not diagnostic ECHO.
 IHU prints RF_WINDOW_ACCEPTED or MODEM_ACCEPTED, neither claiming ground receipt.
@@ -173,7 +181,7 @@ Prepared artifacts on 2026-10-02:
 
 IHU v2 boot3148122192 read EPS with ADC-valid1 and confirmed the still-running
 COMMS v1 boot4252110043 over CAN.
-[Pre-COMMS-update evidence](https://github.com/ngrabbs/ember/blob/feature/lte-m-bench/system/ground_station/evidence/ihu-eps-v2-pre-comms-20261002.json).
+[Pre-COMMS-update evidence](../../system/ground_station/evidence/ihu-eps-v2-pre-comms-20261002.json).
 Run `ground/ember/can_chain.py --eps --port IHU_SERIAL --output RUN_DIRECTORY`
 after COMMS is updated and its CAN mode set to normal. This checks ten native
 ADC-valid EPS returns plus five sized CAN echoes and HELLO. Without `--eps` it
@@ -184,14 +192,14 @@ Local loopback, physical CAN HELLO and an exact128-byte CAN echo passed;
 TEC/REC/EFLG and CAN/fragment/timeout errors remained zero. Left COMMS in normal
 CAN mode with Walter powered separately; UART chain had not been exercised in
 this post-flash check (`walter_peer=0`, `chain_ok=0`).
-[COMMS post-flash evidence](https://github.com/ngrabbs/ember/blob/feature/lte-m-bench/system/ground_station/evidence/comms-eps-v2-flash-check-20261002.json).
+[COMMS post-flash evidence](../../system/ground_station/evidence/comms-eps-v2-flash-check-20261002.json).
 The subsequent real EPS chain test passed: ten native128-byte POWER_STATUS
 returns (sequences0–9, readout_count1–10), ADC/conversion-valid1, IHU boot3148122192
 and COMMS boot1790982730. CRC/header/identity/sequence/engineering quality checks
 passed along with five sized CAN echoes and HELLO. IHU matched count increased
 by16; CAN/fragment/timeout/BUSY/UNKNOWN errors remained zero. Battery8.099–8.100 V,
 output about8.080 V, die21.464 °C; current scaling remains provisional.
-[Real EPS evidence](https://github.com/ngrabbs/ember/blob/feature/lte-m-bench/system/ground_station/evidence/ihu-comms-walter-eps-can-20261002.json).
+[Real EPS evidence](../../system/ground_station/evidence/ihu-comms-walter-eps-can-20261002.json).
 This verifies actual EPS reads through CAN and UART echo, not LTE reception.
 COMMS post-chain counters were not independently sampled with USB on IHU.
 Walter LTE upload still follows.
@@ -289,12 +297,12 @@ TEC/REC stayed zero and EFLG was zero at completion. The existing UNKNOWN=1 is
 the earlier clock bug, not a new failure. COMMS post-chain counters were not
 independently sampled.
 
-[Saved evidence](https://github.com/ngrabbs/ember/blob/feature/lte-m-bench/system/ground_station/evidence/ihu-comms-walter-can-20261002.json)
+[Saved evidence](../../system/ground_station/evidence/ihu-comms-walter-can-20261002.json)
 includes decoded heartbeats, hardware identities, binary hashes, counter baselines,
 and scope. The private transcript is `can-chain-20261002/can-chain.log` beneath
 the m75q task directory. All 30 existing ground tests also passed.
 
-Current UF2 SHA-256:
+Historical heartbeat-chain UF2 SHA-256 (before the later native EPS images):
 
 - IHU: `c5cff5e021e2b21c3b9316193a49fca53891da875be2dc1be7e4b5e2bebee403`
 - COMMS: `507110580861478d2e688fa16053a0457de1bcd6edc59dd8936bbb9ebc5cdf78`
@@ -310,8 +318,11 @@ python3 ground/ember/can_chain.py \
 It checks local self-test, CAN handshake/five boundary echoes, ten IHU-generated
 heartbeat returns through Walter, decoded IHU boot/sequence/uptime, and no new
 CAN/fragment errors or application timeouts. Output includes full USB transcript
-and decoded JSON. Fault injection, independent reset/recovery, live EPS integration,
-periodic streaming, Yamcs ingestion, CAN B, UHF, and LTE delivery remain future work.
+and decoded JSON. At that heartbeat checkpoint, EPS integration, cadence, Yamcs and radio delivery
+were future work; later sections and the LTE evidence index record native EPS
+and LTE delivery. Production FreeRTOS scheduling remains separate work; the optional UHF bench
+and native timer are described below. Independent reset/fault recovery, endurance, production
+integration and CAN B remain open.
 
 ## Opt-in EPS FIFO candidate
 
@@ -321,9 +332,8 @@ Only explicit pre-submission NOT_READY/BUSY is retried, at most three send
 attempts. Uncertain outcomes, modem rejection and expiry hold the original
 packet for inspection. Enqueue refuses active CAN exchanges. Queue retirement
 means modem acceptance; independently validate reception/archive.
-[Policy, tests and deployment record](https://github.com/ngrabbs/ember/blob/feature/lte-m-bench/ground/lte/results/2026-10-02-queue-preparation.md).
+[Policy, tests and deployment record](../../ground/lte/results/2026-10-02-queue-preparation.md).
 The operational queue belongs in COMMS; this is bench harness staging.
-
 
 ## Opt-in native IHU EPS cadence — October 3, 2026
 

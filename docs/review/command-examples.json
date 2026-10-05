@@ -1,0 +1,374 @@
+{
+  "source": "ground/ember/simulator.py via codec.py; software-only, not hardware or Yamcs UI capture",
+  "review_date": "2026-10-04",
+  "cases": [
+    {
+      "command": "PING",
+      "arguments": {},
+      "responses": [
+        {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 0,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 1,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 1,
+            "stage": 0,
+            "reason": 0,
+            "parameter_id": 0,
+            "value": 0
+          }
+        },
+        {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 1,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 1,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 1,
+            "stage": 2,
+            "reason": 0,
+            "parameter_id": 0,
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "command": "SET_PARAMETER",
+      "arguments": {
+        "parameter_id": 1,
+        "value": 2000
+      },
+      "responses": [
+        {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 2,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 2,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 48,
+            "stage": 0,
+            "reason": 0,
+            "parameter_id": 0,
+            "value": 0
+          }
+        },
+        {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 3,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 2,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 48,
+            "stage": 2,
+            "reason": 0,
+            "parameter_id": 1,
+            "value": 2000
+          }
+        }
+      ]
+    },
+    {
+      "command": "REQUEST_STATUS",
+      "arguments": {},
+      "responses": [
+        {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 4,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 3,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 2,
+            "stage": 0,
+            "reason": 0,
+            "parameter_id": 0,
+            "value": 0
+          }
+        },
+        {
+          "name": "SYSTEM_STATUS",
+          "sequence": 5,
+          "header": {
+            "schema_version": 1,
+            "kind": 1,
+            "message_id": 1,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 3,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 14
+          },
+          "payload": {
+            "mode": 3,
+            "configuration": 1,
+            "telemetry_period_ms": 2000,
+            "accepted_commands": 3,
+            "rejected_commands": 0
+          }
+        },
+        {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 6,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 3,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 2,
+            "stage": 2,
+            "reason": 0,
+            "parameter_id": 0,
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "command": "REQUEST_TELEMETRY",
+      "arguments": {
+        "data_group": 1
+      },
+      "responses": [
+        {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 7,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 4,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 3,
+            "stage": 0,
+            "reason": 0,
+            "parameter_id": 0,
+            "value": 0
+          }
+        },
+        {
+          "name": "SYSTEM_STATUS",
+          "sequence": 8,
+          "header": {
+            "schema_version": 1,
+            "kind": 1,
+            "message_id": 1,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 4,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 14
+          },
+          "payload": {
+            "mode": 3,
+            "configuration": 1,
+            "telemetry_period_ms": 2000,
+            "accepted_commands": 4,
+            "rejected_commands": 0
+          }
+        },
+        {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 9,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 4,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 3,
+            "stage": 2,
+            "reason": 0,
+            "parameter_id": 0,
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "command": "REQUEST_TELEMETRY",
+      "arguments": {
+        "data_group": 48
+      },
+      "responses": [
+        {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 10,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 5,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 3,
+            "stage": 0,
+            "reason": 0,
+            "parameter_id": 0,
+            "value": 0
+          }
+        },
+        {
+          "name": "COMM_STATUS",
+          "sequence": 11,
+          "header": {
+            "schema_version": 1,
+            "kind": 1,
+            "message_id": 48,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 5,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 18
+          },
+          "payload": {
+            "rx_packets": 5,
+            "tx_packets": 10,
+            "crc_errors": 0,
+            "dropped_packets": 0,
+            "rssi_dbm": -32768
+          }
+        },
+        {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 12,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 5,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 3,
+            "stage": 2,
+            "reason": 0,
+            "parameter_id": 0,
+            "value": 0
+          }
+        }
+      ]
+    },
+    {
+      "command": "SET_PARAMETER",
+      "arguments": {
+        "parameter_id": 1,
+        "value": 99
+      },
+      "responses": [
+        {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 13,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 42,
+            "transaction_id": 6,
+            "source_boot_id": 12345,
+            "uptime_ms": 0,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 48,
+            "stage": 1,
+            "reason": 2,
+            "parameter_id": 0,
+            "value": 0
+          }
+        }
+      ]
+    }
+  ]
+}

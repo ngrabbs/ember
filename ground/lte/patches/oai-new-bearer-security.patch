@@ -1,0 +1,13 @@
+--- a/openair2/RRC/LTE/rrc_eNB.c
++++ b/openair2/RRC/LTE/rrc_eNB.c
+@@ -5151,7 +5151,9 @@
+                            SRB_configList, // NULL,
+                            DRB_configList,
+                            DRB_Release_configList2,
+-                           0xff, // already configured during the securitymodecommand
++                           /* SRB2/DRBs may be new; initialize their negotiated security too. */
++                           (ue_context_pP->ue_context.integrity_algorithm << 4) |
++                           ue_context_pP->ue_context.ciphering_algorithm,
+                            kRRCenc,
+                            kRRCint,
+                            kUPenc,

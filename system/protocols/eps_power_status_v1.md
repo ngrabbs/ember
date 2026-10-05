@@ -22,6 +22,17 @@ is IHU because the observations originate there. Its sequence tracker is
 isolated from the spare Pico's UDP link. `ihu_readout_uptime_ms` comes directly
 from the IHU's JSON, after the register reads; IHU boot identity is unknown.
 
+Native IHU packets use `provenance=IHU_NATIVE` (2), with actual IHU boot and
+uptime in the common header, `bridge_session_id=0`, and readout completion uptime
+from IHU. For manual and native-timer emission, readout_count counts complete reads
+packaged into native packets; readout_age_ms=0 at packet construction. Failed
+reads emit no native packet. ADC validity and sense-resistor assumptions retain
+the same quality rules. This identifies the producer, not a transport or proof
+of RF delivery. Native LTE packets enter the isolated Yamcs `ember-lte`
+instance; native SDRB/UHF packets enter `ember-uhf` on a separate UDP link.
+The Pi UART wrapper remains in `ember`. Both RF paths are telemetry-only bench
+configurations; timer submissions do not prove reception. See the [operator capability table](../../docs/user/yamcs.md#instances-and-endpoints).
+
 Yamcs generation time equals ground packet reception time. `readout_age_ms`
 is Pi monotonic time since the last complete accepted UART readout, capped at
 `0xfffffffe`; `0xffffffff` means never received. It is **not ADC conversion

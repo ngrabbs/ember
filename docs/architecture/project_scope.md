@@ -37,6 +37,7 @@ development and flight testing live in the payload instrument repository.
 
 ## Out of Scope
 
-Direct-to-cell / NTN modem work was carried in earlier revisions of this
-repository as an exploratory payload concept. It is superseded by the
-potassium-line instrument and is no longer tracked here.
+Direct-to-cell / NTN as the mission payload is superseded by the potassium-line
+instrument. The separate [Walter LTE-M ground experiment](../../ground/lte/README.md)
+is tracked as a bench telemetry transport; it does not replace the science
+payload or establish an orbital cellular link.

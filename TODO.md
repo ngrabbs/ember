@@ -1,6 +1,6 @@
 # EMBER — Open Work
 
-Updated 2026-10-01 (ground station plan and current comms direction).
+Updated 2026-10-02 (COMMS MCU/Walter transport and CAN migration).
 
 **What lives here:** the current front on each subsystem, plus anything that
 doesn't belong to a checklist already in the docs.
@@ -58,6 +58,20 @@ already; give it real loads and it answers the question immediately.
 ---
 
 ## Communications — flight radio + ground station
+
+LTE-M is an additional spacecraft-channel bench experiment: Walter as UE and
+an SDR eNodeB/EPC on the ground. Hardware inventory and modem AT access are
+verified; LTE-M attach and received UDP telemetry are demonstrated, but
+repeatability is unresolved and LTE reliability work is shelved. The owned
+checklist and bring-up procedure are in [ground/lte](ground/lte/README.md).
+
+The communications-board Pico is the **COMMS MCU**, distinct from the **IHU
+MCU**. The standalone CAN Feather/Walter bench demonstrates packet forwarding and
+native EPS return packets, with bounded LTE delivery evidence. SDRB UHF
+remains a separate local workstream outside this documentation PR.
+The FreeRTOS I2C jumper firmware still supplies housekeeping/ping only.
+The [controller integration checklist](system/interfaces/comms_walter.md) owns
+production integration, bounded queues/reset recovery and CAN A/B qualification.
 
 The active front. Board is KiCad, project at
 [`hardware/comms/kicad/`](hardware/comms/kicad/), plan at

@@ -1,5 +1,10 @@
 # EMBER Command Dictionary
 
+**Mission design draft:** this page records proposed application behavior.
+For commands available in the current lab, use the [Yamcs operator guide](../../../user/yamcs.md)
+and [bench contract](../../../../system/protocols/ember_bench_v1.md). Draft commands
+such as SET_MODE and REBOOT_IHU are not exposed by the current Yamcs bench MDB.
+
 **Status:** Draft 0.2
 
 This document defines operator-initiated commands available through Ground Operations.
@@ -90,3 +95,4 @@ Every operator command should include a sequence number.
 SEQ: 0042
 COMMAND: SET_MODE
 PARAMETER: NOMINAL
+```

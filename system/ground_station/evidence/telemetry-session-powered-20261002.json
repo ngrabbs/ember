@@ -1,0 +1,48 @@
+{
+  "format": "ember-telemetry-session-v1",
+  "origin": "User restored bench power; Pi USB Pico heartbeat and IHU UART Pi EPS wrapper",
+  "start": "2026-10-02T12:56:13.040+00:00",
+  "stop": "2026-10-02T12:56:43.046+00:00",
+  "packet_count": 60,
+  "streams": [
+    {
+      "name": "HEARTBEAT",
+      "link": "udp-in",
+      "source_boot_id": 3087467115,
+      "packets": 30,
+      "first_sequence": 2721,
+      "last_sequence": 2808,
+      "receive_span_seconds": 29.001,
+      "quality": {}
+    },
+    {
+      "name": "POWER_STATUS",
+      "link": "eps-uart-in",
+      "source_boot_id": 2301702123,
+      "packets": 30,
+      "first_sequence": 56,
+      "last_sequence": 85,
+      "receive_span_seconds": 29.043,
+      "quality": {
+        "current_readout": 30,
+        "conversion_unavailable": 30
+      }
+    }
+  ],
+  "note": "Archive receive times; no latency or radio loss measurement. Replay is local only.",
+  "dictionary_sha256": "7d22ec5b49f4e031ae6b5e69fcb1e14612a519d14d4d68acf1e22f294d640a99",
+  "session_sha256": "76d26af03bd82f50c08e7eff6ca194b521b350cc20467e5c5359169b8ea75cf5",
+  "replay_verified_packets": 60,
+  "ground_tests_passed": 30,
+  "eps_observation": {
+    "first_readout_count": 1087,
+    "last_readout_count": 1093,
+    "max_readout_age_ms": 4006,
+    "adc_valid_values": [
+      0
+    ],
+    "detected_cells_values": [
+      0
+    ]
+  }
+}

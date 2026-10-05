@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/media/ngrabbs/BACKUP-A/ember-walter-bridge/host-tests/eps_lte_trial.py", line 94, in <module>
+    run(args)
+  File "/media/ngrabbs/BACKUP-A/ember-walter-bridge/host-tests/eps_lte_trial.py", line 62, in run
+    diagnostics('after_send')
+  File "/media/ngrabbs/BACKUP-A/ember-walter-bridge/host-tests/eps_lte_trial.py", line 24, in diagnostics
+    Console.require_match(response,'LTE_DIAG')
+  File "/media/ngrabbs/BACKUP-A/ember-walter-bridge/host-tests/comms_uart.py", line 56, in require_match
+    assert len(submitted) == 1 and completed == submitted, reply
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: SUBMITTED request=159 type=122 bytes=0
+RESULT request=159 outcome=UNKNOWN_REMOTE_LINK reason=6
+

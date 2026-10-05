@@ -1,0 +1,37 @@
+{
+  "format": "ember-telemetry-session-v1",
+  "origin": "Pi USB Pico bench heartbeat; IHU UART Pi EPS wrapper (readout quality carried in each packet)",
+  "start": "2026-10-02T12:53:11.318+00:00",
+  "stop": "2026-10-02T12:53:41.324+00:00",
+  "packet_count": 60,
+  "streams": [
+    {
+      "name": "POWER_STATUS",
+      "link": "eps-uart-in",
+      "source_boot_id": 2301702123,
+      "packets": 30,
+      "first_sequence": 16258,
+      "last_sequence": 16287,
+      "receive_span_seconds": 29.042,
+      "quality": {
+        "invalid_or_stale_readout": 30,
+        "conversion_unavailable": 30
+      }
+    },
+    {
+      "name": "HEARTBEAT",
+      "link": "udp-in",
+      "source_boot_id": 3087467115,
+      "packets": 30,
+      "first_sequence": 2178,
+      "last_sequence": 2265,
+      "receive_span_seconds": 29.002,
+      "quality": {}
+    }
+  ],
+  "note": "Archive receive times; no latency or radio loss measurement. Replay is local only.",
+  "dictionary_sha256": "7d22ec5b49f4e031ae6b5e69fcb1e14612a519d14d4d68acf1e22f294d640a99",
+  "session_sha256": "8fe27afbe472b70c17e1bc4edab1b774935d70ae93164c6d14da7509b5793d13",
+  "replay_verified_packets": 60,
+  "ground_tests_passed": 30
+}

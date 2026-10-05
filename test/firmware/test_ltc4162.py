@@ -12,6 +12,14 @@ decoder=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(decoder)
 
 class ReadoutTests(unittest.TestCase):
+    def test_can_feather_observational_reader(self):
+        with tempfile.TemporaryDirectory() as d:
+            binary=str(Path(d)/'can-eps')
+            subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',
+                '-I'+str(ROOT/'test/firmware/ltc4162_mocks'),
+                str(ROOT/'test/firmware/can_eps_readout_test.c'),'-o',binary],check=True)
+            subprocess.run([binary],check=True)
+
     def test_production_c_driver(self):
         for writes in (0,1):
             with self.subTest(writes=writes), tempfile.TemporaryDirectory() as d:

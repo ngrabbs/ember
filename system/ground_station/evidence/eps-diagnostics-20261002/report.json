@@ -1,0 +1,55 @@
+{
+  "date_utc": "2026-10-02",
+  "scope": "Separate diagnostic trials after the ten-run qualification; modem acceptance is not delivery. Raw EPC/OAI logs remain private.",
+  "runs": [
+    {
+      "run": 1,
+      "label": "eps-diagnostic-20261002-01",
+      "accepted": 1,
+      "received": 0,
+      "oai_exit": -6,
+      "epc_exit": 124,
+      "before_stop_sample": false,
+      "assertion_utc": "2026-10-02T21:52:38.453Z"
+    },
+    {
+      "run": 2,
+      "label": "eps-diagnostic-20261002-02",
+      "accepted": 1,
+      "received": 0,
+      "oai_exit": -6,
+      "epc_exit": 124,
+      "before_stop_sample": true,
+      "srb2_max_retx_utc": "2026-10-02T21:55:57.673Z",
+      "assertion_utc": "2026-10-02T21:56:00.366Z"
+    },
+    {
+      "run": 3,
+      "label": "eps-diagnostic-20261002-03",
+      "accepted": 1,
+      "received": 0,
+      "oai_exit": 124,
+      "epc_exit": 124,
+      "before_stop_sample": true,
+      "instrumentation": "Temporary RLC/HARQ metadata patch; RLC debug; no RF parameter changes.",
+      "instrumented_oai_sha256": "7d856739374e0c8b1f1c2f25a87db3318528a2edc383042ad7d09f8a06517314",
+      "srb2_max_retx_utc": "2026-10-02T22:02:23.869Z",
+      "ready_elapsed_s": 49.533
+    }
+  ],
+  "oai_assertion": "find_ulsch(..., SEARCH_EXIST_OR_FREE) returned -1",
+  "baseline_oai_sha256": "13ab09bf176773e213dd02f950b96577c6369e9be54723e7a1db1281c14b6d8a",
+  "modem_error_reproduced": false,
+  "restored_oai_sha256": "13ab09bf176773e213dd02f950b96577c6369e9be54723e7a1db1281c14b6d8a",
+  "restored_binary_matches_private_backup": true,
+  "network_processes_stopped": true,
+  "verification": {
+    "host_tests_passed": 34,
+    "failed_before_stop_diagnostic_still_stops_rf": true
+  },
+  "firmware_sha256": {
+    "ihu_uf2": "3764132e96dda969381781e35affe99e9aa17d693885eb001bf72dbecad4b422",
+    "comms_uf2": "01bc62d7e6ed7b7491f526503107f5e61a9fbe6fec7a534e7e257cac16e88c55",
+    "walter_application": "23b2137cd8e33b4e5ce4389b3245e311937b47eab914572b8962143eee1cba90"
+  }
+}

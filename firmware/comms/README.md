@@ -282,9 +282,9 @@ IHU writes a 32-bit token and reads it back; a match proves the write
 path, this board's slave ISR, and the read path all work end to end.
 An address probe only proves that *something* ACKed.
 
-There are deliberately **no command registers**. Keying the PA belongs
-on the SPI link behind framing and a CRC, not on a housekeeping bus
-where one corrupted byte could put RF on the antenna.
+There are deliberately **no command registers**. Packet transmission requires
+a separately framed service with length/CRC checks and explicit authority.
+The existing scratch-echo register does not authorize RF transmission.
 
 ### Where this is actually going
 
@@ -296,8 +296,17 @@ where one corrupted byte could put RF on the antenna.
 
 See [`system/interfaces/comms_to_ihu.md`](../../system/interfaces/comms_to_ihu.md)
 and [`system/interfaces/board_to_board.md`](../../system/interfaces/board_to_board.md).
-Note those docs currently describe CAN as *added alongside* SPI; the
-working intent is CAN *instead of* it. That needs reconciling.
+The interface documents now reflect CAN as the intended replacement internal
+link. SPI is the existing PCB allocation/older plan; implementing SPI packet
+firmware is not a prerequisite. The communications-board Pico is the **COMMS
+MCU**, distinct from the **IHU MCU**. It will own packet forwarding and select
+Walter LTE-M or UHF behind one application-facing packet service. See the
+[COMMS–Walter contract and owned TODO](../../system/interfaces/comms_walter.md).
+
+A separate [CAN Feather USB/UART diagnostic image](../comms_feather_bench/README.md)
+is now built and flashed on the m75q-attached module. It does not run this
+firmware's UHF tasks or conflicting pin assignments; peer/UART wiring validation
+awaits matching Walter firmware.
 
 The register file here is deliberately the seed for the `0x300-0x3FF`
 "communications status and queue state" CAN message group that
@@ -381,7 +390,10 @@ other direction:
       its status block over jumpers (interim; see above)
 - [ ] CAN transport (the real link) — transceiver choice, message IDs
       in the `0x300-0x3FF` group, transport-agnostic link layer
-- [ ] SPI0 slave transport with CRC and sequence counter
+- [ ] Internal packet transport with bounded framing, CRC, and sequence/session
+      identity; select a versioned I2C interim mailbox or proceed directly to CAN
+- [ ] COMMS packet service and framed UART Walter adapter; follow the
+      [integration checklist](../../system/interfaces/comms_walter.md)
 - [ ] `COMMS_IRQ` assert/clear tied to the RX FIFO and TX status
 - [ ] Promote the console to a real CLI (port `firmware/ihu/src/cli/`)
 - [x] Board health telemetry schema (the housekeeping register map,
@@ -397,4 +409,4 @@ other direction:
 - All-UHF rebuild plan:
   [`hardware/comms/design/kicad_implementation_plan.md`](../../hardware/comms/design/kicad_implementation_plan.md)
 - Si5351A bring-up log:
-  [`hardware/comms/bringup/si5351a_bringup_log.md`](../../hardware/comms/bringup/si5351a_bringup_log.md)
+  [`hardware/comms/bringup/history/si5351a_bringup_log.md`](../../hardware/comms/bringup/history/si5351a_bringup_log.md)

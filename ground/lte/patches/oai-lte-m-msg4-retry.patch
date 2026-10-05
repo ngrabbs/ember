@@ -1,0 +1,289 @@
+diff --git a/openair2/LAYER2/MAC/eNB_scheduler_RA.c b/openair2/LAYER2/MAC/eNB_scheduler_RA.c
+index 4b24b95..71e12c8 100644
+--- a/openair2/LAYER2/MAC/eNB_scheduler_RA.c
++++ b/openair2/LAYER2/MAC/eNB_scheduler_RA.c
+@@ -13,6 +13,7 @@
+ #include "common/platform_types.h"
+ 
+ #include "LAYER2/MAC/mac.h"
++#include "LAYER2/MAC/emtc_msg4.h"
+ #include "LAYER2/MAC/mac_extern.h"
+ 
+ #include "LAYER2/MAC/mac_proto.h"
+@@ -680,9 +681,10 @@ generate_Msg4(module_id_t module_idP,
+ 
+     if ((ra->msg4_mpdcch_repetition_cnt == 0) && (mpdcch_sf_condition (mac, CC_idP, frameP, subframeP, rmax, TYPE2, -1) > 0)) {
+       // Get RRCConnectionSetup for Piggyback
+-      ra->msg4_rrc_sdu_length = mac_rrc_data_req (module_idP, CC_idP, frameP, CCCH,
+-                                UE_RNTI(module_idP, UE_id), 1,        // 1 transport block
+-                                &cc[CC_idP].CCCH_pdu.payload[0], 0);  // not used in this case
++      if (ra->msg4_harq_round == 0)
++        ra->msg4_rrc_sdu_length = mac_rrc_data_req(module_idP, CC_idP, frameP, CCCH,
++                                                 UE_RNTI(module_idP, UE_id), 1,
++                                                 &cc[CC_idP].CCCH_pdu.payload[0], 0);
+       AssertFatal (ra->msg4_rrc_sdu_length > 0, "[MAC][eNB Scheduler] CCCH not allocated\n");
+       LOG_D (MAC, "[eNB %d][RAPROC] CC_id %d Frame %d, subframeP %d: UE_id %d, rrc_sdu_length %d, dl_req->num_pdu %d\n", module_idP, CC_idP, frameP, subframeP, UE_id, ra->msg4_rrc_sdu_length,
+              dl_req_body->number_pdu);
+@@ -764,7 +766,7 @@ generate_Msg4(module_id_t module_idP,
+         ra->msg4_mpdcch_repetition_cnt++;
+     }
+     // mpdcch_repetition_count == reps
+-    else if ((ra->Msg4_frame == frameP) && (ra->Msg4_subframe == subframeP)) {
++    else if (ra->msg4_mpdcch_done && (ra->Msg4_frame == frameP) && (ra->Msg4_subframe == subframeP)) {
+       // Program PDSCH
+       LOG_D (MAC, "[eNB %d][RAPROC] CC_id %d Frame %d, subframeP %d: Generating Msg4 BR with RRC Piggyback (ce_level %d RNTI %x)\n",
+              module_idP, CC_idP, frameP, subframeP, ra->rach_resource_type - 1, ra->rnti);
+@@ -773,6 +775,7 @@ generate_Msg4(module_id_t module_idP,
+       dl_config_pdu->pdu_type = NFAPI_DL_CONFIG_DLSCH_PDU_TYPE;
+       dl_config_pdu->pdu_size = (uint8_t) (2 + sizeof (nfapi_dl_config_dlsch_pdu));
+       dl_config_pdu->dlsch_pdu.dlsch_pdu_rel8.pdu_index = mac->pdu_index[CC_idP];
++      dl_config_pdu->dlsch_pdu.dlsch_pdu_rel8.length = ra->msg4_TBsize;
+       dl_config_pdu->dlsch_pdu.dlsch_pdu_rel8.rnti = ra->rnti;
+       dl_config_pdu->dlsch_pdu.dlsch_pdu_rel8.resource_allocation_type = 2;   // format 1A/1B/1D
+       dl_config_pdu->dlsch_pdu.dlsch_pdu_rel8.virtual_resource_block_assignment_flag = 0;     // localized
+@@ -802,32 +805,32 @@ generate_Msg4(module_id_t module_idP,
+       dl_req_body->number_pdu++;
+       ra->eRA_state = WAITMSG4ACK;
+       lcid = 0;
+-      UE_info->UE_sched_ctrl[UE_id].round[CC_idP][ra->harq_pid] = 0;
+-      msg4_header = 1 + 6 + 1;        // CR header, CR CE, SDU header
+-      AssertFatal((ra->msg4_TBsize - ra->msg4_rrc_sdu_length - msg4_header)>=0,
+-                  "msg4_TBS %d is too small, change mcs to increase by %d bytes\n",ra->msg4_TBsize,ra->msg4_rrc_sdu_length+msg4_header-ra->msg4_TBsize);
+-
+-      if ((ra->msg4_TBsize - ra->msg4_rrc_sdu_length - msg4_header) <= 2) {
+-        msg4_padding = ra->msg4_TBsize - ra->msg4_rrc_sdu_length - msg4_header;
+-        msg4_post_padding = 0;
+-      } else {
+-        msg4_padding = 0;
+-        msg4_post_padding = ra->msg4_TBsize - ra->msg4_rrc_sdu_length - msg4_header - 1;
+-      }
++      UE_info->UE_sched_ctrl[UE_id].round[CC_idP][ra->harq_pid] = ra->msg4_harq_round;
++      ra->msg4_feedback = 0;
++      if (ra->msg4_harq_round == 0) {
++        msg4_header = 1 + 6 + 1;        // CR header, CR CE, SDU header
++        AssertFatal((ra->msg4_TBsize - ra->msg4_rrc_sdu_length - msg4_header)>=0,
++                    "msg4_TBS %d is too small, change mcs to increase by %d bytes\n",
++                    ra->msg4_TBsize, ra->msg4_rrc_sdu_length + msg4_header - ra->msg4_TBsize);
++
++        if ((ra->msg4_TBsize - ra->msg4_rrc_sdu_length - msg4_header) <= 2) {
++          msg4_padding = ra->msg4_TBsize - ra->msg4_rrc_sdu_length - msg4_header;
++          msg4_post_padding = 0;
++        } else {
++          msg4_padding = 0;
++          msg4_post_padding = ra->msg4_TBsize - ra->msg4_rrc_sdu_length - msg4_header - 1;
++        }
+ 
+-      LOG_D (MAC, "[eNB %d][RAPROC] CC_id %d Frame %d subframeP %d Msg4 : TBS %d, sdu_len %d, msg4_header %d, msg4_padding %d, msg4_post_padding %d\n",
+-             module_idP, CC_idP, frameP, subframeP, ra->msg4_TBsize, ra->msg4_rrc_sdu_length, msg4_header, msg4_padding, msg4_post_padding);
+-      DevAssert (UE_id != UE_INDEX_INVALID);  // FIXME not sure how to gracefully return
+-      // CHECK THIS: &cc[CC_idP].CCCH_pdu.payload[0]
+-      offset = generate_dlsch_header ((unsigned char *) mac->UE_info.DLSCH_pdu[CC_idP][0][(unsigned char) UE_id].payload[0], 1,       //num_sdus
+-                                      (unsigned short *) &ra->msg4_rrc_sdu_length,     //
+-                                      &lcid,  // sdu_lcid
+-                                      255,    // no drx
+-                                      31,     // no timing advance
+-                                      ra->cont_res_id,       // contention res id
+-                                      msg4_padding,   // no padding
+-                                      msg4_post_padding);
+-      memcpy ((void *) &mac->UE_info.DLSCH_pdu[CC_idP][0][(unsigned char) UE_id].payload[0][(unsigned char) offset], &cc[CC_idP].CCCH_pdu.payload[0], ra->msg4_rrc_sdu_length);
++        LOG_D(MAC, "[eNB %d][RAPROC] CC_id %d Frame %d subframeP %d Msg4: TBS %d, sdu_len %d\n",
++              module_idP, CC_idP, frameP, subframeP, ra->msg4_TBsize, ra->msg4_rrc_sdu_length);
++        DevAssert(UE_id != UE_INDEX_INVALID);
++        offset = generate_dlsch_header(mac->UE_info.DLSCH_pdu[CC_idP][0][UE_id].payload[0], 1,
++                                       (unsigned short *)&ra->msg4_rrc_sdu_length, &lcid, 255, 31,
++                                       ra->cont_res_id, msg4_padding, msg4_post_padding);
++        memcpy(&mac->UE_info.DLSCH_pdu[CC_idP][0][UE_id].payload[0][offset],
++               cc[CC_idP].CCCH_pdu.payload, ra->msg4_rrc_sdu_length);
++      }
++      // Reuse the original MAC transport block and NDI; RV 0 provides Chase combining.
+       // DL request
+       mac->TX_req[CC_idP].sfn_sf = (frameP << 4) + subframeP;
+       TX_req = &mac->TX_req[CC_idP].tx_request_body.tx_pdu_list[mac->TX_req[CC_idP].tx_request_body.number_of_pdus];
+@@ -844,6 +847,7 @@ generate_Msg4(module_id_t module_idP,
+       AssertFatal (reps == 1, "Have to handle programming of ACK when PDSCH repetitions is > 1\n");
+       ul_req_body = &mac->UL_req_tmp[CC_idP][ackNAK_absSF % 10].ul_config_request_body;
+       ul_config_pdu = &ul_req_body->ul_config_pdu_list[ul_req_body->number_of_pdus];
++      memset(ul_config_pdu, 0, sizeof(*ul_config_pdu));
+       ul_config_pdu->pdu_type = NFAPI_UL_CONFIG_UCI_HARQ_PDU_TYPE;
+       ul_config_pdu->pdu_size = (uint8_t) (2 + sizeof (nfapi_ul_config_uci_harq_pdu));
+       ul_config_pdu->uci_harq_pdu.ue_information.ue_information_rel8.tl.tag = NFAPI_UL_CONFIG_REQUEST_UE_INFORMATION_REL8_TAG;
+@@ -1119,12 +1123,37 @@ check_Msg4_retransmission(module_id_t module_idP, int CC_idP,
+         "[eNB %d][RAPROC] CC_id %d Frame %d, subframeP %d: Checking if Msg4 for harq_pid %d was acknowledged (round %d), UE_id: %d \n",
+         module_idP, CC_idP, frameP, subframeP, ra->harq_pid, round, UE_id);
+ 
++  if (ra->rach_resource_type > 0) {
++    emtc_msg4_action_t action = emtc_msg4_action(round, ra->msg4_harq_round, ra->msg4_feedback);
++    if (action == EMTC_MSG4_WAIT)
++      return;
++    if (action == EMTC_MSG4_FAIL) {
++      LOG_W(MAC, "BL/CE Msg4 retries exhausted for rnti %x\n", ra->rnti);
++      put_UE_in_freelist(module_idP, ra->rnti, true);
++      cancel_ra_proc(module_idP, CC_idP, frameP, ra->rnti);
++      return;
++    }
++    if (action == EMTC_MSG4_RETRY) {
++      if (ra->rach_resource_type > 2 || cc[CC_idP].tdd_Config != NULL) {
++        LOG_W(MAC, "Unsupported BL/CE Msg4 retry mode for rnti %x\n", ra->rnti);
++        put_UE_in_freelist(module_idP, ra->rnti, true);
++        cancel_ra_proc(module_idP, CC_idP, frameP, ra->rnti);
++        return;
++      }
++      ra->msg4_harq_round = round;
++      ra->msg4_mpdcch_repetition_cnt = 0;
++      ra->msg4_mpdcch_done = 0;
++      ra->Msg4_frame = (frameP + (subframeP == 9)) & 1023;
++      ra->Msg4_subframe = (subframeP + 1) % 10;
++      ra->eRA_state = MSG4;
++      LOG_I(MAC, "Scheduling BL/CE Msg4 retry round %d for rnti %x after %d.%d\n",
++            round, ra->rnti, frameP, subframeP);
++      return;
++    }
++  }
++
+   if (round != 8) {
+-    if (ra->rach_resource_type > 0 && round > 0) {
+-      AssertFatal(1 == 0,
+-                  "Msg4 Retransmissions not handled yet for BL/CE UEs, Frame %d, subframeP %d harq_pid %d round %d, UE_id: %d \n",
+-                  frameP, subframeP, ra->harq_pid, round, UE_id);
+-    } else {
++    {
+       if ((ra->Msg4_frame == frameP)
+           && (ra->Msg4_subframe == subframeP)) {
+         //ra->wait_ack_Msg4++;
+@@ -1239,7 +1268,8 @@ schedule_RA(module_id_t module_idP, frame_t frameP, sub_frame_t subframeP) {
+ 
+       if (ra->eRA_state == MSG2)
+         generate_Msg2(module_idP, CC_id, frameP, subframeP, ra);
+-      else if (ra->eRA_state == MSG4 && ra->Msg4_frame == frameP && ra->Msg4_subframe == subframeP)
++      else if (ra->eRA_state == MSG4 &&
++               (ra->rach_resource_type > 0 || (ra->Msg4_frame == frameP && ra->Msg4_subframe == subframeP)))
+         generate_Msg4(module_idP, CC_id, frameP, subframeP, ra);
+       else if (ra->eRA_state == WAITMSG4ACK)
+         check_Msg4_retransmission(module_idP, CC_id, frameP,
+@@ -1311,6 +1341,9 @@ initiate_ra_proc(module_id_t module_idP,
+       ra[i].rach_resource_type = rach_resource_type;
+       ra[i].msg2_mpdcch_repetition_cnt = 0;
+       ra[i].msg4_mpdcch_repetition_cnt = 0;
++      ra[i].msg4_harq_round = 0;
++      ra[i].msg4_feedback = 0;
++      ra[i].msg4_rrc_sdu_length = 0;
+ 
+       //TODO Fill in other TDD config. What about nfapi_mode?
+       if(cc->tdd_Config!=NULL) {
+diff --git a/openair2/LAYER2/MAC/eNB_scheduler_primitives.c b/openair2/LAYER2/MAC/eNB_scheduler_primitives.c
+index 5fac2d4..e683c15 100644
+--- a/openair2/LAYER2/MAC/eNB_scheduler_primitives.c
++++ b/openair2/LAYER2/MAC/eNB_scheduler_primitives.c
+@@ -4078,6 +4078,10 @@ extract_harq(module_id_t mod_idP,
+           }
+ 
+           LOG_D(MAC, "In extract_harq(): pdu[0] = %d for harq_pid = %d\n", pdu[0], harq_pid);
++          for (uint8_t ra_i = 0; ra_i < NB_RA_PROC_MAX; ra_i++) {
++            if (ra[ra_i].rnti == rnti && ra[ra_i].eRA_state == WAITMSG4ACK && ra[ra_i].rach_resource_type > 0)
++              ra[ra_i].msg4_feedback = pdu[0];
++          }
+ 
+           if (pdu[0] == 1) {  // ACK
+             sched_ctl->round[CC_idP][harq_pid] = 8; // release HARQ process
+@@ -4097,6 +4101,8 @@ extract_harq(module_id_t mod_idP,
+             if (sched_ctl->round[CC_idP][harq_pid] == 8) {
+               for (uint8_t ra_i = 0; ra_i < NB_RA_PROC_MAX; ra_i++) {
+                 if ((ra[ra_i].rnti == rnti) && (ra[ra_i].eRA_state == WAITMSG4ACK)) {
++                  if (ra[ra_i].rach_resource_type > 0)
++                    continue; // BL/CE cleanup is handled by check_Msg4_retransmission.
+                   // Msg NACK num to MAC ,remove UE
+                   // add UE info to freeList
+                   LOG_I(RRC, "put UE %x into freeList\n",
+diff --git a/openair2/LAYER2/MAC/emtc_msg4.h b/openair2/LAYER2/MAC/emtc_msg4.h
+new file mode 100644
+index 0000000..7130234
+--- /dev/null
++++ b/openair2/LAYER2/MAC/emtc_msg4.h
+@@ -0,0 +1,22 @@
++/* SPDX-License-Identifier: LicenseRef-CSSL-1.0 */
++#ifndef EMTC_MSG4_H
++#define EMTC_MSG4_H
++
++typedef enum {
++  EMTC_MSG4_WAIT,
++  EMTC_MSG4_RETRY,
++  EMTC_MSG4_ACK,
++  EMTC_MSG4_FAIL,
++} emtc_msg4_action_t;
++
++/* MAC uses round 8 for both an ACK and exhausted retries; preserve the feedback. */
++static inline emtc_msg4_action_t emtc_msg4_action(int round, int transmitted_round, int feedback)
++{
++  if (round == 8)
++    return feedback == 1 ? EMTC_MSG4_ACK : EMTC_MSG4_FAIL;
++  if (round > transmitted_round && round < 4)
++    return EMTC_MSG4_RETRY;
++  return EMTC_MSG4_WAIT;
++}
++
++#endif
+diff --git a/openair2/LAYER2/MAC/mac.h b/openair2/LAYER2/MAC/mac.h
+index a296dff..f13da19 100644
+--- a/openair2/LAYER2/MAC/mac.h
++++ b/openair2/LAYER2/MAC/mac.h
+@@ -1059,6 +1059,8 @@ typedef struct {
+   uint8_t msg2_narrowband;
+   uint8_t msg34_narrowband;
+   int     msg4_rrc_sdu_length;
++  uint8_t msg4_harq_round;
++  uint8_t msg4_feedback;
+   /// Repetition column in pusch_repetition Table 8.2.b in TS36.213
+   uint8_t pusch_repetition_levels;
+   int32_t  crnti_rrc_mui;
+diff --git a/openair2/LAYER2/MAC/tests/CMakeLists.txt b/openair2/LAYER2/MAC/tests/CMakeLists.txt
+new file mode 100644
+index 0000000..69dfef6
+--- /dev/null
++++ b/openair2/LAYER2/MAC/tests/CMakeLists.txt
+@@ -0,0 +1,7 @@
++# SPDX-License-Identifier: LicenseRef-CSSL-1.0
++cmake_minimum_required(VERSION 3.16)
++project(emtc_msg4_tests C)
++enable_testing()
++add_executable(test_emtc_msg4 test_emtc_msg4.c)
++target_compile_options(test_emtc_msg4 PRIVATE -Wall -Wextra -Werror)
++add_test(NAME lte.mac.emtc_msg4_action COMMAND test_emtc_msg4)
+diff --git a/openair2/LAYER2/MAC/tests/test_emtc_msg4.c b/openair2/LAYER2/MAC/tests/test_emtc_msg4.c
+new file mode 100644
+index 0000000..976758b
+--- /dev/null
++++ b/openair2/LAYER2/MAC/tests/test_emtc_msg4.c
+@@ -0,0 +1,33 @@
++/* SPDX-License-Identifier: LicenseRef-CSSL-1.0 */
++#include "../emtc_msg4.h"
++#include <stdio.h>
++
++int main(void)
++{
++  const struct {
++    int round;
++    int transmitted_round;
++    int feedback;
++    emtc_msg4_action_t expected;
++  } cases[] = {
++    {0, 0, 0, EMTC_MSG4_WAIT},
++    {1, 0, 4, EMTC_MSG4_RETRY},
++    {1, 1, 0, EMTC_MSG4_WAIT},
++    {2, 1, 2, EMTC_MSG4_RETRY},
++    {3, 2, 4, EMTC_MSG4_RETRY},
++    {3, 3, 0, EMTC_MSG4_WAIT},
++    {8, 0, 1, EMTC_MSG4_ACK},
++    {8, 3, 1, EMTC_MSG4_ACK},
++    {8, 3, 2, EMTC_MSG4_FAIL},
++    {8, 3, 4, EMTC_MSG4_FAIL},
++    {8, 3, 0, EMTC_MSG4_FAIL},
++  };
++  for (unsigned int i = 0; i < sizeof(cases) / sizeof(cases[0]); i++) {
++    emtc_msg4_action_t actual = emtc_msg4_action(cases[i].round, cases[i].transmitted_round, cases[i].feedback);
++    if (actual != cases[i].expected) {
++      fprintf(stderr, "Msg4 action case %u: expected %d, got %d\n", i, cases[i].expected, actual);
++      return 1;
++    }
++  }
++  return 0;
++}

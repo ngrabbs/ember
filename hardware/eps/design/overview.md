@@ -1,5 +1,12 @@
 # EPS Architecture Overview
 
+**Configuration review pending, 2026-10-04.** This older architecture record
+uses a TPSM5D1806 regulation target; the [Rev A bring-up plan](../bringup/phase1_validation.md)
+describes the TPS62933 hardware. Newer EPS Rev B planning is in a separate
+active worktree, listed in the [documentation review](../../../docs/review/README.md). Keep revision-specific
+parts and validation claims separate until reconciled; this page does not
+establish the currently assembled regulator or a completed rail qualification.
+
 ## Scope
 
 This document defines the baseline Electrical Power System (EPS) architecture
@@ -42,7 +49,9 @@ Solar Array (SM141K10TF, 3S/3S2P eval)
 ### Distribution and Regulation Path
 
 - Target regulated rails are 5 V and 3.3 V via TPSM5D1806
-- Regulator behavior is currently treated as a validated module-level path
+- Older module-level validation claims require a linked result and revision
+  check before reuse; current Rev A regulator troubleshooting is recorded in
+  [the bring-up guide](../bringup/tps62933_ltspice_debug_guide.md)
 - Fully integrated EPS rail distribution is in progress
 
 ## Operating Modes (Design Intent)

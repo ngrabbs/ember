@@ -1,0 +1,67 @@
+diff --git a/openair2/LAYER2/MAC/eNB_scheduler_ulsch.c b/openair2/LAYER2/MAC/eNB_scheduler_ulsch.c
+index d7cdb3b..ba807e6 100644
+--- a/openair2/LAYER2/MAC/eNB_scheduler_ulsch.c
++++ b/openair2/LAYER2/MAC/eNB_scheduler_ulsch.c
+@@ -11,6 +11,7 @@
+ #include "LAYER2/MAC/mac.h"
+ #include "LAYER2/MAC/mac_proto.h"
+ #include "LAYER2/MAC/mac_extern.h"
++#include "emtc_ul_harq.h"
+ #include "common/utils/LOG/log.h"
+ #include "common/utils/LOG/vcd_signal_dumper.h"
+ #include "nfapi/oai_integration/vendor_ext.h"
+@@ -125,6 +126,7 @@ rx_sdu(const module_id_t enb_mod_idP,
+   if (UE_id != -1) {
+     UE_scheduling_control = &UE_info->UE_sched_ctrl[UE_id];
+     UE_template_ptr = &UE_info->UE_template[CC_idP][UE_id];
++    harq_pid = emtc_ul_rx_harq_pid(UE_template_ptr->rach_resource_type, harq_pid);
+     LOG_D(MAC, "[eNB %d][PUSCH %d] CC_id %d %d.%d Received ULSCH (%s) sdu round %d from PHY (rnti %x, UE_id %d) ul_cqi %d, timing_advance %d\n",
+           enb_mod_idP,
+           harq_pid,
+diff --git a/openair2/LAYER2/MAC/emtc_ul_harq.h b/openair2/LAYER2/MAC/emtc_ul_harq.h
+new file mode 100644
+index 0000000..0ea0619
+--- /dev/null
++++ b/openair2/LAYER2/MAC/emtc_ul_harq.h
+@@ -0,0 +1,11 @@
++/* SPDX-License-Identifier: LicenseRef-CSSL-1.0 */
++#ifndef EMTC_UL_HARQ_H
++#define EMTC_UL_HARQ_H
++
++/* Match the single-process BL/CE uplink scheduler and PHY receive path. */
++static inline int emtc_ul_rx_harq_pid(unsigned int rach_resource_type, int legacy_harq_pid)
++{
++  return rach_resource_type > 0 ? 0 : legacy_harq_pid;
++}
++
++#endif
+diff --git a/openair2/LAYER2/MAC/tests/CMakeLists.txt b/openair2/LAYER2/MAC/tests/CMakeLists.txt
+index 69dfef6..92b78c4 100644
+--- a/openair2/LAYER2/MAC/tests/CMakeLists.txt
++++ b/openair2/LAYER2/MAC/tests/CMakeLists.txt
+@@ -5,3 +5,6 @@ enable_testing()
+ add_executable(test_emtc_msg4 test_emtc_msg4.c)
+ target_compile_options(test_emtc_msg4 PRIVATE -Wall -Wextra -Werror)
+ add_test(NAME lte.mac.emtc_msg4_action COMMAND test_emtc_msg4)
++add_executable(test_emtc_ul_harq test_emtc_ul_harq.c)
++target_compile_options(test_emtc_ul_harq PRIVATE -Wall -Wextra -Werror -UNDEBUG)
++add_test(NAME lte.mac.emtc_ul_rx_harq_pid COMMAND test_emtc_ul_harq)
+diff --git a/openair2/LAYER2/MAC/tests/test_emtc_ul_harq.c b/openair2/LAYER2/MAC/tests/test_emtc_ul_harq.c
+new file mode 100644
+index 0000000..3a67192
+--- /dev/null
++++ b/openair2/LAYER2/MAC/tests/test_emtc_ul_harq.c
+@@ -0,0 +1,13 @@
++/* SPDX-License-Identifier: LicenseRef-CSSL-1.0 */
++#include <assert.h>
++#include "../emtc_ul_harq.h"
++
++int main(void)
++{
++  for (int legacy = 0; legacy < 8; legacy++) {
++    assert(emtc_ul_rx_harq_pid(0, legacy) == legacy);
++    for (unsigned int ce = 1; ce <= 4; ce++)
++      assert(emtc_ul_rx_harq_pid(ce, legacy) == 0);
++  }
++  return 0;
++}
