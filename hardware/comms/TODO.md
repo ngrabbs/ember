@@ -1,6 +1,6 @@
 # Comms open work
 
-**October 4 PR snapshot:** saved-board DRC still passes with zero errors/unconnected. Power/RX schematic cleanup and PCB saves postdate the October 3 quote; repeat native ERC/parity and refresh affected manufacturing outputs before ordering. [PR validation record](verification/pr_review_2026-10-04.md).
+**October 5 purchased baseline:** Y24 is paid (5 PCBs / 2 assembled); the exact October 4 source and export hashes were verified during Git reconciliation. See [order record](releases/Y24-order-record.md). JLCPCB rejected the requested J9 hole tolerance; assembly-engineering acceptance of the offered tolerance and final CAM/placement approval remain unresolved. The original [release archive](releases/review_20261004_1100/README.md) and [independent review](verification/review_20261004_final/independent-review.md) remain unchanged.
 
 [Comms home](README.md) · [Design overview](design/overview.md)
 
