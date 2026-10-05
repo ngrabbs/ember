@@ -1,0 +1,47 @@
+{
+  "native_netlist": "/Users/nick/Desktop/ember/hardware/comms/releases/review_20261004_1100/evidence/transceiver.net",
+  "native_nets": 213,
+  "native_logical_pins": 567,
+  "physical_pads": 591,
+  "pcb_logical_pads": 572,
+  "mismatches": [
+    {
+      "native_net": "Net-(C72-Pad2)",
+      "nodes": [
+        "C72.2",
+        "R28.2",
+        "R29.1",
+        "R30.2",
+        "R38.2",
+        "R39.1"
+      ],
+      "pcb_nets": [
+        "/RX Chain/RX_AMP_IN",
+        "/RX Chain/VREF_RX"
+      ]
+    },
+    {
+      "native_net": "Net-(U5B-+)",
+      "nodes": [
+        "C69.1",
+        "R39.2",
+        "U5.5"
+      ],
+      "pcb_nets": [
+        "/RX Chain/RX_AMP_IN",
+        "/RX Chain/VREF_RX"
+      ]
+    }
+  ],
+  "unrepresented_electrical_pads": {},
+  "isolated_duplicate_no_connect_pads": [
+    {
+      "node": "U15.10",
+      "distinct_isolated_pcb_nets": [
+        "unconnected-(U15-DNC-Pad10)",
+        "unconnected-(U15-DNC-Pad10)_1"
+      ]
+    }
+  ],
+  "pass": false
+}
