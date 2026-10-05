@@ -1,0 +1,46 @@
+{
+  "sdrb": {
+    "state": "RUNNING",
+    "role": "sdrb",
+    "pid": 3462,
+    "run": "/home/petalinux/ember-uhf-supervised/20240228T041510Z-c5e3ca52850a",
+    "run_id": "20240228T041510Z-c5e3ca52850a",
+    "config": "/home/petalinux/ember-uhf-20261003/sdrb.json",
+    "lease_seconds": 0,
+    "children": {
+      "can": {
+        "pid": 3463,
+        "returncode": null
+      },
+      "forward": {
+        "pid": 3464,
+        "returncode": null
+      },
+      "radio": {
+        "pid": 3466,
+        "returncode": null
+      }
+    },
+    "reason": null,
+    "error": null,
+    "updated_unix": 1709093730.58402
+  },
+  "ground": {
+    "state": "RUNNING",
+    "role": "ground",
+    "pid": 575792,
+    "run": "/home/ngrabbs/work/ember-uhf-supervised/20261003T212158Z-f2c38ab0ad34",
+    "run_id": "20261003T212158Z-f2c38ab0ad34",
+    "config": "/home/ngrabbs/work/ember-uhf-20261003/ground.json",
+    "lease_seconds": 0,
+    "children": {
+      "receiver": {
+        "pid": 575815,
+        "returncode": null
+      }
+    },
+    "reason": null,
+    "error": null,
+    "updated_unix": 1791062520.0669498
+  }
+}

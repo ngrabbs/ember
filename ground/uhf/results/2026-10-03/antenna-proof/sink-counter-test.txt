@@ -1,0 +1,8 @@
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'from gnuradio import gr,blocks; t=gr.t
+top_block(); s=blocks.null_sink(gr.sizeof_gr_complex); t.connect(blocks.vector_so
+ource_c([0j]*8),s); t.run(); assert s.nitems_read(0)==8; print('"'"'PASS_SINK_INP
+PUT_COUNTER'"'"')'
+PASS_SINK_INPUT_COUNTER
+sdrb-uhd:~/ember-uhf-20261003$ 

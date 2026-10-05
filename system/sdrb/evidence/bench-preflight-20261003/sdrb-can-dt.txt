@@ -1,0 +1,12 @@
+python3 -c "from pathlib import Path; r=Path('/proc/device-tree'); print([(str(p.relative_to(r)),p.read_bytes().hex()) for p in r.rglobb('*') if p.is_file() and ('can@' in str(p) or (p.name=='compatible' and b'can' in p.read_bytes()))])"; sha256sum /boot/BOOT.BIN /boot/image.ub /b oot/boot.scr; ls /usr/bin/*can* /usr/share/sdrb 2>/dev/null
+[('axi/can@e0009000/compatible', '786c6e782c7a796e712d63616e2d312e3000'), ('axi/can@e0009000/clocks', '00000001000000140000000100000025'), ('axi/can@e0009000/tx-fifo-depth', '00000040'), ('axi/can@e0009000/clock-names', '63616e5f636c6b0070636c6b00'), ('axi/can@e0009000/status', '64697361626c656400'), ('axi/can@e0009000/interrupt-parent', '00000004'), ('axi/can@e0009000/interrupts', '000000000000003300000004'), ('axi/can@e0009000/phandle', '00000016'), ('axi/can@e0009000/reg', 'e000900000001000'), ('axi/can@e0009000/rx-fifo-depth', '00000040'), ('axi/can@e0009000/name', '63616e00'), ('axi/can@e0008000/compatible', '786c6e782c7a796e712d63616e2d312e3000'), ('axi/can@e0008000/clocks', '00000001000000130000000100000024'), ('axi/can@e0008000/tx-fifo-depth', '00000040'), ('axi/can@e0008000/clock-names', '63616e5f636c6b0070636c6b00'), ('axi/can@e0008000/status', '64697361626c656400'), ('axi/can@e0008000/interrupt-parent', '00000004'), ('axi/can@e0008000/interrupts', '000000000000001c00000004'), ('axi/can@e0008000/phandle', '00000015'), ('axi/can@e0008000/reg', 'e000800000001000'), ('axi/can@e0008000/rx-fifo-depth', '00000040'), ('axi/can@e0008000/name', '63616e00')]
+e65252d73d9d40f15caff930d085f8aa1d67b2c37668ce91e5a01d9fbe73d47a  /boot/BOOT.BIN
+992e4f2b98834e7b1000c027ddc89fe10219719a636c370d032183c14b42428e  /boot/image.ub
+4c7ed60cad10872084bf727b2c9ab0eca9eab992635cf3abf67dfe7ed9cc7807  /boot/boot.scr
+/usr/bin/candump                /usr/bin/canplayer              /usr/bin/cansequence
+/usr/bin/candump.can-utils      /usr/bin/cansend                /usr/bin/cansequence.can-utils
+/usr/bin/cangen                 /usr/bin/cansend.can-utils      /usr/bin/cansniffer
+
+/usr/share/sdrb:
+gnuradio
+sdrb-uhd:~$ 

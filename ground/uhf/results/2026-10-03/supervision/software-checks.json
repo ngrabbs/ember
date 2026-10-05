@@ -1,0 +1,25 @@
+{
+  "supervisor_tests_passed": [
+    "component failure without retry",
+    "non-socket path preservation",
+    "parent death cleanup and stale restart",
+    "exclusive start, stop, restart and retention",
+    "evidence quota cleanup",
+    "SDRB fault shuts radio before CAN",
+    "finite lease begins after readiness"
+  ],
+  "execution_host": "m75q Linux",
+  "test_runs": "Five tests passed in the six-case run; SDRB test fixture lacked can_monitor and failed before server startup. The fixture was corrected and that case passed separately. The later lease case passed separately; no RF opened by these tests.",
+  "can_admission_tests_passed": 3,
+  "can_adapter_tests_passed": 7,
+  "can_virtual_filter_test": "skipped: no explicitly supplied virtual CAN interface",
+  "ground_decoder_tests_passed": 2,
+  "ground_decoder_host": "Pi5",
+  "limits": "Process and software checks; live RF results are separate.",
+  "final_supervisor_suite": {
+    "passed": 7,
+    "failed": 0,
+    "log": "supervisor-final-tests.txt",
+    "source": "tools-final/test_supervisor.py"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "settings": {
+    "mode": "telemetry",
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-persistent-radio-01",
+    "seconds": 180,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "rx_frequency": null,
+    "rx_gain": 30,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 0.5,
+    "transmit": true
+  },
+  "status": {
+    "accepted": 1,
+    "queued": 0,
+    "expired": 0,
+    "queue_full": 0,
+    "emitted": 1,
+    "output_samples": 270237201,
+    "writer_error": null,
+    "accepting": false,
+    "recent_packets": [
+      {
+        "sequence": 1,
+        "begin": 245235712,
+        "end": 246915712,
+        "emitted": true
+      }
+    ],
+    "note": "Downstream samples are not RF reception",
+    "mode": "telemetry"
+  },
+  "error": null,
+  "cleanup_errors": [],
+  "elapsed_seconds": 180.22697119999975,
+  "scope": "Persistent bench sample submission; RF reception and repeater operation require independent proof"
+}

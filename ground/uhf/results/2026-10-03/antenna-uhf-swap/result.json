@@ -1,0 +1,111 @@
+{
+  "status": "TELEMETRY_PASS_UHF_RECEIVE_ANTENNA_FORWARDING_GATE_FAILED",
+  "physical_setup": "Operator-confirmed UHF antenna fitted to SDRB antenna_in; LibreSDR stock antennas and approximately12inch spacing unchanged",
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-antenna-radio-02",
+    "seconds": 75,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "packet_peak": 0.12,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 60.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 16.0,
+    "forward_peak": 0.25,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "stream_seconds": 59.54985513399879,
+  "fresh_packets": 3,
+  "all_original_bytes_matched_at_ihu_can_socket_rf_yamcs": true,
+  "identities": [
+    {
+      "inner_sequence": 80,
+      "sha256": "35e7ffa5a05f9269ba7ceaa70d87d3429727b3772467e085e812f5109c9b5cdb",
+      "yamcs_reception": "2026-10-03T19:22:58.149Z"
+    },
+    {
+      "inner_sequence": 81,
+      "sha256": "36b3e19281eb5bf1bd87d9dd3157ac513f7962edeb31b65c0618c291e16fd944",
+      "yamcs_reception": "2026-10-03T19:23:05.677Z"
+    },
+    {
+      "inner_sequence": 82,
+      "sha256": "b227b6e63247862f121957dbb4c4e42821ca73bf2128f88748c5a4b09801a18f",
+      "yamcs_reception": "2026-10-03T19:23:13.683Z"
+    }
+  ],
+  "rx_async_events": {},
+  "tx_async_events": {},
+  "udp_delta": {
+    "InDatagrams": 28463,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 39415,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "headroom": {
+    "samples": 36538502,
+    "forwarded_clipped": 0,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 0.20796019497134116,
+    "forward_peak_after": 0.20796019497134116,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.23305284779561558,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "translated_tones": {
+    "5000": {
+      "on_off_db": 1.1801912087334352,
+      "spectral_snr_db": 9.444779005297557,
+      "peak_hz": 4882.8125
+    },
+    "11000": {
+      "on_off_db": 2.092716647943194,
+      "spectral_snr_db": 10.028811338326445,
+      "peak_hz": 10986.328125
+    }
+  },
+  "antenna_forwarding_pass": false,
+  "previous_translated_tones": {
+    "5000": {
+      "on_off_db": 0.1670514133268058,
+      "spectral_snr_db": 9.087274319357814,
+      "peak_hz": 5126.953125
+    },
+    "11000": {
+      "on_off_db": -0.1943011324125983,
+      "spectral_snr_db": 8.921560568529033,
+      "peak_hz": 10742.1875
+    }
+  },
+  "radio_settings_unchanged": true,
+  "conclusion": "The controlled SDRB receive antenna swap improved tone contrast slightly but the forwarding gate still did not pass.3/3 fresh telemetry packets remained byte-identical through Yamcs with clean stream counters. SSB remains pending.",
+  "next_step": "Use a known430\u2013440MHz antenna on LibreSDR TXA; stock antenna bands are unverified. Any next check remains finite with unchanged radio settings.",
+  "limits": [
+    "Single finite check, not SSB/voice or endurance qualification.",
+    "Operator-confirmed antenna change and unchanged spacing; no antenna model, calibrated RF power or isolation measurement.",
+    "No AMSAT core, clock/driver, boot, FPGA or rootfs library changes; default adder behavior unchanged.",
+    "Yamcs archive byte identity checked; the previously paused EPS display was not updated."
+  ]
+}

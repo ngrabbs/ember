@@ -1,0 +1,43 @@
+{
+  "status": "CAN_TEST_NOT_STARTED",
+  "operator_confirmed": {
+    "ihu_eps_fully_powered": true,
+    "comms_on_bus": true,
+    "common_ground_and_termination_checked_before_power": true,
+    "sdrb_h_l_orientation": "uncertain"
+  },
+  "sdrb": {
+    "console": "FT230X_DK0LA3NJ",
+    "linux": "6.6.40-xilinx-gbb8d8f910d79",
+    "can0_dt_status": "disabled",
+    "can1_dt_status": "disabled",
+    "can_interfaces": [],
+    "boot_sha256": {
+      "BOOT.BIN": "e65252d73d9d40f15caff930d085f8aa1d67b2c37668ce91e5a01d9fbe73d47a",
+      "image.ub": "992e4f2b98834e7b1000c027ddc89fe10219719a636c370d032183c14b42428e",
+      "boot.scr": "4c7ed60cad10872084bf727b2c9ab0eca9eab992635cf3abf67dfe7ed9cc7807"
+    },
+    "source_mapping": "Exact boot-file match to original developer-image baseline"
+  },
+  "ihu": {
+    "usb_serial": "DF641455DB822427",
+    "text_status_response_received": true,
+    "firmware_identity": "EMBER ihu CAN Bench can-bench-v2",
+    "boot": 2623056192,
+    "can_mode": "configuration",
+    "can_errors": 0,
+    "eps_readout_received": true
+  },
+  "changes": {
+    "can_configured": false,
+    "adapter_started": false,
+    "rf_started": false,
+    "boot_files_changed": false,
+    "boards_reset": true,
+    "reset_scope": "Only positively identified IHU in BOOTSEL booted its existing image; no reflash"
+  },
+  "next": [
+    "Clean halt, backup current card, then compatible CAN boot/module update preserving current UHD library",
+    "Confirm SDRB CAN port and use controller listen-only plus adapter monitor mode for shared bus"
+  ]
+}

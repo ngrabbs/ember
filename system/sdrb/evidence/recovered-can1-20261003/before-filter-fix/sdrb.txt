@@ -1,0 +1,35 @@
+sudo -v
+Password: 
+sdrb-uhd:~$ sudo -n ip link set can1 type can bitrate 499999 restart-ms 0 && sudoo -n ip link set can1 up && python3 ~/ember-can-monitor-20261003/sdrb_can.py --innterface can1 --seconds 20 --output ~/ember-can-test-06 > ~/ember-can-test-06.logg 2>&1 &
+[1] 481
+sdrb-uhd:~$ cat ~/ember-can-test-06.log
+{"ready": true, "interface": "can1", "boot": 94540599, "radio": "disabled", "application_replies_enabled": false}
+sdrb-uhd:~$ cat ~/ember-can-test-06/status.json; cat ~/ember-can-test-06/packets..jsonl; ip -details -statistics link show can1
+{
+  "boot": 94540599,
+  "accepted": 0,
+  "rejected": 0,
+  "duplicates": 0,
+  "fragment_errors": 0,
+  "fragment_timeouts": 0,
+  "rf_started": false,
+  "application_replies_enabled": false
+}
+[1]+  Done                    sudo -n ip link set can1 type can bitrate 499999 restart-ms 0 && sudo -n ip link set can1 up && python3 ~/ember-can-monitor-20261003/sdrb_can.py --interface can1 --seconds 20 --output ~/ember-can-test-06 > ~/ember-can-test-06.log 2>&1
+3: can1: <NOARP,UP,LOWER_UP,ECHO> mtu 16 qdisc pfifo_fast state UP mode DEFAULT group default qlen 10
+    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 
+    can state ERROR-ACTIVE (berr-counter tx 0 rx 0) restart-ms 0 
+	  bitrate 499999 sample-point 0.875
+	  tq 250 prop-seg 3 phase-seg1 3 phase-seg2 1 sjw 1 brp 25
+	  xilinx_can: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..256 brp_inc 1
+	  clock 99999999 
+	  re-started bus-errors arbit-lost error-warn error-pass bus-off
+	  0          0          0          0          0          0         numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536 parentbus platform parentdev e0009000.can 
+    RX:  bytes packets errors dropped  missed   mcast           
+           696      88      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+             0       0      0       0       0       0 
+sdrb-uhd:~$ sudo -n ip link set can1 down; ip link show can1
+3: can1: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
+    link/can 
+sdrb-uhd:~$ 

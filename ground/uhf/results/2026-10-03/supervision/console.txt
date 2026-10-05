@@ -1,0 +1,226 @@
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -n ip link set can1 up; systemctl --user set-
+-property --runtime ember-uhf-sdrb.service RuntimeMaxSec=120s; systemctl --user s
+show ember-uhf-sdrb.service -p RuntimeMaxUSec
+[0;1;31mFailed to set unit properties on ember-uhf-sdrb.service: Cannot set property RuntimeMaxUSec, or unknown property.[0m
+
+RuntimeMaxUSec=infinity
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+systemctl --user --no-block start ember-uhf-sdrb.s
+service
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3275, "run": "/home/petalinux/ember-uhf-supervised/20240228T035709Z-36251207569c", "run_id": "20240228T035709Z-36251207569c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3276, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092629.6838799}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3275, "run": "/home/petalinux/ember-uhf-supervised/20240228T035709Z-36251207569c", "run_id": "20240228T035709Z-36251207569c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3276, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092629.6838799}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3275, "run": "/home/petalinux/ember-uhf-supervised/20240228T035709Z-36251207569c", "run_id": "20240228T035709Z-36251207569c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3276, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092629.6838799}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3275, "run": "/home/petalinux/ember-uhf-supervised/20240228T035709Z-36251207569c", "run_id": "20240228T035709Z-36251207569c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3276, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092629.6838799}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3275, "run": "/home/petalinux/ember-uhf-supervised/20240228T035709Z-36251207569c", "run_id": "20240228T035709Z-36251207569c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3276, "returncode": null}, "can": {"pid": 3305, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092643.2245798}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "RUNNING", "role": "sdrb", "pid": 3275, "run": "/home/petalinux/ember-uhf-supervised/20240228T035709Z-36251207569c", "run_id": "20240228T035709Z-36251207569c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3276, "returncode": null}, "can": {"pid": 3305, "returncode": null}, "forward": {"pid": 3307, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092647.4432821}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 ~/ember-uhf-20261003/add_packet.py --statu
+us
+{"request": {"command": "status"}}
+{
+  "accepted": 2,
+  "queued": 0,
+  "expired": 0,
+  "queue_full": 0,
+  "emitted": 2,
+  "output_samples": 35264504,
+  "writer_error": null,
+  "accepting": true,
+  "recent_packets": [
+    {
+      "sequence": 1,
+      "begin": 18153472,
+      "end": 18841600,
+      "emitted": true
+    },
+    {
+      "sequence": 2,
+      "begin": 30507008,
+      "end": 31195136,
+      "emitted": true
+    }
+  ],
+  "note": "Downstream samples are not RF reception",
+  "mode": "transponder",
+  "tx_async_events": {},
+  "rx_async_events": {},
+  "headroom": {
+    "samples": 35264504,
+    "forwarded_clipped": 7,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 0.2864021361742857,
+    "forward_peak_after": 0.25,
+    "telemetry_peak_before": 0.12000001061086807,
+    "output_peak": 0.25,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "ready": true
+}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+systemctl --user --no-block stop ember-uhf-sdrb.se
+ervice
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STOPPED", "role": "sdrb", "pid": 3275, "run": "/home/petalinux/ember-uhf-supervised/20240228T035709Z-36251207569c", "run_id": "20240228T035709Z-36251207569c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3276, "returncode": 0}, "can": {"pid": 3305, "returncode": 0}, "forward": {"pid": 3307, "returncode": 0}}, "reason": "signal", "error": null, "updated_unix": 1709092703.347799}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+systemctl --user --no-block start ember-uhf-sdrb.s
+service
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3319, "run": "/home/petalinux/ember-uhf-supervised/20240228T035830Z-3963f27bd5fd", "run_id": "20240228T035830Z-3963f27bd5fd", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3320, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092710.4462187}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3319, "run": "/home/petalinux/ember-uhf-supervised/20240228T035830Z-3963f27bd5fd", "run_id": "20240228T035830Z-3963f27bd5fd", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3320, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092710.4462187}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3319, "run": "/home/petalinux/ember-uhf-supervised/20240228T035830Z-3963f27bd5fd", "run_id": "20240228T035830Z-3963f27bd5fd", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3320, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092710.4462187}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3319, "run": "/home/petalinux/ember-uhf-supervised/20240228T035830Z-3963f27bd5fd", "run_id": "20240228T035830Z-3963f27bd5fd", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3320, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092710.4462187}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3319, "run": "/home/petalinux/ember-uhf-supervised/20240228T035830Z-3963f27bd5fd", "run_id": "20240228T035830Z-3963f27bd5fd", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3320, "returncode": null}, "can": {"pid": 3349, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092723.8007436}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "RUNNING", "role": "sdrb", "pid": 3319, "run": "/home/petalinux/ember-uhf-supervised/20240228T035830Z-3963f27bd5fd", "run_id": "20240228T035830Z-3963f27bd5fd", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3320, "returncode": null}, "can": {"pid": 3349, "returncode": null}, "forward": {"pid": 3351, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092727.8258579}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 ~/ember-uhf-20261003/add_packet.py --statu
+us
+{"request": {"command": "status"}}
+{
+  "accepted": 2,
+  "queued": 0,
+  "expired": 0,
+  "queue_full": 0,
+  "emitted": 2,
+  "output_samples": 35210271,
+  "writer_error": null,
+  "accepting": true,
+  "recent_packets": [
+    {
+      "sequence": 1,
+      "begin": 18153472,
+      "end": 18841600,
+      "emitted": true
+    },
+    {
+      "sequence": 2,
+      "begin": 30375936,
+      "end": 31064064,
+      "emitted": true
+    }
+  ],
+  "note": "Downstream samples are not RF reception",
+  "mode": "transponder",
+  "tx_async_events": {},
+  "rx_async_events": {},
+  "headroom": {
+    "samples": 35210271,
+    "forwarded_clipped": 3,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 0.2556658879528927,
+    "forward_peak_after": 0.25000001490116075,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.25000001490116075,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "ready": true
+}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "RUNNING", "role": "sdrb", "pid": 3319, "run": "/home/petalinux/ember-uhf-supervised/20240228T035830Z-3963f27bd5fd", "run_id": "20240228T035830Z-3963f27bd5fd", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3320, "returncode": null}, "can": {"pid": 3349, "returncode": null}, "forward": {"pid": 3351, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709092781.8746214}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+kill -TERM 3351
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "FAILED", "role": "sdrb", "pid": 3319, "run": "/home/petalinux/ember-uhf-supervised/20240228T035830Z-3963f27bd5fd", "run_id": "20240228T035830Z-3963f27bd5fd", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3320, "returncode": 0}, "can": {"pid": 3349, "returncode": 0}, "forward": {"pid": 3351, "returncode": 0}}, "reason": "component_failure", "error": "forward exited unexpectedly: 0", "updated_unix": 1709092786.8051965}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+systemctl --user --no-block stop ember-uhf-sdrb.se
+ervice
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -v
+sdrb-uhd:~/ember-uhf-20261003$ 
+while ps w | grep "[s]drb_can.py.*ember-uhf-superv
+vised" >/dev/null; do sleep 1; done; sudo -n ip link set can1 down; systemctl --u
+user set-property --runtime ember-uhf-sdrb.service RuntimeMaxSec=0; systemctl --u
+user reset-failed ember-uhf-sdrb.service; systemctl --user show ember-uhf-sdrb.se
+ervice -p ActiveState -p UnitFileState -p RuntimeMaxUSec
+[0;1;31mFailed to set unit properties on ember-uhf-sdrb.service: Cannot set property RuntimeMaxUSec, or unknown property.[0m
+
+RuntimeMaxUSec=infinity
+ActiveState=inactive
+UnitFileState=disabled
+sdrb-uhd:~/ember-uhf-20261003$ 

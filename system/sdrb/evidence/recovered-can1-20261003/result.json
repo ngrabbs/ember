@@ -1,0 +1,36 @@
+{
+  "status": "PASS_PHYSICAL_CAN_EPS_MONITOR",
+  "session_date": "2026-10-03",
+  "scope": "Fresh IHU EPS POWER_STATUS received and recorded by optional SDRB monitor alongside existing COMMS",
+  "packet_request": 10,
+  "packet_bytes": 128,
+  "packet_sha256": "a1b31343c5be604902472f42b844150bf9a87eb2805b39b9fe2a94a8d33a60f5",
+  "byte_identity_to_ihu_return": true,
+  "accepted": 1,
+  "rejected": 0,
+  "fragment_errors": 0,
+  "fragment_timeouts": 0,
+  "can_rx_frames_this_trial": 88,
+  "can_rx_errors": 0,
+  "sdrb_application_replies": false,
+  "rf_started": false,
+  "final_can0": "DOWN",
+  "final_can1": "DOWN",
+  "adapter_sha256": "49f71fc490ee5ee3a0e158c9f18eae8c713e362252e92d36c7510ffea934df04",
+  "validation": {
+    "ground_tests_pass": 43,
+    "host_linux_adapter_checks_pass": 8,
+    "real_socketcan_virtual_interface_filter_test": true
+  },
+  "limits": [
+    "CAN receive and local record only; SDRB response mode/RF/Yamcs route not tested",
+    "SDRB wall clock is unsynchronized; board timestamps are not session dates",
+    "Boot FAT unclean-unmount warning remains; schedule offline filesystem check"
+  ],
+  "post_test_uhd_discovery": {
+    "exit": 0,
+    "serial": "0AB90219",
+    "claimed": false
+  },
+  "post_test_root": "rw"
+}

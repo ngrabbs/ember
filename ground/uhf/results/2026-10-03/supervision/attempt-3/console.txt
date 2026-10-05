@@ -1,0 +1,61 @@
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -n ip link set can1 up
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+systemctl --user --no-block start ember-uhf-sdrb.s
+service
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3402, "run": "/home/petalinux/ember-uhf-supervised/20240228T041230Z-58fe2465810c", "run_id": "20240228T041230Z-58fe2465810c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3403, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709093550.8368738}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3402, "run": "/home/petalinux/ember-uhf-supervised/20240228T041230Z-58fe2465810c", "run_id": "20240228T041230Z-58fe2465810c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3403, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709093550.8368738}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3402, "run": "/home/petalinux/ember-uhf-supervised/20240228T041230Z-58fe2465810c", "run_id": "20240228T041230Z-58fe2465810c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3403, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709093550.8368738}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3402, "run": "/home/petalinux/ember-uhf-supervised/20240228T041230Z-58fe2465810c", "run_id": "20240228T041230Z-58fe2465810c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3403, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709093550.8368738}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STARTING", "role": "sdrb", "pid": 3402, "run": "/home/petalinux/ember-uhf-supervised/20240228T041230Z-58fe2465810c", "run_id": "20240228T041230Z-58fe2465810c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3403, "returncode": null}, "can": {"pid": 3432, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709093564.3326724}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "FAILED", "role": "sdrb", "pid": 3402, "run": "/home/petalinux/ember-uhf-supervised/20240228T041230Z-58fe2465810c", "run_id": "20240228T041230Z-58fe2465810c", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"radio": {"pid": 3403, "returncode": 1}, "can": {"pid": 3432, "returncode": 0}, "forward": {"pid": 3435, "returncode": 0}}, "reason": "component_failure", "error": "radio exited unexpectedly: 1", "updated_unix": 1709093567.666653}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+systemctl --user --no-block stop ember-uhf-sdrb.se
+ervice
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -v
+sdrb-uhd:~/ember-uhf-20261003$ 
+while ps w | grep "[s]drb_can.py.*ember-uhf-superv
+vised" >/dev/null; do sleep 1; done; sudo -n ip link set can1 down; systemctl --u
+user reset-failed ember-uhf-sdrb.service; systemctl --user show ember-uhf-sdrb.se
+ervice -p ActiveState -p UnitFileState -p RuntimeMaxUSec
+RuntimeMaxUSec=infinity
+ActiveState=inactive
+UnitFileState=disabled
+sdrb-uhd:~/ember-uhf-20261003$ 

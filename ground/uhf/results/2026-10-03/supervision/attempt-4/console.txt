@@ -1,0 +1,96 @@
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -v
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -n ip link set can1 up
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+systemctl --user --no-block start ember-uhf-sdrb.s
+service
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "RUNNING", "role": "sdrb", "pid": 3462, "run": "/home/petalinux/ember-uhf-supervised/20240228T041510Z-c5e3ca52850a", "run_id": "20240228T041510Z-c5e3ca52850a", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"can": {"pid": 3463, "returncode": null}, "forward": {"pid": 3464, "returncode": null}, "radio": {"pid": 3466, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1709093730.58402}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+nohup python3 ~/ember-uhf-20261003/bench_guard.py 
+ --state ~/.cache/ember-uhf-sdrb --run-id 20240228T041510Z-c5e3ca52850a --seconds
+s 85 </dev/null >~/ember-uhf-20261003/guard-4.log 2>&1 &
+[1] 3492
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 ~/ember-uhf-20261003/add_packet.py --statu
+us
+{"request": {"command": "status"}}
+{
+  "accepted": 2,
+  "queued": 0,
+  "expired": 0,
+  "queue_full": 0,
+  "emitted": 2,
+  "output_samples": 37541868,
+  "writer_error": null,
+  "accepting": true,
+  "recent_packets": [
+    {
+      "sequence": 1,
+      "begin": 21954560,
+      "end": 22642688,
+      "emitted": true
+    },
+    {
+      "sequence": 2,
+      "begin": 33718272,
+      "end": 34406400,
+      "emitted": true
+    }
+  ],
+  "note": "Downstream samples are not RF reception",
+  "mode": "transponder",
+  "tx_async_events": {},
+  "rx_async_events": {},
+  "headroom": {
+    "samples": 37541868,
+    "forwarded_clipped": 8,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 0.28505639718683884,
+    "forward_peak_after": 0.25000001490116075,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.251896548757425,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "ready": true
+}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+systemctl --user --no-block stop ember-uhf-sdrb.se
+ervice
+sdrb-uhd:~/ember-uhf-20261003$ 
+[1]+  Done                    nohup python3 ~/ember-uhf-20261003/bench_guard.py --state ~/.cache/ember-uhf-sdrb --run-id 20240228T041510Z-c5e3ca52850a --seconds 85 < /dev/null > ~/ember-uhf-20261003/guard-4.log 2>&1
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c 'import pathlib,json; p=pathlib.Path.ho
+ome()/".cache/ember-uhf-sdrb/status.json"; print("SUPERVISOR:"+json.dumps(json.lo
+oads(p.read_text()) if p.exists() else None))'
+SUPERVISOR:{"state": "STOPPED", "role": "sdrb", "pid": 3462, "run": "/home/petalinux/ember-uhf-supervised/20240228T041510Z-c5e3ca52850a", "run_id": "20240228T041510Z-c5e3ca52850a", "config": "/home/petalinux/ember-uhf-20261003/sdrb.json", "lease_seconds": 0, "children": {"can": {"pid": 3463, "returncode": 0}, "forward": {"pid": 3464, "returncode": 0}, "radio": {"pid": 3466, "returncode": 0}}, "reason": "signal", "error": null, "updated_unix": 1709093788.6836066}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+systemctl --user --no-block stop ember-uhf-sdrb.se
+ervice
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -v
+sdrb-uhd:~/ember-uhf-20261003$ 
+while ps w | grep "[s]drb_can.py.*ember-uhf-superv
+vised" >/dev/null; do sleep 1; done; sudo -n ip link set can1 down; systemctl --u
+user reset-failed ember-uhf-sdrb.service; systemctl --user show ember-uhf-sdrb.se
+ervice -p ActiveState -p UnitFileState -p RuntimeMaxUSec
+[0;1;31mFailed to reset failed state of unit ember-uhf-sdrb.service: Unit ember-uhf-sdrb.service not loaded.[0m
+
+RuntimeMaxUSec=infinity
+ActiveState=inactive
+UnitFileState=disabled
+sdrb-uhd:~/ember-uhf-20261003$ 

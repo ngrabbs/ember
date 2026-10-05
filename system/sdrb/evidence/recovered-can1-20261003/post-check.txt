@@ -1,0 +1,32 @@
+python3 -c 'import subprocess; r=subprocess.run(["uhd_find_devices",""--args","type=sdrb"],capture_output=True,text=True,timeout=20); print(r.stdout);; print(r.stderr); print("UHD_DISCOVERY_EXIT",r.returncode)'; cat /proc/mounts |  head -1; dmesg | grep -iE "mmc|I/O error|EXT4-fs error"
+--------------------------------------------------
+-- UHD Device 0
+--------------------------------------------------
+Device Address:
+    serial: 0AB90219
+    claimed: False
+    fpga: n/a
+    mgmt_addr: 127.0.0.1
+    name: sdrb-uhd
+    product: sdrb
+    type: sdrb
+
+
+
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+
+UHD_DISCOVERY_EXIT 0
+/dev/root / ext4 rw,relatime 0 0
+[    0.000000] Kernel command line: console=ttyPS0,115200 earlycon root=/dev/mmcblk0p2 ro rootwait uio_pdrv_genirq.of_id=usrp-uio clk_ignore_unused
+[    0.621618] mmc0: SDHCI controller on e0100000.mmc [e0100000.mmc] using ADMA
+[    0.664344] mmc0: new high speed SDHC card at address 0007
+[    0.669329] mmcblk0: mmc0:0007 SD16G 14.5 GiB
+[    0.674863]  mmcblk0: p1 p2
+[    0.716803] EXT4-fs (mmcblk0p2): INFO: recovery required on readonly filesystem
+[    0.722860] EXT4-fs (mmcblk0p2): write access will be enabled during recovery
+[    7.275499] EXT4-fs (mmcblk0p2): orphan cleanup on readonly fs
+[    7.284578] EXT4-fs (mmcblk0p2): recovery complete
+[    8.715269] EXT4-fs (mmcblk0p2): mounted filesystem ffedbcdf-0312-433c-b97a-36db82bc4a78 ro with ordered data mode. Quota mode: disabled.
+[   12.539249] EXT4-fs (mmcblk0p2): re-mounted ffedbcdf-0312-433c-b97a-36db82bc4a78 r/w. Quota mode: disabled.
+[   17.476317] FAT-fs (mmcblk0p1): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+sdrb-uhd:~$ 

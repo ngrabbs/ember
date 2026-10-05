@@ -1,0 +1,26 @@
+{
+  "status": "PASS_UPDATED_BOOT_AND_DISCOVERY",
+  "kernel": "6.6.40-xilinx-gd37e591b96e0",
+  "boot_file_hashes_match_candidate": true,
+  "can0": {
+    "controller": "e0008000.can",
+    "state": "DOWN",
+    "tx_errors": 0,
+    "rx_errors": 0
+  },
+  "can1": {
+    "controller": "e0009000.can",
+    "state": "DOWN",
+    "tx_errors": 0,
+    "rx_errors": 0
+  },
+  "mpm": "active",
+  "uhd_discovery_rc": 0,
+  "uhd_reported_serial": "0AB90219",
+  "listen_only_supported": false,
+  "listen_only_configuration_result": "RTNETLINK Operation not supported, exit 2; did not bring interface up",
+  "driver_source": "sdrb-uhd/build/tmp/work-shared/zynq-generic-7z020/kernel-source/drivers/net/can/xilinx_can.c, ctrlmode_supported at line 1949",
+  "rf_started": false,
+  "can_frames_sent": 0,
+  "physical_can_test": "pending H/L orientation confirmation; next use normal controller with application replies suppressed"
+}

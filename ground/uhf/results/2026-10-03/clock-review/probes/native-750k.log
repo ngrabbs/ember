@@ -1,0 +1,47 @@
+
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[00:00:00.022236] Creating the usrp device with: type=sdrb,mgmt_addr=127.0.0.1...
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False
+Using Device: Single USRP:
+  Device: AMSAT SDRB v0.2 development
+  Mboard 0: sdrb
+  RX Channel: 0
+    RX DSP: n/a
+    RX Dboard: A
+    RX Subdev: SDRB
+  RX Channel: 1
+    RX DSP: n/a
+    RX Dboard: A
+    RX Subdev: SDRB
+  TX Channel: 0
+    TX DSP: n/a
+    TX Dboard: A
+    TX Subdev: SDRB
+  TX Channel: 1
+    TX DSP: n/a
+    TX Dboard: A
+    TX Subdev: SDRB
+
+[00:00:02.878841597] Setting device timestamp to 0...
+[00:00:07.679973713] Testing receive rate 0.750000 Msps on 1 channels
+Setting TX samples per packet (spp) to 370
+Setting TX samples per burst (spb) to 370
+[00:00:07.874373871] Testing transmit rate 0.750000 Msps on 1 channels
+[00:00:17.923909571] Benchmark complete.
+
+
+Benchmark rate summary:
+  Num received samples:     7640096
+  Num dropped samples:      0
+  Num overruns detected:    0
+  Num transmitted samples:  7532460
+  Num sequence errors (Tx): 0
+  Num sequence errors (Rx): 0
+  Num underruns detected:   0
+  Num late commands:        0
+  Num timeouts (Tx):        0
+  Num timeouts (Rx):        0
+
+
+Done!
+

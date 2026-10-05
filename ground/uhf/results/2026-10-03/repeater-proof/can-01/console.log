@@ -1,0 +1,8 @@
+{"ready": true, "interface": "can1", "boot": 1300812191, "radio": "disabled", "application_replies_enabled": false}
+Traceback (most recent call last):
+  File "/home/petalinux/ember-can-monitor-20261003/sdrb_can.py", line 260, in <module>
+    serve(args.interface, args.seconds, args.output, args.respond)
+  File "/home/petalinux/ember-can-monitor-20261003/sdrb_can.py", line 226, in serve
+    frame = bus.recv(CAN_FRAME.size)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 100] Network is down

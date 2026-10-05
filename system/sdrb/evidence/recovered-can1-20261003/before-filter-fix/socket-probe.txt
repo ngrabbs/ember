@@ -1,0 +1,7 @@
+sudo -n ip link set can1 up && python3 -u -c 'import socket,struct; ss=socket.socket(socket.PF_CAN,socket.SOCK_RAW,socket.CAN_RAW); s.setsockopt(sockeet.SOL_CAN_RAW,socket.CAN_RAW_FILTER,struct.pack("=II",0x710,0xe00007ff)); s.setttimeout(7); s.bind(("can1",)); print("PROBE_READY",flush=True); print(s.recv(16)..hex())'
+PROBE_READY
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+TimeoutError: timed out
+sdrb-uhd:~$ sudo -n ip link set can1 down
+sdrb-uhd:~$ 

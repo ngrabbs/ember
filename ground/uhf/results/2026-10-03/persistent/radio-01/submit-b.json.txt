@@ -1,0 +1,12 @@
+{"request": {"command": "enqueue", "hex": "0901c004007901010010020100000000000000009c58a940006fd95a0060010202010101010202000000000000000005006fd95a000000000000000200002935000027f5fffffdb600015cbf00005836000027100000271000000001080000000000000000000067000518fd182cfffc0261342401e50000000720e20001ca2c", "request_id": "persistent-01-b"}}
+Traceback (most recent call last):
+  File "/home/petalinux/ember-uhf-20261003/add_packet.py", line 21, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/petalinux/ember-uhf-20261003/add_packet.py", line 20, in main
+    print(json.dumps(request(a.socket,message),indent=2),flush=True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/petalinux/ember-uhf-20261003/radio_control.py", line 10, in request
+    conn.settimeout(timeout);conn.connect(str(path));conn.sendall(data)
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory

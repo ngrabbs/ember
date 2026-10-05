@@ -1,0 +1,36 @@
+sudo -n ip link set can1 up && python3 ~/ember-can-monitor-20261003/ssdrb_can.py --interface can1 --seconds 16 --output ~/ember-can-test-09 > ~/ember--can-test-09.log 2>&1 &
+[1] 519
+sdrb-uhd:~$ cat ~/ember-can-test-09.log
+{"ready": true, "interface": "can1", "boot": 2094828767, "radio": "disabled", "application_replies_enabled": false}
+sdrb-uhd:~$ cat ~/ember-can-test-09/status.json; cat ~/ember-can-test-09/packets..jsonl; ip -details -statistics link show can1
+{
+  "boot": 2094828767,
+  "accepted": 1,
+  "rejected": 0,
+  "duplicates": 0,
+  "fragment_errors": 0,
+  "fragment_timeouts": 0,
+  "rf_started": false,
+  "application_replies_enabled": false
+}
+[1]+  Done                    sudo -n ip link set can1 up && python3 ~/ember-can-monitor-20261003/sdrb_can.py --interface can1 --seconds 16 --output ~/ember-can-test-09 > ~/ember-can-test-09.log 2>&1
+{"outcome": "VALIDATED_AND_RECORDED", "rf_started": false, "sender_boot": 2623056192, "responder_boot": 2094828767, "request": 10, "hex": "0901c002007901010010020100000000000000009c58a9400037d65b00600102020101010102020000000000000000030037d65b00000000000000020000292e000027f8fffffd2300015e77000053ee000027100000271000000001080000000000000000000067000618f9182efffb026433f101db0000000720e20001de61", "decoded": {"name": "POWER_STATUS", "sequence": 2, "header": {"schema_version": 1, "kind": 1, "message_id": 16, "source": 2, "target": 1, "transaction_epoch": 0, "transaction_id": 0, "source_boot_id": 2623056192, "uptime_ms": 3659355, "payload_length": 96}, "payload": {"payload_version": 1, "provenance": 2, "link": 2, "readout_present": 1, "readout_valid": 1, "conversion_valid": 1, "adc_valid": 1, "configured_cells": 2, "detected_cells": 2, "sense_values_verified": 0, "bridge_session_id": 0, "readout_count": 3, "ihu_readout_uptime_ms": 3659355, "readout_age_ms": 0, "battery_mv": 2, "input_mv": 10542, "output_mv": 10232, "battery_ua": -733, "input_ua": 89719, "die_temp_mc": 21486, "rsnsb_microohms": 10000, "rsnsi_microohms": 10000, "raw_config_bits": 0, "raw_charger_config_bits": 1, "raw_charger_state": 2048, "raw_charge_status": 0, "raw_limit_alerts": 0, "raw_charger_state_alerts": 0, "raw_charge_status_alerts": 0, "raw_system_status": 103, "raw_vbat": 6, "raw_vin": 6393, "raw_vout": 6190, "raw_ibat": 65531, "raw_iin": 612, "raw_die_temp": 13297, "raw_thermistor_voltage": 475, "raw_bsr": 0, "raw_jeita_region": 7, "raw_chem_cells": 8418, "raw_telemetry_status": 1}}, "application_replies_enabled": false, "host_unix_ns": 1709061090166842092}
+3: can1: <NOARP,UP,LOWER_UP,ECHO> mtu 16 qdisc pfifo_fast state UP mode DEFAULT group default qlen 10
+    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 
+    can state ERROR-ACTIVE (berr-counter tx 0 rx 0) restart-ms 0 
+	  bitrate 499999 sample-point 0.875
+	  tq 250 prop-seg 3 phase-seg1 3 phase-seg2 1 sjw 1 brp 25
+	  xilinx_can: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..256 brp_inc 1
+	  clock 99999999 
+	  re-started bus-errors arbit-lost error-warn error-pass bus-off
+	  0          0          0          0          0          0         numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536 parentbus platform parentdev e0009000.can 
+    RX:  bytes packets errors dropped  missed   mcast           
+          1576     200      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+             0       0      0       0       0       0 
+sdrb-uhd:~$ sudo -n ip link set can1 down; ip link show can0; ip link show can1
+2: can0: <NOARP,ECHO> mtu 16 qdisc noop state DOWN mode DEFAULT group default qlen 10
+    link/can 
+3: can1: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
+    link/can 
+sdrb-uhd:~$ 

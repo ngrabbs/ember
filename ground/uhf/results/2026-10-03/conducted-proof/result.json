@@ -1,0 +1,427 @@
+{
+  "status": "PASS_BOUNDED_CONDUCTED_UPLINK_FORWARDING_PLUS_FRESH_TELEMETRY",
+  "physical_setup": "Operator-confirmed LibreSDR TXA/channel0 through DC blocks and approximately40dB attenuation to SDRB antenna_in; downlink remains antennas",
+  "tested_application": "radio_service.py with forward_scale16,250ms TX priming, explicit RX/TX async counts and fail-closed errors; no limiter in active sample path",
+  "profiles": [
+    {
+      "name": "03",
+      "settings": {
+        "mode": "transponder",
+        "rate": 614400,
+        "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+        "output": "/home/petalinux/ember-repeater-radio-03",
+        "seconds": 120,
+        "tx_frequency": 434200000.0,
+        "tx_gain": 70.0,
+        "packet_peak": 0.12,
+        "rx_frequency": 435100000.0,
+        "rx_gain": 60.0,
+        "passband": 20000,
+        "transition": 20000,
+        "forward_scale": 0.5,
+        "transmit": true
+      },
+      "stream_seconds": 92.71794551099993,
+      "generated": 8,
+      "received_and_archived": 8,
+      "reported_rx_overflows": 0,
+      "udp_delta": {
+        "InDatagrams": 44320,
+        "NoPorts": 0,
+        "InErrors": 0,
+        "OutDatagrams": 61056,
+        "RcvbufErrors": 0,
+        "SndbufErrors": 0,
+        "InCsumErrors": 0,
+        "IgnoredMulti": 0,
+        "MemErrors": 0
+      },
+      "tones": {
+        "5000": {
+          "on_off_db": 0.29144662832025686,
+          "median_active_snr_db": 6.353566209039441,
+          "median_peak_hz": 4882.8125,
+          "active_measurements": 51,
+          "silent_measurements": 112
+        },
+        "11000": {
+          "on_off_db": 0.4853654582417224,
+          "median_active_snr_db": 5.671357448388735,
+          "median_peak_hz": 11230.46875,
+          "active_measurements": 48,
+          "silent_measurements": 112
+        }
+      },
+      "qualifies_clean_stream": true,
+      "tx_async_events": {},
+      "rx_async_events": null,
+      "forward_limiter": null,
+      "identities": [
+        {
+          "outer_sequence": 1,
+          "inner_sequence": 50,
+          "sha256": "0e939c5763f25d358ec852e7235094f5f09f26569994f27c0595467812b974ff",
+          "yamcs_reception": "2026-10-03T16:21:13.335Z"
+        },
+        {
+          "outer_sequence": 2,
+          "inner_sequence": 51,
+          "sha256": "85b6f90772221ddac8ab3f60130fecfafee9291670aa199426ee3cbae2882de9",
+          "yamcs_reception": "2026-10-03T16:21:21.411Z"
+        },
+        {
+          "outer_sequence": 3,
+          "inner_sequence": 52,
+          "sha256": "c10064d9707233608e444aa9b3a7414e1fd4b0b3818e15446f4bc8f5b43019be",
+          "yamcs_reception": "2026-10-03T16:21:28.876Z"
+        },
+        {
+          "outer_sequence": 4,
+          "inner_sequence": 53,
+          "sha256": "3b7ffc4caa85b65f76ea13a0469f6c8dec18c2daf8768e8a856a0938212bab31",
+          "yamcs_reception": "2026-10-03T16:21:37.221Z"
+        },
+        {
+          "outer_sequence": 5,
+          "inner_sequence": 54,
+          "sha256": "f66f28fa533d12bc4ef0febe8a5df9f52b53d7a28ff222ad3ad26f360aba3aa7",
+          "yamcs_reception": "2026-10-03T16:21:44.625Z"
+        },
+        {
+          "outer_sequence": 6,
+          "inner_sequence": 55,
+          "sha256": "c45d463cfadd768355e36ec2843e124ccf9c17473ae2595400a1acb887afb207",
+          "yamcs_reception": "2026-10-03T16:21:52.878Z"
+        },
+        {
+          "outer_sequence": 7,
+          "inner_sequence": 56,
+          "sha256": "51d05dbaed05a104db495b5404b6b7db9956ddf4d603228ca82f809c63f9b84b",
+          "yamcs_reception": "2026-10-03T16:22:00.866Z"
+        },
+        {
+          "outer_sequence": 8,
+          "inner_sequence": 57,
+          "sha256": "5183af5bcc3a18d7d00969d29af5f2306a95a66c17844cfc46c28b0d8fce1fa4",
+          "yamcs_reception": "2026-10-03T16:22:09.183Z"
+        }
+      ]
+    },
+    {
+      "name": "04",
+      "settings": {
+        "mode": "transponder",
+        "rate": 614400,
+        "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+        "output": "/home/petalinux/ember-repeater-radio-04",
+        "seconds": 120,
+        "tx_frequency": 434200000.0,
+        "tx_gain": 40.0,
+        "packet_peak": 0.12,
+        "rx_frequency": 435100000.0,
+        "rx_gain": 60.0,
+        "passband": 20000,
+        "transition": 20000,
+        "forward_scale": 0.5,
+        "transmit": true
+      },
+      "stream_seconds": 72.77827629900094,
+      "generated": 4,
+      "received_and_archived": 0,
+      "reported_rx_overflows": 0,
+      "udp_delta": {
+        "InDatagrams": 34797,
+        "NoPorts": 0,
+        "InErrors": 0,
+        "OutDatagrams": 48542,
+        "RcvbufErrors": 0,
+        "SndbufErrors": 0,
+        "InCsumErrors": 0,
+        "IgnoredMulti": 0,
+        "MemErrors": 0
+      },
+      "tones": {
+        "5000": {
+          "on_off_db": -1.3149314366608253,
+          "median_active_snr_db": 6.22808426285968,
+          "median_peak_hz": 5371.09375,
+          "active_measurements": 48,
+          "silent_measurements": 80
+        },
+        "11000": {
+          "on_off_db": 0.09941539667999913,
+          "median_active_snr_db": 6.5744589027746265,
+          "median_peak_hz": 11108.3984375,
+          "active_measurements": 32,
+          "silent_measurements": 80
+        }
+      },
+      "qualifies_clean_stream": true,
+      "tx_async_events": {},
+      "rx_async_events": null,
+      "forward_limiter": null,
+      "identities": []
+    },
+    {
+      "name": "05",
+      "settings": {
+        "mode": "transponder",
+        "rate": 614400,
+        "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+        "output": "/home/petalinux/ember-repeater-radio-05",
+        "seconds": 75,
+        "tx_frequency": 434200000.0,
+        "tx_gain": 70.0,
+        "packet_peak": 0.12,
+        "rx_frequency": 435100000.0,
+        "rx_gain": 60.0,
+        "passband": 20000,
+        "transition": 20000,
+        "forward_scale": 16.0,
+        "transmit": true
+      },
+      "stream_seconds": 60.73274936799862,
+      "generated": 3,
+      "received_and_archived": 3,
+      "reported_rx_overflows": 0,
+      "udp_delta": {
+        "InDatagrams": 29042,
+        "NoPorts": 0,
+        "InErrors": 0,
+        "OutDatagrams": 40202,
+        "RcvbufErrors": 0,
+        "SndbufErrors": 0,
+        "InCsumErrors": 0,
+        "IgnoredMulti": 0,
+        "MemErrors": 0
+      },
+      "tones": {
+        "5000": {
+          "on_off_db": 14.84541618990555,
+          "median_active_snr_db": 23.771463441130543,
+          "median_peak_hz": 4882.8125,
+          "active_measurements": 32,
+          "silent_measurements": 64
+        },
+        "11000": {
+          "on_off_db": 15.996468056183827,
+          "median_active_snr_db": 23.19833320161272,
+          "median_peak_hz": 10986.328125,
+          "active_measurements": 32,
+          "silent_measurements": 64
+        }
+      },
+      "qualifies_clean_stream": true,
+      "tx_async_events": {},
+      "rx_async_events": null,
+      "forward_limiter": null,
+      "identities": [
+        {
+          "outer_sequence": 1,
+          "inner_sequence": 62,
+          "sha256": "aaec11e3891bdc4791dc79a17005d92fafe56f585e9f6aa2a2df0c44c6154264",
+          "yamcs_reception": "2026-10-03T16:57:58.099Z"
+        },
+        {
+          "outer_sequence": 2,
+          "inner_sequence": 63,
+          "sha256": "6d3654815e1509efd9db446cdb926bc08aa87d8071c9cfcb15f36e0e33cfb096",
+          "yamcs_reception": "2026-10-03T16:58:06.131Z"
+        },
+        {
+          "outer_sequence": 3,
+          "inner_sequence": 64,
+          "sha256": "c4e867b3a1b953a739f4e61c2d8ca2b92030e6b54ac30ca51dd49c9ce51334d8",
+          "yamcs_reception": "2026-10-03T16:58:14.532Z"
+        }
+      ]
+    },
+    {
+      "name": "08",
+      "settings": {
+        "mode": "transponder",
+        "rate": 614400,
+        "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+        "output": "/home/petalinux/ember-repeater-radio-08",
+        "seconds": 75,
+        "tx_frequency": 434200000.0,
+        "tx_gain": 70.0,
+        "packet_peak": 0.12,
+        "rx_frequency": 435100000.0,
+        "rx_gain": 60.0,
+        "passband": 20000,
+        "transition": 20000,
+        "forward_scale": 16.0,
+        "transmit": true
+      },
+      "stream_seconds": 60.88898858899847,
+      "generated": 3,
+      "received_and_archived": 3,
+      "reported_rx_overflows": 6,
+      "udp_delta": {
+        "InDatagrams": 28951,
+        "NoPorts": 0,
+        "InErrors": 28,
+        "OutDatagrams": 39329,
+        "RcvbufErrors": 28,
+        "SndbufErrors": 0,
+        "InCsumErrors": 0,
+        "IgnoredMulti": 0,
+        "MemErrors": 0
+      },
+      "tones": {
+        "5000": {
+          "on_off_db": 14.329437659677168,
+          "median_active_snr_db": 22.598153047734087,
+          "median_peak_hz": 4882.8125,
+          "active_measurements": 32,
+          "silent_measurements": 64
+        },
+        "11000": {
+          "on_off_db": 16.107867707069722,
+          "median_active_snr_db": 23.28283197598472,
+          "median_peak_hz": 10986.328125,
+          "active_measurements": 32,
+          "silent_measurements": 64
+        }
+      },
+      "qualifies_clean_stream": false,
+      "tx_async_events": {},
+      "rx_async_events": null,
+      "forward_limiter": {
+        "samples": 36908042,
+        "limit": 0.25,
+        "component_limit": 0.17677669529663687,
+        "note": "Native component clipping; strong input can distort phase",
+        "error": null
+      },
+      "identities": [
+        {
+          "outer_sequence": 1,
+          "inner_sequence": 68,
+          "sha256": "56b3bcc40338e08fd7ad639f7071eb8b2edc5cd9ec92e77e13a5c2ac39120732",
+          "yamcs_reception": "2026-10-03T17:18:07.113Z"
+        },
+        {
+          "outer_sequence": 2,
+          "inner_sequence": 69,
+          "sha256": "4dc5e1a90e1fc1137ed596efd19fdb065255b546b11b3adcc9e32a568ea6e1ac",
+          "yamcs_reception": "2026-10-03T17:18:14.863Z"
+        },
+        {
+          "outer_sequence": 3,
+          "inner_sequence": 70,
+          "sha256": "3d2a393dc7e6971a2364d48570d998771a0e6528e1144a932e018a0d8af7cb10",
+          "yamcs_reception": "2026-10-03T17:18:22.883Z"
+        }
+      ]
+    },
+    {
+      "name": "09",
+      "settings": {
+        "mode": "transponder",
+        "rate": 614400,
+        "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+        "output": "/home/petalinux/ember-repeater-radio-09",
+        "seconds": 75,
+        "tx_frequency": 434200000.0,
+        "tx_gain": 70.0,
+        "packet_peak": 0.12,
+        "rx_frequency": 435100000.0,
+        "rx_gain": 60.0,
+        "passband": 20000,
+        "transition": 20000,
+        "forward_scale": 16.0,
+        "transmit": true
+      },
+      "stream_seconds": 62.091522909999185,
+      "generated": 3,
+      "received_and_archived": 3,
+      "reported_rx_overflows": 0,
+      "udp_delta": {
+        "InDatagrams": 29689,
+        "NoPorts": 0,
+        "InErrors": 0,
+        "OutDatagrams": 40914,
+        "RcvbufErrors": 0,
+        "SndbufErrors": 0,
+        "InCsumErrors": 0,
+        "IgnoredMulti": 0,
+        "MemErrors": 0
+      },
+      "tones": {
+        "5000": {
+          "on_off_db": 15.533455974578676,
+          "median_active_snr_db": 23.24739668836153,
+          "median_peak_hz": 4882.8125,
+          "active_measurements": 32,
+          "silent_measurements": 64
+        },
+        "11000": {
+          "on_off_db": 16.89394137707631,
+          "median_active_snr_db": 23.74756923812268,
+          "median_peak_hz": 10986.328125,
+          "active_measurements": 32,
+          "silent_measurements": 64
+        }
+      },
+      "qualifies_clean_stream": true,
+      "tx_async_events": {},
+      "rx_async_events": {},
+      "forward_limiter": null,
+      "identities": [
+        {
+          "outer_sequence": 1,
+          "inner_sequence": 71,
+          "sha256": "aa1da79396d583ca659c13927ffb558d10c87f8abe9a2fa6b141d99d84a9c0ec",
+          "yamcs_reception": "2026-10-03T17:28:23.184Z"
+        },
+        {
+          "outer_sequence": 2,
+          "inner_sequence": 72,
+          "sha256": "b244f0b2d8455378c69ae7cc95a9455d4ca2ac310a73d7c4cf09eefdf9230684",
+          "yamcs_reception": "2026-10-03T17:28:30.437Z"
+        },
+        {
+          "outer_sequence": 3,
+          "inner_sequence": 73,
+          "sha256": "dbc07737f7074ec1dbef4d8c535bd26be2461af73d87590148f54a0ceab36b0a",
+          "yamcs_reception": "2026-10-03T17:28:39.002Z"
+        }
+      ]
+    }
+  ],
+  "telemetry_generated": 24,
+  "telemetry_received_and_archived": 17,
+  "final_application_generated": 3,
+  "final_application_received_and_archived": 3,
+  "all_received_packets_byte_identical_at_ihu_can_socket_rf_yamcs": true,
+  "hardware_timekeeper": {
+    "hardware_start": 7.264706990213078,
+    "hardware_end": 8.266448521012768,
+    "hardware_elapsed": 1.0017415307996895,
+    "wall_elapsed": 1.0031666319991928,
+    "ratio": 0.9985793973263812,
+    "rx_rate": 614400.0034706265,
+    "tx_rate": 614400.0034706265,
+    "clock": 614400.0034706265
+  },
+  "software_tests_passed": 9,
+  "native_software_filter_and_packet_mix_passed": true,
+  "conclusion": "Conducted uplink is detectable at SDRB. Raising digital forwarding scale from .5 to16 made both translated tones observable while fresh telemetry reached Yamcs. This resolves the bounded bench forwarding gate, not flight reliability.",
+  "excluded_diagnostics": {
+    "duplex-iq-01": "Extra file/FIR branches produced TX underflow and continuous late-command errors; RF output invalid despite tones in software IQ.",
+    "duplex-iq-02": "One-second priming did not cure instrumented graph errors; RX overflow and TX underflow/late commands. Excluded from error-free stream claims.",
+    "radio-08": "Native limiter with one-second priming delivered tones and3/3 packets but logged six RX overflows and28UDP receive-buffer drops; not a clean stream qualification. Removed from active application.",
+    "radio-06": "Unbatched Python limiter caused underflow, late TX commands, RX overflows and control timeout; stopped without admitting packets. Excluded from final qualification.",
+    "radio-07": "Batching the Python limiter still hit a startup underflow/late commands; fail-closed TX event handling stopped the session in1.42seconds before readiness or IHU triggers.",
+    "radio-04": "Lowering SDRB TX gain70 to40 lost all four telemetry packets; does not isolate self-interference."
+  },
+  "limits": [
+    "Two gain-only tone/packet checks,05 and09; final application checked in one finite stream. Native limiter08 delivered packets but had RX/UDP errors and is excluded from the clean-profile claim.",
+    "No all-antenna uplink proof, calibrated RF power, voice/SSB test, uplink commands, FEC or endurance qualification.",
+    "Host USB triggers real IHU telemetry; no native autonomous IHU scheduler.",
+    "Input gain/forward scale require bench-specific link budgeting and manual amplitude headroom checks. No qualified limiter/AGC in active application; strong input remains unqualified.",
+    "No AMSAT core, FPGA, boot, LTE or Yamcs dictionary changes."
+  ]
+}
