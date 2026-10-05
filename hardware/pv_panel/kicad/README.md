@@ -31,6 +31,11 @@ OpenCascade shapes; an actual Onshape import has not been tested.
 - Original diode and connector bodies are retained as package representations;
   their geometry has not been certified against the fitted manufacturers' drawings.
 - Screws, mating cables, and solder fillets are not modeled.
+- D1, the through-hole diode, is mounted on the outside solar-cell face (F.Cu).
+  The connector and surface-mount diodes remain on the inside face (B.Cu).
+  Its legacy 3D body is raised by a 1 mm model Z offset to clear the nearest solar
+  module. This is an assembly-height assumption to confirm against hardware;
+  both diode holes and their net assignments are unchanged.
 
 ## Recovery changes
 
