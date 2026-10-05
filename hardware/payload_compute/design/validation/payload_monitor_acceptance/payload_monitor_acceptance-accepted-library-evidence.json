@@ -1,0 +1,1149 @@
+{
+  "wires": {
+    "floating_count": 0,
+    "floating_endpoints": [],
+    "valid": true
+  },
+  "pins": {
+    "unconnected_count": 0,
+    "unconnected_pins": [],
+    "valid": true
+  },
+  "shorts": {
+    "short_count": 0,
+    "shorts": []
+  },
+  "orphans": {
+    "orphan_count": 0,
+    "orphans": [],
+    "tolerance": 0.05
+  },
+  "erc": {
+    "errors": 0,
+    "total": 0,
+    "violations": [],
+    "warnings": 0
+  },
+  "netlist": {
+    "format": "kicad",
+    "output": "/Users/nick/Documents/ChatGPT/EMBER/work/sdrb-can-adapter/hardware/payload_compute/design/validation/payload_monitor_acceptance/payload_monitor_acceptance.net",
+    "success": true
+  },
+  "ref_symbol": {
+    "lib_id": "EMBER_Payload:REF3425IDBVR",
+    "library": "EMBER_Payload",
+    "name": "REF3425IDBVR",
+    "pin_count": 6,
+    "pins": [
+      {
+        "name": "GND_F",
+        "number": "1",
+        "type": "power_in",
+        "x": -10.16,
+        "y": -10.16
+      },
+      {
+        "name": "GND_S",
+        "number": "2",
+        "type": "power_in",
+        "x": 10.16,
+        "y": -10.16
+      },
+      {
+        "name": "EN",
+        "number": "3",
+        "type": "input",
+        "x": -15.24,
+        "y": 2.54
+      },
+      {
+        "name": "IN",
+        "number": "4",
+        "type": "power_in",
+        "x": -5.08,
+        "y": 10.16
+      },
+      {
+        "name": "OUT_S",
+        "number": "5",
+        "type": "input",
+        "x": 15.24,
+        "y": 0
+      },
+      {
+        "name": "OUT_F",
+        "number": "6",
+        "type": "power_out",
+        "x": 15.24,
+        "y": 2.54
+      }
+    ],
+    "properties": {
+      "Datasheet": "https://www.ti.com/lit/ds/symlink/ref34.pdf",
+      "Description": "",
+      "Footprint": "EMBER_Payload:TI_DBV0006A_SOT23_6",
+      "Reference": "U",
+      "Value": "REF3425IDBVR"
+    }
+  },
+  "comp_symbol": {
+    "lib_id": "Comparator:LM2903",
+    "library": "Comparator",
+    "name": "LM2903",
+    "pin_count": 8,
+    "pins": [
+      {
+        "name": "",
+        "number": "1",
+        "type": "open_collector",
+        "x": 7.62,
+        "y": 0
+      },
+      {
+        "name": "-",
+        "number": "2",
+        "type": "input",
+        "x": -7.62,
+        "y": -2.54
+      },
+      {
+        "name": "+",
+        "number": "3",
+        "type": "input",
+        "x": -7.62,
+        "y": 2.54
+      },
+      {
+        "name": "+",
+        "number": "5",
+        "type": "input",
+        "x": -7.62,
+        "y": 2.54
+      },
+      {
+        "name": "-",
+        "number": "6",
+        "type": "input",
+        "x": -7.62,
+        "y": -2.54
+      },
+      {
+        "name": "",
+        "number": "7",
+        "type": "open_collector",
+        "x": 7.62,
+        "y": 0
+      },
+      {
+        "name": "V-",
+        "number": "4",
+        "type": "power_in",
+        "x": -2.54,
+        "y": -7.62
+      },
+      {
+        "name": "V+",
+        "number": "8",
+        "type": "power_in",
+        "x": -2.54,
+        "y": 7.62
+      }
+    ],
+    "properties": {
+      "Datasheet": "http://www.ti.com/lit/ds/symlink/lm393.pdf",
+      "Description": "Low-Power, Low-Offset Voltage, Dual Comparators, DIP-8/SOIC-8/SOP-8/TSSOP-8/VSSOP-8",
+      "Footprint": "",
+      "Reference": "U",
+      "Value": "LM2903",
+      "ki_fp_filters": "SOIC*3.9x4.9mm*P1.27mm* DIP*W7.62mm* SOP*5.28x5.23mm*P1.27mm* VSSOP*3x3mm*P0.65mm* TSSOP*4.4x3mm*P0.65mm*",
+      "ki_keywords": "cmp open collector",
+      "ki_locked": ""
+    }
+  },
+  "ref_fp": {
+    "coordinate_system": "footprint_local_mm_y_down",
+    "description": "TI manufacturer land pattern; top/component view, pin 1 upper left, counterclockwise. TI_DBV0006A_SOT23_6",
+    "graphic_count": 5,
+    "graphics": [
+      {
+        "end": {
+          "x": 2.1,
+          "y": 1.7
+        },
+        "fill": "none",
+        "item_id": null,
+        "layer": "F.CrtYd",
+        "start": {
+          "x": -2.1,
+          "y": -1.7
+        },
+        "stroke_width_mm": 0.05,
+        "type": "rect"
+      },
+      {
+        "end": {
+          "x": 0.8,
+          "y": -1.57
+        },
+        "item_id": null,
+        "layer": "F.SilkS",
+        "start": {
+          "x": -0.8,
+          "y": -1.57
+        },
+        "stroke_width_mm": 0.12,
+        "type": "line"
+      },
+      {
+        "end": {
+          "x": 0.8,
+          "y": 1.57
+        },
+        "item_id": null,
+        "layer": "F.SilkS",
+        "start": {
+          "x": -0.8,
+          "y": 1.57
+        },
+        "stroke_width_mm": 0.12,
+        "type": "line"
+      },
+      {
+        "center": {
+          "x": -2.3,
+          "y": -1.45
+        },
+        "fill": "solid",
+        "item_id": null,
+        "layer": "F.SilkS",
+        "radius_mm": 0.11999999999999966,
+        "stroke_width_mm": 0.1,
+        "type": "circle"
+      },
+      {
+        "closed": true,
+        "fill": "none",
+        "item_id": null,
+        "layer": "F.Fab",
+        "point_count": 5,
+        "points": [
+          {
+            "x": -0.5,
+            "y": -1.45
+          },
+          {
+            "x": 0.8,
+            "y": -1.45
+          },
+          {
+            "x": 0.8,
+            "y": 1.45
+          },
+          {
+            "x": -0.8,
+            "y": 1.45
+          },
+          {
+            "x": -0.8,
+            "y": -1.15
+          }
+        ],
+        "stroke_width_mm": 0.1,
+        "type": "poly"
+      }
+    ],
+    "has_3d_model": false,
+    "has_courtyard": true,
+    "name": "TI_DBV0006A_SOT23_6",
+    "pad_count": 6,
+    "pads": [
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "1",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.1,
+        "x": -1.3,
+        "y": -0.95
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "2",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.1,
+        "x": -1.3,
+        "y": 0
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "3",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.1,
+        "x": -1.3,
+        "y": 0.95
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "4",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.1,
+        "x": 1.3,
+        "y": 0.95
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "5",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.1,
+        "x": 1.3,
+        "y": 0
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "6",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.1,
+        "x": 1.3,
+        "y": -0.95
+      }
+    ],
+    "path": "/Users/nick/Documents/ChatGPT/EMBER/work/sdrb-can-adapter/hardware/payload_compute/design/validation/payload_monitor_acceptance/../../../kicad/lib/EMBER_Payload.pretty/TI_DBV0006A_SOT23_6.kicad_mod"
+  },
+  "comp_fp": {
+    "coordinate_system": "footprint_local_mm_y_down",
+    "description": "TI manufacturer land pattern; top/component view, pin 1 upper left, counterclockwise. TI_D0008A_SOIC_8",
+    "graphic_count": 5,
+    "graphics": [
+      {
+        "end": {
+          "x": 3.725,
+          "y": 2.7
+        },
+        "fill": "none",
+        "item_id": null,
+        "layer": "F.CrtYd",
+        "start": {
+          "x": -3.725,
+          "y": -2.7
+        },
+        "stroke_width_mm": 0.05,
+        "type": "rect"
+      },
+      {
+        "end": {
+          "x": 1.95,
+          "y": -2.57
+        },
+        "item_id": null,
+        "layer": "F.SilkS",
+        "start": {
+          "x": -1.95,
+          "y": -2.57
+        },
+        "stroke_width_mm": 0.12,
+        "type": "line"
+      },
+      {
+        "end": {
+          "x": 1.95,
+          "y": 2.57
+        },
+        "item_id": null,
+        "layer": "F.SilkS",
+        "start": {
+          "x": -1.95,
+          "y": 2.57
+        },
+        "stroke_width_mm": 0.12,
+        "type": "line"
+      },
+      {
+        "center": {
+          "x": -3.925,
+          "y": -2.45
+        },
+        "fill": "solid",
+        "item_id": null,
+        "layer": "F.SilkS",
+        "radius_mm": 0.11999999999999966,
+        "stroke_width_mm": 0.1,
+        "type": "circle"
+      },
+      {
+        "closed": true,
+        "fill": "none",
+        "item_id": null,
+        "layer": "F.Fab",
+        "point_count": 5,
+        "points": [
+          {
+            "x": -1.65,
+            "y": -2.45
+          },
+          {
+            "x": 1.95,
+            "y": -2.45
+          },
+          {
+            "x": 1.95,
+            "y": 2.45
+          },
+          {
+            "x": -1.95,
+            "y": 2.45
+          },
+          {
+            "x": -1.95,
+            "y": -2.15
+          }
+        ],
+        "stroke_width_mm": 0.1,
+        "type": "poly"
+      }
+    ],
+    "has_3d_model": false,
+    "has_courtyard": true,
+    "name": "TI_D0008A_SOIC_8",
+    "pad_count": 8,
+    "pads": [
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "1",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.55,
+        "x": -2.7,
+        "y": -1.905
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "2",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.55,
+        "x": -2.7,
+        "y": -0.635
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "3",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.55,
+        "x": -2.7,
+        "y": 0.635
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "4",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.55,
+        "x": -2.7,
+        "y": 1.905
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "5",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.55,
+        "x": 2.7,
+        "y": 1.905
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "6",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.55,
+        "x": 2.7,
+        "y": 0.635
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "7",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.55,
+        "x": 2.7,
+        "y": -0.635
+      },
+      {
+        "drill": [],
+        "height": 0.6,
+        "layers": [
+          "F.Cu",
+          "F.Paste",
+          "F.Mask"
+        ],
+        "number": "8",
+        "rotation": 0,
+        "roundrect_rratio": 0.08333333333333334,
+        "shape": "roundrect",
+        "type": "smd",
+        "width": 1.55,
+        "x": 2.7,
+        "y": -1.905
+      }
+    ],
+    "path": "/Users/nick/Documents/ChatGPT/EMBER/work/sdrb-can-adapter/hardware/payload_compute/design/validation/payload_monitor_acceptance/../../../kicad/lib/EMBER_Payload.pretty/TI_D0008A_SOIC_8.kicad_mod"
+  },
+  "ref_live": {
+    "pad_count": 6,
+    "pads": [
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "1",
+        "x": 98.7,
+        "y": 99.05
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "2",
+        "x": 98.7,
+        "y": 100
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "3",
+        "x": 98.7,
+        "y": 100.95
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "4",
+        "x": 101.3,
+        "y": 100.95
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "5",
+        "x": 101.3,
+        "y": 100
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "6",
+        "x": 101.3,
+        "y": 99.05
+      }
+    ],
+    "reference": "U1",
+    "source": "ipc"
+  },
+  "comp_live": {
+    "pad_count": 8,
+    "pads": [
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "1",
+        "x": 109.3,
+        "y": 98.095
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "2",
+        "x": 109.3,
+        "y": 99.365
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "3",
+        "x": 109.3,
+        "y": 100.635
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "4",
+        "x": 109.3,
+        "y": 101.905
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "5",
+        "x": 114.7,
+        "y": 101.905
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "6",
+        "x": 114.7,
+        "y": 100.635
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "7",
+        "x": 114.7,
+        "y": 99.365
+      },
+      {
+        "layers": [
+          "F.Cu",
+          "F.Mask",
+          "F.Paste"
+        ],
+        "net": "",
+        "number": "8",
+        "x": 114.7,
+        "y": 98.095
+      }
+    ],
+    "reference": "U2",
+    "source": "ipc"
+  },
+  "ref_instance": {
+    "footprint": "EMBER_Payload:TI_DBV0006A_SOT23_6",
+    "lib_id": "EMBER_Payload:REF3425IDBVR",
+    "mirror_x": false,
+    "mirror_y": false,
+    "reference": "U1",
+    "rotation": 0,
+    "unit_count": 1,
+    "units": [
+      {
+        "mirror_x": false,
+        "mirror_y": false,
+        "rotation": 0,
+        "unit": 1,
+        "uuid": "5bd58899-5006-48f1-b893-d84250e6608c",
+        "x": 76.2,
+        "y": 63.5
+      }
+    ],
+    "uuid": "5bd58899-5006-48f1-b893-d84250e6608c",
+    "value": "REF3425IDBVR",
+    "x": 76.2,
+    "y": 63.5
+  },
+  "comp_instance": {
+    "footprint": "EMBER_Payload:TI_D0008A_SOIC_8",
+    "lib_id": "Comparator:LM2903",
+    "mirror_x": false,
+    "mirror_y": false,
+    "reference": "U2",
+    "rotation": 0,
+    "unit_count": 3,
+    "units": [
+      {
+        "mirror_x": false,
+        "mirror_y": false,
+        "rotation": 0,
+        "unit": 1,
+        "uuid": "f8dae1a7-9d0d-4f50-a35f-409ef44bfd9e",
+        "x": 139.7,
+        "y": 50.8
+      },
+      {
+        "mirror_x": false,
+        "mirror_y": false,
+        "rotation": 0,
+        "unit": 2,
+        "uuid": "f3252018-40e3-4bdb-ba09-ada6551e65b3",
+        "x": 139.7,
+        "y": 81.28
+      },
+      {
+        "mirror_x": false,
+        "mirror_y": false,
+        "rotation": 0,
+        "unit": 3,
+        "uuid": "65890a1d-2ea3-424a-b895-5684ef3cf7db",
+        "x": 177.8,
+        "y": 63.5
+      }
+    ],
+    "uuid": "f8dae1a7-9d0d-4f50-a35f-409ef44bfd9e",
+    "value": "LM2903BIDR",
+    "x": 139.7,
+    "y": 50.8
+  },
+  "pins_query": {
+    "components": [
+      {
+        "component_x": 76.2,
+        "component_y": 63.5,
+        "pins": [
+          {
+            "length_mm": 2.54,
+            "name": "GND_F",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 66.04,
+            "y": 73.66
+          },
+          {
+            "length_mm": 2.54,
+            "name": "GND_S",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 86.36,
+            "y": 73.66
+          },
+          {
+            "length_mm": 2.54,
+            "name": "EN",
+            "number": "3",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 60.96,
+            "y": 60.96
+          },
+          {
+            "length_mm": 2.54,
+            "name": "IN",
+            "number": "4",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 71.12,
+            "y": 53.34
+          },
+          {
+            "length_mm": 2.54,
+            "name": "OUT_S",
+            "number": "5",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 91.44,
+            "y": 63.5
+          },
+          {
+            "length_mm": 2.54,
+            "name": "OUT_F",
+            "number": "6",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 91.44,
+            "y": 60.96
+          }
+        ],
+        "reference": "U1",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.54,
+                "name": "GND_F",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 66.04,
+                "y": 73.66
+              },
+              {
+                "length_mm": 2.54,
+                "name": "GND_S",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 86.36,
+                "y": 73.66
+              },
+              {
+                "length_mm": 2.54,
+                "name": "EN",
+                "number": "3",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 60.96,
+                "y": 60.96
+              },
+              {
+                "length_mm": 2.54,
+                "name": "IN",
+                "number": "4",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 71.12,
+                "y": 53.34
+              },
+              {
+                "length_mm": 2.54,
+                "name": "OUT_S",
+                "number": "5",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 91.44,
+                "y": 63.5
+              },
+              {
+                "length_mm": 2.54,
+                "name": "OUT_F",
+                "number": "6",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 91.44,
+                "y": 60.96
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 76.2,
+            "y": 63.5
+          }
+        ],
+        "x": 76.2,
+        "y": 63.5
+      },
+      {
+        "component_x": 139.7,
+        "component_y": 50.8,
+        "pins": [
+          {
+            "length_mm": 2.54,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 147.32,
+            "y": 50.8
+          },
+          {
+            "length_mm": 2.54,
+            "name": "-",
+            "number": "2",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.07999999999998,
+            "y": 53.339999999999996
+          },
+          {
+            "length_mm": 2.54,
+            "name": "+",
+            "number": "3",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.07999999999998,
+            "y": 48.26
+          },
+          {
+            "length_mm": 2.54,
+            "name": "+",
+            "number": "5",
+            "orientation_degrees": 180,
+            "unit": 2,
+            "x": 132.07999999999998,
+            "y": 78.74
+          },
+          {
+            "length_mm": 2.54,
+            "name": "-",
+            "number": "6",
+            "orientation_degrees": 180,
+            "unit": 2,
+            "x": 132.07999999999998,
+            "y": 83.82000000000001
+          },
+          {
+            "length_mm": 2.54,
+            "name": "",
+            "number": "7",
+            "orientation_degrees": 0,
+            "unit": 2,
+            "x": 147.32,
+            "y": 81.28
+          },
+          {
+            "length_mm": 3.81,
+            "name": "V-",
+            "number": "4",
+            "orientation_degrees": 270,
+            "unit": 3,
+            "x": 175.26000000000002,
+            "y": 71.12
+          },
+          {
+            "length_mm": 3.81,
+            "name": "V+",
+            "number": "8",
+            "orientation_degrees": 90,
+            "unit": 3,
+            "x": 175.26000000000002,
+            "y": 55.88
+          }
+        ],
+        "reference": "U2",
+        "rotation": 0,
+        "unit_count": 3,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.54,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 147.32,
+                "y": 50.8
+              },
+              {
+                "length_mm": 2.54,
+                "name": "-",
+                "number": "2",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.07999999999998,
+                "y": 53.339999999999996
+              },
+              {
+                "length_mm": 2.54,
+                "name": "+",
+                "number": "3",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.07999999999998,
+                "y": 48.26
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 139.7,
+            "y": 50.8
+          },
+          {
+            "pins": [
+              {
+                "length_mm": 2.54,
+                "name": "+",
+                "number": "5",
+                "orientation_degrees": 180,
+                "unit": 2,
+                "x": 132.07999999999998,
+                "y": 78.74
+              },
+              {
+                "length_mm": 2.54,
+                "name": "-",
+                "number": "6",
+                "orientation_degrees": 180,
+                "unit": 2,
+                "x": 132.07999999999998,
+                "y": 83.82000000000001
+              },
+              {
+                "length_mm": 2.54,
+                "name": "",
+                "number": "7",
+                "orientation_degrees": 0,
+                "unit": 2,
+                "x": 147.32,
+                "y": 81.28
+              }
+            ],
+            "rotation": 0,
+            "unit": 2,
+            "x": 139.7,
+            "y": 81.28
+          },
+          {
+            "pins": [
+              {
+                "length_mm": 3.81,
+                "name": "V-",
+                "number": "4",
+                "orientation_degrees": 270,
+                "unit": 3,
+                "x": 175.26000000000002,
+                "y": 71.12
+              },
+              {
+                "length_mm": 3.81,
+                "name": "V+",
+                "number": "8",
+                "orientation_degrees": 90,
+                "unit": 3,
+                "x": 175.26000000000002,
+                "y": 55.88
+              }
+            ],
+            "rotation": 0,
+            "unit": 3,
+            "x": 177.8,
+            "y": 63.5
+          }
+        ],
+        "x": 139.7,
+        "y": 50.8
+      }
+    ]
+  }
+}

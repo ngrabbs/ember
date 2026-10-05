@@ -1,0 +1,338 @@
+(export
+	(version "E")
+	(design
+		(source "/Users/nick/Documents/ChatGPT/EMBER/work/sdrb-can-adapter/hardware/payload_compute/design/validation/payload_input_acceptance/payload_input_acceptance.kicad_sch")
+		(date "2026-10-04T19:41:19")
+		(tool "Eeschema 10.0.0")
+		(sheet
+			(number "1")
+			(name "/")
+			(tstamps "/")
+			(title_block
+				(title)
+				(company)
+				(rev)
+				(date)
+				(source "payload_input_acceptance.kicad_sch")
+				(comment
+					(number "1")
+					(value "")
+				)
+				(comment
+					(number "2")
+					(value "")
+				)
+				(comment
+					(number "3")
+					(value "")
+				)
+				(comment
+					(number "4")
+					(value "")
+				)
+				(comment
+					(number "5")
+					(value "")
+				)
+				(comment
+					(number "6")
+					(value "")
+				)
+				(comment
+					(number "7")
+					(value "")
+				)
+				(comment
+					(number "8")
+					(value "")
+				)
+				(comment
+					(number "9")
+					(value "")
+				)
+			)
+		)
+	)
+	(components
+		(comp
+			(ref "U1")
+			(value "TPS259470LRPWR")
+			(footprint "EMBER_Payload:TI_RPW0010A_VQFN-HR-10_2x2mm")
+			(datasheet "https://www.ti.com/lit/ds/symlink/tps25947.pdf")
+			(fields
+				(field
+					(name "Acceptance") "Disposable package verification only")
+				(field
+					(name "MPN") "TPS259470LRPWR")
+				(field
+					(name "Manufacturer") "Texas Instruments")
+				(field
+					(name "Footprint") "EMBER_Payload:TI_RPW0010A_VQFN-HR-10_2x2mm")
+				(field
+					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/tps25947.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "EMBER_Payload")
+				(part "TPS259470LRPWR")
+				(description "")
+			)
+			(property
+				(name "Acceptance")
+				(value "Disposable package verification only")
+			)
+			(property
+				(name "MPN")
+				(value "TPS259470LRPWR")
+			)
+			(property
+				(name "Manufacturer")
+				(value "Texas Instruments")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "payload_input_acceptance.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "a0e65907-635e-4935-9014-c05f5f5e8586")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "8")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "7")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "10")
+						)
+					)
+				)
+			)
+		)
+	)
+	(groups)
+	(variants)
+	(libparts
+		(libpart
+			(lib "EMBER_Payload")
+			(part "TPS259470LRPWR")
+			(docs "https://www.ti.com/lit/ds/symlink/tps25947.pdf")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "TPS259470LRPWR")
+				(field
+					(name "Footprint") "EMBER_Payload:TI_RPW0010A_VQFN-HR-10_2x2mm")
+				(field
+					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/tps25947.pdf")
+				(field
+					(name "Description")
+				)
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "EN/UVLO")
+					(type "input")
+				)
+				(pin
+					(num "2")
+					(name "OVLO")
+					(type "input")
+				)
+				(pin
+					(num "3")
+					(name "AUXOFF")
+					(type "open_collector")
+				)
+				(pin
+					(num "4")
+					(name "~{FLT}")
+					(type "open_collector")
+				)
+				(pin
+					(num "5")
+					(name "IN")
+					(type "power_in")
+				)
+				(pin
+					(num "6")
+					(name "OUT")
+					(type "power_out")
+				)
+				(pin
+					(num "7")
+					(name "DVDT")
+					(type "passive")
+				)
+				(pin
+					(num "8")
+					(name "GND")
+					(type "power_in")
+				)
+				(pin
+					(num "9")
+					(name "ILM")
+					(type "passive")
+				)
+				(pin
+					(num "10")
+					(name "ITIMER")
+					(type "passive")
+				)
+			)
+		)
+	)
+	(libraries
+		(library
+			(logical "EMBER_Payload")
+			(uri "/Users/nick/Documents/ChatGPT/EMBER/work/sdrb-can-adapter/hardware/payload_compute/kicad/lib/EMBER_Payload.kicad_sym")
+		)
+	)
+	(nets
+		(net
+			(code "1")
+			(name "unconnected-(U1-AUXOFF-Pad3)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "3")
+				(pinfunction "AUXOFF_3")
+				(pintype "open_collector")
+			)
+		)
+		(net
+			(code "2")
+			(name "unconnected-(U1-DVDT-Pad7)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "7")
+				(pinfunction "DVDT_7")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "3")
+			(name "unconnected-(U1-EN{slash}UVLO-Pad1)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "1")
+				(pinfunction "EN/UVLO_1")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "4")
+			(name "unconnected-(U1-GND-Pad8)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "8")
+				(pinfunction "GND_8")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "5")
+			(name "unconnected-(U1-ILM-Pad9)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "9")
+				(pinfunction "ILM_9")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "6")
+			(name "unconnected-(U1-IN-Pad5)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "5")
+				(pinfunction "IN_5")
+				(pintype "power_in")
+			)
+		)
+		(net
+			(code "7")
+			(name "unconnected-(U1-ITIMER-Pad10)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "10")
+				(pinfunction "ITIMER_10")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "8")
+			(name "unconnected-(U1-OUT-Pad6)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "6")
+				(pinfunction "OUT_6")
+				(pintype "power_out")
+			)
+		)
+		(net
+			(code "9")
+			(name "unconnected-(U1-OVLO-Pad2)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "2")
+				(pinfunction "OVLO_2")
+				(pintype "input")
+			)
+		)
+		(net
+			(code "10")
+			(name "unconnected-(U1-~{FLT}-Pad4)")
+			(class "Default")
+			(node
+				(ref "U1")
+				(pin "4")
+				(pinfunction "~{FLT}_4")
+				(pintype "open_collector")
+			)
+		)
+	)
+)

@@ -1,0 +1,354 @@
+(kicad_sch
+	(version 20250610)
+	(generator "konnect")
+	(generator_version "10.0")
+	(uuid "2bf1ffd1-ee26-4992-9236-e35ff8bb5a76")
+	(paper "A4")
+	(lib_symbols
+		(symbol
+		  "EMBER_Payload:TPS259470LRPWR"
+		  (pin_names
+		    (offset 1.016)
+		  )
+		  (exclude_from_sim no)
+		  (in_bom yes)
+		  (on_board yes)
+		  (in_pos_files yes)
+		  (duplicate_pin_numbers_are_jumpers no)
+		  (property "Reference" "U"
+		    (at 0 17.7800 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Value" "TPS259470LRPWR"
+		    (at 0 -17.7800 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Footprint" "EMBER_Payload:TI_RPW0010A_VQFN-HR-10_2x2mm"
+		    (at 0 0 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (hide yes)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps25947.pdf"
+		    (at 0 0 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (hide yes)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Description" ""
+		    (at 0 0 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (hide yes)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (symbol "TPS259470LRPWR_0_1"
+		    (rectangle
+		      (start -12.7000 -15.2400)
+		      (end 12.7000 15.2400)
+		      (stroke
+		        (width 0.254)
+		        (type default)
+		      )
+		      (fill
+		        (type background)
+		      )
+		    )
+		    (pin power_in line
+		      (at -15.24 12.7 0)
+		      (length 2.54)
+		      (name "IN"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "5"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -15.24 7.62 0)
+		      (length 2.54)
+		      (name "EN/UVLO"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "1"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -15.24 2.54 0)
+		      (length 2.54)
+		      (name "OVLO"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "2"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_in line
+		      (at -15.24 -12.7 0)
+		      (length 2.54)
+		      (name "GND"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "8"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_out line
+		      (at 15.24 12.7 180)
+		      (length 2.54)
+		      (name "OUT"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "6"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin open_collector line
+		      (at 15.24 7.62 180)
+		      (length 2.54)
+		      (name "AUXOFF"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "3"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin open_collector line
+		      (at 15.24 2.54 180)
+		      (length 2.54)
+		      (name "~{FLT}"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "4"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin passive line
+		      (at 15.24 -2.54 180)
+		      (length 2.54)
+		      (name "DVDT"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "7"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin passive line
+		      (at 15.24 -7.62 180)
+		      (length 2.54)
+		      (name "ILM"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "9"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin passive line
+		      (at 15.24 -12.7 180)
+		      (length 2.54)
+		      (name "ITIMER"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "10"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		  )
+		  (embedded_fonts no)
+		)
+	)
+	(symbol
+		(lib_id "EMBER_Payload:TPS259470LRPWR")
+		(at 76.2 63.5 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a0e65907-635e-4935-9014-c05f5f5e8586")
+		(property "Reference" "U1"
+			(at 76.2 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TPS259470LRPWR"
+			(at 76.2 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "EMBER_Payload:TI_RPW0010A_VQFN-HR-10_2x2mm"
+			(at 76.2 63.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps25947.pdf"
+			(at 76.2 63.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 76.2 63.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "payload_input_acceptance"
+				(path "/2bf1ffd1-ee26-4992-9236-e35ff8bb5a76"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	
+		(property "Acceptance" "Disposable package verification only"
+			(at 76.2 63.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "TPS259470LRPWR"
+			(at 76.2 63.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 76.2 63.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		))
+)

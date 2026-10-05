@@ -1,0 +1,17 @@
+{
+  "result": "PASS for ideal stage3 control contract only",
+  "mode_source_cases": 256,
+  "invariants": [
+    "000/multihot and uncommitted mode/source deny permission",
+    "bench permits USB/bench only; flight permits stack only with IHU high",
+    "source choice does not establish raw/PD/bus/inrush qualification"
+  ],
+  "limits": [
+    "Actual exported gate topology must independently implement these rules",
+    "Stored-choice retention and watchdog/reset qualification need actual topology and state checks",
+    "No metastability, propagation-race, brownout or partial-power proof",
+    "MCU_READY must come from healthy supervisor state; WDI must come from its live loop",
+    "Full AON loss requires persistent unclean-session recovery policy",
+    "No direct buck/Jetson enable or flight inhibit acceptance"
+  ]
+}

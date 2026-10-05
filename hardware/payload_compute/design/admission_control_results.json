@@ -1,0 +1,43 @@
+{
+  "qualification": "CONDITIONAL DC SCREEN; not a default-off guarantee",
+  "usb_uv_rising_V": [
+    12.57837503636364,
+    13.889295884484483
+  ],
+  "usb_uv_falling_V": [
+    11.403512898501502,
+    12.71015374234234
+  ],
+  "usb_ov_rising_V": [
+    15.804096796846013,
+    16.473437305567472
+  ],
+  "usb_ov_falling_V": [
+    14.371349584874311,
+    15.035376482839983
+  ],
+  "uv_combined_leakage_allocation_A": 1.1e-06,
+  "raw_bias_gate_6_to_23V_V": [
+    1.966113687707641,
+    7.776587892976589
+  ],
+  "conditional_EN_clamped_V": 2.0314432079137964e-06,
+  "conditional_Q1_gate_with_grant_V": 3.833333333333334e-05,
+  "Q2_gate_high_min_V": 2.17771951512374,
+  "Q2_gate_low_VOL_0p4V_screen_V": 0.3642921550946799,
+  "Q2_power_off_gate_10uA_screen_V": 0.010201000000000002,
+  "usb_current_limit_A_screen": [
+    1.7982017982017984,
+    2.2022022022022023
+  ],
+  "nominal_output_slew_V_ms": 0.2,
+  "nominal_100uF_charge_A": 0.02,
+  "nominal_15V_ramp_ms": 75.0,
+  "open_items": [
+    "Q2 leakage at nonzero VGS and hot/cold",
+    "grant low and partial-power behavior",
+    "raw fast/slow ramps and Cgd injection",
+    "negative input and entry protection",
+    "capacitor tolerances, load inrush and measured reset latency"
+  ]
+}

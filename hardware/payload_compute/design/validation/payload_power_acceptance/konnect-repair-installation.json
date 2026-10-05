@@ -1,0 +1,44 @@
+{
+  "build": {
+    "commit": "eadbe451bb50eb51c6e42abcf6e0152f62bc1e13",
+    "commit_source": "git_head",
+    "profile": "debug",
+    "target_arch": "aarch64",
+    "target_os": "macos",
+    "version": "0.11.1",
+    "working_tree_state": "not_recorded"
+  },
+  "configuration": {
+    "search_policy": "first_existing_no_merge",
+    "selected_path": "/Users/nick/Library/Application Support/konnect/config.toml",
+    "skipped_existing_paths": [],
+    "source": "search_path"
+  },
+  "installation": {
+    "binary_on_disk": {
+      "newer_than_running": false,
+      "probe_status": "ok",
+      "version": "0.11.1"
+    },
+    "evidence": "No verified KiCad PCM manifest was found beside this executable; standalone and source builds are intentionally not guessed from path names.",
+    "manifest_path": null,
+    "source": "unknown"
+  },
+  "ipc": {
+    "configured": true,
+    "endpoint": "ipc:///tmp/kicad/api.sock",
+    "source": "resolved_server_config"
+  },
+  "kicad": {
+    "cli_path": "/opt/homebrew/bin/kicad-cli",
+    "probe_status": "ok",
+    "version": "10.0.0"
+  },
+  "restart_guidance": [
+    "macOS: restart the MCP client that launched Konnect; if KiCad launched it, quit and reopen KiCad after the update.",
+    "Call get_installation_info again after restart and verify the serving version, commit, and executable path."
+  ],
+  "runtime": {
+    "executable_path": "/Users/nick/Library/Application Support/konnect/local-repair-20261004/konnect"
+  }
+}

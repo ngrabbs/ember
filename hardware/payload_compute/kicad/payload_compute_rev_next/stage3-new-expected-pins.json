@@ -1,0 +1,460 @@
+{
+  "ic": {
+    "06_source_lock.kicad_sch": {
+      "U401": {
+        "1": "SOURCE_LOCK_CLK",
+        "2": "+3V3_AON",
+        "3": "SOURCE_UNLOCKED",
+        "4": "GND",
+        "5": "SOURCE_LOCKED",
+        "6": "AON_RESET_N",
+        "7": "+3V3_AON",
+        "8": "+3V3_AON"
+      },
+      "U402": {
+        "1": "AON_RESET_N",
+        "2": "GND",
+        "3": "SOURCE_UNLOCKED",
+        "4": "SOURCE_REQ_LE",
+        "5": "+3V3_AON",
+        "6": "+3V3_AON"
+      },
+      "U403": {
+        "1": "AON_RESET_N",
+        "2": "GND",
+        "3": "MODE_LOCKED",
+        "4": "CHOICE_LOCKS_VALID",
+        "5": "+3V3_AON",
+        "6": "SOURCE_LOCKED"
+      },
+      "U404": {
+        "1": "SOURCE_REQ_LE",
+        "2": "GND",
+        "3": "USB_REQ",
+        "4": "USB_REQ_LATCHED",
+        "5": "+3V3_AON",
+        "6": "GND"
+      },
+      "U407": {
+        "2": "USB_REQ_LATCHED",
+        "3": "GND",
+        "4": "USB_REQ_N",
+        "5": "+3V3_AON"
+      },
+      "U410": {
+        "1": "USB_REQ_LATCHED",
+        "2": "GND",
+        "3": "BENCH_REQ_N",
+        "4": "USB_ONEHOT",
+        "5": "+3V3_AON",
+        "6": "STACK_REQ_N"
+      },
+      "U413": {
+        "1": "USB_ONEHOT",
+        "2": "GND",
+        "3": "BENCH_LATCHED",
+        "4": "USB_CHOICE_ONLY",
+        "5": "+3V3_AON",
+        "6": "CHOICE_LOCKS_VALID"
+      },
+      "U405": {
+        "1": "SOURCE_REQ_LE",
+        "2": "GND",
+        "3": "BENCH_REQ",
+        "4": "BENCH_REQ_LATCHED",
+        "5": "+3V3_AON",
+        "6": "GND"
+      },
+      "U408": {
+        "2": "BENCH_REQ_LATCHED",
+        "3": "GND",
+        "4": "BENCH_REQ_N",
+        "5": "+3V3_AON"
+      },
+      "U411": {
+        "1": "BENCH_REQ_LATCHED",
+        "2": "GND",
+        "3": "STACK_REQ_N",
+        "4": "BENCH_ONEHOT",
+        "5": "+3V3_AON",
+        "6": "USB_REQ_N"
+      },
+      "U414": {
+        "1": "BENCH_ONEHOT",
+        "2": "GND",
+        "3": "BENCH_LATCHED",
+        "4": "BENCH_CHOICE_ONLY",
+        "5": "+3V3_AON",
+        "6": "CHOICE_LOCKS_VALID"
+      },
+      "U406": {
+        "1": "SOURCE_REQ_LE",
+        "2": "GND",
+        "3": "STACK_REQ",
+        "4": "STACK_REQ_LATCHED",
+        "5": "+3V3_AON",
+        "6": "GND"
+      },
+      "U409": {
+        "2": "STACK_REQ_LATCHED",
+        "3": "GND",
+        "4": "STACK_REQ_N",
+        "5": "+3V3_AON"
+      },
+      "U412": {
+        "1": "STACK_REQ_LATCHED",
+        "2": "GND",
+        "3": "USB_REQ_N",
+        "4": "STACK_ONEHOT",
+        "5": "+3V3_AON",
+        "6": "BENCH_REQ_N"
+      },
+      "U415": {
+        "1": "STACK_ONEHOT",
+        "2": "GND",
+        "3": "FLIGHT_LATCHED",
+        "4": "STACK_CHOICE_ONLY",
+        "5": "+3V3_AON",
+        "6": "CHOICE_LOCKS_VALID"
+      }
+    },
+    "05_mode_watchdog.kicad_sch": {
+      "U301": {
+        "1": "IHU_EN_OD",
+        "2": "GND",
+        "3": "IHU_EN_SENSE",
+        "4": "BENCH_FILTERED",
+        "5": "+3V3_AON",
+        "6": "BENCH_EN_OD"
+      },
+      "U302": {
+        "2": "IHU_EN_OD",
+        "3": "GND",
+        "4": "IHU_EN_VALID",
+        "5": "+3V3_AON"
+      },
+      "U303": {
+        "2": "AON_RESET_RAW_N",
+        "3": "GND",
+        "4": "WDT_ENABLE",
+        "5": "+3V3_AON"
+      },
+      "U304": {
+        "2": "AON_RESET_RAW_N",
+        "3": "GND",
+        "4": "AON_RESET_N",
+        "5": "+3V3_AON"
+      },
+      "U305": {
+        "2": "BENCH_EN_OD",
+        "3": "GND",
+        "4": "BENCH_JUMPER_VALID",
+        "5": "+3V3_AON"
+      },
+      "U306": {
+        "1": "MODE_LE",
+        "2": "GND",
+        "3": "BENCH_JUMPER_VALID",
+        "4": "BENCH_LATCHED",
+        "5": "+3V3_AON",
+        "6": "GND"
+      },
+      "U307": {
+        "1": "MODE_LOCK_CLK",
+        "2": "+3V3_AON",
+        "3": "MODE_UNLOCKED",
+        "4": "GND",
+        "5": "MODE_LOCKED",
+        "6": "AON_RESET_N",
+        "7": "+3V3_AON",
+        "8": "+3V3_AON"
+      },
+      "U308": {
+        "1": "AON_RESET_N",
+        "2": "GND",
+        "3": "MODE_UNLOCKED",
+        "4": "MODE_LE",
+        "5": "+3V3_AON",
+        "6": "+3V3_AON"
+      },
+      "U309": {
+        "2": "BENCH_LATCHED",
+        "3": "GND",
+        "4": "FLIGHT_LATCHED",
+        "5": "+3V3_AON"
+      },
+      "U310": {
+        "1": "+3V3_AON",
+        "3": "WDT_ENABLE",
+        "4": "GND",
+        "5": "+3V3_AON",
+        "6": "MCU_WDI",
+        "7": "MCU_NRST_N",
+        "8": "MCU_NRST_N",
+        "9": "GND"
+      },
+      "U311": {
+        "2": "MCU_NRST_N",
+        "3": "GND",
+        "4": "WD_RESET_VALID",
+        "5": "+3V3_AON"
+      },
+      "U312": {
+        "1": "AON_RESET_N",
+        "2": "GND",
+        "3": "MCU_READY",
+        "4": "MCU_CONTROL_READY",
+        "5": "+3V3_AON",
+        "6": "WD_RESET_VALID"
+      },
+      "U313": {
+        "1": "STACK_CHOICE_ONLY",
+        "2": "GND",
+        "3": "IHU_EN_VALID",
+        "4": "FLIGHT_IHU_PERMISSION",
+        "5": "+3V3_AON",
+        "6": "+3V3_AON"
+      },
+      "U314": {
+        "1": "USB_CHOICE_ONLY",
+        "2": "BENCH_CHOICE_ONLY",
+        "3": "GND",
+        "4": "LAB_CHOICE_VALID",
+        "5": "+3V3_AON"
+      },
+      "U315": {
+        "1": "LAB_CHOICE_VALID",
+        "2": "FLIGHT_IHU_PERMISSION",
+        "3": "GND",
+        "4": "CHOICE_PERMISSION",
+        "5": "+3V3_AON"
+      },
+      "U316": {
+        "1": "AON_RESET_N",
+        "2": "GND",
+        "3": "MODE_LOCKED",
+        "4": "MODE_PERMISSION",
+        "5": "+3V3_AON",
+        "6": "CHOICE_PERMISSION"
+      }
+    }
+  },
+  "passives": {
+    "06_source_lock.kicad_sch": {
+      "R401": {
+        "1": "SOURCE_LOCK_CLK",
+        "2": "GND"
+      },
+      "R402": {
+        "1": "USB_REQ",
+        "2": "GND"
+      },
+      "R403": {
+        "1": "BENCH_REQ",
+        "2": "GND"
+      },
+      "R404": {
+        "1": "STACK_REQ",
+        "2": "GND"
+      },
+      "R405": {
+        "1": "USB_CHOICE_ONLY",
+        "2": "GND"
+      },
+      "R406": {
+        "1": "BENCH_CHOICE_ONLY",
+        "2": "GND"
+      },
+      "R407": {
+        "1": "STACK_CHOICE_ONLY",
+        "2": "GND"
+      },
+      "R408": {
+        "1": "SOURCE_LOCKED",
+        "2": "GND"
+      },
+      "C401": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C402": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C403": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C404": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C405": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C406": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C407": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C408": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C409": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C410": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C411": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C412": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C413": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C414": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C415": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      }
+    },
+    "05_mode_watchdog.kicad_sch": {
+      "R301": {
+        "1": "IHU_PAYLOAD_EN",
+        "2": "IHU_EN_SENSE"
+      },
+      "R302": {
+        "1": "IHU_EN_SENSE",
+        "2": "GND"
+      },
+      "R303": {
+        "1": "+3V3_AON",
+        "2": "BENCH_JUMPER_N"
+      },
+      "R304": {
+        "1": "BENCH_JUMPER_N",
+        "2": "BENCH_FILTERED"
+      },
+      "C317": {
+        "1": "BENCH_FILTERED",
+        "2": "GND"
+      },
+      "R305": {
+        "1": "+3V3_AON",
+        "2": "IHU_EN_OD"
+      },
+      "R306": {
+        "1": "+3V3_AON",
+        "2": "BENCH_EN_OD"
+      },
+      "R307": {
+        "1": "WDT_ENABLE",
+        "2": "GND"
+      },
+      "R308": {
+        "1": "MCU_READY",
+        "2": "GND"
+      },
+      "R309": {
+        "1": "MODE_LOCK_CLK",
+        "2": "GND"
+      },
+      "R310": {
+        "1": "MODE_LOCKED",
+        "2": "GND"
+      },
+      "R311": {
+        "1": "MCU_WDI",
+        "2": "GND"
+      },
+      "R312": {
+        "1": "+3V3_AON",
+        "2": "MCU_NRST_N"
+      },
+      "R313": {
+        "1": "AON_RESET_N",
+        "2": "GND"
+      },
+      "C301": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C302": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C303": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C304": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C305": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C306": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C307": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C308": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C309": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C310": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C311": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C312": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C313": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C314": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C315": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      },
+      "C316": {
+        "1": "+3V3_AON",
+        "2": "GND"
+      }
+    }
+  }
+}
