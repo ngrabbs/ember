@@ -1,0 +1,75 @@
+{
+  "status": "PASS_SINGLE_IHU_SDRB_UHF_LIBRESDR_YAMCS_PACKET",
+  "session_date": "2026-10-03",
+  "packet_bytes": 128,
+  "packet_sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd",
+  "ihu_boot": 2623056192,
+  "ihu_can_request": 12,
+  "inner_packet_sequence": 3,
+  "outer_rf_sequence": 3,
+  "exact_identity": [
+    "IHU returned packet",
+    "SDRB CAN record",
+    "LibreSDR RF-decoded payload",
+    "Yamcs ember-uhf archive"
+  ],
+  "yamcs_link": "eps-uhf-in",
+  "yamcs_reception_time": "2026-10-03T12:44:55.368Z",
+  "radio": {
+    "center_hz": 434200000,
+    "packet_hz": 434100000,
+    "baud": 1200,
+    "modulation": "binary continuous-phase FSK; deviations +/-2400Hz",
+    "tx_channel": 1,
+    "tx_antenna": "TX1A_Direct1",
+    "tx_gain": 70,
+    "rx_channel": 0,
+    "rx_antenna": "RX2",
+    "rx_gain": 40,
+    "connections": "antennas, operator identified SDRB tested TX1 direct path",
+    "rf_carrier_bias_estimate_hz": 700.78125
+  },
+  "trials": {
+    "01": {
+      "tx_gain": 40,
+      "decoded": 0
+    },
+    "02": {
+      "tx_gain": 60,
+      "decoded": 0
+    },
+    "03": {
+      "tx_gain": 70,
+      "file_source": true,
+      "longer_silence": true,
+      "coherent_detector": true,
+      "decoded": 1
+    }
+  },
+  "software_checks_passed": 4,
+  "limits": [
+    "One successful packet; not reliability or flight-waveform qualification",
+    "Gain, source/pipeline guards and decoder changed between trials; does not isolate cause",
+    "Finite manual CAN record -> packet file -> RF burst; no automatic continuous scheduling",
+    "Ground decodes after bounded capture; receiver-to-Yamcs delivery is delayed",
+    "Paused replay is archived RF proof, not continuous live telemetry",
+    "No uplink, FEC, permission scheduler, queue protocol or delivery ACK demonstrated",
+    "Unverified EPS sense resistors and original packet validity meanings preserved",
+    "SDRB clock unsynchronized; use ground archive times/session date"
+  ],
+  "source_sha256": {
+    "ground/uhf/packet_radio.py": "922a3e5f2dce81200ca33f97147c3d59600761152d6afcc65d0d636dec837803",
+    "ground/uhf/prepare_yamcs.py": "431d7ba308c9d1ae592e87ea7835f2acbf9c13fb3b681f9c710b11555b6d131e",
+    "ground/uhf/sdrb_tx.py": "2f7868b6cf5baf0c5c3c7cb5b48a22c55aec8047776e89c8fbc854b27e04da80",
+    "ground/uhf/libresdr_rx.py": "15cd8ad306f869aa628025fb360ec133bfcfddd5654697b7906e2e518e4093f0",
+    "ground/uhf/test_packet_radio.py": "4c2d42058a545910226d8c1f0a3f9e80413ea590620192278aad0affbd67fac9"
+  },
+  "cleanup": {
+    "sdrb_can0": "DOWN",
+    "sdrb_can1": "DOWN",
+    "sdrb_uhd_discovery": true,
+    "sdrb_radio_unclaimed": true,
+    "libresdr_no_usb_owner": true,
+    "uhf_and_lte_radio_processes": "stopped"
+  }
+}

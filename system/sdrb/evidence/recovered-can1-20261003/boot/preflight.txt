@@ -1,0 +1,70 @@
+petalinux
+Password: 
+uname -r; cat /proc/mounts; sha256sum /boot/BOOT.BIN /boot/image.ub; ip -details -statistics link show can1; dmesg | tail -35
+7[r[999;999H[6n;80R^C
+
+-sh: 80R: command not found
+sdrb-uhd:~$ uname -r; cat /proc/mounts; sha256sum /boot/BOOT.BIN /boot/image.ub;  ip -details -statistics link show can1; dmesg | tail -35
+6.6.40-xilinx-gd37e591b96e0
+/dev/root / ext4 rw,relatime 0 0
+devtmpfs /dev devtmpfs rw,relatime,size=505432k,nr_inodes=126358,mode=755 0 0
+proc /proc proc rw,relatime 0 0
+sysfs /sys sysfs rw,nosuid,nodev,noexec,relatime 0 0
+tmpfs /dev/shm tmpfs rw,nosuid,nodev 0 0
+devpts /dev/pts devpts rw,relatime,gid=5,mode=620,ptmxmode=666 0 0
+tmpfs /run tmpfs rw,nosuid,nodev,size=205656k,nr_inodes=819200,mode=755 0 0
+cgroup2 /sys/fs/cgroup cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot 0 0
+tmpfs /tmp tmpfs rw,nosuid,nodev,size=514140k,nr_inodes=1048576 0 0
+configfs /sys/kernel/config configfs rw,nosuid,nodev,noexec,relatime 0 0
+tmpfs /var/volatile tmpfs rw,relatime 0 0
+/dev/mmcblk0p1 /boot vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+tmpfs /run/user/1000 tmpfs rw,nosuid,nodev,relatime,size=102824k,nr_inodes=25706,mode=700,uid=1000,gid=1000 0 0
+d77ca4e55841b9eee95b06f30b8066d096eb8139af9e94ea5ef9bc5d50158620  /boot/BOOT.BIN
+4373833ccb9975e51e2a90fab0a886a9610514e3502879c785c58184f5db8741  /boot/image.ub
+3: can1: <NOARP,ECHO> mtu 16 qdisc noop state DOWN mode DEFAULT group default qlen 10
+    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 
+    can state STOPPED (berr-counter tx 0 rx 0) restart-ms 0 
+	  xilinx_can: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..256 brp_inc 1
+	  clock 99999999 
+	  re-started bus-errors arbit-lost error-warn error-pass bus-off
+	  0          0          0          0          0          0         numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536 parentbus platform parentdev e0009000.can 
+    RX:  bytes packets errors dropped  missed   mcast           
+             0       0      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+             0       0      0       0       0       0 
+[   11.665184] systemd[1]: systemd-journald.service: (This warning is only shown for the first unit using IP firewalling.)
+[   11.700326] systemd[1]: Starting Journal Service...
+[   11.743798] systemd[1]: Load Kernel Modules was skipped because no trigger condition checks were met.
+[   11.757218] systemd[1]: Mounting NFSD configuration filesystem...
+[   11.788050] systemd[1]: Starting Generate network units from Kernel command line...
+[   11.820079] systemd[1]: Starting Apply Kernel Variables...
+[   11.825708] systemd-journald[72]: Collecting audit messages is disabled.
+[   11.846812] systemd[1]: Starting Create Static Device Nodes in /dev gracefully...
+[   11.897957] systemd[1]: Starting Coldplug All udev Devices...
+[   11.941635] systemd[1]: Started RPC Bind.
+[   11.958431] systemd[1]: Mounted Temporary Directory /tmp.
+[   11.976281] systemd[1]: modprobe@configfs.service: Deactivated successfully.
+[   11.999387] systemd[1]: Finished Load Kernel Module configfs.
+[   12.006072] systemd[1]: modprobe@dm_mod.service: Deactivated successfully.
+[   12.018077] systemd[1]: Finished Load Kernel Module dm_mod.
+[   12.025053] systemd[1]: modprobe@drm.service: Deactivated successfully.
+[   12.038014] systemd[1]: Finished Load Kernel Module drm.
+[   12.045145] systemd[1]: modprobe@fuse.service: Deactivated successfully.
+[   12.056250] systemd[1]: Finished Load Kernel Module fuse.
+[   12.072898] systemd[1]: modprobe@loop.service: Deactivated successfully.
+[   12.082980] systemd[1]: Finished Load Kernel Module loop.
+[   12.088596] systemd[1]: proc-fs-nfsd.mount: Mount process exited, code=exited, status=32/n/a
+[   12.100482] systemd[1]: proc-fs-nfsd.mount: Failed with result 'exit-code'.
+[   12.108260] systemd[1]: Failed to mount NFSD configuration filesystem.
+[   12.113928] systemd[1]: Dependency failed for NFS server and services.
+[   12.125065] systemd[1]: Dependency failed for NFS Mount Daemon.
+[   12.135691] systemd[1]: nfs-mountd.service: Job nfs-mountd.service/start failed with result 'dependency'.
+[   12.149685] systemd[1]: nfs-server.service: Job nfs-server.service/start failed with result 'dependency'.
+[   12.164679] systemd[1]: Started Journal Service.
+[   12.539249] EXT4-fs (mmcblk0p2): re-mounted ffedbcdf-0312-433c-b97a-36db82bc4a78 r/w. Quota mode: disabled.
+[   12.681355] systemd-journald[72]: Received client request to flush runtime journal.
+[   15.048301] nixge 40020000.ethernet int0: renamed from eth0
+[   16.476965] random: crng init done
+[   17.476317] FAT-fs (mmcblk0p1): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+[   20.272142] nixge 40020000.ethernet int0: Link is Up - 1Gbps/Full - flow control off
+sdrb-uhd:~$ 

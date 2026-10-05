@@ -54,3 +54,5 @@ adds signed i32 fixed-point engineering fields, all 19 raw words, readout
 quality/age and bridge provenance. Yamcs scales engineering values and marks
 unavailable sentinels INVALID. See the [packet contract](../../system/protocols/eps_power_status_v1.md)
 and [Pi setup/validation](../../system/ground_station/eps_yamcs_setup.md).
+
+[Optional SDRB CAN adapter](../../system/interfaces/sdrb_adapter.md) validates native IHU packets without owning RF; [current workstreams](../../system/sdrb/TODO.md).

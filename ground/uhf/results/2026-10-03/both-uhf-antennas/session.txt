@@ -1,0 +1,55 @@
+
+[2]-  Done                    python3 ~/ember-can-monitor-20261003/sdrb_can.py --interface can1 --seconds 40 --output ~/ember-antenna-can-03 > ~/ember-antenna-can-03.log 2>&1
+[3]+  Done                    PYTHONPATH=~/ember-can-monitor-20261003 python3 ~/ember-uhf-20261003/can_forward.py --records ~/ember-antenna-can-03/packets.jsonl --output ~/ember-antenna-forward-03 --seconds 45 --limit 3 --service-socket ~/.cache/ember-binary-radio/control.sock --transmit > ~/ember-antenna-forward-03.log 2>&1
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 ~/ember-uhf-20261003/add_packet.py --statu
+us; python3 ~/ember-uhf-20261003/add_packet.py --stop
+{"request": {"command": "status"}}
+{
+  "accepted": 3,
+  "queued": 0,
+  "expired": 0,
+  "queue_full": 0,
+  "emitted": 3,
+  "output_samples": 36498193,
+  "writer_error": null,
+  "accepting": true,
+  "recent_packets": [
+    {
+      "sequence": 1,
+      "begin": 10813440,
+      "end": 11501568,
+      "emitted": true
+    },
+    {
+      "sequence": 2,
+      "begin": 15761408,
+      "end": 16449536,
+      "emitted": true
+    },
+    {
+      "sequence": 3,
+      "begin": 20643840,
+      "end": 21331968,
+      "emitted": true
+    }
+  ],
+  "note": "Downstream samples are not RF reception",
+  "mode": "transponder",
+  "tx_async_events": {},
+  "rx_async_events": {},
+  "headroom": {
+    "samples": 36498193,
+    "forwarded_clipped": 5,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 0.26924496802548603,
+    "forward_peak_after": 0.25000001490116075,
+    "telemetry_peak_before": 0.12000001061086807,
+    "output_peak": 0.25000001490116075,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "ready": true
+}
+

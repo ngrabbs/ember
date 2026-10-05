@@ -1,0 +1,68 @@
+{
+  "processor": {
+    "instance": "ember-uhf",
+    "name": "eps-uhf-proof",
+    "type": "Archive",
+    "creator": "guest",
+    "hasAlarms": false,
+    "hasCommanding": false,
+    "state": "RUNNING",
+    "replayRequest": {
+      "endAction": "STOP",
+      "speed": {
+        "type": "FIXED_DELAY",
+        "param": 2000.0
+      },
+      "packetRequest": {
+        "tmLinks": [
+          "eps-uhf-in"
+        ]
+      },
+      "start": "2026-10-03T12:44:54.368Z",
+      "stop": "2026-10-03T12:44:56.368Z",
+      "reverse": false,
+      "autostart": false
+    },
+    "replayState": "PAUSED",
+    "services": [
+      {
+        "instance": "ember-uhf",
+        "name": "ReplayService",
+        "state": "RUNNING",
+        "className": "org.yamcs.tctm.ReplayService",
+        "processor": "eps-uhf-proof"
+      },
+      {
+        "instance": "ember-uhf",
+        "name": "AlgorithmManager",
+        "state": "RUNNING",
+        "className": "org.yamcs.algorithms.AlgorithmManager",
+        "processor": "eps-uhf-proof"
+      }
+    ],
+    "persistent": true,
+    "time": "2026-10-03T12:44:55.368Z",
+    "replay": true,
+    "checkCommandClearance": false,
+    "protected": false,
+    "overrideAlgorithmsEnabled": false
+  },
+  "value": {
+    "id": {
+      "name": "POWER_STATUS_input_mv",
+      "namespace": "/ember"
+    },
+    "rawValue": {
+      "type": "SINT32",
+      "sint32Value": 10547
+    },
+    "engValue": {
+      "type": "FLOAT",
+      "floatValue": 10.547
+    },
+    "acquisitionTime": "2026-10-03T12:44:55.368Z",
+    "generationTime": "2026-10-03T12:44:55.368Z",
+    "acquisitionStatus": "ACQUIRED",
+    "expireMillis": "1900"
+  }
+}

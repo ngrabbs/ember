@@ -1,0 +1,8 @@
+IMPORTS {"gnuradio": "3.10.10.0", "burst_to_stream": false}
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False
+[WARNING] [MULTI_USRP] Could not set TX rate to 0.512 MHz. Actual rate is 0.512 MHz
+[WARNING] [MULTI_USRP] Could not set RX rate to 0.512 MHz. Actual rate is 0.512 MHz
+ACTUAL {"rx_rate": 511999.99977560603, "tx_rate": 511999.99977560603, "rx_clock": 511999.99977560603, "tx_clock": 511999.99977560603, "rx_bw": 512000.0, "tx_bw": 512000.0, "clock_source": "internal"}
+PROBE_READY
+PROBE_RESULT {"mode": "pipe", "rate": 512000, "actual": {"rx_rate": 511999.99977560603, "tx_rate": 511999.99977560603, "rx_clock": 511999.99977560603, "tx_clock": 511999.99977560603, "rx_bw": 512000.0, "tx_bw": 512000.0, "clock_source": "internal"}, "elapsed": 10.010586926999167, "input": 5171431, "output": 5155080, "udp_before": {"InDatagrams": 732575, "NoPorts": 40, "InErrors": 16384, "OutDatagrams": 1979637, "RcvbufErrors": 16384, "SndbufErrors": 0, "InCsumErrors": 0, "IgnoredMulti": 0, "MemErrors": 0}, "udp_after": {"InDatagrams": 747987, "NoPorts": 40, "InErrors": 16384, "OutDatagrams": 1995189, "RcvbufErrors": 16384, "SndbufErrors": 0, "InCsumErrors": 0, "IgnoredMulti": 0, "MemErrors": 0}, "udp_delta": {"InDatagrams": 15412, "NoPorts": 0, "InErrors": 0, "OutDatagrams": 15552, "RcvbufErrors": 0, "SndbufErrors": 0, "InCsumErrors": 0, "IgnoredMulti": 0, "MemErrors": 0}}

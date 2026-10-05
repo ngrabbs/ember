@@ -1,0 +1,23 @@
+ip link show can0; ip link show can1; ps w | grep -E "sdrb_tx|sdrb_caan"; python3 -c 'import subprocess; r=subprocess.run(["uhd_find_devices","--args"","type=sdrb"],capture_output=True,text=True,timeout=20); print(r.stdout); print(("UHD_DISCOVERY_EXIT",r.returncode)'; sha256sum ~/ember-uhf-20261003/sdrb_tx.py
+2: can0: <NOARP,ECHO> mtu 16 qdisc noop state DOWN mode DEFAULT group default qlen 10
+    link/can 
+3: can1: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
+    link/can 
+  650 petalinu  2260 S    grep -E sdrb_tx|sdrb_can
+--------------------------------------------------
+-- UHD Device 0
+--------------------------------------------------
+Device Address:
+    serial: 0AB90219
+    claimed: False
+    fpga: n/a
+    mgmt_addr: 127.0.0.1
+    name: sdrb-uhd
+    product: sdrb
+    type: sdrb
+
+
+
+UHD_DISCOVERY_EXIT 0
+2f7868b6cf5baf0c5c3c7cb5b48a22c55aec8047776e89c8fbc854b27e04da80  /home/petalinux/ember-uhf-20261003/sdrb_tx.py
+sdrb-uhd:~$ 

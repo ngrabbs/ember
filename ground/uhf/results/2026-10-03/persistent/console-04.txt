@@ -1,0 +1,105 @@
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 ~/ember-uhf-20261003/radio_service.py --mo
+ode transponder --rate 750000 --rx-frequency 435100000 --rx-gain 30 --tx-frequenc
+cy 434200000 --tx-gain 70 --seconds 120 --output ~/ember-persistent-radio-04 --tr
+ransmit > ~/ember-persistent-radio-04.log 2>&1 &
+[1] 1155
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 3000 ~/ember-persistent-radio-04.log
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 3000 ~/ember-persistent-radio-04.log
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 3000 ~/ember-persistent-radio-04.log
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 3000 ~/ember-persistent-radio-04.log
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 3000 ~/ember-persistent-radio-04.log
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 3000 ~/ember-persistent-radio-04.log
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 3000 ~/ember-persistent-radio-04.log
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False
+UUusrp_sink :error: In the last 9209 ms, 1 underflows occurred.
+usrp_source :error: In the last 3954 ms, 1 overflows occurred.
+DBINARY_RADIO_READY {"settings": {"mode": "transponder", "rate": 750000, "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock", "output": "/home/petalinux/ember-persistent-radio-04", "seconds": 120, "tx_frequency": 434200000.0, "tx_gain": 70.0, "rx_frequency": 435100000.0, "rx_gain": 30.0, "passband": 20000, "transition": 20000, "forward_scale": 0.5, "transmit": true}, "status": {"accepted": 0, "queued": 0, "expired": 0, "queue_full": 0, "emitted": 0, "output_samples": 788256, "writer_error": null, "accepting": true, "recent_packets": [], "note": "Downstream samples are not RF reception", "mode": "transponder"}}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -v
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -n ip link set can1 up; python3 ~/ember-can-m
+monitor-20261003/sdrb_can.py --interface can1 --seconds 100 --output ~/ember-pers
+sistent-can-04 > ~/ember-persistent-can-04.log 2>&1 &
+[2] 1189
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+PYTHONPATH=~/ember-can-monitor-20261003 python3 ~/
+/ember-uhf-20261003/can_forward.py --records ~/ember-persistent-can-04/packets.js
+sonl --output ~/ember-persistent-forward-04 --seconds 80 --limit 3 --service-sock
+ket ~/.cache/ember-binary-radio/control.sock --transmit > ~/ember-persistent-forw
+ward-04.log 2>&1 &
+[3] 1190
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+cat ~/ember-persistent-forward-04.log
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+cat ~/ember-persistent-forward-04.log
+CAN_RF_FORWARD_READY {"input": "/home/petalinux/ember-persistent-can-04/packets.jsonl", "queue_capacity": 2, "limit": 3, "seconds": 80, "application_replies": false}
+sdrb-uhd:~/ember-uhf-20261003$ 
+[3]+  Done                    PYTHONPATH=~/ember-can-monitor-20261003 python3 ~/ember-uhf-20261003/can_forward.py --records ~/ember-persistent-can-04/packets.jsonl --output ~/ember-persistent-forward-04 --seconds 80 --limit 3 --service-socket ~/.cache/ember-binary-radio/control.sock --transmit > ~/ember-persistent-forward-04.log 2>&1
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 ~/ember-uhf-20261003/add_packet.py --statu
+us; python3 ~/ember-uhf-20261003/add_packet.py --stop
+{"request": {"command": "status"}}
+{
+  "accepted": 3,
+  "queued": 0,
+  "expired": 0,
+  "queue_full": 0,
+  "emitted": 3,
+  "output_samples": 58775786,
+  "writer_error": null,
+  "accepting": true,
+  "recent_packets": [
+    {
+      "sequence": 1,
+      "begin": 13500416,
+      "end": 14340416,
+      "emitted": true
+    },
+    {
+      "sequence": 2,
+      "begin": 19976512,
+      "end": 20816512,
+      "emitted": true
+    },
+    {
+      "sequence": 3,
+      "begin": 26583680,
+      "end": 27423680,
+      "emitted": true
+    }
+  ],
+  "note": "Downstream samples are not RF reception",
+  "mode": "transponder",
+  "ready": true
+}

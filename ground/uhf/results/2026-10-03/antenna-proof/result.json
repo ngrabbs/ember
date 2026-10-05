@@ -1,0 +1,127 @@
+{
+  "status": "TELEMETRY_PASS_ANTENNA_FORWARDING_GATE_FAILED",
+  "physical_setup": "Operator-confirmed antennas restored on LibreSDR TXA and SDRB antenna_in; SDRB TX1 Direct and LibreSDR RX antennas unchanged",
+  "operator_reported_antennas": {
+    "libresdr": "stock antennas; bands unverified",
+    "sdrb": "tiny Wi-Fi/900 MHz antenna",
+    "separation_inches": 12
+  },
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-antenna-radio-01",
+    "seconds": 75,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "packet_peak": 0.12,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 60.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 16.0,
+    "forward_peak": 0.25,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "stream_seconds": 59.88061778499832,
+  "fresh_packets": 3,
+  "all_original_bytes_matched_at_ihu_can_socket_rf_yamcs": true,
+  "identities": [
+    {
+      "inner_sequence": 77,
+      "sha256": "8ceebfa6985ec158c49379b6bfdd7702580a955ec4835cc7b0cddcbad834f79e",
+      "yamcs_reception": "2026-10-03T19:05:34.601Z"
+    },
+    {
+      "inner_sequence": 78,
+      "sha256": "6d900189dc969b74f74621906629dbc7c910c0e60f0c612e2d29763dca383d3b",
+      "yamcs_reception": "2026-10-03T19:05:42.484Z"
+    },
+    {
+      "inner_sequence": 79,
+      "sha256": "180344251caaea87c2f483769ae96f9f33d71436064fbc5e4ad2311ab2750301",
+      "yamcs_reception": "2026-10-03T19:05:50.863Z"
+    }
+  ],
+  "rx_async_events": {},
+  "tx_async_events": {},
+  "udp_delta": {
+    "InDatagrams": 28626,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 40022,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "headroom": {
+    "samples": 36746717,
+    "forwarded_clipped": 5390,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 0.3265815948306377,
+    "forward_peak_after": 0.2500000298023206,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.36999843977264124,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "translated_tones": {
+    "5000": {
+      "on_off_db": 0.1670514133268058,
+      "spectral_snr_db": 9.087274319357814,
+      "peak_hz": 5126.953125
+    },
+    "11000": {
+      "on_off_db": -0.1943011324125983,
+      "spectral_snr_db": 8.921560568529033,
+      "peak_hz": 10742.1875
+    }
+  },
+  "antenna_forwarding_pass": false,
+  "ground_local_tones": {
+    "5000": {
+      "on_off_db": 16.894030307091846,
+      "spectral_snr_db": 23.81922115590354,
+      "peak_hz": 4882.8125
+    },
+    "11000": {
+      "on_off_db": 17.987528225181002,
+      "spectral_snr_db": 24.784575221577512,
+      "peak_hz": 10986.328125
+    }
+  },
+  "receive_only_weak_candidate": {
+    "candidate_measurements": 20,
+    "candidate_frequency_hz": 4200.0,
+    "median_candidate_snr_db": 12.826337178547483,
+    "first_seconds": 11.25,
+    "last_seconds": 21.5,
+    "max_5000_window_snr_db": 15.942286677000478,
+    "max_11000_window_snr_db": 14.230187738676921
+  },
+  "conclusion": "Fresh telemetry remains clean over the antenna downlink, but the antenna uplink-forwarding gate did not pass. Receive-only SDRB shows a weak repeated candidate consistent with the previously measured uplink frequency offset. Antenna/link margin and duplex isolation remain unresolved; SSB check held.",
+  "next_step": "Identify uplink antenna models/bands and spacing, inspect the physical feeds, then agree one bounded check after a concrete setup change.",
+  "limits": [
+    "One59.88second transponder check; no SSB/voice, endurance or uplink-command qualification.",
+    "Two24second local-ground tone checks: the first accompanied an invalid SDRB helper run, the second the corrected receiver-only capture. Local tones can include TX leakage and do not prove antenna efficiency or radiated power.",
+    "First SDRB receive-only helper used nitems_written on a sink and aborted; retained as invalid evidence. Corrected helper uses nitems_read and completed24seconds with1843200samples.",
+    "Receiver-only time is not aligned to ground TX timestamps; the late11kHz slot has limited overlap. The weak5kHz candidate is not a calibrated gain or self-interference measurement.",
+    "Reported stream-error qualification applies to the transponder service. The diagnostic receiver-only helper lacks explicit RX async counters.",
+    "No driver/clock, AMSAT core, boot, FPGA or rootfs library changes. Previous conducted results do not qualify this antenna setup.",
+    "Yamcs archive byte identity is verified; the previously paused EPS proof display was not updated."
+  ]
+}

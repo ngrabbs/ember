@@ -1,0 +1,109 @@
+{
+  "status": "SUPERVISED_NATIVE_TELEMETRY_PASS_STARTUP_RELIABILITY_OPEN",
+  "software_owner_tests": 7,
+  "final_native_packets": 2,
+  "host_telemetry_triggers": 0,
+  "native_interval_ms": 20000,
+  "identities": [
+    {
+      "inner_sequence": 9,
+      "sha256": "43595f877816da3eb9daff9dbba326863114ce107ae23ea838cebe24fac973e3",
+      "yamcs_reception": "2026-10-03T21:22:58.279Z"
+    },
+    {
+      "inner_sequence": 10,
+      "sha256": "4aeea3acb9dbb13097b57ed06c40f9d926889b2348f932aecd67b26cca85ffdc",
+      "yamcs_reception": "2026-10-03T21:23:19.045Z"
+    }
+  ],
+  "radio_stream_seconds": 63.58968623599503,
+  "ground_capture_seconds": 84.03056994199869,
+  "rx_async_events": {},
+  "tx_async_events": {},
+  "udp_delta": {
+    "InDatagrams": 30399,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 41831,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "headroom": {
+    "samples": 39023202,
+    "forwarded_clipped": 8,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 0.28505639718683884,
+    "forward_peak_after": 0.25000001490116075,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.251896548757425,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-uhf-supervised/20240228T041510Z-c5e3ca52850a/radio",
+    "seconds": 0,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "packet_peak": 0.12,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 60.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 16.0,
+    "forward_peak": 0.25,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "process_controls": [
+    "Explicit start/stop and new manual restart identity passed live.",
+    "Deliberately stopping the owned forwarder stopped SDRB radio/CAN without retry.",
+    "A real TX startup fault also stopped the entire SDRB role without retry."
+  ],
+  "earlier_attempts": [
+    {
+      "runs": [
+        1,
+        2
+      ],
+      "rf_gate": "FAIL",
+      "reason": "Pi user manager stopped 10 seconds after last SSH logout; each SDRB emitted 2 packets but receiver decoded none."
+    },
+    {
+      "run": 3,
+      "rf_gate": "FAIL",
+      "reason": "TX startup underflow=1 and time_error=144; no packet arm occurred. Ground captured 24.13 seconds after linger correction."
+    }
+  ],
+  "changes": [
+    "Pi account lingering enabled; UHF units remain disabled at boot.",
+    "Passive CAN reader and adapter now initialize before the unchanged timed RF flow.",
+    "Receiver capture metadata includes monotonic elapsed time; no IQ is saved in persistent mode."
+  ],
+  "final_state": "IHU timer off, both UHF services inactive/disabled, CAN0/1 down, radio owners released; Pi lingering yes, SDRB lingering no.",
+  "limits": [
+    "One 63.59-second final stream does not establish restart/endurance reliability or fix every underrun.",
+    "The startup fault root cause is not established. Startup ordering was changed before one subsequent successful check; no radio DSP/clock/core edit.",
+    "SDRB session must remain logged in; no persistent login policy was enabled there.",
+    "Native cadence remains bench firmware, opt-in and boot-off; production FreeRTOS scheduler/recovery is separate.",
+    "No new HT/SSB or calibrated RF measurement; old paused EPS display was not advanced.",
+    "Attempted RuntimeMaxSec runtime property was rejected by both systemd installations. Final check used named one-run fallback stop guards; no property backstop was claimed.",
+    "SDRB wall-clock run names use its incorrect 2024 date; chronology and durations use client/ground dates and monotonic time."
+  ]
+}

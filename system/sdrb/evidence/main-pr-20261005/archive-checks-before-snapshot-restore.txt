@@ -1,0 +1,386 @@
+{
+  "status": "NATIVE_IHU_AUTOTELEM_CLOSED_USB_UHF_YAMCS_PASS",
+  "firmware": {
+    "files": {
+      "firmware/can_feather_bench/main.c": "d694002900faf543f8df037b03c343aa69fac216bfe740878231f3fb1492fa64",
+      "firmware/can_feather_bench/autotelem.h": "f54f3ef33b49bebf47c167a02e944fd07c075d3321ab68c6b3296112ee49571b",
+      "firmware/can_feather_bench/CMakeLists.txt": "d3353c57a8ee4a433a77d4d057a03088290b848adf3ccd0a2ed501e10c34196e",
+      "build/ember_ihu_can_bench.uf2": "44bb70d0256567e78e6ac7acd3836faca45eef0c27281184c12b9a0e65a7789f",
+      "build/ember_ihu_can_bench.bin": "9791b90da2f03aaad0f6b4195dcccd4ae56fe98f686c3f3d604a9edad2f41540"
+    },
+    "backup_path": "/media/ngrabbs/BACKUP-A/ember-autotelem-20261003/ihu-before-autotelem.uf2",
+    "backup_sha256": "a87c2204f52490a27d47402637e4a63f97754b0e9579091b23b468eeda8dbfd0",
+    "flash_id": "DF641455DB822427",
+    "compiler": "arm-none-eabi-gcc14.2.1",
+    "sdk": "2.1.1-1-gee68c78",
+    "build_type": "Release",
+    "board": "ember_can_feather",
+    "flash_readback_verified": true
+  },
+  "period_seconds": 20,
+  "native_packets": 4,
+  "host_telemetry_triggers": 0,
+  "native_intervals_ms": [
+    19999,
+    20000
+  ],
+  "identities": [
+    {
+      "inner_sequence": 1,
+      "sha256": "187807a868e2958c206699b76db2dcf2b3598b6b25db13e764c8c73026f3b128",
+      "yamcs_reception": "2026-10-03T20:40:34.475Z",
+      "source_evidence": "IHU timer submission and returned bytes/CAN/socket/RF/Yamcs"
+    },
+    {
+      "inner_sequence": 2,
+      "sha256": "7cf786f1a86d4b8de96be4aa1dc31f3f48d606a4243df89c202aaed1dd9e87d5",
+      "yamcs_reception": "2026-10-03T20:40:54.704Z",
+      "source_evidence": "IHU timer submission and returned bytes/CAN/socket/RF/Yamcs"
+    },
+    {
+      "inner_sequence": 3,
+      "sha256": "b5a3d86ce6561db4152b5b1d05a6e0aebc323298477df784e4944d63d5e1738b",
+      "yamcs_reception": "2026-10-03T20:41:11.321Z",
+      "source_evidence": "IHU timer submission and returned bytes/CAN/socket/RF/Yamcs"
+    },
+    {
+      "inner_sequence": 4,
+      "sha256": "819464e7390371cc738dfb73606d7e826d0a059bf3b3c7df08e26e97df495981",
+      "yamcs_reception": "2026-10-03T20:41:38.812Z",
+      "source_evidence": "Native counter advanced during closed USB interval; CAN/socket/RF/Yamcs byte identity"
+    }
+  ],
+  "usb_console_closed_seconds": 25.000121098011732,
+  "disabled_quiet_ms": 136055,
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-autotelem-radio-01",
+    "seconds": 170,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "packet_peak": 0.12,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 60.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 16.0,
+    "forward_peak": 0.25,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "radio_stream_seconds": 118.23619502899965,
+  "rx_async_events": {},
+  "tx_async_events": {},
+  "udp_delta": {
+    "InDatagrams": 56498,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 76958,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "headroom": {
+    "samples": 72601537,
+    "forwarded_clipped": 0,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 0.2342742067407667,
+    "forward_peak_after": 0.2342742067407667,
+    "telemetry_peak_before": 0.12000001061086807,
+    "output_peak": 0.2342742067407667,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "final_state": "Native IHU timer disabled, radios released, CAN0/1 down; no startup services enabled.",
+  "limits": [
+    "IHU CAN bench firmware; not yet the production FreeRTOS flight scheduler.",
+    "Timer uses the existing CF_CHAIN peer/COMMS/Walter bench acknowledgement path; it needs normal CAN and a HELLO. No SDRB-aware firmware or protocol changes.",
+    "First three packets have IHU returned-byte evidence; fourth has native counter/closed USB timing plus CAN/RF/archive identities, because USB logging was absent.",
+    "USB endpoint/DTR closed; physical cable and supplies remained attached.",
+    "Finite transponder-mode telemetry test; no new HT/SSB, RF power, outage or endurance qualification.",
+    "Yamcs archive identities verified; old paused EPS display not advanced."
+  ]
+}
+{
+  "status": "HT_FORWARDING_OPERATOR_OBSERVED_TELEMETRY_AND_STREAM_PASS_OBSERVATION_WINDOW_ENDED_EARLY",
+  "physical_setup": "Operator confirmed UHF antennas on both radios; external HT uplink and RTL-SDR downlink observation requested. LibreSDR receive-only.",
+  "operator_observation": {
+    "source": "User response to the HT/RTL-SDR observation question in this chat",
+    "report": "yep it continued the whole time, I saw me transmitting and I saw it getting retransmitted down the band",
+    "observed_forwarding": true,
+    "observed_continuity_during_test": true,
+    "limits": [
+      "Visual external receiver observation reported by the operator; no saved RTL-SDR IQ, calibrated spectral measurement or audio-quality report supplied.",
+      "The observation concerns this HT test and does not retroactively pass the prior LibreSDR uplink tone gate."
+    ]
+  },
+  "test_window": {
+    "start_unix": 1791058483.626747,
+    "requested_seconds": 180,
+    "completed": false,
+    "end_unix": null,
+    "elapsed_seconds": null,
+    "start_provenance": "HANDHELD_WINDOW_STARTED stdout captured by the local execution tool",
+    "end_provenance": "Orchestrator raised when the finite ground receiver exited; exact observation-window end was not recorded. See session.json."
+  },
+  "orchestration": {
+    "error": "Ground receiver ended before test window",
+    "ground_returncode": 0
+  },
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-handheld-radio-01",
+    "seconds": 240,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "packet_peak": 0.12,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 60.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 16.0,
+    "forward_peak": 0.25,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "radio_stream_seconds": 203.27376040499803,
+  "fresh_packets": 9,
+  "all_original_bytes_matched_at_ihu_can_socket_rf_yamcs": true,
+  "identities": [
+    {
+      "inner_sequence": 86,
+      "sha256": "e2f94ff8026e64414e8b2682475007d763ea0f53ab5429a3c06e3379e0615297",
+      "yamcs_reception": "2026-10-03T20:14:52.187Z"
+    },
+    {
+      "inner_sequence": 87,
+      "sha256": "7e781a6e0d17857ce46819d063853f61fb88f2af1666c7e3425794e2efe182f1",
+      "yamcs_reception": "2026-10-03T20:15:12.621Z"
+    },
+    {
+      "inner_sequence": 88,
+      "sha256": "0adb8273c39f9f6fa094e87b4b24bed1fb3ee510f041641fa8f4aeca33720444",
+      "yamcs_reception": "2026-10-03T20:15:31.848Z"
+    },
+    {
+      "inner_sequence": 89,
+      "sha256": "f39f2db84c870ebcc2cc5d38d9c92f1aa1606307e83ae611a37a801f1946e0ca",
+      "yamcs_reception": "2026-10-03T20:15:52.387Z"
+    },
+    {
+      "inner_sequence": 90,
+      "sha256": "298697e43c6b1c14892fd3d39a2ea770333ff55993f2058b4765b847bc2ce743",
+      "yamcs_reception": "2026-10-03T20:16:11.850Z"
+    },
+    {
+      "inner_sequence": 91,
+      "sha256": "3e161e3648e583dc881a98111fa688af948a249c9272e7f12ae43ebd8126b1cb",
+      "yamcs_reception": "2026-10-03T20:16:32.415Z"
+    },
+    {
+      "inner_sequence": 92,
+      "sha256": "445dab67f7ef8e4eafd1eb2856720f1c2d9aac4c3af656ef1a2bd0f3ee9d6714",
+      "yamcs_reception": "2026-10-03T20:16:52.009Z"
+    },
+    {
+      "inner_sequence": 93,
+      "sha256": "0aef0f9210c1fb1592cd743bc54291b24703a76a459404c284de9b0f7bf126e4",
+      "yamcs_reception": "2026-10-03T20:17:12.641Z"
+    },
+    {
+      "inner_sequence": 94,
+      "sha256": "e30f5082cae58d766a5e6260f454ea581d3f694d305598da53cf0c17265fa826",
+      "yamcs_reception": "2026-10-03T20:17:31.974Z"
+    }
+  ],
+  "rx_async_events": {},
+  "tx_async_events": {},
+  "udp_delta": {
+    "InDatagrams": 97116,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 135780,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "headroom": {
+    "samples": 124857651,
+    "forwarded_clipped": 9295996,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 3.1091848344015602,
+    "forward_peak_after": 0.2500000298023206,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.37000003057557057,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "ground_capture": {
+    "samples": 420000000,
+    "errors": [],
+    "dropped_decode_windows": 0,
+    "decoder_exitcode": 0,
+    "fpga_sha256": "7f0e329b4724e0d919a06b9924aaa3c77305b6f25038deebd6171657ac7c8a99",
+    "frequency_hz": 434200000.0,
+    "rx_channel": 0,
+    "rx_gain": 40.0,
+    "seconds": 210,
+    "lowrate_hz": 40000,
+    "master_clock_hz": 32000000.0,
+    "hardware_decimation": 16.0
+  },
+  "limits": [
+    "The ground receiver lifetime started before radio setup and exhausted before the advertised180s observation window. The window ended early; radio stream duration is verified separately.",
+    "External HT transmit timing, modulation and received RTL-SDR signal/audio were not recorded by these applications; operator observation is separate.",
+    "Telemetry receiver captures its own low-rate band; this does not independently measure translated HT spectral quality.",
+    "Finite three-minute window; not indefinite or SSB qualification.",
+    "Optional bench time limits extended to600s; no AMSAT core/image/FPGA/rootfs changes.",
+    "Yamcs archive verified; the old paused EPS proof display was not advanced."
+  ]
+}
+{
+  "status": "TELEMETRY_PASS_BOTH_UHF_ANTENNAS_FORWARDING_GATE_FAILED",
+  "physical_setup": "Operator confirmed UHF antennas on SDRB and LibreSDR, following the request to fit LibreSDR TXA; last reported spacing approximately12inches; no models or calibrated efficiency supplied",
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-antenna-radio-03",
+    "seconds": 75,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "packet_peak": 0.12,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 60.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 16.0,
+    "forward_peak": 0.25,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "stream_seconds": 60.760165815998334,
+  "fresh_packets": 3,
+  "all_original_bytes_matched_at_ihu_can_socket_rf_yamcs": true,
+  "identities": [
+    {
+      "inner_sequence": 83,
+      "sha256": "f0556b5976a804e6cbc356ee3ff44dc8d509da3abab672c8c3e96f0ef3383b7f",
+      "yamcs_reception": "2026-10-03T19:51:44.592Z"
+    },
+    {
+      "inner_sequence": 84,
+      "sha256": "174585d281d741d4a4aaad3750f209a1ea16c92dc97ba704f31ba3db25b8da85",
+      "yamcs_reception": "2026-10-03T19:51:53.225Z"
+    },
+    {
+      "inner_sequence": 85,
+      "sha256": "39fca153fa0ef77cbcce01942763affb7df699de1d53df1138c420784073519c",
+      "yamcs_reception": "2026-10-03T19:52:01.165Z"
+    }
+  ],
+  "rx_async_events": {},
+  "tx_async_events": {},
+  "udp_delta": {
+    "InDatagrams": 29045,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 40799,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "headroom": {
+    "samples": 37283328,
+    "forwarded_clipped": 5,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 0.26924496802548603,
+    "forward_peak_after": 0.25000001490116075,
+    "telemetry_peak_before": 0.12000001061086807,
+    "output_peak": 0.25000001490116075,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "translated_tones": {
+    "5000": {
+      "on_off_db": 0.855769729745985,
+      "spectral_snr_db": 9.250424829508734,
+      "peak_hz": 5126.953125
+    },
+    "11000": {
+      "on_off_db": 0.94213982065145,
+      "spectral_snr_db": 7.983745995364246,
+      "peak_hz": 10986.328125
+    }
+  },
+  "antenna_forwarding_pass": false,
+  "previous_translated_tones": {
+    "5000": {
+      "on_off_db": 1.1801912087334352,
+      "spectral_snr_db": 9.444779005297557,
+      "peak_hz": 4882.8125
+    },
+    "11000": {
+      "on_off_db": 2.092716647943194,
+      "spectral_snr_db": 10.028811338326445,
+      "peak_hz": 10986.328125
+    }
+  },
+  "radio_settings_unchanged": true,
+  "conclusion": "With UHF antennas on both radios,3/3 fresh telemetry packets remained byte-identical through Yamcs with clean stream counters. Forwarded tone on/off contrast was still below1dB; the antenna forwarding gate did not pass. SSB remains pending.",
+  "next_step": "Verify actual LibreSDR TXA output level using an available RF analyzer, then resolve source/receive link margin and duplex isolation. No further automatic gain or rate sweep.",
+  "limits": [
+    "Single finite check, not SSB/voice or endurance qualification.",
+    "Operator-confirmed UHF antennas; prior spacing was12inches, not newly measured. No antenna model, calibrated RF power or isolation measurement.",
+    "No AMSAT core, clock/driver, boot, FPGA or rootfs library changes; default adder behavior unchanged.",
+    "Yamcs archive byte identity checked; the previously paused EPS display was not updated."
+  ]
+}
+Traceback (most recent call last):
+  File "/home/ngrabbs/work/ember-sdrb-pr-validation-20261005/ground/uhf/results/2026-10-03/supervision/verify.py", line 14, in <module>
+    for name,digest in read(manifest).items():assert hashlib.sha256((p/folder/name).read_bytes()).hexdigest()==digest
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

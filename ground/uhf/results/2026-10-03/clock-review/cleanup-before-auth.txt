@@ -1,0 +1,102 @@
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -n ip link set can1 down; ip -details link shhow can0; ip -details link show can1; uhd_find_devices --args type=sdrb; test ! --S ~/.cache/ember-binary-radio/control.sock && echo RADIO_SOCKET_CLOSED; ps w
+sudo: a password is required
+2: can0: <NOARP,ECHO> mtu 16 qdisc noop state DOWN mode DEFAULT group default qlen 10
+    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 
+    can state STOPPED (berr-counter tx 0 rx 0) restart-ms 0 
+	  xilinx_can: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..256 brp_inc 1
+	  clock 99999999 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536 parentbus platform parentdev e0008000.can 
+3: can1: <NOARP,UP,LOWER_UP,ECHO> mtu 16 qdisc pfifo_fast state UP mode DEFAULT group default qlen 10
+    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 
+    can state ERROR-ACTIVE (berr-counter tx 0 rx 0) restart-ms 0 
+	  bitrate 499999 sample-point 0.875
+	  tq 250 prop-seg 3 phase-seg1 3 phase-seg2 1 sjw 1 brp 25
+	  xilinx_can: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..256 brp_inc 1
+	  clock 99999999 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536 parentbus platform parentdev e0009000.can 
+[0;32m[INFO] [UHD] [0;39mlinux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+--------------------------------------------------
+-- UHD Device 0
+--------------------------------------------------
+Device Address:
+    serial: 0AB90219
+    claimed: False
+    fpga: n/a
+    mgmt_addr: 127.0.0.1
+    name: sdrb-uhd
+    product: sdrb
+    type: sdrb
+
+
+RADIO_SOCKET_CLOSED
+  PID USER       VSZ STAT COMMAND
+    1 root     10624 S    {systemd} /sbin/init
+    2 root         0 SW   [kthreadd]
+    3 root         0 SW   [pool_workqueue_]
+    4 root         0 IW<  [kworker/R-rcu_g]
+    5 root         0 IW<  [kworker/R-rcu_p]
+    6 root         0 IW<  [kworker/R-slub_]
+    9 root         0 IW   [kworker/0:1-eve]
+   10 root         0 IW   [kworker/u4:0-fl]
+   11 root         0 IW<  [kworker/R-mm_pe]
+   12 root         0 SW   [ksoftirqd/0]
+   13 root         0 IW   [rcu_preempt]
+   14 root         0 SW   [migration/0]
+   15 root         0 SW   [cpuhp/0]
+   16 root         0 SW   [cpuhp/1]
+   17 root         0 SW   [migration/1]
+   18 root         0 SW   [ksoftirqd/1]
+   21 root         0 SW   [kdevtmpfs]
+   22 root         0 IW<  [kworker/R-inet_]
+   24 root         0 IW   [kworker/1:1-eve]
+   25 root         0 SW   [oom_reaper]
+   26 root         0 IW<  [kworker/R-write]
+   27 root         0 IW<  [kworker/R-kbloc]
+   28 root         0 IW<  [kworker/R-edac-]
+   29 root         0 SW   [watchdogd]
+   30 root         0 IW<  [kworker/0:1H-mm]
+   31 root         0 IW<  [kworker/R-rpcio]
+   32 root         0 IW<  [kworker/R-xprti]
+   33 root         0 SW   [kswapd0]
+   34 root         0 IW<  [kworker/R-nfsio]
+   35 root         0 IW   [kworker/0:2-pm]
+   36 root         0 SW   [spi1]
+   38 root         0 IW<  [kworker/u5:0]
+   39 root         0 IW<  [kworker/R-sdhci]
+   40 root         0 SW   [irq/48-mmc0]
+   41 root         0 IW<  [kworker/R-mld]
+   42 root         0 IW<  [kworker/1:1H-kb]
+   43 root         0 IW<  [kworker/R-ipv6_]
+   44 root         0 IW<  [kworker/R-mmc_c]
+   45 root         0 IW   [kworker/u4:2-ev]
+   48 root         0 SW   [jbd2/mmcblk0p2-]
+   49 root         0 IW<  [kworker/R-ext4-]
+   62 root         0 IW   [kworker/1:2-pm]
+   70 rpc       2816 S    /usr/sbin/rpcbind -w -f
+   72 root     16620 S    /usr/lib/systemd/systemd-journald
+   83 root         0 IW   [kworker/u4:3]
+  110 root     19360 S    /usr/lib/systemd/systemd-udevd
+  399 systemd-  9204 S    /usr/lib/systemd/systemd-resolved
+  401 systemd- 17564 S    /usr/lib/systemd/systemd-timesyncd
+  403 root      8168 S    /usr/lib/systemd/systemd-userdbd
+  415 root      2260 S    /usr/sbin/klogd -n
+  416 root      2260 S    /usr/sbin/syslogd -n
+  417 messageb  4172 S    /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+  420 root      8340 S    /usr/lib/systemd/systemd-logind
+  429 systemd-  9292 S    /usr/lib/systemd/systemd-networkd
+  438 root     13796 S    /usr/sbin/tcf-agent -d -L- -l0
+  444 root      1528 S    /sbin/agetty -o -p -- \u --noclear - linux
+  445 root      3280 S    /bin/login --
+  452 root     36920 S    python3 /usr/bin/usrp_hwd.py
+  455 root     67820 S    python3 /usr/bin/usrp_hwd.py
+  456 root     36904 S    python3 /usr/bin/usrp_hwd.py
+  461 petalinu  9840 S    /usr/lib/systemd/systemd --user
+  462 petalinu 10768 S    (sd-pam)
+  467 petalinu  3092 S    -sh
+ 1194 root         0 IW<  [kworker/1:0H]
+ 1587 root         0 IW<  [kworker/0:2H]
+ 1663 root      8456 S    systemd-userwork: waiting...
+ 1664 root      8456 S    systemd-userwork: waiting...
+ 1665 root      8456 S    systemd-userwork: waiting...
+ 1686 petalinu  2288 R    ps w
+sdrb-uhd:~/ember-uhf-20261003$ 

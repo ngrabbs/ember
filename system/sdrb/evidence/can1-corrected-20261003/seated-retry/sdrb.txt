@@ -1,0 +1,10 @@
+sudo -n ip link set can1 up && python3 ~/ember-can-monitor-20261003/ssdrb_can.py --interface can1 --seconds 18 --output ~/ember-can-test-05 > ~/ember--can-test-05.log 2>&1 &
+[1] 598
+sdrb-uhd:~$ -sh: line 35: /usr/bin/sudo: Input/output error
+cat ~/ember-can-test-05.log
+-sh: /usr/bin/cat: Input/output error
+[1]+  Done(126)               sudo -n ip link set can1 up && python3 ~/ember-can-monitor-20261003/sdrb_can.py --interface can1 --seconds 18 --output ~/ember-can-test-05 > ~/ember-can-test-05.log 2>&1
+sdrb-uhd:~$ sudo -n ip link set can1 down; ip link show can1
+-sh: /usr/bin/sudo: Input/output error
+-sh: /usr/sbin/ip: Input/output error
+sdrb-uhd:~$ 

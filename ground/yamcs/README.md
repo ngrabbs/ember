@@ -190,3 +190,7 @@ remove `COMPOSE_FILE` from `.env`, set `EMBER_PACKET_TRANSPORT=simulator`, run
 `python3 prepare.py --transport simulator` and `docker compose up -d`. Both
 configurations retain the existing archives. Use the matching `--transport`
 for `ember_smoke.py`.
+
+## UHF / SDRB channel
+
+The [UHF section](../uhf/README.md) adds isolated `ember-uhf` / UDP10019 with the existing MDB and EPS display. The [optional services](../uhf/SERVICES.md) remain disabled at boot; IHU cadence is armed separately. USB and LTE archives stay separate.

@@ -1,0 +1,153 @@
+{
+  "scope": "RF decoder output byte-matched to isolated UHF Yamcs archive and realtime decoded parameters",
+  "matched_packets": [
+    {
+      "packet": "CQHAAwB5AQEAEAIBAAAAAAAAAACcWKlAAEXInQBgAQICAQEBAQICAAAAAAAAAAAEAEXInQAAAAAAAAACAAApMwAAJ/b///0jAAFgwgAAVVsAACcQAAAnEAAAAAEIAAAAAAAAAAAAAGcABBj8GC3/+wJoNAIB5AAAAAcg4gAB7Kk=",
+      "sequenceNumber": 151109635,
+      "id": {
+        "name": "/ember/POWER_STATUS"
+      },
+      "receptionTime": "2026-10-03T12:44:55.368Z",
+      "generationTime": "2026-10-03T12:44:55.368Z",
+      "earthReceptionTime": "2026-10-03T12:44:55.368Z",
+      "link": "eps-uhf-in",
+      "size": 128
+    }
+  ],
+  "parameters": {
+    "input_mv": {
+      "id": {
+        "name": "POWER_STATUS_input_mv",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "SINT32",
+        "sint32Value": 10547
+      },
+      "engValue": {
+        "type": "FLOAT",
+        "floatValue": 10.547
+      },
+      "acquisitionTime": "2026-10-03T12:44:55.368Z",
+      "generationTime": "2026-10-03T12:44:55.368Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    },
+    "output_mv": {
+      "id": {
+        "name": "POWER_STATUS_output_mv",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "SINT32",
+        "sint32Value": 10230
+      },
+      "engValue": {
+        "type": "FLOAT",
+        "floatValue": 10.23
+      },
+      "acquisitionTime": "2026-10-03T12:44:55.368Z",
+      "generationTime": "2026-10-03T12:44:55.368Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    },
+    "battery_mv": {
+      "id": {
+        "name": "POWER_STATUS_battery_mv",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "SINT32",
+        "sint32Value": 2
+      },
+      "engValue": {
+        "type": "FLOAT",
+        "floatValue": 0.002
+      },
+      "acquisitionTime": "2026-10-03T12:44:55.368Z",
+      "generationTime": "2026-10-03T12:44:55.368Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    },
+    "die_temp_mc": {
+      "id": {
+        "name": "POWER_STATUS_die_temp_mc",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "SINT32",
+        "sint32Value": 21851
+      },
+      "engValue": {
+        "type": "FLOAT",
+        "floatValue": 21.851
+      },
+      "acquisitionTime": "2026-10-03T12:44:55.368Z",
+      "generationTime": "2026-10-03T12:44:55.368Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    },
+    "readout_count": {
+      "id": {
+        "name": "POWER_STATUS_readout_count",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "UINT32",
+        "uint32Value": 4
+      },
+      "engValue": {
+        "type": "UINT32",
+        "uint32Value": 4
+      },
+      "acquisitionTime": "2026-10-03T12:44:55.368Z",
+      "generationTime": "2026-10-03T12:44:55.368Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    },
+    "adc_valid": {
+      "id": {
+        "name": "POWER_STATUS_adc_valid",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "UINT32",
+        "uint32Value": 1
+      },
+      "engValue": {
+        "type": "UINT32",
+        "uint32Value": 1
+      },
+      "acquisitionTime": "2026-10-03T12:44:55.368Z",
+      "generationTime": "2026-10-03T12:44:55.368Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    }
+  },
+  "links": {
+    "links": [
+      {
+        "instance": "ember-uhf",
+        "name": "eps-uhf-in",
+        "type": "org.yamcs.tctm.UdpTmDataLink",
+        "disabled": false,
+        "status": "OK",
+        "detailedStatus": "OK, receiving on 10019",
+        "dataInCount": "1",
+        "dataOutCount": "0",
+        "extra": {
+          "Valid datagrams": "1",
+          "Invalid datagrams": "0"
+        },
+        "parameters": [
+          "/yamcs/eab13e9291e5/links/eps-uhf-in/dataInCount",
+          "/yamcs/eab13e9291e5/links/eps-uhf-in/dataInRate",
+          "/yamcs/eab13e9291e5/links/eps-uhf-in/dataOutCount",
+          "/yamcs/eab13e9291e5/links/eps-uhf-in/dataOutRate",
+          "/yamcs/eab13e9291e5/links/eps-uhf-in/linkStatus",
+          "/yamcs/eab13e9291e5/links/eps-uhf-in/packetRate"
+        ]
+      }
+    ]
+  }
+}

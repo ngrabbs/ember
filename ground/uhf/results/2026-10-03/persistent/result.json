@@ -1,0 +1,74 @@
+{
+  "status": "PASS_PERSISTENT_BINARY_TELEMETRY_IN_TRANSPONDER_MODE_WITH_STREAM_INTERRUPTION_LIMIT",
+  "fresh_packets_admitted": 3,
+  "rf_packets_recovered": 3,
+  "identical_ihu_can_queue_rf_yamcs": true,
+  "identities": [
+    {
+      "outer_sequence": 1,
+      "inner_sequence": 13,
+      "sha256": "c301d84fe7e20a7c3d550145ef648317811a4d01d442feb0aff0ca8462fa6455",
+      "yamcs_reception": "2026-10-03T14:07:13.126Z",
+      "preparation_seconds": 2.87007197299954
+    },
+    {
+      "outer_sequence": 2,
+      "inner_sequence": 14,
+      "sha256": "8e712ebbe965829c2c1f658f1fae40e4069a8bc32c83654d27ac1e636fc15867",
+      "yamcs_reception": "2026-10-03T14:07:21.379Z",
+      "preparation_seconds": 2.7854788240001653
+    },
+    {
+      "outer_sequence": 3,
+      "inner_sequence": 15,
+      "sha256": "706c746dee615bc98b04fc58934304aea11c559b0a764eeb73f02d28a99f3edc",
+      "yamcs_reception": "2026-10-03T14:07:29.413Z",
+      "preparation_seconds": 2.708177618999798
+    }
+  ],
+  "settings": {
+    "mode": "transponder",
+    "rate": 750000,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-persistent-radio-04",
+    "seconds": 120,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 30.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 0.5,
+    "transmit": true
+  },
+  "stop": "side command; clean stop after81seconds",
+  "software_checks": {
+    "queue_ipc_tests": 4,
+    "native_filtered_mix_payload_recovery": true
+  },
+  "limits": [
+    "Native SDRB RX overflows and TX underflows remain; uninterrupted repeater service is not qualified",
+    "Actual over-the-air amateur uplink forwarding has not been independently tested; forwarding/filter/addition passed software GNU Radio test",
+    "1.5MS/s transponder mode failed with control timeout and watchdog stop",
+    "750kS/s initial run stayed open but its later submissions were outside the bounded session; aligned follow-up produced this3/3 proof",
+    "No FEC, ACK/retry or unattended startup service"
+  ],
+  "source_sha256": {
+    "radio_service.py": "9fe4bb7f8fdd491b355e55d1d064aff54ea6b544c8b840efad9819faf2d7bf39",
+    "binary_injector.py": "7c6cadae5127638ad9b01267a4474c2d66f8f9dcfa422abeab871c9ff8916bb3",
+    "radio_control.py": "65102f5079b31e17d88bb2e353d388a06fddafd92c66381657cada071e3e2e58",
+    "add_packet.py": "6da1fdef5db67120f612aee7f56a27d31927bbfafe23ef5058f1f4049d8f57b3",
+    "can_forward.py": "80c8e4e9db1be9cab8551acaf58e60a55c0be0cb82fc10516d171a87554d845f",
+    "packet_radio.py": "922a3e5f2dce81200ca33f97147c3d59600761152d6afcc65d0d636dec837803"
+  },
+  "tested_radio_service_sha256": "2f6fef64fefc4cc6f3b2b24a5327f993f6e6fe255d92b3060ffa0b01c61aa667",
+  "delivered_source_difference": "Mode-dependent rate default; concise client error output/exit1; tested explicit750000 settings and wire protocol unchanged",
+  "cleanup": {
+    "sdrb_can0": "DOWN",
+    "sdrb_can1": "DOWN",
+    "sdrb_claimed": false,
+    "radio_apps_running": false,
+    "libresdr_usb_owner": false,
+    "yamcs_healthy": true
+  }
+}

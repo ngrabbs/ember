@@ -1,0 +1,5 @@
+# Add to the existing COMPOSE_FILE selection; retains USB and LTE bindings.
+services:
+  yamcs:
+    ports:
+      - "127.0.0.1:10019:10019/udp"

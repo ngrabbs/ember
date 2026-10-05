@@ -1,0 +1,377 @@
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+test ! -S ~/.cache/ember-binary-radio/control.sock
+k && echo RADIO_CONTROL_CLOSED; sha256sum ~/ember-uhf-20261003/radio_service.py ~
+~/ember-uhf-20261003/headroom_mix.so ~/ember-uhf-20261003/can_forward.py ~/ember-
+-can-monitor-20261003/sdrb_can.py
+RADIO_CONTROL_CLOSED
+0023d715da1fbd80a8f4bd3e64e59d2fe2409736e2ad622c4cfe5ac3e010d99e  /home/petalinux/ember-uhf-20261003/radio_service.py
+b893aece99f12be0753eaeecfac528fb69265ee48959e51db2bd6d0773ddbcf5  /home/petalinux/ember-uhf-20261003/headroom_mix.so
+d0738346535056173ae08b9727fba64b3c433b9132cc5f5412874bcb03394132  /home/petalinux/ember-uhf-20261003/can_forward.py
+851e49d769e8c66e28a2a547e3b7deb89feddcbe1b6c838d206bc726c9494dcc  /home/petalinux/ember-can-monitor-20261003/sdrb_can.py
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -n ip link set can1 up; python3 -u ~/ember-ca
+an-monitor-20261003/sdrb_can.py --interface can1 --seconds 220 --output ~/ember-h
+handheld-can-01 > ~/ember-handheld-can-01.log 2>&1 &
+[1] 3107
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+cat ~/ember-handheld-can-01.log
+{"ready": true, "interface": "can1", "boot": 963288088, "radio": "disabled", "application_replies_enabled": false}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -u ~/ember-uhf-20261003/radio_service.py -
+--mode transponder --rate 614400 --rx-frequency 435100000 --rx-gain 60 --tx-frequ
+uency 434200000 --tx-gain 70 --forward-scale 16 --forward-peak .25 --seconds 240 
+ --output ~/ember-handheld-radio-01 --transmit > ~/ember-handheld-radio-01.log 2>
+>&1 &
+[2] 3109
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 5000 ~/ember-handheld-radio-01.log
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 5000 ~/ember-handheld-radio-01.log
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False,recv_frame_size=8000,send_frame_size=8000
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 5000 ~/ember-handheld-radio-01.log
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False,recv_frame_size=8000,send_frame_size=8000
+[WARNING] [MULTI_USRP] Could not set TX rate to 0.614 MHz. Actual rate is 0.614 MHz
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 5000 ~/ember-handheld-radio-01.log
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False,recv_frame_size=8000,send_frame_size=8000
+[WARNING] [MULTI_USRP] Could not set TX rate to 0.614 MHz. Actual rate is 0.614 MHz
+[WARNING] [MULTI_USRP] Could not set RX rate to 0.614 MHz. Actual rate is 0.614 MHz
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 5000 ~/ember-handheld-radio-01.log
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False,recv_frame_size=8000,send_frame_size=8000
+[WARNING] [MULTI_USRP] Could not set TX rate to 0.614 MHz. Actual rate is 0.614 MHz
+[WARNING] [MULTI_USRP] Could not set RX rate to 0.614 MHz. Actual rate is 0.614 MHz
+BINARY_RADIO_READY {"settings": {"mode": "transponder", "rate": 614400, "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock", "output": "/home/petalinux/ember-handheld-radio-01", "seconds": 240, "tx_frequency": 434200000.0, "tx_gain": 70.0, "packet_peak": 0.12, "rx_frequency": 435100000.0, "rx_gain": 60.0, "passband": 20000, "transition": 20000, "forward_scale": 16.0, "forward_peak": 0.25, "transmit": true}, "actual": {"device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000", "tx_rate": 614400.0034706265, "tx_clock": 614400.0034706265, "tx_bandwidth": 614400.0, "clock_source": "internal", "samples_per_symbol": 512.0, "rx_rate": 614400.0034706265, "rx_clock": 614400.0034706265, "rx_bandwidth": 614400.0}, "status": {"accepted": 0, "queued": 0, "expired": 0, "queue_full": 0, "emitted": 0, "output_samples": 763215, "writer_error": null, "accepting": true, "recent_packets": [], "note": "Downstream samples are not RF reception", "mode": "transponder", "tx_async_events": {}, "rx_async_events": {}, "headroom": {"samples": 763215, "forwarded_clipped": 9, "telemetry_clipped": 0, "invalid": 0, "forward_peak_before": 0.2847868080789783, "forward_peak_after": 0.25000001490116075, "telemetry_peak_before": 0.0, "output_peak": 0.25000001490116075, "forward_limit": 0.25, "telemetry_limit": 0.15000000596046448}}}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+PYTHONPATH=~/ember-can-monitor-20261003 python3 -u
+u ~/ember-uhf-20261003/can_forward.py --records ~/ember-handheld-can-01/packets.j
+jsonl --output ~/ember-handheld-forward-01 --seconds 200 --limit 9 --service-sock
+ket ~/.cache/ember-binary-radio/control.sock --transmit > ~/ember-handheld-forwar
+rd-01.log 2>&1 &
+[3] 3139
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+cat ~/ember-handheld-forward-01.log
+CAN_RF_FORWARD_READY {"input": "/home/petalinux/ember-handheld-can-01/packets.jsonl", "queue_capacity": 2, "limit": 9, "seconds": 200, "application_replies": false}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 ~/ember-uhf-20261003/add_packet.py --statu
+us
+{"request": {"command": "status"}}
+{
+  "accepted": 3,
+  "queued": 0,
+  "expired": 0,
+  "queue_full": 0,
+  "emitted": 3,
+  "output_samples": 41812140,
+  "writer_error": null,
+  "accepting": true,
+  "recent_packets": [
+    {
+      "sequence": 1,
+      "begin": 14745600,
+      "end": 15433728,
+      "emitted": true
+    },
+    {
+      "sequence": 2,
+      "begin": 27230208,
+      "end": 27918336,
+      "emitted": true
+    },
+    {
+      "sequence": 3,
+      "begin": 39321600,
+      "end": 40009728,
+      "emitted": true
+    }
+  ],
+  "note": "Downstream samples are not RF reception",
+  "mode": "transponder",
+  "tx_async_events": {},
+  "rx_async_events": {},
+  "headroom": {
+    "samples": 41812140,
+    "forwarded_clipped": 2624793,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 1.9091806865406593,
+    "forward_peak_after": 0.2500000298023206,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.37000003057557057,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "ready": true
+}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 ~/ember-uhf-20261003/add_packet.py --statu
+us
+{"request": {"command": "status"}}
+{
+  "accepted": 5,
+  "queued": 0,
+  "expired": 0,
+  "queue_full": 0,
+  "emitted": 5,
+  "output_samples": 69283534,
+  "writer_error": null,
+  "accepting": true,
+  "recent_packets": [
+    {
+      "sequence": 1,
+      "begin": 14745600,
+      "end": 15433728,
+      "emitted": true
+    },
+    {
+      "sequence": 2,
+      "begin": 27230208,
+      "end": 27918336,
+      "emitted": true
+    },
+    {
+      "sequence": 3,
+      "begin": 39321600,
+      "end": 40009728,
+      "emitted": true
+    },
+    {
+      "sequence": 4,
+      "begin": 51544064,
+      "end": 52232192,
+      "emitted": true
+    },
+    {
+      "sequence": 5,
+      "begin": 63766528,
+      "end": 64454656,
+      "emitted": true
+    }
+  ],
+  "note": "Downstream samples are not RF reception",
+  "mode": "transponder",
+  "tx_async_events": {},
+  "rx_async_events": {},
+  "headroom": {
+    "samples": 69283534,
+    "forwarded_clipped": 3736263,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 1.9091806865406593,
+    "forward_peak_after": 0.2500000298023206,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.37000003057557057,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "ready": true
+}
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 ~/ember-uhf-20261003/add_packet.py --statu
+us
+{"request": {"command": "status"}}
+{
+  "accepted": 7,
+  "queued": 0,
+  "expired": 0,
+  "queue_full": 0,
+  "emitted": 7,
+  "output_samples": 96992273,
+  "writer_error": null,
+  "accepting": true,
+  "recent_packets": [
+    {
+      "sequence": 1,
+      "begin": 14745600,
+      "end": 15433728,
+      "emitted": true
+    },
+    {
+      "sequence": 2,
+      "begin": 27230208,
+      "end": 27918336,
+      "emitted": true
+    },
+    {
+      "sequence": 3,
+      "begin": 39321600,
+      "end": 40009728,
+      "emitted": true
+    },
+    {
+      "sequence": 4,
+      "begin": 51544064,
+      "end": 52232192,
+      "emitted": true
+    },
+    {
+      "sequence": 5,
+      "begin": 63766528,
+      "end": 64454656,
+      "emitted": true
+    },
+    {
+      "sequence": 6,
+      "begin": 76120064,
+      "end": 76808192,
+      "emitted": true
+    },
+    {
+      "sequence": 7,
+      "begin": 88408064,
+      "end": 89096192,
+      "emitted": true
+    }
+  ],
+  "note": "Downstream samples are not RF reception",
+  "mode": "transponder",
+  "tx_async_events": {},
+  "rx_async_events": {},
+  "headroom": {
+    "samples": 96992273,
+    "forwarded_clipped": 5815397,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 1.9091806865406593,
+    "forward_peak_after": 0.2500000298023206,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.37000003057557057,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "ready": true
+}
+sdrb-uhd:~/ember-uhf-20261003$ 
+[3]+  Done                    PYTHONPATH=~/ember-can-monitor-20261003 python3 -u ~/ember-uhf-20261003/can_forward.py --records ~/ember-handheld-can-01/packets.jsonl --output ~/ember-handheld-forward-01 --seconds 200 --limit 9 --service-socket ~/.cache/ember-binary-radio/control.sock --transmit > ~/ember-handheld-forward-01.log 2>&1
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 ~/ember-uhf-20261003/add_packet.py --statu
+us; python3 ~/ember-uhf-20261003/add_packet.py --stop
+{"request": {"command": "status"}}
+{
+  "accepted": 9,
+  "queued": 0,
+  "expired": 0,
+  "queue_full": 0,
+  "emitted": 9,
+  "output_samples": 124120906,
+  "writer_error": null,
+  "accepting": true,
+  "recent_packets": [
+    {
+      "sequence": 1,
+      "begin": 14745600,
+      "end": 15433728,
+      "emitted": true
+    },
+    {
+      "sequence": 2,
+      "begin": 27230208,
+      "end": 27918336,
+      "emitted": true
+    },
+    {
+      "sequence": 3,
+      "begin": 39321600,
+      "end": 40009728,
+      "emitted": true
+    },
+    {
+      "sequence": 4,
+      "begin": 51544064,
+      "end": 52232192,
+      "emitted": true
+    },
+    {
+      "sequence": 5,
+      "begin": 63766528,
+      "end": 64454656,
+      "emitted": true
+    },
+    {
+      "sequence": 6,
+      "begin": 76120064,
+      "end": 76808192,
+      "emitted": true
+    },
+    {
+      "sequence": 7,
+      "begin": 88408064,
+      "end": 89096192,
+      "emitted": true
+    },
+    {
+      "sequence": 8,
+      "begin": 100696064,
+      "end": 101384192,
+      "emitted": true
+    },
+    {
+      "sequence": 9,
+      "begin": 112984064,
+      "end": 113672192,
+      "emitted": true
+    }
+  ],
+  "note": "Downstream samples are not RF reception",
+  "mode": "transponder",
+  "tx_async_events": {},
+  "rx_async_events": {},
+  "headroom": {
+    "samples": 124120906,
+    "forwarded_clipped": 9295996,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 3.1091848344015602,
+    "forward_peak_after": 0.2500000298023206,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.37000003057557057,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "ready": true
+}
+[1]-  Done                    python3 -u ~/ember-can-monitor-20261003/sdrb_can.py --interface can1 --seconds 220 --output ~/ember-handheld-can-01 > ~/ember-handheld-can-01.log 2>&1
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -v
+sdrb-uhd:~/ember-uhf-20261003$ 
+while ps w | grep "[s]drb_can.py.*ember-handheld-c
+can-01" >/dev/null; do sleep 1; done; echo CAN_MONITOR_ENDED; sudo -n ip link set
+t can1 down; ip -details -statistics link show can1
+[2]+  Done                    python3 -u ~/ember-uhf-20261003/radio_service.py --mode transponder --rate 614400 --rx-frequency 435100000 --rx-gain 60 --tx-frequency 434200000 --tx-gain 70 --forward-scale 16 --forward-peak .25 --seconds 240 --output ~/ember-handheld-radio-01 --transmit > ~/ember-handheld-radio-01.log 2>&1
+CAN_MONITOR_ENDED
+3: can1: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
+    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 
+    can state STOPPED (berr-counter tx 0 rx 0) restart-ms 0 
+	  bitrate 499999 sample-point 0.875
+	  tq 250 prop-seg 3 phase-seg1 3 phase-seg2 1 sjw 1 brp 25
+	  xilinx_can: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..256 brp_inc 1
+	  clock 99999999 
+	  re-started bus-errors arbit-lost error-warn error-pass bus-off
+	  0          0          0          0          0          0         numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536 parentbus platform parentdev e0009000.can 
+    RX:  bytes packets errors dropped  missed   mcast           
+         59076    7444      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+             0       0      0       0       0       0 
+sdrb-uhd:~/ember-uhf-20261003$ 

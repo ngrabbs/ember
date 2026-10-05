@@ -1,0 +1,365 @@
+Subject: [PATCH] Recognize SDRB and adapt the retained E310 radio register ABI
+
+Upstream-Status: Inappropriate [SDRB board port]
+
+Keep software product identity SDRB. The current FPGA retains E310's device ID
+and digital frontend order, so select SDRB RF policy from MPM product metadata.
+No IIO path or E310 EEPROM/ATR/PA controls are used for this product.
+
+diff --git a/host/lib/usrp/mpmd/mpmd_devices.hpp b/host/lib/usrp/mpmd/mpmd_devices.hpp
+--- a/host/lib/usrp/mpmd/mpmd_devices.hpp
++++ b/host/lib/usrp/mpmd/mpmd_devices.hpp
+@@ -16,6 +16,6 @@
+ // List all MPM devices here by their 'type' key. Note: Do not use these values
+ // to make decisions. This vector is for filtering purposes.
+ static const std::vector<std::string> MPM_DEVICE_TYPES = {
+-    MPM_CATCHALL_DEVICE_TYPE, "n3xx", "e3xx", "x4xx"};
++    MPM_CATCHALL_DEVICE_TYPE, "n3xx", "e3xx", "x4xx", "sdrb"};
+ 
+ #endif /* INCLUDED_MPMD_DEVICES_HPP */
+diff --git a/host/lib/usrp/dboard/e3xx/e3xx_radio_control_impl.hpp b/host/lib/usrp/dboard/e3xx/e3xx_radio_control_impl.hpp
+--- a/host/lib/usrp/dboard/e3xx/e3xx_radio_control_impl.hpp
++++ b/host/lib/usrp/dboard/e3xx/e3xx_radio_control_impl.hpp
+@@ -204,6 +204,8 @@
+ 
+     //! Swap RFA and RFB for catalina
+     bool _fe_swap;
++    // SDRB retains the E310 FPGA register ABI, but not its RF/peripheral policy.
++    bool _is_sdrb = false;
+ 
+     //! Init RPC-related items
+     void _init_mpm();
+diff --git a/host/lib/usrp/dboard/e3xx/e31x_radio_control_impl.hpp b/host/lib/usrp/dboard/e3xx/e31x_radio_control_impl.hpp
+--- a/host/lib/usrp/dboard/e3xx/e31x_radio_control_impl.hpp
++++ b/host/lib/usrp/dboard/e3xx/e31x_radio_control_impl.hpp
+@@ -33,7 +33,7 @@
+ 
+     std::vector<std::string> get_gpio_banks() const override
+     {
+-        return {E31x_GPIO_BANK};
++        return _is_sdrb ? std::vector<std::string>{} : std::vector<std::string>{E31x_GPIO_BANK};
+     }
+ 
+ private:
+diff --git a/host/lib/usrp/dboard/e3xx/e3xx_radio_control_impl.cpp b/host/lib/usrp/dboard/e3xx/e3xx_radio_control_impl.cpp
+--- a/host/lib/usrp/dboard/e3xx/e3xx_radio_control_impl.cpp
++++ b/host/lib/usrp/dboard/e3xx/e3xx_radio_control_impl.cpp
+@@ -39,6 +39,11 @@
+     UHD_ASSERT_THROW(get_mb_controller());
+     _e3xx_mb_control = std::dynamic_pointer_cast<mpmd_mb_controller>(get_mb_controller());
+     UHD_ASSERT_THROW(_e3xx_mb_control);
++    _is_sdrb = _e3xx_mb_control->get_mboard_name() == "sdrb";
++    if (_is_sdrb) {
++        // RFNoC port 0 is physical chain 2; port 1 is physical chain 1.
++        _fe_swap = true;
++    }
+     _e3xx_timekeeper = std::dynamic_pointer_cast<mpmd_mb_controller::mpmd_timekeeper>(
+         _e3xx_mb_control->get_timekeeper(0));
+     UHD_ASSERT_THROW(_e3xx_timekeeper);
+@@ -82,6 +87,9 @@
+ {
+     if (!node_t::check_topology(connected_inputs, connected_outputs)) {
+         return false;
++    }
++    if (_is_sdrb && (connected_inputs.size() > 1 || connected_outputs.size() > 1)) {
++        throw uhd::value_error("SDRB native CMOS candidate supports one RX and one TX");
+     }
+     // Now we know that the connected ports are either 0 or 1
+ 
+@@ -118,7 +126,7 @@
+     // setup the active chains in the codec
+     if (connected_inputs.size() + connected_outputs.size() == 0) {
+         // Ensure at least one RX chain is enabled so AD9361 outputs a sample clock
+-        this->set_streaming_mode(true, false, true, false);
++        this->set_streaming_mode(!_is_sdrb, false, true, false);
+     } else {
+         this->set_streaming_mode(
+             tx_fe0_active, tx_fe1_active, rx_fe0_active, rx_fe1_active);
+@@ -137,7 +145,7 @@
+     // setup the active chains in the codec
+     if ((num_rx + num_tx) == 0) {
+         // Ensure at least one RX chain is enabled so AD9361 outputs a sample clock
+-        _ad9361->set_active_chains(true, false, true, false);
++        _ad9361->set_active_chains(!_is_sdrb, false, true, false);
+     } else {
+         // setup the active chains in the codec
+         _ad9361->set_active_chains(tx1, tx2, rx1, rx2);
+@@ -177,8 +185,8 @@
+     RFNOC_LOG_DEBUG("Actual clock rate " << actual_tick_rate / 1e6 << " MHz\n");
+     set_tick_rate(actual_tick_rate);
+     radio_control_impl::set_rate(actual_tick_rate);
+-    _e3xx_timekeeper->update_tick_rate(rate);
+-    return rate;
++    _e3xx_timekeeper->update_tick_rate(_is_sdrb ? actual_tick_rate : rate);
++    return _is_sdrb ? actual_tick_rate : rate;
+ }
+ 
+ uhd::meta_range_t e3xx_radio_control_impl::get_rate_range() const
+@@ -203,7 +211,15 @@
+ 
+ void e3xx_radio_control_impl::set_rx_antenna(const std::string& ant, const size_t chan)
+ {
+-    UHD_ASSERT_THROW(chan <= E3XX_NUM_CHANS);
++    UHD_ASSERT_THROW(chan < E3XX_NUM_CHANS);
++    if (_is_sdrb) {
++        const std::string expected = chan == 0 ? "RX2" : "RX1";
++        if (ant != expected) {
++            throw uhd::value_error("SDRB receive connector for this channel is " + expected);
++        }
++        radio_control_impl::set_rx_antenna(ant, chan);
++        return;
++    }
+     std::lock_guard<std::recursive_mutex> l(_set_lock);
+     if (std::find(E3XX_RX_ANTENNAS.begin(), E3XX_RX_ANTENNAS.end(), ant)
+         == E3XX_RX_ANTENNAS.end()) {
+@@ -269,7 +285,7 @@
+ {
+     std::lock_guard<std::recursive_mutex> l(_set_lock);
+     RFNOC_LOG_TRACE("set_rx_agc(enb=" << enb << ", chan=" << chan << ")");
+-    const std::string rx_fe = get_which_ad9361_chain(RX_DIRECTION, chan);
++    const std::string rx_fe = get_which_ad9361_chain(RX_DIRECTION, chan, _is_sdrb && _fe_swap);
+     // Upon enabling AGC, stop tracking by power
+     if (enb) {
+         _rx_pwr_mgr.at(chan)->set_tracking_mode(pwr_cal_mgr::tracking_mode::TRACK_GAIN);
+@@ -322,13 +338,21 @@
+     return clip_gain;
+ }
+ 
+-std::vector<std::string> e3xx_radio_control_impl::get_tx_antennas(const size_t) const
+-{
++std::vector<std::string> e3xx_radio_control_impl::get_tx_antennas(const size_t chan) const
++{
++    if (_is_sdrb) {
++        UHD_ASSERT_THROW(chan < 2);
++        return {chan == 0 ? "TX2A_Direct1" : "TX1A_Direct1"};
++    }
+     return {E3XX_DEFAULT_TX_ANTENNA};
+ }
+ 
+-std::vector<std::string> e3xx_radio_control_impl::get_rx_antennas(const size_t) const
+-{
++std::vector<std::string> e3xx_radio_control_impl::get_rx_antennas(const size_t chan) const
++{
++    if (_is_sdrb) {
++        UHD_ASSERT_THROW(chan < 2);
++        return {chan == 0 ? "RX2" : "RX1"};
++    }
+     return E3XX_RX_ANTENNAS;
+ }
+ 
+@@ -369,7 +393,7 @@
+ {
+     std::lock_guard<std::recursive_mutex> l(_set_lock);
+     RFNOC_LOG_TRACE("set_rx_dc_offset(enb=" << enb << ", chan=" << chan << ")");
+-    const std::string rx_fe = get_which_ad9361_chain(RX_DIRECTION, chan);
++    const std::string rx_fe = get_which_ad9361_chain(RX_DIRECTION, chan, _is_sdrb && _fe_swap);
+     _ad9361->set_dc_offset_auto(rx_fe, enb);
+ }
+ 
+@@ -377,7 +401,7 @@
+ {
+     std::lock_guard<std::recursive_mutex> l(_set_lock);
+     RFNOC_LOG_TRACE("set_rx_iq_balance(enb=" << enb << ", chan=" << chan << ")");
+-    const std::string rx_fe = get_which_ad9361_chain(RX_DIRECTION, chan);
++    const std::string rx_fe = get_which_ad9361_chain(RX_DIRECTION, chan, _is_sdrb && _fe_swap);
+     _ad9361->set_iq_balance_auto(rx_fe, enb);
+ }
+ 
+@@ -387,6 +411,9 @@
+ void e3xx_radio_control_impl::set_gpio_attr(
+     const std::string& bank, const std::string& attr, const uint32_t value)
+ {
++    if (_is_sdrb) {
++        throw uhd::not_implemented_error("SDRB does not expose an E310 front-panel GPIO bank");
++    }
+     if (bank != get_gpio_banks().front()) {
+         RFNOC_LOG_ERROR("Invalid GPIO bank: " << bank);
+         throw uhd::key_error("Invalid GPIO bank!");
+@@ -409,6 +436,9 @@
+ uint32_t e3xx_radio_control_impl::get_gpio_attr(
+     const std::string& bank, const std::string& attr)
+ {
++    if (_is_sdrb) {
++        throw uhd::not_implemented_error("SDRB does not expose an E310 front-panel GPIO bank");
++    }
+     if (bank != get_gpio_banks().front()) {
+         RFNOC_LOG_ERROR("Invalid GPIO bank: " << bank);
+         throw uhd::key_error("Invalid GPIO bank!");
+@@ -430,7 +460,7 @@
+     const std::string& sensor_name, const size_t chan)
+ {
+     return sensor_value_t(_rpcc->request_with_token<sensor_value_t::sensor_map_t>(
+-        _rpc_prefix + "get_sensor", "RX", sensor_name, chan));
++        _rpc_prefix + "get_sensor", "RX", sensor_name, _is_sdrb ? (1 - chan) : chan));
+ }
+ 
+ std::vector<std::string> e3xx_radio_control_impl::get_tx_sensor_names(const size_t) const
+@@ -442,7 +472,7 @@
+     const std::string& sensor_name, const size_t chan)
+ {
+     return sensor_value_t(_rpcc->request_with_token<sensor_value_t::sensor_map_t>(
+-        _rpc_prefix + "get_sensor", "TX", sensor_name, chan));
++        _rpc_prefix + "get_sensor", "TX", sensor_name, _is_sdrb ? (1 - chan) : chan));
+ }
+ 
+ /*  loopback_self_test checks the integrity of the FPGA->AD936x->FPGA sample interface.
+@@ -531,7 +561,7 @@
+ 
+     // Take AD936x out of loopback mode
+     _ad9361->data_port_loopback(false);
+-    this->set_streaming_mode(true, false, true, false);
++    this->set_streaming_mode(!_is_sdrb, false, true, false);
+     // Switch back to current rate
+     _ad9361->set_clock_rate(current_rate);
+ }
+@@ -552,6 +582,9 @@
+ 
+ void e3xx_radio_control_impl::_set_atr_bits(const size_t chan)
+ {
++    if (_is_sdrb) {
++        return; // MPM owns SDRB RF routes; E310 ATR/PA/LED tables do not apply.
++    }
+     const auto rx_freq       = radio_control_impl::get_rx_frequency(chan);
+     const auto tx_freq       = radio_control_impl::get_tx_frequency(chan);
+     const auto rx_ant        = radio_control_impl::get_rx_antenna(chan);
+@@ -580,11 +613,17 @@
+ 
+ void e3xx_radio_control_impl::set_db_eeprom(const eeprom_map_t& db_eeprom)
+ {
++    if (_is_sdrb) {
++        throw uhd::not_implemented_error("SDRB daughterboard EEPROM writes are unsupported");
++    }
+     _rpcc->notify_with_token("set_db_eeprom", 0, db_eeprom);
+ }
+ 
+ eeprom_map_t e3xx_radio_control_impl::get_db_eeprom()
+ {
++    if (_is_sdrb) {
++        return {}; // No fabricated E310 daughterboard EEPROM.
++    }
+     return _rpcc->request_with_token<eeprom_map_t>("get_db_eeprom", 0);
+ }
+ 
+@@ -662,5 +701,5 @@
+ std::string e3xx_radio_control_impl::get_fe_name(
+     const size_t, const uhd::direction_t) const
+ {
+-    return "E3xx";
+-}
++    return _is_sdrb ? "SDRB" : "E3xx";
++}
+diff --git a/host/lib/usrp/dboard/e3xx/e3xx_radio_control_init.cpp b/host/lib/usrp/dboard/e3xx/e3xx_radio_control_init.cpp
+--- a/host/lib/usrp/dboard/e3xx/e3xx_radio_control_init.cpp
++++ b/host/lib/usrp/dboard/e3xx/e3xx_radio_control_init.cpp
+@@ -50,14 +50,14 @@
+     for (size_t chan = 0; chan < num_rx_chans; chan++) {
+         radio_control_impl::set_rx_frequency(E3XX_DEFAULT_FREQ, chan);
+         radio_control_impl::set_rx_gain(E3XX_DEFAULT_GAIN, chan);
+-        radio_control_impl::set_rx_antenna(E3XX_DEFAULT_RX_ANTENNA, chan);
++        radio_control_impl::set_rx_antenna(_is_sdrb ? (chan == 0 ? "RX2" : "RX1") : E3XX_DEFAULT_RX_ANTENNA, chan);
+         radio_control_impl::set_rx_bandwidth(E3XX_DEFAULT_BANDWIDTH, chan);
+     }
+ 
+     for (size_t chan = 0; chan < num_tx_chans; chan++) {
+         radio_control_impl::set_tx_frequency(E3XX_DEFAULT_FREQ, chan);
+         radio_control_impl::set_tx_gain(E3XX_DEFAULT_GAIN, chan);
+-        radio_control_impl::set_tx_antenna(E3XX_DEFAULT_TX_ANTENNA, chan);
++        radio_control_impl::set_tx_antenna(_is_sdrb ? (chan == 0 ? "TX2A_Direct1" : "TX1A_Direct1") : E3XX_DEFAULT_TX_ANTENNA, chan);
+         radio_control_impl::set_tx_bandwidth(E3XX_DEFAULT_BANDWIDTH, chan);
+     }
+ 
+@@ -77,6 +77,12 @@
+ void e3xx_radio_control_impl::_init_peripherals()
+ {
+     RFNOC_LOG_TRACE("Initializing peripherals...");
++    if (_is_sdrb) {
++        if (get_block_args().has_key("identify")) {
++            throw uhd::not_implemented_error("SDRB has no E310 identify LEDs");
++        }
++        return; // No E310 ATR, front-panel GPIO or LED register ownership.
++    }
+     for (size_t radio_idx = 0; radio_idx < E3XX_NUM_CHANS; radio_idx++) {
+         _wb_ifaces.push_back(RFNOC_MAKE_WB_IFACE(0, radio_idx));
+     }
+@@ -135,10 +141,10 @@
+                     << rx_fe_path);
+ 
+     // TX Standard attributes
+-    subtree->create<std::string>(tx_fe_path / "name").set("E3xx");
++    subtree->create<std::string>(tx_fe_path / "name").set(_is_sdrb ? "SDRB" : "E3xx");
+     subtree->create<std::string>(tx_fe_path / "connection").set("IQ");
+     // RX Standard attributes
+-    subtree->create<std::string>(rx_fe_path / "name").set("E3xx");
++    subtree->create<std::string>(rx_fe_path / "name").set(_is_sdrb ? "SDRB" : "E3xx");
+     subtree->create<std::string>(rx_fe_path / "connection").set("IQ");
+     // TX Antenna
+     subtree->create<std::string>(tx_fe_path / "antenna" / "value")
+@@ -147,7 +153,7 @@
+         })
+         .set_publisher([this, chan_idx]() { return this->get_tx_antenna(chan_idx); });
+     subtree->create<std::vector<std::string>>(tx_fe_path / "antenna" / "options")
+-        .set({E3XX_DEFAULT_TX_ANTENNA})
++        .set(_is_sdrb ? std::vector<std::string>{chan_idx == 0 ? "TX2A_Direct1" : "TX1A_Direct1"} : std::vector<std::string>{E3XX_DEFAULT_TX_ANTENNA})
+         .add_coerced_subscriber([](const std::vector<std::string>&) {
+             throw uhd::runtime_error("Attempting to update antenna options!");
+         });
+@@ -158,7 +164,7 @@
+         })
+         .set_publisher([this, chan_idx]() { return this->get_rx_antenna(chan_idx); });
+     subtree->create<std::vector<std::string>>(rx_fe_path / "antenna" / "options")
+-        .set(E3XX_RX_ANTENNAS)
++        .set(_is_sdrb ? std::vector<std::string>{chan_idx == 0 ? "RX2" : "RX1"} : E3XX_RX_ANTENNAS)
+         .add_coerced_subscriber([](const std::vector<std::string>&) {
+             throw uhd::runtime_error("Attempting to update antenna options!");
+         });
+@@ -180,7 +186,7 @@
+             // Current calibration key getter (format is "e3xx_pwr_$dir_$chan_$ant")
+             [this, chan_idx]() {
+                 const std::string ant = get_tx_antenna(chan_idx);
+-                return std::string("e3xx_pwr_tx_") + std::to_string(chan_idx) + "_"
++                return std::string(_is_sdrb ? "sdrb_pwr_tx_" : "e3xx_pwr_tx_") + std::to_string(chan_idx) + "_"
+                        + pwr_cal_mgr::sanitize_antenna_name(ant);
+             },
+             tx_cal_ggroup));
+@@ -205,7 +211,7 @@
+             // Current calibration key getter (format is "e3xx_pwr_$dir_$chan_$ant")
+             [this, chan_idx]() {
+                 const std::string ant = get_rx_antenna(chan_idx);
+-                return std::string("e3xx_pwr_rx_") + std::to_string(chan_idx) + "_"
++                return std::string(_is_sdrb ? "sdrb_pwr_rx_" : "e3xx_pwr_rx_") + std::to_string(chan_idx) + "_"
+                        + pwr_cal_mgr::sanitize_antenna_name(ant);
+             },
+             rx_cal_ggroup));
+@@ -337,6 +343,11 @@
+     // Initialize catalina
+     _init_codec();
+ 
++    if (_is_sdrb) {
++        // Qualify the CMOS interface once during coordinated board bring-up.
++        // The stock automatic two-channel E310 test is outside this 1R1T port.
++        return;
++    }
+     // Loopback test
+     for (size_t chan = 0; chan < E3XX_NUM_CHANS; chan++) {
+         loopback_self_test(chan);
+@@ -347,16 +358,16 @@
+ {
+     RFNOC_LOG_TRACE("Setting Catalina Defaults... ");
+     for (size_t chan = 0; chan < E3XX_NUM_CHANS; chan++) {
+-        std::string rx_fe = get_which_ad9361_chain(RX_DIRECTION, chan);
++        std::string rx_fe = get_which_ad9361_chain(RX_DIRECTION, chan, _is_sdrb && _fe_swap);
+         this->set_rx_gain(E3XX_DEFAULT_GAIN, chan);
+         this->set_rx_frequency(E3XX_DEFAULT_FREQ, chan);
+-        this->set_rx_antenna(E3XX_DEFAULT_RX_ANTENNA, chan);
++        this->set_rx_antenna(_is_sdrb ? (chan == 0 ? "RX2" : "RX1") : E3XX_DEFAULT_RX_ANTENNA, chan);
+         this->set_rx_bandwidth(E3XX_DEFAULT_BANDWIDTH, chan);
+         _ad9361->set_dc_offset_auto(rx_fe, E3XX_DEFAULT_AUTO_DC_OFFSET);
+         _ad9361->set_iq_balance_auto(rx_fe, E3XX_DEFAULT_AUTO_IQ_BALANCE);
+         _ad9361->set_agc(rx_fe, E3XX_DEFAULT_AGC_ENABLE);
+-        std::string tx_fe = get_which_ad9361_chain(TX_DIRECTION, chan);
+-        this->set_tx_gain(E3XX_DEFAULT_GAIN, chan);
++        std::string tx_fe = get_which_ad9361_chain(TX_DIRECTION, chan, _is_sdrb && _fe_swap);
++        this->set_tx_gain(_is_sdrb ? 0.0 : E3XX_DEFAULT_GAIN, chan);
+         this->set_tx_frequency(E3XX_DEFAULT_FREQ, chan);
+         this->set_tx_bandwidth(E3XX_DEFAULT_BANDWIDTH, chan);
+     }

@@ -1,0 +1,25 @@
+{
+  "status": "FAIL_FIRST_CAN_FRAME_NO_SDRB_RECEPTION",
+  "scope": "One manual IHU HELLO attempt; SDRB normal CAN1 controller with application monitor replies disabled",
+  "operator_confirmed_h7_l8": true,
+  "ihu_boot": 2623056192,
+  "ihu_request": 1,
+  "ihu_tx_success": 0,
+  "ihu_tx_failed": 1,
+  "ihu_tec_before": 0,
+  "ihu_tec_after": 8,
+  "ihu_rec_after": 0,
+  "ihu_unknown_after": 1,
+  "sdrb_rx_frames": 0,
+  "sdrb_tx_frames": 0,
+  "sdrb_controller_errors": {
+    "tx": 0,
+    "rx": 0
+  },
+  "eps_packet_attempted": false,
+  "rf_started": false,
+  "final_sdrb_can0": "DOWN",
+  "final_sdrb_can1": "DOWN",
+  "cause": "Not isolated; verify powered COMMS controller state and existing IHU-COMMS link next",
+  "startup_check_note": "Initial monitor readiness check was too early; no IHU traffic sent during that attempt. Second monitor readiness was confirmed before HELLO."
+}

@@ -295,3 +295,8 @@ this file.
 copy of the K-line physics primer removed after it was found to describe an
 abandoned filter plan (762/766/770 nm rather than the current 750/770/780);
 about 190 bare filenames converted to working links.
+
+
+## Temporary SDRB UHF integration
+
+The [two-workstream checklist](system/sdrb/TODO.md), [adapter boundary](system/interfaces/sdrb_adapter.md) and [optional services](ground/uhf/SERVICES.md) record the CAN/UHF/LibreSDR/Yamcs bench. Native IHU cadence and finite delivery passed; intermittent RF startup errors, production integration and sustained operation remain open. AMSAT core changes are separate.

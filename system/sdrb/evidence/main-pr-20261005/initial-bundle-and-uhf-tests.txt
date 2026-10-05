@@ -1,0 +1,107 @@
+test_cadence_busy_disable_and_clock_wrap (test_autotelem.AutoTelemetry.test_cadence_busy_disable_and_clock_wrap) ... autotelem: boot-off, bounds, cadence, busy skip, no catch-up, disable and wrap PASS
+ok
+test_eps_bridge (unittest.loader._FailedTest.test_eps_bridge) ... ERROR
+cc1: fatal error: /home/ngrabbs/work/ember-sdrb-pr-validation-20261005/firmware/usb_bench/protocol.c: No such file or directory
+compilation terminated.
+cc1: fatal error: /home/ngrabbs/work/ember-sdrb-pr-validation-20261005/firmware/usb_bench/framing.c: No such file or directory
+compilation terminated.
+/tmp/tmphtjjfvmg/size.c:1:10: fatal error: protocol.h: No such file or directory
+    1 | #include "protocol.h"
+      |          ^~~~~~~~~~~~
+compilation terminated.
+setUpClass (test_firmware.FirmwareTests) ... ERROR
+test_command_ids_are_scoped_by_kind (test_packets.PacketTests.test_command_ids_are_scoped_by_kind) ... ok
+test_corruption_truncation_and_trailing_bytes (test_packets.PacketTests.test_corruption_truncation_and_trailing_bytes) ... ok
+test_crc_check_value (test_packets.PacketTests.test_crc_check_value) ... ok
+test_encoder_rejects_overflow_missing_fields_and_bad_identity (test_packets.PacketTests.test_encoder_rejects_overflow_missing_fields_and_bad_identity) ... ok
+test_fixed_vectors (test_packets.PacketTests.test_fixed_vectors) ... ok
+test_invalid_arguments_are_decodable_for_rejection (test_packets.PacketTests.test_invalid_arguments_are_decodable_for_rejection) ... ok
+test_valid_crc_does_not_bypass_header_checks (test_packets.PacketTests.test_valid_crc_does_not_bypass_header_checks) ... ok
+test_c_firmware_interoperability_all_payload_sizes (test_sdrb_can.AdapterTests.test_c_firmware_interoperability_all_payload_sizes) ... ok
+test_duplicate_conflict_and_reset (test_sdrb_can.AdapterTests.test_duplicate_conflict_and_reset) ... ok
+test_missing_duplicate_timeout_route_token_and_recovery (test_sdrb_can.AdapterTests.test_missing_duplicate_timeout_route_token_and_recovery) ... ok
+test_real_eps_and_application_response (test_sdrb_can.AdapterTests.test_real_eps_and_application_response) ... ok
+test_reject_control_bad_crc_and_producer (test_sdrb_can.AdapterTests.test_reject_control_bad_crc_and_producer) ... ok
+test_socket_monitor_sends_nothing_and_responder_is_opt_in (test_sdrb_can.AdapterTests.test_socket_monitor_sends_nothing_and_responder_is_opt_in) ... ok
+test_storage_failure_does_not_acknowledge (test_sdrb_can.AdapterTests.test_storage_failure_does_not_acknowledge) ... ok
+test_kernel_receives_only_ihu_standard_data (test_sdrb_can.SocketCANFilterTests.test_kernel_receives_only_ihu_standard_data) ... skipped 'requires an explicitly supplied virtual CAN interface'
+test_cache_bound_and_reset_contract (test_simulator.EndpointTests.test_cache_bound_and_reset_contract) ... ok
+test_corruption_is_dropped_without_response (test_simulator.EndpointTests.test_corruption_is_dropped_without_response) ... ok
+test_duplicate_does_not_execute_and_conflict_preserves_cache (test_simulator.EndpointTests.test_duplicate_does_not_execute_and_conflict_preserves_cache) ... ok
+test_invalid_and_unknown_commands_rejected (test_simulator.EndpointTests.test_invalid_and_unknown_commands_rejected) ... ok
+test_queries_return_correlated_data_before_completion (test_simulator.EndpointTests.test_queries_return_correlated_data_before_completion) ... ok
+test_set_parameter_results_and_periodic_data (test_simulator.EndpointTests.test_set_parameter_results_and_periodic_data) ... ok
+
+======================================================================
+ERROR: test_eps_bridge (unittest.loader._FailedTest.test_eps_bridge)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_eps_bridge
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.13/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/ngrabbs/work/ember-sdrb-pr-validation-20261005/tests/ground/test_eps_bridge.py", line 16, in <module>
+    SAMPLE = json.loads((ROOT/'system/ground_station/evidence/ltc4162-input-10v7-20261001.json').read_text())[0]
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/pathlib/_local.py", line 548, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/pathlib/_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/pathlib/_local.py", line 539, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ngrabbs/work/ember-sdrb-pr-validation-20261005/system/ground_station/evidence/ltc4162-input-10v7-20261001.json'
+
+
+======================================================================
+ERROR: setUpClass (test_firmware.FirmwareTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ngrabbs/work/ember-sdrb-pr-validation-20261005/tests/ground/test_firmware.py", line 28, in setUpClass
+    subprocess.run([compiler, "-std=c11", "-Wall", "-Wextra", "-Werror", "-shared", "-fPIC",
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    "-I" + str(path), "-I" + str(source), str(source / "protocol.c"),
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    str(source / "framing.c"), str(path / "size.c"), "-o", str(path / "endpoint.so")], check=True)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/usr/bin/cc', '-std=c11', '-Wall', '-Wextra', '-Werror', '-shared', '-fPIC', '-I/tmp/tmphtjjfvmg', '-I/home/ngrabbs/work/ember-sdrb-pr-validation-20261005/firmware/usb_bench', '/home/ngrabbs/work/ember-sdrb-pr-validation-20261005/firmware/usb_bench/protocol.c', '/home/ngrabbs/work/ember-sdrb-pr-validation-20261005/firmware/usb_bench/framing.c', '/tmp/tmphtjjfvmg/size.c', '-o', '/tmp/tmphtjjfvmg/endpoint.so']' returned non-zero exit status 1.
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.314s
+
+FAILED (errors=2, skipped=1)
+test_integral_symbol_waveform_preserves_frequency_and_phase (test_packet_radio.PacketRadioTests.test_integral_symbol_waveform_preserves_frequency_and_phase) ... ok
+test_noise_does_not_make_packet (test_packet_radio.PacketRadioTests.test_noise_does_not_make_packet) ... ok
+test_packet_carrier_and_fractional_timing (test_packet_radio.PacketRadioTests.test_packet_carrier_and_fractional_timing) ... ok
+test_truncated_packet (test_packet_radio.PacketRadioTests.test_truncated_packet) ... ok
+test_weak_packet_two_tone_integration (test_packet_radio.PacketRadioTests.test_weak_packet_two_tone_integration) ... ok
+test_crossing_boundary_and_repeated_payload (test_stream_decoder.StreamingTests.test_crossing_boundary_and_repeated_payload) ... ok
+test_invalid_native_payload_rejected (test_stream_decoder.StreamingTests.test_invalid_native_payload_rejected) ... ok
+test_duplicate_not_queued_again (test_can_forward.AdmissionTests.test_duplicate_not_queued_again) ... ok
+test_full_queue_no_retry (test_can_forward.AdmissionTests.test_full_queue_no_retry) ... ok
+test_invalid_or_active_records_not_admitted (test_can_forward.AdmissionTests.test_invalid_or_active_records_not_admitted) ... ok
+test_capacity_and_expiry (test_binary_injector.QueueTests.test_capacity_and_expiry) ... ok
+test_duplicate_and_conflicting_identity (test_binary_injector.QueueTests.test_duplicate_and_conflicting_identity) ... ok
+test_invalid_and_stopping (test_binary_injector.QueueTests.test_invalid_and_stopping) ... ok
+test_private_socket_and_duplicate_owner (test_binary_injector.QueueTests.test_private_socket_and_duplicate_owner) ... ok
+test_cadence_preflight_faults (test_repeater_probe.ProbeTests.test_cadence_preflight_faults) ... ok
+test_tones_and_noise (test_repeater_probe.ProbeTests.test_tones_and_noise) ... ok
+test_component_failure_stops_without_retry (test_supervisor.Supervisor.test_component_failure_stops_without_retry) ... ok
+test_finite_lease_is_after_readiness (test_supervisor.Supervisor.test_finite_lease_is_after_readiness) ... ok
+test_non_socket_control_is_preserved (test_supervisor.Supervisor.test_non_socket_control_is_preserved) ... ok
+test_owner_death_signals_child_and_stale_control_can_restart (test_supervisor.Supervisor.test_owner_death_signals_child_and_stale_control_can_restart) ... ok
+test_sdrb_component_fault_stops_radio_before_can (test_supervisor.Supervisor.test_sdrb_component_fault_stops_radio_before_can) ... ok
+test_start_exclusive_stop_and_manual_restart (test_supervisor.Supervisor.test_start_exclusive_stop_and_manual_restart) ... ok
+test_storage_quota_fails_and_cleans_child (test_supervisor.Supervisor.test_storage_quota_fails_and_cleans_child) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 18.338s
+
+OK

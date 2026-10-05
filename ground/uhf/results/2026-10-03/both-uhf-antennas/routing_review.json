@@ -1,0 +1,28 @@
+{
+  "status": "READ_ONLY_SOURCE_REVIEW_NO_DOCUMENTED_ROUTE_MISMATCH_FOUND",
+  "source_checkout": {
+    "host": "192.168.1.252",
+    "path": "/media/ngrabbs/BACKUP-A/sdrb-can-20260917/source-checkout",
+    "commit": "543d3f6d77d278e19badd728d8e32d6f974b2586"
+  },
+  "retained_source_sha256": {
+    "0001-sdrb-host-radio.patch": "4267b75367d880a41de7b8f977d25b14489a634e89f80876bfad14a5a844c22b",
+    "rf-control-audit.md": "53b23cd027e89746edd16835d9de9dff795a80272d34b83c3ab704a4cebdaae6",
+    "sdrb_defaults.hpp": "2b2c9b7fc3e9f005502aacc25ceee3ba55280a08a1e0196c4e06f06191d893fb",
+    "sdrb_radio.py": "681347d8771cf999a87acc9a5fdec78952f7dfd1d5c1c353e32dce68e09a7e8b"
+  },
+  "findings": [
+    "The host patch sets the SDRB frontend swap: logical channel 1 names physical RX1 and TX1A_Direct1; channel 0 names RX2 and TX2A_Direct1.",
+    "NativeRadioSession.tune_rx selects state 3 for frequencies below 1.2 GHz, including the 435.1 MHz uplink; the policy agrees with sdrb_defaults.hpp.",
+    "The historical exported RF control audit maps state 11/J3 to the RX1 RLP-470+ path and corresponding RX2 path. This is a documented route, not a measured passband.",
+    "NativeRadioSession.tune_tx keeps the shared TX route off because the direct TX A connector bypasses it.",
+    "No documented channel or receive-route mismatch was found that justifies changing route policy for this test."
+  ],
+  "limits": [
+    "Read-only source review; no GPIO, PA, FPGA, boot or RF control changes performed.",
+    "The historical RF control audit is an exported schematic/netlist review, not evidence of present switch voltage, population or physical path loss.",
+    "The deployed Python module hash was not confirmed by the short console import attempt; retained hashes identify reviewed checkout files only.",
+    "Source mapping does not establish actual LibreSDR output power, antenna efficiency, receiver sensitivity or duplex isolation."
+  ],
+  "next_step": "Measure actual LibreSDR TXA output at 435.1 MHz with an available RF analyzer before choosing another bounded RF change."
+}

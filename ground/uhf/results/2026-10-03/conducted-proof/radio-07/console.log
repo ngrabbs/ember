@@ -1,0 +1,14 @@
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False,recv_frame_size=8000,send_frame_size=8000
+[WARNING] [MULTI_USRP] Could not set TX rate to 0.614 MHz. Actual rate is 0.614 MHz
+[WARNING] [MULTI_USRP] Could not set RX rate to 0.614 MHz. Actual rate is 0.614 MHz
+usrp_sink :error: In the last 7102 ms, 1 underflows occurred.
+usrp_sink :error: In the last 7103 ms, 1 cmd time errors occurred.
+ULLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBINARY_RADIO_STOPPED {"settings": {"mode": "transponder", "rate": 614400, "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock", "output": "/home/petalinux/ember-repeater-radio-07", "seconds": 75, "tx_frequency": 434200000.0, "tx_gain": 70.0, "packet_peak": 0.12, "rx_frequency": 435100000.0, "rx_gain": 60.0, "passband": 20000, "transition": 20000, "forward_scale": 16.0, "transmit": true}, "actual": {"device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000", "tx_rate": 614400.0034706265, "tx_clock": 614400.0034706265, "tx_bandwidth": 614400.0, "clock_source": "internal", "samples_per_symbol": 512.0, "rx_rate": 614400.0034706265, "rx_clock": 614400.0034706265, "rx_bandwidth": 614400.0}, "status": {"accepted": 0, "queued": 0, "expired": 0, "queue_full": 0, "emitted": 0, "output_samples": 735232, "writer_error": null, "accepting": false, "recent_packets": [], "note": "Downstream samples are not RF reception", "mode": "transponder", "tx_async_events": {"underflow": 1, "time_error": 114, "burst_ack": 1}, "forward_limiter": {"samples": 739328, "clipped_samples": 0, "peak_before": 0.24016699194908142, "peak_after": 0.24016699194908142, "limit": 0.25, "error": null}}, "error": "TX stream event: {\"underflow\": 1, \"time_error\": 58}", "cleanup_errors": [], "udp_delta": {"InDatagrams": 798, "NoPorts": 0, "InErrors": 0, "OutDatagrams": 930, "RcvbufErrors": 0, "SndbufErrors": 0, "InCsumErrors": 0, "IgnoredMulti": 0, "MemErrors": 0}, "elapsed_seconds": 1.4198739679995924, "scope": "Persistent bench sample submission; RF reception and repeater operation require independent proof"}
+Traceback (most recent call last):
+  File "/home/petalinux/ember-uhf-20261003/radio_service.py", line 204, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/petalinux/ember-uhf-20261003/radio_service.py", line 174, in main
+    raise RuntimeError('TX stream event: '+json.dumps(last_status['tx_async_events']))
+RuntimeError: TX stream event: {"underflow": 1, "time_error": 58}

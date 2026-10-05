@@ -1,0 +1,111 @@
+{
+  "status": "TELEMETRY_PASS_BOTH_UHF_ANTENNAS_FORWARDING_GATE_FAILED",
+  "physical_setup": "Operator confirmed UHF antennas on SDRB and LibreSDR, following the request to fit LibreSDR TXA; last reported spacing approximately12inches; no models or calibrated efficiency supplied",
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-antenna-radio-03",
+    "seconds": 75,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "packet_peak": 0.12,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 60.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 16.0,
+    "forward_peak": 0.25,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "stream_seconds": 60.760165815998334,
+  "fresh_packets": 3,
+  "all_original_bytes_matched_at_ihu_can_socket_rf_yamcs": true,
+  "identities": [
+    {
+      "inner_sequence": 83,
+      "sha256": "f0556b5976a804e6cbc356ee3ff44dc8d509da3abab672c8c3e96f0ef3383b7f",
+      "yamcs_reception": "2026-10-03T19:51:44.592Z"
+    },
+    {
+      "inner_sequence": 84,
+      "sha256": "174585d281d741d4a4aaad3750f209a1ea16c92dc97ba704f31ba3db25b8da85",
+      "yamcs_reception": "2026-10-03T19:51:53.225Z"
+    },
+    {
+      "inner_sequence": 85,
+      "sha256": "39fca153fa0ef77cbcce01942763affb7df699de1d53df1138c420784073519c",
+      "yamcs_reception": "2026-10-03T19:52:01.165Z"
+    }
+  ],
+  "rx_async_events": {},
+  "tx_async_events": {},
+  "udp_delta": {
+    "InDatagrams": 29045,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 40799,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "headroom": {
+    "samples": 37283328,
+    "forwarded_clipped": 5,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 0.26924496802548603,
+    "forward_peak_after": 0.25000001490116075,
+    "telemetry_peak_before": 0.12000001061086807,
+    "output_peak": 0.25000001490116075,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "translated_tones": {
+    "5000": {
+      "on_off_db": 0.855769729745985,
+      "spectral_snr_db": 9.250424829508734,
+      "peak_hz": 5126.953125
+    },
+    "11000": {
+      "on_off_db": 0.9421398206514502,
+      "spectral_snr_db": 7.983745995364246,
+      "peak_hz": 10986.328125
+    }
+  },
+  "antenna_forwarding_pass": false,
+  "previous_translated_tones": {
+    "5000": {
+      "on_off_db": 1.1801912087334352,
+      "spectral_snr_db": 9.444779005297557,
+      "peak_hz": 4882.8125
+    },
+    "11000": {
+      "on_off_db": 2.092716647943194,
+      "spectral_snr_db": 10.028811338326445,
+      "peak_hz": 10986.328125
+    }
+  },
+  "radio_settings_unchanged": true,
+  "conclusion": "With UHF antennas on both radios,3/3 fresh telemetry packets remained byte-identical through Yamcs with clean stream counters. Forwarded tone on/off contrast was still below1dB; the antenna forwarding gate did not pass. SSB remains pending.",
+  "next_step": "Verify actual LibreSDR TXA output level using an available RF analyzer, then resolve source/receive link margin and duplex isolation. No further automatic gain or rate sweep.",
+  "limits": [
+    "Single finite check, not SSB/voice or endurance qualification.",
+    "Operator-confirmed UHF antennas; prior spacing was12inches, not newly measured. No antenna model, calibrated RF power or isolation measurement.",
+    "No AMSAT core, clock/driver, boot, FPGA or rootfs library changes; default adder behavior unchanged.",
+    "Yamcs archive byte identity checked; the previously paused EPS display was not updated."
+  ]
+}
