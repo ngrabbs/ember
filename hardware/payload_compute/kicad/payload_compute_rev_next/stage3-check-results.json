@@ -1,0 +1,64 @@
+{
+  "result": "PASS bounded stage3 capture; prototype qualifications remain open",
+  "physical_components": 132,
+  "exported_nets": 105,
+  "new_ICs": 31,
+  "truth_cases": {
+    "mode_source": 256,
+    "qualified_readiness": 8
+  },
+  "checks": "all six sheets wires/pins/shorts/orphans/overlaps zero; hierarchy zero issues",
+  "ERC": {
+    "errors": 31,
+    "warnings": 3,
+    "open_ports": [
+      "BENCH_ENTRY_POS",
+      "BENCH_JUMPER_N",
+      "BENCH_REQ",
+      "IHU_EN_VALID",
+      "IHU_PAYLOAD_EN",
+      "MAIN_BUCK_REQUEST_OK",
+      "MCU_ARM_CLK",
+      "MCU_ARM_QUAL",
+      "MCU_MAIN_REQ",
+      "MCU_NRST_N",
+      "MCU_READY",
+      "MCU_WDI",
+      "MODE_LOCK_CLK",
+      "ORIN_5V_WINDOW_OK",
+      "POWER_PERMISSION",
+      "RUN_LATCH",
+      "SHUTDOWN_OK_AON",
+      "SOURCE_LOCKED",
+      "SOURCE_LOCK_CLK",
+      "SOURCE_OK_AON",
+      "STACK_ENTRY_POS",
+      "STACK_REQ",
+      "USB_ENTRY_POS",
+      "USB_REQ",
+      "WD_RESET_VALID"
+    ],
+    "missing_external_power_drivers": 4,
+    "documented_native_OR_conflicts": 2,
+    "isolated_IHU_boundary_labels": 3
+  },
+  "conditional_corners": {
+    "sink_A_per_10k": 0.0003416666666666666,
+    "clean_reset_buffer_load_A": 7.416666666666666e-05,
+    "watchdog_enable_buffer_load_A": 3.4866666666666656e-05,
+    "IHU_high_min_V": 0.9997838225295399,
+    "IHU_low_max_V": 0.13697926200916882,
+    "captured_AON_W_with_1mA_reserve": 0.035184764999999986,
+    "rounded_allocation_W": 0.036,
+    "remaining_of_200mW_W": 0.164
+  },
+  "not_proven": [
+    "receiver threshold/ramp envelope",
+    "early mode lock firmware prevention",
+    "AON/eFuse/buck cold startup and capacitor charging",
+    "watchdog partial-power/startup/level waveform",
+    "physical MCU/PD/raw windows/source qualification/main admissions",
+    "entry fuse/TVS/connector/harness qualification",
+    "EP/stencil/assembly/layout/fabrication/flight"
+  ]
+}

@@ -1,0 +1,453 @@
+{
+  "mpn": "STM32G0B1VET6",
+  "package": "LQFP100",
+  "status": "FUNCTIONAL RESERVATION; physical lead/symbol/footprint acceptance pending",
+  "source": "https://www.st.com/resource/en/datasheet/stm32g0b1re.pdf",
+  "rows": [
+    {
+      "pin": "PC4",
+      "net": "CAN_A_RX",
+      "mode": "alternate",
+      "af": 3
+    },
+    {
+      "pin": "PC5",
+      "net": "CAN_A_TX",
+      "mode": "alternate",
+      "af": 3
+    },
+    {
+      "pin": "PB12",
+      "net": "CAN_B_RX",
+      "mode": "alternate",
+      "af": 3
+    },
+    {
+      "pin": "PB13",
+      "net": "CAN_B_TX",
+      "mode": "alternate",
+      "af": 3
+    },
+    {
+      "pin": "PA9",
+      "net": "JETSON_UART_TX_3V3",
+      "mode": "alternate",
+      "af": 1
+    },
+    {
+      "pin": "PA10",
+      "net": "JETSON_UART_RX_3V3",
+      "mode": "alternate",
+      "af": 1
+    },
+    {
+      "pin": "PA2",
+      "net": "MCU_DBG_TX",
+      "mode": "alternate",
+      "af": 1
+    },
+    {
+      "pin": "PA3",
+      "net": "MCU_DBG_RX",
+      "mode": "alternate",
+      "af": 1
+    },
+    {
+      "pin": "PB8",
+      "net": "LOCAL_I2C_SCL",
+      "mode": "alternate",
+      "af": 6
+    },
+    {
+      "pin": "PB9",
+      "net": "LOCAL_I2C_SDA",
+      "mode": "alternate",
+      "af": 6
+    },
+    {
+      "pin": "PA0",
+      "net": "CAM_TRIGGER_TIMER",
+      "mode": "alternate",
+      "af": 2
+    },
+    {
+      "pin": "PA1",
+      "net": "CAM1_STROBE",
+      "mode": "alternate",
+      "af": 2
+    },
+    {
+      "pin": "PB10",
+      "net": "CAM2_STROBE",
+      "mode": "alternate",
+      "af": 2
+    },
+    {
+      "pin": "PB11",
+      "net": "CAM3_STROBE",
+      "mode": "alternate",
+      "af": 2
+    },
+    {
+      "pin": "PB4",
+      "net": "FAN_PWM_TIMER",
+      "mode": "alternate",
+      "af": 1
+    },
+    {
+      "pin": "PB5",
+      "net": "FAN_TACH",
+      "mode": "alternate",
+      "af": 1
+    },
+    {
+      "pin": "PA13",
+      "net": "SWDIO",
+      "mode": "alternate",
+      "af": 0
+    },
+    {
+      "pin": "PA14",
+      "net": "SWCLK",
+      "mode": "alternate",
+      "af": 0
+    },
+    {
+      "pin": "PB0",
+      "net": "USB_VBUS_SENSE",
+      "mode": "analog",
+      "af": null,
+      "adc_channel": 8
+    },
+    {
+      "pin": "PB1",
+      "net": "BENCH_RAW_SENSE",
+      "mode": "analog",
+      "af": null,
+      "adc_channel": 9
+    },
+    {
+      "pin": "PB2",
+      "net": "STACK_RAW_SENSE",
+      "mode": "analog",
+      "af": null,
+      "adc_channel": 10
+    },
+    {
+      "pin": "PC3",
+      "net": "MAIN_BUS_VALID_AON",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PA4",
+      "net": "ORIN_5V_SENSE",
+      "mode": "analog",
+      "af": null,
+      "adc_channel": 4
+    },
+    {
+      "pin": "PA5",
+      "net": "CAM_3V3_SENSE",
+      "mode": "analog",
+      "af": null,
+      "adc_channel": 5
+    },
+    {
+      "pin": "PA6",
+      "net": "IO_1V8_SENSE",
+      "mode": "analog",
+      "af": null,
+      "adc_channel": 6
+    },
+    {
+      "pin": "PA7",
+      "net": "BOARD_NTC_SENSE",
+      "mode": "analog",
+      "af": null,
+      "adc_channel": 7
+    },
+    {
+      "pin": "PC6",
+      "net": "PD_ALERT_N",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PC7",
+      "net": "PD_POWER_OK3_N",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PC8",
+      "net": "PD_VBUS_EN_SNK",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PC9",
+      "net": "BENCH_LATCHED",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PC10",
+      "net": "MODE_LOCKED",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PC11",
+      "net": "SOURCE_LOCKED",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PC12",
+      "net": "RUN_LATCH_STATE",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PD0",
+      "net": "USB_REQ",
+      "mode": "output",
+      "af": null,
+      "former_planning_net": "REQ_USB"
+    },
+    {
+      "pin": "PD1",
+      "net": "BENCH_REQ",
+      "mode": "output",
+      "af": null,
+      "former_planning_net": "REQ_BENCH"
+    },
+    {
+      "pin": "PD2",
+      "net": "STACK_REQ",
+      "mode": "output",
+      "af": null,
+      "former_planning_net": "REQ_STACK"
+    },
+    {
+      "pin": "PD3",
+      "net": "SOURCE_LOCK_CLK",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PD4",
+      "net": "TRIGGER_ALLOW_REQ",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PD5",
+      "net": "MCU_MAIN_REQ",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PD6",
+      "net": "MCU_ARM_QUAL",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PD7",
+      "net": "MCU_ARM_CLK",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PD8",
+      "net": "MCU_WDI",
+      "mode": "output",
+      "af": null,
+      "former_planning_net": "WATCHDOG_WDI"
+    },
+    {
+      "pin": "PD9",
+      "net": "WD_RESET_VALID",
+      "mode": "input",
+      "af": null,
+      "former_planning_net": "WATCHDOG_WDO_N",
+      "notes": "Conditioned reset-valid input, high when combined open-drain MCU_NRST_N is released; this is not a direct WDO-only fault input."
+    },
+    {
+      "pin": "PD10",
+      "net": "ORIN_RESET_RELEASED_AON",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PD11",
+      "net": "ORIN_SHUTDOWN_OK_AON",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PD12",
+      "net": "ORIN_MOD_SLEEP_AON",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PD13",
+      "net": "USB_RAW_WINDOW_OK",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PD14",
+      "net": "BENCH_RAW_WINDOW_OK",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PD15",
+      "net": "STACK_RAW_WINDOW_OK",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PE0",
+      "net": "PAYLOAD_FAULT_DRIVE",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PE1",
+      "net": "IHU_EN_VALID",
+      "mode": "input",
+      "af": null,
+      "former_planning_net": "IHU_EN_RX"
+    },
+    {
+      "pin": "PE2",
+      "net": "IHU_SLEEP_REQ_RX_N",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PE3",
+      "net": "CAN_A_STB",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PE4",
+      "net": "CAN_B_STB",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PE5",
+      "net": "CAN_A_SHDN",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PE6",
+      "net": "CAN_B_SHDN",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PE7",
+      "net": "STATUS_START",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PE8",
+      "net": "STATUS_READY",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PE9",
+      "net": "STATUS_FAULT",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PE10",
+      "net": "LAB_STOP_BUTTON_N",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PE11",
+      "net": "MCU_READY",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PE12",
+      "net": "ORIN_5V_WINDOW_OK",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PE13",
+      "net": "CARRIER_IO_READY",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PE14",
+      "net": "MAIN_BUCK_PG",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PE15",
+      "net": "PERIPH_3V3_WINDOW_OK",
+      "mode": "input",
+      "af": null
+    },
+    {
+      "pin": "PF3",
+      "net": "MODE_LOCK_CLK",
+      "mode": "output",
+      "af": null
+    },
+    {
+      "pin": "PF4",
+      "net": "ADC_MUX_A1",
+      "mode": "reserved_output",
+      "af": null
+    },
+    {
+      "pin": "PF5",
+      "net": "ADC_MUX_A2",
+      "mode": "reserved_output",
+      "af": null
+    },
+    {
+      "pin": "PF6",
+      "net": "ADC_MUX_DISABLE",
+      "mode": "reserved_output",
+      "af": null
+    }
+  ],
+  "clock_pins": [
+    "PF0",
+    "PF1"
+  ],
+  "reset_pin": "PF2",
+  "optional_lse_pins": [
+    "PC14",
+    "PC15"
+  ],
+  "gpio_uses": 69,
+  "notes": [
+    "DS13560 Rev 6 Table 12: PC0-PC3 do not have ADC inputs. Seven direct ADC channels assigned; main-bus voltage measured by INA228, with an independent digital validity receiver.",
+    "VDD and VDDIO2 both locally AON powered; UCPD dead-battery pulldowns must be disabled during initialization.",
+    "2026-10-05 control capture: PF3 repurposed from optional ADC mux reservation to MODE_LOCK_CLK; PC9 BENCH_LATCHED follows jumper before mode lock and supports startup stability polling. Physical lead/package mapping remains pending.",
+    "Stage3 boundary naming: PD0/1/2 USB_REQ/BENCH_REQ/STACK_REQ; PD8 MCU_WDI; PD9 WD_RESET_VALID high means combined reset bus released; PE1 IHU_EN_VALID. PF2 hardware NRST joins MCU_NRST_N; debug reset must be open-drain. Former planning names retained as aliases."
+  ],
+  "reset_net": "MCU_NRST_N"
+}

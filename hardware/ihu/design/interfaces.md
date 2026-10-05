@@ -22,7 +22,17 @@ ownership expectations for each link.
 | `COMMS_FAULT_N` | In | Comms fault indication to IHU | Provisional |
 | `COMMS_IRQ` | In | Comms data-ready / packet-available signal to IHU (active-low, IHU ISR triggers SPI read) | Provisional |
 | `EPS_ALERT_N` | In | EPS fault/alert line to IHU | Provisional |
-| `PAYLOAD_EN` | Out | Payload power/operation gating | Provisional |
+| `PAYLOAD_EN` | Out | Payload power/operation gating; H1.50 | Proposed 3.3 V push-pull, default low; electrical validation pending |
+
+### Payload enable electrical proposal — 2026-10-04
+
+User selected 3.3 V push-pull, default low for PAYLOAD_EN. Keep the output low
+during startup/reset and configure a low output value before enabling its GPIO.
+Payload supplies a pulldown so missing drive removes permission. Normal CAN
+stops hold permission until verified power-down acknowledgement; low is an
+immediate hardware kill. This contract is not proof of the current IHU circuit.
+See [receiver/mode requirements](../../payload_compute/design/bench_mode.md)
+for proposed voltage/load limits and outstanding qualification.
 
 ## Timing and Throughput Targets (Provisional)
 
