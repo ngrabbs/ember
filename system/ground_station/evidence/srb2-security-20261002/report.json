@@ -1,0 +1,85 @@
+{
+  "scope": "Baseline diagnosis and two bounded corrected bench windows; independent reliability remains pending.",
+  "baseline_label": "srb2-security-before-20261002-02",
+  "baseline_instrumented_oai_sha256": "51aaf76f80f78e72a639ceaf0f5b9d1ba94f4345841e9ceed7197a8265f1ac93",
+  "baseline_modem_accepted": 1,
+  "baseline_ground_received": 0,
+  "baseline_srb2_security_mode": 255,
+  "baseline_srb2_security_activated": false,
+  "baseline_srb2_container_present": false,
+  "baseline_oai_exit": 124,
+  "baseline_epc_exit": 124,
+  "baseline_trial_interrupted": true,
+  "baseline_final_off_sample_present": false,
+  "later_hardware_power_cycle_reported_by_user": true,
+  "candidate_instrumented_oai_sha256": "6999929ac1bc53ae10af2c013f795342080365e003f75e4c66842a158abdd88d",
+  "candidate_target_build_passed": true,
+  "candidate_rf_validation": "six exact packets across two separate three-packet windows",
+  "focused_helper_tests_passed": 3,
+  "current_rf_processes_stopped": true,
+  "host_tests_passed": 34,
+  "temporary_traces_removed": true,
+  "current_uninstrumented_oai_sha256": "5c5de8e17db509b35823f401b99c7fdbe28144307da0be24fbc777c569768e11",
+  "corrected_srb2_security": {
+    "mode": 32,
+    "active": true,
+    "cipher": 0,
+    "integrity": 2,
+    "rrc_container": true,
+    "status_ack_sn": 1
+  },
+  "corrected_runs": [
+    {
+      "label": "srb2-security-after-20261003-01",
+      "instrumented": true,
+      "accepted": 3,
+      "received": 3,
+      "yamcs_exact_matches": 3,
+      "sequences": [
+        0,
+        1,
+        2
+      ],
+      "ready_elapsed_s": 26.85,
+      "registration_losses": 0,
+      "off_confirmed": true,
+      "new_ihu_errors": {
+        "tx_fail": 0,
+        "tx_timeout": 0,
+        "rx_bad": 0,
+        "rx_overflow": 0,
+        "fragments_bad": 0,
+        "fragments_timeout": 0,
+        "unknown": 0
+      },
+      "oai_exit": 124,
+      "epc_exit": 124
+    },
+    {
+      "label": "srb2-security-after-20261003-02",
+      "instrumented": false,
+      "accepted": 3,
+      "received": 3,
+      "yamcs_exact_matches": 3,
+      "sequences": [
+        3,
+        4,
+        5
+      ],
+      "ready_elapsed_s": 26.85,
+      "registration_losses": 0,
+      "off_confirmed": true,
+      "new_ihu_errors": {
+        "tx_fail": 0,
+        "tx_timeout": 0,
+        "rx_bad": 0,
+        "rx_overflow": 0,
+        "fragments_bad": 0,
+        "fragments_timeout": 0,
+        "unknown": 0
+      },
+      "oai_exit": 124,
+      "epc_exit": 124
+    }
+  ]
+}

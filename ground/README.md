@@ -1,7 +1,13 @@
 # Ground software
 
+For day-to-day commanding, responses, displays and replay, start with the
+[Yamcs operator guide](../docs/user/yamcs.md).
+
 [System guide](../system/README.md) · [Ground station checklist](../system/ground_station/TODO.md)
 
+- [Telemetry data flow](../docs/architecture/telemetry_data_flow.md): shared team reading, battery voltage/current walkthroughs, and definition ownership.
+- [LTE-M telemetry bench](lte/README.md): Walter UE, LibreSDR/eNodeB inventory,
+  recovered LTE configs, bring-up runbook, and spacecraft-channel checklist.
 - [EMBER bench dictionary](ember/README.md): JSON definitions, host codec and
   wire vectors, generated MDB, simulator and verified Pico USB endpoint.
 - [Yamcs ground lab](yamcs/README.md): EMBER command/telemetry loop and the

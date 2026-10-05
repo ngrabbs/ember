@@ -1,9 +1,13 @@
 # Firmware guide
 
+For operator use rather than firmware development, see the
+[UART and CAN console guides](../user/README.md).
+
 [Documentation home](../README.md)
 
 | Work | Reference |
 |---|---|
+| Implement subsystem telemetry | [Telemetry data flow and developer workflow](../architecture/telemetry_data_flow.md) |
 | Housekeeping build and runtime | [IHU firmware](../../firmware/ihu/README.md) |
 | Communications control and bring-up | [Firmware roadmap](../../firmware/firmware.md) |
 | Spacecraft mode-manager behavior | [Operations draft](../architecture/operations/README.md) |

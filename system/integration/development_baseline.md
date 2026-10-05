@@ -1,5 +1,10 @@
 # Development baseline across macOS and m75q
 
+**Archived in place, 2026-10-04.** This is the October 1 reconciliation/build
+record. Host branches, commits, installed images and paths below are historical
+observations. Do not use them as a claim that checkouts are synchronized today.
+Use the [documentation review](../../docs/review/README.md) for review scope, and the application-specific build guide for new work.
+
 Recorded 2026-10-01. These are distinct Git checkouts, not synchronized copies.
 PRs #2–#5 are merged; macOS, m75q and Pi share baseline `a21832b`.
 The active hardware USB branch is `feature/ground-station-usb`.

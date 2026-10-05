@@ -14,3 +14,4 @@ Testing should verify both operator-initiated command transactions and autonomou
 Ground Console --+                               +--> EMBER
                  |                               |
                  +---- Ground / RF Connection ---+
+```

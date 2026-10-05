@@ -1,6 +1,6 @@
 # Ground station lab TODO
 
-Updated 2026-10-01. This checklist owns the ground station lab build; the
+Updated 2026-10-02. This checklist owns the ground station lab build; the
 [root TODO](../../TODO.md) links here. Packet specifications belong in
 [command](../protocols/command.md) and [telemetry](../protocols/telemetry.md).
 Host locations and Pico build commands are recorded in the
@@ -30,6 +30,13 @@ read-only IHU/EPS diagnostics and live [EPS Yamcs path](eps_yamcs_setup.md) on
 `feature/ihu-eps-definitions`.
 
 ## Current direction and open decisions
+
+- The **IHU MCU** and **COMMS MCU** are separate RP2040 controllers. Existing
+  I2C jumper firmware supports COMMS housekeeping/ping; CAN is the intended
+  internal packet transport. Walter will provide an external LTE-M path behind
+  the COMMS packet service while UHF is developed. The
+  [owned integration checklist](../interfaces/comms_walter.md) tracks the
+  UART contract, packet/return-packet bench, and IHU/CAN migration.
 
 - Flight comms is **UHF uplink / UHF downlink**. VHF references describe an
   obsolete design; do not use them as requirements for this build.
@@ -77,6 +84,16 @@ Existing firmware references (separate repositories):
   packet operation still needs a reproducible demonstration.
 
 ## 1. Ground module and host
+
+- [x] Export and locally replay a bounded, decoded housekeeping session with
+      source context and original receive times: 30 live Pico heartbeats plus
+      30 EPS-quality packets; [session evidence](telemetry_sessions.md).
+- [x] Observe IHU/EPS UART recovery after the user restored power; a second
+      30-second session contains 30 current readouts without a service restart.
+- [x] Identify current EPS power/ADC state: user confirmed battery only, VIN off;
+      CONFIG_BITS zero leaves forced telemetry off, ADC-valid zero.
+- [ ] Obtain current engineering EPS measurements under an explicit measurement
+      setup; use input power or a narrowly scoped battery-only ADC-control path.
 
 - [x] Select and provision the Pi 5 / 8 GB with 64-bit Trixie, static Ethernet,
   key-only SSH and verified sudo; [lab inventory](lab_inventory.md).

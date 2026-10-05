@@ -2,18 +2,22 @@
 
 [System guide](../README.md) · [Canonical pin map](cskb_pinmap.md)
 
-**Status: staged interconnect plan; CAN settings below are provisional.**
-IHU and comms each use an RP2040. EPS is currently charger/regulation hardware,
-not a full digital node. RP2040 has no native CAN peripheral; the proposed CAN
-implementation uses an external controller and transceivers.
+**Status: single-bus CAN Feather bench demonstrated; flight interconnect and A/B remain planned.**
+IHU and COMMS now each use an Adafruit RP2040 CAN Bus Feather for this bench,
+with onboard MCP25625 controllers/transceivers. A 500 kbit/s CAN harness has
+carried an IHU-generated heartbeat through COMMS to Walter and back.
+[Implementation/evidence](../../firmware/can_feather_bench/README.md).
+EPS is currently charger/regulation hardware, not a full CAN node. RP2040 has
+no native CAN peripheral; the selected bench boards supply external controllers.
 
 ## Bus roles
 
 | Bus | Role | Initial connection |
 |---|---|---|
-| I2C | Low-rate housekeeping/configuration; avoid long, high-capacitance runs | IHU ↔ LTC4162 charger, with discrete alerts |
-| SPI | Bulk or timing-sensitive data, telemetry buffers, and possible firmware services | IHU master ↔ comms slave |
-| CAN A/B | Iteration 2 commands, heartbeat, mode, health, and fault/status messages | IHU ↔ comms, then payload nodes |
+| I2C | Legacy housekeeping firmware | IHU ↔ EPS; separate bench jumper interface to COMMS at 0x42 for status/ping |
+| SPI | Existing comms PCB allocation/older plan | Stack signals assigned; packet firmware not implemented |
+| CAN | Implemented standalone bench packet transport | CAN Feather IHU MCU ↔ CAN Feather COMMS MCU; one physical harness |
+| CAN A/B | Intended redundant internal transport | Additional hardware/failover qualification remains open |
 | UART | Debug and bring-up logs | Debug host ↔ board |
 
 EPS may join CAN only after a digital controller is added. Refer to the pin map
@@ -23,17 +27,19 @@ for exact signals; both CAN buses are DNP in v0.1.
 
 | Stage | Work | Exit criteria |
 |---|---|---|
-| 1: I2C + SPI | Read EPS telemetry; exchange IHU–comms packets | Reliable charger reads, no SPI framing loss, validated timeout/recovery |
-| 2: CAN A/B | Add control/status traffic; retain SPI for bulk data | Clean multi-node arbitration; command/ack and heartbeat under injected faults; demonstrate failed-node containment and bus failover |
+| Current I2C bench | Read EPS and COMMS housekeeping; preserve ping/status | Reliable reads and bounded timeout/recovery; no packet-forwarding claim |
+| COMMS–Walter bench | Add framed UART and transport-independent packet service | Packet/return-packet loop, bounded queues, reset/error recovery |
+| CAN A/B | Replace interim IHU–COMMS link with packet/control/status transport | Bounded fragmentation/reassembly, command/ack, arbitration and injected-fault recovery; separately qualify bus failover |
 
 ## Provisional CAN settings
 
 - Classic CAN 2.0B; default target 500 kbps.
-- SPI CAN controller (MCP2515 class is an example), plus 3.3 V transceivers.
+- MCP25625 controllers/transceivers are selected and exercised on both CAN
+  Feathers for the single-bus bench. Production A/B controller allocation remains open.
 - Each bus is linear with its own 120 Ω termination at both physical ends and
   a ground reference. The [pin map](cskb_pinmap.md) defines A/B allocations;
   it adds no switched supply.
-- Controller count, selection, and failover policy remain open. Do not connect
+- Redundant controller count and failover policy remain open. Do not connect
   CAN A and CAN B together or assume that a failed node can always be isolated.
 
 | Proposed ID range | Message group |
@@ -46,3 +52,5 @@ for exact signals; both CAN buses are DNP in v0.1.
 
 Next: [IHU–comms interface](comms_to_ihu.md), [data ownership](data_interfaces.md),
 and [integration sequence](../integration/integration_plan.md).
+The [COMMS–Walter integration checklist](comms_walter.md) owns the current
+controller packet service and migration milestones.

@@ -9,7 +9,13 @@ past reasoning and must not be used as an implementation requirement.
 
 1. [Project scope](architecture/project_scope.md) — what we are building and how we will validate it.
 2. [System overview](architecture/system_overview.md) — subsystem responsibilities, power, and data flow.
-3. [Operating modes](architecture/operations/README.md) — proposed behavior, transitions, and permissions.
+3. [Telemetry: from a subsystem to the ground](architecture/telemetry_data_flow.md) — shared reading before implementing subsystem telemetry; worked hardware examples, definitions, and ground decoding.
+4. [Operating modes](architecture/operations/README.md) — proposed behavior, transitions, and permissions.
+
+## Operator use and documentation review
+
+- [Operator guides](user/README.md): IHU UART, CAN Feather USB console, and Yamcs commanding/monitoring.
+- [Documentation review](review/README.md): inventory, corrections, archives and remaining engineering review.
 
 ## Find what you need
 
@@ -28,7 +34,7 @@ past reasoning and must not be used as an implementation requirement.
 
 ## Where information belongs
 
-- `docs/`: short explanations of architecture and decisions; links to deeper work.
+- `docs/`: architecture, decisions, operator guides in `user/`, and review records in `review/`.
 - `system/`: shared interfaces, protocols, and integration plans.
 - `hardware/` and `firmware/`: implementation details and subsystem bring-up.
 - `analysis/` and `test/`: calculations, verification procedures, and evidence.

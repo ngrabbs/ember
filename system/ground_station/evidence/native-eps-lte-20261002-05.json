@@ -1,0 +1,440 @@
+{
+  "date_utc": "2026-10-02",
+  "trial": "native-eps-20261002-05",
+  "source_commit": "2f1bdbc",
+  "firmware_app_sha256": "a3ff11d897bd974bae5dd8992b352cde483682cbd098786fcc8ba7debe244d01",
+  "host": {
+    "modem_accepted": [
+      {
+        "hex": "0901c00f00790101001002010000000000000000bba488500065e73600600102020101010102000000000000000000100065e7360000000000001f7c0000000700001f6afffe98f200002539000055860000271000002710000400010100000000000000000000a151d100041301fd8d00413404237e0000000300e000011fdc",
+        "decoded": {
+          "name": "POWER_STATUS",
+          "sequence": 15,
+          "header": {
+            "schema_version": 1,
+            "kind": 1,
+            "message_id": 16,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 0,
+            "transaction_id": 0,
+            "source_boot_id": 3148122192,
+            "uptime_ms": 6678326,
+            "payload_length": 96
+          },
+          "payload": {
+            "payload_version": 1,
+            "provenance": 2,
+            "link": 2,
+            "readout_present": 1,
+            "readout_valid": 1,
+            "conversion_valid": 1,
+            "adc_valid": 1,
+            "configured_cells": 2,
+            "detected_cells": 0,
+            "sense_values_verified": 0,
+            "bridge_session_id": 0,
+            "readout_count": 16,
+            "ihu_readout_uptime_ms": 6678326,
+            "readout_age_ms": 0,
+            "battery_mv": 8060,
+            "input_mv": 7,
+            "output_mv": 8042,
+            "battery_ua": -91918,
+            "input_ua": 9529,
+            "die_temp_mc": 21894,
+            "rsnsb_microohms": 10000,
+            "rsnsi_microohms": 10000,
+            "raw_config_bits": 4,
+            "raw_charger_config_bits": 1,
+            "raw_charger_state": 256,
+            "raw_charge_status": 0,
+            "raw_limit_alerts": 0,
+            "raw_charger_state_alerts": 0,
+            "raw_charge_status_alerts": 0,
+            "raw_system_status": 161,
+            "raw_vbat": 20945,
+            "raw_vin": 4,
+            "raw_vout": 4865,
+            "raw_ibat": 64909,
+            "raw_iin": 65,
+            "raw_die_temp": 13316,
+            "raw_thermistor_voltage": 9086,
+            "raw_bsr": 0,
+            "raw_jeita_region": 3,
+            "raw_chem_cells": 224,
+            "raw_telemetry_status": 1
+          }
+        }
+      }
+    ],
+    "status": [
+      "SUBMITTED request=172 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119961 modem_accepted=1 rejected=1\r\nRESULT request=172 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=010000000001d4990000000100000001",
+      "SUBMITTED request=173 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117899 modem_accepted=1 rejected=1\r\nRESULT request=173 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=010000000001cc8b0000000100000001",
+      "SUBMITTED request=174 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115839 modem_accepted=1 rejected=1\r\nRESULT request=174 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=010000000001c47f0000000100000001",
+      "SUBMITTED request=175 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113778 modem_accepted=1 rejected=1\r\nRESULT request=175 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=010000000001bc720000000100000001",
+      "SUBMITTED request=176 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111717 modem_accepted=1 rejected=1\r\nRESULT request=176 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=010000000001b4650000000100000001",
+      "SUBMITTED request=177 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109657 modem_accepted=1 rejected=1\r\nRESULT request=177 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=010000000001ac590000000100000001",
+      "SUBMITTED request=178 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107595 modem_accepted=1 rejected=1\r\nRESULT request=178 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=020500000001a44b0000000100000001",
+      "SUBMITTED request=179 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105534 modem_accepted=1 rejected=1\r\nRESULT request=179 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=0308000000019c3e0000000100000001",
+      "SUBMITTED request=180 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103474 modem_accepted=1 rejected=1\r\nRESULT request=180 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=03080000000194320000000100000001",
+      "SUBMITTED request=181 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101413 modem_accepted=1 rejected=1\r\nRESULT request=181 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=0308000000018c250000000100000001",
+      "SUBMITTED request=182 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99352 modem_accepted=1 rejected=1\r\nRESULT request=182 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=03080000000184180000000100000001",
+      "SUBMITTED request=183 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=97292 modem_accepted=1 rejected=1\r\nRESULT request=183 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=0308000000017c0c0000000100000001",
+      "SUBMITTED request=184 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=95231 modem_accepted=1 rejected=1\r\nRESULT request=184 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=03080000000173ff0000000100000001",
+      "SUBMITTED request=185 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=93170 modem_accepted=1 rejected=1\r\nRESULT request=185 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=0308000000016bf20000000100000001",
+      "SUBMITTED request=186 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=91110 modem_accepted=1 rejected=1\r\nRESULT request=186 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=03080000000163e60000000100000001",
+      "SUBMITTED request=187 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=89049 modem_accepted=1 rejected=1\r\nRESULT request=187 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=0308000000015bd90000000100000001",
+      "SUBMITTED request=188 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=86988 modem_accepted=1 rejected=1\r\nRESULT request=188 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=03080000000153cc0000000100000001",
+      "SUBMITTED request=189 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=84927 modem_accepted=1 rejected=1\r\nRESULT request=189 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=0308000000014bbf0000000100000001",
+      "SUBMITTED request=190 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=82868 modem_accepted=1 rejected=1\r\nRESULT request=190 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=03080000000143b40000000100000001",
+      "SUBMITTED request=191 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=80807 modem_accepted=1 rejected=1\r\nRESULT request=191 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=0608000100013ba70000000100000001"
+    ],
+    "scope": "Modem acceptance only; correlate ground receiver and Yamcs separately.",
+    "initial_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=3148122192 peer=1790982730 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1679 tx_fail=0 tx_timeout=0 rx=2119 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=165 unknown=3 busy_drops=0 pending=0 uptime_ms=6638652",
+    "ready": true,
+    "stop": "SUBMITTED request=194 type=116 bytes=4\r\nRESULT request=194 outcome=RF_WINDOW_ACCEPTED peer=1790982730 bytes=4 hex=00000000",
+    "final_modem_status": "SUBMITTED request=195 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=2 rejected=1\r\nRESULT request=195 outcome=LTE_STATUS peer=1790982730 bytes=16 hex=00080000000000000000000200000001",
+    "final_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=3148122192 peer=1790982730 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1869 tx_fail=0 tx_timeout=0 rx=2393 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=191 unknown=3 busy_drops=0 pending=0 uptime_ms=6694697"
+  },
+  "ground_receiver": {
+    "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+    "received": 1,
+    "requested": 1,
+    "rejected": 0,
+    "duplicates": 0,
+    "packets": [
+      {
+        "received_utc": "2026-10-02T20:59:56.399865+00:00",
+        "peer": [
+          "172.16.0.2",
+          51001
+        ],
+        "hex": "0901c00f00790101001002010000000000000000bba488500065e73600600102020101010102000000000000000000100065e7360000000000001f7c0000000700001f6afffe98f200002539000055860000271000002710000400010100000000000000000000a151d100041301fd8d00413404237e0000000300e000011fdc",
+        "decoded": {
+          "name": "POWER_STATUS",
+          "sequence": 15,
+          "header": {
+            "schema_version": 1,
+            "kind": 1,
+            "message_id": 16,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 0,
+            "transaction_id": 0,
+            "source_boot_id": 3148122192,
+            "uptime_ms": 6678326,
+            "payload_length": 96
+          },
+          "payload": {
+            "payload_version": 1,
+            "provenance": 2,
+            "link": 2,
+            "readout_present": 1,
+            "readout_valid": 1,
+            "conversion_valid": 1,
+            "adc_valid": 1,
+            "configured_cells": 2,
+            "detected_cells": 0,
+            "sense_values_verified": 0,
+            "bridge_session_id": 0,
+            "readout_count": 16,
+            "ihu_readout_uptime_ms": 6678326,
+            "readout_age_ms": 0,
+            "battery_mv": 8060,
+            "input_mv": 7,
+            "output_mv": 8042,
+            "battery_ua": -91918,
+            "input_ua": 9529,
+            "die_temp_mc": 21894,
+            "rsnsb_microohms": 10000,
+            "rsnsi_microohms": 10000,
+            "raw_config_bits": 4,
+            "raw_charger_config_bits": 1,
+            "raw_charger_state": 256,
+            "raw_charge_status": 0,
+            "raw_limit_alerts": 0,
+            "raw_charger_state_alerts": 0,
+            "raw_charge_status_alerts": 0,
+            "raw_system_status": 161,
+            "raw_vbat": 20945,
+            "raw_vin": 4,
+            "raw_vout": 4865,
+            "raw_ibat": 64909,
+            "raw_iin": 65,
+            "raw_die_temp": 13316,
+            "raw_thermistor_voltage": 9086,
+            "raw_bsr": 0,
+            "raw_jeita_region": 3,
+            "raw_chem_cells": 224,
+            "raw_telemetry_status": 1
+          }
+        }
+      }
+    ]
+  },
+  "yamcs": {
+    "links": {
+      "links": [
+        {
+          "instance": "ember-lte",
+          "name": "eps-lte-in",
+          "type": "org.yamcs.tctm.UdpTmDataLink",
+          "disabled": false,
+          "status": "OK",
+          "detailedStatus": "OK, receiving on 10018",
+          "dataInCount": "1",
+          "dataOutCount": "0",
+          "extra": {
+            "Valid datagrams": "1",
+            "Invalid datagrams": "0"
+          },
+          "parameters": [
+            "/yamcs/8b2b01d55f16/links/eps-lte-in/dataInCount",
+            "/yamcs/8b2b01d55f16/links/eps-lte-in/dataInRate",
+            "/yamcs/8b2b01d55f16/links/eps-lte-in/dataOutCount",
+            "/yamcs/8b2b01d55f16/links/eps-lte-in/dataOutRate",
+            "/yamcs/8b2b01d55f16/links/eps-lte-in/linkStatus",
+            "/yamcs/8b2b01d55f16/links/eps-lte-in/packetRate"
+          ]
+        }
+      ]
+    },
+    "archive": {
+      "packet": [
+        {
+          "packet": "CQHADwB5AQEAEAIBAAAAAAAAAAC7pIhQAGXnNgBgAQICAQEBAQIAAAAAAAAAAAAQAGXnNgAAAAAAAB98AAAABwAAH2r//pjyAAAlOQAAVYYAACcQAAAnEAAEAAEBAAAAAAAAAAAAAKFR0QAEEwH9jQBBNAQjfgAAAAMA4AABH9w=",
+          "sequenceNumber": 151109647,
+          "id": {
+            "name": "/ember/POWER_STATUS"
+          },
+          "receptionTime": "2026-10-02T20:59:56.400Z",
+          "generationTime": "2026-10-02T20:59:56.400Z",
+          "earthReceptionTime": "2026-10-02T20:59:56.400Z",
+          "link": "eps-lte-in",
+          "size": 128
+        }
+      ],
+      "packets": [
+        {
+          "packet": "CQHADwB5AQEAEAIBAAAAAAAAAAC7pIhQAGXnNgBgAQICAQEBAQIAAAAAAAAAAAAQAGXnNgAAAAAAAB98AAAABwAAH2r//pjyAAAlOQAAVYYAACcQAAAnEAAEAAEBAAAAAAAAAAAAAKFR0QAEEwH9jQBBNAQjfgAAAAMA4AABH9w=",
+          "sequenceNumber": 151109647,
+          "id": {
+            "name": "/ember/POWER_STATUS"
+          },
+          "receptionTime": "2026-10-02T20:59:56.400Z",
+          "generationTime": "2026-10-02T20:59:56.400Z",
+          "earthReceptionTime": "2026-10-02T20:59:56.400Z",
+          "link": "eps-lte-in",
+          "size": 128
+        }
+      ]
+    },
+    "battery": {
+      "id": {
+        "name": "POWER_STATUS_battery_mv",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "SINT32",
+        "sint32Value": 8060
+      },
+      "engValue": {
+        "type": "FLOAT",
+        "floatValue": 8.06
+      },
+      "acquisitionTime": "2026-10-02T20:59:56.400Z",
+      "generationTime": "2026-10-02T20:59:56.400Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    },
+    "temperature": {
+      "id": {
+        "name": "POWER_STATUS_die_temp_mc",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "SINT32",
+        "sint32Value": 21894
+      },
+      "engValue": {
+        "type": "FLOAT",
+        "floatValue": 21.894
+      },
+      "acquisitionTime": "2026-10-02T20:59:56.400Z",
+      "generationTime": "2026-10-02T20:59:56.400Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    }
+  },
+  "replay": {
+    "processor": {
+      "instance": "ember-lte",
+      "name": "eps-lte-proof",
+      "type": "Archive",
+      "creator": "guest",
+      "hasAlarms": false,
+      "hasCommanding": false,
+      "state": "RUNNING",
+      "replayRequest": {
+        "endAction": "STOP",
+        "speed": {
+          "type": "REALTIME",
+          "param": 1.0
+        },
+        "packetRequest": {
+          "tmLinks": [
+            "eps-lte-in"
+          ]
+        },
+        "start": "2026-10-02T20:59:56Z",
+        "stop": "2026-10-02T20:59:57Z",
+        "reverse": false,
+        "autostart": false
+      },
+      "replayState": "PAUSED",
+      "services": [
+        {
+          "instance": "ember-lte",
+          "name": "ReplayService",
+          "state": "RUNNING",
+          "className": "org.yamcs.tctm.ReplayService",
+          "processor": "eps-lte-proof"
+        },
+        {
+          "instance": "ember-lte",
+          "name": "AlgorithmManager",
+          "state": "RUNNING",
+          "className": "org.yamcs.algorithms.AlgorithmManager",
+          "processor": "eps-lte-proof"
+        }
+      ],
+      "persistent": true,
+      "time": "2026-10-02T20:59:56.400Z",
+      "replay": true,
+      "checkCommandClearance": false,
+      "protected": false,
+      "overrideAlgorithmsEnabled": false
+    },
+    "battery_mv": {
+      "id": {
+        "name": "POWER_STATUS_battery_mv",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "SINT32",
+        "sint32Value": 8060
+      },
+      "engValue": {
+        "type": "FLOAT",
+        "floatValue": 8.06
+      },
+      "acquisitionTime": "2026-10-02T20:59:56.400Z",
+      "generationTime": "2026-10-02T20:59:56.400Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    },
+    "output_mv": {
+      "id": {
+        "name": "POWER_STATUS_output_mv",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "SINT32",
+        "sint32Value": 8042
+      },
+      "engValue": {
+        "type": "FLOAT",
+        "floatValue": 8.042
+      },
+      "acquisitionTime": "2026-10-02T20:59:56.400Z",
+      "generationTime": "2026-10-02T20:59:56.400Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    },
+    "die_temp_mc": {
+      "id": {
+        "name": "POWER_STATUS_die_temp_mc",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "SINT32",
+        "sint32Value": 21894
+      },
+      "engValue": {
+        "type": "FLOAT",
+        "floatValue": 21.894
+      },
+      "acquisitionTime": "2026-10-02T20:59:56.400Z",
+      "generationTime": "2026-10-02T20:59:56.400Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    },
+    "provenance": {
+      "id": {
+        "name": "POWER_STATUS_provenance",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "UINT32",
+        "uint32Value": 2
+      },
+      "engValue": {
+        "type": "ENUMERATED",
+        "stringValue": "IHU_NATIVE",
+        "sint64Value": "2"
+      },
+      "acquisitionTime": "2026-10-02T20:59:56.400Z",
+      "generationTime": "2026-10-02T20:59:56.400Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    },
+    "readout_valid": {
+      "id": {
+        "name": "POWER_STATUS_readout_valid",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "UINT32",
+        "uint32Value": 1
+      },
+      "engValue": {
+        "type": "UINT32",
+        "uint32Value": 1
+      },
+      "acquisitionTime": "2026-10-02T20:59:56.400Z",
+      "generationTime": "2026-10-02T20:59:56.400Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    },
+    "adc_valid": {
+      "id": {
+        "name": "POWER_STATUS_adc_valid",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "UINT32",
+        "uint32Value": 1
+      },
+      "engValue": {
+        "type": "UINT32",
+        "uint32Value": 1
+      },
+      "acquisitionTime": "2026-10-02T20:59:56.400Z",
+      "generationTime": "2026-10-02T20:59:56.400Z",
+      "acquisitionStatus": "ACQUIRED",
+      "expireMillis": "1900"
+    }
+  },
+  "proof": {
+    "ihu_modem_accepted_hex_matches_radio_udp": true,
+    "radio_udp_matches_yamcs_archive": true,
+    "packet_bytes": 128,
+    "sequence": 15,
+    "provenance": "IHU_NATIVE",
+    "reception_utc": "2026-10-02T20:59:56.400Z",
+    "rf_cleanup": "Walter OFF/window zero; OAI and EPC stopped with expected timeout124",
+    "capture": "4 packets captured; UDP128 observed on EPC SGi; no capture kernel drops"
+  },
+  "limits": "One valid full-chain packet; repeated earlier failures mean LTE reliability remains unqualified. Dashboard proof is paused archive replay, not continuous live telemetry. Currents use unverified10mOhm sense values."
+}

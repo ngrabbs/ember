@@ -122,4 +122,5 @@ latest saved DRC is 0 errors / 0 unconnected / one known H1/H2 silk warning;
 this pass made no copper or schematic changes and did not rerun unchanged DRC.
 A local manufacturing candidate has since been exported and reviewed.
 Overall release remains INCOMPLETE pending service acceptance, final stock and
-assembly preview. See [current fabrication notes](../releases/review_20261003_1230/fabrication-notes.md), including the specific J9 precision-hole request.
+assembly preview. See [release index and paid order record](../releases/README.md). The earlier J9 precision-hole request
+was rejected by JLCPCB; the paid order record retains that unresolved limitation.

@@ -1,0 +1,13 @@
+diff --git a/openair2/LAYER2/MAC/eNB_scheduler_dlsch.c b/openair2/LAYER2/MAC/eNB_scheduler_dlsch.c
+index 3f3b72a..d51bb59 100644
+--- a/openair2/LAYER2/MAC/eNB_scheduler_dlsch.c
++++ b/openair2/LAYER2/MAC/eNB_scheduler_dlsch.c
+@@ -1285,6 +1285,8 @@ schedule_ue_spec_br(module_id_t module_idP,
+     }
+ 
+     round_DL = ue_sched_ctl->round[CC_id][harq_pid];
++    /* Retransmit the original transport block with its original MCS. */
++    mcs = UE_template->mcs[harq_pid];
+     AssertFatal (UE_template->physicalConfigDedicated != NULL, "UE_template->physicalConfigDedicated is null\n");
+     AssertFatal (UE_template->physicalConfigDedicated->ext4 != NULL, "UE_template->physicalConfigDedicated->ext4 is null\n");
+     AssertFatal (UE_template->physicalConfigDedicated->ext4->epdcch_Config_r11 != NULL, "UE_template->physicalConfigDedicated->ext4->epdcch_Config_r11 is null\n");

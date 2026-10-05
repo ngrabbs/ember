@@ -1,0 +1,51 @@
+test_cadence_busy_disable_and_clock_wrap (test_autotelem.AutoTelemetry.test_cadence_busy_disable_and_clock_wrap) ... autotelem: boot-off, bounds, cadence, busy skip, no catch-up, disable and wrap PASS
+ok
+test_adc_and_cell_validity (test_eps_bridge.EPS.test_adc_and_cell_validity) ... ok
+test_configuration_bounds (test_eps_bridge.EPS.test_configuration_bounds) ... ok
+test_line_bounds_and_split (test_eps_bridge.EPS.test_line_bounds_and_split) ... ok
+test_malformed_readout (test_eps_bridge.EPS.test_malformed_readout) ... ok
+test_mdb_scaling_expiration_and_header_provenance (test_eps_bridge.EPS.test_mdb_scaling_expiration_and_header_provenance) ... ok
+test_quality_transitions (test_eps_bridge.EPS.test_quality_transitions) ... ok
+test_real_packet (test_eps_bridge.EPS.test_real_packet) ... ok
+test_c_invalid_unknown_and_corrupt (test_firmware.FirmwareTests.test_c_invalid_unknown_and_corrupt) ... ok
+test_c_parameter_query_and_duplicate (test_firmware.FirmwareTests.test_c_parameter_query_and_duplicate) ... ok
+test_framing_vectors_boundaries_and_recovery (test_firmware.FirmwareTests.test_framing_vectors_boundaries_and_recovery) ... ok
+test_error_evidence_survives_off_status (test_lte_diagnostics.ModemDiagnosticDecode.test_error_evidence_survives_off_status) ... ok
+test_backoff_retention_expiry_uncertainty_and_timer_wrap (test_lte_queue.LTEQueue.test_backoff_retention_expiry_uncertainty_and_timer_wrap) ... ok
+test_child_abort_is_not_hidden_by_wrapper_success (test_lte_reliability.ReliabilityComparison.test_child_abort_is_not_hidden_by_wrapper_success) ... ok
+test_requires_own_packet_in_radio_and_archive_and_modem_off (test_lte_reliability.ReliabilityComparison.test_requires_own_packet_in_radio_and_archive_and_modem_off) ... ok
+test_c_packets_against_real_eps_readouts (test_native_power.NativePower.test_c_packets_against_real_eps_readouts) ... ok
+test_command_ids_are_scoped_by_kind (test_packets.PacketTests.test_command_ids_are_scoped_by_kind) ... ok
+test_corruption_truncation_and_trailing_bytes (test_packets.PacketTests.test_corruption_truncation_and_trailing_bytes) ... ok
+test_crc_check_value (test_packets.PacketTests.test_crc_check_value) ... ok
+test_encoder_rejects_overflow_missing_fields_and_bad_identity (test_packets.PacketTests.test_encoder_rejects_overflow_missing_fields_and_bad_identity) ... ok
+test_fixed_vectors (test_packets.PacketTests.test_fixed_vectors) ... ok
+test_invalid_arguments_are_decodable_for_rejection (test_packets.PacketTests.test_invalid_arguments_are_decodable_for_rejection) ... ok
+test_valid_crc_does_not_bypass_header_checks (test_packets.PacketTests.test_valid_crc_does_not_bypass_header_checks) ... ok
+test_c_firmware_interoperability_all_payload_sizes (test_sdrb_can.AdapterTests.test_c_firmware_interoperability_all_payload_sizes) ... ok
+test_duplicate_conflict_and_reset (test_sdrb_can.AdapterTests.test_duplicate_conflict_and_reset) ... ok
+test_missing_duplicate_timeout_route_token_and_recovery (test_sdrb_can.AdapterTests.test_missing_duplicate_timeout_route_token_and_recovery) ... ok
+test_real_eps_and_application_response (test_sdrb_can.AdapterTests.test_real_eps_and_application_response) ... ok
+test_reject_control_bad_crc_and_producer (test_sdrb_can.AdapterTests.test_reject_control_bad_crc_and_producer) ... ok
+test_socket_monitor_sends_nothing_and_responder_is_opt_in (test_sdrb_can.AdapterTests.test_socket_monitor_sends_nothing_and_responder_is_opt_in) ... ok
+test_storage_failure_does_not_acknowledge (test_sdrb_can.AdapterTests.test_storage_failure_does_not_acknowledge) ... ok
+test_kernel_receives_only_ihu_standard_data (test_sdrb_can.SocketCANFilterTests.test_kernel_receives_only_ihu_standard_data) ... skipped 'requires an explicitly supplied virtual CAN interface'
+test_command_packet_not_replayed (test_session.SessionTests.test_command_packet_not_replayed) ... ok
+test_continuation_preserves_filters_and_orders_reception (test_session.SessionTests.test_continuation_preserves_filters_and_orders_reception) ... ok
+test_corrupt_later_packet_emits_nothing (test_session.SessionTests.test_corrupt_later_packet_emits_nothing) ... ok
+test_invalid_eps_readouts_remain_invalid (test_session.SessionTests.test_invalid_eps_readouts_remain_invalid) ... ok
+test_metadata_dictionary_and_time_mismatch_rejected (test_session.SessionTests.test_metadata_dictionary_and_time_mismatch_rejected) ... ok
+test_repeated_token_fails_instead_of_looping (test_session.SessionTests.test_repeated_token_fails_instead_of_looping) ... ok
+test_replay_timing_and_original_metadata (test_session.SessionTests.test_replay_timing_and_original_metadata) ... ok
+test_cache_bound_and_reset_contract (test_simulator.EndpointTests.test_cache_bound_and_reset_contract) ... ok
+test_corruption_is_dropped_without_response (test_simulator.EndpointTests.test_corruption_is_dropped_without_response) ... ok
+test_duplicate_does_not_execute_and_conflict_preserves_cache (test_simulator.EndpointTests.test_duplicate_does_not_execute_and_conflict_preserves_cache) ... ok
+test_invalid_and_unknown_commands_rejected (test_simulator.EndpointTests.test_invalid_and_unknown_commands_rejected) ... ok
+test_queries_return_correlated_data_before_completion (test_simulator.EndpointTests.test_queries_return_correlated_data_before_completion) ... ok
+test_set_parameter_results_and_periodic_data (test_simulator.EndpointTests.test_set_parameter_results_and_periodic_data) ... ok
+test_bounded_window_prompt_outcomes_and_timeout (test_walter_lte.WalterLTE.test_bounded_window_prompt_outcomes_and_timeout) ... ok
+
+----------------------------------------------------------------------
+Ran 45 tests in 0.578s
+
+OK (skipped=1)

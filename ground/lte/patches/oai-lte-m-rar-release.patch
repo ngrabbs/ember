@@ -1,0 +1,123 @@
+diff --git a/openair1/PHY/LTE_TRANSPORT/dci_tools.c b/openair1/PHY/LTE_TRANSPORT/dci_tools.c
+index 5529d86..fc25072 100644
+--- a/openair1/PHY/LTE_TRANSPORT/dci_tools.c
++++ b/openair1/PHY/LTE_TRANSPORT/dci_tools.c
+@@ -1460,11 +1460,13 @@ void fill_dci_and_dlsch(PHY_VARS_eNB *eNB,
+   }
+ 
+   if (dlsch0_harq) {
++    dlsch0_harq->release_after_tx = 0;
+     dlsch0_harq->frame    = frame;
+     dlsch0_harq->subframe = subframe;
+   }
+ 
+   if (dlsch1_harq) {
++    dlsch1_harq->release_after_tx = 0;
+     dlsch1_harq->frame    = frame;
+     dlsch1_harq->subframe = subframe;
+   }
+@@ -1754,6 +1756,9 @@ void fill_mdci_and_dlsch(PHY_VARS_eNB *eNB,L1_rxtx_proc_t *proc,mDCI_ALLOC_t *dc
+     dlsch0_harq->round = 0;
+   }
+ 
++  /* RARs have no HARQ feedback. Release the single-transmission CE-A context after PDSCH mapping. */
++  dlsch0_harq->release_after_tx =
++      rel13->rnti_type == 2 && rel13->ce_mode == 1 && rel13->pdsch_reptition_levels == 0;
+   dlsch0_harq->ndi = rel13->new_data_indicator;
+ 
+   if (dlsch0_harq->round == 0) {
+diff --git a/openair1/PHY/LTE_TRANSPORT/emtc_dlsch_context.h b/openair1/PHY/LTE_TRANSPORT/emtc_dlsch_context.h
+new file mode 100644
+index 0000000..1de6b4a
+--- /dev/null
++++ b/openair1/PHY/LTE_TRANSPORT/emtc_dlsch_context.h
+@@ -0,0 +1,16 @@
++/* SPDX-License-Identifier: LicenseRef-CSSL-1.0 */
++#ifndef EMTC_DLSCH_CONTEXT_H
++#define EMTC_DLSCH_CONTEXT_H
++#include <stdbool.h>
++#include <stdint.h>
++
++/* Called after PDSCH mapping: retain UE HARQ processes awaiting feedback. */
++static inline bool emtc_release_rar_harq(uint8_t *release_after_tx, uint16_t *harq_mask, uint8_t harq_pid)
++{
++  if (!*release_after_tx)
++    return false;
++  *harq_mask &= (uint16_t)~(1U << harq_pid);
++  *release_after_tx = 0;
++  return true;
++}
++#endif
+diff --git a/openair1/PHY/LTE_TRANSPORT/tests/CMakeLists.txt b/openair1/PHY/LTE_TRANSPORT/tests/CMakeLists.txt
+new file mode 100644
+index 0000000..2fb2dc0
+--- /dev/null
++++ b/openair1/PHY/LTE_TRANSPORT/tests/CMakeLists.txt
+@@ -0,0 +1,7 @@
++# SPDX-License-Identifier: LicenseRef-CSSL-1.0
++cmake_minimum_required(VERSION 3.16)
++project(emtc_dlsch_context_tests C)
++enable_testing()
++add_executable(test_emtc_dlsch_context test_emtc_dlsch_context.c)
++target_compile_options(test_emtc_dlsch_context PRIVATE -Wall -Wextra -Werror -UNDEBUG)
++add_test(NAME lte.phy.emtc_dlsch_context COMMAND test_emtc_dlsch_context)
+diff --git a/openair1/PHY/LTE_TRANSPORT/tests/test_emtc_dlsch_context.c b/openair1/PHY/LTE_TRANSPORT/tests/test_emtc_dlsch_context.c
+new file mode 100644
+index 0000000..3b91987
+--- /dev/null
++++ b/openair1/PHY/LTE_TRANSPORT/tests/test_emtc_dlsch_context.c
+@@ -0,0 +1,20 @@
++/* SPDX-License-Identifier: LicenseRef-CSSL-1.0 */
++#include <assert.h>
++#include "../emtc_dlsch_context.h"
++
++int main(void)
++{
++  uint8_t release = 1;
++  uint16_t mask = 1;
++  assert(emtc_release_rar_harq(&release, &mask, 0));
++  assert(mask == 0 && release == 0);
++  assert(!emtc_release_rar_harq(&release, &mask, 0));
++  mask = 1;
++  assert(!emtc_release_rar_harq(&release, &mask, 0));
++  assert(mask == 1);
++  release = 1;
++  mask = 0x81;
++  assert(emtc_release_rar_harq(&release, &mask, 7));
++  assert(mask == 1 && release == 0);
++  return 0;
++}
+diff --git a/openair1/PHY/LTE_TRANSPORT/transport_eNB.h b/openair1/PHY/LTE_TRANSPORT/transport_eNB.h
+index b08fe83..a496817 100644
+--- a/openair1/PHY/LTE_TRANSPORT/transport_eNB.h
++++ b/openair1/PHY/LTE_TRANSPORT/transport_eNB.h
+@@ -30,6 +30,8 @@
+ typedef struct {
+   /// Status Flag indicating for this DLSCH (idle,active,disabled)
+   SCH_status_t status;
++  /// Release a single-transmission eMTC RAR after its PDSCH has been mapped
++  uint8_t release_after_tx;
+   /// Transport block size
+   uint32_t TBS;
+   /// pointer to pdu from MAC interface (this is "a" in 36.212)
+diff --git a/openair1/SCHED/phy_procedures_lte_eNb.c b/openair1/SCHED/phy_procedures_lte_eNb.c
+index 2df5daf..5999e57 100644
+--- a/openair1/SCHED/phy_procedures_lte_eNb.c
++++ b/openair1/SCHED/phy_procedures_lte_eNb.c
+@@ -7,6 +7,7 @@
+  */
+ 
+ #include "PHY/defs_eNB.h"
++#include "PHY/LTE_TRANSPORT/emtc_dlsch_context.h"
+ #include "PHY/phy_extern.h"
+ #include "SCHED/sched_eNB.h"
+ #include "SCHED/sched_common_extern.h"
+@@ -405,6 +406,8 @@ void pdsch_procedures(PHY_VARS_eNB *eNB,
+                    dlsch->ue_type==0 ? dlsch1 : (LTE_eNB_DLSCH_t *)NULL);
+   stop_meas(&eNB->dlsch_modulation_stats);
+   LOG_D(PHY,"Generated PDSCH dlsch_harq[round:%d]\n",dlsch_harq->round);
++  if (emtc_release_rar_harq(&dlsch_harq->release_after_tx, &dlsch->harq_mask, harq_pid))
++    dlsch_harq->status = SCH_IDLE;
+ }
+ 
+ 

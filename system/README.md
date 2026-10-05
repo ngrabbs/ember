@@ -2,6 +2,10 @@
 
 [Documentation home](../docs/README.md)
 
+Read [Telemetry: from a subsystem to the ground](../docs/architecture/telemetry_data_flow.md)
+before developing subsystem telemetry. It explains the shared data path and links
+to the authoritative definitions below.
+
 Use these documents when two subsystems must agree. The **CSKB pin map is
 canonical**; protocol layouts, timing targets, and integration gates remain drafts
 unless explicitly marked otherwise. Allocation does not imply implementation.
@@ -26,4 +30,5 @@ shared assignments belong here.
 Ground station bench build: [checklist](ground_station/TODO.md).
 
 Shared macOS/m75q development and container builds:
-[development baseline](integration/development_baseline.md).
+[October 1 development baseline record](integration/development_baseline.md)
+(historical; check local Git state before building).

@@ -6,6 +6,7 @@
 |---|---|
 | [Project scope](project_scope.md) | What are we building and validating? |
 | [System overview](system_overview.md) | Which subsystem owns each function? |
+| [Telemetry data flow](telemetry_data_flow.md) | How does my subsystem's data reach a ground display, and which definitions must match? |
 | [Operations draft](operations/README.md) | How should the spacecraft behave? |
 | [Inhibit and deployment decisions](inhibit_and_deployment.md) | What is decided for the prototype, and what remains open? |
 | [Hardware guide](hardware_overview.md) | Where do I find board implementation details? |

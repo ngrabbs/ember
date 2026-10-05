@@ -1,0 +1,50 @@
+{
+  "boundary_echoes": 15,
+  "initial_status": "STATUS role=COMMS_MCU board=CAN_FEATHER fw=uart-framed-v1 id=DF637882D39E4426 boot=492053135 peer=385143002 tx=0 rx=1 baud=115200 tx_bytes=2602 rx_bytes=3769 matched=18 rejected=0 unknown=1 unsolicited=2 pending=0 cobs=0 crc=0 format=0 overflow=1 gaps=1 uptime_ms=854486",
+  "synthetic_heartbeat": {
+    "name": "HEARTBEAT",
+    "sequence": 7,
+    "header": {
+      "schema_version": 1,
+      "kind": 1,
+      "message_id": 5,
+      "source": 2,
+      "target": 1,
+      "transaction_epoch": 0,
+      "transaction_id": 0,
+      "source_boot_id": 270544960,
+      "uptime_ms": 123456,
+      "payload_length": 6
+    },
+    "payload": {
+      "mode": 3,
+      "configuration": 1,
+      "telemetry_period_ms": 1000
+    }
+  },
+  "explicit_rejections": 2,
+  "fault_recovery": [
+    "bad_crc",
+    "encoded_overflow",
+    "truncated_gap"
+  ],
+  "matched_transactions": 20,
+  "echoes": 19,
+  "passed": true,
+  "final_status": "STATUS role=COMMS_MCU board=CAN_FEATHER fw=uart-framed-v1 id=DF637882D39E4426 boot=492053135 peer=385143002 tx=0 rx=1 baud=115200 tx_bytes=5707 rx_bytes=6577 matched=38 rejected=0 unknown=1 unsolicited=4 pending=0 cobs=0 crc=0 format=0 overflow=1 gaps=1 uptime_ms=864156",
+  "scope": "Bench echo only; synthetic IHU packet; no IHU forwarding or modem/RF delivery",
+  "test_date": "2026-10-02",
+  "hardware": {
+    "comms": "Adafruit RP2040 CAN Bus Feather",
+    "comms_flash_id": "DF637882D39E4426",
+    "walter": "ESP32-S3 MAC 24:58:7c:6f:0c:24",
+    "uart": "Feather GP0 TX to Walter IO44 RX; Walter IO43 TX to Feather GP1 RX; common ground; 115200 8N1",
+    "modem": "Held in reset by Walter application; no radio commands in test"
+  },
+  "firmware_sha256": {
+    "feather_uf2": "b45d81ef73d59b0b9d48bfc8c41de22e1f38fdd2cf171dc55b28821b4820828a",
+    "walter_bin": "268875a1a0cd98776607696c47f86e05d78319456436d278b997e1b9dbedc7b9"
+  },
+  "private_transcript": "m75q:/media/ngrabbs/BACKUP-A/ember-walter-bridge/framed-independent-faults-20261002/framed-bench.log",
+  "counter_interpretation": "Use initial-to-final differences. unknown=1 is the previous deliberately missing-peer test; overflow=1 and gaps=1 predate the paired runs. Fault injections target the Walter receiver; Feather counters do not expose Walter receiver fault counts."
+}

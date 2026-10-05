@@ -1,5 +1,8 @@
 # Documentation editing guide
 
+The [review record](review/README.md) and [operator guides](user/README.md)
+show the implementation/draft/evidence distinction used in this repository.
+
 [Documentation home](README.md)
 
 Write for a teammate who needs to find an answer and act on it.

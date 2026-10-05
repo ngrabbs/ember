@@ -7,5 +7,6 @@ Start with the [canonical pin map](cskb_pinmap.md) for wiring, then the
 
 - [Connector mechanics](cskb_mechanical.md)
 - [IHU–comms](comms_to_ihu.md)
+- [COMMS MCU–Walter and CAN migration checklist](comms_walter.md)
 - [Power](power_interfaces.md)
 - [Data ownership](data_interfaces.md)

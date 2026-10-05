@@ -154,7 +154,7 @@ No added resistors are required for that stated concern.
   route CLK0 entirely on top and clear the TRIPLER_OUT return corridor.
 - [x] Review J9 nominal launch/footprint and classify clock/IF exceptions.
 - [x] Inspect exported inner planes/paste; verify closed outline and all 140 CPL
-  positions/angles against saved geometry. [Fabrication notes](releases/review_20261003_1230/fabrication-notes.md).
+  positions/angles against saved geometry. [Fabrication notes](releases/README.md).
 - [ ] Confirm precision finished-hole tolerance for all five J9 holes (0.84 ±0.05 mm);
   standard JLCPCB hole tolerance is wider. Specific export coordinates are in the fabrication notes.
 - [ ] Accept the proposed 50-ohm ±10% fabrication service and exact 7628 stackup
@@ -162,7 +162,7 @@ No added resistors are required for that stated concern.
   [Detailed review](verification/ground_stitching_rf_review.md).
 - [ ] Complete exact parts, mechanics and manufacturing checks below, then export
   a fresh Gerber/drill/BOM/CPL package. A local review candidate now exists at
-  [review_20261003_1230](releases/review_20261003_1230/README.md); it is not released for ordering.
+  [review_20261003_1230](releases/README.md); it is not released for ordering.
 
 RF gain, sensitivity, filter tuning and spectrum measurements requiring the
 assembled board belong to prototype bring-up. Before fabrication, close the
@@ -307,6 +307,10 @@ this work, not completed substitutions or guaranteed performance.
 - [ ] Complete placeholder LED/D15 polarity acceptance, final placement checks and CAM/hole-process confirmation.
 - [ ] Review final quote before payment: preliminary $319.98 excludes shipping/tax/discount changes.
 
-[Draft findings and preserved corrections](releases/review_20261003_1230/jlc-preview-review.md). No order or payment made.
+[Draft findings and preserved corrections](releases/README.md). No order or payment made.
 
 Evening BOM audit: R26/R31 corrected from erroneous C1152 (24k) to C11702 (1k 1%, 0402) in schematic and PCB; fresh assembly BOM reflects the correction. Final DRC remains zero errors/unconnected.
+
+The October 3 12:30 preview remained a local historical package. Links above
+now point to the release index; the paid Y24 order and current recorded release
+are identified there. Earlier unchecked gates and dated results remain historical.

@@ -24,8 +24,13 @@ parameters still need definition.
 | IHU | Mode, reset reason, watchdog events, uptime |
 | Payload | Status and selected science/experiment metadata |
 
-IHU–comms telemetry uses SPI; Iteration 2 CAN carries subsystem status.
-Comms owns RF downlink framing. Apply link-level packet checksums, an end-to-end
+The FreeRTOS IHU–COMMS application has an I2C status/ping jumper link. The
+separate CAN Feather bench implements packet forwarding, with native EPS
+telemetry delivery recorded over Walter LTE-M. SDRB UHF is a separate local
+workstream whose source/configuration is not included in this branch. Production
+application integration and CAN A/B remain open; see the
+[integration checklist](../interfaces/comms_walter.md). COMMS owns external
+link framing. Apply link-level packet checksums, an end-to-end
 payload CRC, and a sequence counter for drops/reordering.
 
 **Versioning proposal:** a semantic schema version in the header, with compatible

@@ -6,6 +6,8 @@ senior capstone project for the Mississippi State University ECE department.
 
 **[Documentation start here](docs/README.md)** · [System interfaces](system/README.md) · [Open work](TODO.md)
 
+**Team reading:** [Telemetry: from a subsystem to the ground](docs/architecture/telemetry_data_flow.md) — read before implementing subsystem telemetry.
+
 ---
 
 ## The mission
@@ -109,8 +111,11 @@ notes are in [`firmware/ihu/README.md`](firmware/ihu/README.md).
 
 ## Status
 
-Under active development. Fall semester covers design and proof of concept;
-hardware build and integration follow in spring.
+Under active development. Recorded bench work includes EPS readout, dedicated
+USB command/response, and standalone CAN/native EPS telemetry with bounded LTE
+delivery evidence. These demonstrations do not establish flight readiness or
+complete integration of the FreeRTOS applications. Start with the
+[operator guides](docs/user/README.md) and [documentation review](docs/review/README.md).
 
 Open work is tracked in [`TODO.md`](TODO.md) — the current front on each
 subsystem, plus anything not owned by a checklist inside the design docs.

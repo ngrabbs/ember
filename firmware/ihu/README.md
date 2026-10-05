@@ -1,5 +1,9 @@
 # Internal Housekeeping Unit Firmware
 
+**Application scope:** this is the FreeRTOS Pico/UART prototype. The newer
+[CAN Feather bench](../can_feather_bench/README.md) is a separate application
+with USB console and different EPS pins. See the [UART user guide](../../docs/user/ihu-debug-uart.md).
+
 ## Purpose
 
 FreeRTOS-based control firmware for the IHU. Tracks
@@ -11,9 +15,9 @@ layout.
 
 ## Core Responsibilities
 
-- System mode manager (safe, nominal, high-duty)
-- Command parser, validation, and dispatch
-- Subsystem link supervision (I2C/SPI, later CAN)
+- Intended system mode manager: [operations draft](../../docs/architecture/operations/README.md); not yet implemented
+- UART CLI implemented; flight command validation and dispatch remain open
+- I2C housekeeping implemented; production CAN integration remains open
 - Telemetry aggregation and framing handoff to comms
 - Fault handling, retry policy, and recovery coordination
 
@@ -50,7 +54,9 @@ resistors; voltage conversion uses configured series cells. USB CDC remains
 disabled: the bench console uses a 3.3 V USB UART adapter.
 
 See [IHU/EPS bench setup](../../system/ground_station/eps_bench_setup.md) for
-hardware evidence, build/decoder commands and the remaining Yamcs integration.
+hardware evidence and build/decoder commands. The UART wrapper was subsequently
+[deployed and validated in Yamcs](../../system/ground_station/eps_yamcs_setup.md);
+its port ownership and operator use are in the [UART guide](../../docs/user/ihu-debug-uart.md).
 
 ## Project Layout
 
@@ -83,7 +89,7 @@ firmware/shared/
 ```
 
 Future additions slot into `src/drivers/` (MR25H40, STWD100),
-`src/tasks/` (SPI link to comms, telemetry aggregator, command
+`src/tasks/` (production CAN link, telemetry aggregator, command
 dispatch, watchdog feed), and `src/state/` (mode FSM, persistent
 state in MRAM).
 
@@ -99,8 +105,8 @@ i2c0 (GP4/GP5) carries two devices:
 > The comms board is **not** on the CSKB I2C bus. That revision brings
 > SPI back to the stack, and the intended flight link is CAN on
 > H1.51/H1.52. The I2C path below is a two-wire desk harness so this
-> firmware has something real to talk to while the CAN transport is
-> designed — IHU GP4/GP5 to comms GP14/GP15, grounds tied. See
+> firmware has something real to talk to. The separate CAN Feather bench
+> implements packet transport; production FreeRTOS integration remains open — IHU GP4/GP5 to comms GP14/GP15, grounds tied. See
 > [`system/interfaces/comms_to_ihu.md`](../../system/interfaces/comms_to_ihu.md).
 
 The comms board presents a 32-byte register file defined in
@@ -244,8 +250,8 @@ so nothing under the build tree gets committed.
 - [x] Multi-task scheduler running with `console`, `blink`, `i2c-scan`
 - [ ] Define explicit state machine for mode transitions
 - [ ] Implement boot sequence and health gating checks
-- [ ] Enforce default safe mode at boot until EPS I2C and comms SPI links
-  are both healthy for N consecutive checks
+- [ ] Define and enforce boot health gating for EPS I2C and the selected
+  comms transport; the complete mode manager is not implemented
 - [ ] Implement safe-mode entry/exit conditions and actions
 
 ### Workstream B: Interface Drivers and Link Management
@@ -260,8 +266,9 @@ so nothing under the build tree gets committed.
   harness; the real link is CAN)
 - [x] Link heartbeat and timeout handling for the comms housekeeping link
   (transport-agnostic — carries over to CAN)
-- [ ] Add CAN transport abstraction — now the primary IHU↔comms link,
-  not an Iteration 2 addition. `0x300-0x3FF` carries comms status
+- [ ] Integrate CAN packet transport into this FreeRTOS application. The
+  separate [CAN Feather bench](../can_feather_bench/README.md) already exercises
+  one bus; production ID allocation and A/B qualification remain open
 
 ### Workstream C: Command and Telemetry Services
 
@@ -281,8 +288,8 @@ so nothing under the build tree gets committed.
 ## Phase 1 Exit Criteria
 
 - [ ] IHU boots to deterministic safe state and reports reset reason
-- [ ] Stable I2C polling and SPI packet exchange with bounded retry
-  behavior
+- [ ] Stable I2C polling and production comms packet exchange with bounded
+  timeout/recovery behavior
 - [ ] Command/telemetry loop closes with reproducible test results
 
 ## Related Documents

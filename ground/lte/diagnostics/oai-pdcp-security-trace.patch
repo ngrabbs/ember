@@ -1,0 +1,44 @@
+--- a/openair2/LAYER2/PDCP_v10.1.0/pdcp.c
++++ b/openair2/LAYER2/PDCP_v10.1.0/pdcp.c
+@@ -1851,6 +1851,9 @@
+             pdcp_pP->seq_num_size,
+             (rlc_modeP == RLC_MODE_AM ) ? "AM" : (rlc_modeP == RLC_MODE_TM) ? "TM" : "UM");
+ 
++      LOG_I(PDCP, "TRACE_PDCP_SECURITY_REQUEST rnti %x srb %d rb %u action %d mode %u active_before %d cipher %d integrity %d\n",
++            ctxt_pP->rntiMaybeUEid, srb_flagP == SRB_FLAG_YES, rb_idP, actionP, security_modeP,
++            pdcp_pP->security_activated, pdcp_pP->cipheringAlgorithm, pdcp_pP->integrityProtAlgorithm);
+       /* Setup security */
+       if (security_modeP != 0xff) {
+         pdcp_config_set_security(
+@@ -1861,6 +1864,10 @@
+           kRRCint_pP,
+           kUPenc_pP);
+       }
++      LOG_I(PDCP, "TRACE_PDCP_SECURITY_RESULT rnti %x srb %d rb %u action %d active %d cipher %d integrity %d container %d\n",
++            ctxt_pP->rntiMaybeUEid, srb_flagP == SRB_FLAG_YES, rb_idP, actionP,
++            pdcp_pP->security_activated, pdcp_pP->cipheringAlgorithm, pdcp_pP->integrityProtAlgorithm,
++            pdcp_pP->security_container_rrc != NULL);
+ 
+       break;
+ 
+@@ -1870,6 +1877,9 @@
+       pdcp_pP->status_report = rb_reportP;
+       pdcp_pP->rlc_mode = rlc_modeP;
+ 
++      LOG_I(PDCP, "TRACE_PDCP_SECURITY_REQUEST rnti %x srb %d rb %u action %d mode %u active_before %d cipher %d integrity %d\n",
++            ctxt_pP->rntiMaybeUEid, srb_flagP == SRB_FLAG_YES, rb_idP, actionP, security_modeP,
++            pdcp_pP->security_activated, pdcp_pP->cipheringAlgorithm, pdcp_pP->integrityProtAlgorithm);
+       /* Setup security */
+       if (security_modeP != 0xff) {
+         pdcp_config_set_security(
+@@ -1880,6 +1890,10 @@
+           kRRCint_pP,
+           kUPenc_pP);
+       }
++      LOG_I(PDCP, "TRACE_PDCP_SECURITY_RESULT rnti %x srb %d rb %u action %d active %d cipher %d integrity %d container %d\n",
++            ctxt_pP->rntiMaybeUEid, srb_flagP == SRB_FLAG_YES, rb_idP, actionP,
++            pdcp_pP->security_activated, pdcp_pP->cipheringAlgorithm, pdcp_pP->integrityProtAlgorithm,
++            pdcp_pP->security_container_rrc != NULL);
+ 
+       if (rb_snP == LTE_PDCP_Config__rlc_UM__pdcp_SN_Size_len7bits) {
+         pdcp_pP->seq_num_size = 7;

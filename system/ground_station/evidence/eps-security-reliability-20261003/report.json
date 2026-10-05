@@ -1,0 +1,3577 @@
+{
+  "started_utc": "2026-10-03T00:50:06.791135+00:00",
+  "profile": "enb.band13.emtc.ce300tx20diag.conf",
+  "requested": 10,
+  "trials": [
+    {
+      "number": 1,
+      "label": "eps-security-reliability-20261003-01",
+      "started_utc": "2026-10-03T00:50:06.791387+00:00",
+      "host_exit": 0,
+      "host": {
+        "modem_accepted": [
+          {
+            "hex": "0901c006007901010010020100000000000000003a678242000e54710060010202010101010200000000000000000007000e54710000000000001f520000000500001f42fffea4f8000027830000522a0000271000002710000400010100000000000000000000a15165000312e9fda2004533dc22cf0000000300e000015ac6",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 6,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 939121,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 7,
+                "ihu_readout_uptime_ms": 939121,
+                "readout_age_ms": 0,
+                "battery_mv": 8018,
+                "input_mv": 5,
+                "output_mv": 8002,
+                "battery_ua": -88840,
+                "input_ua": 10115,
+                "die_temp_mc": 21034,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20837,
+                "raw_vin": 3,
+                "raw_vout": 4841,
+                "raw_ibat": 64930,
+                "raw_iin": 69,
+                "raw_die_temp": 13276,
+                "raw_thermistor_voltage": 8911,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            },
+            "elapsed_s": 27.194
+          }
+        ],
+        "status": [
+          "SUBMITTED request=68 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119962 modem_accepted=6 rejected=0\r\nRESULT request=68 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d49a0000000600000000",
+          "SUBMITTED request=69 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117901 modem_accepted=6 rejected=0\r\nRESULT request=69 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8d0000000600000000",
+          "SUBMITTED request=70 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115842 modem_accepted=6 rejected=0\r\nRESULT request=70 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c4820000000600000000",
+          "SUBMITTED request=71 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113780 modem_accepted=6 rejected=0\r\nRESULT request=71 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc740000000600000000",
+          "SUBMITTED request=72 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111719 modem_accepted=6 rejected=0\r\nRESULT request=72 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4670000000600000000",
+          "SUBMITTED request=73 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109659 modem_accepted=6 rejected=0\r\nRESULT request=73 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac5b0000000600000000",
+          "SUBMITTED request=74 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107598 modem_accepted=6 rejected=0\r\nRESULT request=74 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a44e0000000600000000",
+          "SUBMITTED request=75 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105537 modem_accepted=6 rejected=0\r\nRESULT request=75 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c410000000600000000",
+          "SUBMITTED request=76 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103477 modem_accepted=6 rejected=0\r\nRESULT request=76 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000194350000000600000000",
+          "SUBMITTED request=77 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101417 modem_accepted=6 rejected=0\r\nRESULT request=77 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c290000000600000000",
+          "SUBMITTED request=78 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99355 modem_accepted=6 rejected=0\r\nRESULT request=78 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001841b0000000600000000",
+          "SUBMITTED request=79 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=97295 modem_accepted=6 rejected=0\r\nRESULT request=79 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000017c0f0000000600000000",
+          "SUBMITTED request=80 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=95234 modem_accepted=6 rejected=0\r\nRESULT request=80 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000174020000000600000000",
+          "SUBMITTED request=81 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=93173 modem_accepted=6 rejected=0\r\nRESULT request=81 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0608000100016bf50000000600000000"
+        ],
+        "status_timing": [
+          {
+            "elapsed_s": 0.061,
+            "response": "SUBMITTED request=68 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119962 modem_accepted=6 rejected=0\r\nRESULT request=68 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d49a0000000600000000"
+          },
+          {
+            "elapsed_s": 2.121,
+            "response": "SUBMITTED request=69 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117901 modem_accepted=6 rejected=0\r\nRESULT request=69 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8d0000000600000000"
+          },
+          {
+            "elapsed_s": 4.182,
+            "response": "SUBMITTED request=70 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115842 modem_accepted=6 rejected=0\r\nRESULT request=70 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c4820000000600000000"
+          },
+          {
+            "elapsed_s": 6.243,
+            "response": "SUBMITTED request=71 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113780 modem_accepted=6 rejected=0\r\nRESULT request=71 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc740000000600000000"
+          },
+          {
+            "elapsed_s": 8.303,
+            "response": "SUBMITTED request=72 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111719 modem_accepted=6 rejected=0\r\nRESULT request=72 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4670000000600000000"
+          },
+          {
+            "elapsed_s": 10.364,
+            "response": "SUBMITTED request=73 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109659 modem_accepted=6 rejected=0\r\nRESULT request=73 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac5b0000000600000000"
+          },
+          {
+            "elapsed_s": 12.425,
+            "response": "SUBMITTED request=74 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107598 modem_accepted=6 rejected=0\r\nRESULT request=74 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a44e0000000600000000"
+          },
+          {
+            "elapsed_s": 14.486,
+            "response": "SUBMITTED request=75 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105537 modem_accepted=6 rejected=0\r\nRESULT request=75 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c410000000600000000"
+          },
+          {
+            "elapsed_s": 16.546,
+            "response": "SUBMITTED request=76 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103477 modem_accepted=6 rejected=0\r\nRESULT request=76 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000194350000000600000000"
+          },
+          {
+            "elapsed_s": 18.607,
+            "response": "SUBMITTED request=77 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101417 modem_accepted=6 rejected=0\r\nRESULT request=77 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c290000000600000000"
+          },
+          {
+            "elapsed_s": 20.667,
+            "response": "SUBMITTED request=78 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99355 modem_accepted=6 rejected=0\r\nRESULT request=78 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001841b0000000600000000"
+          },
+          {
+            "elapsed_s": 22.728,
+            "response": "SUBMITTED request=79 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=97295 modem_accepted=6 rejected=0\r\nRESULT request=79 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000017c0f0000000600000000"
+          },
+          {
+            "elapsed_s": 24.788,
+            "response": "SUBMITTED request=80 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=95234 modem_accepted=6 rejected=0\r\nRESULT request=80 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000174020000000600000000"
+          },
+          {
+            "elapsed_s": 26.849,
+            "response": "SUBMITTED request=81 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=93173 modem_accepted=6 rejected=0\r\nRESULT request=81 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0608000100016bf50000000600000000"
+          }
+        ],
+        "scope": "Modem acceptance only; correlate ground receiver and Yamcs separately.",
+        "initial_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=586 tx_fail=1 tx_timeout=0 rx=1098 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=64 unknown=1 busy_drops=0 pending=0 uptime_ms=911716",
+        "ready_elapsed_s": 26.849,
+        "ready": true,
+        "diagnostics": [
+          {
+            "stage": "before_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 93113,
+              "last_cereg": 1,
+              "send_cereg": 255,
+              "failure_cereg": 255,
+              "last_command": 9,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 0,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 25914,
+              "uart_send_request": 0,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 92768,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 27078,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 25914,
+              "uart_send_request": 76,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "before_stop",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 76628,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 27078,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 25914,
+              "uart_send_request": 76,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_stop",
+            "decoded": {
+              "version": 1,
+              "state": 0,
+              "error": 0,
+              "registered": 0,
+              "window_ms": 0,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 27078,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 25914,
+              "uart_send_request": 76,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          }
+        ],
+        "stop": "SUBMITTED request=87 type=116 bytes=4\r\nRESULT request=87 outcome=RF_WINDOW_ACCEPTED peer=1875991883 bytes=4 hex=00000000",
+        "final_modem_status": "SUBMITTED request=88 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=7 rejected=0\r\nRESULT request=88 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=00080000000000000000000700000000",
+        "final_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=764 tx_fail=1 tx_timeout=0 rx=1432 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=88 unknown=1 busy_drops=0 pending=0 uptime_ms=955796"
+      },
+      "off_confirmed": true,
+      "receiver_exit": 0,
+      "radio_exit": 0,
+      "capture_exit": 124,
+      "modem_accepted": 1,
+      "radio_received": 1,
+      "receiver_rejected": 0,
+      "bytes_match": true,
+      "archive_match": true,
+      "success": true,
+      "ready_elapsed_s": 26.849,
+      "radio_children": {
+        "oai": 124,
+        "epc": 124
+      },
+      "delivery_success": true,
+      "normal_process_exits": true,
+      "ground_receiver": {
+        "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+        "received": 1,
+        "requested": 1,
+        "rejected": 0,
+        "duplicates": 0,
+        "packets": [
+          {
+            "received_utc": "2026-10-03T00:50:41.420327+00:00",
+            "peer": [
+              "172.16.0.2",
+              51001
+            ],
+            "hex": "0901c006007901010010020100000000000000003a678242000e54710060010202010101010200000000000000000007000e54710000000000001f520000000500001f42fffea4f8000027830000522a0000271000002710000400010100000000000000000000a15165000312e9fda2004533dc22cf0000000300e000015ac6",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 6,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 939121,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 7,
+                "ihu_readout_uptime_ms": 939121,
+                "readout_age_ms": 0,
+                "battery_mv": 8018,
+                "input_mv": 5,
+                "output_mv": 8002,
+                "battery_ua": -88840,
+                "input_ua": 10115,
+                "die_temp_mc": 21034,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20837,
+                "raw_vin": 3,
+                "raw_vout": 4841,
+                "raw_ibat": 64930,
+                "raw_iin": 69,
+                "raw_die_temp": 13276,
+                "raw_thermistor_voltage": 8911,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            }
+          }
+        ]
+      },
+      "matching_archive": [
+        {
+          "packet": "CQHABgB5AQEAEAIBAAAAAAAAAAA6Z4JCAA5UcQBgAQICAQEBAQIAAAAAAAAAAAAHAA5UcQAAAAAAAB9SAAAABQAAH0L//qT4AAAngwAAUioAACcQAAAnEAAEAAEBAAAAAAAAAAAAAKFRZQADEun9ogBFM9wizwAAAAMA4AABWsY=",
+          "sequenceNumber": 151109638,
+          "id": {
+            "name": "/ember/POWER_STATUS"
+          },
+          "receptionTime": "2026-10-03T00:50:41.421Z",
+          "generationTime": "2026-10-03T00:50:41.421Z",
+          "earthReceptionTime": "2026-10-03T00:50:41.421Z",
+          "link": "eps-lte-in",
+          "size": 128
+        }
+      ],
+      "duration_s": 155.737,
+      "finished_utc": "2026-10-03T00:52:42.528978+00:00"
+    },
+    {
+      "number": 2,
+      "label": "eps-security-reliability-20261003-02",
+      "started_utc": "2026-10-03T00:52:42.529701+00:00",
+      "host_exit": 0,
+      "host": {
+        "modem_accepted": [
+          {
+            "hex": "0901c007007901010010020100000000000000003a678242001088a20060010202010101010200000000000000000008001088a20000000000001f4c0000000c00001f3afffe081000002c18000052150000271000002710000400010100000000000000000000a15155000712e4fc90004d33db23280000000300e000019a2d",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 7,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 1083554,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 8,
+                "ihu_readout_uptime_ms": 1083554,
+                "readout_age_ms": 0,
+                "battery_mv": 8012,
+                "input_mv": 12,
+                "output_mv": 7994,
+                "battery_ua": -129008,
+                "input_ua": 11288,
+                "die_temp_mc": 21013,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20821,
+                "raw_vin": 7,
+                "raw_vout": 4836,
+                "raw_ibat": 64656,
+                "raw_iin": 77,
+                "raw_die_temp": 13275,
+                "raw_thermistor_voltage": 9000,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            },
+            "elapsed_s": 16.888
+          }
+        ],
+        "status": [
+          "SUBMITTED request=92 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119961 modem_accepted=7 rejected=0\r\nRESULT request=92 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4990000000700000000",
+          "SUBMITTED request=93 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=7 rejected=0\r\nRESULT request=93 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000700000000",
+          "SUBMITTED request=94 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115840 modem_accepted=7 rejected=0\r\nRESULT request=94 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c4800000000700000000",
+          "SUBMITTED request=95 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113779 modem_accepted=7 rejected=0\r\nRESULT request=95 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc730000000700000000",
+          "SUBMITTED request=96 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111718 modem_accepted=7 rejected=0\r\nRESULT request=96 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4660000000700000000",
+          "SUBMITTED request=97 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109658 modem_accepted=7 rejected=0\r\nRESULT request=97 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac5a0000000700000000",
+          "SUBMITTED request=98 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107598 modem_accepted=7 rejected=0\r\nRESULT request=98 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a44e0000000700000000",
+          "SUBMITTED request=99 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105537 modem_accepted=7 rejected=0\r\nRESULT request=99 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c410000000700000000",
+          "SUBMITTED request=100 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=103476 modem_accepted=7 rejected=0\r\nRESULT request=100 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=06080001000194340000000700000000"
+        ],
+        "status_timing": [
+          {
+            "elapsed_s": 0.061,
+            "response": "SUBMITTED request=92 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119961 modem_accepted=7 rejected=0\r\nRESULT request=92 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4990000000700000000"
+          },
+          {
+            "elapsed_s": 2.122,
+            "response": "SUBMITTED request=93 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=7 rejected=0\r\nRESULT request=93 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000700000000"
+          },
+          {
+            "elapsed_s": 4.182,
+            "response": "SUBMITTED request=94 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115840 modem_accepted=7 rejected=0\r\nRESULT request=94 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c4800000000700000000"
+          },
+          {
+            "elapsed_s": 6.243,
+            "response": "SUBMITTED request=95 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113779 modem_accepted=7 rejected=0\r\nRESULT request=95 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc730000000700000000"
+          },
+          {
+            "elapsed_s": 8.303,
+            "response": "SUBMITTED request=96 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111718 modem_accepted=7 rejected=0\r\nRESULT request=96 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4660000000700000000"
+          },
+          {
+            "elapsed_s": 10.364,
+            "response": "SUBMITTED request=97 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109658 modem_accepted=7 rejected=0\r\nRESULT request=97 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac5a0000000700000000"
+          },
+          {
+            "elapsed_s": 12.424,
+            "response": "SUBMITTED request=98 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107598 modem_accepted=7 rejected=0\r\nRESULT request=98 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a44e0000000700000000"
+          },
+          {
+            "elapsed_s": 14.485,
+            "response": "SUBMITTED request=99 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105537 modem_accepted=7 rejected=0\r\nRESULT request=99 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c410000000700000000"
+          },
+          {
+            "elapsed_s": 16.546,
+            "response": "SUBMITTED request=100 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=103476 modem_accepted=7 rejected=0\r\nRESULT request=100 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=06080001000194340000000700000000"
+          }
+        ],
+        "scope": "Modem acceptance only; correlate ground receiver and Yamcs separately.",
+        "initial_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=764 tx_fail=1 tx_timeout=0 rx=1432 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=88 unknown=1 busy_drops=0 pending=0 uptime_ms=1066450",
+        "ready_elapsed_s": 16.546,
+        "ready": true,
+        "diagnostics": [
+          {
+            "stage": "before_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 103415,
+              "last_cereg": 1,
+              "send_cereg": 255,
+              "failure_cereg": 255,
+              "last_command": 9,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 0,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 15029,
+              "uart_send_request": 0,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 103073,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 16776,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 15029,
+              "uart_send_request": 93,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "before_stop",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 86911,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 16776,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 15029,
+              "uart_send_request": 93,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_stop",
+            "decoded": {
+              "version": 1,
+              "state": 0,
+              "error": 0,
+              "registered": 0,
+              "window_ms": 0,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 16776,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 15029,
+              "uart_send_request": 93,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          }
+        ],
+        "stop": "SUBMITTED request=106 type=116 bytes=4\r\nRESULT request=106 outcome=RF_WINDOW_ACCEPTED peer=1875991883 bytes=4 hex=00000000",
+        "final_modem_status": "SUBMITTED request=107 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=8 rejected=0\r\nRESULT request=107 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=00080000000000000000000800000000",
+        "final_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=912 tx_fail=1 tx_timeout=0 rx=1716 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=107 unknown=1 busy_drops=0 pending=0 uptime_ms=1100249"
+      },
+      "off_confirmed": true,
+      "receiver_exit": 0,
+      "radio_exit": 0,
+      "capture_exit": 124,
+      "modem_accepted": 1,
+      "radio_received": 1,
+      "receiver_rejected": 0,
+      "bytes_match": true,
+      "archive_match": true,
+      "success": true,
+      "ready_elapsed_s": 16.546,
+      "radio_children": {
+        "oai": 124,
+        "epc": 124
+      },
+      "delivery_success": true,
+      "normal_process_exits": true,
+      "ground_receiver": {
+        "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+        "received": 1,
+        "requested": 1,
+        "rejected": 0,
+        "duplicates": 0,
+        "packets": [
+          {
+            "received_utc": "2026-10-03T00:53:05.614111+00:00",
+            "peer": [
+              "172.16.0.2",
+              51001
+            ],
+            "hex": "0901c007007901010010020100000000000000003a678242001088a20060010202010101010200000000000000000008001088a20000000000001f4c0000000c00001f3afffe081000002c18000052150000271000002710000400010100000000000000000000a15155000712e4fc90004d33db23280000000300e000019a2d",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 7,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 1083554,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 8,
+                "ihu_readout_uptime_ms": 1083554,
+                "readout_age_ms": 0,
+                "battery_mv": 8012,
+                "input_mv": 12,
+                "output_mv": 7994,
+                "battery_ua": -129008,
+                "input_ua": 11288,
+                "die_temp_mc": 21013,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20821,
+                "raw_vin": 7,
+                "raw_vout": 4836,
+                "raw_ibat": 64656,
+                "raw_iin": 77,
+                "raw_die_temp": 13275,
+                "raw_thermistor_voltage": 9000,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            }
+          }
+        ]
+      },
+      "matching_archive": [
+        {
+          "packet": "CQHABwB5AQEAEAIBAAAAAAAAAAA6Z4JCABCIogBgAQICAQEBAQIAAAAAAAAAAAAIABCIogAAAAAAAB9MAAAADAAAHzr//ggQAAAsGAAAUhUAACcQAAAnEAAEAAEBAAAAAAAAAAAAAKFRVQAHEuT8kABNM9sjKAAAAAMA4AABmi0=",
+          "sequenceNumber": 151109639,
+          "id": {
+            "name": "/ember/POWER_STATUS"
+          },
+          "receptionTime": "2026-10-03T00:53:05.614Z",
+          "generationTime": "2026-10-03T00:53:05.614Z",
+          "earthReceptionTime": "2026-10-03T00:53:05.614Z",
+          "link": "eps-lte-in",
+          "size": 128
+        }
+      ],
+      "duration_s": 155.731,
+      "finished_utc": "2026-10-03T00:55:18.260683+00:00"
+    },
+    {
+      "number": 3,
+      "label": "eps-security-reliability-20261003-03",
+      "started_utc": "2026-10-03T00:55:18.261865+00:00",
+      "host_exit": 0,
+      "host": {
+        "modem_accepted": [
+          {
+            "hex": "0901c008007901010010020100000000000000003a678242001369e50060010202010101010200000000000000000009001369e50000000000001f4b0000000700001f38fffe1dd3000028a90000526b0000271000002710000400010100000000000000000000a15153000412e3fcb6004733df232e0000000300e00001530e",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 8,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 1272293,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 9,
+                "ihu_readout_uptime_ms": 1272293,
+                "readout_age_ms": 0,
+                "battery_mv": 8011,
+                "input_mv": 7,
+                "output_mv": 7992,
+                "battery_ua": -123437,
+                "input_ua": 10409,
+                "die_temp_mc": 21099,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20819,
+                "raw_vin": 4,
+                "raw_vout": 4835,
+                "raw_ibat": 64694,
+                "raw_iin": 71,
+                "raw_die_temp": 13279,
+                "raw_thermistor_voltage": 9006,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            },
+            "elapsed_s": 49.876
+          }
+        ],
+        "status": [
+          "SUBMITTED request=111 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119962 modem_accepted=8 rejected=0\r\nRESULT request=111 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d49a0000000800000000",
+          "SUBMITTED request=112 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117901 modem_accepted=8 rejected=0\r\nRESULT request=112 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8d0000000800000000",
+          "SUBMITTED request=113 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115840 modem_accepted=8 rejected=0\r\nRESULT request=113 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c4800000000800000000",
+          "SUBMITTED request=114 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113779 modem_accepted=8 rejected=0\r\nRESULT request=114 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc730000000800000000",
+          "SUBMITTED request=115 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111718 modem_accepted=8 rejected=0\r\nRESULT request=115 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4660000000800000000",
+          "SUBMITTED request=116 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109657 modem_accepted=8 rejected=0\r\nRESULT request=116 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac590000000800000000",
+          "SUBMITTED request=117 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107595 modem_accepted=8 rejected=0\r\nRESULT request=117 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a44b0000000800000000",
+          "SUBMITTED request=118 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105534 modem_accepted=8 rejected=0\r\nRESULT request=118 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3e0000000800000000",
+          "SUBMITTED request=119 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103473 modem_accepted=8 rejected=0\r\nRESULT request=119 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000194310000000800000000",
+          "SUBMITTED request=120 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101412 modem_accepted=8 rejected=0\r\nRESULT request=120 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c240000000800000000",
+          "SUBMITTED request=121 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99350 modem_accepted=8 rejected=0\r\nRESULT request=121 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000184160000000800000000",
+          "SUBMITTED request=122 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=97289 modem_accepted=8 rejected=0\r\nRESULT request=122 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000017c090000000800000000",
+          "SUBMITTED request=123 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=95228 modem_accepted=8 rejected=0\r\nRESULT request=123 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000173fc0000000800000000",
+          "SUBMITTED request=124 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=93167 modem_accepted=8 rejected=0\r\nRESULT request=124 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000016bef0000000800000000",
+          "SUBMITTED request=125 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=91105 modem_accepted=8 rejected=0\r\nRESULT request=125 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000163e10000000800000000",
+          "SUBMITTED request=126 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=89043 modem_accepted=8 rejected=0\r\nRESULT request=126 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000015bd30000000800000000",
+          "SUBMITTED request=127 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=86982 modem_accepted=8 rejected=0\r\nRESULT request=127 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000153c60000000800000000",
+          "SUBMITTED request=128 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=84921 modem_accepted=8 rejected=0\r\nRESULT request=128 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000014bb90000000800000000",
+          "SUBMITTED request=129 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=82860 modem_accepted=8 rejected=0\r\nRESULT request=129 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000143ac0000000800000000",
+          "SUBMITTED request=130 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=80799 modem_accepted=8 rejected=0\r\nRESULT request=130 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000013b9f0000000800000000",
+          "SUBMITTED request=131 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=78738 modem_accepted=8 rejected=0\r\nRESULT request=131 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000133920000000800000000",
+          "SUBMITTED request=132 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=76676 modem_accepted=8 rejected=0\r\nRESULT request=132 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000012b840000000800000000",
+          "SUBMITTED request=133 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=74615 modem_accepted=8 rejected=0\r\nRESULT request=133 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000123770000000800000000",
+          "SUBMITTED request=134 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=72553 modem_accepted=8 rejected=0\r\nRESULT request=134 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000011b690000000800000000",
+          "SUBMITTED request=135 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=70492 modem_accepted=8 rejected=0\r\nRESULT request=135 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=060800010001135c0000000800000000"
+        ],
+        "status_timing": [
+          {
+            "elapsed_s": 0.061,
+            "response": "SUBMITTED request=111 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119962 modem_accepted=8 rejected=0\r\nRESULT request=111 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d49a0000000800000000"
+          },
+          {
+            "elapsed_s": 2.122,
+            "response": "SUBMITTED request=112 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117901 modem_accepted=8 rejected=0\r\nRESULT request=112 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8d0000000800000000"
+          },
+          {
+            "elapsed_s": 4.183,
+            "response": "SUBMITTED request=113 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115840 modem_accepted=8 rejected=0\r\nRESULT request=113 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c4800000000800000000"
+          },
+          {
+            "elapsed_s": 6.244,
+            "response": "SUBMITTED request=114 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113779 modem_accepted=8 rejected=0\r\nRESULT request=114 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc730000000800000000"
+          },
+          {
+            "elapsed_s": 8.305,
+            "response": "SUBMITTED request=115 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111718 modem_accepted=8 rejected=0\r\nRESULT request=115 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4660000000800000000"
+          },
+          {
+            "elapsed_s": 10.367,
+            "response": "SUBMITTED request=116 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109657 modem_accepted=8 rejected=0\r\nRESULT request=116 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac590000000800000000"
+          },
+          {
+            "elapsed_s": 12.428,
+            "response": "SUBMITTED request=117 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107595 modem_accepted=8 rejected=0\r\nRESULT request=117 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a44b0000000800000000"
+          },
+          {
+            "elapsed_s": 14.489,
+            "response": "SUBMITTED request=118 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105534 modem_accepted=8 rejected=0\r\nRESULT request=118 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3e0000000800000000"
+          },
+          {
+            "elapsed_s": 16.55,
+            "response": "SUBMITTED request=119 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103473 modem_accepted=8 rejected=0\r\nRESULT request=119 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000194310000000800000000"
+          },
+          {
+            "elapsed_s": 18.612,
+            "response": "SUBMITTED request=120 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101412 modem_accepted=8 rejected=0\r\nRESULT request=120 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c240000000800000000"
+          },
+          {
+            "elapsed_s": 20.673,
+            "response": "SUBMITTED request=121 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99350 modem_accepted=8 rejected=0\r\nRESULT request=121 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000184160000000800000000"
+          },
+          {
+            "elapsed_s": 22.734,
+            "response": "SUBMITTED request=122 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=97289 modem_accepted=8 rejected=0\r\nRESULT request=122 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000017c090000000800000000"
+          },
+          {
+            "elapsed_s": 24.795,
+            "response": "SUBMITTED request=123 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=95228 modem_accepted=8 rejected=0\r\nRESULT request=123 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000173fc0000000800000000"
+          },
+          {
+            "elapsed_s": 26.857,
+            "response": "SUBMITTED request=124 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=93167 modem_accepted=8 rejected=0\r\nRESULT request=124 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000016bef0000000800000000"
+          },
+          {
+            "elapsed_s": 28.918,
+            "response": "SUBMITTED request=125 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=91105 modem_accepted=8 rejected=0\r\nRESULT request=125 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000163e10000000800000000"
+          },
+          {
+            "elapsed_s": 30.98,
+            "response": "SUBMITTED request=126 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=89043 modem_accepted=8 rejected=0\r\nRESULT request=126 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000015bd30000000800000000"
+          },
+          {
+            "elapsed_s": 33.041,
+            "response": "SUBMITTED request=127 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=86982 modem_accepted=8 rejected=0\r\nRESULT request=127 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000153c60000000800000000"
+          },
+          {
+            "elapsed_s": 35.102,
+            "response": "SUBMITTED request=128 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=84921 modem_accepted=8 rejected=0\r\nRESULT request=128 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000014bb90000000800000000"
+          },
+          {
+            "elapsed_s": 37.163,
+            "response": "SUBMITTED request=129 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=82860 modem_accepted=8 rejected=0\r\nRESULT request=129 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000143ac0000000800000000"
+          },
+          {
+            "elapsed_s": 39.224,
+            "response": "SUBMITTED request=130 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=80799 modem_accepted=8 rejected=0\r\nRESULT request=130 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000013b9f0000000800000000"
+          },
+          {
+            "elapsed_s": 41.285,
+            "response": "SUBMITTED request=131 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=78738 modem_accepted=8 rejected=0\r\nRESULT request=131 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000133920000000800000000"
+          },
+          {
+            "elapsed_s": 43.347,
+            "response": "SUBMITTED request=132 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=76676 modem_accepted=8 rejected=0\r\nRESULT request=132 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000012b840000000800000000"
+          },
+          {
+            "elapsed_s": 45.409,
+            "response": "SUBMITTED request=133 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=74615 modem_accepted=8 rejected=0\r\nRESULT request=133 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000123770000000800000000"
+          },
+          {
+            "elapsed_s": 47.47,
+            "response": "SUBMITTED request=134 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=72553 modem_accepted=8 rejected=0\r\nRESULT request=134 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000011b690000000800000000"
+          },
+          {
+            "elapsed_s": 49.531,
+            "response": "SUBMITTED request=135 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=70492 modem_accepted=8 rejected=0\r\nRESULT request=135 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=060800010001135c0000000800000000"
+          }
+        ],
+        "scope": "Modem acceptance only; correlate ground receiver and Yamcs separately.",
+        "initial_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=912 tx_fail=1 tx_timeout=0 rx=1716 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=107 unknown=1 busy_drops=0 pending=0 uptime_ms=1222199",
+        "ready_elapsed_s": 49.531,
+        "ready": true,
+        "diagnostics": [
+          {
+            "stage": "before_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 70432,
+              "last_cereg": 1,
+              "send_cereg": 255,
+              "failure_cereg": 255,
+              "last_command": 9,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 0,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 48046,
+              "uart_send_request": 0,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 70087,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 49759,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 48046,
+              "uart_send_request": 126,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "before_stop",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 53943,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 49759,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 48046,
+              "uart_send_request": 126,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_stop",
+            "decoded": {
+              "version": 1,
+              "state": 0,
+              "error": 0,
+              "registered": 0,
+              "window_ms": 0,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 49759,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 48046,
+              "uart_send_request": 126,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          }
+        ],
+        "stop": "SUBMITTED request=141 type=116 bytes=4\r\nRESULT request=141 outcome=RF_WINDOW_ACCEPTED peer=1875991883 bytes=4 hex=00000000",
+        "final_modem_status": "SUBMITTED request=142 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=9 rejected=0\r\nRESULT request=142 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=00080000000000000000000900000000",
+        "final_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1156 tx_fail=1 tx_timeout=0 rx=2160 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=142 unknown=1 busy_drops=0 pending=0 uptime_ms=1288972"
+      },
+      "off_confirmed": true,
+      "receiver_exit": 0,
+      "radio_exit": 0,
+      "capture_exit": 124,
+      "modem_accepted": 1,
+      "radio_received": 1,
+      "receiver_rejected": 0,
+      "bytes_match": true,
+      "archive_match": true,
+      "success": true,
+      "ready_elapsed_s": 49.531,
+      "radio_children": {
+        "oai": 124,
+        "epc": 124
+      },
+      "delivery_success": true,
+      "normal_process_exits": true,
+      "ground_receiver": {
+        "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+        "received": 1,
+        "requested": 1,
+        "rejected": 0,
+        "duplicates": 0,
+        "packets": [
+          {
+            "received_utc": "2026-10-03T00:56:14.268530+00:00",
+            "peer": [
+              "172.16.0.2",
+              51001
+            ],
+            "hex": "0901c008007901010010020100000000000000003a678242001369e50060010202010101010200000000000000000009001369e50000000000001f4b0000000700001f38fffe1dd3000028a90000526b0000271000002710000400010100000000000000000000a15153000412e3fcb6004733df232e0000000300e00001530e",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 8,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 1272293,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 9,
+                "ihu_readout_uptime_ms": 1272293,
+                "readout_age_ms": 0,
+                "battery_mv": 8011,
+                "input_mv": 7,
+                "output_mv": 7992,
+                "battery_ua": -123437,
+                "input_ua": 10409,
+                "die_temp_mc": 21099,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20819,
+                "raw_vin": 4,
+                "raw_vout": 4835,
+                "raw_ibat": 64694,
+                "raw_iin": 71,
+                "raw_die_temp": 13279,
+                "raw_thermistor_voltage": 9006,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            }
+          }
+        ]
+      },
+      "matching_archive": [
+        {
+          "packet": "CQHACAB5AQEAEAIBAAAAAAAAAAA6Z4JCABNp5QBgAQICAQEBAQIAAAAAAAAAAAAJABNp5QAAAAAAAB9LAAAABwAAHzj//h3TAAAoqQAAUmsAACcQAAAnEAAEAAEBAAAAAAAAAAAAAKFRUwAEEuP8tgBHM98jLgAAAAMA4AABUw4=",
+          "sequenceNumber": 151109640,
+          "id": {
+            "name": "/ember/POWER_STATUS"
+          },
+          "receptionTime": "2026-10-03T00:56:14.269Z",
+          "generationTime": "2026-10-03T00:56:14.269Z",
+          "earthReceptionTime": "2026-10-03T00:56:14.269Z",
+          "link": "eps-lte-in",
+          "size": 128
+        }
+      ],
+      "duration_s": 155.767,
+      "finished_utc": "2026-10-03T00:57:54.029316+00:00"
+    },
+    {
+      "number": 4,
+      "label": "eps-security-reliability-20261003-04",
+      "started_utc": "2026-10-03T00:57:54.031956+00:00",
+      "host_exit": 1,
+      "host": {
+        "modem_accepted": [
+          {
+            "hex": "0901c009007901010010020100000000000000003a67824200155db8006001020201010101020000000000000000000a00155db80000000000001f4a0000000700001f37fffe2a6c0000293b0000526b0000271000002710000400010100000000000000000000a15151000412e2fccc004833df231a0000000300e00001f3e6",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 9,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 1400248,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 10,
+                "ihu_readout_uptime_ms": 1400248,
+                "readout_age_ms": 0,
+                "battery_mv": 8010,
+                "input_mv": 7,
+                "output_mv": 7991,
+                "battery_ua": -120212,
+                "input_ua": 10555,
+                "die_temp_mc": 21099,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20817,
+                "raw_vin": 4,
+                "raw_vout": 4834,
+                "raw_ibat": 64716,
+                "raw_iin": 72,
+                "raw_die_temp": 13279,
+                "raw_thermistor_voltage": 8986,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            },
+            "elapsed_s": 21.02
+          }
+        ],
+        "status": [
+          "SUBMITTED request=146 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119961 modem_accepted=9 rejected=0\r\nRESULT request=146 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4990000000900000000",
+          "SUBMITTED request=147 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117899 modem_accepted=9 rejected=0\r\nRESULT request=147 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8b0000000900000000",
+          "SUBMITTED request=148 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115838 modem_accepted=9 rejected=0\r\nRESULT request=148 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47e0000000900000000",
+          "SUBMITTED request=149 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113776 modem_accepted=9 rejected=0\r\nRESULT request=149 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc700000000900000000",
+          "SUBMITTED request=150 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111715 modem_accepted=9 rejected=0\r\nRESULT request=150 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4630000000900000000",
+          "SUBMITTED request=151 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109654 modem_accepted=9 rejected=0\r\nRESULT request=151 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac560000000900000000",
+          "SUBMITTED request=152 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107592 modem_accepted=9 rejected=0\r\nRESULT request=152 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a4480000000900000000",
+          "SUBMITTED request=153 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105531 modem_accepted=9 rejected=0\r\nRESULT request=153 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3b0000000900000000",
+          "SUBMITTED request=154 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103469 modem_accepted=9 rejected=0\r\nRESULT request=154 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001942d0000000900000000",
+          "SUBMITTED request=155 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101409 modem_accepted=9 rejected=0\r\nRESULT request=155 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c210000000900000000",
+          "SUBMITTED request=156 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=99347 modem_accepted=9 rejected=0\r\nRESULT request=156 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=06080001000184130000000900000000"
+        ],
+        "status_timing": [
+          {
+            "elapsed_s": 0.061,
+            "response": "SUBMITTED request=146 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119961 modem_accepted=9 rejected=0\r\nRESULT request=146 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4990000000900000000"
+          },
+          {
+            "elapsed_s": 2.123,
+            "response": "SUBMITTED request=147 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117899 modem_accepted=9 rejected=0\r\nRESULT request=147 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8b0000000900000000"
+          },
+          {
+            "elapsed_s": 4.184,
+            "response": "SUBMITTED request=148 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115838 modem_accepted=9 rejected=0\r\nRESULT request=148 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47e0000000900000000"
+          },
+          {
+            "elapsed_s": 6.246,
+            "response": "SUBMITTED request=149 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113776 modem_accepted=9 rejected=0\r\nRESULT request=149 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc700000000900000000"
+          },
+          {
+            "elapsed_s": 8.307,
+            "response": "SUBMITTED request=150 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111715 modem_accepted=9 rejected=0\r\nRESULT request=150 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4630000000900000000"
+          },
+          {
+            "elapsed_s": 10.368,
+            "response": "SUBMITTED request=151 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109654 modem_accepted=9 rejected=0\r\nRESULT request=151 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac560000000900000000"
+          },
+          {
+            "elapsed_s": 12.43,
+            "response": "SUBMITTED request=152 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107592 modem_accepted=9 rejected=0\r\nRESULT request=152 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a4480000000900000000"
+          },
+          {
+            "elapsed_s": 14.491,
+            "response": "SUBMITTED request=153 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105531 modem_accepted=9 rejected=0\r\nRESULT request=153 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3b0000000900000000"
+          },
+          {
+            "elapsed_s": 16.552,
+            "response": "SUBMITTED request=154 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103469 modem_accepted=9 rejected=0\r\nRESULT request=154 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001942d0000000900000000"
+          },
+          {
+            "elapsed_s": 18.614,
+            "response": "SUBMITTED request=155 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101409 modem_accepted=9 rejected=0\r\nRESULT request=155 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c210000000900000000"
+          },
+          {
+            "elapsed_s": 20.675,
+            "response": "SUBMITTED request=156 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=99347 modem_accepted=9 rejected=0\r\nRESULT request=156 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=06080001000184130000000900000000"
+          }
+        ],
+        "scope": "Modem acceptance only; correlate ground receiver and Yamcs separately.",
+        "initial_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1156 tx_fail=1 tx_timeout=0 rx=2160 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=142 unknown=1 busy_drops=0 pending=0 uptime_ms=1379010",
+        "ready_elapsed_s": 20.675,
+        "ready": true,
+        "diagnostics": [
+          {
+            "stage": "before_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 99286,
+              "last_cereg": 1,
+              "send_cereg": 255,
+              "failure_cereg": 255,
+              "last_command": 9,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 0,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 20329,
+              "uart_send_request": 0,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "before_stop",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 96865,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 20906,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 20329,
+              "uart_send_request": 145,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_stop",
+            "decoded": {
+              "version": 1,
+              "state": 0,
+              "error": 0,
+              "registered": 0,
+              "window_ms": 0,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 20906,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 20329,
+              "uart_send_request": 145,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          }
+        ],
+        "stop": "SUBMITTED request=162 type=116 bytes=4\r\nRESULT request=162 outcome=RF_WINDOW_ACCEPTED peer=1875991883 bytes=4 hex=00000000",
+        "final_modem_status": "SUBMITTED request=163 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=10 rejected=0\r\nRESULT request=163 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=00080000000000000000000a00000000",
+        "final_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1316 tx_fail=1 tx_timeout=0 rx=2440 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=162 unknown=2 busy_drops=0 pending=0 uptime_ms=1402893"
+      },
+      "off_confirmed": true,
+      "receiver_exit": 0,
+      "radio_exit": 0,
+      "capture_exit": 124,
+      "modem_accepted": 1,
+      "radio_received": 1,
+      "receiver_rejected": 0,
+      "bytes_match": true,
+      "archive_match": true,
+      "success": false,
+      "ready_elapsed_s": 20.675,
+      "radio_children": {
+        "oai": 124,
+        "epc": 124
+      },
+      "delivery_success": true,
+      "normal_process_exits": false,
+      "ground_receiver": {
+        "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+        "received": 1,
+        "requested": 1,
+        "rejected": 0,
+        "duplicates": 0,
+        "packets": [
+          {
+            "received_utc": "2026-10-03T00:58:22.262047+00:00",
+            "peer": [
+              "172.16.0.2",
+              51001
+            ],
+            "hex": "0901c009007901010010020100000000000000003a67824200155db8006001020201010101020000000000000000000a00155db80000000000001f4a0000000700001f37fffe2a6c0000293b0000526b0000271000002710000400010100000000000000000000a15151000412e2fccc004833df231a0000000300e00001f3e6",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 9,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 1400248,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 10,
+                "ihu_readout_uptime_ms": 1400248,
+                "readout_age_ms": 0,
+                "battery_mv": 8010,
+                "input_mv": 7,
+                "output_mv": 7991,
+                "battery_ua": -120212,
+                "input_ua": 10555,
+                "die_temp_mc": 21099,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20817,
+                "raw_vin": 4,
+                "raw_vout": 4834,
+                "raw_ibat": 64716,
+                "raw_iin": 72,
+                "raw_die_temp": 13279,
+                "raw_thermistor_voltage": 8986,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            }
+          }
+        ]
+      },
+      "matching_archive": [
+        {
+          "packet": "CQHACQB5AQEAEAIBAAAAAAAAAAA6Z4JCABVduABgAQICAQEBAQIAAAAAAAAAAAAKABVduAAAAAAAAB9KAAAABwAAHzf//ipsAAApOwAAUmsAACcQAAAnEAAEAAEBAAAAAAAAAAAAAKFRUQAEEuL8zABIM98jGgAAAAMA4AAB8+Y=",
+          "sequenceNumber": 151109641,
+          "id": {
+            "name": "/ember/POWER_STATUS"
+          },
+          "receptionTime": "2026-10-03T00:58:22.262Z",
+          "generationTime": "2026-10-03T00:58:22.262Z",
+          "earthReceptionTime": "2026-10-03T00:58:22.262Z",
+          "link": "eps-lte-in",
+          "size": 128
+        }
+      ],
+      "duration_s": 155.632,
+      "finished_utc": "2026-10-03T01:00:29.664613+00:00"
+    },
+    {
+      "number": 5,
+      "label": "eps-security-reliability-20261003-05",
+      "started_utc": "2026-10-03T01:00:29.666574+00:00",
+      "host_exit": 0,
+      "host": {
+        "modem_accepted": [
+          {
+            "hex": "0901c00a007901010010020100000000000000003a6782420017d5cd006001020201010101020000000000000000000b0017d5cd0000000000001f4c0000000500001f38fffea61e00002816000052550000271000002710000400010100000000000000000000a15156000312e3fda4004633de22d30000000300e00001e8fa",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 10,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 1562061,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 11,
+                "ihu_readout_uptime_ms": 1562061,
+                "readout_age_ms": 0,
+                "battery_mv": 8012,
+                "input_mv": 5,
+                "output_mv": 7992,
+                "battery_ua": -88546,
+                "input_ua": 10262,
+                "die_temp_mc": 21077,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20822,
+                "raw_vin": 3,
+                "raw_vout": 4835,
+                "raw_ibat": 64932,
+                "raw_iin": 70,
+                "raw_die_temp": 13278,
+                "raw_thermistor_voltage": 8915,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            },
+            "elapsed_s": 27.204
+          }
+        ],
+        "status": [
+          "SUBMITTED request=167 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119961 modem_accepted=10 rejected=0\r\nRESULT request=167 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4990000000a00000000",
+          "SUBMITTED request=168 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=10 rejected=0\r\nRESULT request=168 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000a00000000",
+          "SUBMITTED request=169 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115839 modem_accepted=10 rejected=0\r\nRESULT request=169 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47f0000000a00000000",
+          "SUBMITTED request=170 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113779 modem_accepted=10 rejected=0\r\nRESULT request=170 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc730000000a00000000",
+          "SUBMITTED request=171 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111717 modem_accepted=10 rejected=0\r\nRESULT request=171 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4650000000a00000000",
+          "SUBMITTED request=172 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109655 modem_accepted=10 rejected=0\r\nRESULT request=172 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac570000000a00000000",
+          "SUBMITTED request=173 type=120 bytes=0\r\nLTE_STATUS state=2 step=4 error=0 registered=0 window_ms=107594 modem_accepted=10 rejected=0\r\nRESULT request=173 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020400000001a44a0000000a00000000",
+          "SUBMITTED request=174 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105533 modem_accepted=10 rejected=0\r\nRESULT request=174 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3d0000000a00000000",
+          "SUBMITTED request=175 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103471 modem_accepted=10 rejected=0\r\nRESULT request=175 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001942f0000000a00000000",
+          "SUBMITTED request=176 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101409 modem_accepted=10 rejected=0\r\nRESULT request=176 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c210000000a00000000",
+          "SUBMITTED request=177 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99349 modem_accepted=10 rejected=0\r\nRESULT request=177 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000184150000000a00000000",
+          "SUBMITTED request=178 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=97287 modem_accepted=10 rejected=0\r\nRESULT request=178 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000017c070000000a00000000",
+          "SUBMITTED request=179 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=95225 modem_accepted=10 rejected=0\r\nRESULT request=179 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000173f90000000a00000000",
+          "SUBMITTED request=180 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=93165 modem_accepted=10 rejected=0\r\nRESULT request=180 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0608000100016bed0000000a00000000"
+        ],
+        "status_timing": [
+          {
+            "elapsed_s": 0.061,
+            "response": "SUBMITTED request=167 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119961 modem_accepted=10 rejected=0\r\nRESULT request=167 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4990000000a00000000"
+          },
+          {
+            "elapsed_s": 2.122,
+            "response": "SUBMITTED request=168 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=10 rejected=0\r\nRESULT request=168 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000a00000000"
+          },
+          {
+            "elapsed_s": 4.184,
+            "response": "SUBMITTED request=169 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115839 modem_accepted=10 rejected=0\r\nRESULT request=169 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47f0000000a00000000"
+          },
+          {
+            "elapsed_s": 6.244,
+            "response": "SUBMITTED request=170 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113779 modem_accepted=10 rejected=0\r\nRESULT request=170 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc730000000a00000000"
+          },
+          {
+            "elapsed_s": 8.306,
+            "response": "SUBMITTED request=171 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111717 modem_accepted=10 rejected=0\r\nRESULT request=171 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4650000000a00000000"
+          },
+          {
+            "elapsed_s": 10.367,
+            "response": "SUBMITTED request=172 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109655 modem_accepted=10 rejected=0\r\nRESULT request=172 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac570000000a00000000"
+          },
+          {
+            "elapsed_s": 12.429,
+            "response": "SUBMITTED request=173 type=120 bytes=0\r\nLTE_STATUS state=2 step=4 error=0 registered=0 window_ms=107594 modem_accepted=10 rejected=0\r\nRESULT request=173 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020400000001a44a0000000a00000000"
+          },
+          {
+            "elapsed_s": 14.491,
+            "response": "SUBMITTED request=174 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105533 modem_accepted=10 rejected=0\r\nRESULT request=174 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3d0000000a00000000"
+          },
+          {
+            "elapsed_s": 16.552,
+            "response": "SUBMITTED request=175 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103471 modem_accepted=10 rejected=0\r\nRESULT request=175 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001942f0000000a00000000"
+          },
+          {
+            "elapsed_s": 18.613,
+            "response": "SUBMITTED request=176 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101409 modem_accepted=10 rejected=0\r\nRESULT request=176 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c210000000a00000000"
+          },
+          {
+            "elapsed_s": 20.674,
+            "response": "SUBMITTED request=177 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99349 modem_accepted=10 rejected=0\r\nRESULT request=177 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000184150000000a00000000"
+          },
+          {
+            "elapsed_s": 22.736,
+            "response": "SUBMITTED request=178 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=97287 modem_accepted=10 rejected=0\r\nRESULT request=178 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000017c070000000a00000000"
+          },
+          {
+            "elapsed_s": 24.797,
+            "response": "SUBMITTED request=179 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=95225 modem_accepted=10 rejected=0\r\nRESULT request=179 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000173f90000000a00000000"
+          },
+          {
+            "elapsed_s": 26.858,
+            "response": "SUBMITTED request=180 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=93165 modem_accepted=10 rejected=0\r\nRESULT request=180 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0608000100016bed0000000a00000000"
+          }
+        ],
+        "scope": "Modem acceptance only; correlate ground receiver and Yamcs separately.",
+        "initial_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1316 tx_fail=1 tx_timeout=0 rx=2440 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=162 unknown=2 busy_drops=0 pending=0 uptime_ms=1534643",
+        "ready_elapsed_s": 26.858,
+        "ready": true,
+        "diagnostics": [
+          {
+            "stage": "before_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 93103,
+              "last_cereg": 1,
+              "send_cereg": 255,
+              "failure_cereg": 255,
+              "last_command": 9,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 0,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 26029,
+              "uart_send_request": 0,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 92757,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 27087,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 26029,
+              "uart_send_request": 168,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "before_stop",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 76615,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 27087,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 26029,
+              "uart_send_request": 168,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_stop",
+            "decoded": {
+              "version": 1,
+              "state": 0,
+              "error": 0,
+              "registered": 0,
+              "window_ms": 0,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 27087,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 26029,
+              "uart_send_request": 168,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          }
+        ],
+        "stop": "SUBMITTED request=186 type=116 bytes=4\r\nRESULT request=186 outcome=RF_WINDOW_ACCEPTED peer=1875991883 bytes=4 hex=00000000",
+        "final_modem_status": "SUBMITTED request=187 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=11 rejected=0\r\nRESULT request=187 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=00080000000000000000000b00000000",
+        "final_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1494 tx_fail=1 tx_timeout=0 rx=2774 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=186 unknown=2 busy_drops=0 pending=0 uptime_ms=1578741"
+      },
+      "off_confirmed": true,
+      "receiver_exit": 0,
+      "radio_exit": 0,
+      "capture_exit": 124,
+      "modem_accepted": 1,
+      "radio_received": 1,
+      "receiver_rejected": 0,
+      "bytes_match": true,
+      "archive_match": true,
+      "success": true,
+      "ready_elapsed_s": 26.858,
+      "radio_children": {
+        "oai": 124,
+        "epc": 124
+      },
+      "delivery_success": true,
+      "normal_process_exits": true,
+      "ground_receiver": {
+        "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+        "received": 1,
+        "requested": 1,
+        "rejected": 0,
+        "duplicates": 0,
+        "packets": [
+          {
+            "received_utc": "2026-10-03T01:01:04.355849+00:00",
+            "peer": [
+              "172.16.0.2",
+              51001
+            ],
+            "hex": "0901c00a007901010010020100000000000000003a6782420017d5cd006001020201010101020000000000000000000b0017d5cd0000000000001f4c0000000500001f38fffea61e00002816000052550000271000002710000400010100000000000000000000a15156000312e3fda4004633de22d30000000300e00001e8fa",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 10,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 1562061,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 11,
+                "ihu_readout_uptime_ms": 1562061,
+                "readout_age_ms": 0,
+                "battery_mv": 8012,
+                "input_mv": 5,
+                "output_mv": 7992,
+                "battery_ua": -88546,
+                "input_ua": 10262,
+                "die_temp_mc": 21077,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20822,
+                "raw_vin": 3,
+                "raw_vout": 4835,
+                "raw_ibat": 64932,
+                "raw_iin": 70,
+                "raw_die_temp": 13278,
+                "raw_thermistor_voltage": 8915,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            }
+          }
+        ]
+      },
+      "matching_archive": [
+        {
+          "packet": "CQHACgB5AQEAEAIBAAAAAAAAAAA6Z4JCABfVzQBgAQICAQEBAQIAAAAAAAAAAAALABfVzQAAAAAAAB9MAAAABQAAHzj//qYeAAAoFgAAUlUAACcQAAAnEAAEAAEBAAAAAAAAAAAAAKFRVgADEuP9pABGM94i0wAAAAMA4AAB6Po=",
+          "sequenceNumber": 151109642,
+          "id": {
+            "name": "/ember/POWER_STATUS"
+          },
+          "receptionTime": "2026-10-03T01:01:04.356Z",
+          "generationTime": "2026-10-03T01:01:04.356Z",
+          "earthReceptionTime": "2026-10-03T01:01:04.356Z",
+          "link": "eps-lte-in",
+          "size": 128
+        }
+      ],
+      "duration_s": 155.645,
+      "finished_utc": "2026-10-03T01:03:05.311634+00:00"
+    },
+    {
+      "number": 6,
+      "label": "eps-security-reliability-20261003-06",
+      "started_utc": "2026-10-03T01:03:05.314023+00:00",
+      "host_exit": 0,
+      "host": {
+        "modem_accepted": [],
+        "status": [
+          "SUBMITTED request=191 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119961 modem_accepted=11 rejected=0\r\nRESULT request=191 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4990000000b00000000",
+          "SUBMITTED request=192 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=11 rejected=0\r\nRESULT request=192 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000b00000000",
+          "SUBMITTED request=193 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115839 modem_accepted=11 rejected=0\r\nRESULT request=193 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47f0000000b00000000",
+          "SUBMITTED request=194 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113778 modem_accepted=11 rejected=0\r\nRESULT request=194 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc720000000b00000000",
+          "SUBMITTED request=195 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111716 modem_accepted=11 rejected=0\r\nRESULT request=195 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4640000000b00000000",
+          "SUBMITTED request=196 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109655 modem_accepted=11 rejected=0\r\nRESULT request=196 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac570000000b00000000",
+          "SUBMITTED request=197 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107594 modem_accepted=11 rejected=0\r\nRESULT request=197 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a44a0000000b00000000",
+          "SUBMITTED request=198 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105532 modem_accepted=11 rejected=0\r\nRESULT request=198 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3c0000000b00000000",
+          "SUBMITTED request=199 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103471 modem_accepted=11 rejected=0\r\nRESULT request=199 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001942f0000000b00000000",
+          "SUBMITTED request=200 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101410 modem_accepted=11 rejected=0\r\nRESULT request=200 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c220000000b00000000",
+          "SUBMITTED request=201 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99347 modem_accepted=11 rejected=0\r\nRESULT request=201 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000184130000000b00000000",
+          "SUBMITTED request=202 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=97286 modem_accepted=11 rejected=0\r\nRESULT request=202 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000017c060000000b00000000",
+          "SUBMITTED request=203 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=95225 modem_accepted=11 rejected=0\r\nRESULT request=203 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000173f90000000b00000000",
+          "SUBMITTED request=204 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=93164 modem_accepted=11 rejected=0\r\nRESULT request=204 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000016bec0000000b00000000",
+          "SUBMITTED request=205 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=91102 modem_accepted=11 rejected=0\r\nRESULT request=205 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000163de0000000b00000000",
+          "SUBMITTED request=206 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=89042 modem_accepted=11 rejected=0\r\nRESULT request=206 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000015bd20000000b00000000",
+          "SUBMITTED request=207 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=86980 modem_accepted=11 rejected=0\r\nRESULT request=207 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000153c40000000b00000000",
+          "SUBMITTED request=208 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=84920 modem_accepted=11 rejected=0\r\nRESULT request=208 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000014bb80000000b00000000",
+          "SUBMITTED request=209 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=82859 modem_accepted=11 rejected=0\r\nRESULT request=209 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000143ab0000000b00000000",
+          "SUBMITTED request=210 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=0 window_ms=80798 modem_accepted=11 rejected=0\r\nRESULT request=210 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0608000000013b9e0000000b00000000"
+        ],
+        "status_timing": [
+          {
+            "elapsed_s": 0.061,
+            "response": "SUBMITTED request=191 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119961 modem_accepted=11 rejected=0\r\nRESULT request=191 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4990000000b00000000"
+          },
+          {
+            "elapsed_s": 2.122,
+            "response": "SUBMITTED request=192 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=11 rejected=0\r\nRESULT request=192 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000b00000000"
+          },
+          {
+            "elapsed_s": 4.183,
+            "response": "SUBMITTED request=193 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115839 modem_accepted=11 rejected=0\r\nRESULT request=193 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47f0000000b00000000"
+          },
+          {
+            "elapsed_s": 6.245,
+            "response": "SUBMITTED request=194 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113778 modem_accepted=11 rejected=0\r\nRESULT request=194 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc720000000b00000000"
+          },
+          {
+            "elapsed_s": 8.306,
+            "response": "SUBMITTED request=195 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111716 modem_accepted=11 rejected=0\r\nRESULT request=195 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4640000000b00000000"
+          },
+          {
+            "elapsed_s": 10.368,
+            "response": "SUBMITTED request=196 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109655 modem_accepted=11 rejected=0\r\nRESULT request=196 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac570000000b00000000"
+          },
+          {
+            "elapsed_s": 12.429,
+            "response": "SUBMITTED request=197 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107594 modem_accepted=11 rejected=0\r\nRESULT request=197 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a44a0000000b00000000"
+          },
+          {
+            "elapsed_s": 14.49,
+            "response": "SUBMITTED request=198 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105532 modem_accepted=11 rejected=0\r\nRESULT request=198 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3c0000000b00000000"
+          },
+          {
+            "elapsed_s": 16.552,
+            "response": "SUBMITTED request=199 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103471 modem_accepted=11 rejected=0\r\nRESULT request=199 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001942f0000000b00000000"
+          },
+          {
+            "elapsed_s": 18.613,
+            "response": "SUBMITTED request=200 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101410 modem_accepted=11 rejected=0\r\nRESULT request=200 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c220000000b00000000"
+          },
+          {
+            "elapsed_s": 20.675,
+            "response": "SUBMITTED request=201 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99347 modem_accepted=11 rejected=0\r\nRESULT request=201 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000184130000000b00000000"
+          },
+          {
+            "elapsed_s": 22.736,
+            "response": "SUBMITTED request=202 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=97286 modem_accepted=11 rejected=0\r\nRESULT request=202 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000017c060000000b00000000"
+          },
+          {
+            "elapsed_s": 24.797,
+            "response": "SUBMITTED request=203 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=95225 modem_accepted=11 rejected=0\r\nRESULT request=203 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000173f90000000b00000000"
+          },
+          {
+            "elapsed_s": 26.859,
+            "response": "SUBMITTED request=204 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=93164 modem_accepted=11 rejected=0\r\nRESULT request=204 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000016bec0000000b00000000"
+          },
+          {
+            "elapsed_s": 28.921,
+            "response": "SUBMITTED request=205 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=91102 modem_accepted=11 rejected=0\r\nRESULT request=205 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000163de0000000b00000000"
+          },
+          {
+            "elapsed_s": 30.982,
+            "response": "SUBMITTED request=206 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=89042 modem_accepted=11 rejected=0\r\nRESULT request=206 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000015bd20000000b00000000"
+          },
+          {
+            "elapsed_s": 33.043,
+            "response": "SUBMITTED request=207 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=86980 modem_accepted=11 rejected=0\r\nRESULT request=207 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000153c40000000b00000000"
+          },
+          {
+            "elapsed_s": 35.104,
+            "response": "SUBMITTED request=208 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=84920 modem_accepted=11 rejected=0\r\nRESULT request=208 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000014bb80000000b00000000"
+          },
+          {
+            "elapsed_s": 37.165,
+            "response": "SUBMITTED request=209 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=82859 modem_accepted=11 rejected=0\r\nRESULT request=209 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000143ab0000000b00000000"
+          },
+          {
+            "elapsed_s": 39.226,
+            "response": "SUBMITTED request=210 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=0 window_ms=80798 modem_accepted=11 rejected=0\r\nRESULT request=210 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0608000000013b9e0000000b00000000"
+          }
+        ],
+        "scope": "Modem acceptance only; correlate ground receiver and Yamcs separately.",
+        "initial_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1494 tx_fail=1 tx_timeout=0 rx=2774 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=186 unknown=2 busy_drops=0 pending=0 uptime_ms=1689251",
+        "ready_elapsed_s": 39.226,
+        "ready": true,
+        "diagnostics": [
+          {
+            "stage": "before_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 0,
+              "window_ms": 80736,
+              "last_cereg": 2,
+              "send_cereg": 255,
+              "failure_cereg": 255,
+              "last_command": 9,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 0,
+              "registration_losses": 1,
+              "last_cereg_elapsed_ms": 38822,
+              "uart_send_request": 0,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "before_stop",
+            "decoded": {
+              "version": 1,
+              "state": 0,
+              "error": 1,
+              "registered": 0,
+              "window_ms": 0,
+              "last_cereg": 2,
+              "send_cereg": 2,
+              "failure_cereg": 2,
+              "last_command": 10,
+              "failure_command": 10,
+              "failure_state": 7,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": true,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 39456,
+              "registration_losses": 1,
+              "last_cereg_elapsed_ms": 38822,
+              "uart_send_request": 196,
+              "error_kind": "text_CME",
+              "error_text": "operation not supported"
+            }
+          },
+          {
+            "stage": "after_stop",
+            "decoded": {
+              "version": 1,
+              "state": 0,
+              "error": 1,
+              "registered": 0,
+              "window_ms": 0,
+              "last_cereg": 2,
+              "send_cereg": 2,
+              "failure_cereg": 2,
+              "last_command": 10,
+              "failure_command": 10,
+              "failure_state": 7,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": true,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 39456,
+              "registration_losses": 1,
+              "last_cereg_elapsed_ms": 38822,
+              "uart_send_request": 196,
+              "error_kind": "text_CME",
+              "error_text": "operation not supported"
+            }
+          }
+        ],
+        "send_failure": "SUBMITTED request=212 type=118 bytes=128\r\nRESULT request=212 outcome=PEER_REJECTED reason=11",
+        "stop": "SUBMITTED request=215 type=116 bytes=4\r\nRESULT request=215 outcome=RF_WINDOW_ACCEPTED peer=1875991883 bytes=4 hex=00000000",
+        "final_modem_status": "SUBMITTED request=216 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=1 registered=0 window_ms=0 modem_accepted=11 rejected=1\r\nRESULT request=216 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=00080100000000000000000b00000001",
+        "final_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1702 tx_fail=1 tx_timeout=0 rx=3106 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=214 unknown=2 busy_drops=0 pending=0 uptime_ms=1729535"
+      },
+      "off_confirmed": true,
+      "receiver_exit": 0,
+      "radio_exit": 0,
+      "capture_exit": 124,
+      "modem_accepted": 0,
+      "radio_received": 0,
+      "receiver_rejected": 0,
+      "bytes_match": false,
+      "archive_match": false,
+      "success": false,
+      "ready_elapsed_s": 39.226,
+      "radio_children": {
+        "oai": 124,
+        "epc": 124
+      },
+      "delivery_success": false,
+      "normal_process_exits": true,
+      "ground_receiver": {
+        "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+        "received": 0,
+        "requested": 1,
+        "rejected": 0,
+        "duplicates": 0,
+        "packets": []
+      },
+      "matching_archive": [],
+      "duration_s": 165.865,
+      "finished_utc": "2026-10-03T01:05:51.179193+00:00"
+    },
+    {
+      "number": 7,
+      "label": "eps-security-reliability-20261003-07",
+      "started_utc": "2026-10-03T01:05:51.181469+00:00",
+      "host_exit": 0,
+      "host": {
+        "modem_accepted": [
+          {
+            "hex": "0901c00c007901010010020100000000000000003a678242001c957f006001020201010101020000000000000000000d001c957f0000000000001f460000000800001f32fffe1a63000027830000522a0000271000002710000400010100000000000000000000a15146000512dffcb0004533dc23160000000300e00001d3cc",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 12,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 1873279,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 13,
+                "ihu_readout_uptime_ms": 1873279,
+                "readout_age_ms": 0,
+                "battery_mv": 8006,
+                "input_mv": 8,
+                "output_mv": 7986,
+                "battery_ua": -124317,
+                "input_ua": 10115,
+                "die_temp_mc": 21034,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20806,
+                "raw_vin": 5,
+                "raw_vout": 4831,
+                "raw_ibat": 64688,
+                "raw_iin": 69,
+                "raw_die_temp": 13276,
+                "raw_thermistor_voltage": 8982,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            },
+            "elapsed_s": 16.877
+          }
+        ],
+        "status": [
+          "SUBMITTED request=220 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119961 modem_accepted=11 rejected=1\r\nRESULT request=220 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4990000000b00000001",
+          "SUBMITTED request=221 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=11 rejected=1\r\nRESULT request=221 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000b00000001",
+          "SUBMITTED request=222 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115837 modem_accepted=11 rejected=1\r\nRESULT request=222 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47d0000000b00000001",
+          "SUBMITTED request=223 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113778 modem_accepted=11 rejected=1\r\nRESULT request=223 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc720000000b00000001",
+          "SUBMITTED request=224 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111737 modem_accepted=11 rejected=1\r\nRESULT request=224 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4790000000b00000001",
+          "SUBMITTED request=225 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109675 modem_accepted=11 rejected=1\r\nRESULT request=225 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac6b0000000b00000001",
+          "SUBMITTED request=226 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107615 modem_accepted=11 rejected=1\r\nRESULT request=226 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a45f0000000b00000001",
+          "SUBMITTED request=227 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105552 modem_accepted=11 rejected=1\r\nRESULT request=227 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c500000000b00000001",
+          "SUBMITTED request=228 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=103491 modem_accepted=11 rejected=1\r\nRESULT request=228 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=06080001000194430000000b00000001"
+        ],
+        "status_timing": [
+          {
+            "elapsed_s": 0.061,
+            "response": "SUBMITTED request=220 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119961 modem_accepted=11 rejected=1\r\nRESULT request=220 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4990000000b00000001"
+          },
+          {
+            "elapsed_s": 2.123,
+            "response": "SUBMITTED request=221 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=11 rejected=1\r\nRESULT request=221 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000b00000001"
+          },
+          {
+            "elapsed_s": 4.184,
+            "response": "SUBMITTED request=222 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115837 modem_accepted=11 rejected=1\r\nRESULT request=222 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47d0000000b00000001"
+          },
+          {
+            "elapsed_s": 6.224,
+            "response": "SUBMITTED request=223 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113778 modem_accepted=11 rejected=1\r\nRESULT request=223 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc720000000b00000001"
+          },
+          {
+            "elapsed_s": 8.285,
+            "response": "SUBMITTED request=224 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111737 modem_accepted=11 rejected=1\r\nRESULT request=224 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4790000000b00000001"
+          },
+          {
+            "elapsed_s": 10.347,
+            "response": "SUBMITTED request=225 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109675 modem_accepted=11 rejected=1\r\nRESULT request=225 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac6b0000000b00000001"
+          },
+          {
+            "elapsed_s": 12.408,
+            "response": "SUBMITTED request=226 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107615 modem_accepted=11 rejected=1\r\nRESULT request=226 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a45f0000000b00000001"
+          },
+          {
+            "elapsed_s": 14.469,
+            "response": "SUBMITTED request=227 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105552 modem_accepted=11 rejected=1\r\nRESULT request=227 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c500000000b00000001"
+          },
+          {
+            "elapsed_s": 16.53,
+            "response": "SUBMITTED request=228 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=103491 modem_accepted=11 rejected=1\r\nRESULT request=228 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=06080001000194430000000b00000001"
+          }
+        ],
+        "scope": "Modem acceptance only; correlate ground receiver and Yamcs separately.",
+        "initial_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1702 tx_fail=1 tx_timeout=0 rx=3106 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=214 unknown=2 busy_drops=0 pending=0 uptime_ms=1856187",
+        "ready_elapsed_s": 16.53,
+        "ready": true,
+        "diagnostics": [
+          {
+            "stage": "before_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 103430,
+              "last_cereg": 1,
+              "send_cereg": 255,
+              "failure_cereg": 255,
+              "last_command": 9,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 0,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 16348,
+              "uart_send_request": 0,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 103084,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 16761,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 16348,
+              "uart_send_request": 213,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "before_stop",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 86941,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 16761,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 16348,
+              "uart_send_request": 213,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_stop",
+            "decoded": {
+              "version": 1,
+              "state": 0,
+              "error": 0,
+              "registered": 0,
+              "window_ms": 0,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 16761,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 16348,
+              "uart_send_request": 213,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          }
+        ],
+        "stop": "SUBMITTED request=234 type=116 bytes=4\r\nRESULT request=234 outcome=RF_WINDOW_ACCEPTED peer=1875991883 bytes=4 hex=00000000",
+        "final_modem_status": "SUBMITTED request=235 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=12 rejected=1\r\nRESULT request=235 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=00080000000000000000000c00000001",
+        "final_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1850 tx_fail=1 tx_timeout=0 rx=3390 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=233 unknown=2 busy_drops=0 pending=0 uptime_ms=1889960"
+      },
+      "off_confirmed": true,
+      "receiver_exit": 0,
+      "radio_exit": 0,
+      "capture_exit": 124,
+      "modem_accepted": 1,
+      "radio_received": 1,
+      "receiver_rejected": 0,
+      "bytes_match": true,
+      "archive_match": true,
+      "success": true,
+      "ready_elapsed_s": 16.53,
+      "radio_children": {
+        "oai": 124,
+        "epc": 124
+      },
+      "delivery_success": true,
+      "normal_process_exits": true,
+      "ground_receiver": {
+        "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+        "received": 1,
+        "requested": 1,
+        "rejected": 0,
+        "duplicates": 0,
+        "packets": [
+          {
+            "received_utc": "2026-10-03T01:06:15.402445+00:00",
+            "peer": [
+              "172.16.0.2",
+              51001
+            ],
+            "hex": "0901c00c007901010010020100000000000000003a678242001c957f006001020201010101020000000000000000000d001c957f0000000000001f460000000800001f32fffe1a63000027830000522a0000271000002710000400010100000000000000000000a15146000512dffcb0004533dc23160000000300e00001d3cc",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 12,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 1873279,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 13,
+                "ihu_readout_uptime_ms": 1873279,
+                "readout_age_ms": 0,
+                "battery_mv": 8006,
+                "input_mv": 8,
+                "output_mv": 7986,
+                "battery_ua": -124317,
+                "input_ua": 10115,
+                "die_temp_mc": 21034,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20806,
+                "raw_vin": 5,
+                "raw_vout": 4831,
+                "raw_ibat": 64688,
+                "raw_iin": 69,
+                "raw_die_temp": 13276,
+                "raw_thermistor_voltage": 8982,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            }
+          }
+        ]
+      },
+      "matching_archive": [
+        {
+          "packet": "CQHADAB5AQEAEAIBAAAAAAAAAAA6Z4JCAByVfwBgAQICAQEBAQIAAAAAAAAAAAANAByVfwAAAAAAAB9GAAAACAAAHzL//hpjAAAngwAAUioAACcQAAAnEAAEAAEBAAAAAAAAAAAAAKFRRgAFEt/8sABFM9wjFgAAAAMA4AAB08w=",
+          "sequenceNumber": 151109644,
+          "id": {
+            "name": "/ember/POWER_STATUS"
+          },
+          "receptionTime": "2026-10-03T01:06:15.402Z",
+          "generationTime": "2026-10-03T01:06:15.403Z",
+          "earthReceptionTime": "2026-10-03T01:06:15.402Z",
+          "link": "eps-lte-in",
+          "size": 128
+        }
+      ],
+      "duration_s": 155.805,
+      "finished_utc": "2026-10-03T01:08:26.986353+00:00"
+    },
+    {
+      "number": 8,
+      "label": "eps-security-reliability-20261003-08",
+      "started_utc": "2026-10-03T01:08:26.988280+00:00",
+      "host_exit": 0,
+      "host": {
+        "modem_accepted": [
+          {
+            "hex": "0901c00d007901010010020100000000000000003a678242001f0605006001020201010101020000000000000000000e001f06050000000000001f450000000700001f35fffe20b000002414000052150000271000002710000400010100000000000000000000a15144000412e1fcbb003f33db23130000000300e00001c469",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 13,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 2033157,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 14,
+                "ihu_readout_uptime_ms": 2033157,
+                "readout_age_ms": 0,
+                "battery_mv": 8005,
+                "input_mv": 7,
+                "output_mv": 7989,
+                "battery_ua": -122704,
+                "input_ua": 9236,
+                "die_temp_mc": 21013,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20804,
+                "raw_vin": 4,
+                "raw_vout": 4833,
+                "raw_ibat": 64699,
+                "raw_iin": 63,
+                "raw_die_temp": 13275,
+                "raw_thermistor_voltage": 8979,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            },
+            "elapsed_s": 21.019
+          }
+        ],
+        "status": [
+          "SUBMITTED request=239 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119962 modem_accepted=12 rejected=1\r\nRESULT request=239 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d49a0000000c00000001",
+          "SUBMITTED request=240 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=12 rejected=1\r\nRESULT request=240 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000c00000001",
+          "SUBMITTED request=241 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115840 modem_accepted=12 rejected=1\r\nRESULT request=241 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c4800000000c00000001",
+          "SUBMITTED request=242 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113778 modem_accepted=12 rejected=1\r\nRESULT request=242 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc720000000c00000001",
+          "SUBMITTED request=243 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111716 modem_accepted=12 rejected=1\r\nRESULT request=243 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4640000000c00000001",
+          "SUBMITTED request=244 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109656 modem_accepted=12 rejected=1\r\nRESULT request=244 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac580000000c00000001",
+          "SUBMITTED request=245 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107594 modem_accepted=12 rejected=1\r\nRESULT request=245 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a44a0000000c00000001",
+          "SUBMITTED request=246 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105534 modem_accepted=12 rejected=1\r\nRESULT request=246 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3e0000000c00000001",
+          "SUBMITTED request=247 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103472 modem_accepted=12 rejected=1\r\nRESULT request=247 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000194300000000c00000001",
+          "SUBMITTED request=248 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101411 modem_accepted=12 rejected=1\r\nRESULT request=248 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c230000000c00000001",
+          "SUBMITTED request=249 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=99349 modem_accepted=12 rejected=1\r\nRESULT request=249 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=06080001000184150000000c00000001"
+        ],
+        "status_timing": [
+          {
+            "elapsed_s": 0.061,
+            "response": "SUBMITTED request=239 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119962 modem_accepted=12 rejected=1\r\nRESULT request=239 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d49a0000000c00000001"
+          },
+          {
+            "elapsed_s": 2.122,
+            "response": "SUBMITTED request=240 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=12 rejected=1\r\nRESULT request=240 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000c00000001"
+          },
+          {
+            "elapsed_s": 4.183,
+            "response": "SUBMITTED request=241 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115840 modem_accepted=12 rejected=1\r\nRESULT request=241 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c4800000000c00000001"
+          },
+          {
+            "elapsed_s": 6.245,
+            "response": "SUBMITTED request=242 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113778 modem_accepted=12 rejected=1\r\nRESULT request=242 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc720000000c00000001"
+          },
+          {
+            "elapsed_s": 8.307,
+            "response": "SUBMITTED request=243 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111716 modem_accepted=12 rejected=1\r\nRESULT request=243 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4640000000c00000001"
+          },
+          {
+            "elapsed_s": 10.367,
+            "response": "SUBMITTED request=244 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109656 modem_accepted=12 rejected=1\r\nRESULT request=244 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac580000000c00000001"
+          },
+          {
+            "elapsed_s": 12.429,
+            "response": "SUBMITTED request=245 type=120 bytes=0\r\nLTE_STATUS state=2 step=5 error=0 registered=0 window_ms=107594 modem_accepted=12 rejected=1\r\nRESULT request=245 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020500000001a44a0000000c00000001"
+          },
+          {
+            "elapsed_s": 14.49,
+            "response": "SUBMITTED request=246 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105534 modem_accepted=12 rejected=1\r\nRESULT request=246 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3e0000000c00000001"
+          },
+          {
+            "elapsed_s": 16.551,
+            "response": "SUBMITTED request=247 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103472 modem_accepted=12 rejected=1\r\nRESULT request=247 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000194300000000c00000001"
+          },
+          {
+            "elapsed_s": 18.612,
+            "response": "SUBMITTED request=248 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101411 modem_accepted=12 rejected=1\r\nRESULT request=248 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c230000000c00000001"
+          },
+          {
+            "elapsed_s": 20.674,
+            "response": "SUBMITTED request=249 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=99349 modem_accepted=12 rejected=1\r\nRESULT request=249 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=06080001000184150000000c00000001"
+          }
+        ],
+        "scope": "Modem acceptance only; correlate ground receiver and Yamcs separately.",
+        "initial_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1850 tx_fail=1 tx_timeout=0 rx=3390 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=233 unknown=2 busy_drops=0 pending=0 uptime_ms=2011921",
+        "ready_elapsed_s": 20.674,
+        "ready": true,
+        "diagnostics": [
+          {
+            "stage": "before_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 99288,
+              "last_cereg": 1,
+              "send_cereg": 255,
+              "failure_cereg": 255,
+              "last_command": 9,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 0,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 19665,
+              "uart_send_request": 0,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 98943,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 20903,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 19665,
+              "uart_send_request": 232,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "before_stop",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 82800,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 20903,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 19665,
+              "uart_send_request": 232,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_stop",
+            "decoded": {
+              "version": 1,
+              "state": 0,
+              "error": 0,
+              "registered": 0,
+              "window_ms": 0,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 20903,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 19665,
+              "uart_send_request": 232,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          }
+        ],
+        "stop": "SUBMITTED request=255 type=116 bytes=4\r\nRESULT request=255 outcome=RF_WINDOW_ACCEPTED peer=1875991883 bytes=4 hex=00000000",
+        "final_modem_status": "SUBMITTED request=256 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=13 rejected=1\r\nRESULT request=256 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=00080000000000000000000d00000001",
+        "final_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=2010 tx_fail=1 tx_timeout=0 rx=3694 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=254 unknown=2 busy_drops=0 pending=0 uptime_ms=2049836"
+      },
+      "off_confirmed": true,
+      "receiver_exit": 0,
+      "radio_exit": 0,
+      "capture_exit": 124,
+      "modem_accepted": 1,
+      "radio_received": 1,
+      "receiver_rejected": 0,
+      "bytes_match": true,
+      "archive_match": true,
+      "success": true,
+      "ready_elapsed_s": 20.674,
+      "radio_children": {
+        "oai": 124,
+        "epc": 124
+      },
+      "delivery_success": true,
+      "normal_process_exits": true,
+      "ground_receiver": {
+        "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+        "received": 1,
+        "requested": 1,
+        "rejected": 0,
+        "duplicates": 0,
+        "packets": [
+          {
+            "received_utc": "2026-10-03T01:08:55.475750+00:00",
+            "peer": [
+              "172.16.0.2",
+              51001
+            ],
+            "hex": "0901c00d007901010010020100000000000000003a678242001f0605006001020201010101020000000000000000000e001f06050000000000001f450000000700001f35fffe20b000002414000052150000271000002710000400010100000000000000000000a15144000412e1fcbb003f33db23130000000300e00001c469",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 13,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 2033157,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 14,
+                "ihu_readout_uptime_ms": 2033157,
+                "readout_age_ms": 0,
+                "battery_mv": 8005,
+                "input_mv": 7,
+                "output_mv": 7989,
+                "battery_ua": -122704,
+                "input_ua": 9236,
+                "die_temp_mc": 21013,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20804,
+                "raw_vin": 4,
+                "raw_vout": 4833,
+                "raw_ibat": 64699,
+                "raw_iin": 63,
+                "raw_die_temp": 13275,
+                "raw_thermistor_voltage": 8979,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            }
+          }
+        ]
+      },
+      "matching_archive": [
+        {
+          "packet": "CQHADQB5AQEAEAIBAAAAAAAAAAA6Z4JCAB8GBQBgAQICAQEBAQIAAAAAAAAAAAAOAB8GBQAAAAAAAB9FAAAABwAAHzX//iCwAAAkFAAAUhUAACcQAAAnEAAEAAEBAAAAAAAAAAAAAKFRRAAEEuH8uwA/M9sjEwAAAAMA4AABxGk=",
+          "sequenceNumber": 151109645,
+          "id": {
+            "name": "/ember/POWER_STATUS"
+          },
+          "receptionTime": "2026-10-03T01:08:55.476Z",
+          "generationTime": "2026-10-03T01:08:55.476Z",
+          "earthReceptionTime": "2026-10-03T01:08:55.476Z",
+          "link": "eps-lte-in",
+          "size": 128
+        }
+      ],
+      "duration_s": 155.73,
+      "finished_utc": "2026-10-03T01:11:02.718266+00:00"
+    },
+    {
+      "number": 9,
+      "label": "eps-security-reliability-20261003-09",
+      "started_utc": "2026-10-03T01:11:02.720695+00:00",
+      "host_exit": 0,
+      "host": {
+        "modem_accepted": [
+          {
+            "hex": "0901c00e007901010010020100000000000000003a67824200216e9e006001020201010101020000000000000000000f00216e9e0000000000001f430000000800001f30fffe1786000026f10000522a0000271000002710000400010100000000000000000000a1513e000512defcab004433dc23120000000300e000014f80",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 14,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 2191006,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 15,
+                "ihu_readout_uptime_ms": 2191006,
+                "readout_age_ms": 0,
+                "battery_mv": 8003,
+                "input_mv": 8,
+                "output_mv": 7984,
+                "battery_ua": -125050,
+                "input_ua": 9969,
+                "die_temp_mc": 21034,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20798,
+                "raw_vin": 5,
+                "raw_vout": 4830,
+                "raw_ibat": 64683,
+                "raw_iin": 68,
+                "raw_die_temp": 13276,
+                "raw_thermistor_voltage": 8978,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            },
+            "elapsed_s": 23.103
+          }
+        ],
+        "status": [
+          "SUBMITTED request=260 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119962 modem_accepted=13 rejected=1\r\nRESULT request=260 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d49a0000000d00000001",
+          "SUBMITTED request=261 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=13 rejected=1\r\nRESULT request=261 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000d00000001",
+          "SUBMITTED request=262 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115839 modem_accepted=13 rejected=1\r\nRESULT request=262 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47f0000000d00000001",
+          "SUBMITTED request=263 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113779 modem_accepted=13 rejected=1\r\nRESULT request=263 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc730000000d00000001",
+          "SUBMITTED request=264 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111717 modem_accepted=13 rejected=1\r\nRESULT request=264 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4650000000d00000001",
+          "SUBMITTED request=265 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109655 modem_accepted=13 rejected=1\r\nRESULT request=265 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac570000000d00000001",
+          "SUBMITTED request=266 type=120 bytes=0\r\nLTE_STATUS state=2 step=4 error=0 registered=0 window_ms=107594 modem_accepted=13 rejected=1\r\nRESULT request=266 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020400000001a44a0000000d00000001",
+          "SUBMITTED request=267 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105532 modem_accepted=13 rejected=1\r\nRESULT request=267 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3c0000000d00000001",
+          "SUBMITTED request=268 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103471 modem_accepted=13 rejected=1\r\nRESULT request=268 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001942f0000000d00000001",
+          "SUBMITTED request=269 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101409 modem_accepted=13 rejected=1\r\nRESULT request=269 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c210000000d00000001",
+          "SUBMITTED request=270 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99348 modem_accepted=13 rejected=1\r\nRESULT request=270 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000184140000000d00000001",
+          "SUBMITTED request=271 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=97286 modem_accepted=13 rejected=1\r\nRESULT request=271 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0608000100017c060000000d00000001"
+        ],
+        "status_timing": [
+          {
+            "elapsed_s": 0.061,
+            "response": "SUBMITTED request=260 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119962 modem_accepted=13 rejected=1\r\nRESULT request=260 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d49a0000000d00000001"
+          },
+          {
+            "elapsed_s": 2.122,
+            "response": "SUBMITTED request=261 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=13 rejected=1\r\nRESULT request=261 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000d00000001"
+          },
+          {
+            "elapsed_s": 4.183,
+            "response": "SUBMITTED request=262 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115839 modem_accepted=13 rejected=1\r\nRESULT request=262 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47f0000000d00000001"
+          },
+          {
+            "elapsed_s": 6.245,
+            "response": "SUBMITTED request=263 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113779 modem_accepted=13 rejected=1\r\nRESULT request=263 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc730000000d00000001"
+          },
+          {
+            "elapsed_s": 8.307,
+            "response": "SUBMITTED request=264 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111717 modem_accepted=13 rejected=1\r\nRESULT request=264 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4650000000d00000001"
+          },
+          {
+            "elapsed_s": 10.368,
+            "response": "SUBMITTED request=265 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109655 modem_accepted=13 rejected=1\r\nRESULT request=265 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac570000000d00000001"
+          },
+          {
+            "elapsed_s": 12.429,
+            "response": "SUBMITTED request=266 type=120 bytes=0\r\nLTE_STATUS state=2 step=4 error=0 registered=0 window_ms=107594 modem_accepted=13 rejected=1\r\nRESULT request=266 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020400000001a44a0000000d00000001"
+          },
+          {
+            "elapsed_s": 14.49,
+            "response": "SUBMITTED request=267 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105532 modem_accepted=13 rejected=1\r\nRESULT request=267 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3c0000000d00000001"
+          },
+          {
+            "elapsed_s": 16.552,
+            "response": "SUBMITTED request=268 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103471 modem_accepted=13 rejected=1\r\nRESULT request=268 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001942f0000000d00000001"
+          },
+          {
+            "elapsed_s": 18.613,
+            "response": "SUBMITTED request=269 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101409 modem_accepted=13 rejected=1\r\nRESULT request=269 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c210000000d00000001"
+          },
+          {
+            "elapsed_s": 20.675,
+            "response": "SUBMITTED request=270 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99348 modem_accepted=13 rejected=1\r\nRESULT request=270 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000184140000000d00000001"
+          },
+          {
+            "elapsed_s": 22.736,
+            "response": "SUBMITTED request=271 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=97286 modem_accepted=13 rejected=1\r\nRESULT request=271 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0608000100017c060000000d00000001"
+          }
+        ],
+        "scope": "Modem acceptance only; correlate ground receiver and Yamcs separately.",
+        "initial_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=2010 tx_fail=1 tx_timeout=0 rx=3694 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=254 unknown=2 busy_drops=0 pending=0 uptime_ms=2167688",
+        "ready_elapsed_s": 22.736,
+        "ready": true,
+        "diagnostics": [
+          {
+            "stage": "before_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 97225,
+              "last_cereg": 1,
+              "send_cereg": 255,
+              "failure_cereg": 255,
+              "last_command": 9,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 0,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 20670,
+              "uart_send_request": 0,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 96858,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 22986,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 20670,
+              "uart_send_request": 252,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "before_stop",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 80716,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 22986,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 20670,
+              "uart_send_request": 252,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_stop",
+            "decoded": {
+              "version": 1,
+              "state": 0,
+              "error": 0,
+              "registered": 0,
+              "window_ms": 0,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 22986,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 20670,
+              "uart_send_request": 252,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          }
+        ],
+        "stop": "SUBMITTED request=277 type=116 bytes=4\r\nRESULT request=277 outcome=RF_WINDOW_ACCEPTED peer=1875991883 bytes=4 hex=00000000",
+        "final_modem_status": "SUBMITTED request=278 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=14 rejected=1\r\nRESULT request=278 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=00080000000000000000000e00000001",
+        "final_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=2176 tx_fail=1 tx_timeout=0 rx=4008 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=276 unknown=2 busy_drops=0 pending=0 uptime_ms=2207688"
+      },
+      "off_confirmed": true,
+      "receiver_exit": 0,
+      "radio_exit": 0,
+      "capture_exit": 124,
+      "modem_accepted": 1,
+      "radio_received": 1,
+      "receiver_rejected": 0,
+      "bytes_match": true,
+      "archive_match": true,
+      "success": true,
+      "ready_elapsed_s": 22.736,
+      "radio_children": {
+        "oai": 124,
+        "epc": 124
+      },
+      "delivery_success": true,
+      "normal_process_exits": true,
+      "ground_receiver": {
+        "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+        "received": 1,
+        "requested": 1,
+        "rejected": 0,
+        "duplicates": 0,
+        "packets": [
+          {
+            "received_utc": "2026-10-03T01:11:33.168718+00:00",
+            "peer": [
+              "172.16.0.2",
+              51001
+            ],
+            "hex": "0901c00e007901010010020100000000000000003a67824200216e9e006001020201010101020000000000000000000f00216e9e0000000000001f430000000800001f30fffe1786000026f10000522a0000271000002710000400010100000000000000000000a1513e000512defcab004433dc23120000000300e000014f80",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 14,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 2191006,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 15,
+                "ihu_readout_uptime_ms": 2191006,
+                "readout_age_ms": 0,
+                "battery_mv": 8003,
+                "input_mv": 8,
+                "output_mv": 7984,
+                "battery_ua": -125050,
+                "input_ua": 9969,
+                "die_temp_mc": 21034,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20798,
+                "raw_vin": 5,
+                "raw_vout": 4830,
+                "raw_ibat": 64683,
+                "raw_iin": 68,
+                "raw_die_temp": 13276,
+                "raw_thermistor_voltage": 8978,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            }
+          }
+        ]
+      },
+      "matching_archive": [
+        {
+          "packet": "CQHADgB5AQEAEAIBAAAAAAAAAAA6Z4JCACFungBgAQICAQEBAQIAAAAAAAAAAAAPACFungAAAAAAAB9DAAAACAAAHzD//heGAAAm8QAAUioAACcQAAAnEAAEAAEBAAAAAAAAAAAAAKFRPgAFEt78qwBEM9wjEgAAAAMA4AABT4A=",
+          "sequenceNumber": 151109646,
+          "id": {
+            "name": "/ember/POWER_STATUS"
+          },
+          "receptionTime": "2026-10-03T01:11:33.169Z",
+          "generationTime": "2026-10-03T01:11:33.169Z",
+          "earthReceptionTime": "2026-10-03T01:11:33.169Z",
+          "link": "eps-lte-in",
+          "size": 128
+        }
+      ],
+      "duration_s": 155.758,
+      "finished_utc": "2026-10-03T01:13:38.479275+00:00"
+    },
+    {
+      "number": 10,
+      "label": "eps-security-reliability-20261003-10",
+      "started_utc": "2026-10-03T01:13:38.482121+00:00",
+      "host_exit": 0,
+      "host": {
+        "modem_accepted": [
+          {
+            "hex": "0901c00f007901010010020100000000000000003a6782420023d77500600102020101010102000000000000000000100023d7750000000000001f460000000500001f33fffea34100002b86000052150000271000002710000400010100000000000000000000a15146000312e0fd9f004c33db22dd0000000300e00001486b",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 15,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 2348917,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 16,
+                "ihu_readout_uptime_ms": 2348917,
+                "readout_age_ms": 0,
+                "battery_mv": 8006,
+                "input_mv": 5,
+                "output_mv": 7987,
+                "battery_ua": -89279,
+                "input_ua": 11142,
+                "die_temp_mc": 21013,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20806,
+                "raw_vin": 3,
+                "raw_vout": 4832,
+                "raw_ibat": 64927,
+                "raw_iin": 76,
+                "raw_die_temp": 13275,
+                "raw_thermistor_voltage": 8925,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            },
+            "elapsed_s": 27.203
+          }
+        ],
+        "status": [
+          "SUBMITTED request=282 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119960 modem_accepted=14 rejected=1\r\nRESULT request=282 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4980000000e00000001",
+          "SUBMITTED request=283 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=14 rejected=1\r\nRESULT request=283 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000e00000001",
+          "SUBMITTED request=284 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115838 modem_accepted=14 rejected=1\r\nRESULT request=284 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47e0000000e00000001",
+          "SUBMITTED request=285 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113776 modem_accepted=14 rejected=1\r\nRESULT request=285 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc700000000e00000001",
+          "SUBMITTED request=286 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111716 modem_accepted=14 rejected=1\r\nRESULT request=286 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4640000000e00000001",
+          "SUBMITTED request=287 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109655 modem_accepted=14 rejected=1\r\nRESULT request=287 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac570000000e00000001",
+          "SUBMITTED request=288 type=120 bytes=0\r\nLTE_STATUS state=2 step=4 error=0 registered=0 window_ms=107593 modem_accepted=14 rejected=1\r\nRESULT request=288 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020400000001a4490000000e00000001",
+          "SUBMITTED request=289 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105531 modem_accepted=14 rejected=1\r\nRESULT request=289 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3b0000000e00000001",
+          "SUBMITTED request=290 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103471 modem_accepted=14 rejected=1\r\nRESULT request=290 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001942f0000000e00000001",
+          "SUBMITTED request=291 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101409 modem_accepted=14 rejected=1\r\nRESULT request=291 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c210000000e00000001",
+          "SUBMITTED request=292 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99347 modem_accepted=14 rejected=1\r\nRESULT request=292 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000184130000000e00000001",
+          "SUBMITTED request=293 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=97286 modem_accepted=14 rejected=1\r\nRESULT request=293 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000017c060000000e00000001",
+          "SUBMITTED request=294 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=95225 modem_accepted=14 rejected=1\r\nRESULT request=294 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000173f90000000e00000001",
+          "SUBMITTED request=295 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=93164 modem_accepted=14 rejected=1\r\nRESULT request=295 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0608000100016bec0000000e00000001"
+        ],
+        "status_timing": [
+          {
+            "elapsed_s": 0.061,
+            "response": "SUBMITTED request=282 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=119960 modem_accepted=14 rejected=1\r\nRESULT request=282 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001d4980000000e00000001"
+          },
+          {
+            "elapsed_s": 2.122,
+            "response": "SUBMITTED request=283 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=117900 modem_accepted=14 rejected=1\r\nRESULT request=283 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001cc8c0000000e00000001"
+          },
+          {
+            "elapsed_s": 4.184,
+            "response": "SUBMITTED request=284 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=115838 modem_accepted=14 rejected=1\r\nRESULT request=284 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001c47e0000000e00000001"
+          },
+          {
+            "elapsed_s": 6.245,
+            "response": "SUBMITTED request=285 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=113776 modem_accepted=14 rejected=1\r\nRESULT request=285 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001bc700000000e00000001"
+          },
+          {
+            "elapsed_s": 8.306,
+            "response": "SUBMITTED request=286 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=111716 modem_accepted=14 rejected=1\r\nRESULT request=286 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001b4640000000e00000001"
+          },
+          {
+            "elapsed_s": 10.368,
+            "response": "SUBMITTED request=287 type=120 bytes=0\r\nLTE_STATUS state=1 step=0 error=0 registered=0 window_ms=109655 modem_accepted=14 rejected=1\r\nRESULT request=287 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=010000000001ac570000000e00000001"
+          },
+          {
+            "elapsed_s": 12.429,
+            "response": "SUBMITTED request=288 type=120 bytes=0\r\nLTE_STATUS state=2 step=4 error=0 registered=0 window_ms=107593 modem_accepted=14 rejected=1\r\nRESULT request=288 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=020400000001a4490000000e00000001"
+          },
+          {
+            "elapsed_s": 14.491,
+            "response": "SUBMITTED request=289 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=105531 modem_accepted=14 rejected=1\r\nRESULT request=289 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000019c3b0000000e00000001"
+          },
+          {
+            "elapsed_s": 16.552,
+            "response": "SUBMITTED request=290 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=103471 modem_accepted=14 rejected=1\r\nRESULT request=290 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=030800000001942f0000000e00000001"
+          },
+          {
+            "elapsed_s": 18.613,
+            "response": "SUBMITTED request=291 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=101409 modem_accepted=14 rejected=1\r\nRESULT request=291 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000018c210000000e00000001"
+          },
+          {
+            "elapsed_s": 20.675,
+            "response": "SUBMITTED request=292 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=99347 modem_accepted=14 rejected=1\r\nRESULT request=292 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000184130000000e00000001"
+          },
+          {
+            "elapsed_s": 22.736,
+            "response": "SUBMITTED request=293 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=97286 modem_accepted=14 rejected=1\r\nRESULT request=293 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0308000000017c060000000e00000001"
+          },
+          {
+            "elapsed_s": 24.796,
+            "response": "SUBMITTED request=294 type=120 bytes=0\r\nLTE_STATUS state=3 step=8 error=0 registered=0 window_ms=95225 modem_accepted=14 rejected=1\r\nRESULT request=294 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=03080000000173f90000000e00000001"
+          },
+          {
+            "elapsed_s": 26.858,
+            "response": "SUBMITTED request=295 type=120 bytes=0\r\nLTE_STATUS state=6 step=8 error=0 registered=1 window_ms=93164 modem_accepted=14 rejected=1\r\nRESULT request=295 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=0608000100016bec0000000e00000001"
+          }
+        ],
+        "scope": "Modem acceptance only; correlate ground receiver and Yamcs separately.",
+        "initial_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=2176 tx_fail=1 tx_timeout=0 rx=4008 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=276 unknown=2 busy_drops=0 pending=0 uptime_ms=2321496",
+        "ready_elapsed_s": 26.858,
+        "ready": true,
+        "diagnostics": [
+          {
+            "stage": "before_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 93103,
+              "last_cereg": 1,
+              "send_cereg": 255,
+              "failure_cereg": 255,
+              "last_command": 9,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": false,
+              "final_send_ok": false,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 0,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 26234,
+              "uart_send_request": 0,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_send",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 92757,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 27090,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 26234,
+              "uart_send_request": 274,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "before_stop",
+            "decoded": {
+              "version": 1,
+              "state": 6,
+              "error": 0,
+              "registered": 1,
+              "window_ms": 76594,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 27090,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 26234,
+              "uart_send_request": 274,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          },
+          {
+            "stage": "after_stop",
+            "decoded": {
+              "version": 1,
+              "state": 0,
+              "error": 0,
+              "registered": 0,
+              "window_ms": 0,
+              "last_cereg": 1,
+              "send_cereg": 1,
+              "failure_cereg": 255,
+              "last_command": 10,
+              "failure_command": 0,
+              "failure_state": 0,
+              "prompt_seen": true,
+              "final_send_ok": true,
+              "failure_seen": false,
+              "socket_open_ok_observed": true,
+              "error_text_truncated": false,
+              "cme_number": null,
+              "send_elapsed_ms": 27090,
+              "registration_losses": 0,
+              "last_cereg_elapsed_ms": 26234,
+              "uart_send_request": 274,
+              "error_kind": "none",
+              "error_text": ""
+            }
+          }
+        ],
+        "stop": "SUBMITTED request=301 type=116 bytes=4\r\nRESULT request=301 outcome=RF_WINDOW_ACCEPTED peer=1875991883 bytes=4 hex=00000000",
+        "final_modem_status": "SUBMITTED request=302 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=15 rejected=1\r\nRESULT request=302 outcome=LTE_STATUS peer=1875991883 bytes=16 hex=00080000000000000000000f00000001",
+        "final_status": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=979862082 peer=1875991883 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=2354 tx_fail=1 tx_timeout=0 rx=4342 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=300 unknown=2 busy_drops=0 pending=0 uptime_ms=2365635"
+      },
+      "off_confirmed": true,
+      "receiver_exit": 0,
+      "radio_exit": 0,
+      "capture_exit": 124,
+      "modem_accepted": 1,
+      "radio_received": 1,
+      "receiver_rejected": 0,
+      "bytes_match": true,
+      "archive_match": true,
+      "success": true,
+      "ready_elapsed_s": 26.858,
+      "radio_children": {
+        "oai": 124,
+        "epc": 124
+      },
+      "delivery_success": true,
+      "normal_process_exits": true,
+      "ground_receiver": {
+        "scope": "Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.",
+        "received": 1,
+        "requested": 1,
+        "rejected": 0,
+        "duplicates": 0,
+        "packets": [
+          {
+            "received_utc": "2026-10-03T01:14:10.901830+00:00",
+            "peer": [
+              "172.16.0.2",
+              51001
+            ],
+            "hex": "0901c00f007901010010020100000000000000003a6782420023d77500600102020101010102000000000000000000100023d7750000000000001f460000000500001f33fffea34100002b86000052150000271000002710000400010100000000000000000000a15146000312e0fd9f004c33db22dd0000000300e00001486b",
+            "decoded": {
+              "name": "POWER_STATUS",
+              "sequence": 15,
+              "header": {
+                "schema_version": 1,
+                "kind": 1,
+                "message_id": 16,
+                "source": 2,
+                "target": 1,
+                "transaction_epoch": 0,
+                "transaction_id": 0,
+                "source_boot_id": 979862082,
+                "uptime_ms": 2348917,
+                "payload_length": 96
+              },
+              "payload": {
+                "payload_version": 1,
+                "provenance": 2,
+                "link": 2,
+                "readout_present": 1,
+                "readout_valid": 1,
+                "conversion_valid": 1,
+                "adc_valid": 1,
+                "configured_cells": 2,
+                "detected_cells": 0,
+                "sense_values_verified": 0,
+                "bridge_session_id": 0,
+                "readout_count": 16,
+                "ihu_readout_uptime_ms": 2348917,
+                "readout_age_ms": 0,
+                "battery_mv": 8006,
+                "input_mv": 5,
+                "output_mv": 7987,
+                "battery_ua": -89279,
+                "input_ua": 11142,
+                "die_temp_mc": 21013,
+                "rsnsb_microohms": 10000,
+                "rsnsi_microohms": 10000,
+                "raw_config_bits": 4,
+                "raw_charger_config_bits": 1,
+                "raw_charger_state": 256,
+                "raw_charge_status": 0,
+                "raw_limit_alerts": 0,
+                "raw_charger_state_alerts": 0,
+                "raw_charge_status_alerts": 0,
+                "raw_system_status": 161,
+                "raw_vbat": 20806,
+                "raw_vin": 3,
+                "raw_vout": 4832,
+                "raw_ibat": 64927,
+                "raw_iin": 76,
+                "raw_die_temp": 13275,
+                "raw_thermistor_voltage": 8925,
+                "raw_bsr": 0,
+                "raw_jeita_region": 3,
+                "raw_chem_cells": 224,
+                "raw_telemetry_status": 1
+              }
+            }
+          }
+        ]
+      },
+      "matching_archive": [
+        {
+          "packet": "CQHADwB5AQEAEAIBAAAAAAAAAAA6Z4JCACPXdQBgAQICAQEBAQIAAAAAAAAAAAAQACPXdQAAAAAAAB9GAAAABQAAHzP//qNBAAArhgAAUhUAACcQAAAnEAAEAAEBAAAAAAAAAAAAAKFRRgADEuD9nwBMM9si3QAAAAMA4AABSGs=",
+          "sequenceNumber": 151109647,
+          "id": {
+            "name": "/ember/POWER_STATUS"
+          },
+          "receptionTime": "2026-10-03T01:14:10.902Z",
+          "generationTime": "2026-10-03T01:14:10.902Z",
+          "earthReceptionTime": "2026-10-03T01:14:10.902Z",
+          "link": "eps-lte-in",
+          "size": 128
+        }
+      ],
+      "duration_s": 155.625,
+      "finished_utc": "2026-10-03T01:16:14.107751+00:00"
+    }
+  ],
+  "diagnostics": true,
+  "method": "One fresh EPS packet per separate cell/modem window; 120-second modem window, 15-second settle, no send retries.",
+  "successful": 8,
+  "completed": 10,
+  "finished_utc": "2026-10-03T01:16:14.110547+00:00"
+}

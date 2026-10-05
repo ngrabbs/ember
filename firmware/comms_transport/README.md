@@ -144,7 +144,7 @@ Starting overflow/gap counters and the earlier deliberate missing-peer timeout
 are historical, not failures in these paired runs. Faults were injected into
 Walter; its local parser counters were not independently sampled afterward.
 
-[Saved summary](https://github.com/ngrabbs/ember/blob/feature/lte-m-bench/system/ground_station/evidence/comms-walter-framed-20261002.json)
+[Saved summary](../../system/ground_station/evidence/comms-walter-framed-20261002.json)
 includes board identities, binary hashes, original/final status, and scope.
 Private paired transcripts are in `framed-paired-20261002/` and
 `framed-independent-faults-20261002/` beneath the task directory below.

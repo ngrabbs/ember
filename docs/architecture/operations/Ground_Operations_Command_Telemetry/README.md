@@ -1,5 +1,10 @@
 # EMBER Ground Operations & Test
 
+**Mission design draft:** this page records proposed application behavior.
+For commands available in the current lab, use the [Yamcs operator guide](../../../user/yamcs.md)
+and [bench contract](../../../../system/protocols/ember_bench_v1.md). Draft commands
+such as SET_MODE and REBOOT_IHU are not exposed by the current Yamcs bench MDB.
+
 **Status:** Draft 0.2
 
 The Ground Operations & Test subsystem provides the operator-facing interface used to monitor, command, and test EMBER.
@@ -7,6 +12,12 @@ The Ground Operations & Test subsystem provides the operator-facing interface us
 EMBER is designed to operate autonomously during normal mission operations. Ground Operations monitors spacecraft health and mission activity, receives periodic telemetry and event-driven messages, displays and logs significant events, and provides operator command capability for configuration, testing, recovery, manual operations, and on-demand information requests.
 
 Ground communications are shared with Flight Communications, and the exact division of responsibilities will continue to be refined as the design develops.
+
+## Shared team reading
+
+[Telemetry: from a subsystem to the ground](../../telemetry_data_flow.md) explains
+the implemented bench data path, definition files, Yamcs decoding, and the workflow
+for adding subsystem telemetry. Read it alongside the application dictionaries below.
 
 ## Design Documents
 
@@ -46,3 +57,4 @@ PAYLOAD_STATUS
 MODE_EVENT
 FAULT_EVENT
 FIRE_DETECTED
+```

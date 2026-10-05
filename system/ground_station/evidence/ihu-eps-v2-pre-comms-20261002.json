@@ -1,0 +1,18 @@
+[
+  {
+    "command": "status",
+    "response": "STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=3148122192 peer=0 can_ready=1 mode=80 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=0 tx_fail=0 tx_timeout=0 rx=0 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=0 unknown=0 busy_drops=0 pending=0 uptime_ms=74519\r\n"
+  },
+  {
+    "command": "eps json",
+    "response": "{\"profile\":\"ltc4162-l-readout-v1\",\"uptime_ms\":75231,\"registers\":{\"config_bits\":4,\"charger_config_bits\":1,\"charger_state\":256,\"charge_status\":0,\"limit_alerts\":0,\"charger_state_alerts\":0,\"charge_status_alerts\":0,\"system_status\":161,\"vbat\":21055,\"vin\":4,\"vout\":4890,\"ibat\":64952,\"iin\":72,\"die_temp\":13290,\"thermistor_voltage\":8968,\"bsr\":0,\"jeita_region\":3,\"chem_cells\":224,\"telemetry_status\":1}}\r\n"
+  },
+  {
+    "command": "normal",
+    "response": "CAN_NORMAL ready=1\r\n"
+  },
+  {
+    "command": "hello",
+    "response": "SUBMITTED request=1 type=1 bytes=0\r\nRESULT request=1 outcome=CAN_HELLO_CONFIRMED peer=4252110043 bytes=0 hex=\r\n"
+  }
+]
