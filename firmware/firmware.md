@@ -1,5 +1,10 @@
 # Firmware Roadmap
 
+**Scope:** FreeRTOS communications-board work. Separate CAN Feather, Walter LTE
+bench applications have newer transport demonstrations; their
+[implementation guides](../docs/user/README.md) and owning checklists record that
+work. Unchecked rows here refer to production integration, not absence of bench evidence.
+
 ## Document Purpose
 
 This roadmap defines firmware work for the current communications-board
@@ -22,23 +27,24 @@ baseline and separates optional exploratory payload work.
 - [x] Select runtime model (bare metal or RTOS) based on timing and complexity
       — FreeRTOS, kernel config shared with the IHU
 - [ ] Implement watchdog and recovery pathways
-- [ ] Define boot states (safe mode, nominal mode, high-duty mode), gated
-      on the boot self-test result
+- [ ] Implement boot/operating behavior from the [operations draft](../docs/architecture/operations/README.md),
+      with explicit health gating; the full state machine remains open
 - [x] Define board health telemetry schema — IHU↔comms register map,
       shared by both trees, written to carry over to the CAN
       `0x300-0x3FF` message group
       ([`firmware/shared/comms_hk_proto.h`](shared/comms_hk_proto.h))
 - [x] Bench interim link exercising that schema (I2C over jumpers —
       **not** a flight interface; the comms PCB has no stack I2C)
-- [ ] CAN transport: transceiver trade (can2040 PIO vs MCP2515),
-      message ID allocation, transport-agnostic link layer
+- [ ] Integrate the demonstrated standalone MCP25625 CAN Feather transport
+      into production runtime; finalize message IDs, A/B hardware and failover
 - [ ] Logging interface
 
 ### Workstream C: Bring-Up and Ground Support
 
 The communications-board RP2040 is the **COMMS MCU**; the IHU-board RP2040 is
-the **IHU MCU**. Their current I2C link is housekeeping/ping only. CAN is the
-intended internal packet transport. Walter provides the initial external
+the **IHU MCU**. The FreeRTOS I2C link is housekeeping/ping only. The standalone
+CAN Feather application demonstrates packet transport; production integration
+remains open. Walter provides the initial external
 transport while UHF is developed, behind the same COMMS packet service.
 The [integration checklist](../system/interfaces/comms_walter.md) owns UART
 framing, queues, forwarding, and controller-reset validation.
@@ -49,8 +55,8 @@ framing, queues, forwarding, and controller-reset validation.
       the driver, so it survives the move to CAN
 - [ ] Create repeatable RF bench-test helper scripts
 - [ ] Implement ground-side telemetry decode utility for captured frames
-- [ ] Implement COMMS–Walter packet forwarding and an IHU packet transport,
-      then replace the external adapter with UHF without changing packet meanings
+- [ ] Integrate standalone CAN/Walter packet forwarding into production
+      applications without changing packet meanings; UHF integration remains open
 
 ## Baseline Exit Criteria
 

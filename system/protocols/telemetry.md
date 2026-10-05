@@ -24,9 +24,11 @@ parameters still need definition.
 | IHU | Mode, reset reason, watchdog events, uptime |
 | Payload | Status and selected science/experiment metadata |
 
-IHU–COMMS presently has an I2C status/ping bench link; packet forwarding remains
-to implement. CAN is the intended internal packet transport. The COMMS MCU
-will forward application packets through Walter LTE-M or UHF; see the
+The FreeRTOS IHU–COMMS application has an I2C status/ping jumper link. The
+separate CAN Feather bench implements packet forwarding, with native EPS
+telemetry delivery recorded over Walter LTE-M. SDRB UHF is a separate local
+workstream whose source/configuration is not included in this branch. Production
+application integration and CAN A/B remain open; see the
 [integration checklist](../interfaces/comms_walter.md). COMMS owns external
 link framing. Apply link-level packet checksums, an end-to-end
 payload CRC, and a sequence counter for drops/reordering.

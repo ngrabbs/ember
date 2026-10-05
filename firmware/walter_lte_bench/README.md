@@ -1,5 +1,10 @@
 # Walter native EPS LTE bench sender
 
+**Evidence update:** hardware upload and later native EPS LTE delivery are
+recorded in the [LTE status and evidence index](../../ground/lte/README.md). The
+initial radio-off qualification statement below describes the first upload;
+continuous reliability and production integration remain open.
+
 Experimental standalone application using the same pinned PlatformIO 6.1.18,
 espressif32 6.10.0 / Arduino 2.0.17 toolchain as the UART responder. Uses local
 nonblocking AT orchestration, not the WalterModem library. Generated wire offsets

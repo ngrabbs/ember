@@ -1,5 +1,10 @@
 # EMBER Ground Operations & Test
 
+**Mission design draft:** this page records proposed application behavior.
+For commands available in the current lab, use the [Yamcs operator guide](../../../user/yamcs.md)
+and [bench contract](../../../../system/protocols/ember_bench_v1.md). Draft commands
+such as SET_MODE and REBOOT_IHU are not exposed by the current Yamcs bench MDB.
+
 **Status:** Draft 0.2
 
 The Ground Operations & Test subsystem provides the operator-facing interface used to monitor, command, and test EMBER.
@@ -52,3 +57,4 @@ PAYLOAD_STATUS
 MODE_EVENT
 FAULT_EVENT
 FIRE_DETECTED
+```

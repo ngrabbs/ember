@@ -1,5 +1,8 @@
 # Ground software
 
+For day-to-day commanding, responses, displays and replay, start with the
+[Yamcs operator guide](../docs/user/yamcs.md).
+
 [System guide](../system/README.md) · [Ground station checklist](../system/ground_station/TODO.md)
 
 - [Telemetry data flow](../docs/architecture/telemetry_data_flow.md): shared team reading, battery voltage/current walkthroughs, and definition ownership.

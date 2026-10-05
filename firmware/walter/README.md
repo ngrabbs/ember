@@ -1,5 +1,11 @@
 # Walter LTE-M firmware
 
+**Current bench reference, reviewed 2026-10-04:** the
+[Walter LTE bench sender](../walter_lte_bench/README.md) is implemented and has
+[recorded native EPS delivery](../../ground/lte/README.md). The reserved directory
+here is for production integration. The vendor research and initial responder
+status below are a dated 2026-10-01 record, not the latest installed-image claim.
+
 Reserved for the spacecraft-side Walter LTE application. The separate
 [UART bench responder](../walter_uart_bench/README.md) now supplies the initial
 COMMS link diagnostic, with the modem held in reset. The previous AT passthrough

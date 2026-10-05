@@ -28,8 +28,9 @@ from IHU. For the manual native producer, readout_count counts complete reads
 packaged into native packets; readout_age_ms=0 at packet construction. Failed
 reads emit no native packet. ADC validity and sense-resistor assumptions retain
 the same quality rules. This identifies the producer, not a transport or proof
-of LTE delivery. Native radio packets enter the isolated Yamcs `ember-lte`
-instance; the Pi wrapper remains in `ember`.
+of RF delivery. Native LTE packets enter the isolated Yamcs `ember-lte`
+instance; the Pi UART wrapper remains in `ember`. The separate local SDRB/UHF
+experiment is outside the published configuration documented here. See the [operator capability table](../../docs/user/yamcs.md#instances-and-endpoints).
 
 Yamcs generation time equals ground packet reception time. `readout_age_ms`
 is Pi monotonic time since the last complete accepted UART readout, capped at

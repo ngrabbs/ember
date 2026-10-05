@@ -1,0 +1,3836 @@
+{
+  "review_date": "2026-10-05",
+  "scope": "First-party repository documentation; tracked and untracked working tree",
+  "limitations": "Inventory and content triage; code/configuration checks only where cited. No external URL/anchor, CAD, hardware, or live service verification.",
+  "counts": {
+    "Implementation reference": 58,
+    "Work checklist": 4,
+    "Navigation or placeholder": 35,
+    "Analysis or validation plan": 4,
+    "Historical evidence": 38,
+    "Proposed operations": 14,
+    "Research reference": 6,
+    "Historical design": 4,
+    "Operator guide": 4,
+    "Hardware design or procedure": 66,
+    "Integration plan": 2
+  },
+  "documents": [
+    {
+      "path": "README.md",
+      "title": "EMBER",
+      "category": "Implementation reference",
+      "disposition": "Updated",
+      "review_basis": "F13",
+      "lines": 127,
+      "sha256": "18673102101069b2b438e783efe02c59948c789e0bde349285b3a3b85d88569f",
+      "status_excerpts": [
+        "Mississippi recorded more than 2,500 wildfires across 51,000 acres in FY2024 \u2014",
+        "| `test/` | Validation procedures and recorded results |",
+        "## Status"
+      ],
+      "finding_ids": [
+        "F13"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "TODO.md",
+      "title": "EMBER \u2014 Open Work",
+      "category": "Work checklist",
+      "disposition": "Updated",
+      "review_basis": "F13",
+      "lines": 311,
+      "sha256": "0055fb3c878fe923f1bc484a747231b70fda2b4b88871bc2c0937fceed9b0aef",
+      "status_excerpts": [
+        "Updated 2026-10-02 (COMMS MCU/Walter transport and CAN migration).",
+        "The current working project is **all-UHF, single-antenna**, as recorded in",
+        "VHF-uplink/RX-rebuild description has been superseded. Current saved"
+      ],
+      "finding_ids": [
+        "F13"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "analysis/README.md",
+      "title": "Analysis Workspace",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 9,
+      "sha256": "c2421f2d16180d9096d04057dd2caf656ebb2791d03c6a017ac063b46e7ea020",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "analysis/link_budget/README.md",
+      "title": "Link Budget Analysis",
+      "category": "Navigation or placeholder",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "F15",
+      "lines": 4,
+      "sha256": "828363866b139190fc2fb7c02b4a353ff65293ba4c662f37dad2d9197d727403",
+      "status_excerpts": [],
+      "finding_ids": [
+        "F15"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "analysis/orbit/README.md",
+      "title": "Orbit Analysis",
+      "category": "Analysis or validation plan",
+      "disposition": "Keep as reference",
+      "review_basis": "Assumptions and acceptance limits need owning engineering review",
+      "lines": 47,
+      "sha256": "2bf779b666aff8021aa7b2d033eedf7c1d64cdb3322a6f84c8a8e350f1226e2c",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "analysis/orbit/stk_power_export_guide.md",
+      "title": "STK Export Guide \u2014 EPS Power Analysis",
+      "category": "Analysis or validation plan",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "F15",
+      "lines": 229,
+      "sha256": "742d846c0611dee1e9a1e983f432b63bdb5ce14aa4f8036b5960341d0b45ca17",
+      "status_excerpts": [],
+      "finding_ids": [
+        "F15"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "analysis/power/README.md",
+      "title": "EPS Power Budget",
+      "category": "Analysis or validation plan",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "F15",
+      "lines": 572,
+      "sha256": "4b0a13b0c9c0561a911c34f14105512fe0b01586acedc2de74af2ca1ae3fb351",
+      "status_excerpts": [
+        "| +25\u00b0C           | 100%              | Datasheet baseline                    |"
+      ],
+      "finding_ids": [
+        "F15"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "analysis/trade_studies/README.md",
+      "title": "Trade Studies",
+      "category": "Navigation or placeholder",
+      "disposition": "Retain as planning/reference",
+      "review_basis": "F16",
+      "lines": 4,
+      "sha256": "964a9c09266d65576df651e183120efe02b7ede4f84355b21436e7f6fef15425",
+      "status_excerpts": [],
+      "finding_ids": [
+        "F16"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/README.md",
+      "title": "EMBER documentation",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 47,
+      "sha256": "46962eebcc537c8a737b811e6144e7eb1fd1396300cc00bac67793ff7ea267c4",
+      "status_excerpts": [
+        "**Baseline** describes the documented design, not verified hardware. **Draft** means",
+        "proposed behavior or values still needing agreement. **Historical** material records",
+        "Start pages with their answer and status; put rationale, alternatives, and history"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/README.md",
+      "title": "Architecture",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 14,
+      "sha256": "3e23f7b45c2c369ce606ef801fe52295198b0ca6da8486aed3dd68c49f589939",
+      "status_excerpts": [
+        "| [Operations draft](operations/README.md) | How should the spacecraft behave? |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/hardware_overview.md",
+      "title": "Hardware guide",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 22,
+      "sha256": "2b927565ab19ec0095ddfcfd0781f653a7465e355434fd08cce823bc02ff150f",
+      "status_excerpts": [
+        "stack signal. Board status and open work stay in the owning documents and"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/history/README.md",
+      "title": "Architecture history",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 7,
+      "sha256": "cd8b266ca6bf996ba5162913cb7fc47cd3e3c693d0b305bf4c4c0b5175b64527",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/history/inhibit_and_deployment_2026-04-15.md",
+      "title": "Historical inhibit and deployment discussion",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 242,
+      "sha256": "f8e2dc8b506f5508975db4e0ae8e486b0db2c7f20d89354c3607907f600c4248",
+      "status_excerpts": [
+        "# Historical inhibit and deployment discussion",
+        "**Historical reference, archived September 21, 2026.** The original discussion",
+        "[operations draft](../operations/README.md) before using it."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/inhibit_and_deployment.md",
+      "title": "Inhibit and deployment decisions",
+      "category": "Implementation reference",
+      "disposition": "Updated links; evidence retained",
+      "review_basis": "F10",
+      "lines": 117,
+      "sha256": "77f300ad4307dd029b17f8ede852b75593e0a6428d8f224a892919f29c06a1dd",
+      "status_excerpts": [
+        "Updated 2026-09-23. This document separates the CDS Rev. 14.1 requirements,",
+        "## Requirements baseline",
+        "and choosing to shut down. Status signals to the IHU supplement the hardware"
+      ],
+      "finding_ids": [
+        "F10"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/01-mode-table.md",
+      "title": "EMBER mode table",
+      "category": "Proposed operations",
+      "disposition": "Keep as draft",
+      "review_basis": "Mission intent; bench implementation is separate",
+      "lines": 51,
+      "sha256": "233cd5f495c00e45a5e6c74b61922cfc7db8b8c1adc87e7de46b0c30c7a9c744",
+      "status_excerpts": [
+        "Draft 0.1 \u2022 September 19, 2026 \u2022 Proposed behavior for team review",
+        "mode-manager ownership still needs team agreement. This draft treats the earlier",
+        "- One mode manager owns mode changes. Subsystems report status and request actions."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/02-transition-table.md",
+      "title": "EMBER transition table",
+      "category": "Proposed operations",
+      "disposition": "Keep as draft",
+      "review_basis": "Mission intent; bench implementation is separate",
+      "lines": 56,
+      "sha256": "c32c74aa3ae227815d800a5262616a005614e540821c4e53787b61894e206306",
+      "status_excerpts": [
+        "Draft 0.1 \u2022 September 19, 2026 \u2022 Proposed behavior for team review",
+        "2. **Deployment:** record an attempt before energizing the actuator; record confirmed completion separately. A reset between those events means **unknown outcome**, not \u201cnever attempted.\u201d No automatic retry from that condition in this draft."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/03-permission-matrix.md",
+      "title": "EMBER inhibit and permission matrix",
+      "category": "Proposed operations",
+      "disposition": "Keep as draft",
+      "review_basis": "Mission intent; bench implementation is separate",
+      "lines": 38,
+      "sha256": "809a6be300bafa694706b53075854647bca7763251d9b09d7832ae9621256131",
+      "status_excerpts": [
+        "Draft 0.1 \u2022 September 19, 2026 \u2022 Proposed behavior for team review",
+        "| Enable ground-test commands | Test jumper with a defined electrical default. | GROUND TEST selected at boot; deliberate command for each test. TX and deployment still need explicit test authorization and applicable physical protection. | Housekeeping and command/telemetry | Verify jumper status is visible; removing it does not start flight actions; reset selects the new configuration. |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/Ground_Operations_Command_Telemetry/01-subsystem-overview.md",
+      "title": "Ground Operations & Test - Subsystem Overview",
+      "category": "Proposed operations",
+      "disposition": "Formatting repaired",
+      "review_basis": "F09",
+      "lines": 53,
+      "sha256": "dea34104475df8cc925a11dab428df3f7ad15fefe59928e04c35d8349854c85a",
+      "status_excerpts": [
+        "**Status:** Draft 0.2",
+        "Ground Operations provides the operator with spacecraft status, alerts, telemetry, and event information while retaining the ability to issue commands when manual control, testing, configuration, recovery, or on-demand information is required.",
+        "- Spacecraft monitoring and status display"
+      ],
+      "finding_ids": [
+        "F09"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/Ground_Operations_Command_Telemetry/02-command-dictionary.md",
+      "title": "EMBER Command Dictionary",
+      "category": "Proposed operations",
+      "disposition": "Retain as mission draft; scope clarified; Formatting repaired",
+      "review_basis": "F03; F09",
+      "lines": 98,
+      "sha256": "c935b08db1af2cc22466289b4a5a4c6591a20475c19ac8b09bcdb7f7bdfe17d9",
+      "status_excerpts": [
+        "**Mission design draft:** this page records proposed application behavior.",
+        "and [bench contract](../../../../system/protocols/ember_bench_v1.md). Draft commands",
+        "**Status:** Draft 0.2"
+      ],
+      "finding_ids": [
+        "F03",
+        "F09"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/Ground_Operations_Command_Telemetry/03-command-responses.md",
+      "title": "EMBER Command Responses",
+      "category": "Proposed operations",
+      "disposition": "Retain as mission draft; scope clarified; Formatting repaired",
+      "review_basis": "F03; F09",
+      "lines": 22,
+      "sha256": "d8a7bcd05e0ed23014cc99a029b8f120a8c3812bdc50846a570bd5c45c956d99",
+      "status_excerpts": [
+        "**Mission design draft:** this page records proposed application behavior.",
+        "and [bench contract](../../../../system/protocols/ember_bench_v1.md). Draft commands",
+        "**Status:** Draft 0.2"
+      ],
+      "finding_ids": [
+        "F03",
+        "F09"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/Ground_Operations_Command_Telemetry/04-telemetry-dictionary.md",
+      "title": "EMBER Telemetry & Event Dictionary",
+      "category": "Proposed operations",
+      "disposition": "Formatting repaired",
+      "review_basis": "F09",
+      "lines": 87,
+      "sha256": "31b4a866c9d52ad8ae7651f271648bafd26ecf54e25f0188c94fae359fba1e9b",
+      "status_excerpts": [
+        "**Status:** Draft 0.2",
+        "This document defines application-level messages generated by EMBER to report spacecraft status, health, mission information, and significant events.",
+        "| 0x01 | SYSTEM_STATUS | Periodic / Requested | Overall spacecraft status | Mode, configuration, health | Scheduled / on request |"
+      ],
+      "finding_ids": [
+        "F09"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/Ground_Operations_Command_Telemetry/05-ground-console.md",
+      "title": "EMBER Ground Operations Console",
+      "category": "Proposed operations",
+      "disposition": "Retain as mission draft; scope clarified; Formatting repaired",
+      "review_basis": "F03; F09",
+      "lines": 56,
+      "sha256": "25731da8f9a6caae9be479d9ea79507e1e4306e43ddbee32451f15d09b9f3d03",
+      "status_excerpts": [
+        "**Mission design draft:** this page records proposed application behavior.",
+        "and [bench contract](../../../../system/protocols/ember_bench_v1.md). Draft commands",
+        "**Status:** Draft 0.2"
+      ],
+      "finding_ids": [
+        "F03",
+        "F09"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/Ground_Operations_Command_Telemetry/06-ground-test.md",
+      "title": "EMBER Ground Test",
+      "category": "Proposed operations",
+      "disposition": "Formatting repaired",
+      "review_basis": "F09",
+      "lines": 17,
+      "sha256": "c4443a4a4b13ee6f1d58b4502a61f2da1ee02b6040f31caec9cec05d038bb6ec",
+      "status_excerpts": [
+        "**Status:** Draft 0.2"
+      ],
+      "finding_ids": [
+        "F09"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/Ground_Operations_Command_Telemetry/07-interfaces.md",
+      "title": "Ground Operations Subsystem Interfaces",
+      "category": "Proposed operations",
+      "disposition": "Formatting repaired",
+      "review_basis": "F09",
+      "lines": 115,
+      "sha256": "3de3caab0b21b34c191f35d8338943113211bc96fd07f15fa24cb15c5aafe973",
+      "status_excerpts": [
+        "**Status:** Draft 0.2",
+        "- Radio status",
+        "- System status"
+      ],
+      "finding_ids": [
+        "F09"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/Ground_Operations_Command_Telemetry/08-tbd-items.md",
+      "title": "Ground Operations - TBD Items",
+      "category": "Proposed operations",
+      "disposition": "Keep as draft",
+      "review_basis": "Mission intent; bench implementation is separate",
+      "lines": 169,
+      "sha256": "722ea4ec8d3121f7fe622156f6c16d38f54baab14e4c23156daa11976cdcf71d",
+      "status_excerpts": [
+        "**Status:** Draft 0.2",
+        "Draft 0.2 defines the current Ground Operations behavioral and application-messaging architecture. The items below remain open for subsystem coordination, team approval, or implementation design.",
+        "- Available radio/link status information"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/Ground_Operations_Command_Telemetry/09-command-telemetry-protocol.md",
+      "title": "EMBER Command / Telemetry Protocol",
+      "category": "Proposed operations",
+      "disposition": "Retain as mission draft; scope clarified",
+      "review_basis": "F03",
+      "lines": 1101,
+      "sha256": "e01c57fbc2799df68ffdbf55c88725585a49c23ac4b1dbc29ed4f5a6c4c0c05a",
+      "status_excerpts": [
+        "**Mission design draft:** this page records proposed application behavior.",
+        "and [bench contract](../../../../system/protocols/ember_bench_v1.md). Draft commands",
+        "**Status:** Draft 0.2"
+      ],
+      "finding_ids": [
+        "F03"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/Ground_Operations_Command_Telemetry/README.md",
+      "title": "EMBER Ground Operations & Test",
+      "category": "Proposed operations",
+      "disposition": "Retain as mission draft; scope clarified; Formatting repaired",
+      "review_basis": "F03; F09",
+      "lines": 60,
+      "sha256": "79d99f8b16e0956d4fa30edc8f596f80c678f78a8d9363e55f10b6c4ca96a408",
+      "status_excerpts": [
+        "**Mission design draft:** this page records proposed application behavior.",
+        "and [bench contract](../../../../system/protocols/ember_bench_v1.md). Draft commands",
+        "**Status:** Draft 0.2"
+      ],
+      "finding_ids": [
+        "F03",
+        "F09"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/operations/README.md",
+      "title": "Spacecraft operations",
+      "category": "Proposed operations",
+      "disposition": "Keep as draft",
+      "review_basis": "Mission intent; bench implementation is separate",
+      "lines": 14,
+      "sha256": "6598d7c52f624f84a3c271590fbd70d1d6c56bdc4a569eb8593eff63c2b8a60b",
+      "status_excerpts": [
+        "**Draft 0.1 \u00b7 September 19, 2026 \u00b7 For team review.** These three tables describe"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/project_scope.md",
+      "title": "Project Scope and Positioning",
+      "category": "Implementation reference",
+      "disposition": "Updated; Retain; scope decision pending",
+      "review_basis": "F11; F14",
+      "lines": 43,
+      "sha256": "a8ebe985bfca24b74adaa0eb41b17fe130dc75117f010519fcfc6cbcaa85dc3b",
+      "status_excerpts": [
+        "## Baseline Build",
+        "The baseline for the current build is:",
+        "are compared against ground truth recorded on the same burn. Instrument-level"
+      ],
+      "finding_ids": [
+        "F11",
+        "F14"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/system_overview.md",
+      "title": "System overview",
+      "category": "Implementation reference",
+      "disposition": "Updated",
+      "review_basis": "F01",
+      "lines": 41,
+      "sha256": "8de786f81bef1068a994518cded8dba6f8e6f6302622ac3c31d914a56789537b",
+      "status_excerpts": [
+        "**Status: architecture summary; operating modes are a separate draft.** EMBER",
+        "packets, with recorded bounded LTE delivery evidence.",
+        "provides status/ping; the standalone CAN Feather bench carries packets on one"
+      ],
+      "finding_ids": [
+        "F01"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/architecture/telemetry_data_flow.md",
+      "title": "Telemetry: from a subsystem to the ground",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 557,
+      "sha256": "9ccb0d09d406c5c8ecee1ddcd617ce011ac39e51791bfe020404e43b2a94f82a",
+      "status_excerpts": [
+        "**Status:** Implementation walkthrough and team development reference, checked",
+        "A[Subsystem measurement or status] --> B[IHU collects data]",
+        "| Application packet | Define the meaning, order, size, and representation of fields | `POWER_STATUS`, containing `battery_mv` |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/comms/README.md",
+      "title": "Communications guide",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 20,
+      "sha256": "9e89d2eff2cd75d13a43ddc3bab20daa036e6d1e7e819549f98d20d77a6c95f2",
+      "status_excerpts": [
+        "| Packet encoding and framing | [Encoding status](encoding.md) |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/comms/encoding.md",
+      "title": "Encoding and framing",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 9,
+      "sha256": "19c11173c16d8ec97ff648018538bb44ae4cf5bfe57a242efde083c2e5736a6f",
+      "status_excerpts": [
+        "**Status: final RF framing/encoding decisions remain open.** Track implementation",
+        "in the [firmware roadmap](../../firmware/firmware.md). The draft"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/comms/frequency_plan.md",
+      "title": "Frequency plan",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 9,
+      "sha256": "16e2fb568e83c205d260d49b585ac0c1424465aceb96c1e69b0ecbc7305803ca",
+      "status_excerpts": [
+        "status still needs an owning record."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/comms/link_budget.md",
+      "title": "Link budget",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 7,
+      "sha256": "8731b06b1074625bda2adbe6deaae76a3d30ea5c029e92b50356d7e4717f7860",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/comms/modulation.md",
+      "title": "Modulation references",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 9,
+      "sha256": "a61582141674600aa2ba7329476f98e2265e9a0e233904763d315b2e648a4658",
+      "status_excerpts": [
+        "and the [firmware roadmap](../../firmware/firmware.md) for implementation status."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/firmware/README.md",
+      "title": "Firmware guide",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 18,
+      "sha256": "ca8a7a4bc2ed5595724fb246ddef5586d23e5a238b5eed4d77843b292e083a52",
+      "status_excerpts": [
+        "| Spacecraft mode-manager behavior | [Operations draft](../architecture/operations/README.md) |",
+        "Implementation status belongs with the firmware. Operations and protocol drafts"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/firmware/firmware_architecture.md",
+      "title": "Firmware architecture",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 8,
+      "sha256": "d13c0b67fbed30e480aba24575493797feff741f80de25c7e2670c0412a41c73",
+      "status_excerpts": [
+        "control. Shared behavior belongs in the [operations draft](../architecture/operations/README.md)"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/firmware/rtos_design.md",
+      "title": "RTOS design",
+      "category": "Navigation or placeholder",
+      "disposition": "Updated",
+      "review_basis": "F05",
+      "lines": 8,
+      "sha256": "fb86d4924d2a21fd0e668523d09f328aa1ea19ec0d395e1b055409b47431fc51",
+      "status_excerpts": [],
+      "finding_ids": [
+        "F05"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/hardware/README.md",
+      "title": "Hardware references",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 14,
+      "sha256": "6331c087a5474dc25ca13a8012eefab372e0c1b73311e9dde6bc0b1fa24c634a",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/hardware/design_rules.md",
+      "title": "Hardware design rules",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 7,
+      "sha256": "a6f5e63dbf6d36aa9d79bffd9abd5289fd2eab52b9838dc93871e510207732a6",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/hardware/pcb_guidelines.md",
+      "title": "PCB layout references",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 8,
+      "sha256": "5a18e9b2f62b01573121a6dd0eb30678ec55fcb52e0f17ea5f1e839161e212f5",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/hardware/stackup.md",
+      "title": "PCB stackup",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 7,
+      "sha256": "9037ac5d62374b575b0ac59ac9a596c47fb70237300d762567e32c76eba6db46",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/research/README.md",
+      "title": "Research references",
+      "category": "Research reference",
+      "disposition": "Keep as reference",
+      "review_basis": "External sources not revalidated",
+      "lines": 10,
+      "sha256": "f1649149e06cccb1800cfcf75ca1a3f91578b9036dde3ddfc61e3e7886b15a80",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/research/comms.md",
+      "title": "RF prototyping reference",
+      "category": "Research reference",
+      "disposition": "Keep as reference",
+      "review_basis": "External sources not revalidated",
+      "lines": 6,
+      "sha256": "307327d48a0b75d9e09802d54390e852608bd607163413831b30cc5b092eb1a1",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/research/firmware_references.md",
+      "title": "Firmware Research References",
+      "category": "Research reference",
+      "disposition": "Keep as reference",
+      "review_basis": "External sources not revalidated",
+      "lines": 15,
+      "sha256": "2eec2e92445aa576a62bed1f2d13e494d14c660225acb34d2b3864ef7d73a206",
+      "status_excerpts": [
+        "the implementation baseline."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/research/interesting_cubesat_info.md",
+      "title": "CubeSat projects and resources",
+      "category": "Research reference",
+      "disposition": "Keep as reference",
+      "review_basis": "External sources not revalidated",
+      "lines": 21,
+      "sha256": "01c16b31ccd385e3898e9627a71bfbfc0f8531c1294e619c9ee41c0936bd9fde",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/research/k_line_detection.md",
+      "title": "K-Line Wildfire Detection",
+      "category": "Historical design",
+      "disposition": "Keep as history",
+      "review_basis": "Do not use as current procedure",
+      "lines": 33,
+      "sha256": "7fd33c37cfe11cffef9d17c4d40d03cb91f5a8fc451b5a31b786301c45ac96ed",
+      "status_excerpts": [
+        "An earlier copy of the primer lived here and described a **superseded filter"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/review/README.md",
+      "title": "EMBER documentation review",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 142,
+      "sha256": "9b688809685768c138b24959066ce50f79f52864b58d3bf8f23b0979f162bafc",
+      "status_excerpts": [
+        "- [Detailed findings](findings.json): evidence, correction, status and remaining",
+        "Every repository document received content/status triage and local file-link",
+        "| F02 | Update FreeRTOS IHU/Yamcs status and identify the separate CAN application | Corrected |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/review/verification.md",
+      "title": "Documentation review verification",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 37,
+      "sha256": "68d9b8b6fdb1e52d9303d7d2b4d90df81b79f992a73d8bf64b36d5a9606dee04",
+      "status_excerpts": [
+        "| Triple-backtick code blocks | No unmatched fences after repairing eight draft files | Fence parity, not full rendered-layout verification |",
+        "| Existing `tests/ground` suite on the PR base | 36 tests passed, no skips | Codec, generated MDB, simulator, host C firmware/framing, EPS quality, native packet, CAN/LTE queue and recorded-session behavior |",
+        "| Source-generated operator examples | Six exchanges verified against the PR-base dispatcher | PING, period change, status, both query groups and invalid-parameter rejection |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/user/README.md",
+      "title": "EMBER operator guides",
+      "category": "Operator guide",
+      "disposition": "New operator guides",
+      "review_basis": "F17",
+      "lines": 40,
+      "sha256": "07324c0a5e919c3cb8806d2e606a499c1f95cac194564d16c4d6e324ff9f0505",
+      "status_excerpts": [
+        "| Use the newer IHU CAN bench | [CAN Feather USB console](ihu-can-console.md) | USB text console; `STATUS role=IHU_MCU fw=can-bench-v2` |",
+        "- **Inspect the CAN IHU:** open its USB text console, run `status` and `help`.",
+        "## Meaning of status"
+      ],
+      "finding_ids": [
+        "F17"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/user/ihu-can-console.md",
+      "title": "IHU CAN Feather USB console",
+      "category": "Operator guide",
+      "disposition": "New operator guides",
+      "review_basis": "F17",
+      "lines": 149,
+      "sha256": "42f400bf52c0c1ee3556e4647c857506fa01947f9a92c9ec4b6fa756fa2dd767",
+      "status_excerpts": [
+        "Open the exact IHU USB serial device and run `status` and `help`. The recorded",
+        "in the status response before issuing IHU controls. USB CDC carries the text;",
+        "send complete literal lines. Status/log output is suppressed when USB is not"
+      ],
+      "finding_ids": [
+        "F17"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/user/ihu-debug-uart.md",
+      "title": "IHU debug UART",
+      "category": "Operator guide",
+      "disposition": "New operator guides",
+      "review_basis": "F17",
+      "lines": 239,
+      "sha256": "70513c330caaca45c7cf42dbd8a12cd9fa648790fed86a508963e13475ec8981",
+      "status_excerpts": [
+        "The device path is specific to the recorded installation. Identify your adapter",
+        "systemctl status ember-eps-bridge",
+        "| `eps` | Prints the latest valid monitor snapshot in engineering units | State, charge status, voltages, currents and chip die temperature; may refuse if no valid snapshot |"
+      ],
+      "finding_ids": [
+        "F17"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/user/yamcs.md",
+      "title": "Commanding and monitoring EMBER in Yamcs",
+      "category": "Operator guide",
+      "disposition": "New operator guides",
+      "review_basis": "F17",
+      "lines": 245,
+      "sha256": "6c0d3e053caff15c97c17e1892295c8ecc9f57f4e3afaa464a3fcaa6957f0650",
+      "status_excerpts": [
+        "Deployment/UI checks cited below were recorded October 1\u20133; this review did not",
+        "The recorded bench web address is [Pi Yamcs](http://192.168.1.251:8090).",
+        "| `REQUEST_STATUS` | `0x02` | None | ACCEPTED, correlated SYSTEM_STATUS, then COMPLETED |"
+      ],
+      "finding_ids": [
+        "F17"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "docs/writing_guide.md",
+      "title": "Documentation editing guide",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 30,
+      "sha256": "6494f52a0947c7c2dfd66e4714ec3b43a6c7647831c708182f1a4f78d9a8b3b8",
+      "status_excerpts": [
+        "show the implementation/draft/evidence distinction used in this repository.",
+        "1. **Open with the answer.** State what this page defines and whether it is baseline,",
+        "draft, reference, or historical. Do not begin with meeting history."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "firmware/can_feather_bench/README.md",
+      "title": "IHU\u2013COMMS CAN Feather bench",
+      "category": "Implementation reference",
+      "disposition": "Updated; old milestones retained",
+      "review_basis": "F06",
+      "lines": 335,
+      "sha256": "de9682903d5ad6c8c15c757c1b597faf134cad189a9dcada8f955671497875e8",
+      "status_excerpts": [
+        "single-bus CAN forwarding and recorded bounded LTE delivery are implemented",
+        "correct application version and its recorded validation before flashing.",
+        "Both CAN Feathers have recorded native EPS forwarding through Walter echo."
+      ],
+      "finding_ids": [
+        "F06"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "firmware/common/README.md",
+      "title": "Common Firmware Components",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 4,
+      "sha256": "7e9f93a7fc221536ed00cfb63847e739ff595eb470bc9a5ab468571bda9c8d5e",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "firmware/comms/README.md",
+      "title": "Comms Board Firmware",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 412,
+      "sha256": "c14988c5adc17fe851d27a184063a7b0f51b0e16035f10fe32a3d3df5a2c800d",
+      "status_excerpts": [
+        "## v0.1 Status \u2014 boots, reports, detects",
+        "2. **Detect.** i2c0 bus scan, Si5351A status probe, RX baseband DC bias.",
+        "| Si5351A | Read-only status register probe at 0x60 \u2014 ACK, `SYS_INIT`, `LOL_A`/`LOL_B`, revision | No ACK \u2192 part absent or unpowered. `SYS_INIT` stuck \u2192 usually a missing or dead 25 MHz crystal (Y1), since the internal init waits on it |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "firmware/comms_feather_bench/README.md",
+      "title": "COMMS CAN Feather UART bench",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 123,
+      "sha256": "4238cd63779a69afea748de9084297f81a04fa1f0ab728aa92398fcc1aa435d4",
+      "status_excerpts": [
+        "This UART-only project is preserved as the proven baseline/recovery source.",
+        "115200 8N1, and GPIO13 for the status LED. CAN, I2C, Si5351, and UHF control",
+        "image described in the historical evidence below. It includes the shared"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "firmware/comms_transport/README.md",
+      "title": "COMMS\u2013Walter UART bench envelope v1",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 156,
+      "sha256": "b77dc6eddef93bcf5c8d66c7a93be2cf58dec21e7c112e3ee93bf20abe83a095",
+      "status_excerpts": [
+        "Feather USB: `status`, `help`, `hello`, `echo N` (ascending-byte test payload,",
+        "Walter USB: `status` and `help`; its modem is held in reset in both images.",
+        "Its USB status/help, unknown-command rejection, overlong-command rejection,"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "firmware/firmware.md",
+      "title": "Firmware Roadmap",
+      "category": "Implementation reference",
+      "disposition": "Updated",
+      "review_basis": "F05",
+      "lines": 75,
+      "sha256": "860564616938b0eade348b9a5e48c772f63eab68c3b9baa9def445fe84951afc",
+      "status_excerpts": [
+        "baseline and separates optional exploratory payload work.",
+        "## Baseline Firmware Scope (Senior Design)",
+        "- [ ] Implement boot/operating behavior from the [operations draft](../docs/architecture/operations/README.md),"
+      ],
+      "finding_ids": [
+        "F05"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "firmware/ihu/README.md",
+      "title": "Internal Housekeeping Unit Firmware",
+      "category": "Implementation reference",
+      "disposition": "Updated",
+      "review_basis": "F02",
+      "lines": 302,
+      "sha256": "29b35409ec6185d2eb88de7fcd622cdc3bb503535f8e89c202e8a16e17ea09e0",
+      "status_excerpts": [
+        "architecture, implementation milestones, and bring-up status for the",
+        "- Intended system mode manager: [operations draft](../../docs/architecture/operations/README.md); not yet implemented",
+        "## v0.1 Status (proto board: RP2040 riser on top of EPS, GP4/GP5 \u2192 CSKB I2C)"
+      ],
+      "finding_ids": [
+        "F02"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "firmware/usb_bench/README.md",
+      "title": "Pico USB bench endpoint",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 44,
+      "sha256": "7aedb24e7403a20e44cebe7271a04ed7364123b0cb50ab62103ab383000b8ad7",
+      "status_excerpts": [
+        "It implements PING, status/telemetry queries, telemetry-period changes,",
+        "Build environment versions and the picotool pinning limitation are recorded in",
+        "[development baseline](../../system/integration/development_baseline.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "firmware/walter/README.md",
+      "title": "Walter LTE-M firmware",
+      "category": "Implementation reference",
+      "disposition": "Updated; old source review retained",
+      "review_basis": "F07",
+      "lines": 59,
+      "sha256": "10e447ad2211f3063cd4f57b861d18d96e37a8a2d213b06462c3b26eefc5b680",
+      "status_excerpts": [
+        "[recorded native EPS delivery](../../ground/lte/README.md). The reserved directory",
+        "status below are a dated 2026-10-01 record, not the latest installed-image claim.",
+        "authority. Current IHU\u2013COMMS I2C firmware is status/ping only; CAN is the intended"
+      ],
+      "finding_ids": [
+        "F07"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "firmware/walter_lte_bench/README.md",
+      "title": "Walter native EPS LTE bench sender",
+      "category": "Implementation reference",
+      "disposition": "Updated; old source review retained",
+      "review_basis": "F07",
+      "lines": 82,
+      "sha256": "c9394e6e2dad989eb66e7613a5168256da21b501fe8723e298649bd5a8fe5556",
+      "status_excerpts": [
+        "recorded in the [LTE status and evidence index](../../ground/lte/README.md). The",
+        "Build passed; hardware upload hashes were verified on 2026-10-02. USB status",
+        "CAN/UART application status and modem/LTE delivery qualification remain pending."
+      ],
+      "finding_ids": [
+        "F07"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "firmware/walter_uart_bench/README.md",
+      "title": "Walter COMMS UART bench responder",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 119,
+      "sha256": "a7a3137c0ba9715561c43b7719dd51169809fa7d5db6bcb97067bb2394752629",
+      "status_excerpts": [
+        "USB commands are `status` and `help`, terminated by newline; the command buffer",
+        "behavior, and independent controller resets are not yet qualified. The historical",
+        "USB status/help, unknown-command rejection, overlong-command rejection, and"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/README.md",
+      "title": "Ground software",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 21,
+      "sha256": "687414458f315efa53e54d58445a4a37f8824daf82a13c83304aa5c7077a919c",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/ember/README.md",
+      "title": "EMBER bench dictionary and codec",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 64,
+      "sha256": "b4ce5691ab42480bf9f0ad839b7ad5ec3593e36dfd60446f8cf3a9ab07f3c2d4",
+      "status_excerpts": [
+        "`session.py` records a bounded HEARTBEAT/POWER_STATUS archive window from Yamcs",
+        "and replays its validated packets locally with recorded receive times and",
+        "POWER_STATUS (0x10) to Yamcs UDP 10017. This is explicitly a Pi-generated"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/BRINGUP.md",
+      "title": "LTE bench bring-up runbook",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 421,
+      "sha256": "97c98d072be60b1ebe2b0194fcf3c3f9e592dd5acacaab6486f6127e8e9ff624",
+      "status_excerpts": [
+        "Status: OAI and srsEPC are built on the Pi; S1 setup works. Walter completed",
+        "## 3. Recover the ordinary LTE baseline (optional SIM7600 regression)",
+        "attenuation, and gains before starting a cell. Historical TX gain 80 is not a"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/INVENTORY.md",
+      "title": "Bench inventory \u2014 2026-10-01",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 100,
+      "sha256": "a40fa04a77b217cdcdb465240b3be07ae21188ced62c2363641e76f25b69b9df",
+      "status_excerpts": [
+        "## Previous ordinary LTE baseline",
+        "- Recovered gains: TX `80`, RX `40`. These are historical settings, not",
+        "zero loss. This is historical evidence, not a new hardware validation."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/README.md",
+      "title": "LTE-M spacecraft telemetry bench",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 138,
+      "sha256": "2da8e37250893060c02d428f7e12ecad63bc0c111d9b632007092a32d106fc45",
+      "status_excerpts": [
+        "- [RLC acknowledgment and RRC security transition trace](results/2026-10-02-rlc-status.md)",
+        "## Current status",
+        "with modem registration and EPC bearer setup recorded. A subsequent trial"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/TODO.md",
+      "title": "LTE-M bench and spacecraft channel TODO",
+      "category": "Work checklist",
+      "disposition": "Keep",
+      "review_basis": "Owning workstream; checked items are dated evidence",
+      "lines": 295,
+      "sha256": "64f3c031f873204474f519bcfd585e5a7842714c831758dbe48e24049fb7caa8",
+      "status_excerpts": [
+        "Updated 2026-10-03. Bench success is the immediate goal. Spacecraft items are",
+        "controllers to normal mode if reset, refreshing HELLO/status, and verifying EPS",
+        "patched MAC-debug run recorded Msg4 DTX before the retransmission assert."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/configs/oai/BUILD.md",
+      "title": "Pi OAI build record",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 65,
+      "sha256": "8697686f8d8da4a5511e4c43d1d4a5eb0eaba3a2c994e23234e7d28d1a59d811",
+      "status_excerpts": [
+        "Final build/startup status is recorded in the ground-radio results document.",
+        "status is recorded separately from compilation status in the results document."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/configs/oai/README.md",
+      "title": "OAI LTE-M candidate",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 81,
+      "sha256": "64472b657783ea8c26a2b38757f6d3f9a6e122b876babe9b082c29cbc351c31e",
+      "status_excerpts": [
+        "relative to `ce300diag`. It recorded completed Walter attach and registration.",
+        "The RX25 trial processed three RLC STATUS acknowledgments, then exhausted SRB1",
+        "See [RLC results](../../results/2026-10-02-rlc-status.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/diagnostics/README.md",
+      "title": "Optional RLC/HARQ metadata trace",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 90,
+      "sha256": "9d6532159f99d16bc40f0f993240b4920bb3eb533eb5196cf03e8aa389f69711",
+      "status_excerpts": [
+        "`oai-rlc-status-trace.patch` is temporary instrumentation relative to the pinned",
+        "decoded STATUS fields, and compact CE downlink HARQ feedback. It does not print",
+        "git apply --check ../oai-rlc-status-trace.patch"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/patches/README.md",
+      "title": "Experimental OAI patches",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 233,
+      "sha256": "b921661c84c26930398a85c8028758485a10e25ee17b782becf0fd77a6de5f10",
+      "status_excerpts": [
+        "The earlier bench baseline has seven applied, in this order: Msg3 cleanup, Msg4 retry,",
+        "in the opposite order and rebuild to restore the baseline. No upstream commits,",
+        "the baseline. Do not apply twice to the Pi: it is already applied there."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-01-ground-radio.md",
+      "title": "Ground radio bring-up \u2014 2026-10-01",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 171,
+      "sha256": "5a971859c6b7d66d87e83cc9ab5551d2496a7d3c9fa6f1abd62ba6f5e7ef80dc",
+      "status_excerpts": [
+        "Exit status 0 with overrun/drop/sequence thresholds set to zero. This validates"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-01-hackrf-lte.md",
+      "title": "Independent RF capture and LTE-M access failures \u2014 2026-10-01",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 111,
+      "sha256": "7f75a46b332f44fafced006d23bae6c758737db4f852f5691e2e11961898827f",
+      "status_excerpts": [
+        "digital amplitude 0.1, and RX gain 20, the tone rose 18.98 dB over baseline and",
+        "unmodified pinned baseline for comparisons and implement any fixes as tracked"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-ce-context.md",
+      "title": "Dedicated bearer and context trace \u2014 2026-10-02",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 74,
+      "sha256": "f405dad9ee05f5b5d37ffc82837bcc9f56544e223b490dcc1a7937dfbf265682",
+      "status_excerpts": [
+        "One bounded trial delivered a real, native EPS POWER_STATUS packet through",
+        "SRB2 STATUS remains absent despite mixed HARQ feedback. The UE successfully",
+        "uplink STATUS scheduling/decoding, and the post-reconfiguration PHY transition."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-eps-diagnostics.md",
+      "title": "EPS LTE diagnostic trials \u2014 2026-10-02",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 67,
+      "sha256": "b26620df47da913bc369a4a04ad6d379ec1a302aa347a6a0181f421a27c75fe1",
+      "status_excerpts": [
+        "before shutdown despite the ground bearer release; modem status can lag ground",
+        "state. Historical socket-open OK is not a live socket health check.",
+        "| 22:02:22.171\u2013571 | SRB1 STATUS ACK_SN progressed through 1, 2, 3, 4, 5, 6, 8 |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-eps-reliability.md",
+      "title": "Ten-run native EPS LTE reliability test",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 59,
+      "sha256": "df1993cfaa04e8b3806a5ac9e297697ebf5da988c9f3a8d22d7e144cc350b50d",
+      "status_excerpts": [
+        "at run3 without repeating the first two runs. This is recorded in run2's note."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-eps-security-reliability.md",
+      "title": "Ten-run EPS reliability after SRB2 security correction",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 88,
+      "sha256": "2e9e024eeb6f77f87ecfd67eac9e11df58b436ed46f77dab8071386ad586a2ac",
+      "status_excerpts": [
+        "Nine of ten independent attempts delivered real EPS POWER_STATUS through",
+        "[Full packet/status/archive evidence](../../../system/ground_station/evidence/eps-security-reliability-20261003/report.json).",
+        "[Fixed baseline](../../../system/ground_station/evidence/eps-security-reliability-20261003/baseline.json)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-final-reliability-round.md",
+      "title": "Two further reliability trials \u2014 2026-10-02",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 69,
+      "sha256": "b20986f4abdea76d7729f351f0ebd624a562b599fec107945d1089e0831ed824",
+      "status_excerpts": [
+        "Both receivers recorded zero packets. The ten missing requested sequences are",
+        "and clean pinned PHY simulator baseline recorded in the",
+        "[RLC trace](2026-10-02-rlc-status.md). Do not treat the earlier short UDP bursts"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-msg4-authentication.md",
+      "title": "Walter Msg4 retry and SIM authentication",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 102,
+      "sha256": "33942b5894e2c3070f877fe182b5af5e563e33b756b7432e1f5b09681f00f285",
+      "status_excerpts": [
+        "At 10:02:10.872, the ceonly run generated Msg4. It recorded DTX and scheduled",
+        "The ce300 run recorded Msg4 ACK at 10:06:47.354. The EPC then recorded:"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-queue-outage.md",
+      "title": "Controlled LTE cell outage and queued EPS recovery",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 82,
+      "sha256": "dd2f69163956ec21bfac6d934c0cb79959f3c084c83192b28700feb15662c5a3",
+      "status_excerpts": [
+        "[Complete packet, status and archive evidence](../../../system/ground_station/evidence/outage-eps-20261003-01/report.json).",
+        "hold0, no change in queue acceptance count. The status-based admission policy",
+        "had only the baseline packet before restoration."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-queue-preparation.md",
+      "title": "Registration-aware admission and bounded EPS queue preparation",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 85,
+      "sha256": "8da56d51fa6957f664a25fe78b043d677cb1fbe2ff71d694325d278437b89fc9",
+      "status_excerpts": [
+        "original native EPS bytes and identities. It queries Walter status before each",
+        "in-flight request to finish. `lte queue status` reports enabled/count/state/hold,",
+        "States0idle/1status-query/2send/3held; hold reasons1unknown/2modem-rejected/"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-queued-eps.md",
+      "title": "First queued hardware EPS delivery",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 78,
+      "sha256": "5e102f6587bd09ad66aab2b5882e8df944544323e52c78a1d21a0cdd73e601d0",
+      "status_excerpts": [
+        "Three real EPS POWER_STATUS packets were captured on IHU, retained while Walter",
+        "[Packet/status/archive evidence](../../../system/ground_station/evidence/queued-eps-20261003-01/report.json).",
+        "The first Walter status query encountered the new Walter boot identity after"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-rar-release.md",
+      "title": "Walter RAR context release and rejected-UE lifecycle",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 164,
+      "sha256": "e2d7d812f28ee43040d7bbdebf66c56fb5490f82dbed14bce397b75b5ba14524",
+      "status_excerpts": [
+        "EPC recorded Initial Context Setup Response and Modify Bearer Request at that",
+        "128-byte payloads; its delivery evidence is recorded separately.",
+        "hook from that failure, but is not a full clean-source baseline comparison."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-repeatability-release.md",
+      "title": "Repeatability and signaling-bearer release \u2014 2026-10-02",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 113,
+      "sha256": "bcdd9a35465cb6dd0dfbe07417ce7d3e3b83876609afa040d15e4e397edd51ca",
+      "status_excerpts": [
+        "Downlink HARQ/PUCCH, RLC STATUS handling, and reestablishment lifecycle need",
+        "match the Pi source. The last trial recorded one RRC Setup Complete, one Msg4",
+        "packet capture recorded zero traffic. Both network applications exited 124 at"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-rlc-status.md",
+      "title": "RLC acknowledgment trace \u2014 2026-10-02",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 94,
+      "sha256": "4b54f1488b34a4e1dd9fcaa1fa912b5e8d7ff7fdb18ac52ab7f7d8e7bcad3a81",
+      "status_excerpts": [
+        "| Run ID | Profile suffix | RX gain | RRC Setup Complete | RLC RX / TX / retry events | STATUS / NACK events | UDP submitted / received |",
+        "| `rlc-status-20261002` | `ce300tx20rrcdiag` | 35 | 2 | 4 / 12 / 10 | 0 / 0 | 0 / 0 |",
+        "The first trial used RLC RX/TX/retry/STATUS tracing and existing MAC debug"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-separated-antennas.md",
+      "title": "Walter antenna-separation comparison",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 109,
+      "sha256": "cf0e30d2ed7abcc8ff5bbb07dbe2e7acbd97c4b1b218a6c79c9b7c9341e7be3f",
+      "status_excerpts": [
+        "Reconfiguration Complete, and Initial Context Setup Response were recorded.",
+        "HARQ/CRC outcomes, modem socket status, and GTP/SGi packet evidence around the",
+        "A completed attach was recorded in earlier six-inch trials, but the data path"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-srb2-security.md",
+      "title": "SRB2 security initialization candidate",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 69,
+      "sha256": "fc51ec768176e946dc81a7755e4cdc5d4bf3be95d2b768a1e1e99a85373b3877",
+      "status_excerpts": [
+        "The baseline `srb2-security-before-20261002-02` logs SRB2 ADD and MODIFY with",
+        "existed. At 00:41:27.374, its RLC entity returned STATUS ACK_SN1. This establishes",
+        "recorded; the earlier failed HELLO while COMMS was in configuration mode remains"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-uplink-telemetry.md",
+      "title": "First Walter LTE-M UDP delivery \u2014 2026-10-02",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 104,
+      "sha256": "008dec2143a1b3d382dfa2fca6e5079b972966a56793a8eb431124146bfb1951",
+      "status_excerpts": [
+        "status query returned `operation not supported`, stopping that trial. The",
+        "capture recorded zero matching packets, and the receiver recorded zero.",
+        "The sender also now treats a completed error from an optional socket-status"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/lte/results/2026-10-02-walter-control.md",
+      "title": "Walter OFF/ON control and OAI Msg3 cleanup",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 87,
+      "sha256": "8a084429b7e45634c55c894ef8dc091b2d6da2e7811d65189fd92e3c1c977ccc",
+      "status_excerpts": [
+        "## Controlled baseline",
+        "timeout status 124.",
+        "The separate OFF baseline begins after confirmed CFUN 0."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/yamcs/DISPLAYS.md",
+      "title": "EMBER operator displays",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 106,
+      "sha256": "04e7b2c88257e24ba7c93c78e79a48facaf6911e2bcc34b1f17d5795c944170a",
+      "status_excerpts": [
+        "with generation time, raw/engineering values and acquisition status.",
+        "die temperature, readout/ADC quality, readout age and last raw charger status.",
+        "readout validity, serial-link status and Yamcs expiration handling; see"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "ground/yamcs/README.md",
+      "title": "Yamcs ground lab",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 211,
+      "sha256": "42c4358ef452f0e66cba894b361d0187c56c84e3f7b4f6bcd4c0c5763ab96945",
+      "status_excerpts": [
+        "POWER_STATUS packets at EPC UDP51000 from Walter172.16.0.2:51001, verifies the",
+        "is prerecorded, but the upstream preprocessor assigns the current Yamcs-local",
+        "systemctl status ember-ground-starter"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/CAD/README.md",
+      "title": "Mechanical CAD",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 26,
+      "sha256": "9ff2b6ddfa0d813cceb05c1d4a83596d2ac8d49e17498ca547570a4428cb249f",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/README.md",
+      "title": "Communications hardware",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 32,
+      "sha256": "540261314e3c5ef3e9b5873c94df690aa2926bb6384f231a90991cba2ef74ee6",
+      "status_excerpts": [
+        "[current work list](TODO.md). Recorded ERC/DRC results are dated evidence, not a"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/TODO.md",
+      "title": "Comms open work",
+      "category": "Work checklist",
+      "disposition": "Keep",
+      "review_basis": "Owning workstream; checked items are dated evidence",
+      "lines": 56,
+      "sha256": "14869b8fcc8c77f719d1e2f0453e00684f6ef748adea8aaffc09aae92ca87aff",
+      "status_excerpts": [
+        "**Status consolidated September 21, 2026 from existing records; no new hardware",
+        "checks performed.** The low-power TX architecture is settled. The latest recorded",
+        "and the historical SRF requirement remain unresolved. [Audit](verification/components/l16_footprint_acceptance.md)"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/TOOD.md",
+      "title": "Comms checklist moved",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 5,
+      "sha256": "06e11e3fec23aff61c3a388632683811f4df836cc05b645f311a6611d140356a",
+      "status_excerpts": [
+        "superseded intermediate states are retained in Git history. This pointer preserves"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bom/README.md",
+      "title": "Comms BOM and sourcing",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 33,
+      "sha256": "22c7d14467bd5f120a259701e6b94592ce6da21bf0a1705de8fa4ed33e0f8627",
+      "status_excerpts": [
+        "| Filter tuning | 9.1 pF baseline; 8.2/7.5 pF candidates require distinct exact parts and measurements |",
+        "Older model notes calling its identity unknown are superseded; exact RF models and"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bom/evidence/bom_field_completion.md",
+      "title": "Verified ordering fields completed \u2014 2026-09-09",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 23,
+      "sha256": "8e54687b94ebe05b135e5c7dab586fda5f5f343028c1f30d5b953aa19bef8104",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md).",
+        "These are purchasing-field completions for existing parts, not circuit substitutions. Previously observed live quantities are recorded in the live-stock audit; header quantity remains limited to five pieces and the build quantity is still unresolved."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bom/evidence/jlcpcb_bom_audit.md",
+      "title": "Complete BOM catalogue audit \u2014 2026-09-09",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 58,
+      "sha256": "1fb9f16066bf56493249e9ddd98b8607510130022c83d8d7355814b1171737aa",
+      "status_excerpts": [
+        "> Superseded availability status: signed-in live checks are complete for all 32 existing codes. See `jlcpcb_live_audit.md`: U9 and the exact D15 option are preorder-only; J9 has an in-stock listing. Earlier login-blocked and catalogue-only statements below are historical.",
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bom/evidence/jlcpcb_live_audit.md",
+      "title": "JLCPCB live-stock audit \u2014 2026-09-09",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 54,
+      "sha256": "667b39e44b86843d9676dbcc453c6015f1e756baca422ec55b9b170e028a59c1",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bom/evidence/passive_field_completion.md",
+      "title": "Passive ordering fields \u2014 2026-09-09",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 24,
+      "sha256": "b5e8e585f8affc66211d5a592bbbbc013b046c62b887601b59365619c7fb965e",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bom/evidence/remaining_field_completion.md",
+      "title": "Clock, op amp and regulator capacitor selections \u2014 2026-09-09",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 29,
+      "sha256": "2c8c98b43d23d13e586fa6997a9fe8255006380a3b0b58412f8078ec695802f5",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md).",
+        "Applied ordering fields in schematic and PCB. Y2's R suffix and U5's T suffix specify tape-and-reel; their functional device, package and temperature grade are retained. Capacitor values remain 1 \u00b5F and footprints remain 0603; the Voltage field is updated from 16 V to the selected part's 25 V rating."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bom/replacement_candidates.md",
+      "title": "RF replacement candidates",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 67,
+      "sha256": "15845e551a1eddb9bfade2e718a8596c05dd02e54c5fe052440e4fde14724b3c",
+      "status_excerpts": [
+        "**Dated candidate evidence from September 9, 2026.** Quantities below are historical",
+        "Status: promising replacement candidates identified; **not applied and not yet fully qualified**. No purchases or PCB/schematic edits in this pass.",
+        "The recorded JLCPCB search found **947 pieces**. This is the preferred candidate to investigate for replacing the unavailable PSA4-5043+."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bringup/README.md",
+      "title": "Comms bring-up",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 14,
+      "sha256": "c10083262fc5f33f628772fe701abab5714826a40916eb3a398e7f5196f4cb3c",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bringup/history/README.md",
+      "title": "Earlier bench records",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 16,
+      "sha256": "b06bf85656812387545287d59f3d56265144423f3a35adfada7118298f11d256",
+      "status_excerpts": [
+        "Historical measurements and failure analysis; configurations differ from the"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bringup/history/lo_drive_verification.md",
+      "title": "LO Drive Verification \u2014 TinySA Procedure",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 248,
+      "sha256": "7e219a95f73f9d7c590afa8970e5a205301a05dc934356c1a239b98f8f81abec",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bringup/history/pcb_first_power_on.md",
+      "title": "Comms PCB \u2014 First Power-On / Fault-Finding Log",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 642,
+      "sha256": "3a1226e84cbb7da6bf3c1c855dadf0aa1f0c1586013fc1b0dbc2bd6eb29715d8",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md).",
+        "**Status:** \u274c Rev A non-functional \u2014 fatal schematic wiring error found. Rev B required."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bringup/history/si5351a_breakout_bench_test.md",
+      "title": "Si5351A Breakout Bench Test \u2014 CLK1 Power Verification",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 217,
+      "sha256": "b6666cb1be6b61da6819090abd649f8290d7edcec3f22f20637d34f38f9596d9",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md).",
+        "1. **Measure the breakout direct.** That's the baseline \u2014 equivalent to"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bringup/history/si5351a_bringup_log.md",
+      "title": "Si5351A Bring-Up Log",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 201,
+      "sha256": "c401bc2e68d8c07b3c15523a2e8508423b3e33dfd5c425ef5f59563c4d36561a",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bringup/history/tripler_breadboard.md",
+      "title": "Frequency Tripler Prototype Build",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 271,
+      "sha256": "8cf678598a2cfb417e55f9e210891cf515ec5bebeee7cd1b829b5a2d1086e5bf",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md).",
+        "### Baseline \u2014 Si5351A Direct (No Tripler)"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bringup/rf_prototype_checklist.md",
+      "title": "Comms prototype RF qualification worksheet",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 66,
+      "sha256": "a664882c2bd1665cdd2b86de24fb6cbc93d6b07c8aee24a7dc9f65eaaea32e5d",
+      "status_excerpts": [
+        "Status: NOT EXECUTED. This worksheet does not approve fabrication or certify RF performance.",
+        "- Baseline 9.1 pF C526972: YAGEO CC0402BRNPO9BN9R1, identified in the sourcing record; verify live stock and exact RF model.",
+        "| Filter | Paired tuning capacitors | Baseline | Intermediate | Preferred candidate |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bringup/rx_test_plan.md",
+      "title": "RX qualification plan",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 19,
+      "sha256": "ff411627f40e1dbb2dd9d485417597f82e58b399375374d784ef16cdbc81e20b",
+      "status_excerpts": [
+        "**Planned for the 435 MHz ADE-1+ receiver.** The old SA612 procedure is superseded.",
+        "| Input filter | Baseline and candidate S11/S21/S22 with active/bias branches isolated |",
+        "figure. Preserve baseline data before any component substitution, and record exact"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/bringup/tx_test_plan.md",
+      "title": "TX qualification plan",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 23,
+      "sha256": "543b22b73f8b5186d755613a8b26d564c4e7fc146e7cf45a8d7b873095fb3496",
+      "status_excerpts": [
+        "connectivity and design rules after hardware changes. Historical clock/tripler"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/datasheet/README.md",
+      "title": "Comms datasheet",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 5,
+      "sha256": "05624594b30a0d5547e25be7d71c4ea92c7ba880e0870ac3edbe5fe0a6da615a",
+      "status_excerpts": [
+        "baseline. A new measured-performance datasheet remains future release work."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/README.md",
+      "title": "Comms design guide",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 19,
+      "sha256": "0ef338a72ae574272b21a6a669288a97647038a9a4b3eb8b08164d6886c27a9b",
+      "status_excerpts": [
+        "Older VHF/SA612/dual-antenna descriptions are superseded; do not combine them"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/WI0805QD1R0MST-HF_datasheet_translated.md",
+      "title": "DDY WI0805QD1R0MST-HF \u2014 Datasheet (English Translation)",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 216,
+      "sha256": "ba9c9c2b788d162c24d5a322bea83007a3d53fd3735d2aa37abb93550a779bd8",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/analysis/README.md",
+      "title": "RF analysis",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 29,
+      "sha256": "1e0e847c99b5c8fbcd5f1c8ff9460afeb72a871e5a39935baa4783a0eeb5b4df",
+      "status_excerpts": [
+        "used by these studies. Historical stock counts and component candidates need"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/analysis/rf_vendor_model_followup.md",
+      "title": "RF component-model follow-up \u2014 2026-09-09",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 84,
+      "sha256": "82174e8779b5764013c7a913aac5d498eadb5fe8307c539d6cf4e0bf97a80365",
+      "status_excerpts": [
+        "| Filter | Change together during controlled tuning | Baseline | Candidate sequence |",
+        "Keep the baseline data before changing anything. Compare both input/output return loss and insertion loss across the intended band. A measured improvement is the basis for updating the default values and exact orderable parts in both schematic and PCB.",
+        "3. Record S11, S21 and S22 for the 9.1 pF baseline and each candidate, including 435 and 437 MHz. Save raw Touchstone files with the assembly configuration and calibration plane. Choose final values against the agreed bandwidth, loss, return-loss and rejection budgets."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/analysis/u9_circuit_screen.md",
+      "title": "U9 replacement: circuit-specific screening \u2014 2026-09-09",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 34,
+      "sha256": "bb87cfe61ff2477136ea29748372701ce45f2953f4e3fa72d704152c825717d1",
+      "status_excerpts": [
+        "## J9 verification status"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/analysis/u9_implementation_preparation.md",
+      "title": "U9 implementation preparation",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 25,
+      "sha256": "4f635265f996783e743d299c62bf5e646571063c3ca251745f9c90ca5cbb606b",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/analysis/u9_mixer_headroom.md",
+      "title": "U9 \u2192 U10 mixer headroom \u2014 2026-09-09",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 20,
+      "sha256": "15023a6b7c1c515b5bd50989baa7ea1504a12782e5be725153a047e465ce5338",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/architecture.md",
+      "title": "Communications architecture",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 4,
+      "sha256": "8047e5747cd05615f8c97a8396f8211356c5f5d353b4b4feacdce8fd66ce780d",
+      "status_excerpts": [
+        "Use the [design overview](overview.md) for the current documented baseline and"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/kicad_implementation_plan.md",
+      "title": "Comms implementation plan",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 13,
+      "sha256": "11df95e1abf8b7b589d44f3c0556c5914a18fb0ca920defddda7badc83dc634e",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/ltspice_simulations/README.md",
+      "title": "LTspice models and experiments",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 17,
+      "sha256": "5135597cae7ad64dd559acdac23d90f2a408c6ffaa77a4ff171c816e3aadb38a",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/ltspice_tx_chain_guide.md",
+      "title": "LTspice TX Chain Simulation Guide",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 346,
+      "sha256": "41be3db98b5cdbcad4dd8e960cdc5f25a8beb9b9c1d2d3a2da1850c4a7843ebb",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/overview.md",
+      "title": "Comms design overview",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 32,
+      "sha256": "182001f3b599315240b61af54ea403758a58921e1ec8ba0c7ac4fc015a4818cd",
+      "status_excerpts": [
+        "**Documented baseline:** 437 MHz BPSK transmitter, 435 MHz receiver, half duplex",
+        "| Stack data | IHU\u2013comms SPI plus housekeeping I2C and control/status signals |",
+        "this baseline. Actual antenna power, spectral purity, receive performance, and"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/rf_layout_guidelines.md",
+      "title": "RF Layout Guidelines \u2014 Comms Board",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "F15",
+      "lines": 390,
+      "sha256": "9d026cc382860c40e44b737432e4510f73cc34a6247d4b4dba9b5142d3732c64",
+      "status_excerpts": [
+        "7. Route SPI / I2C / USB / status LEDs on the bottom layer, well"
+      ],
+      "finding_ids": [
+        "F15"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/rx_chain.md",
+      "title": "Receive chain",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 26,
+      "sha256": "585fbea14dc3fe8fa429e6bcfaed98a84c46a40d6acbc81010bbad640d77fdca",
+      "status_excerpts": [
+        "**Baseline: 435 MHz RX through the shared J9 antenna.**",
+        "U9 to the mixer. The recorded design has no post-LNA attenuator.",
+        "Older VHF/SA612 descriptions and unqualified system-noise claims are superseded."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/rx_mixer_trade_study.md",
+      "title": "Receiver mixer decision",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 20,
+      "sha256": "367fc793af0ab7ab9fed9f32810efa94f51805a04416c5d345a562c26d84372e",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/sallen_key_simulation_lab.md",
+      "title": "Sallen-Key LPF Simulation Lab \u2014 LTspice",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 278,
+      "sha256": "8086f7d270ea6ae81b5e39a0c54b48cd61d0be11b169229d27c9f8cb121f328f",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/schematic_guide.md",
+      "title": "Comms schematic guide",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 37,
+      "sha256": "67b20dbbdfa5c519aa84e10dd42450f8b61f81589413a4927f0a861ba3f9c793",
+      "status_excerpts": [
+        "instructions contained superseded VHF, package, and power assumptions."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/single_antenna_integration.md",
+      "title": "Single-antenna interface",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 39,
+      "sha256": "7d1b493d5da479469af8a24e465776c97ff37ef07098a9c27fa90b152e54cdef",
+      "status_excerpts": [
+        "half duplex. Earlier placement/routing logs are superseded by the",
+        "[recorded RF review](../verification/rf_review_435mhz.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/design/tx_chain.md",
+      "title": "Transmit chain",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 25,
+      "sha256": "ace0e061e09352ae6e5e5918523184e3f1bf1fbc9d4b6a8c47d853cbb0367a15",
+      "status_excerpts": [
+        "**Baseline: low-power 437 MHz BPSK, retaining ADL5602.**",
+        "The present 9.1 pF shunt values are baseline; 8.2/7.5 pF are measurement candidates.",
+        "[TODO](../TODO.md). Older BFR92A/Rev-A examples are historical, not replacement"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/kicad/README.md",
+      "title": "Comms KiCad project",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 28,
+      "sha256": "ca58b1be7a3b323e9f6c9bc88b4242c4709275713c1535198da0011614539eae",
+      "status_excerpts": [
+        "project; the former \u201cRX rebuild pending\u201d description is superseded.",
+        "Recorded checks are summarized in [verification](../verification/README.md);"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/releases/README.md",
+      "title": "Comms releases",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 11,
+      "sha256": "d561a74024fac4f51ce439ead944d115624f00cc74d16f8e4e8cdd047865f5b5",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/releases/legacy-rev-a/README.md",
+      "title": "Legacy Rev-A package",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 16,
+      "sha256": "0109aec8c41a73d908455c48f9a80a5cbf101201dff72531e60f3fe0f5fc12b9",
+      "status_excerpts": [
+        "Historical fabrication outputs and May 2026 datasheet, retained together for",
+        "Files are preserved as historical artifacts; use the [current work list](../../TODO.md)"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/releases/legacy-rev-a/datasheet/comms_datasheet.md",
+      "title": "Applications",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 128,
+      "sha256": "e5453b1513bf242141f6e3bd8118067b2ede6f82a3cff9c9b9cece6e4002d996",
+      "status_excerpts": [
+        "\\begin{dscallout}[BRING-UP STATUS]"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/README.md",
+      "title": "Comms verification records",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 37,
+      "sha256": "a580a9fd281644a7c354ef53fe16425f2ffca50f279f29bdc59709b5a65674a0",
+      "status_excerpts": [
+        "## Latest recorded state",
+        "| D15 currently recorded package | [Antenna protection audit](components/antenna_esd_pinmap.md) |",
+        "its numbering and J6/J7 socket selection were superseded for these board instances."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/baseband_and_header_review.md",
+      "title": "Routing cleanup and receiver bias correction",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 33,
+      "sha256": "748cb5842c003607f462bb3ef7011fc218f62776cf2317d2a9b0b96c021c4426",
+      "status_excerpts": [
+        "> Dated checkpoint record. Intermediate counts and commit-status statements below",
+        "> apply to that pass; use the index and current work list for the latest consolidated status."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/components/antenna_esd_pinmap.md",
+      "title": "Antenna protection package acceptance",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 26,
+      "sha256": "97d0dac29f19704a7e6c373f98e72cdeeeda38642b2b8c4d710469e56d80e273",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md).",
+        "Placement updated during routing: D15 now (133.0,139.9) mm, 0 degrees; pad 1 GND=(132.6,139.9), pad 2 ANT=(133.4,139.9). Both sides routed; local ground via added. See rf_routing_progress.md for current validation."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/components/cskb_alignment_verification.md",
+      "title": "CSKB connector alignment verification",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 114,
+      "sha256": "f219fd007b8fdfbed944af53e48c6ffdecd6d90ff6bec80071b619ceae8619ec",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/components/l16_choke_review.md",
+      "title": "L16 choke review",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 23,
+      "sha256": "b4147c3bf6db586e4595ff3ffea1be114294655ced3fe7a175a692c5fb512ca8",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md).",
+        "The Coilcraft 0805HP-221XJRC candidate has now been applied for prototype testing, with an audited custom land pattern and matching schematic/PCB ordering fields. See `l16_footprint_acceptance.md`. This supersedes the earlier no-change status; the >1.5 GHz target and RF bench qualification remain open."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/components/l16_footprint_acceptance.md",
+      "title": "L16 prototype selection and footprint acceptance",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 32,
+      "sha256": "48f5efcd1e5146d4b20d63c40d6da87a201460602b3f44073cb52b1a1a2b2370",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/components/rf_pinmap_audit.md",
+      "title": "PSA4-5043+ pin-map repair record",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 95,
+      "sha256": "ea05f87a5efa53c5a82cb01fe00992efd9b615d40d16a016128863a2676b6fe0",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md).",
+        "Scratch C1 polarized symbol and C2 custom footprint placed, queried and rendered. Two symbol pins and two pads match; no duplicates or mechanical-only pads. Generator initially made pad-envelope-only courtyard; corrected via MCP before acceptance to include the full body. Main C58/C59 replacement preserves both pin endpoints exactly. Export after replacement confirms C58.1=+5V, C59.1=+3V3, C58.2=C59.2=GND. Values and LCSC C178639 preserved, exact manufacturer/MPN/voltage recorded. Main power schematic render visually checked. Main-board placement/routing and native library availability remain open."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/components/rf_switch_pinmap.md",
+      "title": "RF switch component pin-map acceptance",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 56,
+      "sha256": "4147282e7d221e528eb7116d8c0fe3cc480ce7cc7a05443ff2a50c653917c030",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/components/samtec_pad_audit.md",
+      "title": "Samtec connector pad acceptance \u2014 2026-09-09",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 98,
+      "sha256": "c80a46bd08b3ba5daf82d5a29ec8e1067ff0f786c38e6a4a127b34c8e5f2be3c",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/components/u10_ade1_pinmap.md",
+      "title": "U10 ADE-1+ pin and package audit",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 40,
+      "sha256": "a5e4599894634e1d3acedd1525a9eb379b547aefd9299a756f07bf9b77995bd9",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/components/u8_adl5602_pinmap.md",
+      "title": "U8 ADL5602 identity and pin-map audit",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 39,
+      "sha256": "46377df051a9a7acc621915c8a0872392cab026c40ce52b4536d0c2df614ec94",
+      "status_excerpts": [
+        "> **Dated record.** Measurements and audit scope apply to the recorded configuration.",
+        "> For current work and superseded blockers, see the [comms checklist](../../TODO.md).",
+        "- Updated metadata through Konnect (schematic) and native KiCad field APIs (PCB). Exported component fields verify the MPN and datasheet. The standalone TX export's nine emitted nets are identical before/after, but the known hierarchy/export limitation means this is not a new full-design ERC pass."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/comms/verification/rf_review_435mhz.md",
+      "title": "Comms RF review and PCB cleanup \u2014 2026-09-09",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 104,
+      "sha256": "cc0cb98badfbc75a243a1eccc4f4ccc488404fafb0a187b8e8c58faf3ed36a89",
+      "status_excerpts": [
+        "> Dated checkpoint record. Intermediate counts and commit-status statements below",
+        "> apply to that pass; use the index and current work list for the latest consolidated status.",
+        "## Status of the five requested tasks"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/component_datasheets.md",
+      "title": "Component and Module Datasheets",
+      "category": "Research reference",
+      "disposition": "Keep as reference",
+      "review_basis": "External sources not revalidated",
+      "lines": 74,
+      "sha256": "6ac2c101b95c3e04ddb51150e0c5cb84a0118d3ae374f9d56a37ff3374c5b19f",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/conventions/kicad_jlcpcb_design_rules.md",
+      "title": "KiCad Design Rules & Impedance \u2014 JLCPCB Constraints",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "F15",
+      "lines": 427,
+      "sha256": "2f24eea665fdfb6cd58afac3b33a30485d4d54cdc740402922a2ab63ff2e917a",
+      "status_excerpts": [
+        "**Status:** living document \u2014 update when JLCPCB changes stackups/capabilities.",
+        "> superseded Altium doc listed 3313's dielectrics under the 7628 name; that",
+        "shared `jlcpcb_baseline.kicad_dru` in this folder and copy it in)."
+      ],
+      "finding_ids": [
+        "F15"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/conventions/net_naming.md",
+      "title": "Net Naming Convention",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 266,
+      "sha256": "f7413311fd7ad621bad4960d5124f688a6964dd17d37a4e58733d2e0b0b69553",
+      "status_excerpts": [
+        "**Status:** Living document \u2014 update when a convention proves wrong or"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/eps/README.md",
+      "title": "Electrical Power System (EPS)",
+      "category": "Hardware design or procedure",
+      "disposition": "Scope clarified; engineering review pending",
+      "review_basis": "F12",
+      "lines": 53,
+      "sha256": "7a5df360f72bdc730351ff4a521523d961ae6e97fbd94e468f69fd384d6b2e19",
+      "status_excerpts": [
+        "This directory tracks EPS architecture, interfaces, implementation status, and",
+        "## Status Summary",
+        "- Completed: baseline parts selected (SM141K10TF, LG MJ1 2S2P, LTC4162, TPSM5D1806)"
+      ],
+      "finding_ids": [
+        "F12"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/eps/bringup/phase1_validation.md",
+      "title": "EPS Phase 1 Validation Plan",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 389,
+      "sha256": "660a618e6d937d06f975ed5ed40d19a7237f547cb9a9bfeb72d207538af12e2e",
+      "status_excerpts": [
+        "### Status / Diagnostic Notes",
+        "- All four test sections have measured values filled in and Pass/Fail recorded"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/eps/bringup/tps62933_ltspice_debug_guide.md",
+      "title": "TPS62933F Feedback Network & LTSpice Debug Guide",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 495,
+      "sha256": "2dc1549dda263262e2b2137f004b48ba532fdf6bb14a934db007a0eb0e9e0acd",
+      "status_excerpts": [
+        "TPS62933 datasheet family (SLUSEA4 / SLUSEA4D) has historically listed"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/eps/datasheet/eps_datasheet.md",
+      "title": "Applications",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 115,
+      "sha256": "d0b5848c52b7831a15c2ff89397fd232f5d86095dca8c7cff392bb065d3bfdd5",
+      "status_excerpts": [
+        "\\begin{dscallout}[BRING-UP STATUS]"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/eps/datasheet/eps_datasheet_light.md",
+      "title": "Applications",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 136,
+      "sha256": "d8bee5a576cfa439a428a4d400af0e765da78f4faa3af7c2f1b88a93650ea541",
+      "status_excerpts": [
+        "\\begin{dscallout}[BRING-UP STATUS]"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/eps/datasheet/info.md",
+      "title": "info",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 38,
+      "sha256": "7e4b65ae576720e5dffaed0c21879ac55c772a53b2694efa2161563ede4022d2",
+      "status_excerpts": [
+        "- The custom dscallout color (orange-yellow) is just an aesthetic pick \u2014 change in datasheet-header.tex if you want different status-card colors per state (green=verified,"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/eps/design/interfaces.md",
+      "title": "EPS Interfaces",
+      "category": "Hardware design or procedure",
+      "disposition": "Scope clarified; engineering review pending",
+      "review_basis": "F12",
+      "lines": 51,
+      "sha256": "18c6fd8dfb988abc607527844c4e1399889af879c65d9ecbd43ca3ef7d8b556e",
+      "status_excerpts": [
+        "the current architecture baseline.",
+        "| Interface | Direction | Nominal | Status | Notes |",
+        "| Battery bus (2S Li-ion) | Internal/Out | ~7.2 V nominal | In progress | 2S2P LG MJ1 baseline pack |"
+      ],
+      "finding_ids": [
+        "F12"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/eps/design/layout_guide.md",
+      "title": "Layout & Routing Guide \u2014 EPS Board",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "F15",
+      "lines": 511,
+      "sha256": "3df50cd1e0e873f5ceab463c09ddc841ede70b35a009429c79fb302c7c9ed675",
+      "status_excerpts": [
+        "\u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2518   R50, status LEDs                 (board edges)        \u2502"
+      ],
+      "finding_ids": [
+        "F15"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/eps/design/overview.md",
+      "title": "EPS Architecture Overview",
+      "category": "Hardware design or procedure",
+      "disposition": "Scope clarified; engineering review pending",
+      "review_basis": "F12",
+      "lines": 98,
+      "sha256": "0c4618f10d3269087de86e156bd083ef12a5ec7f2b4ce6eb85d83c909d09cda5",
+      "status_excerpts": [
+        "This document defines the baseline Electrical Power System (EPS) architecture",
+        "## Baseline Architecture",
+        "- Baseline pack is 2S2P LG MJ1 18650 Li-ion"
+      ],
+      "finding_ids": [
+        "F12"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/eps/design/schematic_guide.md",
+      "title": "Schematic Instructions \u2014 EPS Board",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "F15",
+      "lines": 1515,
+      "sha256": "0c41abe81b402fcd5709489c2eba3804e98a5eafd2419afc2bd44da945e718ef",
+      "status_excerpts": [
+        "This sheet holds the battery connector, CSKB H1 + H2 stack connectors, status",
+        "> for inter-board power and signal distribution, status LEDs, and test",
+        "### Section C: Status LEDs (Bottom-Left)"
+      ],
+      "finding_ids": [
+        "F15"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/eps/design/trace_sizing_quickref.md",
+      "title": "PCB Trace Sizing Quick Reference",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 124,
+      "sha256": "8f8ac0de03489e4996e469d15f108c218b72a37950914e103cdf749f987eba61",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/hardware.mm.md",
+      "title": "CubeSat Hardware Memory Map",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 57,
+      "sha256": "fcf9ca14667944f9aa81c1e5cc7be17eba8576002d618ac307f898058705390d",
+      "status_excerpts": [
+        "## Status Legend",
+        "- Selected: baseline component or architecture",
+        "- Deferred: valid option intentionally not in current baseline"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/hardware_vendors.md",
+      "title": "CubeSat Hardware Vendor Survey",
+      "category": "Research reference",
+      "disposition": "Keep as reference",
+      "review_basis": "External sources not revalidated",
+      "lines": 49,
+      "sha256": "8db1ee3010d99ba9af2046db3a9505a9c0dbf8860030ae95b0ea3a1a9d31de49",
+      "status_excerpts": [
+        "| GomSpace | [gomspace.com](https://gomspace.com) | Account/Request | Interface and architecture baseline | Mature ecosystem for comparative trade studies |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/ihu/README.md",
+      "title": "Internal Housekeeping Unit Hardware",
+      "category": "Hardware design or procedure",
+      "disposition": "Updated",
+      "review_basis": "F01",
+      "lines": 34,
+      "sha256": "9a7fe40ef5282db08bbe65ee90585cfbf0801f85cdcd1ce196764c724689cfca",
+      "status_excerpts": [
+        "- MCU baseline: RP2040",
+        "- Implemented FreeRTOS prototype: I2C EPS reads, jumper I2C comms status/ping, UART CLI",
+        "## Status Summary"
+      ],
+      "finding_ids": [
+        "F01"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/ihu/bringup/phase1_validation.md",
+      "title": "Internal Housekeeping Unit Phase 1 Validation Plan",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 97,
+      "sha256": "e6c2bc63868789f486dd7039295918cea89e4bb23d9881900300811730ad49f4",
+      "status_excerpts": [
+        "1. Power-cycle IHU board repeatedly and log boot status",
+        "3. Aggregate status into telemetry frames and forward to comms path",
+        "- Invalid commands are rejected with explicit status code"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/ihu/design/altium_ihu_schematic.md",
+      "title": "Altium Schematic Instructions \u2014 Internal Housekeeping Unit Board",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 1628,
+      "sha256": "6e9ee273e8c9ff44e6525b5adc51343f501c743da05acf8e3a59c17328861633",
+      "status_excerpts": [
+        "- `MCU_Core.SchDoc` \u2014 Pico module, decoupling, status LEDs",
+        "> | LED_HB, LED_FAULT | Net label | Status LED GPIOs |",
+        "> | 2 | MCU Core | Pico module, decoupling, status LEDs |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/ihu/design/interfaces.md",
+      "title": "Internal Housekeeping Unit Interfaces",
+      "category": "Hardware design or procedure",
+      "disposition": "Updated",
+      "review_basis": "F01",
+      "lines": 55,
+      "sha256": "90004675149d1ea4667354f6edbeca6932ecad726c99689f50ecb18fbe1485e6",
+      "status_excerpts": [
+        "| Interface | Peer | Direction | Baseline Use | Status |",
+        "| Signal | Direction | Purpose | Status |"
+      ],
+      "finding_ids": [
+        "F01"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/ihu/design/overview.md",
+      "title": "Internal Housekeeping Unit Architecture Overview",
+      "category": "Hardware design or procedure",
+      "disposition": "Updated",
+      "review_basis": "F01",
+      "lines": 80,
+      "sha256": "69143e6703b410bd6d6b2fce296fa73bad34e536e68b696b0ba69240ae271956",
+      "status_excerpts": [
+        "This document defines the baseline architecture for the internal housekeeping unit board",
+        "- Intended mode behavior: see the [operations draft](../../../docs/architecture/operations/README.md); the full mode manager is not implemented",
+        "## Baseline Hardware Direction"
+      ],
+      "finding_ids": [
+        "F01"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_compute/README.md",
+      "title": "Payload Hardware",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; scope decision pending",
+      "review_basis": "F14",
+      "lines": 46,
+      "sha256": "db42f052e4a24d442ef1996ee6f325dc01200f3eb9e40ed0f6d991b07b232911",
+      "status_excerpts": [
+        "## Board source status"
+      ],
+      "finding_ids": [
+        "F14"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_compute/design/altium_payload_layout_guide.md",
+      "title": "Altium Layout Instructions \u2014 Payload Carrier (Jetson Orin Nano)",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 663,
+      "sha256": "fbe1679aaa0a1c1811193cd5a29b0196bb3d5ab46d54e17c2380a186ecc169bb",
+      "status_excerpts": [
+        "is the assumed baseline:",
+        "6. **Slow control** (I\u00b2C, UART, GPIO, status LEDs) \u2014 leftover space.",
+        "| 0.1 | 2026-05-24 | NG / CC | Initial draft. Focused on the differential-pair workflow (\u00a71\u2013\u00a76) since that's where the user is starting layout work. Catalogs all 14 diff pairs from the schematic, gives target impedances + length-match tolerances, walks through Altium setup (schematic directives, PCB classes, design rules, interactive routing, length tuning, verification). Other layout topics (\u00a77) stubbed for fill-in as the layout progresses. Cross-references [`hardware/comms/design/rf_layout_guidelines.md`](../../comms/design/rf_layout_guidelines.md) for the return-current physics + 0402 dogbone-grounding deep-dive (the RF guide's physics applies directly to our high-speed digital diff pairs and 0402 decoupling caps). Added \u00a75.7 on decoupling/bypass cap placement (cap-then-via order, dogbone for 0402 GND-side legs) since clean rails are what feed the diff-pair signal integrity. |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_compute/design/altium_payload_schematic_guide.md",
+      "title": "Altium Schematic Instructions \u2014 Payload Carrier (Jetson Orin Nano)",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 1120,
+      "sha256": "365c8e0d56ecaafc3e8f39442d447511548420a8871e9395a1d3bd86622ba3bc",
+      "status_excerpts": [
+        "| 3 | CSKB Stack Interface | H1/H2 PC/104-style stack connectors, I\u00b2C to IHU, CAN xcvr (DNP), PAYLOAD_EN gate, fault/sleep wiring, status LEDs |",
+        "### Section D: Status LEDs",
+        "Place 3 status LEDs at the board edge for bring-up visibility:"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_compute/design/jetson_module_compatibility_report.md",
+      "title": "Jetson Orin Nano vs. Original Jetson Nano \u2014 Module Compatibility Report",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 257,
+      "sha256": "95eddfb6527ee87c9c262b0139e1657a11949552fdba9d59796f95c203fbacc0",
+      "status_excerpts": [
+        "- **Production EOL status.** As of 2026-05, the Original Jetson Nano",
+        "| 0.1 | 2026-05-23 | NG / CC | Initial draft. Cross-referenced both datasheets, identified the only 7 pin functions that differ between modules (CAN, PCIE1, MODULE_ID, SDMMC\u2194PCIE2/3). Confirmed the carrier as designed accepts both modules without modification. Recommended Orin Nano for flight, Original Nano for bench/EDU. |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_compute/design/payload_carrier_pinmap.md",
+      "title": "Payload Carrier Pin Map \u2014 Canonical",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 620,
+      "sha256": "1f1b2d1c1a1afe5455a1543bf2876ef74b2b1a8c33683c2a82b3284b7b54db5b",
+      "status_excerpts": [
+        "## Status",
+        "| TP | Net | Sheet | Status | Rationale |",
+        "| H2.27/H2.28 | `+3V3` | Connected as `C` | Auxiliary 3.3V loads on the carrier: I\u00b2C mux (PCA9546A), CAN transceiver bias, status LEDs, level shifter VCCB on TXB0104 (debug UART, high side), **3.3V supply to all three Pi GS Camera FFCs (FFC pin 15)**, and **M.2 Key-E socket (\u00a710)**. (Note: U4 74LVC2G07 buffer is on `+1V8_MOD`, NOT this rail \u2014 see \u00a76.5 / \u00a76.7.) Continuous ~900 mA, peak ~1.6 A (3\u00d7 250 mA cams + 100 mA logic + 750 mA M.2). Within CSKB +3V3 2 A rating but tight \u2014 see \u00a710 power notes. M.2 is bench-only; flight build is DNP and the rail drops back to ~800 mA peak. |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_exp_sband_tx/README.md",
+      "title": "Experimental S-Band BPSK Transmitter",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; scope decision pending",
+      "review_basis": "F14",
+      "lines": 257,
+      "sha256": "43375c300a7cca7223aa886c1de3d27d1e89ddbfe87baac82d75e7d609e4520e",
+      "status_excerpts": [
+        "**Status:** active bench experiment \u00b7 architecture decided 2026-09-05",
+        "**Superseded 2026-09-08.** This was previously \"FPGA-generated low-IF BPSK into",
+        "| Document | Status | Covers |"
+      ],
+      "finding_ids": [
+        "F14"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_exp_sband_tx/fpga/README.md",
+      "title": "FPGA \u2014 M0 symbol engine",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; scope decision pending",
+      "review_basis": "F14",
+      "lines": 487,
+      "sha256": "7295fe0ae23d2cb5e5b5a77f44c02f0469f37d3d7f51b40a3dbe8064f8c9dde8",
+      "status_excerpts": [
+        "CON[\"m0_console<br/>command parser<br/>status printer\"] --> CTL",
+        "returns a nonzero exit status rather than printing something a reader has to",
+        "## Status"
+      ],
+      "finding_ids": [
+        "F14"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_exp_sband_tx/fpga/constraints/README.md",
+      "title": "Constraints",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 325,
+      "sha256": "8211849316403e84115fbb08c35bc15cf9776cfe7eaef1ba9cf5d28b97145a15",
+      "status_excerpts": [
+        "## Pmod JA \u2014 profile select and status",
+        "> Everything below is superseded and retained only as a record of how a wrong",
+        "> **Superseded, 2026-09-08 (fourth revision). Stop reading conclusions from"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_exp_sband_tx/fpga_link_processor_logic_interface_first_bringup.md",
+      "title": "FPGA Link Processor and Logic Interface: First Bring-Up Plan",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 723,
+      "sha256": "d5399c7ddd03ac36fa7e15980b743b471882d3203920ccec8c56a391a7d0779f",
+      "status_excerpts": [
+        "| `prbs_locked` | FPGA output/status | Checker synchronized to the expected sequence |",
+        "| `bit_count` | Status register | Number of checked symbols |",
+        "| `error_count` | Status register | Number of mismatches |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_exp_sband_tx/measurements/m0_symbol_engine/README.md",
+      "title": "M0 symbol engine \u2014 measurements",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 147,
+      "sha256": "05d935b4e773e54d319724d296b316e7333eb93e1e48b655d10d9e05afbae756",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_exp_sband_tx/measurements/m1_dds/README.md",
+      "title": "M1 \u2014 AD9910 DDS bring-up",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 589,
+      "sha256": "2f88becd827f1c6309dad868b25471fb8969cbf0e4992120ae7a990b797b852a",
+      "status_excerpts": [
+        "## Status: root cause found \u2014 our IO_UPDATE pulse was too short",
+        "**Superseded diagnosis.** This document previously concluded \"a break between",
+        "recorded below rather than edited away, because the reasoning that produced it"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_exp_sband_tx/mini_totem_bpsk_if_to_sband_plan.md",
+      "title": "Mini-TOTEM BPSK Transmit Chain Plan",
+      "category": "Historical design",
+      "disposition": "Keep as history",
+      "review_basis": "Do not use as current procedure",
+      "lines": 925,
+      "sha256": "7f822a51561b9ecc3aabfee5eca85e99dbedcf307147e9725c5d28bbd20e9e07",
+      "status_excerpts": [
+        "> **Historical, 2026-09-01.** This is the original narrative that started the",
+        "> analysis, most of which still apply. Two things in it are superseded:"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_exp_sband_tx/sband_payload_architecture_trade_study.md",
+      "title": "Experimental S-Band Payload \u2014 Architecture Trade Study",
+      "category": "Historical design",
+      "disposition": "Retain; scope decision pending",
+      "review_basis": "F14",
+      "lines": 381,
+      "sha256": "82a6ccbbc04e72c936c69d4dbd0d6fb23188b2a0febf55c3d4ed4c0db8fa35f3",
+      "status_excerpts": [
+        "**Status:** Decision made 2026-09-05 \u2014 FPGA-generated low-IF BPSK into a parallel DAC. **Superseded 2026-09-08** when the converter on hand turned out to be an AD9910 DDS: see *Superseded by the hardware* below. The S-band RF front end remains deferred off the critical path.",
+        "Every sample rate is an exact integer divisor of the board clock, which keeps the symbol-tick divider exact and satisfies the assertion already written into `tx_pattern_source`. *(This table was computed against the original 100 MHz board. The platform is now a 125 MHz Arty Z7-20, and the sample-rate plan is moot in any case \u2014 see* Superseded by the hardware *below. The four symbol rates still divide exactly at 125 MHz.)*",
+        "The M5 row adopts the `sband_experimental_tx` drawio's plan \u2014 20 MHz IF, 2380 MHz LO, 2400 MHz RF, image at 2360 MHz. The `mini_totem` plan's 50 MHz IF / 2350 MHz LO is superseded."
+      ],
+      "finding_ids": [
+        "F14"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/payload_exp_sband_tx/tektronix_7l13_a20_2p2ghz_oscillator_characterization.md",
+      "title": "Tektronix 7L13 A20 2.2 GHz Oscillator Characterization",
+      "category": "Hardware design or procedure",
+      "disposition": "Retain; engineering review pending",
+      "review_basis": "Content/link triage only; CAD and electrical limits not requalified",
+      "lines": 647,
+      "sha256": "53c5090fc0207491af97a662130e7f2267f210a0ec73bb92d28e491a8090c91c",
+      "status_excerpts": [
+        "| Marking | Provisional function | Status/evidence |",
+        "| Equipment | Manufacturer/model | Serial/asset number | Calibration/status |",
+        "| Risk | Evidence | Mitigation | Owner | Status |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "hardware/pv_panel/README.md",
+      "title": "PV Panel Hardware",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 14,
+      "sha256": "1f6cbc48377baf6bc15baf89263967ba427dc83dd47542515d65f769bfdb4327",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "rf/README.md",
+      "title": "RF Design Workspace",
+      "category": "Navigation or placeholder",
+      "disposition": "Retain as planning/reference",
+      "review_basis": "F16",
+      "lines": 4,
+      "sha256": "6579d7a290cbe58ee042cf4a0e818fac80b1c57e438f131b28a8f909abd40296",
+      "status_excerpts": [],
+      "finding_ids": [
+        "F16"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "rf/filters/144mhz_bpf/README.md",
+      "title": "144 MHz Band-Pass Filter",
+      "category": "Navigation or placeholder",
+      "disposition": "Retain as planning/reference",
+      "review_basis": "F16",
+      "lines": 4,
+      "sha256": "cbd0501dd6647042e51d5dbd4d8f3ef63c8de7d74fec9ee23781e17fd573905b",
+      "status_excerpts": [],
+      "finding_ids": [
+        "F16"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "rf/gain_stages/mmic_chain/README.md",
+      "title": "MMIC Chain",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 4,
+      "sha256": "0d2ec2e8b2d4a87b2a2e66bc3f330bea77bb05c281e1bdfb28e2c890f88a0bc1",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "rf/matching/README.md",
+      "title": "Matching Networks",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 4,
+      "sha256": "d711ce06cd3ed2154a0f481dda7d26d5e087d7730e64796d6b492073d64bf2a1",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "rf/measurements/filters/README.md",
+      "title": "Filter Measurements",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 3,
+      "sha256": "e03348810a679e5bfa836bb1e683a0d62ade0a5f8d35bd706678a1596670acff",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "rf/measurements/rx/README.md",
+      "title": "RX Measurements",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 3,
+      "sha256": "d9c3b21eb5c7e715af810e6b88ad3cdb95064b2846fc0cb0edcbb7c7aa70a4f4",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "rf/measurements/tx/README.md",
+      "title": "TX Measurements",
+      "category": "Historical evidence",
+      "disposition": "Keep as evidence",
+      "review_basis": "Recorded configuration only; no fresh hardware validation",
+      "lines": 3,
+      "sha256": "f302047a7ee2d82b5cb575c80f7bcef8f96dcc85ec1e5bf82e3d06ddf886e7ae",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "rf/simulations/filters/README.md",
+      "title": "Filter Simulations",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 3,
+      "sha256": "1ead52c9ddb04e4d06b720198e27e87bbb051840a3a991619b24c09b25d785af",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "rf/simulations/gain/README.md",
+      "title": "Gain Simulations",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 3,
+      "sha256": "061ef874f25039a4809757b5a7e29520b803805fe36af0ff2026aeeda4d82a4f",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "rf/simulations/matching/README.md",
+      "title": "Matching Simulations",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 3,
+      "sha256": "179b6cc4e06556538e41b50bee1687f708e582f7c11419bf342865a555d27c16",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/README.md",
+      "title": "System interfaces and integration",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 34,
+      "sha256": "268be5cc6886ec85661d58334c54ff7c66b4c219f97aed8fc33c1f5b713195f4",
+      "status_excerpts": [
+        "canonical**; protocol layouts, timing targets, and integration gates remain drafts",
+        "For spacecraft behavior, use the [operations draft](../docs/architecture/operations/README.md).",
+        "[October 1 development baseline record](integration/development_baseline.md)"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/TODO.md",
+      "title": "Ground station lab TODO",
+      "category": "Work checklist",
+      "disposition": "Keep",
+      "review_basis": "Owning workstream; checked items are dated evidence",
+      "lines": 279,
+      "sha256": "02c79c30c24ea7e746b396761f7a66c03d7f7b8a7b998d3b3270e747ec835a24",
+      "status_excerpts": [
+        "Updated 2026-10-02. This checklist owns the ground station lab build; the",
+        "Host locations and Pico build commands are recorded in the",
+        "[development baseline](../integration/development_baseline.md)."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/archive_replay.md",
+      "title": "EMBER archive replay",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 62,
+      "sha256": "28f3f268e67174a51d77769b8cbd413d1916be80960f8a244fe7d6722335984a",
+      "status_excerpts": [
+        "playing recorded telemetry does not reissue hardware commands.",
+        "replay processor. Play/pause controls and the historical processor clock",
+        "in wall-clock time did not expire the displayed historical sample: freshness"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/dustin_followup.md",
+      "title": "Command and telemetry coordination with Dustin",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 75,
+      "sha256": "8300d165faa2dbc6e94fcc7037b24f16c87208742d69a8e8df963a5a93814b27",
+      "status_excerpts": [
+        "Merged baseline: `ebeec2f` (PRs #2, #3 and #4). Adopt Draft 0.2's message",
+        "content where appropriate, especially the NACK reason-code table from Draft",
+        "2. **Define a small bench subset.** Start with `PING` (`0x01`), `REQUEST_STATUS`"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/ember_validation.md",
+      "title": "EMBER simulated command-loop validation",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 49,
+      "sha256": "dd9d13e661060b35ffd5dc19e5c2a73b51536f82e8d1c836df657926059f0af2",
+      "status_excerpts": [
+        "| REQUEST_STATUS | Correlated SYSTEM_STATUS before completion |",
+        "| REQUEST_TELEMETRY(COMMS) | Correlated COMM_STATUS before completion |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/eps_bench_setup.md",
+      "title": "IHU/EPS UART bench",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 571,
+      "sha256": "1005c042e86b6c39e244fbb39cae09f7787e434cc0fb17b8208053d870a5dd0d",
+      "status_excerpts": [
+        "## Baseline observed before flashing",
+        "| SYSTEM_STATUS `0x39` | `0x00A1` | preserve raw status and charger context |",
+        "an independent calibration. The old readout does not include TELEMETRY_STATUS"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/eps_yamcs_setup.md",
+      "title": "IHU EPS to Yamcs bench",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 103,
+      "sha256": "b5d9df6cb8979d164bc594ecfed0fd02cac631636c98a0ea78dbf7b43febab9d",
+      "status_excerpts": [
+        "from the table. [Packet semantics](../protocols/eps_power_status_v1.md) define",
+        "systemctl status ember-eps-bridge",
+        "hidden. REST cached acquisition status alone is insufficient without an"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/lab_inventory.md",
+      "title": "Ground lab inventory",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 60,
+      "sha256": "c2248c400dd60afd05939abf8881db1e27b399758c81f89874eda91d0f4694e4",
+      "status_excerpts": [
+        "Recorded 2026-10-01. The dedicated ground host is **Raspberry Pi 5 Model B"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/pi_setup.md",
+      "title": "Ground Pi preparation",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 44,
+      "sha256": "f26b4407ea4ca146e51c6e192df27bee991f88ef703cfbf79cab6eae4bf3bb8c",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/starter_validation.md",
+      "title": "Yamcs starter validation",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 55,
+      "sha256": "1a92b280d0a4d3b7d408fa7a2ee90554a219728ff46ed84a7e5145de6c1c9c80",
+      "status_excerpts": [
+        "2026-10-01, m75q x86_64, Docker Compose 5.2.0. Baseline `main` was `ebeec2f`;",
+        "baseline and exchange subsequent work through that branch.",
+        "| Server restart preserves archive | Pass; a previously recorded packet remains retrievable with the same generation time and sequence number |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/telemetry_sessions.md",
+      "title": "Record and replay an EMBER housekeeping session",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 107,
+      "sha256": "faf32dcc0014776c2ec30e8a3102bb4a3a5e2fb33eda4dbbed9b1dd16a0d4925",
+      "status_excerpts": [
+        "and POWER_STATUS packets, original archive timestamps/link names, link-counter",
+        "(default) emits immediately; 1 preserves recorded receive-time spacing and",
+        "remains the native display. POWER_STATUS quality flags govern whether EPS"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/usb_bench_setup.md",
+      "title": "First USB hardware loop",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 72,
+      "sha256": "c0a3a79fa47e6f15023ab3b09ed6328460a94da1508279d703bbcec485089652",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/ground_station/usb_validation.md",
+      "title": "USB hardware validation \u2014 2026-10-01",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 58,
+      "sha256": "86795dfbeee5c208cb9674072ecf81b4477be3032502533b03abf3ab5193db65",
+      "status_excerpts": [
+        "- Status reports accepted count2 after the unique SET and status query.",
+        "subsequent PING completes. COMM_STATUS counts CRC/dropped frames.",
+        "status command reports accepted count1. Initial final-build boot3132296766."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/integration/README.md",
+      "title": "System integration",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 10,
+      "sha256": "1ac55cf2292b5d0680fe5f2444946b1d8f8fce9805ac36e060af01d81fb9ca33",
+      "status_excerpts": [
+        "**Status: planned work; passing results are not recorded here.**"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/integration/development_baseline.md",
+      "title": "Development baseline across macOS and m75q",
+      "category": "Historical design",
+      "disposition": "Archived in place",
+      "review_basis": "F08",
+      "lines": 104,
+      "sha256": "a6ad29f708d070cb4a836da5bfc42a46c64403f21dddc5384117bb214a5266fa",
+      "status_excerpts": [
+        "# Development baseline across macOS and m75q",
+        "record. Host branches, commits, installed images and paths below are historical",
+        "Recorded 2026-10-01. These are distinct Git checkouts, not synchronized copies."
+      ],
+      "finding_ids": [
+        "F08"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/integration/integration_plan.md",
+      "title": "System integration plan",
+      "category": "Integration plan",
+      "disposition": "Updated",
+      "review_basis": "F01",
+      "lines": 22,
+      "sha256": "b0008584bfacae72dcfaef71cec37f7e39c3a89b7821d5a2f3160552eb985c85",
+      "status_excerpts": [
+        "**Status: integration plan updated 2026-10-04; bench demonstrations and future",
+        "| Work | Recorded evidence | Remaining gate |",
+        "Recorded results apply only to their stated hardware/software configurations."
+      ],
+      "finding_ids": [
+        "F01"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/integration/system_tests.md",
+      "title": "System tests",
+      "category": "Integration plan",
+      "disposition": "Updated",
+      "review_basis": "F01",
+      "lines": 21,
+      "sha256": "273606222eeef23a64b81b990cc9a3aa1075d3abcff7932ef7b90c5ca7cc14da",
+      "status_excerpts": [
+        "**Draft coverage list.** Procedures, numerical acceptance limits, and evidence",
+        "| SPI | Historical allocated path; test only if selected for an implemented interface |"
+      ],
+      "finding_ids": [
+        "F01"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/interfaces/README.md",
+      "title": "Board interfaces",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 12,
+      "sha256": "442ad3bdfb2b96aa007afa807957cedf3965684aea038d0ed9d3f008b2aa52ee",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/interfaces/board_to_board.md",
+      "title": "Board-to-board architecture",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 56,
+      "sha256": "f146ab7b6292eca530ed99f68d2704e2b33a21f637c2e5d6c18549af2221711b",
+      "status_excerpts": [
+        "**Status: single-bus CAN Feather bench demonstrated; flight interconnect and A/B remain planned.**",
+        "| I2C | Legacy housekeeping firmware | IHU \u2194 EPS; separate bench jumper interface to COMMS at 0x42 for status/ping |",
+        "| Current I2C bench | Read EPS and COMMS housekeeping; preserve ping/status | Reliable reads and bounded timeout/recovery; no packet-forwarding claim |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/interfaces/comms_to_ihu.md",
+      "title": "IHU\u2013communications interface",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 51,
+      "sha256": "63f952d44975e52ab58a36d700a8a193d666e72adf483637d11b17bc0ff7c887",
+      "status_excerpts": [
+        "**Status: CAN Feather bench packet transport demonstrated; full application integration pending.**",
+        "| Existing PCB allocation | SPI stack signals | Historical data-path allocation; packet firmware not implemented |",
+        "- Control/status: `COMMS_EN`, `COMMS_FAULT_N`."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/interfaces/comms_walter.md",
+      "title": "COMMS MCU and Walter transport",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 265,
+      "sha256": "6c44fcbe78e8bffd9ffd1bf2d81ac856f31e6af5721b243774a637f4d56f9776",
+      "status_excerpts": [
+        "Status: CAN Feather bench forwarding demonstrated, 2026-10-02; production",
+        "drop-in match. The existing I2C baseline below describes the previous firmware,",
+        "## Observed firmware baseline"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/interfaces/cskb_mechanical.md",
+      "title": "CSKB connectors and mechanical reference",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 63,
+      "sha256": "9a73f6b57a6c860cb50a101920634327671d7049b37391cf30d65f221e49b4dc",
+      "status_excerpts": [
+        "**Status: documented v0.1 connector baseline.** Use this page for connector"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/interfaces/cskb_pinmap.md",
+      "title": "CubeSat Kit Bus (CSKB) Pin Map \u2014 Canonical",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 206,
+      "sha256": "efd30daaf58709081f4ff7e8ca707b909efd37545be60ae1be28813e7a36251f",
+      "status_excerpts": [
+        "| 0.1 | 2026-04-15 | NG | Initial canonical pin map (based on PPM H10 numbering \u2014 WRONG, superseded) |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/interfaces/data_interfaces.md",
+      "title": "Data interfaces",
+      "category": "Implementation reference",
+      "disposition": "Updated",
+      "review_basis": "F04",
+      "lines": 33,
+      "sha256": "d0645558e1c6a9ec69eb08e2dc8f36bd3ad2d80412f88ba51d66fc0c0590a8cf",
+      "status_excerpts": [
+        "**Status: ownership baseline; queue sizes and packet contracts are provisional.**",
+        "| Payload | Mission data and payload status |",
+        "The FreeRTOS IHU\u2013COMMS I2C jumper link provides status/ping only. The separate"
+      ],
+      "finding_ids": [
+        "F04"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/interfaces/power_interfaces.md",
+      "title": "Power interfaces",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 19,
+      "sha256": "c06d73b7c60d3062204d9bf6491f3a5fbad3443255e2a60665a9798d2be528bf",
+      "status_excerpts": [
+        "**Status: documented rail allocation; current budgets and protection remain open.**",
+        "| Rail | Documented use | Limit/status |"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/interfaces/walter_gnss.md",
+      "title": "Walter GNSS service through COMMS MCU",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 95,
+      "sha256": "a06227ae7f74a0683099847593f96e15b9d087e6cbddfc445c49bcb61b8642c2",
+      "status_excerpts": [
+        "- [Fix fields, modes and status codes](https://github.com/QuickSpot/walter-arduino/blob/c30b707f8d64b49daec80de6bccfc80c04e42d58/src/WalterModem.h).",
+        "and satellite identifiers/signal levels. Status differentiates READY, cancelled,",
+        "(`AT+LPGNSSFIXPROG=\"single\"` / `\"stop\"`), UTC read/set and assistance status/update."
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/protocols/README.md",
+      "title": "Message protocols",
+      "category": "Implementation reference",
+      "disposition": "Updated",
+      "review_basis": "F04",
+      "lines": 16,
+      "sha256": "98b4a5a2d9cd81d7340ceed155747235917c2aef36012a1b845661e21ddb87a0",
+      "status_excerpts": [
+        "transport definitions remain drafts.",
+        "| Real EPS readout, quality and native/wrapper provenance | [EPS POWER_STATUS v1](eps_power_status_v1.md) |",
+        "| Mission command validation and dispatch intent | [Command draft](command.md) |"
+      ],
+      "finding_ids": [
+        "F04"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/protocols/command.md",
+      "title": "Command protocol",
+      "category": "Implementation reference",
+      "disposition": "Keep",
+      "review_basis": "Content/link triage; see findings for verified corrections",
+      "lines": 32,
+      "sha256": "715357318f503743428199fdfb2d9a70703dc05905226106ede43944c1869e80",
+      "status_excerpts": [
+        "**Legacy flight draft below; use bench v1 for the lab implementation.**",
+        "results. A timeout means the outcome is unknown. Draft 0.2 uses manual resend",
+        "after status verification for state-changing commands; automatic retries"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/protocols/ember_bench_v1.md",
+      "title": "EMBER bench packet dictionary v1",
+      "category": "Implementation reference",
+      "disposition": "Updated",
+      "review_basis": "F04",
+      "lines": 158,
+      "sha256": "574fd5eaad2ee4f49aad8ea5b0abb1f7cb5902d5bf00f3955c26621b4ff952f8",
+      "status_excerpts": [
+        "Status: **implemented codec, Yamcs MDB and simulator; lab contract, not a flight freeze**.",
+        "[POWER_STATUS payload v1](eps_power_status_v1.md) for provenance and quality.",
+        "| command | 0x02 | REQUEST_STATUS | empty |"
+      ],
+      "finding_ids": [
+        "F04"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/protocols/eps_power_status_v1.md",
+      "title": "Observational EPS POWER_STATUS payload v1",
+      "category": "Implementation reference",
+      "disposition": "Updated",
+      "review_basis": "F04",
+      "lines": 79,
+      "sha256": "2cddb8d76ddb956f63d4c0b8c8606e80d5666f4f231c8a24c3cb594555f574bc",
+      "status_excerpts": [
+        "# Observational EPS POWER_STATUS payload v1",
+        "packages that observational JSON into CCSDS and sends one status packet per",
+        "Repeated status packets are not new ADC samples. `readout_count` increments"
+      ],
+      "finding_ids": [
+        "F04"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "system/protocols/telemetry.md",
+      "title": "Telemetry protocol",
+      "category": "Implementation reference",
+      "disposition": "Updated",
+      "review_basis": "F04",
+      "lines": 39,
+      "sha256": "598099f0dea2542e91c030ab2c083f2dd5ed628e85e9213c3259cc43f61e1df4",
+      "status_excerpts": [
+        "**Draft: field groups and framing intent; encoding details pending.**",
+        "| EPS | Rail voltages, battery state, charger status, thermal indicators |",
+        "| Payload | Status and selected science/experiment metadata |"
+      ],
+      "finding_ids": [
+        "F04"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "test/README.md",
+      "title": "Test Workspace",
+      "category": "Navigation or placeholder",
+      "disposition": "Keep",
+      "review_basis": "Preserve navigation; empty planning folders are not implemented features",
+      "lines": 10,
+      "sha256": "13e396ef5d3eb35708db78e15847626f5522c3d2b7b0fa89bd01dc7d8114fc12",
+      "status_excerpts": [],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "test/rf/rx_validation.md",
+      "title": "RX Validation Plan",
+      "category": "Navigation or placeholder",
+      "disposition": "Retain as planning/reference",
+      "review_basis": "F16",
+      "lines": 12,
+      "sha256": "ed890487294d69198f5625a19473d51d01f4e8c4d98115e9c2f79151949e2cf8",
+      "status_excerpts": [
+        "## Baseline Checks"
+      ],
+      "finding_ids": [
+        "F16"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "test/rf/spectral_analysis.md",
+      "title": "Spectral Analysis Plan",
+      "category": "Navigation or placeholder",
+      "disposition": "Retain as planning/reference",
+      "review_basis": "F16",
+      "lines": 12,
+      "sha256": "dcf9be26882ba4c45dfa21877849a4117c621d7a0e1fdd731403bad79dd72997",
+      "status_excerpts": [
+        "## Baseline Checks"
+      ],
+      "finding_ids": [
+        "F16"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "test/rf/tx_validation.md",
+      "title": "TX Validation Plan",
+      "category": "Navigation or placeholder",
+      "disposition": "Retain as planning/reference",
+      "review_basis": "F16",
+      "lines": 13,
+      "sha256": "484937f2d99e859551d56847ce61c05cbec22d283055b2565aa837ce4e750b6b",
+      "status_excerpts": [
+        "## Baseline Checks"
+      ],
+      "finding_ids": [
+        "F16"
+      ],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    },
+    {
+      "path": "test/validation.md",
+      "title": "Testing and Validation Plan",
+      "category": "Analysis or validation plan",
+      "disposition": "Keep as reference",
+      "review_basis": "Assumptions and acceptance limits need owning engineering review",
+      "lines": 43,
+      "sha256": "20f1753c9a26e4655c8c27fbb12b5005ad494878046c22fc1af01bbaec0da375",
+      "status_excerpts": [
+        "## Baseline Validation (Senior Design)"
+      ],
+      "finding_ids": [],
+      "missing_local_links": [],
+      "unclosed_code_fence": false
+    }
+  ]
+}

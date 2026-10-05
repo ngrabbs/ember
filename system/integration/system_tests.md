@@ -11,7 +11,7 @@ links still need definition; these rows do not record passing tests.
 | Telemetry | Transport integrity and complete end-to-end delivery |
 | Commands | Reception, validation, execution, and acknowledgment |
 | I2C | Consistent EPS reads under bus stress |
-| SPI | Framing errors and timeout/recovery under sustained transfer |
+| SPI | Historical allocated path; test only if selected for an implemented interface |
 | CAN | Multi-node arbitration, node offline, fault confinement, and bus recovery |
 | CAN A/B | Inject a fault on each bus and verify the defined failover behavior |
 | Operations | Mode transitions, inhibited actions, and persistent state across resets |

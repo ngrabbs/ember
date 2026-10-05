@@ -112,3 +112,4 @@ Ground Operations uses an application-level messaging model consisting of:
 +----------------------+
 | Command Responses    |
 +----------------------+
+```

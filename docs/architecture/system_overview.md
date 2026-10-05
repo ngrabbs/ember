@@ -17,10 +17,17 @@ See [project scope](project_scope.md) for mission goals and validation scope.
 
 - **Power:** EPS supplies regulated rails; the documented payload carrier draws
   VBAT into a local converter. See [power interfaces](../../system/interfaces/power_interfaces.md).
-- **Commands:** RF uplink → comms → IHU validation → subsystem dispatch.
-- **Telemetry:** subsystem status and payload reports → IHU → comms downlink.
-- **Buses:** I2C handles housekeeping; SPI carries IHU–comms data. CAN A/B is
-  allocated for Iteration 2 control/status traffic. See the
+- **Command design intent:** RF uplink → comms → IHU validation → subsystem dispatch.
+  Current Yamcs commanding reaches the simulator or dedicated USB bench Pico;
+  the native EPS LTE input has no telecommand link. See the
+  [operator guide](../user/yamcs.md).
+- **Implemented telemetry:** FreeRTOS IHU EPS observations reach Yamcs through
+  a Pi UART wrapper. The separate CAN Feather application generates native EPS
+  packets, with recorded bounded LTE delivery evidence.
+- **Buses:** I2C reads the EPS charger. The FreeRTOS IHU–comms jumper link
+  provides status/ping; the standalone CAN Feather bench carries packets on one
+  physical CAN harness. SPI is an older stack allocation. Production CAN A/B
+  integration and failover remain open. See the
   [interconnect plan](../../system/interfaces/board_to_board.md).
 
 For the implemented EPS/CAN/LTE bench path, worked examples, and definition ownership,

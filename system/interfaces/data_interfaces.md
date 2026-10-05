@@ -13,10 +13,11 @@ assembles system state and payload data for downlink through comms.
 | EPS | Charger and rail-health observability fields |
 | Payload | Mission data and payload status |
 
-Use I2C and alert GPIO for EPS housekeeping. The implemented IHU–COMMS I2C
-jumper link provides status/ping only; CAN is the intended internal packet
-transport. SPI remains an existing hardware allocation from the older plan.
-Walter uses a separate proposed framed UART to the COMMS MCU; see the
+Use I2C for implemented EPS housekeeping; alert GPIO behavior remains proposed.
+The FreeRTOS IHU–COMMS I2C jumper link provides status/ping only. The separate
+CAN Feather bench implements single-bus packet forwarding, including framed
+COMMS–Walter UART exchanges. Production CAN A/B integration remains open.
+SPI is an older hardware allocation. See the
 [integration contract and checklist](comms_walter.md). Pin assignments live in the
 [canonical map](cskb_pinmap.md).
 

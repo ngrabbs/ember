@@ -1,5 +1,13 @@
 # IHU–COMMS CAN Feather bench
 
+**Current application summary, reviewed 2026-10-04:** native EPS readout,
+single-bus CAN forwarding and recorded bounded LTE delivery are implemented
+in the standalone bench. Manual telemetry is available; no periodic telemetry
+scheduler is included in this published source. The [USB console guide](../../docs/user/ihu-can-console.md)
+owns operator syntax. Production FreeRTOS command integration and CAN A/B
+remain open. Version/flash tables below are dated milestones; identify the
+correct application version and its recorded validation before flashing.
+
 The new IHU MCU and COMMS MCU both use Adafruit RP2040 CAN Bus Feathers with
 onboard MCP25625 CAN controllers/transceivers. This standalone Pico SDK project
 builds `ember_ihu_can_bench.uf2` and `ember_comms_can_bench.uf2` from one source,
@@ -8,9 +16,10 @@ nor the UHF COMMS application. The IHU role now supports manual read-only EPS
 register observation and explicit battery-only ADC enable; it does not change
 charging policy, activate UHF, execute flight commands, or implement CAN redundancy.
 Version2 adds native EPS packet forwarding and explicit bounded Walter LTE requests.
-Both CAN Feathers are updated and native EPS forwarding through Walter echo
-passed. Walter still has the installed framed diagnostic with its modem held
-in reset; its LTE hardware update and RF qualification remain pending.
+Both CAN Feathers have recorded native EPS forwarding through Walter echo.
+Walter LTE upload and later bounded delivery trials are recorded in the
+[LTE evidence index](../../ground/lte/README.md). Those trials do not qualify
+continuous RF reliability.
 
 User confirmed H-to-H, L-to-L, and common ground, with both terminators present
 and 60 ohms measured across the bus. This qualifies the bench harness, not the
@@ -91,7 +100,7 @@ One request can be pending; timeout is five seconds, then a fresh HELLO is requi
 IHU additionally accepts `telemetry`. The IHU itself generates a 38-byte EMBER
 HEARTBEAT with IHU source, ground target, its own boot ID, sequence, uptime,
 inner CRC, and fixed SAFE/GROUND_TEST bench fields. Period=0 identifies manual
-emission; there is no periodic telemetry scheduler in this image. These are
+emission; there is no periodic telemetry scheduler in this source. These are
 controller-generated bench health fields, not EPS sensor readings.
 
 IHU `eps json` reads the 19-register LTC4162-L profile at address `0x68`,
@@ -293,7 +302,7 @@ includes decoded heartbeats, hardware identities, binary hashes, counter baselin
 and scope. The private transcript is `can-chain-20261002/can-chain.log` beneath
 the m75q task directory. All 30 existing ground tests also passed.
 
-Current UF2 SHA-256:
+Historical heartbeat-chain UF2 SHA-256 (before the later native EPS images):
 
 - IHU: `c5cff5e021e2b21c3b9316193a49fca53891da875be2dc1be7e4b5e2bebee403`
 - COMMS: `507110580861478d2e688fa16053a0457de1bcd6edc59dd8936bbb9ebc5cdf78`
@@ -309,8 +318,10 @@ python3 ground/ember/can_chain.py \
 It checks local self-test, CAN handshake/five boundary echoes, ten IHU-generated
 heartbeat returns through Walter, decoded IHU boot/sequence/uptime, and no new
 CAN/fragment errors or application timeouts. Output includes full USB transcript
-and decoded JSON. Fault injection, independent reset/recovery, live EPS integration,
-periodic streaming, Yamcs ingestion, CAN B, UHF, and LTE delivery remain future work.
+and decoded JSON. At that heartbeat checkpoint, EPS integration, cadence, Yamcs and radio delivery
+were future work; later sections and the LTE evidence index record native EPS
+and LTE delivery. A production periodic scheduler and UHF path remain separate work. Independent reset/fault recovery, endurance, production
+integration and CAN B remain open.
 
 ## Opt-in EPS FIFO candidate
 

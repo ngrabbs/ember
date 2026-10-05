@@ -66,12 +66,12 @@ repeatability is unresolved and LTE reliability work is shelved. The owned
 checklist and bring-up procedure are in [ground/lte](ground/lte/README.md).
 
 The communications-board Pico is the **COMMS MCU**, distinct from the **IHU
-MCU**. Walter will provide the initial external link behind the COMMS packet
-service, with UHF added through the same interface. The current IHU–COMMS I2C
-jumper firmware supplies housekeeping/ping; CAN is the intended internal packet
-transport. The [controller integration checklist](system/interfaces/comms_walter.md)
-owns the next work: framed COMMS–Walter UART, packet forwarding, return packets,
-bounded queues/reset behavior, and IHU packet transport/CAN migration.
+MCU**. The standalone CAN Feather/Walter bench demonstrates packet forwarding and
+native EPS return packets, with bounded LTE delivery evidence. SDRB UHF
+remains a separate local workstream outside this documentation PR.
+The FreeRTOS I2C jumper firmware still supplies housekeeping/ping only.
+The [controller integration checklist](system/interfaces/comms_walter.md) owns
+production integration, bounded queues/reset recovery and CAN A/B qualification.
 
 The active front. Board is KiCad, project at
 [`hardware/comms/kicad/`](hardware/comms/kicad/), plan at

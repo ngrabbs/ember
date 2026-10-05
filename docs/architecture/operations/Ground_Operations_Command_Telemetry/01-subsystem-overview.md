@@ -50,3 +50,4 @@ Ground Operations provides the operator with spacecraft status, alerts, telemetr
               Operator Monitoring
               Alerts / Logging
               Manual Commands
+```
