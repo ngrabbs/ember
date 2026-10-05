@@ -1,0 +1,89 @@
+{
+  "status": "PASS for planning/resource arithmetic; physical packages, dynamics and measured loads pending",
+  "raw_windows_V": {
+    "USB": {
+      "UV_rising_V": [
+        13.141572156430712,
+        13.580498221765295
+      ],
+      "UV_falling_V": [
+        12.842716523330013,
+        13.446118281945836
+      ],
+      "OV_rising_V": [
+        16.2099506385344,
+        16.752618164042126
+      ],
+      "OV_falling_V": [
+        15.841314945613163,
+        16.586850460932798
+      ]
+    },
+    "BATTERY": {
+      "UV_rising_V": [
+        6.021360550523431,
+        6.219553227507522
+      ],
+      "UV_falling_V": [
+        5.884430440852444,
+        6.158008994809427
+      ],
+      "OV_rising_V": [
+        8.853709918619144,
+        9.147663943455365
+      ],
+      "OV_falling_V": [
+        8.652367446036891,
+        9.05714639079739
+      ]
+    }
+  },
+  "eFuse_EN_static_V": {
+    "high_min": 1.6218543367242442,
+    "low_max": 0.27416115569714633,
+    "AON_zero_max": 0.10201000000000002
+  },
+  "input_current_with_20pct_margin_A": {
+    "lab_7W": 1.3944272445820431,
+    "lab_15W": 2.1869969040247677,
+    "flight_15W": 4.252941176470588
+  },
+  "current_limit_min_A": {
+    "USB": 1.7982017982017984,
+    "BATTERY": 3.9560439560439566
+  },
+  "current_limit_allocation_fits": {
+    "lab_7W": true,
+    "lab_15W": false,
+    "flight_15W": false
+  },
+  "MCU_unique_roles": 69,
+  "direct_ADC_channels": 7,
+  "uncompressed_triple_bytes": 9504768,
+  "uncompressed_triple_MiB": 9.064453125,
+  "CAN_500k_zero_overhead_lower_bound_s": 152.076288,
+  "bootstrap_0p2W_current_before_overhead_A": 0.0574712643678161,
+  "ideal_discharge_Rmax_ohm_by_C_uF": {
+    "3V3_1p5ms": {
+      "50": 10.701442527449421,
+      "100": 5.350721263724711,
+      "220": 2.432146028965778,
+      "470": 1.1384513327073853,
+      "1000": 0.535072126372471
+    },
+    "1V8_4ms": {
+      "50": 36.4095690650735,
+      "100": 18.20478453253675,
+      "220": 8.274902060243976,
+      "470": 3.8733584111780313,
+      "1000": 1.8204784532536749
+    }
+  },
+  "limits": [
+    "DC corner allocations exclude ramps/injection/ground offsets",
+    "Current-limit scaling is a screen, not full load/temperature/transient acceptance",
+    "GPIO names/AFs are not a physical lead-to-symbol-to-pad acceptance",
+    "RC screen excludes regulator delay, residual feed and component variation",
+    "Camera stride, SD speed and CAN overhead remain to measure"
+  ]
+}

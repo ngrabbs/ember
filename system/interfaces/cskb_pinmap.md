@@ -204,3 +204,30 @@ both names refer to the same wire:
 | 0.4 | 2026-09-21 | Codex | Allocated H2.49 (`USER8`) = `CAN_B_H` and H2.50 (`USER9`) = `CAN_B_L` for Iteration 2 (DNP v0.1); identified existing H1.51/H1.52 as CAN A without renaming nets; documented planned node roles and implementation requirements; retained H2.51/H2.52 as reserved with no power changes. |
 
 </details>
+
+## Payload next-revision interpretation (2026-10-04)
+
+H1/H2 assignments above are unchanged. The payload's next prototype follows
+[its schematic-start baseline](../../hardware/payload_compute/design/schematic_start.md),
+which supersedes the earlier v0.1 payload routing descriptions:
+
+- H1.50 PAYLOAD_EN is proposed 3.3 V push-pull, default low. Normal stops use
+  CAN and retain permission until verified off; low is immediate hardware kill.
+  Actual IHU reset/output implementation still needs verification.
+- Both CAN transceivers are populated on the next payload; termination is only
+  fitted at physical bus endpoints. Earlier v0.1 CAN DNP policy is historical.
+- H2.47 PAYLOAD_FAULT_N uses an AON-powered open-drain driver and the IHU-side
+  pull-up. Report composite latched faults; ordinary requested shutdown is not
+  automatically a fault. It no longer depends on a disappearing 1.8 V rail.
+- H2.48 PAYLOAD_SLEEP_REQ_N remains allocated, reserved/monitored by STM32;
+  it does not directly connect to Orin SLEEP/WAKE. SC7 is disabled initially.
+- H1.41/43 canonical I2C_SDA/I2C_SCL pass through or remain NC on the new payload;
+  control uses CAN → STM32 → UART. No direct Jetson housekeeping I2C connection.
+- Stack SYS_RESET_N at H1.29 remains reserved. Module pin 239 uses the distinct
+  carrier-local ORIN_SYS_RESET_N.
+- Local switched camera/M.2 rails replace stack +3V3 loading. VBAT remains a
+  consumer input, with protected independent AON/main branches and sequenced
+  buck enable rather than the earlier simple direct enable connection.
+- Launch isolation must cover the raw stack feed to **both** AON and main paths
+  and alternate feeds. The location/design of that physical flight inhibit is
+  unresolved; this update makes no flight-readiness claim.

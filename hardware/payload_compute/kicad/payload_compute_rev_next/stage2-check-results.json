@@ -1,0 +1,78 @@
+{
+  "result": "PASS for stage2 saved topology, accepted lead mapping and classified ERC; startup/fabrication not qualified",
+  "physical_components": 48,
+  "exported_nets": 52,
+  "aon_rail_pins": 18,
+  "bootstrap_bus_pins": 10,
+  "new_efuse_pins": 51,
+  "erc_errors": 21,
+  "erc_warnings": 0,
+  "erc_classification": {
+    "missing_future_ports": 15,
+    "missing_external_power_or_return_drivers": 4,
+    "documented_native_OR_power_output_conflicts": 2
+  },
+  "corners": {
+    "OV_usb_V": [
+      16.065941881188117,
+      17.484847171717174
+    ],
+    "OV_bench_stack_V": [
+      8.789847193069306,
+      9.542537207070708
+    ],
+    "max_OV_sense_at_24V": [
+      1.7463976945244957,
+      3.192203858563245
+    ],
+    "inferred_overload_A": [
+      0.08558482966940761,
+      0.11813045711350796
+    ],
+    "inferred_short_A": [
+      0.08055042792414835,
+      0.12326656394453005
+    ],
+    "slew_V_per_s": [
+      359.8484848484848,
+      796.8749999999999
+    ],
+    "max_switched_input_cap_F": 1.212e-05,
+    "ramp_end_cap_current_A": 0.009658124999999998,
+    "conditional_boot_budget": [
+      {
+        "regulated_W": 0.2,
+        "load_input_A": 0.0574712643678161,
+        "steady_A_with_own_and_PD_reserve": 0.06267563565208738,
+        "ramp_end_A_with_cap_charge": 0.07233376065208738
+      },
+      {
+        "regulated_W": 0.25,
+        "load_input_A": 0.07183908045977011,
+        "steady_A_with_own_and_PD_reserve": 0.0770434517440414,
+        "ramp_end_A_with_cap_charge": 0.0867015767440414
+      },
+      {
+        "regulated_W": 0.35,
+        "load_input_A": 0.10057471264367815,
+        "steady_A_with_own_and_PD_reserve": 0.10577908392794944,
+        "ramp_end_A_with_cap_charge": 0.11543720892794944
+      }
+    ]
+  },
+  "sha256": {
+    "02_bootstrap_inputs.kicad_sch": "ae299837d409ce48f989c2851a8d60cbb1692206bd312222ab796d2b33efda15",
+    "03_aon_supply.kicad_sch": "9eec04233f7720f736ad8f6ca822eb6b6a4f1104643b528acdd453559c2ec9e5",
+    "04_reset_run_core.kicad_sch": "d7125250dfbc915576dc5cf14b0aaea33c9311daa5e8017b7b53fa2619975e6e",
+    "payload_compute_rev_next.kicad_sch": "45260368ce2185e28fc43479412a939b1b2b7962bd87e59943fbaaea618b8d65"
+  },
+  "not_proven": [
+    "fuse/TVS/harness fault envelope",
+    "USB inlet/PD and whole-port input capacitance",
+    "low-voltage buck cold ramp/output-cap charging",
+    "low-load switch drop, reverse leakage/dynamicOR",
+    "persistent unclean-session firmware",
+    "thermal/stencil/physical flight inhibit",
+    "main admissions/source selection/MCU/cameras/PCB"
+  ]
+}
