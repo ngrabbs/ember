@@ -1,0 +1,68 @@
+Oct 03 16:05:20 ember-ground sshd-session[573211]: Accepted publickey for ngrabbs from 192.168.1.22 port 60850 ssh2: ED25519 SHA256:6ZScxoqj6RqJbzk+ZvlSrySL5yKfKn/IiEmGW7r33io
+Oct 03 16:05:20 ember-ground sshd-session[573211]: pam_unix(sshd:session): session opened for user ngrabbs(uid=1000) by ngrabbs(uid=0)
+Oct 03 16:05:20 ember-ground systemd-logind[642]: New session 1796 of user ngrabbs.
+Oct 03 16:05:20 ember-ground systemd[1]: Started session-1796.scope - Session 1796 of User ngrabbs.
+Oct 03 16:05:20 ember-ground sshd-session[573219]: Received disconnect from 192.168.1.22 port 60850:11: disconnected by user
+Oct 03 16:05:20 ember-ground sshd-session[573219]: Disconnected from user ngrabbs 192.168.1.22 port 60850
+Oct 03 16:05:20 ember-ground sshd-session[573211]: pam_unix(sshd:session): session closed for user ngrabbs
+Oct 03 16:05:20 ember-ground systemd[1]: session-1796.scope: Deactivated successfully.
+Oct 03 16:05:20 ember-ground systemd-logind[642]: Session 1796 logged out. Waiting for processes to exit.
+Oct 03 16:05:20 ember-ground systemd-logind[642]: Removed session 1796.
+Oct 03 16:05:20 ember-ground python3[573166]: EMBER_UHF_SUPERVISOR_READY {"state": "RUNNING", "role": "ground", "pid": 573166, "run": "/home/ngrabbs/work/ember-uhf-supervised/20261003T210518Z-8a4756d3268a", "run_id": "20261003T210518Z-8a4756d3268a", "config": "/home/ngrabbs/work/ember-uhf-20261003/ground.json", "lease_seconds": 0, "children": {"receiver": {"pid": 573170, "returncode": null}}, "reason": null, "error": null, "updated_unix": 1791061520.274543}
+Oct 03 16:05:20 ember-ground sshd-session[573224]: Accepted publickey for ngrabbs from 192.168.1.22 port 60851 ssh2: ED25519 SHA256:6ZScxoqj6RqJbzk+ZvlSrySL5yKfKn/IiEmGW7r33io
+Oct 03 16:05:20 ember-ground sshd-session[573224]: pam_unix(sshd:session): session opened for user ngrabbs(uid=1000) by ngrabbs(uid=0)
+Oct 03 16:05:20 ember-ground systemd-logind[642]: New session 1797 of user ngrabbs.
+Oct 03 16:05:20 ember-ground systemd[1]: Started session-1797.scope - Session 1797 of User ngrabbs.
+Oct 03 16:05:20 ember-ground sshd-session[573232]: Received disconnect from 192.168.1.22 port 60851:11: disconnected by user
+Oct 03 16:05:20 ember-ground sshd-session[573232]: Disconnected from user ngrabbs 192.168.1.22 port 60851
+Oct 03 16:05:20 ember-ground sshd-session[573224]: pam_unix(sshd:session): session closed for user ngrabbs
+Oct 03 16:05:20 ember-ground systemd[1]: session-1797.scope: Deactivated successfully.
+Oct 03 16:05:20 ember-ground systemd-logind[642]: Session 1797 logged out. Waiting for processes to exit.
+Oct 03 16:05:20 ember-ground systemd-logind[642]: Removed session 1797.
+Oct 03 16:05:30 ember-ground systemd[1]: Stopping user@1000.service - User Manager for UID 1000...
+Oct 03 16:05:30 ember-ground systemd[573115]: Activating special unit exit.target...
+Oct 03 16:05:30 ember-ground systemd[573115]: Stopped target default.target - Main User Target.
+Oct 03 16:05:30 ember-ground systemd[573115]: Stopping ember-uhf-ground.service - Optional EMBER LibreSDR telemetry receiver to Yamcs...
+Oct 03 16:05:30 ember-ground systemd[573115]: Stopping mpris-proxy.service - Bluetooth mpris proxy...
+Oct 03 16:05:30 ember-ground mpris-proxy[573135]: org.bluez appeared
+Oct 03 16:05:30 ember-ground mpris-proxy[573135]: Bluetooth Adapter /org/bluez/hci0 found
+Oct 03 16:05:30 ember-ground mpris-proxy[573135]: Bluetooth Adapter /org/bluez/hci0 removed
+Oct 03 16:05:30 ember-ground mpris-proxy[573135]: org.bluez disappeared
+Oct 03 16:05:30 ember-ground systemd[573115]: Stopped mpris-proxy.service - Bluetooth mpris proxy.
+Oct 03 16:05:30 ember-ground systemd[573115]: Stopping dbus.service - D-Bus User Message Bus...
+Oct 03 16:05:30 ember-ground systemd[573115]: Stopped dbus.service - D-Bus User Message Bus.
+Oct 03 16:05:30 ember-ground systemd[573115]: Removed slice session.slice - User Core Session Slice.
+Oct 03 16:05:33 ember-ground python3[573166]: EMBER_UHF_SUPERVISOR_STOPPED {"state": "STOPPED", "role": "ground", "pid": 573166, "run": "/home/ngrabbs/work/ember-uhf-supervised/20261003T210518Z-8a4756d3268a", "run_id": "20261003T210518Z-8a4756d3268a", "config": "/home/ngrabbs/work/ember-uhf-20261003/ground.json", "lease_seconds": 0, "children": {"receiver": {"pid": 573170, "returncode": 0}}, "reason": "signal", "error": null, "updated_unix": 1791061533.0450163}
+Oct 03 16:05:33 ember-ground systemd[573115]: Stopped ember-uhf-ground.service - Optional EMBER LibreSDR telemetry receiver to Yamcs.
+Oct 03 16:05:33 ember-ground systemd[573115]: ember-uhf-ground.service: Consumed 7.184s CPU time.
+Oct 03 16:05:33 ember-ground systemd[573115]: Stopped target basic.target - Basic System.
+Oct 03 16:05:33 ember-ground systemd[573115]: Stopped target paths.target - Paths.
+Oct 03 16:05:33 ember-ground systemd[573115]: Stopped target sockets.target - Sockets.
+Oct 03 16:05:33 ember-ground systemd[573115]: Stopped target timers.target - Timers.
+Oct 03 16:05:33 ember-ground systemd[573115]: Closed dbus.socket - D-Bus User Message Bus Socket.
+Oct 03 16:05:33 ember-ground systemd[573115]: Closed dirmngr.socket - GnuPG network certificate management daemon.
+Oct 03 16:05:33 ember-ground systemd[573115]: Closed gpg-agent-browser.socket - GnuPG cryptographic agent and passphrase cache (access for web browsers).
+Oct 03 16:05:33 ember-ground systemd[573115]: Closed gpg-agent-extra.socket - GnuPG cryptographic agent and passphrase cache (restricted).
+Oct 03 16:05:33 ember-ground systemd[573115]: Stopping gpg-agent-ssh.socket - GnuPG cryptographic agent (ssh-agent emulation)...
+Oct 03 16:05:33 ember-ground systemd[573115]: Stopping gpg-agent.socket - GnuPG cryptographic agent and passphrase cache...
+Oct 03 16:05:33 ember-ground systemd[573115]: Closed keyboxd.socket - GnuPG public key management service.
+Oct 03 16:05:33 ember-ground systemd[573115]: Stopping ssh-agent.socket - OpenSSH Agent socket...
+Oct 03 16:05:33 ember-ground systemd[573115]: Closed gpg-agent-ssh.socket - GnuPG cryptographic agent (ssh-agent emulation).
+Oct 03 16:05:33 ember-ground systemd[573115]: Closed gpg-agent.socket - GnuPG cryptographic agent and passphrase cache.
+Oct 03 16:05:33 ember-ground systemd[573115]: Closed ssh-agent.socket - OpenSSH Agent socket.
+Oct 03 16:05:33 ember-ground systemd[573115]: Removed slice app.slice - User Application Slice.
+Oct 03 16:05:33 ember-ground systemd[573115]: app.slice: Consumed 7.282s CPU time.
+Oct 03 16:05:33 ember-ground systemd[573115]: Reached target shutdown.target - Shutdown.
+Oct 03 16:05:33 ember-ground systemd[573115]: Finished systemd-exit.service - Exit the Session.
+Oct 03 16:05:33 ember-ground systemd[573115]: Reached target exit.target - Exit the Session.
+Oct 03 16:05:33 ember-ground (sd-pam)[573117]: pam_unix(systemd-user:session): session closed for user ngrabbs
+Oct 03 16:05:33 ember-ground systemd-logind[642]: Removed session 1790.
+Oct 03 16:05:33 ember-ground systemd[1]: user@1000.service: Deactivated successfully.
+Oct 03 16:05:33 ember-ground systemd[1]: Stopped user@1000.service - User Manager for UID 1000.
+Oct 03 16:05:33 ember-ground systemd[1]: user@1000.service: Consumed 7.473s CPU time.
+Oct 03 16:05:33 ember-ground systemd[1]: Stopping user-runtime-dir@1000.service - User Runtime Directory /run/user/1000...
+Oct 03 16:05:33 ember-ground systemd[1]: run-user-1000.mount: Deactivated successfully.
+Oct 03 16:05:33 ember-ground systemd[1]: user-runtime-dir@1000.service: Deactivated successfully.
+Oct 03 16:05:33 ember-ground systemd[1]: Stopped user-runtime-dir@1000.service - User Runtime Directory /run/user/1000.
+Oct 03 16:05:33 ember-ground systemd[1]: Removed slice user-1000.slice - User Slice of UID 1000.
+Oct 03 16:05:33 ember-ground systemd[1]: user-1000.slice: Consumed 7.742s CPU time.

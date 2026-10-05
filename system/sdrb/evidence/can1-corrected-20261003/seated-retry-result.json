@@ -1,0 +1,17 @@
+{
+  "status": "BLOCKED_SDRB_STORAGE_IO_ERROR_BEFORE_CAN_TRAFFIC",
+  "monitor_started": false,
+  "ihu_test_traffic_sent": false,
+  "can1_last_verified_state": "DOWN",
+  "root_mount": "ext4 ro",
+  "failing_executables": [
+    "sudo",
+    "cat",
+    "ip",
+    "dmesg",
+    "tail"
+  ],
+  "rf_started": false,
+  "physical_can_reseat_reported": true,
+  "next_step": "Recover SDRB storage/power and cold boot; reverify boot and CAN baseline before retry."
+}

@@ -1,0 +1,23 @@
+sudo -v
+Password: 
+sdrb-uhd:~$ sudo -n true && sudo -n ip link set can1 up && candump -L -n 100 -T 112000 can1,710:7FF,711:7FF > ~/ember-can-baseline-03.log 2>&1 &
+[1] 557
+sdrb-uhd:~$ ip -details -statistics link show can1; cat ~/ember-can-baseline-03.llog
+3: can1: <NOARP,UP,LOWER_UP,ECHO> mtu 16 qdisc pfifo_fast state UP mode DEFAULT group default qlen 10
+    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 
+    can state ERROR-ACTIVE (berr-counter tx 0 rx 0) restart-ms 0 
+	  bitrate 499999 sample-point 0.875
+	  tq 250 prop-seg 3 phase-seg1 3 phase-seg2 1 sjw 1 brp 25
+	  xilinx_can: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..256 brp_inc 1
+	  clock 99999999 
+	  re-started bus-errors arbit-lost error-warn error-pass bus-off
+	  0          0          0          0          0          0         numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536 parentbus platform parentdev e0009000.can 
+    RX:  bytes packets errors dropped  missed   mcast           
+             0       0      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+             0       0      0       0       0       0 
+[1]+  Done                    sudo -n true && sudo -n ip link set can1 up && candump -L -n 100 -T 12000 can1,710:7FF,711:7FF > ~/ember-can-baseline-03.log 2>&1
+sdrb-uhd:~$ sudo -n ip link set can1 down; ip link show can1
+3: can1: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
+    link/can 
+sdrb-uhd:~$ 

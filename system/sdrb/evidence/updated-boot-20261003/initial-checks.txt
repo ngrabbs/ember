@@ -1,0 +1,32 @@
+uname -r; sha256sum /boot/BOOT.BIN /boot/image.ub /boot/boot.scr; ip  -details -statistics link show can0; ip -details -statistics link show can1; reaadlink -f /sys/class/net/can0/device; readlink -f /sys/class/net/can1/device; sysstemctl is-active usrp-hwd; sudo -n true
+6.6.40-xilinx-gd37e591b96e0
+d77ca4e55841b9eee95b06f30b8066d096eb8139af9e94ea5ef9bc5d50158620  /boot/BOOT.BIN
+4373833ccb9975e51e2a90fab0a886a9610514e3502879c785c58184f5db8741  /boot/image.ub
+4c7ed60cad10872084bf727b2c9ab0eca9eab992635cf3abf67dfe7ed9cc7807  /boot/boot.scr
+2: can0: <NOARP,ECHO> mtu 16 qdisc noop state DOWN mode DEFAULT group default qlen 10
+    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 
+    can state STOPPED (berr-counter tx 0 rx 0) restart-ms 0 
+	  xilinx_can: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..256 brp_inc 1
+	  clock 99999999 
+	  re-started bus-errors arbit-lost error-warn error-pass bus-off
+	  0          0          0          0          0          0         numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536 parentbus platform parentdev e0008000.can 
+    RX:  bytes packets errors dropped  missed   mcast           
+             0       0      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+             0       0      0       0       0       0 
+3: can1: <NOARP,ECHO> mtu 16 qdisc noop state DOWN mode DEFAULT group default qlen 10
+    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 
+    can state STOPPED (berr-counter tx 0 rx 0) restart-ms 0 
+	  xilinx_can: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..256 brp_inc 1
+	  clock 99999999 
+	  re-started bus-errors arbit-lost error-warn error-pass bus-off
+	  0          0          0          0          0          0         numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536 parentbus platform parentdev e0009000.can 
+    RX:  bytes packets errors dropped  missed   mcast           
+             0       0      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+             0       0      0       0       0       0 
+/sys/devices/soc0/axi/e0008000.can
+/sys/devices/soc0/axi/e0009000.can
+active
+sudo: a password is required
+sdrb-uhd:~$ 

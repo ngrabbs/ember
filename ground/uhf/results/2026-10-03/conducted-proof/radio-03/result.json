@@ -1,0 +1,107 @@
+{
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-repeater-radio-03",
+    "seconds": 120,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "packet_peak": 0.12,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 60.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 0.5,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "status": {
+    "accepted": 8,
+    "queued": 0,
+    "expired": 0,
+    "queue_full": 0,
+    "emitted": 8,
+    "output_samples": 56934566,
+    "writer_error": null,
+    "accepting": false,
+    "recent_packets": [
+      {
+        "sequence": 1,
+        "begin": 10682368,
+        "end": 11370496,
+        "emitted": true
+      },
+      {
+        "sequence": 2,
+        "begin": 15630336,
+        "end": 16318464,
+        "emitted": true
+      },
+      {
+        "sequence": 3,
+        "begin": 20512768,
+        "end": 21200896,
+        "emitted": true
+      },
+      {
+        "sequence": 4,
+        "begin": 25460736,
+        "end": 26148864,
+        "emitted": true
+      },
+      {
+        "sequence": 5,
+        "begin": 30408704,
+        "end": 31096832,
+        "emitted": true
+      },
+      {
+        "sequence": 6,
+        "begin": 35291136,
+        "end": 35979264,
+        "emitted": true
+      },
+      {
+        "sequence": 7,
+        "begin": 40239104,
+        "end": 40927232,
+        "emitted": true
+      },
+      {
+        "sequence": 8,
+        "begin": 45187072,
+        "end": 45875200,
+        "emitted": true
+      }
+    ],
+    "note": "Downstream samples are not RF reception",
+    "mode": "transponder",
+    "tx_async_events": {}
+  },
+  "error": null,
+  "cleanup_errors": [],
+  "udp_delta": {
+    "InDatagrams": 44320,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 61056,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "elapsed_seconds": 92.71794551099993,
+  "scope": "Persistent bench sample submission; RF reception and repeater operation require independent proof"
+}

@@ -1,0 +1,28 @@
+{
+  "status": "PREPARED_NOT_APPLIED",
+  "candidate_root": "/media/ngrabbs/BACKUP-A/sdrb-uhd-linux-20260916/can-dual-01",
+  "files": {
+    "bootfiles/BOOT.BIN": "d77ca4e55841b9eee95b06f30b8066d096eb8139af9e94ea5ef9bc5d50158620",
+    "bootfiles/image.ub": "4373833ccb9975e51e2a90fab0a886a9610514e3502879c785c58184f5db8741",
+    "bootfiles/boot.scr": "4c7ed60cad10872084bf727b2c9ab0eca9eab992635cf3abf67dfe7ed9cc7807",
+    "card-update/kernel-modules.tar.gz": "a4178024909ee39e7b422cab05b02d1783b1445d7d1064b3ae9a24f7d52b6ae8"
+  },
+  "kernel": "6.6.40-xilinx-gd37e591b96e0",
+  "runtime_checked": 173,
+  "runtime_difference_to_preserve": [
+    "usr/lib/libuhd.so.4.8.0"
+  ],
+  "preserve": [
+    "complete existing rootfs and accounts",
+    "current UHD library",
+    "current GNU Radio applications",
+    "old kernel modules"
+  ],
+  "required_before_write": [
+    "clean SDRB halt",
+    "remove power/backfeeds before removing card",
+    "identify exact removable SD device",
+    "full current-card backup and boot-file verification"
+  ],
+  "scope": "Previously tested CAN hardware/FSBL/device-tree/kernel support; no EMBER protocol or startup changes in SDRB core"
+}

@@ -1,0 +1,23 @@
+python3 ~/ember-uhf-20261003/sdrb_tx.py --packet ~/ember-uhf-202610033/packet-01.bin --output ~/ember-uhf-20261003/tx-03.json --sequence 3 --frequencyy 434200000 --gain 70 --transmit > ~/ember-uhf-20261003/tx-03.log 2>&1 &
+[1] 623
+sdrb-uhd:~$ cat ~/ember-uhf-20261003/tx-03.log; cat ~/ember-uhf-20261003/tx-03.jsson
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False
+UHF_TX_READY {"packet_hex": "0901c003007901010010020100000000000000009c58a9400045c89d00600102020101010102020000000000000000040045c89d000000000000000200002933000027f6fffffd23000160c20000555b000027100000271000000001080000000000000000000067000418fc182dfffb0268340201e40000000720e20001eca9", "packet_sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd", "sequence": 3, "samples": 4680000, "seconds": 3.12, "center_frequency_hz": 434199999.9284743, "packet_frequency_hz": 434100000.0, "tx_channel": 1, "antenna": "TX1A_Direct1", "gain": 70.0, "scope": "Samples submitted to TX sink; RF receiver/archive proof is separate"}
+UHF_TX_STOPPED {"packet_hex": "0901c003007901010010020100000000000000009c58a9400045c89d00600102020101010102020000000000000000040045c89d000000000000000200002933000027f6fffffd23000160c20000555b000027100000271000000001080000000000000000000067000418fc182dfffb0268340201e40000000720e20001eca9", "packet_sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd", "sequence": 3, "samples": 4680000, "seconds": 3.12, "center_frequency_hz": 434199999.9284743, "packet_frequency_hz": 434100000.0, "tx_channel": 1, "antenna": "TX1A_Direct1", "gain": 70.0, "scope": "Samples submitted to TX sink; RF receiver/archive proof is separate", "source_samples_emitted": 4680000}
+[1]+  Done                    python3 ~/ember-uhf-20261003/sdrb_tx.py --packet ~/ember-uhf-20261003/packet-01.bin --output ~/ember-uhf-20261003/tx-03.json --sequence 3 --frequency 434200000 --gain 70 --transmit > ~/ember-uhf-20261003/tx-03.log 2>&1
+{
+  "packet_hex": "0901c003007901010010020100000000000000009c58a9400045c89d00600102020101010102020000000000000000040045c89d000000000000000200002933000027f6fffffd23000160c20000555b000027100000271000000001080000000000000000000067000418fc182dfffb0268340201e40000000720e20001eca9",
+  "packet_sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd",
+  "sequence": 3,
+  "samples": 4680000,
+  "seconds": 3.12,
+  "center_frequency_hz": 434199999.9284743,
+  "packet_frequency_hz": 434100000.0,
+  "tx_channel": 1,
+  "antenna": "TX1A_Direct1",
+  "gain": 70.0,
+  "scope": "Samples submitted to TX sink; RF receiver/archive proof is separate",
+  "source_samples_emitted": 4680000
+}
+sdrb-uhd:~$ 

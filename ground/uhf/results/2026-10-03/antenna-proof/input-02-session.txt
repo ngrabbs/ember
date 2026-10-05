@@ -1,0 +1,10 @@
+
+[1]+  Done                    python3 ~/ember-uhf-20261003/rx_antenna_probe_02.py > ~/ember-antenna-input-02.log 2>&1
+sdrb-uhd:~/ember-uhf-20261003$ 
+tail -c 2000 ~/ember-antenna-input-02.log
+[INFO] [UHD] linux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+[INFO] [MPMD] Initializing 1 device(s) in parallel with args: mgmt_addr=127.0.0.1,type=sdrb,product=sdrb,serial=0AB90219,name=sdrb-uhd,fpga=n/a,claimed=False,recv_frame_size=8000
+[WARNING] [MULTI_USRP] Could not set RX rate to 0.614 MHz. Actual rate is 0.614 MHz
+INPUT_CAPTURE_READY {"rate": 614400.0034706265, "clock": 614400.0034706265, "frequency": 435099999.48739916, "gain": 60.0, "antenna": "RX1", "lowrate": 76800, "seconds": 24}
+INPUT_CAPTURE_DONE {"settings": {"rate": 614400.0034706265, "clock": 614400.0034706265, "frequency": 435099999.48739916, "gain": 60.0, "antenna": "RX1", "lowrate": 76800, "seconds": 24}, "samples": 1843200, "elapsed_seconds": 25.49470667499918}
+sdrb-uhd:~/ember-uhf-20261003$ 

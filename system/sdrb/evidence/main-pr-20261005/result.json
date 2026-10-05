@@ -1,0 +1,43 @@
+{
+  "base": "origin/main at 157ebed844f6284f3f7e98f7ad14e3b566028a29",
+  "sdrb_checkpoint": "40981a177e5811908a05dab9aadafd8c8afcf876",
+  "ground_tests": {
+    "run": 32,
+    "passed": 31,
+    "skipped": 1,
+    "reason": "virtual CAN requires an explicitly supplied interface"
+  },
+  "uhf_tests": {
+    "run": 23,
+    "passed": 23,
+    "includes": "seven Linux process-supervision tests; no UHD opened"
+  },
+  "headroom_core": "C++17, warnings-as-errors, address/UB sanitizer: PASS",
+  "pico_build": {
+    "targets": [
+      "ember_ihu_can_bench",
+      "ember_comms_can_bench"
+    ],
+    "sdk": "ee68c78d0afae2b69c03ae1a72bf5cc267a2d94c",
+    "compiler": "arm-none-eabi GCC 14.2.1",
+    "ihu_uf2_sha256": "5d7bf24761edfd5e2bf4f1423b70fd28890736211d98514b9f75556c6e1c02bd",
+    "comms_uf2_sha256": "b289bc05c30e62f0ca471ffffa0a6db720ce82b9e04ddb5847ba1978b859e001",
+    "flashed": false
+  },
+  "archive_checks": [
+    "native-autotelem",
+    "handheld-proof",
+    "both-uhf-antennas",
+    "supervision"
+  ],
+  "corrections": [
+    "Initial remote test bundle omitted baseline firmware and EPS evidence; supplied missing files and reran ground suite successfully.",
+    "Archived supervision SERVICES.md had later link/header annotations breaking its recorded hash. Restored original bytes matching existing manifest; kept annotations in SERVICES.annotated.md."
+  ],
+  "limits": [
+    "No live RF session or firmware flash during Git reconciliation.",
+    "Intermittent TX startup underrun/timing errors remain open.",
+    "Virtual CAN filter and current GNU Radio runtime not requalified; existing saved hardware/runtime evidence retained.",
+    "Only SDRB code plus required native CAN/packet/Yamcs prerequisites imported; LTE radio implementation and other pending hardware/documentation excluded."
+  ]
+}

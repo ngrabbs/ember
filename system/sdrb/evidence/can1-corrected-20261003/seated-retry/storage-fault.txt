@@ -1,0 +1,18 @@
+dmesg | tail -40; echo BLOCK_DEVICES /sys/block/mmcblk*; while IFS= rread -r m; do echo "$m"; done < /proc/mounts
+-sh: /usr/bin/tail: Input/output error
+-sh: /usr/bin/dmesg: Input/output error
+BLOCK_DEVICES /sys/block/mmcblk0
+/dev/root / ext4 ro,relatime 0 0
+devtmpfs /dev devtmpfs rw,relatime,size=505432k,nr_inodes=126358,mode=755 0 0
+proc /proc proc rw,relatime 0 0
+sysfs /sys sysfs rw,nosuid,nodev,noexec,relatime 0 0
+tmpfs /dev/shm tmpfs rw,nosuid,nodev 0 0
+devpts /dev/pts devpts rw,relatime,gid=5,mode=620,ptmxmode=666 0 0
+tmpfs /run tmpfs rw,nosuid,nodev,size=205656k,nr_inodes=819200,mode=755 0 0
+cgroup2 /sys/fs/cgroup cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot 0 0
+tmpfs /tmp tmpfs rw,nosuid,nodev,size=514140k,nr_inodes=1048576 0 0
+configfs /sys/kernel/config configfs rw,nosuid,nodev,noexec,relatime 0 0
+tmpfs /var/volatile tmpfs rw,relatime 0 0
+/dev/mmcblk0p1 /boot vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+tmpfs /run/user/1000 tmpfs rw,nosuid,nodev,relatime,size=102824k,nr_inodes=25706,mode=700,uid=1000,gid=1000 0 0
+sdrb-uhd:~$ 

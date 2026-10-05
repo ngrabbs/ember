@@ -1,0 +1,14 @@
+[Unit]
+Description=Optional EMBER LibreSDR telemetry receiver to Yamcs
+
+[Service]
+Type=simple
+WorkingDirectory=%h/work/ember-uhf-20261003
+ExecStart=/usr/bin/python3 %h/work/ember-uhf-20261003/supervisor.py serve --config %h/work/ember-uhf-20261003/ground.json
+Restart=no
+TimeoutStopSec=120
+KillMode=mixed
+UMask=0077
+
+[Install]
+WantedBy=default.target

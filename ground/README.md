@@ -13,3 +13,5 @@
 Application command and telemetry meanings come from the
 [operations dictionaries](../docs/architecture/operations/Ground_Operations_Command_Telemetry/README.md).
 The radio bridge and waveform implementation will carry that shared interface.
+
+[UHF / SDRB telemetry bench](uhf/README.md): separate Yamcs input, LibreSDR ownership, CAN adapter, packet transport and optional supervision.

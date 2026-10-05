@@ -260,3 +260,30 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
 - [Pluto driver installation](https://analogdevicesinc.github.io/documentation/solutions/platforms/pluto/get-started/drivers.html)
 - [GNU Radio BPSK tutorial](https://wiki.gnuradio.org/index.php/Simulation_example%3A_BPSK_Demodulation)
 - [SatNOGS operator guide](https://wiki.satnogs.org/Satellite_operator_manual)
+
+## UHF / SDRB channel — October 3, 2026
+
+- [x] Inspect Pi Yamcs/LibreSDR setup and document [UHF ground channel](../../ground/uhf/README.md).
+- [x] Add isolated ember-uhf archive/input with the existing EMBER MDB and EPS display.
+- [x] Demonstrate a 128-byte IHU→CAN→SDRB→UHF→LibreSDR→Yamcs packet with byte identity at each recorded stage.
+- [x] Preserve paused RF archive proof display and stop both radio applications.
+- [x] Add optional bounded CAN packet admission and incremental ground decoding; measured series9/10 and fresh automatic flow3/3, with exact Yamcs archive byte identity.
+- [ ] Qualify RF reliability and physical fault recovery; one antenna-series burst was missed.
+- [x] Remove per-packet UHD reopen in the optional persistent service; demonstrate three fresh CAN/socket/RF/Yamcs packets with exact identity.
+- [x] Establish a bounded614.4kS/s transponder profile with no reported U/O or UDP errors; six fresh packets match through Yamcs. [Clock/source review](../../ground/uhf/CLOCKING.md) · [Evidence](../../ground/uhf/results/2026-10-03/clock-review/result.json).
+- [x] Demonstrate conducted RF uplink forwarding alongside fresh telemetry: translated tones and3/3 original packets through Yamcs, zero reported stream/UDP errors in the final finite check.
+- [ ] Qualify all-antenna uplink, representative amateur signals and longer operation before repeater continuity qualification; higher sample rates remain unqualified.
+
+- [x] Add finite configurable host USB triggers for real IHU EPS telemetry;16/16 fresh packets verified at IHU/CAN/socket/RF/Yamcs in two separate~94second streams, zero reported U/O/UDP errors.
+- [x] Implement opt-in native IHU bench telemetry cadence with no USB packet triggers; [4/4 UHF/Yamcs proof](../../ground/uhf/results/2026-10-03/native-autotelem/result.json) includes a closed USB console period. Production firmware integration remains separate.
+- [x] Add optional [UHF application supervision](../../ground/uhf/SERVICES.md), explicit start/stop, no fault retries, bounded evidence storage and Pi user-manager persistence after SSH logout. Radio services remain disabled at boot.
+- [ ] Qualify reliable RF startup/restart and sustained autonomous delivery; one supervised SDRB startup underrun/timing fault remains recorded despite a subsequent successful short run.
+- [x] Verify conducted LibreSDR TXA → SDRB antenna_in/RX1 with both known tones; earlier all-antenna receive failure remains unisolated.
+- [x] Verify normal finite teardown waits for the CAN monitor before taking CAN down; conducted integrated runs report no ENETDOWN.
+- [ ] Qualify interrupted teardown/restart and physical fault recovery.
+
+[Cadence and RF-isolation evidence](../../ground/uhf/results/2026-10-03/repeater-proof/result.json) preserves the telemetry success and the unresolved repeater gate separately.
+
+[Subsequent conducted proof](../../ground/uhf/results/2026-10-03/conducted-proof/result.json)
+records gain-only forwarding scale16,250ms TX priming, explicit RX/TX error
+monitoring, simultaneous tones/telemetry and excluded limiter/diagnostic failures.

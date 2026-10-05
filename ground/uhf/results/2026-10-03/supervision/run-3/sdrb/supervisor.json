@@ -1,0 +1,26 @@
+{
+  "state": "FAILED",
+  "role": "sdrb",
+  "pid": 3402,
+  "run": "/home/petalinux/ember-uhf-supervised/20240228T041230Z-58fe2465810c",
+  "run_id": "20240228T041230Z-58fe2465810c",
+  "config": "/home/petalinux/ember-uhf-20261003/sdrb.json",
+  "lease_seconds": 0,
+  "children": {
+    "radio": {
+      "pid": 3403,
+      "returncode": 1
+    },
+    "can": {
+      "pid": 3432,
+      "returncode": 0
+    },
+    "forward": {
+      "pid": 3435,
+      "returncode": 0
+    }
+  },
+  "reason": "component_failure",
+  "error": "radio exited unexpectedly: 1",
+  "updated_unix": 1709093567.666653
+}

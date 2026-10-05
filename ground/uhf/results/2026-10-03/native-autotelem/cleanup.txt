@@ -1,0 +1,34 @@
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+ip -details link show can0; ip -details link show 
+ can1; test ! -S ~/.cache/ember-binary-radio/control.sock && echo RADIO_CONTROL_C
+CLOSED; uhd_find_devices --args type=sdrb,mgmt_addr=127.0.0.1
+2: can0: <NOARP,ECHO> mtu 16 qdisc noop state DOWN mode DEFAULT group default qlen 10
+    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 
+    can state STOPPED (berr-counter tx 0 rx 0) restart-ms 0 
+	  xilinx_can: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..256 brp_inc 1
+	  clock 99999999 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536 parentbus platform parentdev e0008000.can 
+3: can1: <NOARP,ECHO> mtu 16 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 10
+    link/can  promiscuity 0 allmulti 0 minmtu 0 maxmtu 0 
+    can state STOPPED (berr-counter tx 0 rx 0) restart-ms 0 
+	  bitrate 499999 sample-point 0.875
+	  tq 250 prop-seg 3 phase-seg1 3 phase-seg2 1 sjw 1 brp 25
+	  xilinx_can: tseg1 1..16 tseg2 1..8 sjw 1..4 brp 1..256 brp_inc 1
+	  clock 99999999 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 gso_ipv4_max_size 65536 gro_ipv4_max_size 65536 parentbus platform parentdev e0009000.can 
+RADIO_CONTROL_CLOSED
+[0;32m[INFO] [UHD] [0;39mlinux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+--------------------------------------------------
+-- UHD Device 0
+--------------------------------------------------
+Device Address:
+    serial: 0AB90219
+    claimed: False
+    fpga: n/a
+    mgmt_addr: 127.0.0.1
+    name: sdrb-uhd
+    product: sdrb
+    type: sdrb
+
+
+sdrb-uhd:~/ember-uhf-20261003$ LIBRESDR_FREE
+7f0e329b4724e0d919a06b9924aaa3c77305b6f25038deebd6171657ac7c8a99  /home/ngrabbs/work/ember-lte/images/usrp_b210_fpga.bin

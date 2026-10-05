@@ -1,0 +1,118 @@
+{
+  "status": "NATIVE_IHU_AUTOTELEM_CLOSED_USB_UHF_YAMCS_PASS",
+  "firmware": {
+    "files": {
+      "firmware/can_feather_bench/main.c": "d694002900faf543f8df037b03c343aa69fac216bfe740878231f3fb1492fa64",
+      "firmware/can_feather_bench/autotelem.h": "f54f3ef33b49bebf47c167a02e944fd07c075d3321ab68c6b3296112ee49571b",
+      "firmware/can_feather_bench/CMakeLists.txt": "d3353c57a8ee4a433a77d4d057a03088290b848adf3ccd0a2ed501e10c34196e",
+      "build/ember_ihu_can_bench.uf2": "44bb70d0256567e78e6ac7acd3836faca45eef0c27281184c12b9a0e65a7789f",
+      "build/ember_ihu_can_bench.bin": "9791b90da2f03aaad0f6b4195dcccd4ae56fe98f686c3f3d604a9edad2f41540"
+    },
+    "backup_path": "/media/ngrabbs/BACKUP-A/ember-autotelem-20261003/ihu-before-autotelem.uf2",
+    "backup_sha256": "a87c2204f52490a27d47402637e4a63f97754b0e9579091b23b468eeda8dbfd0",
+    "flash_id": "DF641455DB822427",
+    "compiler": "arm-none-eabi-gcc14.2.1",
+    "sdk": "2.1.1-1-gee68c78",
+    "build_type": "Release",
+    "board": "ember_can_feather",
+    "flash_readback_verified": true
+  },
+  "period_seconds": 20,
+  "native_packets": 4,
+  "host_telemetry_triggers": 0,
+  "native_intervals_ms": [
+    19999,
+    20000
+  ],
+  "identities": [
+    {
+      "inner_sequence": 1,
+      "sha256": "187807a868e2958c206699b76db2dcf2b3598b6b25db13e764c8c73026f3b128",
+      "yamcs_reception": "2026-10-03T20:40:34.475Z",
+      "source_evidence": "IHU timer submission and returned bytes/CAN/socket/RF/Yamcs"
+    },
+    {
+      "inner_sequence": 2,
+      "sha256": "7cf786f1a86d4b8de96be4aa1dc31f3f48d606a4243df89c202aaed1dd9e87d5",
+      "yamcs_reception": "2026-10-03T20:40:54.704Z",
+      "source_evidence": "IHU timer submission and returned bytes/CAN/socket/RF/Yamcs"
+    },
+    {
+      "inner_sequence": 3,
+      "sha256": "b5a3d86ce6561db4152b5b1d05a6e0aebc323298477df784e4944d63d5e1738b",
+      "yamcs_reception": "2026-10-03T20:41:11.321Z",
+      "source_evidence": "IHU timer submission and returned bytes/CAN/socket/RF/Yamcs"
+    },
+    {
+      "inner_sequence": 4,
+      "sha256": "819464e7390371cc738dfb73606d7e826d0a059bf3b3c7df08e26e97df495981",
+      "yamcs_reception": "2026-10-03T20:41:38.812Z",
+      "source_evidence": "Native counter advanced during closed USB interval; CAN/socket/RF/Yamcs byte identity"
+    }
+  ],
+  "usb_console_closed_seconds": 25.000121098011732,
+  "disabled_quiet_ms": 136055,
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-autotelem-radio-01",
+    "seconds": 170,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "packet_peak": 0.12,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 60.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 16.0,
+    "forward_peak": 0.25,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "radio_stream_seconds": 118.23619502899965,
+  "rx_async_events": {},
+  "tx_async_events": {},
+  "udp_delta": {
+    "InDatagrams": 56498,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 76958,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "headroom": {
+    "samples": 72601537,
+    "forwarded_clipped": 0,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 0.2342742067407667,
+    "forward_peak_after": 0.2342742067407667,
+    "telemetry_peak_before": 0.12000001061086807,
+    "output_peak": 0.2342742067407667,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "final_state": "Native IHU timer disabled, radios released, CAN0/1 down; no startup services enabled.",
+  "limits": [
+    "IHU CAN bench firmware; not yet the production FreeRTOS flight scheduler.",
+    "Timer uses the existing CF_CHAIN peer/COMMS/Walter bench acknowledgement path; it needs normal CAN and a HELLO. No SDRB-aware firmware or protocol changes.",
+    "First three packets have IHU returned-byte evidence; fourth has native counter/closed USB timing plus CAN/RF/archive identities, because USB logging was absent.",
+    "USB endpoint/DTR closed; physical cable and supplies remained attached.",
+    "Finite transponder-mode telemetry test; no new HT/SSB, RF power, outage or endurance qualification.",
+    "Yamcs archive identities verified; old paused EPS display not advanced."
+  ]
+}

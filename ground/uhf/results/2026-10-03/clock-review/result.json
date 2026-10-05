@@ -1,0 +1,94 @@
+{
+  "status": "PASS_BOUNDED_TRANSPONDER_NO_STREAM_ERRORS_AND_SIX_FRESH_PACKETS",
+  "duration_seconds": 93.24243884099997,
+  "sdrb_rate_hz": 614400.0034706265,
+  "samples_per_symbol": 512,
+  "libresdr_master_clock_hz": 32000000.0,
+  "libresdr_hardware_decimation": 16.0,
+  "tx_async_events": {},
+  "reported_rx_overflows": 0,
+  "udp_receive_errors": 0,
+  "submitted": 6,
+  "received": 6,
+  "byte_identical_at_ihu_can_socket_rf_yamcs": true,
+  "identities": [
+    {
+      "outer_sequence": 1,
+      "inner_sequence": 28,
+      "sha256": "d6d7061e6ee7f36ed194254e30a315f45b578fbc17959f4091634fbb2589512f",
+      "yamcs_reception": "2026-10-03T15:16:17.377Z"
+    },
+    {
+      "outer_sequence": 2,
+      "inner_sequence": 29,
+      "sha256": "8c85befe171f13c7414705db3f245bb232696f4a2b785e442a41d17a81fac474",
+      "yamcs_reception": "2026-10-03T15:16:29.224Z"
+    },
+    {
+      "outer_sequence": 3,
+      "inner_sequence": 30,
+      "sha256": "ab49f2117ead2e6b394bd1a600cf0b1f008decb05b65c38073c57053b27beb61",
+      "yamcs_reception": "2026-10-03T15:16:37.037Z"
+    },
+    {
+      "outer_sequence": 4,
+      "inner_sequence": 31,
+      "sha256": "2cae4e56652ee5f5a60fbf11e86b0cf33d966e261b89949aa333b42340985ba0",
+      "yamcs_reception": "2026-10-03T15:16:45.276Z"
+    },
+    {
+      "outer_sequence": 5,
+      "inner_sequence": 32,
+      "sha256": "7420a0d9f6c9720460d1567723c882a27e6be7f250331e2343d04a716d8f6ce6",
+      "yamcs_reception": "2026-10-03T15:16:53.232Z"
+    },
+    {
+      "outer_sequence": 6,
+      "inner_sequence": 33,
+      "sha256": "6c13c3e05ae2063ccd6c4ac24f1c626aa39a6d58e649f23fba2156df18b7fe0a",
+      "yamcs_reception": "2026-10-03T15:17:05.992Z"
+    }
+  ],
+  "preparation_seconds": {
+    "min": 0.17802589399980207,
+    "max": 0.19429092800055514
+  },
+  "source_sha256": {
+    "radio_service.py": "c694fe2dd6f9965321649b3472c0ba476b287f0601eb7cbbc4023403ede43795",
+    "packet_radio.py": "69f719b6f50dac8e782b332523e54d79244bf044097245f6024a2be63a459a23",
+    "binary_injector.py": "7c6cadae5127638ad9b01267a4474c2d66f8f9dcfa422abeab871c9ff8916bb3",
+    "libresdr_live_rx.py": "803e76227c525e42a05040f3ca0cf8317fdadef9938d39b57ce25512240da014",
+    "libresdr_rx.py": "969b791b036c88399d45befb7466ecae593a7de673cbca3311c39ad74cbc6908",
+    "test_packet_radio.py": "276e333a55c62ea8cf23786435262ccb250b35adb0c3b42b768b174708803dc2"
+  },
+  "software_tests_passed": 14,
+  "baseline_sdrb_commit": "543d3f6d77d278e19badd728d8e32d6f974b2586",
+  "upstream_uhd_commit": "308126a479ca19dfaebfe4784b375e608788d763",
+  "changes": [
+    "Automatic master clocks; post-configuration shared-clock readback",
+    "614400S/s profile;512 samples/symbol; matched analog bandwidth",
+    "8000byte local CHDR frames;1024 RX samples/packet",
+    "250ms timed TX startup",
+    "Tone-table waveform preparation",
+    "Recorded TX async events and Linux UDP counters",
+    "1.35x weak-burst envelope admission with unchanged CRC validation; telemetry peak0.12"
+  ],
+  "earlier_radio03": {
+    "duration_seconds": 111.57523704499908,
+    "submitted": 6,
+    "received_live": 3,
+    "additional_offline_recoveries": 2,
+    "stream_errors": 0,
+    "packet_peak": 0.08
+  },
+  "limits": [
+    "93.24second integrated antenna bench observation; not indefinite reliability qualification",
+    "Does not qualify1.5/4.608MS/s or arbitrary CPU load",
+    "No independent amateur RF uplink forwarding test",
+    "No physical external-reference selection or FPGA/core/boot changes"
+  ],
+  "excluded_attempts": {
+    "radio-01": "Existing receiver output directory; zero admitted packets",
+    "radio-02": "CAN duration130 exceeded monitor bound120; zero admitted packets; separate clean radio observation"
+  }
+}

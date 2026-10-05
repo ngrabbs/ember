@@ -1,0 +1,152 @@
+{
+  "status": "HT_FORWARDING_OPERATOR_OBSERVED_TELEMETRY_AND_STREAM_PASS_OBSERVATION_WINDOW_ENDED_EARLY",
+  "physical_setup": "Operator confirmed UHF antennas on both radios; external HT uplink and RTL-SDR downlink observation requested. LibreSDR receive-only.",
+  "operator_observation": {
+    "source": "User response to the HT/RTL-SDR observation question in this chat",
+    "report": "yep it continued the whole time, I saw me transmitting and I saw it getting retransmitted down the band",
+    "observed_forwarding": true,
+    "observed_continuity_during_test": true,
+    "limits": [
+      "Visual external receiver observation reported by the operator; no saved RTL-SDR IQ, calibrated spectral measurement or audio-quality report supplied.",
+      "The observation concerns this HT test and does not retroactively pass the prior LibreSDR uplink tone gate."
+    ]
+  },
+  "test_window": {
+    "start_unix": 1791058483.626747,
+    "requested_seconds": 180,
+    "completed": false,
+    "end_unix": null,
+    "elapsed_seconds": null,
+    "start_provenance": "HANDHELD_WINDOW_STARTED stdout captured by the local execution tool",
+    "end_provenance": "Orchestrator raised when the finite ground receiver exited; exact observation-window end was not recorded. See session.json."
+  },
+  "orchestration": {
+    "error": "Ground receiver ended before test window",
+    "ground_returncode": 0
+  },
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-handheld-radio-01",
+    "seconds": 240,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "packet_peak": 0.12,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 60.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 16.0,
+    "forward_peak": 0.25,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "radio_stream_seconds": 203.27376040499803,
+  "fresh_packets": 9,
+  "all_original_bytes_matched_at_ihu_can_socket_rf_yamcs": true,
+  "identities": [
+    {
+      "inner_sequence": 86,
+      "sha256": "e2f94ff8026e64414e8b2682475007d763ea0f53ab5429a3c06e3379e0615297",
+      "yamcs_reception": "2026-10-03T20:14:52.187Z"
+    },
+    {
+      "inner_sequence": 87,
+      "sha256": "7e781a6e0d17857ce46819d063853f61fb88f2af1666c7e3425794e2efe182f1",
+      "yamcs_reception": "2026-10-03T20:15:12.621Z"
+    },
+    {
+      "inner_sequence": 88,
+      "sha256": "0adb8273c39f9f6fa094e87b4b24bed1fb3ee510f041641fa8f4aeca33720444",
+      "yamcs_reception": "2026-10-03T20:15:31.848Z"
+    },
+    {
+      "inner_sequence": 89,
+      "sha256": "f39f2db84c870ebcc2cc5d38d9c92f1aa1606307e83ae611a37a801f1946e0ca",
+      "yamcs_reception": "2026-10-03T20:15:52.387Z"
+    },
+    {
+      "inner_sequence": 90,
+      "sha256": "298697e43c6b1c14892fd3d39a2ea770333ff55993f2058b4765b847bc2ce743",
+      "yamcs_reception": "2026-10-03T20:16:11.850Z"
+    },
+    {
+      "inner_sequence": 91,
+      "sha256": "3e161e3648e583dc881a98111fa688af948a249c9272e7f12ae43ebd8126b1cb",
+      "yamcs_reception": "2026-10-03T20:16:32.415Z"
+    },
+    {
+      "inner_sequence": 92,
+      "sha256": "445dab67f7ef8e4eafd1eb2856720f1c2d9aac4c3af656ef1a2bd0f3ee9d6714",
+      "yamcs_reception": "2026-10-03T20:16:52.009Z"
+    },
+    {
+      "inner_sequence": 93,
+      "sha256": "0aef0f9210c1fb1592cd743bc54291b24703a76a459404c284de9b0f7bf126e4",
+      "yamcs_reception": "2026-10-03T20:17:12.641Z"
+    },
+    {
+      "inner_sequence": 94,
+      "sha256": "e30f5082cae58d766a5e6260f454ea581d3f694d305598da53cf0c17265fa826",
+      "yamcs_reception": "2026-10-03T20:17:31.974Z"
+    }
+  ],
+  "rx_async_events": {},
+  "tx_async_events": {},
+  "udp_delta": {
+    "InDatagrams": 97116,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 135780,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "headroom": {
+    "samples": 124857651,
+    "forwarded_clipped": 9295996,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 3.1091848344015602,
+    "forward_peak_after": 0.2500000298023206,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.37000003057557057,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "ground_capture": {
+    "samples": 420000000,
+    "errors": [],
+    "dropped_decode_windows": 0,
+    "decoder_exitcode": 0,
+    "fpga_sha256": "7f0e329b4724e0d919a06b9924aaa3c77305b6f25038deebd6171657ac7c8a99",
+    "frequency_hz": 434200000.0,
+    "rx_channel": 0,
+    "rx_gain": 40.0,
+    "seconds": 210,
+    "lowrate_hz": 40000,
+    "master_clock_hz": 32000000.0,
+    "hardware_decimation": 16.0
+  },
+  "limits": [
+    "The ground receiver lifetime started before radio setup and exhausted before the advertised180s observation window. The window ended early; radio stream duration is verified separately.",
+    "External HT transmit timing, modulation and received RTL-SDR signal/audio were not recorded by these applications; operator observation is separate.",
+    "Telemetry receiver captures its own low-rate band; this does not independently measure translated HT spectral quality.",
+    "Finite three-minute window; not indefinite or SSB qualification.",
+    "Optional bench time limits extended to600s; no AMSAT core/image/FPGA/rootfs changes.",
+    "Yamcs archive verified; the old paused EPS proof display was not advanced."
+  ]
+}

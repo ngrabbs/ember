@@ -1,0 +1,53 @@
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 ~/ember-uhf-20261003/add_packet.py --statu
+us
+{"request": {"command": "status"}}
+{
+  "accepted": 3,
+  "queued": 0,
+  "expired": 0,
+  "queue_full": 0,
+  "emitted": 3,
+  "output_samples": 41812140,
+  "writer_error": null,
+  "accepting": true,
+  "recent_packets": [
+    {
+      "sequence": 1,
+      "begin": 14745600,
+      "end": 15433728,
+      "emitted": true
+    },
+    {
+      "sequence": 2,
+      "begin": 27230208,
+      "end": 27918336,
+      "emitted": true
+    },
+    {
+      "sequence": 3,
+      "begin": 39321600,
+      "end": 40009728,
+      "emitted": true
+    }
+  ],
+  "note": "Downstream samples are not RF reception",
+  "mode": "transponder",
+  "tx_async_events": {},
+  "rx_async_events": {},
+  "headroom": {
+    "samples": 41812140,
+    "forwarded_clipped": 2624793,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 1.9091806865406593,
+    "forward_peak_after": 0.2500000298023206,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.37000003057557057,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "ready": true
+}
+sdrb-uhd:~/ember-uhf-20261003$ 

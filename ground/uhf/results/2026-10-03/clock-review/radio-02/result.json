@@ -1,0 +1,57 @@
+{
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-clock-radio-02",
+    "seconds": 150,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 30.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 0.5,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "status": {
+    "accepted": 0,
+    "queued": 0,
+    "expired": 0,
+    "queue_full": 0,
+    "emitted": 0,
+    "output_samples": 68597802,
+    "writer_error": null,
+    "accepting": false,
+    "recent_packets": [],
+    "note": "Downstream samples are not RF reception",
+    "mode": "transponder",
+    "tx_async_events": {}
+  },
+  "error": null,
+  "cleanup_errors": [],
+  "udp_delta": {
+    "InDatagrams": 53388,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 73573,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "elapsed_seconds": 111.70213150200107,
+  "scope": "Persistent bench sample submission; RF reception and repeater operation require independent proof"
+}

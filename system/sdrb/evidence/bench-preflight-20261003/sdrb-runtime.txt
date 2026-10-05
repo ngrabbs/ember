@@ -1,0 +1,99 @@
+printf "BOARD_CHECK_BEGIN\n"; cat /proc/cmdline; ls -l /sys/class/net; ls /sys/bus/platform/devices/*can* 2>/dev/null; lsmod; dmesg | ggrep -i can; ls -la /boot; ls -la ~/sdrb; command -v python3; ps w; printf "BOARD_CHECK_END\n"
+BOARD_CHECK_BEGIN
+console=ttyPS0,115200 earlycon root=/dev/mmcblk0p2 ro rootwait uio_pdrv_genirq.of_id=usrp-uio clk_ignore_unused
+lrwxrwxrwx    1 root     root             0 Feb 27 17:26 int0 -> ../../devices/soc0/axi/40020000.ethernet/net/int0
+lrwxrwxrwx    1 root     root             0 Feb 27 17:26 lo -> ../../devices/virtual/net/lo
+lrwxrwxrwx    1 root     root             0 Feb 27 17:26 sit0 -> ../../devices/virtual/net/sit0
+Module                  Size  Used by
+[    0.510066] spi_master spi0: cannot find modalias for /axi/spi@e000d000/flash@0
+[    0.525389] CAN device driver interface
+[    0.549983] cdns-i2c e0004000.i2c: can't get pinctrl, bus recovery not supported
+[    0.643734] can: controller area network core
+[    0.646873] NET: Registered PF_CAN protocol family
+[    0.650417] can: raw protocol
+[    0.652102] can: broadcast manager protocol
+[    0.655008] can: netlink gateway - max_hops=1
+drwxr-xr-x    2 root     root         16384 Jan  1  1970 .
+drwxr-xr-x   17 root     root          4096 Sep 19  2026 ..
+-rwxr-xr-x    1 root     root       5211832 Sep 19  2026 BOOT.BIN
+-rwxr-xr-x    1 root     root          3830 Sep 19  2026 boot.scr
+-rwxr-xr-x    1 root     root       4898555 Sep 19  2026 image.ub
+ls: /home/petalinux/sdrb: No such file or directory
+/usr/bin/python3
+  PID USER       VSZ STAT COMMAND
+    1 root     10624 S    {systemd} /sbin/init
+    2 root         0 SW   [kthreadd]
+    3 root         0 SW   [pool_workqueue_]
+    4 root         0 IW<  [kworker/R-rcu_g]
+    5 root         0 IW<  [kworker/R-rcu_p]
+    6 root         0 IW<  [kworker/R-slub_]
+    7 root         0 IW   [kworker/0:0-eve]
+    8 root         0 IW   [kworker/0:1-eve]
+    9 root         0 IW<  [kworker/0:0H-ev]
+   10 root         0 IW   [kworker/u4:0-ev]
+   11 root         0 IW<  [kworker/R-mm_pe]
+   12 root         0 SW   [ksoftirqd/0]
+   13 root         0 IW   [rcu_preempt]
+   14 root         0 SW   [migration/0]
+   15 root         0 SW   [cpuhp/0]
+   16 root         0 SW   [cpuhp/1]
+   17 root         0 SW   [migration/1]
+   18 root         0 SW   [ksoftirqd/1]
+   19 root         0 IW   [kworker/1:0-eve]
+   20 root         0 IW<  [kworker/1:0H-ev]
+   21 root         0 SW   [kdevtmpfs]
+   22 root         0 IW<  [kworker/R-inet_]
+   23 root         0 IW   [kworker/u4:1-ev]
+   24 root         0 IW   [kworker/1:1-rcu]
+   25 root         0 SW   [oom_reaper]
+   26 root         0 IW<  [kworker/R-write]
+   27 root         0 IW<  [kworker/R-kbloc]
+   28 root         0 IW<  [kworker/R-edac-]
+   29 root         0 SW   [watchdogd]
+   30 root         0 IW<  [kworker/1:1H-kb]
+   31 root         0 IW<  [kworker/R-rpcio]
+   32 root         0 IW<  [kworker/R-xprti]
+   33 root         0 SW   [kswapd0]
+   34 root         0 IW<  [kworker/R-nfsio]
+   35 root         0 IW   [kworker/1:2-eve]
+   36 root         0 SW   [spi1]
+   38 root         0 IW<  [kworker/u5:0]
+   39 root         0 IW<  [kworker/R-sdhci]
+   40 root         0 SW   [irq/46-mmc0]
+   41 root         0 IW<  [kworker/R-mld]
+   42 root         0 IW<  [kworker/0:1H-mm]
+   43 root         0 IW<  [kworker/R-ipv6_]
+   44 root         0 IW   [kworker/u4:2-ev]
+   45 root         0 IW<  [kworker/R-mmc_c]
+   46 root         0 IW<  [kworker/0:2H]
+   47 root         0 IW<  [kworker/1:2H]
+   48 root         0 SW   [jbd2/mmcblk0p2-]
+   49 root         0 IW<  [kworker/R-ext4-]
+   61 root         0 IW   [kworker/0:2-eve]
+   70 rpc       2816 S    /usr/sbin/rpcbind -w -f
+   72 root     16620 S    /usr/lib/systemd/systemd-journald
+  110 root     19360 S    /usr/lib/systemd/systemd-udevd
+  386 systemd-  9204 S    /usr/lib/systemd/systemd-resolved
+  387 systemd- 17564 S    /usr/lib/systemd/systemd-timesyncd
+  390 root      8168 S    /usr/lib/systemd/systemd-userdbd
+  394 root      8784 S    systemd-userwork: waiting...
+  395 root      8784 S    systemd-userwork: waiting...
+  396 root      8592 S    systemd-userwork: waiting...
+  400 root         0 IW   [kworker/u4:3]
+  403 root      2260 S    /usr/sbin/klogd -n
+  404 root      2260 S    /usr/sbin/syslogd -n
+  405 messageb  4172 S    /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+  408 root      8340 S    /usr/lib/systemd/systemd-logind
+  417 systemd-  9292 S    /usr/lib/systemd/systemd-networkd
+  426 root     13796 S    /usr/sbin/tcf-agent -d -L- -l0
+  428 root      1528 S    /sbin/agetty -o -p -- \u --noclear - linux
+  440 root     36920 S    python3 /usr/bin/usrp_hwd.py
+  443 root     38224 S    python3 /usr/bin/usrp_hwd.py
+  444 root     36904 S    python3 /usr/bin/usrp_hwd.py
+  447 root      3280 S    /bin/login --
+  451 petalinu  9840 S    /usr/lib/systemd/systemd --user
+  452 petalinu 10768 S    (sd-pam)
+  457 petalinu  2584 S    -sh
+  477 petalinu  2288 R    ps w
+BOARD_CHECK_END
+sdrb-uhd:~$ 

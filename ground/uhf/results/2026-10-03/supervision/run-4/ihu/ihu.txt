@@ -1,0 +1,20 @@
+> status
+STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=1505720111 peer=200733552 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=366 tx_fail=0 tx_timeout=0 rx=366 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=13 unknown=0 busy_drops=0 pending=0 uptime_ms=2774107
+> telem status
+AUTOTELEM enabled=0 period_ms=20000 next_ms=1830449 due=8 skipped=0 submitted=8 failed=0 pending=0 uptime_ms=2774610
+> hello
+SUBMITTED request=14 type=1 bytes=0
+RESULT request=14 outcome=CAN_HELLO_CONFIRMED peer=200733552 bytes=0 hex=
+> telem on 20
+AUTOTELEM enabled=1 period_ms=20000 next_ms=2795918 due=8 skipped=0 submitted=8 failed=0 pending=0 uptime_ms=2775918
+> PASSIVE_USB_OBSERVATION_NO_COMMANDS
+SUBMITTED request=15 type=114 bytes=128
+AUTOTELEM_SUBMITTED request=15 sequence=9
+RESULT request=15 outcome=WALTER_BENCH_RETURN peer=200733552 bytes=128 hex=0901c0090079010100100201000000000000000059bf772f002aa99b006001020201010101020200000000000000000a002aa99b00000000000000020000291c000027c6fffffdb600016a7e00005a25000027100000271000000001080000000000000000000067000518ee1810fffc0279343b01ed0000000720e2000147ad
+SUBMITTED request=16 type=114 bytes=128
+AUTOTELEM_SUBMITTED request=16 sequence=10
+RESULT request=16 outcome=WALTER_BENCH_RETURN peer=200733552 bytes=128 hex=0901c00a0079010100100201000000000000000059bf772f002af7bb006001020201010101020200000000000000000b002af7bb000000000000059700002915000027cafffffc900001655600005a3a0000271000002710000000010800000000000000000000670e8718ea1812fffa0270343c02220000000720e20001da9f
+> telem off
+AUTOTELEM enabled=0 period_ms=20000 next_ms=2835918 due=10 skipped=0 submitted=10 failed=0 pending=0 uptime_ms=2821235
+> status
+STATUS role=IHU_MCU fw=can-bench-v2 id=DF641455DB822427 boot=1505720111 peer=200733552 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=448 tx_fail=0 tx_timeout=0 rx=448 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=16 unknown=0 busy_drops=0 pending=0 uptime_ms=2821742

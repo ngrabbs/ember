@@ -1,0 +1,104 @@
+{
+  "status": "PASS_BOUNDED_NATIVE_HEADROOM_WITH_FRESH_UHF_TELEMETRY",
+  "stream_seconds": 60.58388227999967,
+  "settings": {
+    "mode": "transponder",
+    "rate": 614400,
+    "socket": "/home/petalinux/.cache/ember-binary-radio/control.sock",
+    "output": "/home/petalinux/ember-headroom-radio-01",
+    "seconds": 75,
+    "tx_frequency": 434200000.0,
+    "tx_gain": 70.0,
+    "packet_peak": 0.12,
+    "rx_frequency": 435100000.0,
+    "rx_gain": 76.0,
+    "passband": 20000,
+    "transition": 20000,
+    "forward_scale": 16.0,
+    "forward_peak": 0.25,
+    "transmit": true
+  },
+  "actual": {
+    "device_args": "type=sdrb,mgmt_addr=127.0.0.1,recv_frame_size=8000,send_frame_size=8000",
+    "tx_rate": 614400.0034706265,
+    "tx_clock": 614400.0034706265,
+    "tx_bandwidth": 614400.0,
+    "clock_source": "internal",
+    "samples_per_symbol": 512.0,
+    "rx_rate": 614400.0034706265,
+    "rx_clock": 614400.0034706265,
+    "rx_bandwidth": 614400.0
+  },
+  "headroom": {
+    "samples": 37181542,
+    "forwarded_clipped": 28432387,
+    "telemetry_clipped": 0,
+    "invalid": 0,
+    "forward_peak_before": 1.4169877286876351,
+    "forward_peak_after": 0.2500000298023206,
+    "telemetry_peak_before": 0.12000000673035761,
+    "output_peak": 0.37000003057557057,
+    "forward_limit": 0.25,
+    "telemetry_limit": 0.15000000596046448
+  },
+  "forwarded_clipped_fraction": 0.764690904965695,
+  "rx_async_events": {},
+  "tx_async_events": {},
+  "udp_delta": {
+    "InDatagrams": 28959,
+    "NoPorts": 0,
+    "InErrors": 0,
+    "OutDatagrams": 41074,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "tones": {
+    "5000": {
+      "on_off_db": 7.803777168909015,
+      "spectral_snr_db": 16.123854388989706,
+      "peak_hz": 4882.8125
+    },
+    "11000": {
+      "on_off_db": 29.939075824723748,
+      "spectral_snr_db": 34.53179996800658,
+      "peak_hz": 10986.328125
+    }
+  },
+  "fresh_packets": 3,
+  "identities": [
+    {
+      "inner_sequence": 74,
+      "sha256": "ea24ea2dc5fd8d9d28c0f7ec1ebcb3afb01803023e06c0f5833f4855041044e7",
+      "yamcs_reception": "2026-10-03T18:09:47.856Z"
+    },
+    {
+      "inner_sequence": 75,
+      "sha256": "d881d2db71f8743af4157bb008b577e5bedd1bdcc70e4893a94b160b66569c8f",
+      "yamcs_reception": "2026-10-03T18:09:55.299Z"
+    },
+    {
+      "inner_sequence": 76,
+      "sha256": "db3e1e67c80a4136356adae40702e23b6e860f92c6b90f00daf085e894b96331",
+      "yamcs_reception": "2026-10-03T18:10:04.003Z"
+    }
+  ],
+  "all_original_bytes_matched_at_ihu_can_socket_rf_yamcs": true,
+  "software_tests": 9,
+  "native_arithmetic_and_gnuradio_packet_mix_passed": true,
+  "native_module_sha256": "b893aece99f12be0753eaeecfac528fb69265ee48959e51db2bd6d0773ddbcf5",
+  "physical_setup": "Operator-confirmed LibreSDR TXA through DC blocks and approximately40dB attenuation to SDRB antenna_in; downlink remains antennas",
+  "implementation": "Opt-in compiled GNU Radio two-input mixer replaces Add in the optional application; no additional stream blocks, Python work callbacks or radio image changes",
+  "limits": [
+    "One60.6second stress check; this is not endurance qualification or a permanent cure for all U/O workloads.",
+    "Aggregate clip counts do not isolate individual tone slots or establish calibrated RF power, analog input headroom or self-interference.",
+    "Weak-signal transparency and phase preservation are proven in software. RF tones were detected; RF gain linearity and multi-signal/SSB distortion remain unqualified.",
+    "This is a hard magnitude bound, not an AGC. Frequent limiting at the stress gains is unsuitable evidence for linear amateur service.",
+    "All-antenna uplink and voice/SSB still require separate bounded checks after physical antenna restoration.",
+    "Real IHU packets were triggered over USB by the host; no autonomous IHU scheduling or uplink commands.",
+    "Yamcs archive byte identity is verified; the previously paused EPS display was not updated for this run.",
+    "AMSAT source, boot, FPGA, rootfs libraries and LTE image remain unchanged. Default application path retains the prior adder unless --forward-peak is supplied."
+  ]
+}

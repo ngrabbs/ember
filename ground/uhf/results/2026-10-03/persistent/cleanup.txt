@@ -1,0 +1,28 @@
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+python3 -c "import base64,pathlib;pathlib.Path.homme().joinpath('ember-uhf-20261003/radio_service.py').write_bytes(base64.b64decodee(pathlib.Path('/tmp/ember-sender.b64').read_bytes()))"; sha256sum ~/ember-uhf-200261003/radio_service.py
+9fe4bb7f8fdd491b355e55d1d064aff54ea6b544c8b840efad9819faf2d7bf39  /home/petalinux/ember-uhf-20261003/radio_service.py
+sdrb-uhd:~/ember-uhf-20261003$ 
+sdrb-uhd:~/ember-uhf-20261003$ 
+
+sdrb-uhd:~/ember-uhf-20261003$ 
+sudo -n ip link set can1 down; ip -brief link showw can0; ip -brief link show can1; ps w | grep -E 'radio_service|sdrb_can|can_forwward'; uhd_find_devices --args type=sdrb; tail -c 1200 ~/ember-uhf-20261003/nativve-mix-test-03.log
+can0             DOWN           <NOARP,ECHO> 
+can1             DOWN           <NOARP,ECHO> 
+ 1223 petalinu  2260 S    grep -E radio_service|sdrb_can|can_forward
+[0;32m[INFO] [UHD] [0;39mlinux; GNU C++ version 13.3.0; Boost_108400; UHD_4.8.0.HEAD-release
+--------------------------------------------------
+-- UHD Device 0
+--------------------------------------------------
+Device Address:
+    serial: 0AB90219
+    claimed: False
+    fpga: n/a
+    mgmt_addr: 127.0.0.1
+    name: sdrb-uhd
+    product: sdrb
+    type: sdrb
+
+
+{"status": "PASS_NATIVE_FILTERED_FORWARDING_PLUS_BINARY_INJECTION", "forwarded_tone_amplitude": 0.11950287281460499, "rejected_tone_amplitude": 0.0001325439196080707, "recovered_payload_bytes": 128, "injector": {"accepted": 1, "queued": 0, "expired": 0, "queue_full": 0, "emitted": 1, "output_samples": 270288, "writer_error": null, "accepting": false, "recent_packets": [{"sequence": 1, "begin": 131072, "end": 175872, "emitted": true}], "note": "Downstream samples are not RF reception"}}
+sdrb-uhd:~/ember-uhf-20261003$ 

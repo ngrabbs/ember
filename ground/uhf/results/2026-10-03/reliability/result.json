@@ -1,0 +1,146 @@
+{
+  "status": "PASS_AUTOMATIC_FRESH_TELEMETRY_WITH_MEASURED_RF_LOSS",
+  "timed_series": {
+    "sent": 10,
+    "received": 9,
+    "delivery_fraction": 0.9,
+    "missing_outer_sequence": 304
+  },
+  "fresh_automatic": {
+    "sent": 3,
+    "received": 3,
+    "identical_at_ihu_can_tx_rf_yamcs": true
+  },
+  "identities": [
+    {
+      "session": "live-02",
+      "outer_sequence": 200,
+      "inner_sequence": 3,
+      "sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd",
+      "yamcs_reception": "2026-10-03T13:13:28.930Z"
+    },
+    {
+      "session": "live-02",
+      "outer_sequence": 201,
+      "inner_sequence": 3,
+      "sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd",
+      "yamcs_reception": "2026-10-03T13:13:37.145Z"
+    },
+    {
+      "session": "live-02",
+      "outer_sequence": 202,
+      "inner_sequence": 3,
+      "sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd",
+      "yamcs_reception": "2026-10-03T13:13:44.929Z"
+    },
+    {
+      "session": "live-02",
+      "outer_sequence": 203,
+      "inner_sequence": 3,
+      "sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd",
+      "yamcs_reception": "2026-10-03T13:13:52.930Z"
+    },
+    {
+      "session": "live-02",
+      "outer_sequence": 204,
+      "inner_sequence": 3,
+      "sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd",
+      "yamcs_reception": "2026-10-03T13:14:01.313Z"
+    },
+    {
+      "session": "live-03",
+      "outer_sequence": 300,
+      "inner_sequence": 3,
+      "sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd",
+      "yamcs_reception": "2026-10-03T13:17:12.388Z"
+    },
+    {
+      "session": "live-03",
+      "outer_sequence": 301,
+      "inner_sequence": 3,
+      "sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd",
+      "yamcs_reception": "2026-10-03T13:17:20.600Z"
+    },
+    {
+      "session": "live-03",
+      "outer_sequence": 302,
+      "inner_sequence": 3,
+      "sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd",
+      "yamcs_reception": "2026-10-03T13:17:28.292Z"
+    },
+    {
+      "session": "live-03",
+      "outer_sequence": 303,
+      "inner_sequence": 3,
+      "sha256": "77711e47460c6df3848bd0524872055f76686d1b48a77ea63a726ba7ceb4a9bd",
+      "yamcs_reception": "2026-10-03T13:17:36.391Z"
+    },
+    {
+      "session": "auto-04",
+      "outer_sequence": 400,
+      "inner_sequence": 4,
+      "sha256": "fd7426194e0fbd58173c1859333549369fab3d4fb574847685db09690c8bf556",
+      "yamcs_reception": "2026-10-03T13:19:53.120Z"
+    },
+    {
+      "session": "auto-04",
+      "outer_sequence": 401,
+      "inner_sequence": 5,
+      "sha256": "ad5301a1efbe50a262cb8e0db05eef83564987aac2c00c2e03af9c060cbdafa7",
+      "yamcs_reception": "2026-10-03T13:20:13.130Z"
+    },
+    {
+      "session": "auto-04",
+      "outer_sequence": 402,
+      "inner_sequence": 6,
+      "sha256": "880bbda754476d070956527c6d6db810cf11d740a814fa664dca608efba3084f",
+      "yamcs_reception": "2026-10-03T13:20:34.341Z"
+    }
+  ],
+  "tests_passed": 9,
+  "baseline_excluded": "series-01 receive window ended during series; preparation was not separated",
+  "limits": [
+    "Small antenna bench sample; reliability not qualified",
+    "RF burst 304 not recovered from saved I/Q; RF vs decoder cause unresolved",
+    "SDRB clock is unsynchronized; use ground archive time",
+    "Per-packet UHD reopen takes about 20 seconds; continuous owner optimization remains",
+    "No ACK/retry, FEC, flight scheduling, uplink or installed background service"
+  ],
+  "source_sha256": {
+    "sdrb_tx.py": "2fe5ed56349f18852de65394b975e84dc6769a0d6c380c1ad5cdd1a887f15bc1",
+    "libresdr_live_rx.py": "d2af8ca703897414f451f4d5b63dfcc50e587f8476b0c9e9a9ad84c69f9530e9",
+    "stream_decoder.py": "d760ebd7399843e2436cc860e114e35214986a746829909efb33a0781052c276",
+    "can_forward.py": "d59e1b6fe58b17238d32e75a3c97fb02ddbdc76c20626dfa90dca644d4dc35a4",
+    "assess_series.py": "2e3cb98f5a7446b3b8ce0fcab9b7a3ccfd8197802974d954b23898d15596cfd7",
+    "packet_radio.py": "922a3e5f2dce81200ca33f97147c3d59600761152d6afcc65d0d636dec837803"
+  },
+  "settings": {
+    "center_frequency_hz": 434200000,
+    "packet_frequency_hz": 434100000,
+    "tx_gain": 70,
+    "rx_gain": 40,
+    "tx_channel": 1,
+    "tx_antenna": "TX1A_Direct1",
+    "rx_channel": 0,
+    "rx_antenna": "RX2"
+  },
+  "stop_test": {
+    "interrupted_receive_only": true,
+    "decoder_exitcode": 0,
+    "stream_errors": [],
+    "decoded_packets": 0
+  },
+  "cleanup": {
+    "sdrb_can0": "DOWN",
+    "sdrb_can1": "DOWN",
+    "sdrb_claimed": false,
+    "libresdr_usb_owner": false,
+    "radio_apps_running": false,
+    "yamcs_healthy": true
+  },
+  "local_tx_processing_seconds": [
+    20.481,
+    20.527,
+    20.522
+  ]
+}
