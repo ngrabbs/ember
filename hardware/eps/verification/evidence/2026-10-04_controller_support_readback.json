@@ -1,0 +1,123 @@
+{
+  "date": "2026-10-04",
+  "ERC_counts": {
+    "power_pin_not_driven/error": 1,
+    "pin_not_connected/error": 25
+  },
+  "symbols": {
+    "TCAN3413D_DRAFT_v3": {
+      "lib_id": "Ember_EPS_Candidates:TCAN3413D_DRAFT_v3",
+      "library": "Ember_EPS_Candidates",
+      "name": "TCAN3413D_DRAFT_v3",
+      "pin_count": 8,
+      "pins": [
+        {
+          "name": "TXD",
+          "number": "1",
+          "type": "input",
+          "x": -12.7,
+          "y": 5.08
+        },
+        {
+          "name": "STB",
+          "number": "8",
+          "type": "input",
+          "x": -12.7,
+          "y": 0
+        },
+        {
+          "name": "RXD",
+          "number": "4",
+          "type": "tri_state",
+          "x": -12.7,
+          "y": -5.08
+        },
+        {
+          "name": "CANH",
+          "number": "7",
+          "type": "bidirectional",
+          "x": 12.7,
+          "y": 2.54
+        },
+        {
+          "name": "CANL",
+          "number": "6",
+          "type": "bidirectional",
+          "x": 12.7,
+          "y": -2.54
+        },
+        {
+          "name": "VCC",
+          "number": "3",
+          "type": "power_in",
+          "x": -2.54,
+          "y": 12.7
+        },
+        {
+          "name": "VIO",
+          "number": "5",
+          "type": "power_in",
+          "x": 2.54,
+          "y": 12.7
+        },
+        {
+          "name": "GND",
+          "number": "2",
+          "type": "power_in",
+          "x": -12.7,
+          "y": -7.62
+        }
+      ],
+      "properties": {
+        "Datasheet": "https://www.ti.com/lit/ds/symlink/tcan3413.pdf",
+        "Description": "",
+        "Footprint": "",
+        "Reference": "U",
+        "Value": "TCAN3413DR"
+      }
+    },
+    "ECS_3225MV_DRAFT_v2": {
+      "lib_id": "Ember_EPS_Candidates:ECS_3225MV_DRAFT_v2",
+      "library": "Ember_EPS_Candidates",
+      "name": "ECS_3225MV_DRAFT_v2",
+      "pin_count": 4,
+      "pins": [
+        {
+          "name": "EN",
+          "number": "1",
+          "type": "input",
+          "x": -10.16,
+          "y": 0
+        },
+        {
+          "name": "OUT",
+          "number": "3",
+          "type": "tri_state",
+          "x": 10.16,
+          "y": 0
+        },
+        {
+          "name": "VDD",
+          "number": "4",
+          "type": "power_in",
+          "x": 0,
+          "y": 8.89
+        },
+        {
+          "name": "GND",
+          "number": "2",
+          "type": "power_in",
+          "x": -10.16,
+          "y": -5.08
+        }
+      ],
+      "properties": {
+        "Datasheet": "https://ecsxtal.com/store/pdf/ECS-3225MV.pdf",
+        "Description": "",
+        "Footprint": "",
+        "Reference": "Y",
+        "Value": "ECS-3225MV-160-BN-TR"
+      }
+    }
+  }
+}

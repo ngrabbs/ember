@@ -1,0 +1,431 @@
+{
+  "date": "2026-10-03",
+  "history": [
+    {
+      "commit": "d181fef",
+      "record": "commit d181fef4b3abccb7c611ccbfb0f6676bb72172b5\nAuthor:     Nick Grabbs <ngrabbs@gmail.com>\nAuthorDate: Wed Sep 2 14:30:01 2026 +0000\nCommit:     Nick Grabbs <ngrabbs@gmail.com>\nCommitDate: Wed Sep 2 14:30:01 2026 +0000\n\n      eps: correct the docs to 2-layer, bring the KiCad project in\n    \n      The EPS docs specified a 4-layer board. The KiCad project is 2-layer and\n      the fabbed rev A gerbers contain only Copper_Signal_Top and\n      Copper_Signal_Bot, so 2 is what was always built. The docs were wrong,\n      not the board.\n    \n      Correcting that is more than a number. The layout guide's ground rules\n      said \"L2 is sacred, do not route on it, do not split it\" -- meaningless\n      advice on a board with no L2. Rewritten around what is actually true: the\n      bottom pour is the return path, stitch the two pours every 5 to 10 mm and\n      densely at the switchers, and never let a trace on one layer split the\n      pour on the other beneath a power loop. The L3 power-plane zoning section\n      is replaced by top-layer distribution, and the via table, pre-fab\n      checklist and gerber layer map lose their inner-layer entries.\n    \n      Note for later: JLCPCB offers up to 4.5 oz on 2-layer, where 4-layer\n      outer is fixed at 1 oz. With no inner planes to spread current or heat,\n      2 oz is worth pricing on this board.\n    \n      KiCad project added and set up to match comms:\n    \n      - Renamed cubesat_eps - Copy to eps. The Altium importer had also baked\n        the project name into a symbol library nickname, so 55 lib_id\n        references moved with it; every lib_id still resolves to an embedded\n        definition.\n      - Both large sheets carried an uncompressed Windows BMP, 2.7 MB each.\n        Re-encoded as PNG at identical resolution: 2717 KB to 68 KB and 2737 KB\n        to 107 KB. The directory drops from 12 MB to 3.8 MB.\n      - Constraints brought to design-rules 5.1; min_clearance was 0.0, so DRC\n        had never checked this board.\n      - PWR and PWR_HIGH net classes added and assigned to the real net names.\n        A power board with no power classes was the wrong way round.\n      - eps.kicad_dru enforces minimum width on the high-current classes rather\n        than copying the comms 50 ohm rule, which is meaningless here.\n    \n      Known and recorded in TODO.md, not fixed here: the schematic is not a\n      hierarchy. The three .kicad_sch files are independent roots from the\n      import, so KiCad shows only the root's 17 components and not the other\n      59. Assembling them by hand means rewriting instance-path UUIDs and\n      risking annotation; it belongs in KiCad.\n    \n      Adds TODO.md at the root -- an index of the active front on each\n      subsystem plus everything not owned by a checklist inside the design\n      docs, linked from the README.\n      EOF\n\n README.md                                      |     3 +\n TODO.md                                        |   178 +\n hardware/eps/datasheet/eps_datasheet.md        |     2 +-\n hardware/eps/datasheet/eps_datasheet_light.md  |     2 +-\n hardware/eps/design/altium_eps_layout_guide.md |   152 +-\n hardware/eps/design/trace_sizing_quickref.md   |     5 +\n hardware/eps/kicad/Regulation.kicad_sch        | 16214 +++++++\n hardware/eps/kicad/Solar_Charger.kicad_sch     | 20921 +++++++++\n hardware/eps/kicad/eps.kicad_dru               |    34 +\n hardware/eps/kicad/eps.kicad_pcb               | 53957 +++++++++++++++++++++++\n hardware/eps/kicad/eps.kicad_pro               |   778 +\n hardware/eps/kicad/eps.kicad_sch               | 11125 +++++\n 12 files changed, 103297 insertions(+), 74 deletions(-)\n"
+    },
+    {
+      "commit": "e15b85f",
+      "record": "commit e15b85f29e8703bad1096985ed11770dff1910f6\nAuthor:     Nick <nick@macbookM5.local>\nAuthorDate: Wed Sep 2 09:44:02 2026 -0500\nCommit:     Nick <nick@macbookM5.local>\nCommitDate: Wed Sep 2 09:44:02 2026 -0500\n\n    attempt to convert altium to kicad, lost foot prints, not good\n\n hardware/eps/kicad/Regulation.kicad_sch    |  2345 +-\n hardware/eps/kicad/Solar_Charger.kicad_sch |  2614 +-\n hardware/eps/kicad/eps.kicad_pcb           | 37298 +++++++++------------------\n hardware/eps/kicad/eps.kicad_pro           |    18 +-\n hardware/eps/kicad/eps.kicad_sch           |  1677 +-\n 5 files changed, 15813 insertions(+), 28139 deletions(-)\n"
+    },
+    {
+      "commit": "344160a",
+      "record": "commit 344160a3eef5b50c8cffcf9c5364eca3c472a0ac\nAuthor:     Nick Grabbs <ngrabbs@gmail.com>\nAuthorDate: Wed Sep 2 15:52:17 2026 +0000\nCommit:     Nick Grabbs <ngrabbs@gmail.com>\nCommitDate: Wed Sep 2 15:52:17 2026 +0000\n\n     eps/kicad: assemble the schematic hierarchy and link it to the PCB\n    \n      The three .kicad_sch files were independent roots from the Altium import.\n      Opening the project showed only the root's 17 components; the other 60\n      were in files KiCad had no path to. Separately, the PCB shared no UUIDs\n      at all with any schematic -- it had been imported independently, so the\n      board-to-schematic link did not exist rather than being broken.\n    \n      Both are now fixed. Root sheet carries sheet symbols for Regulation and\n      Solar_Charger, and all 77 footprints link to their symbols: 17 on the\n      root, 28 in Regulation, 32 in Solar_Charger, matching the schematics\n      exactly. Sheet-local nets picked up hierarchical paths, which cleared\n      the \"via connected to unknown net\" warnings.\n    \n      Getting there took several passes and two things had to be repaired\n      first.\n    \n      Annotation. Building the hierarchy in KiCad re-annotated the child\n      sheets -- Solar_Charger went J1-J8 to J11-J18, C1-C24 became C41-C52 --\n      because a duplicate J5 blocked the assembly. The refdes are the only\n      link to the board, so 69 footprints were deleted as orphans. Every\n      symbol UUID survived, so the old annotation was restored exactly by\n      UUID, and the board was restored from the previous commit. The J5\n      collision is resolved properly: J5 is the JST connector, and the XT30\n      that shared its designator is now J10, on both the schematic and the\n      board.\n    \n      Footprint fields. The import left them unusable -- only 5 of 40 carried\n      a library prefix, and 10 pointed at\n      C__Users_dng_Documents_AltiumLL_SamacSys.PcbLib, a Windows path from the\n      machine that ran the import. All 77 are now the board's own qualified\n      ids, which removed about 60 \"missing a library name\" warnings per\n      update.\n    \n      The last 11 footprints would not link no matter how the update dialog\n      was configured: KiCad matched 66 by UUID path and never fell back to\n      reference designators for the remainder. Their paths were written\n      directly instead, following the convention the linked footprints already\n      used -- one segment for root-sheet parts, two for child-sheet parts.\n    \n      Update PCB from Schematic now reports 0 warnings and 0 errors.\n    \n      Known and unchanged: there is no fp-lib-table, so SamacSys: and Vault:\n    board, but adding a new part from either library will fail until the\n    libraries are configured.\n\n hardware/eps/kicad/Regulation.kicad_sch    |   168 +-\n hardware/eps/kicad/Solar_Charger.kicad_sch |   192 +-\n hardware/eps/kicad/eps.kicad_pcb           | 44180 +++++++++++++++++++++++----\n hardware/eps/kicad/eps.kicad_pro           |     2 +-\n hardware/eps/kicad/eps.kicad_sch           |    34 +-\n 5 files changed, 38249 insertions(+), 6327 deletions(-)\n"
+    }
+  ],
+  "release": {
+    "CubeSat_EPS_rev_A_Gerber.zip": {
+      "sha256": "e33f2a084105b3f018eb4a2330a377a3f7b3440b9e94d4347f7203f1081abf00"
+    },
+    "CubeSat_EPS_rev_A_BOM.csv": {
+      "sha256": "f2b816168b62cfdd4cd5c76feb232674d6a2decd4c75e8604a23c7d24768c5ea",
+      "encoding_used": "cp1252",
+      "header": [
+        "Name",
+        "Description",
+        "Designator",
+        "Footprint",
+        "LibRef",
+        "Quantity",
+        "LCSC Part #"
+      ],
+      "data_rows": 28
+    },
+    "CubeSat_EPS_rev_A_CPL.csv": {
+      "sha256": "8fc97b844ecb72f0a65899344a8a97c7070bbe066801efd5ad6a59b5c34aba55",
+      "encoding_used": "cp1252",
+      "header": [
+        "Designator",
+        "Comment",
+        "Layer",
+        "Footprint",
+        "Mid X",
+        "Mid Y",
+        "Rotation",
+        "Description"
+      ],
+      "data_rows": 77
+    }
+  },
+  "archive_entries": [
+    {
+      "name": "CubeSat_EPS.apr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        12
+      ],
+      "bytes": 4950
+    },
+    {
+      "name": "CubeSat_EPS_Copper_Signal_Bot.gbr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        10
+      ],
+      "bytes": 79099
+    },
+    {
+      "name": "CubeSat_EPS_Copper_Signal_Top.gbr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        10
+      ],
+      "bytes": 111096
+    },
+    {
+      "name": "CubeSat_EPS_Legend_Bot.gbr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        12
+      ],
+      "bytes": 5478
+    },
+    {
+      "name": "CubeSat_EPS_Legend_Top.gbr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        10
+      ],
+      "bytes": 40950
+    },
+    {
+      "name": "CubeSat_EPS_NPTH_Drill.gbr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        12
+      ],
+      "bytes": 365
+    },
+    {
+      "name": "CubeSat_EPS_Paste_Bot.gbr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        12
+      ],
+      "bytes": 352
+    },
+    {
+      "name": "CubeSat_EPS_Paste_Top.gbr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        12
+      ],
+      "bytes": 7154
+    },
+    {
+      "name": "CubeSat_EPS_Profile.gbr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        12
+      ],
+      "bytes": 1164
+    },
+    {
+      "name": "CubeSat_EPS_PTH_Drill.gbr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        12
+      ],
+      "bytes": 5223
+    },
+    {
+      "name": "CubeSat_EPS_Soldermask_Bot.gbr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        12
+      ],
+      "bytes": 5026
+    },
+    {
+      "name": "CubeSat_EPS_Soldermask_Top.gbr",
+      "timestamp": [
+        2026,
+        4,
+        25,
+        15,
+        15,
+        12
+      ],
+      "bytes": 10449
+    }
+  ],
+  "top_copper_generation_attribute": "%TF.GenerationSoftware,Altium Limited,Altium Designer,26.5.0 (11)*%",
+  "limitations": [
+    "Git commit messages are author records, not independently verified electrical acceptance.",
+    "ZIP timestamps are archive metadata, not proof of fabrication date.",
+    "No source file or copper connectivity was inspected in this history investigation."
+  ],
+  "cpl_comparison": {
+    "CPL_unique_references": 77,
+    "saved_unique_references": 77,
+    "CPL_only": [
+      "BT1",
+      "BT2",
+      "BT3",
+      "BT4",
+      "BT5",
+      "BT6",
+      "BT7",
+      "BT8",
+      "D2",
+      "D3",
+      "D4",
+      "TP6",
+      "TP7",
+      "TP8"
+    ],
+    "saved_only": [
+      "C4",
+      "C40",
+      "D5",
+      "D6",
+      "J10",
+      "J5",
+      "J7",
+      "J9",
+      "R16",
+      "R17",
+      "R20",
+      "R21",
+      "RS1",
+      "RS2"
+    ],
+    "different_literal_comments": [
+      {
+        "ref": "C1",
+        "CPL": "CGA3E2X7R1H104K080AD",
+        "saved": "GRM188R60J106ME47D"
+      },
+      {
+        "ref": "C10",
+        "CPL": "C1210C226M3RACTU",
+        "saved": "CL32A226KAJNNNE"
+      },
+      {
+        "ref": "C11",
+        "CPL": "CC0402KPX7R7BB104",
+        "saved": "C14663"
+      },
+      {
+        "ref": "C12",
+        "CPL": "CL32B106KLULNNE",
+        "saved": "CL21B103KBANNNC"
+      },
+      {
+        "ref": "C13",
+        "CPL": "CL32B106KLULNNE",
+        "saved": "CL21B103KBANNNC"
+      },
+      {
+        "ref": "C14",
+        "CPL": "CL05B104KB5NNNC",
+        "saved": "C14663"
+      },
+      {
+        "ref": "C15",
+        "CPL": "C0402C333K4RAC",
+        "saved": "CC0402KRX7R9BB333"
+      },
+      {
+        "ref": "C17",
+        "CPL": "CC0402KPX7R7BB104",
+        "saved": "CL05B104KO5NNNC"
+      },
+      {
+        "ref": "C18",
+        "CPL": "C1210C226M3RACTU",
+        "saved": "CL32A226KAJNNNE"
+      },
+      {
+        "ref": "C19",
+        "CPL": "C1210C226M3RACTU",
+        "saved": "CL32A226KAJNNNE"
+      },
+      {
+        "ref": "C2",
+        "CPL": "0402ZC223KAT2A",
+        "saved": "0402YD105KAT2A"
+      },
+      {
+        "ref": "C20",
+        "CPL": "CC0402KPX7R7BB104",
+        "saved": "C14663"
+      },
+      {
+        "ref": "C21",
+        "CPL": "CL32B106KLULNNE",
+        "saved": "GCM32EC7YA106KA03L"
+      },
+      {
+        "ref": "C22",
+        "CPL": "CL32B106KLULNNE",
+        "saved": "GCM32EC7YA106KA03L"
+      },
+      {
+        "ref": "C23",
+        "CPL": "CL05B104KB5NNNC",
+        "saved": "C14663"
+      },
+      {
+        "ref": "C24",
+        "CPL": "C0402C333K4RAC",
+        "saved": "CC0402KRX7R7BB333"
+      },
+      {
+        "ref": "C3",
+        "CPL": "C1210C226M3RACTU",
+        "saved": "04025C104KAT2A"
+      },
+      {
+        "ref": "C30",
+        "CPL": "LMK105B7104KVHF",
+        "saved": "EMK105B7104KV-F"
+      },
+      {
+        "ref": "C5",
+        "CPL": "CGA3E2X7R1H104K080AD",
+        "saved": "UMK316BBJ106KL-T"
+      },
+      {
+        "ref": "C6",
+        "CPL": "CC0805KKX5R6BB475",
+        "saved": "CC0402KRX7R8BB223"
+      },
+      {
+        "ref": "C7",
+        "CPL": "JMK105BJ105KV8F",
+        "saved": "UMK316BBJ106KL-T"
+      },
+      {
+        "ref": "C8",
+        "CPL": "CC0402KPX7R7BB104",
+        "saved": "CL05B104KO5NNNC"
+      },
+      {
+        "ref": "C9",
+        "CPL": "C1210C226M3RACTU",
+        "saved": "EEEFK1H151P"
+      },
+      {
+        "ref": "D1",
+        "CPL": "SS14",
+        "saved": "150060YS75000"
+      },
+      {
+        "ref": "J6",
+        "CPL": "TMM-102-03-L-S",
+        "saved": "B2B-PH-K-S(LF)(SN)"
+      },
+      {
+        "ref": "J8",
+        "CPL": "TMM-102-03-T-S",
+        "saved": "68000-102HLF"
+      },
+      {
+        "ref": "L1",
+        "CPL": "74405042047",
+        "saved": "XAL6060-682MEC"
+      },
+      {
+        "ref": "R1",
+        "CPL": "WSLP0805R0100FEA",
+        "saved": "CRCW0402100KFKED"
+      },
+      {
+        "ref": "R11",
+        "CPL": "CRCW060361K9FKTA",
+        "saved": "AC0603FR-0761K9L"
+      },
+      {
+        "ref": "R15",
+        "CPL": "CRCW060361K9FKTA",
+        "saved": "AC0603FR-0761K9L"
+      },
+      {
+        "ref": "R2",
+        "CPL": "CR0402AFX-1002GAS",
+        "saved": "CRCW04022K20JNED"
+      },
+      {
+        "ref": "R3",
+        "CPL": "CR0402AFX-1002GAS",
+        "saved": "1206W4F1002T5E"
+      },
+      {
+        "ref": "R4",
+        "CPL": "WSLP0805R0100FEA",
+        "saved": "1206W4F1002T5E"
+      },
+      {
+        "ref": "R5",
+        "CPL": "CR0402AFX-1002GAS",
+        "saved": "CRCW060310K0JNEA"
+      },
+      {
+        "ref": "R6",
+        "CPL": "RK73H2ALTD2R70F",
+        "saved": "CRCW060363K4FKEA"
+      },
+      {
+        "ref": "R7",
+        "CPL": "MCT0603ME6342BP100",
+        "saved": "CRCW060310K0FKEA"
+      },
+      {
+        "ref": "R8",
+        "CPL": "AC0603FR-07226KL",
+        "saved": "CRCW060310K0FKEA"
+      },
+      {
+        "ref": "R9",
+        "CPL": "RK73H1JTTD3162F",
+        "saved": "RT0603FRE072R49L"
+      }
+    ]
+  }
+}

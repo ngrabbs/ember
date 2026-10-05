@@ -1,0 +1,347 @@
+{
+  "date": "2026-10-04",
+  "status": "INCOMPLETE: sizing cases and planning rectangles; no accepted circuit/layout",
+  "operator_top_standoff_mm": 16,
+  "clearance_condition": "Nominal standoff; subtract upper-board underside protrusions and tolerance. Board reference faces not established.",
+  "assumptions": {
+    "minimum_converter_input_sensitivity_V": 4.5,
+    "pack_floor_provisional_V": 5,
+    "path_drop_allowance_sensitivity_V": 0.5,
+    "efficiency_assumed": 0.9,
+    "magnetic_inductance_multiplier_sensitivity": 0.7,
+    "load_current_not_measured": true
+  },
+  "buck_cases": [
+    {
+      "case": "nominal",
+      "effective_L_H": 5.6e-06,
+      "frequency_Hz": 400000.0,
+      "ripple_A_pp": 1.3343112244897959,
+      "peak_at_2A_A": 2.667155612244898,
+      "peak_at_3p5A_A": 4.167155612244898,
+      "ideal_load_ceiling_from_4p2A_peak_A": 3.532844387755102
+    },
+    {
+      "case": "initial_tolerance_and_frequency",
+      "effective_L_H": 4.48e-06,
+      "frequency_Hz": 360000.0,
+      "ripple_A_pp": 1.8532100340136048,
+      "peak_at_2A_A": 2.9266050170068025,
+      "peak_at_3p5A_A": 4.4266050170068025,
+      "ideal_load_ceiling_from_4p2A_peak_A": 3.2733949829931976
+    },
+    {
+      "case": "additional_magnetic_and_dither_sensitivity",
+      "effective_L_H": 3.136e-06,
+      "frequency_Hz": 329400.0,
+      "ripple_A_pp": 2.8933802248455973,
+      "peak_at_2A_A": 3.4466901124227984,
+      "peak_at_3p5A_A": 4.946690112422798,
+      "ideal_load_ceiling_from_4p2A_peak_A": 2.7533098875772017
+    }
+  ],
+  "buck_boost_2A_cases": [
+    {
+      "case": "nominal",
+      "input_V": 4.5,
+      "mode": "boost",
+      "effective_L_H": 1e-05,
+      "frequency_Hz": 400000.0,
+      "ripple_A_pp": 0.11249999999999998,
+      "estimated_average_inductor_A": 2.469135802469136,
+      "estimated_peak_inductor_A": 2.525385802469136
+    },
+    {
+      "case": "nominal",
+      "input_V": 5,
+      "mode": "transition: model required"
+    },
+    {
+      "case": "nominal",
+      "input_V": 8.4,
+      "mode": "buck",
+      "effective_L_H": 1e-05,
+      "frequency_Hz": 400000.0,
+      "ripple_A_pp": 0.5059523809523809,
+      "estimated_average_inductor_A": 2,
+      "estimated_peak_inductor_A": 2.2529761904761907
+    },
+    {
+      "case": "nominal",
+      "input_V": 35,
+      "mode": "buck",
+      "effective_L_H": 1e-05,
+      "frequency_Hz": 400000.0,
+      "ripple_A_pp": 1.0714285714285712,
+      "estimated_average_inductor_A": 2,
+      "estimated_peak_inductor_A": 2.5357142857142856
+    },
+    {
+      "case": "sensitivity",
+      "input_V": 4.5,
+      "mode": "boost",
+      "effective_L_H": 5.600000000000001e-06,
+      "frequency_Hz": 300000.0,
+      "ripple_A_pp": 0.2678571428571428,
+      "estimated_average_inductor_A": 2.469135802469136,
+      "estimated_peak_inductor_A": 2.6030643738977073
+    },
+    {
+      "case": "sensitivity",
+      "input_V": 5,
+      "mode": "transition: model required"
+    },
+    {
+      "case": "sensitivity",
+      "input_V": 8.4,
+      "mode": "buck",
+      "effective_L_H": 5.600000000000001e-06,
+      "frequency_Hz": 300000.0,
+      "ripple_A_pp": 1.2046485260770974,
+      "estimated_average_inductor_A": 2,
+      "estimated_peak_inductor_A": 2.6023242630385486
+    },
+    {
+      "case": "sensitivity",
+      "input_V": 35,
+      "mode": "buck",
+      "effective_L_H": 5.600000000000001e-06,
+      "frequency_Hz": 300000.0,
+      "ripple_A_pp": 2.5510204081632653,
+      "estimated_average_inductor_A": 2,
+      "estimated_peak_inductor_A": 3.2755102040816326
+    }
+  ],
+  "peak_sense_10mOhm_1pct": {
+    "minimum_trip_A": 3.811881188118812,
+    "maximum_trip_A": 5.909090909090909,
+    "nominal_5A_shunt_loss_W": 0.25
+  },
+  "system_cases": [
+    {
+      "case": "illustrative_idle",
+      "I3V3_A": 0.05,
+      "I5V_A": 0.1,
+      "output_W": 0.665,
+      "estimated_input_A_at_4p5V_90pct": 0.16419753086419756,
+      "estimated_input_A_at_7p27V_90pct": 0.10163533547302461
+    },
+    {
+      "case": "illustrative_recovery",
+      "I3V3_A": 0.2,
+      "I5V_A": 0.5,
+      "output_W": 3.16,
+      "estimated_input_A_at_4p5V_90pct": 0.780246913580247,
+      "estimated_input_A_at_7p27V_90pct": 0.482958887360538
+    },
+    {
+      "case": "both_rails_2A",
+      "I3V3_A": 2,
+      "I5V_A": 2,
+      "output_W": 16.6,
+      "estimated_input_A_at_4p5V_90pct": 4.098765432098766,
+      "estimated_input_A_at_7p27V_90pct": 2.5370625095521935
+    }
+  ],
+  "five_volt_load_step_capacitance": [
+    {
+      "step_A": 0.4,
+      "unserved_duration_us": 10,
+      "allowed_droop_V": 0.25,
+      "ideal_capacitance_uF": 16.0
+    },
+    {
+      "step_A": 0.4,
+      "unserved_duration_us": 25,
+      "allowed_droop_V": 0.25,
+      "ideal_capacitance_uF": 40.0
+    },
+    {
+      "step_A": 0.4,
+      "unserved_duration_us": 100,
+      "allowed_droop_V": 0.25,
+      "ideal_capacitance_uF": 160.0
+    },
+    {
+      "step_A": 1.9,
+      "unserved_duration_us": 10,
+      "allowed_droop_V": 0.25,
+      "ideal_capacitance_uF": 76.0
+    },
+    {
+      "step_A": 1.9,
+      "unserved_duration_us": 25,
+      "allowed_droop_V": 0.25,
+      "ideal_capacitance_uF": 190.0
+    },
+    {
+      "step_A": 1.9,
+      "unserved_duration_us": 100,
+      "allowed_droop_V": 0.25,
+      "ideal_capacitance_uF": 760.0
+    }
+  ],
+  "four_fet_gate_charge_budget": {
+    "Qg_max_reference_C": 7.3e-09,
+    "Vgs_reference_V": 4.5,
+    "frequency_Hz": 400000.0,
+    "charge_current_A": 0.01168,
+    "gate_drive_W": 0.05256,
+    "linear_bias_loss_from_35V_W": 0.35624,
+    "all_four_switching_scenario_not_actual_mode_power": true
+  },
+  "floorplan": {
+    "nominal_board_mm": [
+      96,
+      90
+    ],
+    "boxes": [
+      {
+        "id": "stack",
+        "x": 3,
+        "y": 12,
+        "w": 10,
+        "h": 66,
+        "lines": [
+          "Stack H1/H2",
+          "access"
+        ]
+      },
+      {
+        "id": "solar",
+        "x": 29,
+        "y": 3,
+        "w": 35,
+        "h": 7,
+        "lines": [
+          "Solar connectors"
+        ]
+      },
+      {
+        "id": "pack",
+        "x": 77,
+        "y": 3,
+        "w": 16,
+        "h": 10,
+        "lines": [
+          "XT30",
+          "access"
+        ]
+      },
+      {
+        "id": "can",
+        "x": 15,
+        "y": 14,
+        "w": 12,
+        "h": 28,
+        "lines": [
+          "CAN A/B",
+          "336 mm\u00b2"
+        ]
+      },
+      {
+        "id": "charger",
+        "x": 29,
+        "y": 14,
+        "w": 30,
+        "h": 23,
+        "lines": [
+          "Charger / PowerPath",
+          "690 mm\u00b2"
+        ]
+      },
+      {
+        "id": "bms",
+        "x": 66,
+        "y": 17,
+        "w": 25,
+        "h": 22,
+        "lines": [
+          "Pack protection",
+          "550 mm\u00b2"
+        ]
+      },
+      {
+        "id": "mcu",
+        "x": 15,
+        "y": 44,
+        "w": 20,
+        "h": 20,
+        "lines": [
+          "STM32 core",
+          "400 mm\u00b2"
+        ]
+      },
+      {
+        "id": "buck",
+        "x": 37,
+        "y": 40,
+        "w": 24,
+        "h": 18,
+        "lines": [
+          "3.3 V buck",
+          "432 mm\u00b2"
+        ]
+      },
+      {
+        "id": "isolation",
+        "x": 65,
+        "y": 42,
+        "w": 25,
+        "h": 18,
+        "lines": [
+          "RBF + solar OV",
+          "450 mm\u00b2 / open"
+        ]
+      },
+      {
+        "id": "rbf",
+        "x": 92,
+        "y": 41,
+        "w": 3,
+        "h": 20,
+        "lines": [
+          "RBF"
+        ]
+      },
+      {
+        "id": "sense",
+        "x": 14,
+        "y": 68,
+        "w": 22,
+        "h": 12,
+        "lines": [
+          "Sense harness",
+          "264 mm\u00b2"
+        ]
+      },
+      {
+        "id": "bb",
+        "x": 37,
+        "y": 63,
+        "w": 32,
+        "h": 24,
+        "lines": [
+          "5 V buck-boost",
+          "768 mm\u00b2"
+        ]
+      },
+      {
+        "id": "loads",
+        "x": 71,
+        "y": 64,
+        "w": 22,
+        "h": 16,
+        "lines": [
+          "Managed loads",
+          "352 mm\u00b2"
+        ]
+      }
+    ],
+    "represented_area_mm2": 5367,
+    "converter_reservation_mm2": 1200,
+    "previous_converter_reservation_mm2": 576,
+    "additional_converter_reservation_mm2": 624,
+    "checks": "rectangles within nominal board; no rectangle overlaps; not a courtyard/DRC or mechanical test"
+  }
+}

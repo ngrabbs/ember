@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-04",
+  "scratch": "/Users/nick/Documents/ChatGPT/EMBER/eps-rev-b-study/package-check-2026-10-04",
+  "CAN_symbol": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"lib_id\":\"Ember_EPS_Candidates:TCAN3413D_DRAFT\",\"library\":\"Ember_EPS_Candidates\",\"name\":\"TCAN3413D_DRAFT\",\"pin_count\":8,\"pins\":[{\"name\":\"TXD\",\"number\":\"1\",\"type\":\"input\",\"x\":-12.7,\"y\":5.08},{\"name\":\"STB\",\"number\":\"8\",\"type\":\"input\",\"x\":-12.7,\"y\":0.0},{\"name\":\"RXD\",\"number\":\"4\",\"type\":\"tri_state\",\"x\":-12.7,\"y\":-5.08},{\"name\":\"CANH\",\"number\":\"7\",\"type\":\"bidirectional\",\"x\":12.7,\"y\":2.54},{\"name\":\"CANL\",\"number\":\"6\",\"type\":\"bidirectional\",\"x\":12.7,\"y\":-2.54},{\"name\":\"VCC\",\"number\":\"3\",\"type\":\"power_in\",\"x\":-2.54,\"y\":12.7},{\"name\":\"VIO\",\"number\":\"5\",\"type\":\"power_in\",\"x\":2.54,\"y\":12.7},{\"name\":\"GND\",\"number\":\"2\",\"type\":\"power_in\",\"x\":0.0,\"y\":-12.7}],\"properties\":{\"Datasheet\":\"https://www.ti.com/lit/ds/symlink/tcan3413.pdf\",\"Description\":\"\",\"Footprint\":\"\",\"Reference\":\"U\",\"Value\":\"TCAN3413D\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "oscillator_symbol": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"lib_id\":\"Ember_EPS_Candidates:ECS_3225MV_DRAFT\",\"library\":\"Ember_EPS_Candidates\",\"name\":\"ECS_3225MV_DRAFT\",\"pin_count\":4,\"pins\":[{\"name\":\"EN\",\"number\":\"1\",\"type\":\"input\",\"x\":-10.16,\"y\":0.0},{\"name\":\"OUT\",\"number\":\"3\",\"type\":\"tri_state\",\"x\":10.16,\"y\":0.0},{\"name\":\"VDD\",\"number\":\"4\",\"type\":\"power_in\",\"x\":0.0,\"y\":8.89},{\"name\":\"GND\",\"number\":\"2\",\"type\":\"power_in\",\"x\":0.0,\"y\":-8.89}],\"properties\":{\"Datasheet\":\"https://ecsxtal.com/store/pdf/ECS-3225MV.pdf\",\"Description\":\"\",\"Footprint\":\"\",\"Reference\":\"Y\",\"Value\":\"ECS-3225MV-160-BN-TR\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "CAN_pads": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"pad_count\":8,\"pads\":[{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"1\",\"x\":25.525,\"y\":6.095},{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"2\",\"x\":25.525,\"y\":7.365},{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"3\",\"x\":25.525,\"y\":8.635},{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"4\",\"x\":25.525,\"y\":9.905},{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"5\",\"x\":30.475,\"y\":9.905},{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"6\",\"x\":30.475,\"y\":8.635},{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"7\",\"x\":30.475,\"y\":7.365},{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"8\",\"x\":30.475,\"y\":6.095}],\"reference\":\"U2\",\"source\":\"file\"}"
+      }
+    ],
+    "isError": false
+  },
+  "generic_oscillator_pads": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"pad_count\":4,\"pads\":[{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"1\",\"x\":26.95,\"y\":17.825},{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"2\",\"x\":29.05,\"y\":17.825},{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"3\",\"x\":29.05,\"y\":16.175},{\"layers\":[\"F.Cu\",\"F.Mask\",\"F.Paste\"],\"net\":\"\",\"number\":\"4\",\"x\":26.95,\"y\":16.175}],\"reference\":\"Y1\",\"source\":\"file\"}"
+      }
+    ],
+    "isError": false
+  },
+  "custom_oscillator_pad_query": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Footprint 'Y2' not found"
+      }
+    ],
+    "isError": true
+  },
+  "note": "Custom oscillator placement reported success and IPC2581 exports Y2 and four package pins; direct get_component_pads returned not found. Acceptance incomplete."
+}

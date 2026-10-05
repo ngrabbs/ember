@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-04",
+  "scope": "Disposable essential buck stage",
+  "results": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"floating_count\":0,\"floating_endpoints\":[],\"valid\":true}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"unconnected_count\":0,\"unconnected_pins\":[],\"valid\":true}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"short_count\":0,\"shorts\":[]}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"orphan_count\":0,\"orphans\":[],\"tolerance\":0.05}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"errors\":1,\"total\":1,\"violations\":[{\"description\":\"Input Power pin not driven by any Output Power pins: Symbol #PWR003 Pin 1 [Power input, Line]\",\"items\":[{\"description\":\"Symbol #PWR003 Pin 1 [Power input, Line]\",\"uuid\":\"382b9f86-e8c0-4c9f-be71-ec4dee05ce94\",\"x\":2.032,\"y\":0.8001}],\"rule\":\"power_pin_not_driven\",\"severity\":\"error\",\"sheet\":\"/\",\"x\":2.032,\"y\":0.8001}],\"warnings\":0}"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "symbol": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"lib_id\":\"Ember_EPS_Power:LMR51635XDDCR_DRAFT_v2\",\"library\":\"Ember_EPS_Power\",\"name\":\"LMR51635XDDCR_DRAFT_v2\",\"pin_count\":6,\"pins\":[{\"name\":\"FB\",\"number\":\"1\",\"type\":\"input\",\"x\":10.16,\"y\":-5.08},{\"name\":\"EN\",\"number\":\"2\",\"type\":\"input\",\"x\":-10.16,\"y\":0.0},{\"name\":\"VIN\",\"number\":\"3\",\"type\":\"power_in\",\"x\":-10.16,\"y\":5.08},{\"name\":\"GND\",\"number\":\"4\",\"type\":\"power_in\",\"x\":-10.16,\"y\":-5.08},{\"name\":\"SW\",\"number\":\"5\",\"type\":\"power_out\",\"x\":10.16,\"y\":0.0},{\"name\":\"CB\",\"number\":\"6\",\"type\":\"passive\",\"x\":10.16,\"y\":5.08}],\"properties\":{\"Datasheet\":\"https://www.ti.com/lit/ds/symlink/lmr51635.pdf\",\"Description\":\"\",\"Footprint\":\"\",\"Reference\":\"U\",\"Value\":\"LMR51635XDDCR\"}}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "footprint": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"description\":\"TI DDC0006A 4214841/E 08/2024 example land pattern; draft assembly settings\",\"graphic_count\":5,\"graphics\":[{\"end\":{\"x\":2.15,\"y\":1.95},\"fill\":\"none\",\"item_id\":null,\"layer\":\"F.CrtYd\",\"start\":{\"x\":-2.15,\"y\":-1.95},\"stroke_width_mm\":0.05,\"type\":\"rect\"},{\"end\":{\"x\":0.8,\"y\":-1.6},\"item_id\":null,\"layer\":\"F.SilkS\",\"start\":{\"x\":-0.8,\"y\":-1.6},\"stroke_width_mm\":0.12,\"type\":\"line\"},{\"end\":{\"x\":0.8,\"y\":1.6},\"item_id\":null,\"layer\":\"F.SilkS\",\"start\":{\"x\":-0.8,\"y\":1.6},\"stroke_width_mm\":0.12,\"type\":\"line\"},{\"center\":{\"x\":-1.35,\"y\":-1.6},\"fill\":\"solid\",\"item_id\":null,\"layer\":\"F.SilkS\",\"radius_mm\":0.10000000000000009,\"stroke_width_mm\":0.1,\"type\":\"circle\"},{\"closed\":true,\"fill\":\"none\",\"item_id\":null,\"layer\":\"F.Fab\",\"point_count\":5,\"points\":[{\"x\":-0.8,\"y\":-1.05},{\"x\":-0.4,\"y\":-1.45},{\"x\":0.8,\"y\":-1.45},{\"x\":0.8,\"y\":1.45},{\"x\":-0.8,\"y\":1.45}],\"stroke_width_mm\":0.1,\"type\":\"poly\"}],\"has_3d_model\":false,\"has_courtyard\":true,\"name\":\"TI_DDC0006A_SOT23_6_DRAFT\",\"pad_count\":6,\"path\":\"/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/libraries/Ember_EPS_Power.pretty/TI_DDC0006A_SOT23_6_DRAFT.kicad_mod\"}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "limitations": [
+    "save_project requires live IPC and did not run successfully; file-backed mutations and fresh CLI exports succeeded",
+    "get_component_pads file query returned U1 not found; direct IPC-2581 and GenCAD export verify saved placement",
+    "Symbol default Footprint/Description remain unset; explicit placed instance has them",
+    "ERC retains one undriven output power marker behind passive inductor"
+  ]
+}
