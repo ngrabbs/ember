@@ -1,5 +1,8 @@
 # EMBER bench dictionary and codec
 
+For day-to-day commanding, responses, displays and replay, start with the
+[Yamcs operator guide](../../docs/user/yamcs.md).
+
 [Contract](../../system/protocols/ember_bench_v1.md) · [Ground checklist](../../system/ground_station/TODO.md)
 
 `dictionary.json` is the machine-readable bench subset of Dustin's operation

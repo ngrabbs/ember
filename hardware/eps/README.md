@@ -1,5 +1,12 @@
 # Electrical Power System (EPS)
 
+**Configuration review pending, 2026-10-04.** This older architecture record
+uses a TPSM5D1806 regulation target; the [Rev A bring-up plan](bringup/phase1_validation.md)
+describes the TPS62933 hardware. Newer EPS Rev B planning is in a separate
+active worktree, listed in the [documentation review](../../docs/review/README.md). Keep revision-specific
+parts and validation claims separate until reconciled; this page does not
+establish the currently assembled regulator or a completed rail qualification.
+
 ## Purpose
 
 This directory tracks EPS architecture, interfaces, implementation status, and

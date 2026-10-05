@@ -1,5 +1,8 @@
 # Firmware guide
 
+For operator use rather than firmware development, see the
+[UART and CAN console guides](../user/README.md).
+
 [Documentation home](../README.md)
 
 | Work | Reference |

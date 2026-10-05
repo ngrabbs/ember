@@ -7,7 +7,7 @@ that coordinates EPS, communications, and payload behavior.
 
 ## System Role
 
-- Execute mode logic (safe, nominal, high-duty)
+- Intended mode behavior: see the [operations draft](../../../docs/architecture/operations/README.md); the full mode manager is not implemented
 - Serve as command authority for subsystem actions
 - Aggregate housekeeping telemetry for downlink
 - Provide fault supervision and recovery orchestration
@@ -17,10 +17,11 @@ that coordinates EPS, communications, and payload behavior.
 - MCU: RP2040
 - Primary board interfaces:
   - I2C for EPS housekeeping telemetry
-  - SPI for IHU <-> comms bidirectional data exchange
-  - UART for debug and bring-up
-- Planned Iteration 2 interface:
-  - CAN control-plane network via external CAN controller/transceiver
+  - UART for debug and bring-up in the FreeRTOS prototype
+  - CAN for the standalone Feather bench packet path
+  - SPI remains an older stack signal allocation
+- Intended production interface:
+  - CAN A/B via external controllers/transceivers; redundant operation remains unqualified
 
 ## Functional Block View
 
@@ -42,7 +43,8 @@ Subsystem Telemetry -> IHU Aggregator -> Downlink Packet Assembly -> Comms TX
 - Restrict non-essential loads/operations
 - Default boot mode at power-up/reset
 - Exit condition (provisional): transition to nominal only after EPS I2C
-  telemetry and comms SPI heartbeat are both valid for consecutive checks
+  telemetry and the selected comms link are both valid for consecutive checks;
+  the health policy and complete mode manager remain unimplemented
 
 ### Nominal Mode
 
@@ -50,10 +52,11 @@ Subsystem Telemetry -> IHU Aggregator -> Downlink Packet Assembly -> Comms TX
 - Command handling and subsystem coordination
 - Standard payload and communications duty cycle
 
-### High-Duty Mode
+### Legacy high-duty concept
 
-- Elevated telemetry/payload transfer throughput
-- Controlled by mission timeline or command
+The current [operations draft](../../../docs/architecture/operations/README.md)
+places scheduled higher-duty activity within NOMINAL. The earlier separate-mode
+concept is retained here as history, not an implemented mode.
 
 ## Design Priorities
 
@@ -67,7 +70,8 @@ Subsystem Telemetry -> IHU Aggregator -> Downlink Packet Assembly -> Comms TX
 - Final pin-map and connector assignment for SPI/I2C/UART/GPIO alerts
 - Watchdog architecture (single-stage vs staged recovery)
 - Safe-mode trigger thresholds and clear-exit conditions
-- CAN controller/transceiver part selection for Iteration 2
+- Production CAN A/B controller allocation and failover policy; the single-bus
+  Feather bench already uses MCP25625
 
 ## Related Documents
 

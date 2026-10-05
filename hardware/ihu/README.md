@@ -9,8 +9,10 @@ bring-up validation for the RP2040-based system controller.
 
 - MCU baseline: RP2040
 - Primary role: command authority, mode management, and telemetry aggregation
-- Near-term interconnects: I2C (EPS housekeeping), SPI (comms data path)
-- Planned expansion: CAN control plane (Iteration 2)
+- Implemented FreeRTOS prototype: I2C EPS reads, jumper I2C comms status/ping, UART CLI
+- Separate CAN Feather bench: single-bus packet transport and native EPS telemetry
+- Intended production packet transport: CAN A/B; complete runtime integration and failover remain open
+- SPI: older board allocation; packet firmware is not implemented
 
 ## Documentation Map
 

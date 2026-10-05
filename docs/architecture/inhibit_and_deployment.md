@@ -4,7 +4,9 @@ Updated 2026-09-23. This document separates the CDS Rev. 14.1 requirements,
 EMBER's proposed flight architecture, and the documented v0.1 bench circuit.
 It is not a verification of the installed hardware or flight compliance.
 
-See [Startup Sequence](startup_sequence.md) for the reusable Mermaid diagram.
+A separate startup-sequence diagram is not present in this checkout. Use the
+[proposed transition table](operations/02-transition-table.md) for startup
+behavior; diagram creation remains documentation work.
 EMBER has one burn-wire-released UHF antenna and fixed solar panels.
 
 ## Requirements baseline

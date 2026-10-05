@@ -1,5 +1,8 @@
 # Yamcs ground lab
 
+For day-to-day commanding, responses, displays and replay, start with the
+[Yamcs operator guide](../../docs/user/yamcs.md).
+
 [Ground station checklist](../../system/ground_station/TODO.md) · [Ground software](../README.md)
 
 Two isolated Yamcs instances run together: `myproject` keeps the pinned

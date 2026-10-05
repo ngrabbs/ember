@@ -6,7 +6,8 @@ field types, enum values and units. Dustin's merged operations documents own
 application meanings; this subset preserves their command and telemetry IDs.
 New numeric parameter, stage, endpoint and reason values here need his review.
 The codec does not dispatch commands or authenticate uplink. The simulated and spare-Pico GROUND_TEST endpoints dispatch the bench subset.
-The real IHU EPS diagnostic path uses an observational Pi wrapper; see the
+The FreeRTOS IHU EPS UART path uses an observational Pi wrapper. The separate
+CAN Feather bench also produces native EPS packets; see the
 [POWER_STATUS payload v1](eps_power_status_v1.md) for provenance and quality.
 
 ## Envelope

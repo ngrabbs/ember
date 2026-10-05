@@ -30,4 +30,5 @@ shared assignments belong here.
 Ground station bench build: [checklist](ground_station/TODO.md).
 
 Shared macOS/m75q development and container builds:
-[development baseline](integration/development_baseline.md).
+[October 1 development baseline record](integration/development_baseline.md)
+(historical; check local Git state before building).

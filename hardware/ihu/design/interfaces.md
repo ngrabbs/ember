@@ -1,5 +1,9 @@
 # Internal Housekeeping Unit Interfaces
 
+**Scope:** board allocation and provisional targets. The FreeRTOS prototype
+uses 100 kHz I2C0 GP4/GP5; the CAN Feather EPS reader uses 100 kHz I2C1 GP2/GP3.
+Use the [operator guide](../../../docs/user/README.md) for the appropriate application.
+
 ## Scope
 
 Define the external interfaces for the internal housekeeping unit board and assign
@@ -10,9 +14,9 @@ ownership expectations for each link.
 | Interface | Peer | Direction | Baseline Use | Status |
 |---|---|---|---|---|
 | I2C (`SCL`, `SDA`) | EPS | Bidirectional | Charger/housekeeping telemetry | In progress |
-| SPI (`SCLK`, `MOSI`, `MISO`, `CS_N`) | Comms RP2040 | Bidirectional | Command/data exchange | Baseline planned |
-| UART (`TX`, `RX`) | Ground/debug host | Bidirectional | Bring-up logs and diagnostics | Baseline planned |
-| CAN (`CANH`, `CANL`) | Comms/payload nodes | Bidirectional | Control-plane messaging | Iteration 2 planned |
+| SPI (`SCLK`, `MOSI`, `MISO`, `CS_N`) | Comms RP2040 | Bidirectional | Older stack allocation | Packet firmware not implemented |
+| UART (`TX`, `RX`) | Ground/debug host | Bidirectional | FreeRTOS prototype logs and CLI | Implemented at 115200 8N1; Feather bench uses USB console |
+| CAN (`CANH`, `CANL`) | Comms/payload nodes | Bidirectional | Intended production packet transport | Single-bus Feather bench demonstrated; A/B integration pending |
 
 ## Control and Fault Signals (Provisional)
 
@@ -28,7 +32,7 @@ ownership expectations for each link.
 
 - I2C target: 400 kHz fast mode for housekeeping telemetry
 - SPI target: 4 to 8 MHz initial operating range
-- CAN target (Iteration 2): 500 kbps classic CAN 2.0B
+- CAN: 500 kbit/s classic CAN exercised on the Feather harness; production A/B remains planned
 - IHU-comms heartbeat target: 100 ms nominal interval
 
 ## Ownership Rules
