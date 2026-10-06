@@ -1,5 +1,7 @@
 # Comms schematic guide
 
+**KiCad work policy:** read the [shared schematic policy](../../conventions/kicad_schematic_policy.md) before building, editing, or reviewing. It governs wiring, page layout, labels, field presentation, library reuse, net classes, and electrical/visual acceptance. Existing names and revision-specific examples below remain design records; they do not authorize automatic net renaming or override the policy.
+
 [Design guide](README.md) · [KiCad project](../kicad/README.md)
 
 Use the saved KiCad project for component connectivity and the

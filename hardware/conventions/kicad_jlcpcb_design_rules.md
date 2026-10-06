@@ -1,5 +1,12 @@
 # KiCad Design Rules & Impedance — JLCPCB Constraints
 
+For schematic capture and project net-class intent, first read the
+[shared schematic policy](kicad_schematic_policy.md), especially S09/S10.
+Preserve approved physical rules; rail names in this document include legacy
+interfaces. Verify actual class membership after any authorized rename.
+This PCB guide does not authorize stackup, geometry, or routing changes during
+a schematic-only task.
+
 **Scope:** every PCB migrated to or started in KiCad (comms transceiver
 first). JLCPCB standard 4-layer 1.6 mm FR4 (`JLC04161H-7628`) unless stated
 otherwise.

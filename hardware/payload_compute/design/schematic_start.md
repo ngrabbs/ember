@@ -1,5 +1,7 @@
 # Payload compute: schematic-start baseline
 
+**KiCad work policy:** read the [shared schematic policy](../../conventions/kicad_schematic_policy.md) before building, editing, or reviewing. It governs wiring, page layout, labels, field presentation, library reuse, net classes, and electrical/visual acceptance. Existing names and revision-specific examples below remain design records; they do not authorize automatic net renaming or override the policy.
+
 2026-10-04 baseline; capture started 2026-10-05. **Prototype schematic capture is underway.** Architecture,
 ownership, interfaces and implementation order are defined below. This does
 not mean that every component is qualified, that three synchronized Jetson

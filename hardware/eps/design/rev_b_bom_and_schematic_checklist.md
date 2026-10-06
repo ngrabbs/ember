@@ -1,5 +1,7 @@
 # EPS Rev B provisional BOM and schematic checklist
 
+**KiCad work policy:** read the [shared schematic policy](../../conventions/kicad_schematic_policy.md) before building, editing, or reviewing. It governs wiring, page layout, labels, field presentation, library reuse, net classes, and electrical/visual acceptance. Existing names and revision-specific examples below remain design records; they do not authorize automatic net renaming or override the policy.
+
 Draft dated 2026-10-03. This is the implementation handoff for the planned single-board EPS revision. It separates proposed components from reference parts and unresolved circuit selections. It is not a complete assembly BOM or an order list. Quantities below cover functional blocks; supporting passives, protection, test points and connector mating parts must be added from the completed schematic.
 
 [Architecture and decisions](rev_b_plan.md) · [Controller and CAN circuits](rev_b_pin_and_fit_study.md) · [Source isolation](rev_b_source_isolation_study.md) · [BMS and temperature](rev_b_bms_and_temperature_spec.md)

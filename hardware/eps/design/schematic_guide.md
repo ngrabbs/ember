@@ -1,5 +1,7 @@
 # Schematic Instructions — EPS Board
 
+**KiCad work policy:** read the [shared schematic policy](../../conventions/kicad_schematic_policy.md) before building, editing, or reviewing. It governs wiring, page layout, labels, field presentation, library reuse, net classes, and electrical/visual acceptance. Existing names and revision-specific examples below remain design records; they do not authorize automatic net renaming or override the policy.
+
 **Board:** [`hardware/eps/kicad/`](../kicad/), project `eps`.
 **Rules and conventions:**
 [`../../conventions/kicad_jlcpcb_design_rules.md`](../../conventions/kicad_jlcpcb_design_rules.md)
@@ -75,9 +77,10 @@ hierarchy — R1, C1 and so on appear once each, not once per sheet.
 
 ### Net Name Convention
 
-Use these global net names consistently across all sheets. Use **power
-symbols** (not plain labels) for supply rails — a power symbol is global
-across the hierarchy without needing a hierarchical label.
+The following names record the existing EPS design; retain them until an
+explicit migration updates its interface contracts. For new work, follow
+S01/S02 for downward ground/upward power symbols and S05 for label scope:
+global labels for cross-page signals, local labels for same-page signals.
 
 | Net Name | Type | Description |
 |---|---|---|
@@ -1339,9 +1342,10 @@ Not in v0.1 — see the open items in
 
 Note: Sheet 4 has a **cross-sheet tie** to Sheet 2. The `JP_RBF`
 jumper pin 1 is the same net as the R20/R21 EN midpoint on Sheet 2.
-Use a matching label on both sheets so ERC ties them together. Across a
-hierarchy this needs a **hierarchical label** on each sheet plus a matching
-sheet pin, or a global label if the net should be visible everywhere.
+For new cross-page signal connections, use matching **global labels** on
+both sheets under S05. Preserve an existing accepted hierarchical interface
+until its migration is explicitly authorized; repeated-sheet interfaces need
+the policy's separate hierarchy decision.
 
 ---
 
