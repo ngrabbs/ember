@@ -92,6 +92,8 @@ source. Altium projects are **not** tracked: the formats are binary and the
 project trees dwarf the design. For Altium boards this repository carries the
 written design record, fabrication outputs, and measured results only. See
 `hardware/conventions/` for the design rules every board is built to.
+Agents start with [AGENTS.md](AGENTS.md); all KiCad schematic work follows the
+[shared schematic policy](hardware/conventions/kicad_schematic_policy.md).
 
 ---
 

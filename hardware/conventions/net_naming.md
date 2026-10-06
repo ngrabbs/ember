@@ -10,7 +10,10 @@ This document defines how nets are named on every schematic in the
 project. The goal is wildcard-friendly grouping, readable DRC reports,
 and cross-board consistency.
 
-If you're laying out a new board, read this first.
+Before schematic work, read the [shared schematic policy](kicad_schematic_policy.md)
+in full. Its S01/S02/S05/S10 rules supersede older naming and label-scope
+guidance here for new or explicitly migrated circuits. Existing interface
+names remain intact until a migration is authorized.
 
 ---
 
@@ -44,7 +47,7 @@ makes wildcard-based Net Class membership work.
 | `LO_` | Local oscillator distribution (RF, but called out for clarity) | `LO_LPF_NODE1` — or fold under `RF_LO_*` if you prefer |
 | `BB_` | Baseband / analog audio (DC to ~100 kHz analog) | `BB_IF_OUT`, `BB_FILT_OUT`, `BB_ADC_IN` |
 | `DIG_` | Digital signals (slow logic, GPIO, I²C, SPI, UART) | usually unnecessary if the net's functional name is clear (e.g. `SPI_MISO` is self-evident) |
-| `PWR_` | Power rails | usually use **power ports** instead — see Power and Ground section |
+| `PWR_` | Legacy power-net prefix | Preserve existing interfaces; new supplies use voltage-first **power symbols** below |
 | `ANA_` | General analog (sensor outputs, op-amp biases) when not baseband | `ANA_VREF`, `ANA_BIAS_25V` |
 | `THM_` | Thermal / temperature sense signals | `THM_BATT_NTC`, `THM_MMIC_DIODE` |
 
@@ -95,29 +98,39 @@ Use **power symbols** for supply rails, not plain labels with a `PWR_`
 prefix. A power symbol is global across the whole hierarchy without
 needing a hierarchical label or sheet pin.
 
-Canonical rail names across the project:
+For new or explicitly migrated fixed supplies, use voltage-first names:
+`3V3`, `5V0`, `1V8`, `12V0`, with purpose suffixes such as `3V3_MCU` or
+`5V0_USB`. Use an upward stock power symbol with its Value set to the exact
+net name, then verify the exported connectivity. Do not use `VCC`, `VDD`,
+or a `PWR_` prefix as new supply-net names.
 
-| Net name | Meaning |
+Existing shared interfaces use the following legacy names; preserve them
+until a coordinated migration updates the affected schematics, PCB net
+references, net-class patterns, and interface documents:
+
+| Existing net name | Meaning |
 |---|---|
-| `+3V3` | 3.3 V regulated rail (EPS-supplied via stack-bus) |
-| `+5V` | 5.0 V regulated rail (EPS-supplied via stack-bus) |
-| `VBAT` | Unregulated battery bus (~7 V nominal, ~6 V to ~8.4 V) |
-| `GND` | Single ground reference (do not split analog/digital) |
+| `+3V3` | 3.3 V regulated stack rail |
+| `+5V` | 5.0 V regulated stack rail |
+| `VBAT` | Variable battery bus; do not replace with an invented fixed voltage |
+| `GND` | Existing shared ground reference |
 
-**Notation rules:**
-- Always include the `+` sign on positive rails (`+3V3`, not `3V3`)
-- Use `V3` notation, not `V3.3` or `V_3.3` or `_3V3` (`+3V3`, `+1V8`)
-- `GND` only — no `AGND`/`DGND`/`PGND` (see RF layout guidelines for
-  why a single solid plane outperforms split grounds at any
-  frequency above ~1 MHz)
+Agree naming for variable and negative rails before adding them. Keep
+independent regulator outputs and filtered/gated segments distinct, even
+when their nominal voltages match. Ground uses downward symbols, never
+labels. Preserve intentionally distinct analog, isolated, and chassis
+returns; neither this convention nor a drawing cleanup authorizes merging
+ground domains or changing an approved board ground architecture.
 
-If you need a derived or filtered local rail on a single board, prefix
-it to indicate scope:
+---
 
-```
-+3V3_LNA       ← LNA-filtered +3V3, board-local
-+5V_TX_GATED   ← +5V switched by RP2040 GPIO
-```
+## Differential pairs
+
+New pairs use a matched base ending in `_P` / `_N` (S10), for example
+`USB2_D_CONN_P` / `USB2_D_CONN_N`. Lane, endpoint, and segment identifiers
+go before the final polarity suffix. Verify resolved sheet paths and
+manufacturer polarity mapping. Preserve existing pair names until an
+authorized migration; suffixes alone do not prove electrical equivalence.
 
 ---
 
@@ -164,9 +177,12 @@ label overrides the auto-generated name.
 
 Costs a few seconds per net at draw time and saves the recovery work below.
 
-Use a **hierarchical label** plus a matching sheet pin when the net has to
-cross between sheets, or a **global label** when it should be visible
-everywhere.
+Use **global labels** for signals that actually cross pages and **local
+labels** for signals confined to one page (S05). An off-board connector
+alone does not justify a global label. Ground and supply connections use
+the symbols required by S01/S02. Keep local circuit topology wired; do not
+replace every pin connection with a label. Repeated-sheet reuse needs an
+explicit hierarchical-interface decision so global names cannot short channels.
 
 ### 2. (Retrofit) Net-class patterns — group without renaming
 
@@ -206,13 +222,15 @@ it into compliance:
 2. **Add net-class patterns** for the auto-named nets (mechanism 2) so the
    classes are populated and rules apply. This fixes rule scoping without
    touching a single net name.
-3. **As you make design changes**, rename the affected nets to the
-   convention by placing labels. Connectivity is unchanged; only the name
-   updates.
-4. **For critical-path nets** — RF especially — rename explicitly so DRC
-   reports and schematic reviews stay readable.
-5. **Run `Tools → Update PCB from Schematic`** after renaming. Existing
-   copper doesn't move; only net metadata changes.
+3. **Before renaming affected nets**, review external references and obtain
+   authorization for the migration. Update bounded net-class assignments and
+   interface records, then verify full-hierarchy connectivity; a rename alone
+   is not proof that connectivity stayed intact.
+4. **Within the authorized migration**, give critical-path nets — RF
+   especially — explicit functional names so reviews stay readable.
+5. **During an authorized PCB stage**, synchronize from the schematic and
+   verify the resulting net mapping. Schematic-only work does not authorize
+   PCB mutation.
 
 > **Do not re-annotate while doing this.** Renaming *nets* is safe.
 > Re-running annotation renumbers *reference designators*, which are the
