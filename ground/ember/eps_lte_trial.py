@@ -1,4 +1,4 @@
-"""Bounded hardware IHU EPS -> CAN/COMMS/Walter LTE trial; no direct AT access."""
+"""Bounded hardware IHU telemetry -> CAN/COMMS/Walter LTE trial; no direct AT access."""
 import argparse
 import json
 from pathlib import Path
@@ -27,6 +27,7 @@ def run(args):
         result.setdefault('diagnostics',[]).append({'stage':stage,'decoded':parsed})
         print('DIAGNOSTICS '+json.dumps(parsed),flush=True)
     try:
+        c.command('')  # Finish a partial line left by an earlier console session.
         first=c.command('status');result['initial_status']=first.strip()
         Console.require_match(command('hello'),'CAN_HELLO_CONFIRMED')
         enabled=command('lte '+str(args.seconds));Console.require_match(enabled,'RF_WINDOW_ACCEPTED')
@@ -39,26 +40,26 @@ def run(args):
             result['status'].append(response.strip())
             result['status_timing'].append({'elapsed_s':round(time.monotonic()-admitted,3),'response':response.strip()})
             print(response.split('RESULT ')[0].strip(),flush=True)
-            match=re.search(r'LTE_STATUS state=(\d+)',response)
+            match=re.search(r'LTE_STATUS state=(\d+).*registered=(\d+)',response)
             if not match:break
             state=int(match[1])
-            if state==6:
+            if state==6 and int(match[2])==1:
                 ready=True;result['ready_elapsed_s']=round(time.monotonic()-admitted,3);break
             if state==0:break
             time.sleep(2)
         result['ready']=ready
         if ready:
-            for _ in range(args.count):
+            for kind in args.telemetry*args.count:
                 if time.monotonic()>=end:break
                 diagnostics('before_send')
-                response=command('eps lte',22)
+                response=command({'eps':'eps lte','heartbeat':'heartbeat lte','system':'system lte'}[kind],22)
                 if 'outcome=MODEM_ACCEPTED' not in response:
                     result['send_failure']=response.strip();print(response.strip(),flush=True);break
                 Console.require_match(response,'MODEM_ACCEPTED')
                 match=re.search(r'bytes=(\d+) hex=([0-9a-f]+)',response)
-                packet=decode(bytes.fromhex(match[2]));assert packet['name']=='POWER_STATUS'
+                packet=decode(bytes.fromhex(match[2]));assert packet['name']=={'eps':'POWER_STATUS','heartbeat':'HEARTBEAT','system':'SYSTEM_STATUS'}[kind]
                 result['modem_accepted'].append(dict(hex=match[2],decoded=packet,elapsed_s=round(time.monotonic()-admitted,3)))
-                print('MODEM_ACCEPTED EPS sequence='+str(packet['sequence']),flush=True)
+                print('MODEM_ACCEPTED '+packet['name']+' sequence='+str(packet['sequence']),flush=True)
                 diagnostics('after_send')
                 time.sleep(1)
             if result['modem_accepted'] and 'send_failure' not in result:
@@ -86,6 +87,7 @@ if __name__=='__main__':
     parser.add_argument('--port',required=True)
     parser.add_argument('--seconds',type=int,default=90)
     parser.add_argument('--count',type=int,default=10)
+    parser.add_argument('--telemetry',nargs='+',choices=('eps','heartbeat','system'),default=['eps'],help='Packet types per round; default preserves the EPS trial.')
     parser.add_argument('--diagnostics',action='store_true',help='Requires diagnostic-capable firmware on all three boards.')
     parser.add_argument('--settle',type=int,default=10,help='Wait after final modem acceptance before stopping RF (seconds).')
     parser.add_argument('--output',type=Path,required=True)

@@ -111,6 +111,23 @@ Existing firmware references (separate repositories):
   on the hotspot. Yamcs archive survived; [record](evidence/pi-readiness-20261008.json).
 - [ ] Confirm a cold power-up with Ethernet absent and physical LibreSDR
   unplug/replug before relying on the complete demo module.
+- [x] Build native [LTE heartbeat and system status](../../docs/user/lte-system-telemetry.md)
+  support, explicit receiver allowlist and dedicated LTE dashboard; host packet
+  and modem tests pass, all three board images build, Pi receiver/display deployed.
+- [x] Back up, flash and verify the new IHU/COMMS/Walter images; restore normal
+  CAN and confirm the IHU/COMMS HELLO handshake.
+- [x] Restore LibreSDR USB 3 negotiation (5000M); subsequent bounded run reports
+  zero sample overflows and zero late-control messages.
+- [x] Verify native heartbeat, system status and unchanged EPS over LTE against
+  exact Pi capture/Yamcs archive bytes: 3/3 on October 9 at 09:13 local time.
+  [Rollout/test record](evidence/lte-health-20261009.json).
+- [x] Exercise three bounded ground-cell/Walter-window restarts: 27/27 exact
+  IHU/Pi/Yamcs matches, no registration losses after readiness or new CAN
+  errors. Ready times 16.5/61.9/16.6 seconds.
+  [Evidence](evidence/lte-repeatability-20261009.json).
+- [ ] Qualify sustained LTE operation, cold power-up and physical fault recovery;
+  earlier failed trials and variable startup latency remain recorded. After
+  board reset, restore normal CAN mode on both IHU and COMMS before HELLO.
 - [ ] Configure telemetry retention and archive backup.
 - [x] Add a pinned, reproducible [Yamcs starter lab](../../ground/yamcs/README.md)
   with isolated simulator and persistent archive storage.

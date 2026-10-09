@@ -35,9 +35,11 @@ class PiReadiness(unittest.TestCase):
         fields = next(m['fields'] for m in DICTIONARY['messages'] if m['name'] == 'POWER_STATUS')
         payload = {field['name']: 0 for field in fields}
         payload.update(payload_version=1, provenance=2)
-        def packet(sequence):
-            return encode('POWER_STATUS', sequence=sequence, source=2, target=1,
-                          source_boot_id=123, uptime_ms=sequence*1000, payload=payload)
+        def packet(sequence, name="POWER_STATUS"):
+            selected = next(m["fields"] for m in DICTIONARY["messages"] if m["name"] == name)
+            values = {f["name"]: payload[f["name"]] if f["name"] in payload else 0 for f in selected}
+            return encode(name, sequence=sequence, source=2, target=1,
+                          source_boot_id=123, uptime_ms=sequence*1000, payload=values)
         with tempfile.TemporaryDirectory() as directory, \
                 socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sink, \
                 socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sender, \
@@ -59,9 +61,11 @@ class PiReadiness(unittest.TestCase):
                 sender.sendto(bad, address)
                 sender.sendto(packet(1), address)
                 sender.sendto(packet(1), address)
-                sender.sendto(packet(2), address)
+                sender.sendto(packet(2, "HEARTBEAT"), address)
+                sender.sendto(packet(3, "SYSTEM_STATUS"), address)
                 self.assertEqual(sink.recv(4096), packet(1))
-                self.assertEqual(sink.recv(4096), packet(2))
+                self.assertEqual(sink.recv(4096), packet(2, "HEARTBEAT"))
+                self.assertEqual(sink.recv(4096), packet(3, "SYSTEM_STATUS"))
                 sink.settimeout(.2)
                 with self.assertRaises(socket.timeout):
                     sink.recv(4096)
@@ -71,7 +75,7 @@ class PiReadiness(unittest.TestCase):
                 self.assertEqual(proc.returncode, 0, output)
                 self.assertIn('rejected=2 duplicates=1', output)
                 captures = [json.loads(line) for line in log.read_text().splitlines()]
-                self.assertEqual([c['hex'] for c in captures], [packet(1).hex(), packet(2).hex()])
+                self.assertEqual([c['hex'] for c in captures], [packet(1).hex(), packet(2, "HEARTBEAT").hex(), packet(3, "SYSTEM_STATUS").hex()])
             finally:
                 if proc.poll() is None:
                     proc.kill(); proc.communicate()

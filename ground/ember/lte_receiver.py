@@ -1,6 +1,6 @@
-"""Bounded native EPS UDP receiver on the EPC SGi interface -> Yamcs LTE input.
+"""Bounded native IHU telemetry UDP receiver on the EPC SGi interface -> Yamcs LTE input.
 
-Only accepts IHU-native POWER_STATUS from the configured Walter IPv4/port.
+Only accepts IHU-native POWER_STATUS, HEARTBEAT and SYSTEM_STATUS from the configured Walter IPv4/port.
 Packets are forwarded byte-for-byte; no ground-generated spacecraft telemetry.
 """
 import argparse
@@ -15,9 +15,11 @@ from codec import decode,validate_arguments,PacketError
 def validate(packet):
     decoded=decode(packet);validate_arguments(decoded)
     h,p=decoded['header'],decoded['payload']
-    if decoded['name']!='POWER_STATUS' or h['source']!=2 or h['target']!=1:
-        raise PacketError('expected IHU POWER_STATUS')
-    if h['transaction_epoch'] or h['transaction_id'] or p['payload_version']!=1 or p['provenance']!=2 or p['bridge_session_id']:
+    if decoded['name'] not in ('POWER_STATUS','HEARTBEAT','SYSTEM_STATUS') or h['source']!=2 or h['target']!=1:
+        raise PacketError('expected allowlisted IHU telemetry')
+    if h['transaction_epoch'] or h['transaction_id']:
+        raise PacketError('telemetry transaction must be zero')
+    if decoded['name']=='POWER_STATUS' and (p['payload_version']!=1 or p['provenance']!=2 or p['bridge_session_id']):
         raise PacketError('expected native IHU observation, without a ground wrapper')
     return decoded
 
@@ -44,7 +46,7 @@ def run(args):
             print(json.dumps(record,separators=(',',':')),flush=True)
     finally:
         incoming.close();forward.close()
-        result=dict(scope='Native EPS UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.',
+        result=dict(scope='Native IHU telemetry UDP received over EPC SGi and forwarded unchanged to Yamcs UDP 10018; Yamcs archive verification is separate.',
                     received=len(records),requested=args.count,rejected=rejected,duplicates=duplicates,packets=records)
         args.output.parent.mkdir(parents=True,exist_ok=True)
         args.output.write_text(json.dumps(result,indent=2)+'\n')

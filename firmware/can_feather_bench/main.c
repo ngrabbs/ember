@@ -9,9 +9,11 @@
 #include "mcp25625.h"
 #include "wire.h"
 #include "lte_link.h"
+#include "native_telemetry.h"
 #if ROLE_IHU
 #include "eps_readout.h"
 #include "power_packet.h"
+#include "health_packet.h"
 #include "lte_queue.h"
 #include "autotelem.h"
 #endif
@@ -24,6 +26,7 @@ static mcp_state can;
 static cf_reader fragments;
 static ul_reader can_reader;
 static uint32_t boot,peer,request_id,matched,unknown,busy_drops;
+static uint32_t admitted_requests,refused_requests;
 static bool loopback_test;
 static struct {bool active;ul_packet packet;uint32_t started;} pending;
 static struct {
@@ -46,7 +49,7 @@ static at_state auto_telem;
 static uint32_t now_ms(void) {return to_ms_since_boot(get_absolute_time());}
 static void status(void) {
     char id[2*PICO_UNIQUE_BOARD_ID_SIZE_BYTES+1];pico_get_unique_board_id_string(id,sizeof(id));
-    LOG("STATUS role=%s fw=can-bench-v2 id=%s boot=%" PRIu32 " peer=%" PRIu32
+    LOG("STATUS role=%s fw=can-bench-v3 id=%s boot=%" PRIu32 " peer=%" PRIu32
         " can_ready=%d mode=%02x cnf=%02x,%02x,%02x bitrate=500000 tec=%u rec=%u eflg=%02x"
         " tx_ok=%" PRIu32 " tx_fail=%" PRIu32 " tx_timeout=%" PRIu32 " rx=%" PRIu32
         " rx_bad=%" PRIu32 " rx_overflow=%" PRIu32 " fragments_bad=%" PRIu32 " fragments_timeout=%" PRIu32
@@ -94,15 +97,7 @@ static void send_error(const ul_packet *p,uint8_t reason) {
 }
 #if !ROLE_IHU
 static bool valid_telemetry(const ul_packet *p) {
-    const uint8_t *b=p->payload;size_t n=p->size;
-    if(n<W_PAYLOAD+2)return false;
-    uint16_t id=ul_u16(b+W_MESSAGE_ID);
-    size_t payload=id==W_ID_HEARTBEAT?W_SIZE_HEARTBEAT:id==W_ID_POWER_STATUS?W_SIZE_POWER_STATUS:0;
-    return payload && n==W_PAYLOAD+payload+2 && ul_u16(b)==W_TM_IDENTITY && (ul_u16(b+2)>>14)==3 &&
-        (size_t)ul_u16(b+4)+7==n && b[W_SCHEMA_VERSION]==W_VERSION && b[W_KIND]==W_KINDS_TELEMETRY &&
-        b[W_SOURCE]==W_ENDPOINTS_IHU && b[W_TARGET]==W_ENDPOINTS_GROUND &&
-        ul_u32(b+W_SOURCE_BOOT_ID)==p->sender && ul_u16(b+W_PAYLOAD_LENGTH)==payload &&
-        ul_crc(b,n-2)==ul_u16(b+n-2);
+    return native_telemetry_valid(p->payload,p->size,p->sender);
 }
 static void uart_submit(uint8_t type) {
     memset(&chain.uart,0,sizeof(chain.uart));chain.uart.version=1;chain.uart.type=type;
@@ -172,6 +167,7 @@ static void receive(const ul_packet *p) {
             pending.active=false;
             bool uncertain=p->payload[0]==CF_LINK_UNKNOWN || p->payload[0]==UL_ERR_MODEM_UNKNOWN;
             if(uncertain) {++unknown;peer=0;}
+            else ++refused_requests;
             LOG("RESULT request=%" PRIu32 " outcome=%s reason=%u\n",p->request,uncertain?"UNKNOWN_REMOTE_LINK":"PEER_REJECTED",p->payload[0]);return;
         }
         bool diag=pending.packet.type==CF_LINK_DIAG;
@@ -203,15 +199,15 @@ static void receive(const ul_packet *p) {
     ul_packet reply;ul_reply(p,boot,&reply);if(!queue(&reply))++busy_drops;
 }
 static void submit(uint8_t type,const uint8_t *payload,size_t size) {
-    if((mcp_register(0x0e)&0xe0)!=0) {LOG("REJECT reason=NORMAL_MODE_REQUIRED\n");return;}
-    if(pending.active || output.active) {LOG("REJECT reason=BUSY\n");return;}
-    if(type!=UL_HELLO && !peer) {LOG("REJECT reason=HELLO_REQUIRED\n");return;}
-    if(request_id==UINT32_MAX) {LOG("REJECT reason=REQUEST_ID_EXHAUSTED\n");return;}
+    if((mcp_register(0x0e)&0xe0)!=0) {++refused_requests;LOG("REJECT reason=NORMAL_MODE_REQUIRED\n");return;}
+    if(pending.active || output.active) {++refused_requests;LOG("REJECT reason=BUSY\n");return;}
+    if(type!=UL_HELLO && !peer) {++refused_requests;LOG("REJECT reason=HELLO_REQUIRED\n");return;}
+    if(request_id==UINT32_MAX) {++refused_requests;LOG("REJECT reason=REQUEST_ID_EXHAUSTED\n");return;}
     memset(&pending.packet,0,sizeof(pending.packet));pending.packet.version=1;pending.packet.type=type;
     pending.packet.sender=boot;pending.packet.origin=boot;pending.packet.request=++request_id;
     pending.packet.size=(uint16_t)size;if(size)memcpy(pending.packet.payload,payload,size);
-    if(!queue(&pending.packet)) {LOG("REJECT reason=QUEUE\n");return;}
-    pending.active=true;pending.started=now_ms();LOG("SUBMITTED request=%" PRIu32 " type=%u bytes=%zu\n",request_id,type,size);
+    if(!queue(&pending.packet)) {++refused_requests;LOG("REJECT reason=QUEUE\n");return;}
+    ++admitted_requests;pending.active=true;pending.started=now_ms();LOG("SUBMITTED request=%" PRIu32 " type=%u bytes=%zu\n",request_id,type,size);
 }
 #if ROLE_IHU
 static void eps_json(void) {
@@ -294,17 +290,14 @@ static void queue_pump(uint32_t now) {
     if((telemetry_queue.state==LQ_SEND || telemetry_queue.state==LQ_STATUS) && !queue_owned)
         lq_hold(&telemetry_queue,LQ_HOLD_UNKNOWN);
 }
-static void heartbeat(void) {
-    uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2]={0};size_t size=sizeof(p);
-    ul_p16(p,W_TM_IDENTITY);ul_p16(p+2,(uint16_t)(0xc000|telemetry_sequence));
-    telemetry_sequence=(uint16_t)((telemetry_sequence+1)&0x3fff);ul_p16(p+4,(uint16_t)(size-7));
-    p[W_SCHEMA_VERSION]=W_VERSION;p[W_KIND]=W_KINDS_TELEMETRY;ul_p16(p+W_MESSAGE_ID,W_ID_HEARTBEAT);
-    p[W_SOURCE]=W_ENDPOINTS_IHU;p[W_TARGET]=W_ENDPOINTS_GROUND;ul_p32(p+W_SOURCE_BOOT_ID,boot);
-    ul_p32(p+W_UPTIME_MS,now_ms());ul_p16(p+W_PAYLOAD_LENGTH,W_SIZE_HEARTBEAT);
-    p[W_PAYLOAD+W_HEARTBEAT_MODE]=W_MODE_SAFE;p[W_PAYLOAD+W_HEARTBEAT_CONFIGURATION]=W_CONFIGURATION_GROUND_TEST;
-    ul_p32(p+W_PAYLOAD+W_HEARTBEAT_TELEMETRY_PERIOD_MS,auto_telem.enabled?auto_telem.period_ms:0);
-    ul_p16(p+size-2,ul_crc(p,size-2));submit(CF_CHAIN,p,size);
+static void health_telemetry(bool system,bool lte) {
+    uint8_t packet[W_PAYLOAD+W_SIZE_SYSTEM_STATUS+2];
+    size_t n=health_packet(packet,system,boot,telemetry_sequence,now_ms(),
+        auto_telem.enabled?auto_telem.period_ms:0,admitted_requests,refused_requests);
+    telemetry_sequence=(telemetry_sequence+1)&0x3fff;
+    submit(lte?CF_SEND_PACKET:CF_CHAIN,packet,n);
 }
+
 #endif
 static void selftest(void) {
     if(pending.active || output.active || can.pending) {LOG("REJECT reason=BUSY\n");return;}
@@ -325,7 +318,7 @@ static void command(const char *s) {
         uint8_t p[240];for(size_t i=0;i<n;++i)p[i]=(uint8_t)i;submit(UL_ECHO,p,n);
 }
 #if ROLE_IHU
-    else if(!strcmp(s,"telemetry"))heartbeat();
+    else if(!strcmp(s,"telemetry"))health_telemetry(false,false);
     else if(!strcmp(s,"eps json"))eps_json();
     else if(!strcmp(s,"eps adc on"))eps_adc(true);
     else if(!strcmp(s,"eps adc off"))eps_adc(false);
@@ -345,6 +338,8 @@ static void command(const char *s) {
         }
         (void)at_enable(&auto_telem,(uint32_t)seconds,now_ms());auto_status();
     }
+    else if(!strcmp(s,"heartbeat lte"))health_telemetry(false,true);
+    else if(!strcmp(s,"system lte"))health_telemetry(true,true);
     else if(!strcmp(s,"eps lte"))eps_telemetry(true);
     else if(!strcmp(s,"eps enqueue"))eps_enqueue();
     else if(!strcmp(s,"lte queue status"))queue_status();
@@ -365,7 +360,7 @@ static void command(const char *s) {
         uint8_t p[4];ul_p32(p,seconds);submit(CF_RF_WINDOW,p,4);
     }
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json | eps adc on/off | eps telemetry | telem on [seconds]/off/status | lte N | lte status | lte diagnostics | eps lte | eps enqueue | lte queue on/off/status/drop":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json | eps adc on/off | eps telemetry | telem on [seconds]/off/status | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte | eps enqueue | lte queue on/off/status/drop":"");
     else if(*s)LOG("ERROR unknown command\n");
 }
 int main(void) {

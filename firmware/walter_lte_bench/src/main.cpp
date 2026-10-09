@@ -1,3 +1,4 @@
+#include "native_telemetry.h"
 #include <Arduino.h>
 #include <driver/gpio.h>
 #include <esp_system.h>
@@ -96,13 +97,7 @@ static void configuration(void) {
     else {state=REGISTER;wait_until=millis();}
 }
 static bool valid_packet(const ul_packet &p) {
-    const uint8_t *b=p.payload;size_t n=p.size;if(n<W_PAYLOAD+2)return false;
-    uint16_t id=ul_u16(b+W_MESSAGE_ID);
-    size_t payload=id==W_ID_POWER_STATUS?W_SIZE_POWER_STATUS:id==W_ID_HEARTBEAT?W_SIZE_HEARTBEAT:0;
-    return payload && n==W_PAYLOAD+payload+2 && ul_u16(b)==W_TM_IDENTITY && (ul_u16(b+2)>>14)==3 &&
-        (size_t)ul_u16(b+4)+7==n && b[W_SCHEMA_VERSION]==W_VERSION && b[W_KIND]==W_KINDS_TELEMETRY &&
-        b[W_SOURCE]==W_ENDPOINTS_IHU && b[W_TARGET]==W_ENDPOINTS_GROUND && ul_u32(b+W_SOURCE_BOOT_ID) &&
-        ul_u16(b+W_PAYLOAD_LENGTH)==payload && ul_crc(b,n-2)==ul_u16(b+n-2);
+    return native_telemetry_valid(p.payload,p.size,0);
 }
 static void receive(const ul_packet &p) {
     ++requests;

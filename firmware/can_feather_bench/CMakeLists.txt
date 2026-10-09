@@ -33,6 +33,6 @@ foreach(role IN ITEMS ihu comms)
         PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS=0
         PICO_STDIO_USB_ENABLE_RESET_VIA_BAUD_RATE=0)
     pico_set_program_name(ember_${role}_can_bench "EMBER ${role} CAN Bench")
-    pico_set_program_version(ember_${role}_can_bench "can-bench-v2")
+    pico_set_program_version(ember_${role}_can_bench "can-bench-v3")
     pico_add_extra_outputs(ember_${role}_can_bench)
 endforeach()

@@ -160,6 +160,47 @@ def generate(destination):
     label('Use selected processor time; replay link status describes archived data. Readout age is not ADC age.',28,711,1055,24,11)
     ET.indent(display)
     ET.ElementTree(display).write(destination/'EPS.opi',encoding='utf-8',xml_declaration=True)
+    # A receive-only LTE overview: no unrelated USB counters or TC buttons.
+    display = ET.fromstring(ET.tostring(display))
+    for e in list(display):
+        if e.tag == 'widget': display.remove(e)
+    prop(display,'name','EMBER LTE telemetry')
+    label('EMBER / LTE TELEMETRY',28,20,1000,48,30,WHITE,True)
+    label('NATIVE IHU / HEARTBEAT + SYSTEM STATUS + EPS',28,76,1050,25,13,ORANGE,True)
+    box(28,135,336,440); box(380,135,336,440); box(732,135,360,440)
+    label('01 / HEARTBEAT',48,153,295,28,13,BLUE,True)
+    for title,pv,y in [('IHU boot ID','HEARTBEAT_source_boot_id',205),
+                       ('IHU uptime (ms)','HEARTBEAT_uptime_ms',281),
+                       ('Bench mode','HEARTBEAT_mode',357),
+                       ('Bench configuration','HEARTBEAT_configuration',433)]:
+        label(title,48,y,295); value(pv,48,y+25,295,34,20)
+    scripted('No heartbeat received','HEARTBEAT_mode','sample-time.js',48,531,295,24,11)
+    label('02 / SYSTEM STATUS',400,153,295,28,13,BLUE,True)
+    for title,pv,y in [('Bench mode','mode',205),('Bench configuration','configuration',269),
+                       ('Configured EPS cadence (ms)','telemetry_period_ms',333),
+                       ('Admitted CAN requests','accepted_commands',397),
+                       ('Refused CAN requests','rejected_commands',461)]:
+        label(title,400,y,295); value('SYSTEM_STATUS_'+pv,400,y+25,295,32,20)
+    scripted('No status received','SYSTEM_STATUS_mode','sample-time.js',400,541,295,24,11)
+    label('03 / EPS',752,153,317,28,13,BLUE,True)
+    for title,pv,y in [('Charger VIN','input_mv',218),('Battery voltage','battery_mv',315),
+                       ('Power-path output','output_mv',412)]:
+        label(title,752,y,317)
+        e=value('POWER_STATUS_'+pv,752,y+28,317,42,23); prop(e,'precision',3)
+    scripted('No EPS received','POWER_STATUS_readout_count','sample-time.js',752,531,317,24,11)
+    label('One-shot packets: compare each receive time. Clicking a value opens its history.',28,594,1064,24,12)
+    label('SAFE / GROUND_TEST are fixed bench labels. Counters are CAN requests, not LTE uplink commands.',28,622,1064,24,11,ORANGE)
+    button('EPS dashboard','EPS.opi',28,250); button('System raw / history','System.par',297,250)
+    label('Heartbeat/status are manual sends; configured cadence describes EPS over CAN, not LTE repetition.',28,711,1064,24,11)
+    # Fit the three LTE panels beside Yamcs's sidebar on a laptop-sized window.
+    prop(display,'width',780)
+    for e in display.findall('widget'):
+        for key in ('x','width'):
+            prop(e,key,round(int(e.findtext(key))*0.69))
+        for f in e.findall('font/opifont.name'):
+            f.set('height',str(max(10,round(int(f.get('height'))*0.85))))
+    ET.indent(display)
+    ET.ElementTree(display).write(destination/'LTE.opi',encoding='utf-8',xml_declaration=True)
     groups={'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
     for filename,names in groups.items():
         parameters=[]

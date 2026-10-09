@@ -3,6 +3,7 @@
 uint32_t test_time=0;int test_reset=-1;HardwareSerial Serial(9);
 #include "../../firmware/walter_lte_bench/src/main.cpp"
 #include "../../firmware/can_feather_bench/power_packet.h"
+#include "../../firmware/can_feather_bench/health_packet.h"
 static ul_packet request(uint8_t type) {
     ul_packet p={};p.version=1;p.type=type;p.sender=99;p.origin=99;p.request=10;return p;
 }
@@ -83,5 +84,15 @@ int main(void) {
     receive(query);health=returned();assert(health.payload[19]==2 && ul_u32(health.payload+32)==1);
     assert(health.payload[45]==3 && ul_u32(health.payload+24)==UINT32_MAX);
     assert(!strcmp((const char*)health.payload+48,"operation not allowed"));
+    for(bool system:{false,true}) {
+        reset_diagnostic();state=READY;cereg_status=1;registered=1;deadline=test_time+40000;
+        p=request(UL_SEND_PACKET);p.request=20+(unsigned)system;
+        p.size=health_packet(p.payload,system,77,3,456,0,42,3);
+        receive(p);assert(send_pending && state==SEND);
+        modem.output.clear();ok("\r\n> ");
+        assert(modem.output==std::string((char*)p.payload,p.size));
+        ok();auto reply=returned();assert(reply.type==UL_MODEM_ACCEPTED && reply.size==p.size);
+        assert(!memcmp(reply.payload,p.payload,p.size));
+    }
     return 0;
 }
