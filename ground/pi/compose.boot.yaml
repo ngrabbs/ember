@@ -1,0 +1,6 @@
+# Applied last in the deployed Pi's COMPOSE_FILE; retains its runtime/MDB.
+services:
+  yamcs:
+    restart: always
+    # Dependencies are cached on the provisioned Pi; demos need no Internet.
+    command: ["mvn", "-o", "-B", "compile", "yamcs:run"]

@@ -1,0 +1,19 @@
+[Unit]
+Description=EMBER persistent native EPS LTE UDP receiver
+After=ember-ground-starter.service
+
+[Service]
+User=ngrabbs
+Group=ngrabbs
+ExecStart=/usr/bin/python3 -u /opt/ember-ground/lte_listener.py
+Restart=on-failure
+RestartSec=5
+StateDirectory=ember-lte-listener
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+RestrictAddressFamilies=AF_INET AF_UNIX
+TimeoutStopSec=5
