@@ -27,7 +27,7 @@ addresses work. Telemetry input ports remain loopback-bound.
 4. Start the bounded LTE cell and the IHU/Walter RF window using the established
    [LTE walkthrough](../../docs/user/lte-eps-walkthrough.md).
 
-The receiver accepts native IHU POWER_STATUS packets from Walter
+The receiver accepts native IHU POWER_STATUS, HEARTBEAT and SYSTEM_STATUS packets from Walter
 `172.16.0.2:51001` at UDP 51000 and forwards unchanged bytes to Yamcs UDP 10018.
 It does not configure LibreSDR, start EPC/eNodeB, register Walter or transmit RF.
 Those actions retain their separate bounded trial controls. A plugged-in SDR

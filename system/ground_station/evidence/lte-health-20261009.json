@@ -1,0 +1,90 @@
+{
+  "date_utc": "2026-10-09",
+  "firmware": "can-bench-v3",
+  "boards_flashed_and_verified": [
+    "IHU",
+    "COMMS",
+    "Walter"
+  ],
+  "flash_backup_sha256": {
+    "IHU": "43cc004c96b0f571160ed8aef293ddee7b54f79d37ade6cd2c6eee9a5e6721d2",
+    "COMMS": "14faa16dbb334f9352fae68f6bb5b8588ad05a307b095f4a9e6454593b8ed25b",
+    "Walter": "2de75cbeab7f88c311bf1796de1d68888f86b2c9b20b353f8f86e51e41ae55e6"
+  },
+  "image_sha256": {
+    "IHU": "183606f8aebb5118f35be7ffbb444b318807bced231944e9004c96b8f48a2c43",
+    "COMMS": "8cb70dfb4d9d30e5dc5ff6475f641aa06cc15037d76ec2ee096e47891e6bb9bd",
+    "Walter": "55bb285b5d97131c37d120d528e7c00376a979543974b13daec8805ef96272a0"
+  },
+  "host_tests": {
+    "run": 48,
+    "passed": 47,
+    "skipped": 1,
+    "skip_reason": "Explicit virtual CAN interface unavailable"
+  },
+  "live": {
+    "can_hello_confirmed": true,
+    "ihu_boot": 2874467434,
+    "comms_boot": 2256156871,
+    "trial": "health-20261009T0203",
+    "lte_registered": false,
+    "modem_accepted": 0,
+    "yamcs_new_packets_verified": 0,
+    "final_walter_state": 0,
+    "final_window_ms": 0,
+    "sample_overflows": 7224,
+    "libresdr_usb_mbps": 480,
+    "radio_delivery_verified": false,
+    "follow_up": "Qualify LTE attachment/registration continuity, then repeat exact ground/Yamcs verification.",
+    "usb3_restored_mbps": 5000,
+    "usb3_trial": {
+      "trial": "health-20261009-usb3",
+      "overflows": 0,
+      "late_control": 0,
+      "lte_registered": false,
+      "modem_accepted": 0
+    },
+    "baseline_trial": {
+      "trial": "health-20261009-baseline",
+      "lte_registered": true,
+      "ready_elapsed_s": 39.184,
+      "modem_accepted": [
+        {
+          "hex": "0901c000001f0101000502010000000000000000ab54e46a000a91e40006030100000000aeba",
+          "decoded": {
+            "name": "HEARTBEAT",
+            "sequence": 0,
+            "header": {
+              "schema_version": 1,
+              "kind": 1,
+              "message_id": 5,
+              "source": 2,
+              "target": 1,
+              "transaction_epoch": 0,
+              "transaction_id": 0,
+              "source_boot_id": 2874467434,
+              "uptime_ms": 692708,
+              "payload_length": 6
+            },
+            "payload": {
+              "mode": 3,
+              "configuration": 1,
+              "telemetry_period_ms": 0
+            }
+          },
+          "elapsed_s": 39.388
+        }
+      ],
+      "send_failure": "SUBMITTED request=139 type=118 bytes=46\r\nRESULT request=139 outcome=PEER_REJECTED reason=8",
+      "final_modem_status": "SUBMITTED request=143 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=1 rejected=1\r\nRESULT request=143 outcome=LTE_STATUS peer=2256156871 bytes=16 hex=00080000000000000000000100000001",
+      "ground_received": 0,
+      "yamcs_new_packets_verified": 0,
+      "overflows": 0,
+      "late_control": 0,
+      "radio_processes_stopped": true,
+      "oai_exit": 0,
+      "epc_exit": 0
+    }
+  },
+  "backup_location": "m75q:/home/ngrabbs/work/MSU_Cubesat/ember-lte-health-20261008/backups (private full dumps excluded from repository)"
+}
