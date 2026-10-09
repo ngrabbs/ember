@@ -1,0 +1,33 @@
+{
+  "date_local": "2026-10-08",
+  "timezone": "America/Chicago",
+  "host": "ember-ground",
+  "ethernet_ip": "192.168.1.251",
+  "hotspot_ssid": "EMBER-Ground",
+  "hotspot_ip": "192.168.50.1",
+  "client_access": "User confirmed authentication, DHCP address and Yamcs browser access",
+  "ethernet_disconnect_test": {
+    "fallback_active": true,
+    "yamcs_on_hotspot": true,
+    "ethernet_restored": true,
+    "hotspot_off_on_return": true
+  },
+  "listener_crash_recovered": true,
+  "boot_before": "feef2fae-d7d2-444c-8dbd-4cfe815a1202",
+  "boot_after": "2fef8977-8827-42c2-8962-96a068c0f389",
+  "after_reboot": {
+    "readiness": "active",
+    "listener": "active",
+    "yamcs": "healthy",
+    "ember_lte": "RUNNING",
+    "udp_51000_bound": true,
+    "ethernet_connected": true,
+    "hotspot_off": true,
+    "previous_lte_packet_preserved_in_archive": true
+  },
+  "not_tested": [
+    "Physical LibreSDR unplug/replug",
+    "Cold power-up with Ethernet cable absent"
+  ],
+  "scope": "Receive/startup/network configuration only. No LTE RF cell or Walter RF window started for these tests."
+}
