@@ -8,7 +8,12 @@ full-flash backups. On October 9 at 09:13 America/Chicago, heartbeat, system
 status and EPS arrived through LTE and matched the original IHU bytes in the Pi
 capture and Yamcs archive. [Verification record](../../system/ground_station/evidence/lte-health-20261009.json).
 
-This is one bounded three-packet success, not sustained-link qualification.
+Three subsequent ground-cell restart trials also passed, with 27/27 exact
+IHU/Pi/Yamcs packet matches and no observed registration losses or new CAN
+errors. Time to ready was 16.5, 61.9 and 16.6 seconds.
+[Repeatability record](../../system/ground_station/evidence/lte-repeatability-20261009.json).
+This is bounded bench evidence; sustained operation and cold power-up remain
+to qualify.
 Earlier trials lost registration or failed to attach. LibreSDR must negotiate
 USB 3 (`lsusb -t`: 5000M); USB 2 caused sample overflows. The successful test
 used the original `enb.band13.emtc.ce300tx20diag.conf` profile and temporarily
@@ -95,3 +100,60 @@ HELLO after reset. Keep the charger measurement/charging policy unchanged.
 Acceptance requires native heartbeat/status/EPS packets received over LTE and
 byte-for-byte comparison with the Yamcs archive; mocked/loopback tests alone
 are not radio delivery evidence.
+
+## Repeat a bounded nine-packet check
+
+Keep the IHU USB console free. First verify both CAN controllers are in normal
+mode and `hello` returns CAN_HELLO_CONFIRMED. The COMMS console also needs
+`normal` after a board reset; move the single USB cable as necessary while
+keeping board power connected.
+
+Check LibreSDR is at 5000M on the Pi. Record its current CPU governor before
+changing it. The validated runs temporarily used performance; restore the
+recorded governor after the ground radio has stopped.
+
+```sh
+# PI SHELL: inspect USB speed and the original CPU setting.
+lsusb -t
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
+# PI SHELL: temporarily select performance for this bounded radio test.
+for gov_file in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
+    printf 'performance\n' | sudo tee "$gov_file" >/dev/null
+done
+
+# PI SHELL A: start the finite ground cell; this explicitly starts RF.
+# Choose a new label each run so private radio logs are not overwritten.
+python3 ~/work/ember-lte/run-radio-check.py health-repeat-N \
+  --seconds 150 --config enb.band13.emtc.ce300tx20diag.conf
+```
+
+Wait for `ALL eNBs ready` and `Starting steady-state operation`, then use
+another terminal:
+
+```sh
+# M75Q SHELL: request a 120-second Walter window, wait for registration,
+# and send three rounds of heartbeat + system status + EPS (nine packets).
+# The helper saves original packet bytes and closes Walter's window on exit.
+python3 ~/work/ember-lte/operator-tools/eps_lte_trial.py \
+  --port /dev/serial/by-id/usb-Raspberry_Pi_Pico_DF641455DB822427-if00 \
+  --seconds 120 --count 3 --telemetry heartbeat system eps \
+  --diagnostics --settle 15 \
+  --output ~/work/ember-lte/logs/health-repeat-N
+```
+
+MODEM_ACCEPTED is only modem admission. Verify the nine original hex strings
+in the Pi's `/var/lib/ember-lte-listener/packets.jsonl` and the `ember-lte`
+Yamcs archive. Check the helper's final status is state=0/window_ms=0 and let
+the finite ground-cell process exit before starting another run. Confirm
+`pgrep -x lte-softmodem` and `pgrep -x srsepc` return no processes. If a send
+fails or has an unknown outcome, inspect the saved evidence instead of
+blindly repeating it.
+
+```sh
+# PI SHELL: restore the recorded governor after RF is stopped.
+# This example restores ondemand, which was the setting on our tested Pi.
+for gov_file in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
+    printf 'ondemand\n' | sudo tee "$gov_file" >/dev/null
+done
+```

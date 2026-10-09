@@ -121,9 +121,13 @@ Existing firmware references (separate repositories):
 - [x] Verify native heartbeat, system status and unchanged EPS over LTE against
   exact Pi capture/Yamcs archive bytes: 3/3 on October 9 at 09:13 local time.
   [Rollout/test record](evidence/lte-health-20261009.json).
-- [ ] Qualify LTE attachment, registration continuity and repeated startup;
-  earlier failed trials remain recorded. After board reset, restore normal CAN
-  mode on both IHU and COMMS before HELLO.
+- [x] Exercise three bounded ground-cell/Walter-window restarts: 27/27 exact
+  IHU/Pi/Yamcs matches, no registration losses after readiness or new CAN
+  errors. Ready times 16.5/61.9/16.6 seconds.
+  [Evidence](evidence/lte-repeatability-20261009.json).
+- [ ] Qualify sustained LTE operation, cold power-up and physical fault recovery;
+  earlier failed trials and variable startup latency remain recorded. After
+  board reset, restore normal CAN mode on both IHU and COMMS before HELLO.
 - [ ] Configure telemetry retention and archive backup.
 - [x] Add a pinned, reproducible [Yamcs starter lab](../../ground/yamcs/README.md)
   with isolated simulator and persistent archive storage.
