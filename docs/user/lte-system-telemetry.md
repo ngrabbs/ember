@@ -2,18 +2,18 @@
 
 [Operator guides](README.md) · [EPS/LTE startup walkthrough](lte-eps-walkthrough.md)
 
-This extends the existing native EPS path with two one-shot IHU packets.
-The Pi receiver and `LTE.opi` display are deployed. New IHU/COMMS/Walter
-firmware images are built, host-tested and flashed with verified full-flash
-backups. Live radio delivery of the new packet types remains to verify: the
-first trial exposed sample overflows while the LibreSDR negotiated USB 2
-speed (480 Mb/s). USB 3 negotiation (5000 Mb/s) was restored and eliminated
-those overflows. A further attempt with the original profile registered and
-accepted HEARTBEAT, then lost registration and refused SYSTEM_STATUS. No
-new packet reached the Pi listener or Yamcs. Check
-`lsusb -t` for 5000M before running the cell. These commands require the new
-IHU image.
+This extends the native EPS path with two one-shot IHU packets. The Pi receiver
+and `LTE.opi` display are deployed, and all three boards are flashed with verified
+full-flash backups. On October 9 at 09:13 America/Chicago, heartbeat, system
+status and EPS arrived through LTE and matched the original IHU bytes in the Pi
+capture and Yamcs archive. [Verification record](../../system/ground_station/evidence/lte-health-20261009.json).
 
+This is one bounded three-packet success, not sustained-link qualification.
+Earlier trials lost registration or failed to attach. LibreSDR must negotiate
+USB 3 (`lsusb -t`: 5000M); USB 2 caused sample overflows. The successful test
+used the original `enb.band13.emtc.ce300tx20diag.conf` profile and temporarily
+set the Pi CPU governor to performance. Both boards must be in normal CAN mode:
+a reset returns this bench firmware to configuration mode.
 ## What the packets mean
 
 | IHU USB command | Native packet | Size | Contents |

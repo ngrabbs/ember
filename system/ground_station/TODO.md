@@ -118,10 +118,12 @@ Existing firmware references (separate repositories):
   CAN and confirm the IHU/COMMS HELLO handshake.
 - [x] Restore LibreSDR USB 3 negotiation (5000M); subsequent bounded run reports
   zero sample overflows and zero late-control messages.
-- [ ] Qualify LTE registration continuity and verify native heartbeat, system
-  status and unchanged EPS over radio against exact Yamcs archive bytes. One
-  native heartbeat was modem-accepted, then registration dropped; no ground
-  delivery. [Rollout/test record](evidence/lte-health-20261009.json).
+- [x] Verify native heartbeat, system status and unchanged EPS over LTE against
+  exact Pi capture/Yamcs archive bytes: 3/3 on October 9 at 09:13 local time.
+  [Rollout/test record](evidence/lte-health-20261009.json).
+- [ ] Qualify LTE attachment, registration continuity and repeated startup;
+  earlier failed trials remain recorded. After board reset, restore normal CAN
+  mode on both IHU and COMMS before HELLO.
 - [ ] Configure telemetry retention and archive backup.
 - [x] Add a pinned, reproducible [Yamcs starter lab](../../ground/yamcs/README.md)
   with isolated simulator and persistent archive storage.
