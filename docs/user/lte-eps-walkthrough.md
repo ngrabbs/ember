@@ -321,6 +321,13 @@ not the earlier `eps json` sample. Wait for its result, which can take up to
 22 seconds. `RESULT ... outcome=MODEM_ACCEPTED` means modem submission only.
 Do not automatically repeat a send whose outcome is UNKNOWN.
 
+**Keep Walter's RF window and the Pi LTE cell running after acceptance.**
+Wait at least **15 seconds**, and check the receiver for the new packet before
+issuing `lte 0`. The modem's final OK is not a ground-delivery acknowledgment;
+immediately resetting the modem can interrupt queued radio delivery. The
+successful automated trial used a 15-second settling period. This delay does
+not guarantee delivery; the receiver and Yamcs timestamp remain the evidence.
+
 ## 10. Confirm ground reception — Pi listener and laptop browser
 
 For the automatic listener, look for a new `Forwarded POWER_STATUS` journal
@@ -360,7 +367,8 @@ after reception; its timestamp and parameter history distinguish it from no data
 
 ## 11. Stop the session — IHU console, then Pi shells
 
-After the send result completes, enter on IHU:
+After the send result completes, leave RF active for at least **15 seconds**
+and check ground reception as above. Then enter on IHU:
 
 ```text
 lte 0
