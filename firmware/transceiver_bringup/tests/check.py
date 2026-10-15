@@ -26,7 +26,8 @@ stub = r'''
 #define SPI_CPOL_0 0
 #define SPI_CPHA_0 0
 #define SPI_MSB_FIRST 0
-static unsigned delayed_reads;
+static unsigned delayed_reads, data_high_count;
+static bool data_test_active, console_abort;
 static bool bad_can, alias_cs, drop_frame, corrupt_frame, refuse_mode;
 static uint8_t regs[2][128];
 static bool bad_id, bad_dlc, extended_frame, remote_frame;
@@ -35,7 +36,9 @@ static int levels[30], directions[30], initialized[30], call, fail_at;
 static uint8_t readback = 255;
 static jmp_buf done;
 static void gpio_init(unsigned p) {initialized[p]=1; levels[p]=-1;}
-static void gpio_put(unsigned p, bool v) {assert(initialized[p]); levels[p]=v;
+static void gpio_put(unsigned p, bool v) {assert(initialized[p]);
+ if(data_test_active) {assert(p!=10 || !v); assert(p!=11 || !v); if(p==16 && v) ++data_high_count;}
+ levels[p]=v;
  if((p==8||p==9)&&!v) {unsigned k=p==8?0:1;regs[k][14]=128;regs[k][15]=135;}
 }
 static void gpio_set_dir(unsigned p, int v) {assert(levels[p]>=0); directions[p]=v;}
@@ -87,7 +90,7 @@ static int spi_write_read_blocking(int i,const uint8_t *tx,uint8_t *rx,int n) {
  return n;
 }
 static uint64_t time_us_64(void) {static uint64_t now; return now+=10000;}
-static int getchar_timeout_us(unsigned t) {assert(t==0);return -1;}
+static int getchar_timeout_us(unsigned t) {assert(t==0);return console_abort ? 1 : -1;}
 typedef int alarm_id_t;
 static alarm_id_t add_alarm_in_ms(unsigned ms, int64_t (*cb)(alarm_id_t,void*), void *u, bool past) {(void)ms;(void)cb;(void)u;(void)past;return 1;}
 static bool cancel_alarm(alarm_id_t id) {(void)id;return true;}
@@ -116,6 +119,13 @@ int main(void) {
  unsigned low[]={10,11,16,6,7}, high[]={2,3,8,9,14,15,12};
  for(unsigned i=0;i<sizeof(low)/sizeof(*low);i++) assert(directions[low[i]]&&levels[low[i]]==0);
  for(unsigned i=0;i<sizeof(high)/sizeof(*high);i++) assert(directions[high[i]]&&levels[high[i]]==1);
+ data_test_active=true; data_high_count=0; call=0; fail_at=0;
+ data_input_test(); assert(data_high_count>0 && levels[16]==0 && levels[10]==0);
+ data_high_count=0; call=0; fail_at=1;
+ data_input_test(); assert(data_high_count==0 && levels[16]==0);
+ fail_at=0; console_abort=true;
+ data_input_test(); assert(data_high_count==0 && levels[16]==0);
+ console_abort=false; data_test_active=false;
  assert(configuration_mode(0x80,0x87));
  assert(!configuration_mode(0xff,0xff));
  assert(!configuration_mode(0,0));

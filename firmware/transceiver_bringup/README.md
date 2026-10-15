@@ -175,3 +175,12 @@ Single byte `b` sends one native COMMS heartbeat at1200 baud, approximately
 transmission. See [waveform, limits and ground procedure](../../ground/bpsk/README.md).
 C1/C2 removal and C6 replacement are physical prototype reworks documented in
 the lab log; these firmware changes do not update KiCad source/BOM.
+
+## v12: muted data-input measurement
+
+Single byte `d` holds TX_ACTIVE and RX_ACTIVE low, verifies Si5351 output
+disable, then toggles GP16 at approximately 10 Hz for at most five seconds.
+Any console input aborts; GP16 returns low. Failed initial clock-disable
+verification refuses the pattern. No clock or RF path is enabled by this test.
+Probe C65 pad 1 (U7 pin 2 side), grounded at C65 pad 2, to check the data-input
+logic levels. This measures settled data levels, not RF phase performance.

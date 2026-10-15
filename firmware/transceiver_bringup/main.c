@@ -42,6 +42,27 @@ static void bpsk_test(void) {
     printf("[bpsk] complete=%u frame_bytes=%u TX=0\n",ok,(unsigned)size);
 }
 
+/* Data-input measurement only: never enables a clock or RF path. */
+static void data_input_test(void) {
+    gpio_put(10, false);
+    gpio_put(11, false);
+    gpio_put(16, false);
+    if (!disable_clocks()) {
+        printf("[data_test] refused: clock disable not verified\n");
+        return;
+    }
+    printf("[data_test] 10Hz data pattern, max5s, TX/RX=0 clocks=off\n");
+    uint64_t start = time_us_64();
+    while (time_us_64() - start < 5000000) {
+        if (getchar_timeout_us(0) >= 0) break;
+        gpio_put(16, ((time_us_64() - start) / 50000) & 1u);
+        sleep_ms(1);
+    }
+    gpio_put(16, false);
+    bool disabled = disable_clocks();
+    printf("[data_test] end data=0 TX/RX=0 clocks_disabled=%u\n", disabled);
+}
+
 /* SPI mode 0, with explicit chip-select setup/hold delays. */
 static uint8_t can_read(unsigned cs, uint8_t reg) {
     uint8_t tx[] = {0x03, reg, 0}, rx[3] = {0};
@@ -304,6 +325,7 @@ int main(void) {
             if (!listen_a(command != 'l', command == 'h')) {gpio_put(2, true); gpio_put(8, false); afailed = true;}
         }
         if (command == 's') clock_status();
+        if (command == 'd') data_input_test();
         if (command == 'b') bpsk_test();
         if (command == 'c') {
             printf("[clock_test] preparing CLK0 10MHz, max 10s, TX/RX=0; any input aborts\n");
@@ -330,7 +352,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v11] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v12] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());
