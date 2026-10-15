@@ -57,8 +57,8 @@ frame count and final EFLG. Listen-only reception can include invalid traffic;
 its error counters are not a bus-quality metric. This polling test is not a
 high-load capture tool. RF control outputs remain inactive throughout.
 
-The startup sequencing issue observed in the stack is still open. Boot checks
-run once and fail closed; they do not automatically retry when rails arrive later.
+The startup sequencing issue observed in the stack remains pending a physical
+cold-start retest. Version 6 adds bounded readiness retries as described below.
 
 ## Version 5: one HELLO reply
 
@@ -81,3 +81,19 @@ python3 firmware/transceiver_bringup/tests/check.py
 cc -std=c11 -Wall -Wextra -Werror -Ifirmware/transceiver_bringup -Ifirmware/comms_transport firmware/transceiver_bringup/tests/hello.c -o /tmp/y24-hello-test
 /tmp/y24-hello-test
 ```
+
+## Version 6: bounded startup readiness
+
+Before the independence/loopback tests, keep both transceivers in standby and
+attempt controller reset/readback up to twenty times (roughly five seconds).
+Each attempt holds reset low for 10 ms, releases it for 20 ms, then requires two
+configuration-register samples 20 ms apart. A failed attempt reasserts both
+resets and waits 200 ms before retrying. Si5351 disable is attempted during
+this sequence. Exhaustion leaves both resets asserted; no bus mode is enabled.
+
+The `[startup]` line retains the result, attempt count, and last pre-failure-reset
+CANSTAT/CANCTRL values. This is a controller-response check, not power-good
+measurement, and does not make USB-only powering of the installed board safe.
+Late power arrival beyond the retry window still requires a Pico restart.
+Host fault injection covers delayed replies, permanent failure, and recovery;
+actual cold-start validation is tracked in the lab log.

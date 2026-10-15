@@ -26,6 +26,7 @@ stub = r'''
 #define SPI_CPOL_0 0
 #define SPI_CPHA_0 0
 #define SPI_MSB_FIRST 0
+static unsigned delayed_reads;
 static bool bad_can, alias_cs, drop_frame, corrupt_frame, refuse_mode;
 static uint8_t regs[2][128];
 static bool bad_id, bad_dlc, extended_frame, remote_frame;
@@ -34,7 +35,9 @@ static int levels[30], directions[30], initialized[30], call, fail_at;
 static uint8_t readback = 255;
 static jmp_buf done;
 static void gpio_init(unsigned p) {initialized[p]=1; levels[p]=-1;}
-static void gpio_put(unsigned p, bool v) {assert(initialized[p]); levels[p]=v;}
+static void gpio_put(unsigned p, bool v) {assert(initialized[p]); levels[p]=v;
+ if((p==8||p==9)&&!v) {unsigned k=p==8?0:1;regs[k][14]=128;regs[k][15]=135;}
+}
 static void gpio_set_dir(unsigned p, int v) {assert(levels[p]>=0); directions[p]=v;}
 static void gpio_set_function(unsigned p, int v) {assert(((p==20||p==21)&&v==3)||((p==4||p==6||p==7)&&v==1));}
 static void i2c_init(int i, int hz) {assert(i==0&&hz==100000);}
@@ -59,7 +62,8 @@ static int spi_write_read_blocking(int i,const uint8_t *tx,uint8_t *rx,int n) {
  unsigned which=alias_cs?0:(levels[14]==0?0:1);
  uint8_t *r=regs[which];
  if(tx[0]==5) {r[tx[1]]=(r[tx[1]]&~tx[2])|(tx[3]&tx[2]);return n;}
- if(tx[0]==3) {for(int k=2;k<n;k++) rx[k]=bad_can?255:r[tx[1]+k-2];return n;}
+ if(tx[0]==3) {for(int k=2;k<n;k++) rx[k]=(bad_can||delayed_reads)?255:r[tx[1]+k-2];
+ if(delayed_reads) --delayed_reads;return n;}
  unsigned addr=tx[1]; uint8_t v=tx[2];
  if(addr==0x0f) {
   assert((v&0xe0)==0x80||(v&0xe0)==0x40||(v&0xe0)==0x60||(v&0xe0)==0);
@@ -90,7 +94,7 @@ static void adc_gpio_init(unsigned p) {assert(p==27);}
 static void adc_select_input(unsigned p) {assert(p==1);}
 static unsigned adc_read(void) {return 2048;}
 static void stdio_init_all(void) {}
-static void sleep_ms(int ms) {assert(ms==1000||ms==10||ms==1||ms==2); if(ms==1000) longjmp(done,1);}
+static void sleep_ms(int ms) {assert(ms==1000||ms==10||ms==1||ms==2||ms==20||ms==200); if(ms==1000) longjmp(done,1);}
 '''
 harness = r'''
 #define main firmware_main
@@ -127,6 +131,13 @@ int main(void) {
  assert(!can_mode(14,0xa0));
  assert(loopback(14,0xa1)==0);
  assert(listen_a(false, false)); assert(listen_a(true, false)); assert(levels[2]==1&&levels[3]==1);
+ unsigned attempts; uint8_t last[4];
+ delayed_reads=8; assert(wait_can_ready(&attempts,last)&&attempts==2);
+ assert(levels[2]==1&&levels[3]==1);
+ bad_can=true;
+ assert(!wait_can_ready(&attempts,last)&&attempts==20);
+ assert(levels[8]==0&&levels[9]==0&&last[0]==255&&last[2]==255);
+ bad_can=false; assert(wait_can_ready(&attempts,last)&&attempts==1);
  bad_can=true;
  if (!setjmp(done)) firmware_main();
  assert(levels[8]==0&&levels[9]==0&&levels[2]==1&&levels[3]==1);

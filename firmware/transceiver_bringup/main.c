@@ -212,6 +212,33 @@ static bool listen_a(bool acknowledge, bool reply_hello) {
     return mode_ok && restored;
 }
 
+/* Readiness means responsive CAN configuration registers, not a rail measurement.
+ * Twenty attempts give roughly five seconds for power/oscillator settling.
+ * No bus participation is enabled here. Exhaustion leaves both resets low. */
+static bool wait_can_ready(unsigned *attempts, uint8_t last[4]) {
+    gpio_put(2, true); gpio_put(3, true);
+    gpio_put(14, true); gpio_put(15, true);
+    for (*attempts = 1; *attempts <= 20; ++*attempts) {
+        gpio_put(8, false); gpio_put(9, false);
+        sleep_ms(10);
+        (void)disable_clocks();
+        gpio_put(8, true); gpio_put(9, true);
+        sleep_ms(20);
+        bool ready = true;
+        for (unsigned sample = 0; sample < 2; ++sample) {
+            last[0] = can_read(14, 0x0e); last[1] = can_read(14, 0x0f);
+            last[2] = can_read(15, 0x0e); last[3] = can_read(15, 0x0f);
+            ready &= configuration_mode(last[0], last[1]) && configuration_mode(last[2], last[3]);
+            if (sample == 0) sleep_ms(20);
+        }
+        if (ready) return true;
+        gpio_put(8, false); gpio_put(9, false);
+        if (*attempts < 20) sleep_ms(200);
+    }
+    *attempts = 20;
+    return false;
+}
+
 int main(void) {
     output(10, false); /* TX_ACTIVE: hardware mute asserted. */
     output(11, false); /* RX_ACTIVE */
@@ -243,12 +270,10 @@ int main(void) {
     gpio_set_function(4, GPIO_FUNC_SPI);
     gpio_set_function(6, GPIO_FUNC_SPI);
     gpio_set_function(7, GPIO_FUNC_SPI);
-    sleep_ms(10); /* Hardware reset held low well beyond minimum pulse width. */
-    gpio_put(8, true);
-    gpio_put(9, true);
-    sleep_ms(10); /* Oscillator startup; mode is checked rather than assumed. */
-    unsigned count = 0;
-    bool registers_ok = independent_registers();
+    unsigned count = 0, startup_attempts = 0;
+    uint8_t startup_last[4] = {0};
+    bool startup_ready = wait_can_ready(&startup_attempts, startup_last);
+    bool registers_ok = startup_ready && independent_registers();
     unsigned aloop = 6, bloop = 6; /* 6 = skipped after independent-register failure. */
     if (registers_ok) {
         aloop = loopback(14, 0xa1);
@@ -271,13 +296,15 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v5] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v6] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());
         printf("[can] A STAT=%02X CTRL=%02X %s; B STAT=%02X CTRL=%02X %s\n",
                as, ac, !afailed ? "CONFIG" : "FAIL_RESET_HELD",
                bs, bc, !bfailed ? "CONFIG" : "FAIL_RESET_HELD");
+        printf("[startup] ready=%u attempts=%u last_A=%02X/%02X last_B=%02X/%02X\n",
+               startup_ready, startup_attempts, startup_last[0], startup_last[1], startup_last[2], startup_last[3]);
         printf("[selftest] independent_registers=%s loopback_A=%u loopback_B=%u (0=PASS)\n",
                registers_ok ? "PASS" : "FAIL", aloop, bloop);
         for (unsigned k = 0; k < 2; ++k) {
