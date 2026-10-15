@@ -43,7 +43,7 @@ def recover_bits(bits):
         result.append(dict(sequence=sequence,hex=packet.hex(),decoded=native))
     return result
 
-def decode(iq, rate=48000):
+def decode(iq, rate=48000, *, phase_diagnostic=False):
     if rate%BAUD or rate<4*BAUD:raise ValueError('integer samples/symbol required')
     iq=np.asarray(iq,dtype=np.complex64)
     if iq.ndim!=1 or not np.isfinite(iq).all():raise ValueError('invalid IQ')
@@ -65,16 +65,19 @@ def decode(iq, rate=48000):
             symbols=np.diff(integ[bounds])
             if len(symbols)<2:continue
             diff=symbols[1:]*np.conj(symbols[:-1])
-            bits=(diff.real<0).astype(np.uint8)
+            # Explicit diagnostic for non-antipodal phase switching. Not a BPSK pass.
+            bits=((np.abs(np.angle(diff))>np.pi/4) if phase_diagnostic
+                  else (diff.real<0)).astype(np.uint8)
             for item in recover_bits(bits):
                 key=(item['sequence'],item['hex'])
                 if key in seen:continue
-                seen.add(key);item.update(carrier_offset_hz=carrier,window_start=start,timing_sample=phase)
+                seen.add(key);item.update(carrier_offset_hz=carrier,window_start=start,timing_sample=phase,decoder='phase-transition-diagnostic' if phase_diagnostic else 'dbpsk')
                 result.append(item)
     return result
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('iq',type=Path);p.add_argument('--rate',type=int,default=48000)
+    p.add_argument('--phase-diagnostic',action='store_true',help='45-degree transition threshold; NOT standard BPSK validation')
     args=p.parse_args()
-    print(json.dumps(decode(np.load(args.iq,allow_pickle=False),args.rate),indent=2))
+    print(json.dumps(decode(np.load(args.iq,allow_pickle=False),args.rate,phase_diagnostic=args.phase_diagnostic),indent=2))

@@ -47,6 +47,14 @@ class ModemTests(unittest.TestCase):
         self.assertEqual(recover_bits(np.unpackbits(np.frombuffer(bad,np.uint8))),[])
         rng=np.random.default_rng(4)
         self.assertEqual(decode(rng.normal(size=48000)+1j*rng.normal(size=48000)),[])
+    def test_non_antipodal_is_diagnostic_only(self):
+        bits=np.unpackbits(np.frombuffer(self.raw,np.uint8))
+        levels=np.cumsum(bits)%2
+        iq=np.r_[np.zeros(2400),np.repeat(np.exp(1j*levels*np.pi/3),40),np.zeros(2400)]
+        self.assertEqual(decode(iq),[])
+        result=decode(iq,phase_diagnostic=True)
+        self.assertEqual([x['hex'] for x in result],[self.packet.hex()])
+        self.assertEqual(result[0]['decoder'],'phase-transition-diagnostic')
     def test_two_packets(self):
         second=frame(self.packet,20)
         r=decode(np.r_[self.iq(),self.iq(raw=second)])

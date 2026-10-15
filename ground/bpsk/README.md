@@ -69,3 +69,19 @@ not the old EPS proof display.
 Offline repeat: `python3 ground/bpsk/modem.py /path/to/baseband-48k.npy`.
 Maximum capture15s. Stop tests on timing/stream faults and investigate saved
 records. Leave periodic IHU telemetry and unrelated radio services unchanged.
+
+## First hardware result — October15
+
+v11 (`cec4c38`) built/flashed with verification. One burst completed and shut
+ down correctly, with no LibreSDR stream errors at gain0. The standard DBPSK
+decoder returned no packet. Inspection of saved IQ suggested transitions near
+90 degrees rather than the intended180; cause remains unconfirmed.
+
+An explicitly selected offline `--phase-diagnostic` uses a45-degree transition
+threshold and recovered the exact native heartbeat with both CRCs valid.
+Those actual RF-recovered bytes were independently compared with the Pico
+console and forwarded unchanged to Yamcs, which archived `/ember/HEARTBEAT`
+at2026-10-15T22:51:17.695Z. This is a diagnostic RF telemetry success, **not a
+standard BPSK qualification**. The normal decoder/capture path remains strict;
+there is no automatic diagnostic fallback or synthetic packet injection.
+Next: measure the actual phase states/drive path and resolve the discrepancy.
