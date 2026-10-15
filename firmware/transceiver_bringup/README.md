@@ -155,3 +155,15 @@ diagnostic comparison, not a change to the 437 MHz design target. The PLL
 ratio has no fractional remainder; FBA_INT remains clear because 35 is odd
 (AN619 §3.2.1). All mute, lock, timeout and abort behavior matches `t`.
 The external DC block and 30 dB pad must remain connected to the tinySA RF input.
+
+## Version 10: temporary crystal-load comparison
+
+Single-byte commands `0`, `8`, `6` select 10, 8, 6 pF internal loading for one
+muted 10 MHz window, then restore register183's saved value. AN619 specifies
+D2,92,52 respectively; the reserved 00 setting is never selected. Configuration
+is read back and allowed 200 ms to settle before the existing lock-checked
+clock window. Cleanup retries restoration once if necessary but reports a
+first-attempt restoration failure rather than hiding it. Read status after any
+failure before continuing. This does not change external C1/C2 or calibrate the
+crystal. The load values describe the Si5351 internal setting, not the total
+assembled crystal load. TX/RX/BPSK stay low throughout.

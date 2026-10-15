@@ -96,3 +96,27 @@ cleanup:
 static bool clock_test(void) {return clock_window(false, false);}
 static bool tx_tone_test(void) {return clock_window(true, false);}
 static bool tx_comparison_test(void) {return clock_window(true, true);}
+
+/* Temporary crystal-load comparison; never enables TX, always attempts restore. */
+static bool clock_load_test(unsigned pf) {
+    gpio_put(10, false); gpio_put(11, false); gpio_put(16, false);
+    uint8_t selected, original = 0;
+    if (pf == 6) selected = 0x52;
+    else if (pf == 8) selected = 0x92;
+    else if (pf == 10) selected = 0xd2;
+    else return false;
+    if (!clock_stop() || !clock_read(183, &original)) return false;
+    bool configured = clock_write(183, selected, true);
+    bool ok = false;
+    if (configured) {
+        sleep_ms(200);
+        ok = clock_test();
+    }
+    /* Clock window already shuts down; repeat before touching crystal loading. */
+    bool stopped = clock_stop();
+    bool restored = clock_write(183, original, true);
+    if (!restored) (void)clock_write(183, original, true); /* Best-effort retry. */
+    printf("[clock_load] pf=%u original=%02X configured=%u complete=%u stopped=%u restored=%u\n",
+           pf, original, configured, ok, stopped, restored);
+    return configured && ok && stopped && restored;
+}

@@ -90,5 +90,19 @@ int main(void) {
         reset();tx_plan=comparison=true;fail_at=i;assert(!tx_comparison_test());
         assert(!tx_level && now<=10100000);
     }
+    const unsigned loads[] = {6, 8, 10};
+    for (unsigned n=0;n<3;n++) {
+        reset();assert(clock_load_test(loads[n]));
+        assert(regs[183]==0xd2 && !tx_level && duration==10000000);
+        count=calls;
+        for(unsigned i=1;i<=count;i++) {
+            reset();fail_at=i;assert(!clock_load_test(loads[n]));
+            assert(!tx_level && regs[183]==0xd2);
+            assert(regs[3]==255 || regs[16]==0x80);
+        }
+    }
+    reset();assert(!clock_load_test(7)&&enable_count==0);
+    reset();abort_input=true;assert(!clock_load_test(6)&&regs[183]==0xd2);
+    reset();no_lock=true;assert(!clock_load_test(8)&&regs[183]==0xd2);
     puts("PASS: clock timing, register plan, I2C fault sweep, lock/readback failures, abort, shutdown");
 }
