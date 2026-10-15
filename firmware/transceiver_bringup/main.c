@@ -4,6 +4,9 @@
 #include "hardware/adc.h"
 #include "hardware/i2c.h"
 #include "hardware/spi.h"
+#include "pico/rand.h"
+#include "hello.h"
+static uint32_t responder_boot;
 
 static void output(unsigned pin, bool level) {
     gpio_init(pin);
@@ -109,8 +112,42 @@ static unsigned loopback(unsigned cs, uint8_t tag) {
     return 0;
 }
 
+static void can_modify(uint8_t reg, uint8_t mask, uint8_t value) {
+    uint8_t tx[] = {5, reg, mask, value}, rx[4];
+    gpio_put(14, false); sleep_us(2);
+    spi_write_read_blocking(spi0, tx, rx, 4);
+    sleep_us(2); gpio_put(14, true);
+}
+
+static bool hello_send(const uint8_t *wire, size_t size, uint32_t request,
+                       uint64_t deadline) {
+    for (unsigned index = 0; index < CF_FRAMES; ++index) {
+        cf_frame f;
+        if (!cf_fragment(wire, size, CF_COMMS_ID, (uint16_t)request, index, &f)) return false;
+        if (time_us_64() >= deadline || (can_read(14, 0x0e)&0xe0) != 0) return false;
+        can_write(14, 0x30, 0); can_modify(0x2c, 4, 0);
+        uint8_t tx[] = {(uint8_t)(f.id>>3), (uint8_t)(f.id<<5), 0, 0, f.size};
+        for (unsigned i=0;i<5;++i) can_write(14, 0x31+i, tx[i]);
+        for (unsigned i=0;i<f.size;++i) can_write(14, 0x36+i, f.data[i]);
+        can_write(14, 0x30, 8); /* One-shot TX; no indefinite retries. */
+        bool done = false;
+        for (unsigned poll=0;poll<50 && time_us_64()<deadline;++poll) {
+            uint8_t ctrl = can_read(14, 0x30);
+            if (!(ctrl&8)) {done = !(ctrl&0x70) && (can_read(14, 0x2c)&4); break;}
+            sleep_ms(1);
+        }
+        if (!done) {can_write(14, 0x30, 0); return false;}
+        if ((index+1)*CF_CHUNK >= size) return true;
+        sleep_ms(2);
+    }
+    return false;
+}
+
 /* Console l=listen-only, n=receive with ACK; both bounded to ten seconds. */
-static bool listen_a(bool acknowledge) {
+static bool listen_a(bool acknowledge, bool reply_hello) {
+    cf_reader fragments = {0};
+    bool reply_attempted = false, reply_ok = false;
+    uint32_t reply_request = 0;
     uint8_t mode = acknowledge ? 0 : 0x60;
     if (!configuration_mode(can_read(14, 0x0e), can_read(14, 0x0f))) return false;
     if (can_read(14, 0x2a) != 0 || can_read(14, 0x29) != 0xf0 ||
@@ -120,7 +157,7 @@ static bool listen_a(bool acknowledge) {
     can_write(14, 0x30, 0); can_write(14, 0x40, 0); can_write(14, 0x50, 0);
     if (!can_mode(14, mode)) return false;
     gpio_put(2, false); /* All TX buffers inactive before connecting to bus. */
-    printf("[listen_A] START 500000bit/s 10s ACK=%u no_application_TX\n", acknowledge);
+    printf("[listen_A] START 500000bit/s 10s ACK=%u HELLO_reply=%u\n", acknowledge, reply_hello);
     uint64_t end = time_us_64() + 10000000;
     unsigned frames = 0;
     uint8_t captured[32][13];
@@ -137,14 +174,26 @@ static bool listen_a(bool acknowledge) {
             sleep_us(2); gpio_put(14, true);
             if (frames < 32)
                 for (unsigned i = 0; i < 13; ++i) captured[frames][i] = read_rx[i+2];
-            /* BIT MODIFY clears only the consumed receive flag. */
-            uint8_t tx[] = {5, 0x2c, (uint8_t)(1u << buffer), 0}, rx[4];
-            gpio_put(14, false); sleep_us(2);
-            spi_write_read_blocking(spi0, tx, rx, 4);
-            sleep_us(2); gpio_put(14, true);
+            can_modify(0x2c, (uint8_t)(1u<<buffer), 0);
+            uint8_t *data = read_rx+2;
+            if (reply_hello && !reply_attempted && !(data[1]&0x18) &&
+                !(data[4]&0x40) && (data[4]&15)<=8) {
+                cf_frame f = {.id = (uint16_t)((data[0]<<3)|(data[1]>>5)), .size=data[4]&15};
+                memcpy(f.data, data+5, f.size);
+                if (cf_feed(&fragments, &f, CF_IHU_ID, (uint32_t)(time_us_64()/1000))) {
+                    uint8_t wire[UL_WIRE_MAX];
+                    size_t size = hello_response(&fragments, responder_boot, wire, &reply_request);
+                    if (size) {
+                        reply_attempted = true;
+                        reply_ok = hello_send(wire, size, reply_request, end);
+                        if (!reply_ok) {mode_ok=false; break;}
+                    }
+                }
+            }
             ++frames;
 
         }
+        if (!mode_ok) break;
         sleep_ms(1);
     }
     gpio_put(2, true); /* Stop physical reception before changing modes. */
@@ -157,6 +206,9 @@ static bool listen_a(bool acknowledge) {
     }
     printf("[listen_A] END frames=%u EFLG=%02X mode_ok=%u restored=%u\n",
            frames, errors, mode_ok, restored);
+    if (reply_hello) printf("[hello_A] boot=%lu request=%lu attempted=%u tx_complete=%u\n",
+                            (unsigned long)responder_boot, (unsigned long)reply_request,
+                            reply_attempted, reply_ok);
     return mode_ok && restored;
 }
 
@@ -184,6 +236,8 @@ int main(void) {
     adc_gpio_init(27);
     adc_select_input(1);
     stdio_init_all();
+    responder_boot = get_rand_32();
+    if (!responder_boot) responder_boot = 1;
     spi_init(spi0, 1000000);
     spi_set_format(spi0, 8, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST);
     gpio_set_function(4, GPIO_FUNC_SPI);
@@ -206,8 +260,8 @@ int main(void) {
     if (bfailed) gpio_put(9, false);
     while (true) {
         int command = getchar_timeout_us(0);
-        if ((command == 'l' || command == 'n') && !afailed) {
-            if (!listen_a(command == 'n')) {gpio_put(2, true); gpio_put(8, false); afailed = true;}
+        if ((command == 'l' || command == 'n' || command == 'h') && !afailed) {
+            if (!listen_a(command != 'l', command == 'h')) {gpio_put(2, true); gpio_put(8, false); afailed = true;}
         }
         bool clocks_disabled = disable_clocks();
         uint8_t as = can_read(14, 0x0e), ac = can_read(14, 0x0f);
@@ -217,7 +271,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v4] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v5] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

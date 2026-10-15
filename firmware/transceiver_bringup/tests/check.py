@@ -84,12 +84,13 @@ static int spi_write_read_blocking(int i,const uint8_t *tx,uint8_t *rx,int n) {
 }
 static uint64_t time_us_64(void) {static uint64_t now; return now+=10000;}
 static int getchar_timeout_us(unsigned t) {assert(t==0);return -1;}
+static uint32_t get_rand_32(void) {return 12345;}
 static void adc_init(void) {}
 static void adc_gpio_init(unsigned p) {assert(p==27);}
 static void adc_select_input(unsigned p) {assert(p==1);}
 static unsigned adc_read(void) {return 2048;}
 static void stdio_init_all(void) {}
-static void sleep_ms(int ms) {assert(ms==1000||ms==10||ms==1); if(ms==1000) longjmp(done,1);}
+static void sleep_ms(int ms) {assert(ms==1000||ms==10||ms==1||ms==2); if(ms==1000) longjmp(done,1);}
 '''
 harness = r'''
 #define main firmware_main
@@ -125,7 +126,7 @@ int main(void) {
  refuse_mode=true; assert(loopback(14,0xa1)==2); refuse_mode=false;
  assert(!can_mode(14,0xa0));
  assert(loopback(14,0xa1)==0);
- assert(listen_a(false)); assert(listen_a(true)); assert(levels[2]==1&&levels[3]==1);
+ assert(listen_a(false, false)); assert(listen_a(true, false)); assert(levels[2]==1&&levels[3]==1);
  bad_can=true;
  if (!setjmp(done)) firmware_main();
  assert(levels[8]==0&&levels[9]==0&&levels[2]==1&&levels[3]==1);
@@ -136,11 +137,11 @@ int main(void) {
 with tempfile.TemporaryDirectory() as directory:
     root = pathlib.Path(directory)
     (root/'stub.h').write_text(stub)
-    for name in ['pico/stdlib.h', 'hardware/adc.h', 'hardware/i2c.h', 'hardware/spi.h']:
+    for name in ['pico/stdlib.h', 'hardware/adc.h', 'hardware/i2c.h', 'hardware/spi.h', 'pico/rand.h']:
         path = root/name
         path.parent.mkdir(exist_ok=True)
         path.write_text('#include "stub.h"\n')
     (root/'check.c').write_text(harness)
-    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror','-I'+str(root),'-I'+str(src),str(root/'check.c'),'-o',str(root/'check')],check=True)
+    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror','-I'+str(root),'-I'+str(src),'-I'+str(src.parent/'comms_transport'),str(root/'check.c'),'-o',str(root/'check')],check=True)
     subprocess.run([str(root/'check')],check=True)
 print('PASS: ordered pad nets, safe output initialization, clock-disable faults, CS independence, loopback payload/timeout/mode faults')

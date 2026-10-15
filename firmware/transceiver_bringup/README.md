@@ -2,7 +2,8 @@
 
 Original Pico only. This deliberately bounded image is separate from the legacy
 `comms` application. It holds TX/RX inactive, both MCP25625 transceivers in standby,
-and never enables a Si5351 clock output or sends a frame onto the external CAN bus. Console commands are single bytes: `l` and `n` (see below).
+and never enables a Si5351 clock output. External CAN operation is limited to
+explicit console test windows: `l`, `n`, and `h` (see below).
 
 Version 3 performs one boot-time independent-register test using opposite
 patterns in inactive TXB0D0 RAM, restores those bytes, then runs one internal
@@ -47,8 +48,7 @@ This image does not qualify CAN, the receive path, or transmit hardware.
 After successful boot tests, send `l` for a 10-second listen-only window, or `n`
 for a 10-second normal-mode receive window that acknowledges valid CAN frames.
 CAN A uses 500 kbit/s with the ordered 16 MHz oscillator, CNF1/2/3=00/f0/86.
-All three transmit requests are cleared before normal-mode entry. This image
-never requests application-frame transmission on the external bus; normal mode
+All three transmit requests are cleared before normal-mode entry. The `l` and `n` windows never request application-frame transmission; normal mode
 can produce CAN acknowledgments/error signaling. CAN B stays in standby.
 Burst SPI reads and RX0-to-RX1 rollover reduce capture overhead.
 Each window returns A to standby and configuration mode; failed transitions
@@ -59,3 +59,25 @@ high-load capture tool. RF control outputs remain inactive throughout.
 
 The startup sequencing issue observed in the stack is still open. Boot checks
 run once and fail closed; they do not automatically retry when rails arrive later.
+
+## Version 5: one HELLO reply
+
+Send `h` to open a ten-second CAN A normal-mode window and allow one HELLO_ACK
+reply to one valid HELLO request from IHU (CAN ID 0x710). Reassembly and the
+COBS/CRC envelope use the shared `comms_transport` headers. Version, type,
+empty payload, sender/origin relationship, and fragment-token/request match
+are checked. Other requests are ignored. A fresh random nonzero boot ID is
+reported in the reply; origin and request are preserved. Replies use ID 0x711,
+2 ms interfragment spacing and one-shot transmission with bounded completion.
+No LTE, EPS control, RF command, or ECHO service is implemented here.
+Failure stops transmission and holds A in reset; successful windows restore
+standby/configuration. An IHU matched HELLO response, not just TX completion,
+is the evidence of an end-to-end test.
+
+Host checks:
+
+```sh
+python3 firmware/transceiver_bringup/tests/check.py
+cc -std=c11 -Wall -Wextra -Werror -Ifirmware/transceiver_bringup -Ifirmware/comms_transport firmware/transceiver_bringup/tests/hello.c -o /tmp/y24-hello-test
+/tmp/y24-hello-test
+```
