@@ -327,6 +327,10 @@ int main(void) {
         if (command == 's') clock_status();
         if (command == 'd') data_input_test();
         if (command == 'b') bpsk_test();
+        if (command == 'p') {
+            printf("[phase_hold] ten alternating 100ms states, 1s RF, timer mute2s\n");
+            (void)clock_window_run(true,false,phase_hold_emit);
+        }
         if (command == 'c') {
             printf("[clock_test] preparing CLK0 10MHz, max 10s, TX/RX=0; any input aborts\n");
             (void)clock_test();
@@ -352,7 +356,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v12] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v13] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

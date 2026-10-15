@@ -184,3 +184,12 @@ Any console input aborts; GP16 returns low. Failed initial clock-disable
 verification refuses the pattern. No clock or RF path is enabled by this test.
 Probe C65 pad 1 (U7 pin 2 side), grounded at C65 pad 2, to check the data-input
 logic levels. This measures settled data levels, not RF phase performance.
+
+## v13: bounded RF phase holds
+
+Explicit `p` sends ten alternating GP16 states (0,1,...), each 100 ms, at the
+existing nominal 437 MHz setting: one second total RF. Uses the same checked
+clock setup/cleanup, 1.5-second payload deadline and independent two-second
+interrupt mute as `b`. Console input, late transition or timer aborts. No
+periodic TX, telemetry packet or Yamcs forwarding. This isolates settled RF
+phase states for receiver capture; verify scope removal and antenna setup first.

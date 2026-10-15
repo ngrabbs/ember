@@ -19,3 +19,21 @@ static bool bpsk_emit(uint64_t deadline) {
         if(clock_deadline_fired || getchar_timeout_us(0)>=0)return false;
     return time_us_64()<deadline && !clock_deadline_fired;
 }
+
+/* Ten alternating 100ms holds: one second total, existing 2s mute timer. */
+static bool phase_hold_emit(uint64_t deadline) {
+    uint64_t start=time_us_64();
+    for(unsigned state=0;state<10;state++) {
+        uint64_t due=start+(uint64_t)state*100000;
+        while(time_us_64()<due)
+            if(clock_deadline_fired || getchar_timeout_us(0)>=0)return false;
+        uint64_t now=time_us_64();
+        if(now>=deadline || now>due+150 || clock_deadline_fired ||
+           getchar_timeout_us(0)>=0)return false;
+        gpio_put(16,state&1u);
+    }
+    while(time_us_64()<start+1000000)
+        if(time_us_64()>=deadline || clock_deadline_fired ||
+           getchar_timeout_us(0)>=0)return false;
+    return time_us_64()<deadline && !clock_deadline_fired;
+}

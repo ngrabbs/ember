@@ -30,5 +30,11 @@ int main(int argc,char **argv){
  reset();late_at=100001;assert(!bpsk_emit(1500000));
  reset();clock_deadline_fired=true;assert(!bpsk_emit(1500000)&&writes==0);
  reset();assert(!bpsk_emit(10000)&&now<12000);
+ reset();assert(phase_hold_emit(1500000));assert(writes==10 && now>=1000000 && now<1000020);
+ for(unsigned i=0;i<10;i++){assert(values[i]==(bool)(i&1));if(i)assert(timestamps[i]-timestamps[i-1]>=99995 && timestamps[i]-timestamps[i-1]<=100005);}
+ reset();abort_at=20000;assert(!phase_hold_emit(1500000)&&now<21000);
+ reset();late_at=100001;assert(!phase_hold_emit(1500000));
+ reset();clock_deadline_fired=true;assert(!phase_hold_emit(1500000)&&writes==0);
+ reset();assert(!phase_hold_emit(950000)&&now<950020);
  puts("PASS: packet CRCs, DBPSK mapping, symbol timing, console abort, lateness and deadlines");
 }
