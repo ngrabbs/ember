@@ -47,19 +47,22 @@ static int i2c_read_timeout_us(int i,int a,uint8_t*b,int n,bool hold,int t) {
  assert(i==0&&a==0x60&&n==1&&!hold&&t==2000); ++call; *b=readback;
  return call==fail_at?-1:n;
 }
-static void spi_init(int i,int hz) {assert(i==0&&hz==100000);}
+static void spi_init(int i,int hz) {assert(i==0&&hz==1000000);}
 static void spi_set_format(int i,int bits,int pol,int pha,int order) {assert(i==0&&bits==8&&pol==0&&pha==0&&order==0);}
 static void sleep_us(int us) {assert(us==2);}
 static int spi_write_read_blocking(int i,const uint8_t *tx,uint8_t *rx,int n) {
- assert(i==0&&n==3&&(tx[0]==3||tx[0]==2)&&tx[1]<128);
+ assert(i==0&&(((n==3&&(tx[0]==3||tx[0]==2))||(n==15&&tx[0]==3))||(n==4&&tx[0]==5))&&tx[1]<128);
  assert((levels[14]==0&&levels[15]==1)||(levels[15]==0&&levels[14]==1));
- assert(levels[2]==1&&levels[3]==1&&levels[10]==0);
+ assert(levels[3]==1&&levels[10]==0);
+ if(levels[2]==0) assert((regs[0][14]&0xe0)==0x60||(regs[0][14]&0xe0)==0);
+ if(levels[2]==0) assert(!(regs[0][0x30]&8)&&!(regs[0][0x40]&8)&&!(regs[0][0x50]&8));
  unsigned which=alias_cs?0:(levels[14]==0?0:1);
  uint8_t *r=regs[which];
- if(tx[0]==3) {rx[2]=bad_can?255:r[tx[1]];return n;}
+ if(tx[0]==5) {r[tx[1]]=(r[tx[1]]&~tx[2])|(tx[3]&tx[2]);return n;}
+ if(tx[0]==3) {for(int k=2;k<n;k++) rx[k]=bad_can?255:r[tx[1]+k-2];return n;}
  unsigned addr=tx[1]; uint8_t v=tx[2];
  if(addr==0x0f) {
-  assert((v&0xe0)==0x80||(v&0xe0)==0x40);
+  assert((v&0xe0)==0x80||(v&0xe0)==0x40||(v&0xe0)==0x60||(v&0xe0)==0);
   if(!refuse_mode) {r[0x0e]=v&0xe0;r[addr]=v;}
  } else {
   r[addr]=v;
@@ -79,6 +82,8 @@ static int spi_write_read_blocking(int i,const uint8_t *tx,uint8_t *rx,int n) {
  }
  return n;
 }
+static uint64_t time_us_64(void) {static uint64_t now; return now+=10000;}
+static int getchar_timeout_us(unsigned t) {assert(t==0);return -1;}
 static void adc_init(void) {}
 static void adc_gpio_init(unsigned p) {assert(p==27);}
 static void adc_select_input(unsigned p) {assert(p==1);}
@@ -118,7 +123,9 @@ int main(void) {
  remote_frame=true; assert(loopback(14,0xa1)==4); remote_frame=false;
  assert(can_mode(14,0x80));
  refuse_mode=true; assert(loopback(14,0xa1)==2); refuse_mode=false;
- assert(!can_mode(14,0));
+ assert(!can_mode(14,0xa0));
+ assert(loopback(14,0xa1)==0);
+ assert(listen_a(false)); assert(listen_a(true)); assert(levels[2]==1&&levels[3]==1);
  bad_can=true;
  if (!setjmp(done)) firmware_main();
  assert(levels[8]==0&&levels[9]==0&&levels[2]==1&&levels[3]==1);

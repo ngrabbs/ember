@@ -1,4 +1,4 @@
-/* Y24 ordered-board bring-up: internal CAN loopback only; no external transmit or RF enable. */
+/* Y24 ordered-board bring-up: internal loopback and bounded CAN A receive windows; RF stays muted. */
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "hardware/adc.h"
@@ -49,8 +49,8 @@ static void can_write(unsigned cs, uint8_t reg, uint8_t value) {
 }
 
 static bool can_mode(unsigned cs, uint8_t mode) {
-    /* Never allow normal mode. One-shot enabled, CAN CLKOUT disabled. */
-    if (mode != 0x80 && mode != 0x40) return false;
+    /* Mode selection used by bounded tests. One-shot on, CAN CLKOUT off. */
+    if (mode != 0x80 && mode != 0x40 && mode != 0x60 && mode != 0) return false;
     can_write(cs, 0x0f, mode | 0x08);
     for (unsigned n = 0; n < 100; ++n) {
         if ((can_read(cs, 0x0e) & 0xe0) == mode &&
@@ -109,6 +109,57 @@ static unsigned loopback(unsigned cs, uint8_t tag) {
     return 0;
 }
 
+/* Console l=listen-only, n=receive with ACK; both bounded to ten seconds. */
+static bool listen_a(bool acknowledge) {
+    uint8_t mode = acknowledge ? 0 : 0x60;
+    if (!configuration_mode(can_read(14, 0x0e), can_read(14, 0x0f))) return false;
+    if (can_read(14, 0x2a) != 0 || can_read(14, 0x29) != 0xf0 ||
+        can_read(14, 0x28) != 0x86) return false;
+    can_write(14, 0x2c, 0); can_write(14, 0x2d, 0);
+    can_write(14, 0x60, 0x64); /* RX0 rollover into RX1. */
+    can_write(14, 0x30, 0); can_write(14, 0x40, 0); can_write(14, 0x50, 0);
+    if (!can_mode(14, mode)) return false;
+    gpio_put(2, false); /* All TX buffers inactive before connecting to bus. */
+    printf("[listen_A] START 500000bit/s 10s ACK=%u no_application_TX\n", acknowledge);
+    uint64_t end = time_us_64() + 10000000;
+    unsigned frames = 0;
+    uint8_t captured[32][13];
+    bool mode_ok = true;
+    while (time_us_64() < end) {
+        if ((can_read(14, 0x0e) & 0xe0) != mode) {mode_ok = false; break;}
+        uint8_t flags = can_read(14, 0x2c);
+        for (unsigned buffer = 0; buffer < 2; ++buffer) {
+            if (!(flags & (1u << buffer))) continue;
+            uint8_t base = buffer ? 0x71 : 0x61;
+            uint8_t read_tx[15] = {3, base}, read_rx[15];
+            gpio_put(14, false); sleep_us(2);
+            spi_write_read_blocking(spi0, read_tx, read_rx, 15);
+            sleep_us(2); gpio_put(14, true);
+            if (frames < 32)
+                for (unsigned i = 0; i < 13; ++i) captured[frames][i] = read_rx[i+2];
+            /* BIT MODIFY clears only the consumed receive flag. */
+            uint8_t tx[] = {5, 0x2c, (uint8_t)(1u << buffer), 0}, rx[4];
+            gpio_put(14, false); sleep_us(2);
+            spi_write_read_blocking(spi0, tx, rx, 4);
+            sleep_us(2); gpio_put(14, true);
+            ++frames;
+
+        }
+        sleep_ms(1);
+    }
+    gpio_put(2, true); /* Stop physical reception before changing modes. */
+    uint8_t errors = can_read(14, 0x2d);
+    bool restored = can_mode(14, 0x80);
+    for (unsigned f = 0; f < frames && f < 32; ++f) {
+        printf("[listen_A] raw");
+        for (unsigned i = 0; i < 13; ++i) printf(" %02X", captured[f][i]);
+        printf("\n");
+    }
+    printf("[listen_A] END frames=%u EFLG=%02X mode_ok=%u restored=%u\n",
+           frames, errors, mode_ok, restored);
+    return mode_ok && restored;
+}
+
 int main(void) {
     output(10, false); /* TX_ACTIVE: hardware mute asserted. */
     output(11, false); /* RX_ACTIVE */
@@ -133,7 +184,7 @@ int main(void) {
     adc_gpio_init(27);
     adc_select_input(1);
     stdio_init_all();
-    spi_init(spi0, 100000);
+    spi_init(spi0, 1000000);
     spi_set_format(spi0, 8, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST);
     gpio_set_function(4, GPIO_FUNC_SPI);
     gpio_set_function(6, GPIO_FUNC_SPI);
@@ -154,6 +205,10 @@ int main(void) {
     if (afailed) gpio_put(8, false);
     if (bfailed) gpio_put(9, false);
     while (true) {
+        int command = getchar_timeout_us(0);
+        if ((command == 'l' || command == 'n') && !afailed) {
+            if (!listen_a(command == 'n')) {gpio_put(2, true); gpio_put(8, false); afailed = true;}
+        }
         bool clocks_disabled = disable_clocks();
         uint8_t as = can_read(14, 0x0e), ac = can_read(14, 0x0f);
         uint8_t bs = can_read(15, 0x0e), bc = can_read(15, 0x0f);
@@ -162,7 +217,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v3] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v4] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());
