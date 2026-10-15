@@ -1,8 +1,15 @@
 # Y24 transceiver bring-up
 
 Original Pico only. This deliberately bounded image is separate from the legacy
-`comms` application. It holds TX/RX inactive, both MCP25625s in reset and standby,
-and never enables a clock output or sends a CAN frame. There are no commands.
+`comms` application. It holds TX/RX inactive, both MCP25625 transceivers in standby,
+and never enables a Si5351 clock output or sends a CAN frame. There are no commands.
+
+Version 2 releases the CAN controller resets after a 10 ms hold, waits 10 ms,
+then reads CANSTAT (0x0E) and CANCTRL (0x0F) through SPI0 at 100 kHz, mode 0.
+Only READ instructions are issued. Both mode fields must indicate configuration
+mode (0x80 masked with 0xE0); otherwise that controller is held in reset until
+reboot. Standby stays high throughout. These read-only checks do not validate
+CAN bus traffic, interrupts, or register writes. See Microchip DS20005282C.
 
 Every second it writes Si5351 register 3 = 0xFF and checks the readback, using
 bounded I2C operations. `NOT_VERIFIED` is expected on a bare Pico. Successful
