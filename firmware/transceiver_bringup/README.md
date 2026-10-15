@@ -193,3 +193,12 @@ clock setup/cleanup, 1.5-second payload deadline and independent two-second
 interrupt mute as `b`. Console input, late transition or timer aborts. No
 periodic TX, telemetry packet or Yamcs forwarding. This isolates settled RF
 phase states for receiver capture; verify scope removal and antenna setup first.
+
+## v14: controlled CLK0 drive comparison
+
+`p` remains the 2 mA baseline; explicit `j`, `k`, `m` select 4, 6, 8 mA for
+one phase-hold burst respectively. Only register16 bits1:0 change, as documented
+in [Skyworks AN619](https://www.skyworksinc.com/-/media/Skyworks/SL/documents/public/application-notes/AN619.pdf).
+Frequency, PLL, divider, data sequence and bounds are unchanged. Cleanup restores
+register16 to 0x80 (powered down, 2 mA field); future normal tests use 2 mA.
+No automatic sweep or persistent drive setting. Check each result before advancing.

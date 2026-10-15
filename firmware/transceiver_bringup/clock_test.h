@@ -41,14 +41,15 @@ static int64_t clock_deadline_callback(alarm_id_t id, void *user) {
     clock_deadline_fired = true;
     return 0;
 }
-static bool clock_window_run(bool transmit, bool integer_comparison,
-                             bool (*payload)(uint64_t)) {
+static bool clock_window_drive(bool transmit, bool integer_comparison,
+                             bool (*payload)(uint64_t), unsigned drive) {
     alarm_id_t deadline_alarm = 0;
     clock_deadline_fired = false;
     gpio_put(10, false); gpio_put(11, false); gpio_put(16, false);
     gpio_put(2, true); gpio_put(3, true);
     bool ok = false;
     uint8_t status = 0xff;
+    if (drive > 3) goto cleanup;
     if (!disable_clocks()) goto cleanup;
     if (!clock_read(0, &status) || (status & 0x88)) goto cleanup;
     /* Unused CLK1/CLK2 powered down. CLK0 remains disabled until lock check. */
@@ -69,8 +70,8 @@ static bool clock_window_run(bool transmit, bool integer_comparison,
     for (unsigned i=0; i<8; ++i)
         if (!clock_write(26+i, selected_pll[i], true) ||
             !clock_write(42+i, (transmit ? tx_ms : ms)[i], true)) goto cleanup;
-    /* MS0 integer, PLLA, own multisynth, 2 mA drive. */
-    if (!clock_write(16, 0x4c, true) || !clock_write(177, 0x20, false)) goto cleanup;
+    /* AN619 register16 bits1:0: 2/4/6/8mA; all other control bits fixed. */
+    if (!clock_write(16, 0x4c | drive, true) || !clock_write(177, 0x20, false)) goto cleanup;
     bool locked = false;
     for (unsigned i=0; i<100; ++i) {
         sleep_ms(1);
@@ -115,6 +116,11 @@ cleanup:
       printf("[%s] complete=%u shutdown_verified=%u status=%02X TX=0\n",
              transmit ? "tx_tone" : "clock_test", ok, stopped, status);
       return ok && stopped; }
+}
+
+static bool clock_window_run(bool transmit, bool integer_comparison,
+                             bool (*payload)(uint64_t)) {
+    return clock_window_drive(transmit, integer_comparison, payload, 0);
 }
 
 static bool clock_window(bool transmit, bool integer_comparison) {

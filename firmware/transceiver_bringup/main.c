@@ -327,6 +327,12 @@ int main(void) {
         if (command == 's') clock_status();
         if (command == 'd') data_input_test();
         if (command == 'b') bpsk_test();
+        if (command == 'j' || command == 'k' || command == 'm') {
+            unsigned drive = command == 'j' ? 1 : command == 'k' ? 2 : 3;
+            printf("[phase_drive] drive_mA=%u r16=%02X ten100ms states, 1s RF, timer mute2s\n",
+                   2*(drive+1), 0x4c|drive);
+            (void)clock_window_drive(true,false,phase_hold_emit,drive);
+        }
         if (command == 'p') {
             printf("[phase_hold] ten alternating 100ms states, 1s RF, timer mute2s\n");
             (void)clock_window_run(true,false,phase_hold_emit);
@@ -356,7 +362,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v13] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v14] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

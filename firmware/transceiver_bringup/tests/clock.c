@@ -6,7 +6,7 @@
 #include <string.h>
 #define i2c0 0
 static uint8_t regs[256], pointer;
-static unsigned calls, fail_at, enable_count;
+static unsigned calls, fail_at, enable_count, expected_drive;
 static uint64_t now, enabled_at, duration;
 static bool tx_level, tx_plan, comparison;
 static bool no_lock, abort_input, lose_lock, bad_readback;
@@ -25,7 +25,7 @@ static int i2c_write_timeout_us(int bus,int addr,const uint8_t *v,int n,bool hol
     if(n==1) {assert(hold);pointer=*v;return 1;}
     assert(n==2&&!hold);
     if(v[0]==3 && v[1]==0xfe) {
-        assert(regs[16]==0x4c&&regs[17]==0x80&&regs[18]==0x80);
+        assert(regs[16]==(0x4c|expected_drive)&&regs[17]==0x80&&regs[18]==0x80);
         if (tx_plan) {
             assert(tx_level && regs[29]==15);
             if(comparison) assert(regs[27]==1 && regs[30]==128 && regs[33]==0);
@@ -64,7 +64,7 @@ static bool cancel_alarm(alarm_id_t id) {assert(id==1);return true;}
 #include "clock_test.h"
 static void reset(void) {
     memset(regs,0,sizeof(regs));regs[3]=255;regs[183]=0xd2;
-    calls=fail_at=enable_count=0;now=enabled_at=duration=0;
+    calls=fail_at=enable_count=expected_drive=0;now=enabled_at=duration=0;
     no_lock=abort_input=lose_lock=bad_readback=tx_level=tx_plan=comparison=false;
 }
 static bool payload_ok(uint64_t deadline) {assert(tx_level && deadline>now);sleep_ms(674);return true;}
@@ -81,6 +81,18 @@ int main(void) {
     reset();tx_plan=true;assert(!clock_window_run(true,false,payload_timeout)&&!tx_level);
     reset();tx_plan=true;alarm_fail=true;assert(!clock_window_run(true,false,payload_ok)&&!enable_count&&!tx_level);alarm_fail=false;
 
+    for(unsigned drive=0;drive<4;drive++) {
+        reset();tx_plan=true;expected_drive=drive;
+        assert(clock_window_drive(true,false,payload_ok,drive));
+        assert(regs[16]==0x80 && regs[3]==255 && !tx_level);
+        unsigned total=calls;
+        for(unsigned fault=1;fault<=total;fault++) {
+            reset();tx_plan=true;expected_drive=drive;fail_at=fault;
+            assert(!clock_window_drive(true,false,payload_ok,drive));
+            assert(!tx_level && (regs[3]==255 || regs[16]==0x80));
+        }
+    }
+    reset();assert(!clock_window_drive(true,false,payload_ok,4) && !enable_count && !tx_level);
     reset();clock_status();reset();assert(clock_test());
     assert(enable_count==1&&duration==10000000&&regs[3]==255&&regs[16]==0x80);
     assert(regs[183]==0xd2);unsigned count=calls;
