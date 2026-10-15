@@ -2,14 +2,22 @@
 
 Original Pico only. This deliberately bounded image is separate from the legacy
 `comms` application. It holds TX/RX inactive, both MCP25625 transceivers in standby,
-and never enables a Si5351 clock output or sends a CAN frame. There are no commands.
+and never enables a Si5351 clock output or sends a frame onto the external CAN bus. There are no commands.
 
-Version 2 releases the CAN controller resets after a 10 ms hold, waits 10 ms,
-then reads CANSTAT (0x0E) and CANCTRL (0x0F) through SPI0 at 100 kHz, mode 0.
-Only READ instructions are issued. Both mode fields must indicate configuration
-mode (0x80 masked with 0xE0); otherwise that controller is held in reset until
-reboot. Standby stays high throughout. These read-only checks do not validate
-CAN bus traffic, interrupts, or register writes. See Microchip DS20005282C.
+Version 3 performs one boot-time independent-register test using opposite
+patterns in inactive TXB0D0 RAM, restores those bytes, then runs one internal
+loopback frame per controller (standard ID 0x321, DLC 8, distinct payloads).
+It checks RX ID/DLC/data and TX completion, clears flags, and returns to
+configuration mode. Both STBY outputs stay high. Only configuration and
+loopback modes are permitted. Mode and receive polls have 100-iteration bounds;
+any failed test holds the affected controller in reset until reboot. A failed
+independence check holds both in reset and skips loopback.
+
+The repeated self-test line reports the boot-time result, not repeated frames.
+Loopback codes: 0 pass, 1 initial configuration failure, 2 loopback-mode failure,
+3 completion timeout, 4 received-frame mismatch, 5 configuration restore failure,
+6 skipped. SPI0 uses 100 kHz, mode 0. This does not validate external CAN wiring,
+transceiver operation, bus bitrate, or interrupt pins. See Microchip DS20005282C.
 
 Every second it writes Si5351 register 3 = 0xFF and checks the readback, using
 bounded I2C operations. `NOT_VERIFIED` is expected on a bare Pico. Successful

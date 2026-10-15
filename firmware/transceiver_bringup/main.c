@@ -1,4 +1,4 @@
-/* Y24 ordered-board bring-up: deliberately no transmit/clock-enable commands. */
+/* Y24 ordered-board bring-up: internal CAN loopback only; no external transmit or RF enable. */
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "hardware/adc.h"
@@ -24,7 +24,7 @@ static bool disable_clocks(void) {
     return value == 0xff;
 }
 
-/* Read-only SPI transactions: never issue a write, RTS, or mode change. */
+/* SPI mode 0, with explicit chip-select setup/hold delays. */
 static uint8_t can_read(unsigned cs, uint8_t reg) {
     uint8_t tx[] = {0x03, reg, 0}, rx[3] = {0};
     gpio_put(cs, false);
@@ -37,6 +37,76 @@ static uint8_t can_read(unsigned cs, uint8_t reg) {
 
 static bool configuration_mode(uint8_t stat, uint8_t ctrl) {
     return (stat & 0xe0) == 0x80 && (ctrl & 0xe0) == 0x80;
+}
+
+static void can_write(unsigned cs, uint8_t reg, uint8_t value) {
+    uint8_t tx[] = {0x02, reg, value}, rx[3];
+    gpio_put(cs, false);
+    sleep_us(2);
+    spi_write_read_blocking(spi0, tx, rx, 3);
+    sleep_us(2);
+    gpio_put(cs, true);
+}
+
+static bool can_mode(unsigned cs, uint8_t mode) {
+    /* Never allow normal mode. One-shot enabled, CAN CLKOUT disabled. */
+    if (mode != 0x80 && mode != 0x40) return false;
+    can_write(cs, 0x0f, mode | 0x08);
+    for (unsigned n = 0; n < 100; ++n) {
+        if ((can_read(cs, 0x0e) & 0xe0) == mode &&
+            (can_read(cs, 0x0f) & 0xe0) == mode) return true;
+        sleep_ms(1);
+    }
+    return false;
+}
+
+static bool independent_registers(void) {
+    if (!configuration_mode(can_read(14, 0x0e), can_read(14, 0x0f)) ||
+        !configuration_mode(can_read(15, 0x0e), can_read(15, 0x0f))) return false;
+    /* TXB0D0 is inactive data RAM; no TXREQ is set by this test. */
+    uint8_t a = can_read(14, 0x36), b = can_read(15, 0x36);
+    can_write(14, 0x36, 0x55); can_write(15, 0x36, 0xaa);
+    bool ok = can_read(14, 0x36) == 0x55 && can_read(15, 0x36) == 0xaa;
+    can_write(14, 0x36, 0xaa); can_write(15, 0x36, 0x55);
+    ok &= can_read(14, 0x36) == 0xaa && can_read(15, 0x36) == 0x55;
+    can_write(14, 0x36, a); can_write(15, 0x36, b);
+    return ok && can_read(14, 0x36) == a && can_read(15, 0x36) == b;
+}
+
+/* Return a stage code: 0 pass, 1 config, 2 loopback mode, 3 timeout,
+ * 4 frame mismatch, 5 return-to-config. Caller holds reset on any failure. */
+static uint8_t loop_received[2][13];
+static unsigned loopback(unsigned cs, uint8_t tag) {
+    if (!can_mode(cs, 0x80)) return 1;
+    can_write(cs, 0x2a, 0); can_write(cs, 0x29, 0xf0); can_write(cs, 0x28, 0x86);
+    can_write(cs, 0x2b, 0); /* Interrupts disabled; poll flags. */
+    can_write(cs, 0x2c, 0);
+    can_write(cs, 0x60, 0x60); can_write(cs, 0x70, 0x60); /* Accept all. */
+    can_write(cs, 0x30, 0);
+    /* Standard ID 0x321, DLC 8, distinguishable payload for each controller. */
+    uint8_t frame[] = {0x64, 0x20, 0, 0, 8, tag, 0, 0xff, 0x55, 0xaa, 0x12, 0x34, 0x78};
+    for (unsigned i = 0; i < sizeof(frame); ++i) can_write(cs, 0x31+i, frame[i]);
+    if (!can_mode(cs, 0x40)) return 2;
+    /* TXREQ only after confirmed internal loopback; STBY stays asserted. */
+    can_write(cs, 0x30, 0x08);
+    unsigned n;
+    for (n = 0; n < 100; ++n) {
+        if ((can_read(cs, 0x2c) & 0x05) == 0x05 && !(can_read(cs, 0x30) & 8)) break;
+        sleep_ms(1);
+    }
+    if (n == 100) return 3;
+    uint8_t *received = loop_received[cs == 14 ? 0 : 1];
+    for (unsigned i = 0; i < sizeof(frame); ++i) {
+        received[i] = can_read(cs, 0x61+i);
+    }
+    /* Standard data frame: EID bytes and SIDL EID bits are not meaningful. */
+    bool match = received[0] == frame[0] && (received[1] & 0xf8) == frame[1]
+                 && (received[4] & 0x4f) == 8;
+    for (unsigned i = 5; i < sizeof(frame); ++i) match &= received[i] == frame[i];
+    if (!match) return 4;
+    can_write(cs, 0x2c, 0);
+    if (!can_mode(cs, 0x80)) return 5;
+    return 0;
 }
 
 int main(void) {
@@ -73,7 +143,16 @@ int main(void) {
     gpio_put(9, true);
     sleep_ms(10); /* Oscillator startup; mode is checked rather than assumed. */
     unsigned count = 0;
-    bool afailed = false, bfailed = false;
+    bool registers_ok = independent_registers();
+    unsigned aloop = 6, bloop = 6; /* 6 = skipped after independent-register failure. */
+    if (registers_ok) {
+        aloop = loopback(14, 0xa1);
+        if (aloop) gpio_put(8, false);
+        bloop = loopback(15, 0xb2);
+    }
+    bool afailed = !registers_ok || aloop, bfailed = !registers_ok || bloop;
+    if (afailed) gpio_put(8, false);
+    if (bfailed) gpio_put(9, false);
     while (true) {
         bool clocks_disabled = disable_clocks();
         uint8_t as = can_read(14, 0x0e), ac = can_read(14, 0x0f);
@@ -83,13 +162,20 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v2] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v3] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());
         printf("[can] A STAT=%02X CTRL=%02X %s; B STAT=%02X CTRL=%02X %s\n",
                as, ac, !afailed ? "CONFIG" : "FAIL_RESET_HELD",
                bs, bc, !bfailed ? "CONFIG" : "FAIL_RESET_HELD");
+        printf("[selftest] independent_registers=%s loopback_A=%u loopback_B=%u (0=PASS)\n",
+               registers_ok ? "PASS" : "FAIL", aloop, bloop);
+        for (unsigned k = 0; k < 2; ++k) {
+            printf("[loop_rx_%c]", k ? 'B' : 'A');
+            for (unsigned j = 0; j < 13; ++j) printf(" %02X", loop_received[k][j]);
+            printf("\n");
+        }
         sleep_ms(1000);
     }
 }
