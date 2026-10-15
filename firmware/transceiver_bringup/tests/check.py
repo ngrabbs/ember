@@ -88,6 +88,9 @@ static int spi_write_read_blocking(int i,const uint8_t *tx,uint8_t *rx,int n) {
 }
 static uint64_t time_us_64(void) {static uint64_t now; return now+=10000;}
 static int getchar_timeout_us(unsigned t) {assert(t==0);return -1;}
+typedef int alarm_id_t;
+static alarm_id_t add_alarm_in_ms(unsigned ms, int64_t (*cb)(alarm_id_t,void*), void *u, bool past) {(void)ms;(void)cb;(void)u;(void)past;return 1;}
+static bool cancel_alarm(alarm_id_t id) {(void)id;return true;}
 static uint32_t get_rand_32(void) {return 12345;}
 static void adc_init(void) {}
 static void adc_gpio_init(unsigned p) {assert(p==27);}

@@ -28,6 +28,19 @@ static bool disable_clocks(void) {
 }
 
 #include "clock_test.h"
+#include "bpsk_packet.h"
+#include "bpsk_emit.h"
+static void bpsk_test(void) {
+    static uint32_t sequence;
+    size_t size=bpsk_frame(packet_frame,sizeof(packet_frame),responder_boot,
+                           sequence++,(uint32_t)(time_us_64()/1000));
+    if(!size)return;
+    printf("[bpsk] prepared native COMMS heartbeat packet_hex=");
+    for(unsigned i=43;i<81;i++)printf("%02x",packet_frame[i]);
+    printf("\n");
+    bool ok=clock_window_run(true,false,bpsk_emit);
+    printf("[bpsk] complete=%u frame_bytes=%u TX=0\n",ok,(unsigned)size);
+}
 
 /* SPI mode 0, with explicit chip-select setup/hold delays. */
 static uint8_t can_read(unsigned cs, uint8_t reg) {
@@ -291,6 +304,7 @@ int main(void) {
             if (!listen_a(command != 'l', command == 'h')) {gpio_put(2, true); gpio_put(8, false); afailed = true;}
         }
         if (command == 's') clock_status();
+        if (command == 'b') bpsk_test();
         if (command == 'c') {
             printf("[clock_test] preparing CLK0 10MHz, max 10s, TX/RX=0; any input aborts\n");
             (void)clock_test();
@@ -316,7 +330,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v10] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v11] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

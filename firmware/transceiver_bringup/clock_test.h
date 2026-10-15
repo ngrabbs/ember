@@ -34,7 +34,17 @@ static void clock_status(void) {
     printf("\n");
 }
 /* Return true only after a full window and verified shutdown. No auto retry. */
-static bool clock_window(bool transmit, bool integer_comparison) {
+static volatile bool clock_deadline_fired;
+static int64_t clock_deadline_callback(alarm_id_t id, void *user) {
+    (void)id; (void)user;
+    gpio_put(10, false);
+    clock_deadline_fired = true;
+    return 0;
+}
+static bool clock_window_run(bool transmit, bool integer_comparison,
+                             bool (*payload)(uint64_t)) {
+    alarm_id_t deadline_alarm = 0;
+    clock_deadline_fired = false;
     gpio_put(10, false); gpio_put(11, false); gpio_put(16, false);
     gpio_put(2, true); gpio_put(3, true);
     bool ok = false;
@@ -68,6 +78,10 @@ static bool clock_window(bool transmit, bool integer_comparison) {
         if (!(status & 0xa8)) {locked = true; break;}
     }
     if (!locked) goto cleanup;
+    if (payload) {
+        deadline_alarm = add_alarm_in_ms(2000, clock_deadline_callback, NULL, false);
+        if (deadline_alarm <= 0) goto cleanup;
+    }
     if (transmit) {
         /* Select TX with CLK0 still disabled, then allow switch settling. */
         gpio_put(10, true);
@@ -76,6 +90,13 @@ static bool clock_window(bool transmit, bool integer_comparison) {
     /* Timer starts BEFORE enable. Nothing prints while output is active. */
     uint64_t end = time_us_64() + 10000000;
     if (!clock_write(3, 0xfe, true)) goto cleanup;
+    if (payload) {
+        ok = !clock_deadline_fired && payload(time_us_64()+1500000);
+        uint8_t enabled;
+        ok = ok && !clock_deadline_fired && clock_read(0, &status) && !(status & 0xa8)
+             && clock_read(3, &enabled) && enabled == 0xfe;
+        goto cleanup;
+    }
     ok = true;
     while (time_us_64() < end) {
         uint8_t enabled;
@@ -86,13 +107,19 @@ static bool clock_window(bool transmit, bool integer_comparison) {
         sleep_ms(10);
     }
 cleanup:
-    { bool stopped = clock_stop();
+    { gpio_put(10, false);
+      gpio_put(16, false);
+      if (deadline_alarm > 0) cancel_alarm(deadline_alarm);
+      bool stopped = clock_stop();
       gpio_put(10, false); /* Always restore mute, including I2C failure. */
       printf("[%s] complete=%u shutdown_verified=%u status=%02X TX=0\n",
              transmit ? "tx_tone" : "clock_test", ok, stopped, status);
       return ok && stopped; }
 }
 
+static bool clock_window(bool transmit, bool integer_comparison) {
+    return clock_window_run(transmit, integer_comparison, NULL);
+}
 static bool clock_test(void) {return clock_window(false, false);}
 static bool tx_tone_test(void) {return clock_window(true, false);}
 static bool tx_comparison_test(void) {return clock_window(true, true);}

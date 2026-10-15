@@ -55,13 +55,32 @@ static bool disable_clocks(void) {
       i2c_write_timeout_us(0,0x60,&r,1,true,2000)==1 &&
       i2c_read_timeout_us(0,0x60,&v,1,false,2000)==1&&v==255;
 }
+static bool alarm_fail;
+typedef int alarm_id_t;
+static alarm_id_t add_alarm_in_ms(unsigned ms, int64_t (*cb)(alarm_id_t,void*), void *u, bool past) {
+    assert(ms==2000 && cb && !u && !past);return alarm_fail ? -1 : 1;
+}
+static bool cancel_alarm(alarm_id_t id) {assert(id==1);return true;}
 #include "clock_test.h"
 static void reset(void) {
     memset(regs,0,sizeof(regs));regs[3]=255;regs[183]=0xd2;
     calls=fail_at=enable_count=0;now=enabled_at=duration=0;
     no_lock=abort_input=lose_lock=bad_readback=tx_level=tx_plan=comparison=false;
 }
+static bool payload_ok(uint64_t deadline) {assert(tx_level && deadline>now);sleep_ms(674);return true;}
+static bool payload_abort(uint64_t deadline) {(void)deadline;return false;}
+static bool payload_timeout(uint64_t deadline) {(void)deadline;sleep_ms(2000);clock_deadline_callback(1,NULL);assert(!tx_level);return true;}
 int main(void) {
+    reset();tx_plan=true;assert(clock_window_run(true,false,payload_ok));
+    assert(!tx_level && duration==674000 && regs[3]==255);unsigned payload_calls=calls;
+    for(unsigned i=1;i<=payload_calls;i++) {
+        reset();tx_plan=true;fail_at=i;assert(!clock_window_run(true,false,payload_ok));
+        assert(!tx_level && (regs[3]==255 || regs[16]==0x80));
+    }
+    reset();tx_plan=true;assert(!clock_window_run(true,false,payload_abort)&&!tx_level);
+    reset();tx_plan=true;assert(!clock_window_run(true,false,payload_timeout)&&!tx_level);
+    reset();tx_plan=true;alarm_fail=true;assert(!clock_window_run(true,false,payload_ok)&&!enable_count&&!tx_level);alarm_fail=false;
+
     reset();clock_status();reset();assert(clock_test());
     assert(enable_count==1&&duration==10000000&&regs[3]==255&&regs[16]==0x80);
     assert(regs[183]==0xd2);unsigned count=calls;

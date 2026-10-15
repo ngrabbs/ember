@@ -167,3 +167,11 @@ first-attempt restoration failure rather than hiding it. Read status after any
 failure before continuing. This does not change external C1/C2 or calibrate the
 crystal. The load values describe the Si5351 internal setting, not the total
 assembled crystal load. TX/RX/BPSK stay low throughout.
+
+## v11: one bounded DBPSK heartbeat
+
+Single byte `b` sends one native COMMS heartbeat at1200 baud, approximately
+673ms, with a2-second independent timer mute and checked cleanup. No automatic
+transmission. See [waveform, limits and ground procedure](../../ground/bpsk/README.md).
+C1/C2 removal and C6 replacement are physical prototype reworks documented in
+the lab log; these firmware changes do not update KiCad source/BOM.
