@@ -8,7 +8,7 @@
 static uint8_t regs[256], pointer;
 static unsigned calls, fail_at, enable_count;
 static uint64_t now, enabled_at, duration;
-static bool tx_level, tx_plan;
+static bool tx_level, tx_plan, comparison;
 static bool no_lock, abort_input, lose_lock, bad_readback;
 static void gpio_put(unsigned pin, bool value) {
     if (pin==10) {
@@ -27,7 +27,9 @@ static int i2c_write_timeout_us(int bus,int addr,const uint8_t *v,int n,bool hol
     if(v[0]==3 && v[1]==0xfe) {
         assert(regs[16]==0x4c&&regs[17]==0x80&&regs[18]==0x80);
         if (tx_plan) {
-            assert(tx_level && regs[27]==25 && regs[29]==15 && regs[30]==122 && regs[33]==22);
+            assert(tx_level && regs[29]==15);
+            if(comparison) assert(regs[27]==1 && regs[30]==128 && regs[33]==0);
+            else assert(regs[27]==25 && regs[30]==122 && regs[33]==22);
             assert(regs[43]==1 && regs[45]==1 && regs[46]==0 && !(regs[22]&0x40));
         } else {
             assert(!tx_level && regs[29]==0x0e&&regs[45]==0x26&&regs[27]==1&&regs[43]==1);
@@ -57,7 +59,7 @@ static bool disable_clocks(void) {
 static void reset(void) {
     memset(regs,0,sizeof(regs));regs[3]=255;regs[183]=0xd2;
     calls=fail_at=enable_count=0;now=enabled_at=duration=0;
-    no_lock=abort_input=lose_lock=bad_readback=tx_level=tx_plan=false;
+    no_lock=abort_input=lose_lock=bad_readback=tx_level=tx_plan=comparison=false;
 }
 int main(void) {
     reset();clock_status();reset();assert(clock_test());
@@ -82,5 +84,11 @@ int main(void) {
     reset();tx_plan=true;no_lock=true;assert(!tx_tone_test()&&!tx_level&&!enable_count);
     reset();tx_plan=true;abort_input=true;assert(!tx_tone_test()&&!tx_level&&duration==0);
     reset();tx_plan=true;lose_lock=true;assert(!tx_tone_test()&&!tx_level&&duration==0);
+    reset();tx_plan=comparison=true;assert(tx_comparison_test());assert(!tx_level&&duration==10000000);
+    count=calls;
+    for(unsigned i=1;i<=count;i++) {
+        reset();tx_plan=comparison=true;fail_at=i;assert(!tx_comparison_test());
+        assert(!tx_level && now<=10100000);
+    }
     puts("PASS: clock timing, register plan, I2C fault sweep, lock/readback failures, abort, shutdown");
 }

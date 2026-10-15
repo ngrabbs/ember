@@ -34,7 +34,7 @@ static void clock_status(void) {
     printf("\n");
 }
 /* Return true only after a full window and verified shutdown. No auto retry. */
-static bool clock_window(bool transmit) {
+static bool clock_window(bool transmit, bool integer_comparison) {
     gpio_put(10, false); gpio_put(11, false); gpio_put(16, false);
     gpio_put(2, true); gpio_put(3, true);
     bool ok = false;
@@ -52,9 +52,12 @@ static bool clock_window(bool transmit) {
     const uint8_t ms[]  = {0, 1, 0, 0x26, 0, 0, 0, 0};
     /* 25MHz*(34+24/25)=874MHz: P1=3962, P2=22, P3=25. */
     const uint8_t tx_pll[] = {0, 25, 0, 0x0f, 0x7a, 0, 0, 22};
+    /* 875MHz = 25MHz*35, no fractional remainder; odd ratio keeps FBA_INT=0. */
+    const uint8_t comparison_pll[] = {0, 1, 0, 0x0f, 0x80, 0, 0, 0};
+    const uint8_t *selected_pll = transmit ? (integer_comparison ? comparison_pll : tx_pll) : pll;
     const uint8_t tx_ms[] = {0, 1, 0, 1, 0, 0, 0, 0};
     for (unsigned i=0; i<8; ++i)
-        if (!clock_write(26+i, (transmit ? tx_pll : pll)[i], true) ||
+        if (!clock_write(26+i, selected_pll[i], true) ||
             !clock_write(42+i, (transmit ? tx_ms : ms)[i], true)) goto cleanup;
     /* MS0 integer, PLLA, own multisynth, 2 mA drive. */
     if (!clock_write(16, 0x4c, true) || !clock_write(177, 0x20, false)) goto cleanup;
@@ -90,5 +93,6 @@ cleanup:
       return ok && stopped; }
 }
 
-static bool clock_test(void) {return clock_window(false);}
-static bool tx_tone_test(void) {return clock_window(true);}
+static bool clock_test(void) {return clock_window(false, false);}
+static bool tx_tone_test(void) {return clock_window(true, false);}
+static bool tx_comparison_test(void) {return clock_window(true, true);}

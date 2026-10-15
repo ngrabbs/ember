@@ -299,6 +299,10 @@ int main(void) {
             printf("[tx_tone] preparing 437MHz CW target, max 10s; any input aborts\n");
             (void)tx_tone_test();
         }
+        if (command == 'u') {
+            printf("[tx_tone] preparing 437.5MHz comparison, PLL ratio35, max10s\n");
+            (void)tx_comparison_test();
+        }
         bool clocks_disabled = disable_clocks();
         uint8_t as = can_read(14, 0x0e), ac = can_read(14, 0x0f);
         uint8_t bs = can_read(15, 0x0e), bc = can_read(15, 0x0f);
@@ -307,7 +311,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v8] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v9] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

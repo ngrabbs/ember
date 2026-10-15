@@ -146,3 +146,12 @@ RF input. Remove the scope probe before RF measurements. C6's negative XOR
 input level remains an open issue; running this exploratory test does not waive
 it or qualify the TX chain. Report measured antenna power only after applying
 known attenuator/cable loss and checking analyzer settings, overload and spurs.
+
+## Version 9: integer-ratio comparison
+
+`u` runs the same bounded conducted-TX test at nominal 437.5 MHz, with PLLA
+875 MHz (25 MHz ×35), MS0 divide-by-six and the existing tripler. This is a
+diagnostic comparison, not a change to the 437 MHz design target. The PLL
+ratio has no fractional remainder; FBA_INT remains clear because 35 is odd
+(AN619 §3.2.1). All mute, lock, timeout and abort behavior matches `t`.
+The external DC block and 30 dB pad must remain connected to the tinySA RF input.
