@@ -202,3 +202,13 @@ in [Skyworks AN619](https://www.skyworksinc.com/-/media/Skyworks/SL/documents/pu
 Frequency, PLL, divider, data sequence and bounds are unchanged. Cleanup restores
 register16 to 0x80 (powered down, 2 mA field); future normal tests use 2 mA.
 No automatic sweep or persistent drive setting. Check each result before advancing.
+
+## v15: integer-PLL phase-hold comparison
+
+Explicit `q` sends the same one-second phase holds at 4 mA using PLLA=875 MHz
+(25 MHz times 35), MS0 divide by six, nominal tripled carrier 437.5 MHz.
+Compare with `j` (4 mA, 437 MHz, PLLA=874 MHz fractional ratio). Retune the
+receiver accordingly. The odd integer PLL ratio keeps FBA_INT clear, matching
+the previously tested `u` plan. Existing mute/deadline/cleanup are unchanged.
+This comparison also shifts the RF frequency by 500 kHz; any difference cannot
+be attributed uniquely to PLL fractional behavior. No default frequency change.

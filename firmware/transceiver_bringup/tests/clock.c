@@ -93,6 +93,15 @@ int main(void) {
         }
     }
     reset();assert(!clock_window_drive(true,false,payload_ok,4) && !enable_count && !tx_level);
+    reset();tx_plan=comparison=true;expected_drive=1;
+    assert(clock_window_drive(true,true,payload_ok,1));
+    assert(!tx_level && regs[3]==255 && regs[16]==0x80);
+    unsigned integer_calls=calls;
+    for(unsigned fault=1;fault<=integer_calls;fault++) {
+        reset();tx_plan=comparison=true;expected_drive=1;fail_at=fault;
+        assert(!clock_window_drive(true,true,payload_ok,1));
+        assert(!tx_level && (regs[3]==255 || regs[16]==0x80));
+    }
     reset();clock_status();reset();assert(clock_test());
     assert(enable_count==1&&duration==10000000&&regs[3]==255&&regs[16]==0x80);
     assert(regs[183]==0xd2);unsigned count=calls;

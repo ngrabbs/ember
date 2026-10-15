@@ -333,6 +333,10 @@ int main(void) {
                    2*(drive+1), 0x4c|drive);
             (void)clock_window_drive(true,false,phase_hold_emit,drive);
         }
+        if (command == 'q') {
+            printf("[phase_pll] nominal437.5MHz PLL875MHz ratio35 drive4mA, 1s RF, timer mute2s\n");
+            (void)clock_window_drive(true,true,phase_hold_emit,1);
+        }
         if (command == 'p') {
             printf("[phase_hold] ten alternating 100ms states, 1s RF, timer mute2s\n");
             (void)clock_window_run(true,false,phase_hold_emit);
@@ -362,7 +366,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v14] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v15] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());
