@@ -2,7 +2,7 @@
 
 Original Pico only. This deliberately bounded image is separate from the legacy
 `comms` application. It holds TX/RX inactive, both MCP25625 transceivers in standby,
-and never enables a Si5351 clock output. External CAN operation is limited to
+and disables Si5351 outputs at boot and while idle. External CAN operation is limited to
 explicit console test windows: `l`, `n`, and `h` (see below).
 
 Version 3 performs one boot-time independent-register test using opposite
@@ -19,7 +19,7 @@ Loopback codes: 0 pass, 1 initial configuration failure, 2 loopback-mode failure
 6 skipped. SPI0 uses 1 MHz, mode 0. This does not validate external CAN wiring,
 transceiver operation, bus bitrate, or interrupt pins. See Microchip DS20005282C.
 
-Every second it writes Si5351 register 3 = 0xFF and checks the readback, using
+Outside an explicit clock-test window, every second it writes Si5351 register 3 = 0xFF and checks the readback, using
 bounded I2C operations. `NOT_VERIFIED` is expected on a bare Pico. Successful
 readback is register evidence, not an RF measurement. ADC1 is reported raw;
 its reading is meaningless while the Pico is disconnected from RX_BASEBAND.
@@ -97,3 +97,35 @@ measurement, and does not make USB-only powering of the installed board safe.
 Late power arrival beyond the retry window still requires a Pico restart.
 Host fault injection covers delayed replies, permanent failure, and recovery;
 actual cold-start validation is tracked in the lab log.
+
+## Version 7: bounded CLK0 bench test
+
+`s` reads Si5351 status, output controls and crystal-load register without enabling
+an output. `c` requests a fixed 10 MHz CLK0 window, at most ten seconds from
+before output enable. Send the single byte with no newline; any input during
+the window aborts. CLK1/CLK2 stay disabled, TX/RX/BPSK stay low, and both CAN
+transceivers stay in standby. No boot-time clock test runs.
+
+The fixed plan follows [Skyworks AN619 rev 0.8](https://www.skyworksinc.com/-/media/Skyworks/SL/documents/public/application-notes/AN619.pdf):
+25 MHz crystal, PLLA ×32, MS0 ÷80, integer mode, 2 mA output drive.
+Configuration writes are read back; SYS_INIT, crystal-loss and PLLA-lock status
+are checked before enabling and during the window. Failure or timeout attempts
+both output disable and CLK0 power-down; shutdown failure is reported explicitly.
+An I2C hardware failure can prevent shutdown, so firmware is not a replacement
+for the physical TX mute. No USB printing occurs while the clock is enabled.
+
+The existing crystal-load register is preserved. The exported design includes
+external 15 pF C1/C2 as well as the Si5351's internal capacitance; total loading
+and frequency accuracy need measurement before choosing a final setting.
+
+Probe TP1 (CLK0_OUT, after C6/R3), with a short nearby ground at C81 pad 2.
+TP1 is AC-coupled; do not assume its DC levels match the Si5351 pin directly.
+Keep the tinySA disconnected for this scope-only check. Confirm probe placement
+before sending `c`; a successful register test alone does not verify RF mute.
+
+Additional host test:
+
+```sh
+cc -std=c11 -Wall -Wextra -Werror -Ifirmware/transceiver_bringup firmware/transceiver_bringup/tests/clock.c -o /tmp/y24-clock-test
+/tmp/y24-clock-test
+```

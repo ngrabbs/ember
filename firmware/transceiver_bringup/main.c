@@ -27,6 +27,8 @@ static bool disable_clocks(void) {
     return value == 0xff;
 }
 
+#include "clock_test.h"
+
 /* SPI mode 0, with explicit chip-select setup/hold delays. */
 static uint8_t can_read(unsigned cs, uint8_t reg) {
     uint8_t tx[] = {0x03, reg, 0}, rx[3] = {0};
@@ -288,6 +290,11 @@ int main(void) {
         if ((command == 'l' || command == 'n' || command == 'h') && !afailed) {
             if (!listen_a(command != 'l', command == 'h')) {gpio_put(2, true); gpio_put(8, false); afailed = true;}
         }
+        if (command == 's') clock_status();
+        if (command == 'c') {
+            printf("[clock_test] preparing CLK0 10MHz, max 10s, TX/RX=0; any input aborts\n");
+            (void)clock_test();
+        }
         bool clocks_disabled = disable_clocks();
         uint8_t as = can_read(14, 0x0e), ac = can_read(14, 0x0f);
         uint8_t bs = can_read(15, 0x0e), bc = can_read(15, 0x0f);
@@ -296,7 +303,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v6] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v7] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());
