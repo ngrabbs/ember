@@ -1,7 +1,8 @@
-/* Fixed 10 MHz CLK0 bench test, Skyworks AN619 rev 0.8.
+/* Bounded CLK0 bench tests, Skyworks AN619 rev 0.8.
  * 25 MHz crystal -> PLLA x32 = 800 MHz -> MS0 /80 = 10 MHz.
  * Retain existing crystal load setting: external C1/C2 require measurement.
- * No RF control is ever asserted. All I2C transfers have 2 ms timeouts. */
+ * TX variant: PLLA 874 MHz /6 -> tripler target 437 MHz.
+ * Only explicit TX test asserts TX_ACTIVE. I2C transfers have 2 ms timeouts. */
 #pragma once
 static bool clock_read(uint8_t reg, uint8_t *value) {
     return i2c_write_timeout_us(i2c0, 0x60, &reg, 1, true, 2000) == 1 &&
@@ -33,7 +34,7 @@ static void clock_status(void) {
     printf("\n");
 }
 /* Return true only after a full window and verified shutdown. No auto retry. */
-static bool clock_test(void) {
+static bool clock_window(bool transmit) {
     gpio_put(10, false); gpio_put(11, false); gpio_put(16, false);
     gpio_put(2, true); gpio_put(3, true);
     bool ok = false;
@@ -44,13 +45,17 @@ static bool clock_test(void) {
     for (unsigned reg=16; reg<=23; ++reg)
         if (!clock_write(reg, 0x80, true)) goto cleanup;
     if (!clock_modify(15, 0x0c, 0) ||
-        !clock_modify(149, 0x80, 0) || !clock_modify(22, 0x40, 0x40) ||
+        !clock_modify(149, 0x80, 0) || !clock_modify(22, 0x40, transmit ? 0 : 0x40) ||
         !clock_modify(24, 3, 0) || !clock_write(165, 0, true)) goto cleanup;
     /* P1=128*a-512, P2=0, P3=1 for integer ratios. */
     const uint8_t pll[] = {0, 1, 0, 0x0e, 0, 0, 0, 0};
     const uint8_t ms[]  = {0, 1, 0, 0x26, 0, 0, 0, 0};
+    /* 25MHz*(34+24/25)=874MHz: P1=3962, P2=22, P3=25. */
+    const uint8_t tx_pll[] = {0, 25, 0, 0x0f, 0x7a, 0, 0, 22};
+    const uint8_t tx_ms[] = {0, 1, 0, 1, 0, 0, 0, 0};
     for (unsigned i=0; i<8; ++i)
-        if (!clock_write(26+i, pll[i], true) || !clock_write(42+i, ms[i], true)) goto cleanup;
+        if (!clock_write(26+i, (transmit ? tx_pll : pll)[i], true) ||
+            !clock_write(42+i, (transmit ? tx_ms : ms)[i], true)) goto cleanup;
     /* MS0 integer, PLLA, own multisynth, 2 mA drive. */
     if (!clock_write(16, 0x4c, true) || !clock_write(177, 0x20, false)) goto cleanup;
     bool locked = false;
@@ -60,6 +65,11 @@ static bool clock_test(void) {
         if (!(status & 0xa8)) {locked = true; break;}
     }
     if (!locked) goto cleanup;
+    if (transmit) {
+        /* Select TX with CLK0 still disabled, then allow switch settling. */
+        gpio_put(10, true);
+        sleep_ms(1);
+    }
     /* Timer starts BEFORE enable. Nothing prints while output is active. */
     uint64_t end = time_us_64() + 10000000;
     if (!clock_write(3, 0xfe, true)) goto cleanup;
@@ -74,6 +84,11 @@ static bool clock_test(void) {
     }
 cleanup:
     { bool stopped = clock_stop();
-      printf("[clock_test] complete=%u shutdown_verified=%u status=%02X\n", ok, stopped, status);
+      gpio_put(10, false); /* Always restore mute, including I2C failure. */
+      printf("[%s] complete=%u shutdown_verified=%u status=%02X TX=0\n",
+             transmit ? "tx_tone" : "clock_test", ok, stopped, status);
       return ok && stopped; }
 }
+
+static bool clock_test(void) {return clock_window(false);}
+static bool tx_tone_test(void) {return clock_window(true);}

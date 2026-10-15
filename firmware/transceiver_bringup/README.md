@@ -129,3 +129,20 @@ Additional host test:
 cc -std=c11 -Wall -Wextra -Werror -Ifirmware/transceiver_bringup firmware/transceiver_bringup/tests/clock.c -o /tmp/y24-clock-test
 /tmp/y24-clock-test
 ```
+
+## Version 8: explicitly requested conducted TX tone
+
+`t` requests one maximum-ten-second unmodulated carrier test targeting 437 MHz
+at J9. CLK0 is 874 MHz /6 (145.666667 MHz), using PLLA = 25 MHz ×(34+24/25).
+PLLA is fractional, MS0 integer, output drive 2 mA. RX clock stays off,
+BPSK stays low and CAN transceivers stay in standby. TX_ACTIVE is asserted
+only after verified configuration/lock while CLK0 is disabled, followed by
+1 ms switch settling before enabling the clock. Cleanup attempts clock disable
+and power-down, then always deasserts TX_ACTIVE, including I²C failures.
+Any console input aborts. No automatic TX occurs on boot.
+
+This test was requested with a DC block and external 30 dB pad into the tinySA
+RF input. Remove the scope probe before RF measurements. C6's negative XOR
+input level remains an open issue; running this exploratory test does not waive
+it or qualify the TX chain. Report measured antenna power only after applying
+known attenuator/cable loss and checking analyzer settings, overload and spurs.
