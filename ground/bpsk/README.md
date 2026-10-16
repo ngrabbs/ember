@@ -110,8 +110,9 @@ python3 ~/work/ember-y24-bpsk/ground/bpsk/live.py \
   --output ~/work/ember-y24-bpsk/runs/live-$(date +%Y%m%d-%H%M%S)
 ```
 
-Wait for `BPSK_RX_READY`. On IHU issue `normal`; on COMMS press `a` (no Enter);
-then IHU `hello` and wait for confirmation. IHU `uhf run 120 10` starts the
+Wait for `BPSK_RX_READY`. With COMMS v21 / IHU v7, CAN is ready at boot:
+issue IHU `hello` and wait for `CAN_HELLO_CONFIRMED`, then press COMMS `a`
+(one byte, no Enter). IHU `uhf run 120 10` starts the
 finite two-minute heartbeat/system/EPS cycle. The receiver can stay running
 between runs; renew COMMS `a` and explicitly start another IHU run as needed.
 COMMS `x` stops its service; IHU `uhf stop` stops future telemetry production.
@@ -133,3 +134,13 @@ queue bounds DSP backlog; overflow stops rather than silently dropping windows.
 Recording uses approximately92 MB/minute (922 MB for ten minutes). Session
 length is bounded at1–3600 seconds; default600 seconds. It does not auto-start
 on boot or enable transmissions. `capture.py` retains the older offline workflow.
+
+### Hardware regression, October 16
+
+With COMMS v21 / IHU v7, a30-second run (three heartbeat/system/EPS cycles)
+delivered9/9 byte-identical packets live into Yamcs. Archive inspection at ten
+seconds verified arrival during the run. The repeat's55-second receive session
+had no stream/decoder errors, and HELLO/discovery worked after RF stopped.
+An initial capture also delivered9/9 packets but then stopped on a sample-stream
+overflow; its cause remains unresolved. Do not treat the clean repeat as a
+long-duration reliability qualification. See lab-log entry003 for both records.
