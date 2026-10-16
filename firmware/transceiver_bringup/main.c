@@ -30,7 +30,7 @@ static bool disable_clocks(void) {
 #include "clock_test.h"
 #include "bpsk_packet.h"
 #include "bpsk_emit.h"
-static void bpsk_test(void) {
+static void bpsk_test(unsigned drive) {
     static uint32_t sequence;
     size_t size=bpsk_frame(packet_frame,sizeof(packet_frame),responder_boot,
                            sequence++,(uint32_t)(time_us_64()/1000));
@@ -38,7 +38,8 @@ static void bpsk_test(void) {
     printf("[bpsk] prepared native COMMS heartbeat packet_hex=");
     for(unsigned i=43;i<81;i++)printf("%02x",packet_frame[i]);
     printf("\n");
-    bool ok=clock_window_run(true,false,bpsk_emit);
+    printf("[bpsk] drive_mA=%u\n",2*(drive+1));
+    bool ok=clock_window_drive(true,false,bpsk_emit,drive);
     printf("[bpsk] complete=%u frame_bytes=%u TX=0\n",ok,(unsigned)size);
 }
 
@@ -326,7 +327,8 @@ int main(void) {
         }
         if (command == 's') clock_status();
         if (command == 'd') data_input_test();
-        if (command == 'b') bpsk_test();
+        if (command == 'b') bpsk_test(0);
+        if (command == 'B') bpsk_test(1);
         if (command == 'j' || command == 'k' || command == 'm') {
             unsigned drive = command == 'j' ? 1 : command == 'k' ? 2 : 3;
             printf("[phase_drive] drive_mA=%u r16=%02X ten100ms states, 1s RF, timer mute2s\n",
@@ -366,7 +368,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v15] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v16] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

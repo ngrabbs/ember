@@ -212,3 +212,11 @@ receiver accordingly. The odd integer PLL ratio keeps FBA_INT clear, matching
 the previously tested `u` plan. Existing mute/deadline/cleanup are unchanged.
 This comparison also shifts the RF frequency by 500 kHz; any difference cannot
 be attributed uniquely to PLL fractional behavior. No default frequency change.
+
+## v16: explicit 4 mA packet comparison
+
+Uppercase `B` sends one native heartbeat using 4 mA CLK0 drive at437 MHz.
+Lowercase `b` retains the 2 mA baseline. Frame format, 1200-baud timing,
+1.5-second deadline, two-second timer mute and shutdown are unchanged.
+The strict ground decoder is unchanged; passing CRC and byte identity does
+not establish ideal180-degree modulation or link reliability.
