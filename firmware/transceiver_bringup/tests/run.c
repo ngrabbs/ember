@@ -22,5 +22,14 @@ int main(void) {
     assert(ur_due(&s,UINT32_MAX-499,true)==0);ur_submitted(&s);
     assert(ur_due(&s,501,true)==-1 && s.state==UR_EXPIRED);
     assert(ur_start(&s,120,10,0));ur_stop(&s,UR_FAULT);assert(ur_due(&s,0,true)==-1);
+    assert(ur_start(&s,120,10,0));
+    ur_link_snapshot(&s,1,3); /* Recovered link with historical errors. */
+    assert(!ur_link_changed(&s,1,3));
+    assert(ur_link_changed(&s,2,3));assert(ur_link_changed(&s,1,4));
+    ur_stop(&s,UR_FAULT);assert(ur_start(&s,120,10,0));
+    ur_link_snapshot(&s,2,4);assert(!ur_link_changed(&s,2,4));
+    ur_link_snapshot(&s,UINT32_MAX,UINT32_MAX);
+    assert(ur_link_changed(&s,0,UINT32_MAX));
+    assert(ur_link_changed(&s,UINT32_MAX,0));
     return 0;
 }

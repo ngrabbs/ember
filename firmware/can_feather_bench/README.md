@@ -406,3 +406,8 @@ for an immediate RF abort. Bad/missing results or producer failure enter FAULT;
 there is no automatic retry, restart, or persistent enable. Legacy automatic
 telemetry and LTE queue must be off. Mode numbers and detailed limits are in
 `system/interfaces/transceiver_uhf_bench.md`.
+
+IHU v6 corrects timed-run recovery after a prior CAN transmit error. Each new
+explicit run snapshots lifetime TX failure/timeout counters; only a subsequent
+change faults that run. Current CAN mode, readiness, peer and EFLG checks remain
+active. Historical counters are preserved for diagnosis rather than cleared.

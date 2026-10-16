@@ -54,7 +54,7 @@ static at_state auto_telem;
 static uint32_t now_ms(void) {return to_ms_since_boot(get_absolute_time());}
 static void status(void) {
     char id[2*PICO_UNIQUE_BOARD_ID_SIZE_BYTES+1];pico_get_unique_board_id_string(id,sizeof(id));
-    LOG("STATUS role=%s fw=can-bench-v5 id=%s boot=%" PRIu32 " peer=%" PRIu32
+    LOG("STATUS role=%s fw=can-bench-v6 id=%s boot=%" PRIu32 " peer=%" PRIu32
         " can_ready=%d mode=%02x cnf=%02x,%02x,%02x bitrate=500000 tec=%u rec=%u eflg=%02x"
         " tx_ok=%" PRIu32 " tx_fail=%" PRIu32 " tx_timeout=%" PRIu32 " rx=%" PRIu32
         " rx_bad=%" PRIu32 " rx_overflow=%" PRIu32 " fragments_bad=%" PRIu32 " fragments_timeout=%" PRIu32
@@ -327,7 +327,7 @@ static void health_telemetry(bool system,unsigned lte) {
 
 static void uhf_run_pump(uint32_t now) {
     if(uhf_run.state!=UR_RUNNING)return;
-    if(!peer || !can.ready || (mcp_register(0x0e)&0xe0) || can.tx_fail || can.tx_timeout || mcp_register(0x2d)) {
+    if(!peer || !can.ready || (mcp_register(0x0e)&0xe0) || ur_link_changed(&uhf_run,can.tx_fail,can.tx_timeout) || mcp_register(0x2d)) {
         ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT link_not_ready\n");return;
     }
     bool ready=!pending.active && !output.active && !can.pending && !uc_count(&uhf_client) &&
@@ -395,6 +395,7 @@ static void command(const char *s) {
            !ur_start(&uhf_run,duration,period,now_ms())) {
             LOG("REJECT reason=RUN_RANGE_OR_LINK_BUSY duration=1..120 period=5..60\n");return;
         }
+        ur_link_snapshot(&uhf_run,can.tx_fail,can.tx_timeout);
         LOG("UHF_RUN START duration_s=%u period_s=%u boot_resume=0\n",duration,period);
     }
     else if(!strcmp(s,"uhf heartbeat"))health_telemetry(false,2);

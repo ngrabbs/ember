@@ -7,6 +7,7 @@ enum {UR_IDLE,UR_RUNNING,UR_EXPIRED,UR_STOPPED,UR_FAULT};
 typedef struct {
     uint8_t state,stage;bool cycle;
     uint32_t started,duration,period,next,cycles,submitted,skipped;
+    uint32_t tx_fail_start,tx_timeout_start;
 } ur_state;
 static inline bool ur_start(ur_state *s,uint32_t seconds,uint32_t period,uint32_t now) {
     if(s->state==UR_RUNNING || !seconds || seconds>120 || period<5 || period>60)return false;
@@ -28,3 +29,11 @@ static inline int ur_due(ur_state *s,uint32_t now,bool ready) {
     return s->stage;
 }
 static inline void ur_submitted(ur_state *s) {++s->stage;++s->submitted;}
+
+/* Preserve lifetime diagnostics; only new errors invalidate an explicit run. */
+static inline void ur_link_snapshot(ur_state *s,uint32_t failures,uint32_t timeouts) {
+    s->tx_fail_start=failures;s->tx_timeout_start=timeouts;
+}
+static inline bool ur_link_changed(const ur_state *s,uint32_t failures,uint32_t timeouts) {
+    return failures!=s->tx_fail_start || timeouts!=s->tx_timeout_start;
+}
