@@ -313,3 +313,10 @@ commands. Wait for receiver BPSK_RX_READY before starting the generator. IHU
 permission window. IHU `status` reports mode, cycles and submitted count.
 A135-second capture accommodates startup and the120-second run; forwarding
 occurs after capture. See the UHF interface contract for bounds and faults.
+
+COMMS v21 boots into CAN A normal mode after controller self-checks, with RF
+muted. Discovery, HELLO and ECHO work without opening a console window. UHF
+requests are explicitly rejected while RF service is disabled. `a`/`g` still
+require explicit action and remain bounded; stopping returns to idle CAN
+service. See the [device registry contract](../../system/interfaces/device_registry.md),
+including the legacy LTE application-ID collision and future-node adoption.

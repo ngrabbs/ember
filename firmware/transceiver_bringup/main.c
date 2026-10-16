@@ -6,6 +6,7 @@
 #include "hardware/spi.h"
 #include "pico/rand.h"
 #include "hello.h"
+#include "device_registry.h"
 static uint32_t responder_boot;
 
 static void output(unsigned pin, bool level) {
@@ -158,25 +159,25 @@ static void can_modify(uint8_t reg, uint8_t mask, uint8_t value) {
     sleep_us(2); gpio_put(14, true);
 }
 
-static bool hello_send(const uint8_t *wire, size_t size, uint32_t request,
-                       uint64_t deadline) {
-    for (unsigned index = 0; index < CF_FRAMES; ++index) {
+static bool can_send_frame(const cf_frame *f,uint64_t deadline) {
+    if(time_us_64()>=deadline || (can_read(14,0x0e)&0xe0)!=0)return false;
+    can_write(14,0x30,0);can_modify(0x2c,4,0);
+    uint8_t header[]={(uint8_t)(f->id>>3),(uint8_t)(f->id<<5),0,0,f->size};
+    for(unsigned i=0;i<5;i++)can_write(14,0x31+i,header[i]);
+    for(unsigned i=0;i<f->size;i++)can_write(14,0x36+i,f->data[i]);
+    can_write(14,0x30,8);
+    for(unsigned poll=0;poll<50 && time_us_64()<deadline;poll++) {
+        uint8_t ctrl=can_read(14,0x30);
+        if(!(ctrl&8))return !(ctrl&0x70) && (can_read(14,0x2c)&4);
+        sleep_ms(1);
+    }
+    can_write(14,0x30,0);return false;
+}
+static bool hello_send(const uint8_t *wire,size_t size,uint32_t request,uint64_t deadline) {
+    for(unsigned index=0;index<CF_FRAMES;index++) {
         cf_frame f;
-        if (!cf_fragment(wire, size, CF_COMMS_ID, (uint16_t)request, index, &f)) return false;
-        if (time_us_64() >= deadline || (can_read(14, 0x0e)&0xe0) != 0) return false;
-        can_write(14, 0x30, 0); can_modify(0x2c, 4, 0);
-        uint8_t tx[] = {(uint8_t)(f.id>>3), (uint8_t)(f.id<<5), 0, 0, f.size};
-        for (unsigned i=0;i<5;++i) can_write(14, 0x31+i, tx[i]);
-        for (unsigned i=0;i<f.size;++i) can_write(14, 0x36+i, f.data[i]);
-        can_write(14, 0x30, 8); /* One-shot TX; no indefinite retries. */
-        bool done = false;
-        for (unsigned poll=0;poll<50 && time_us_64()<deadline;++poll) {
-            uint8_t ctrl = can_read(14, 0x30);
-            if (!(ctrl&8)) {done = !(ctrl&0x70) && (can_read(14, 0x2c)&4); break;}
-            sleep_ms(1);
-        }
-        if (!done) {can_write(14, 0x30, 0); return false;}
-        if ((index+1)*CF_CHUNK >= size) return true;
+        if(!cf_fragment(wire,size,CF_COMMS_ID,(uint16_t)request,index,&f) || !can_send_frame(&f,deadline))return false;
+        if((index+1)*CF_CHUNK>=size)return true;
         sleep_ms(2);
     }
     return false;
@@ -344,8 +345,10 @@ int main(void) {
     bool afailed = !registers_ok || aloop, bfailed = !registers_ok || bloop;
     if (afailed) gpio_put(8, false);
     if (bfailed) gpio_put(9, false);
+    if(!afailed && !rf_bus_open())afailed=true;
     while (true) {
         int command = getchar_timeout_us(0);
+        if(command>=0 && command!='s' && !afailed && !rf_bus_close())afailed=true;
         if ((command == 'l' || command == 'n' || command == 'h') && !afailed) {
             if (!listen_a(command != 'l', command == 'h', false)) {gpio_put(2, true); gpio_put(8, false); afailed = true;}
         }
@@ -393,20 +396,21 @@ int main(void) {
             printf("[clock_load] preparing temporary %upF, muted 10MHz, max10s\n", pf);
             (void)clock_load_test(pf);
         }
+        if(!afailed && (can_read(14,0x0e)&0xe0)==0x80 && !rf_bus_open())afailed=true;
         bool clocks_disabled = disable_clocks();
         uint8_t as = can_read(14, 0x0e), ac = can_read(14, 0x0f);
         uint8_t bs = can_read(15, 0x0e), bc = can_read(15, 0x0f);
-        bool aok = configuration_mode(as, ac), bok = configuration_mode(bs, bc);
+        bool aok = (as&0xe0)==0 && (ac&0xe0)==0, bok = configuration_mode(bs, bc);
         /* Unexpected state is latched safe until the next reboot. */
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v20] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v21] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());
         printf("[can] A STAT=%02X CTRL=%02X %s; B STAT=%02X CTRL=%02X %s\n",
-               as, ac, !afailed ? "CONFIG" : "FAIL_RESET_HELD",
+               as, ac, !afailed ? "NORMAL" : "FAIL_RESET_HELD",
                bs, bc, !bfailed ? "CONFIG" : "FAIL_RESET_HELD");
         printf("[startup] ready=%u attempts=%u last_A=%02X/%02X last_B=%02X/%02X\n",
                startup_ready, startup_attempts, startup_last[0], startup_last[1], startup_last[2], startup_last[3]);
@@ -417,6 +421,10 @@ int main(void) {
             for (unsigned j = 0; j < 13; ++j) printf(" %02X", loop_received[k][j]);
             printf("\n");
         }
-        sleep_ms(1000);
+        uint64_t idle_end=time_us_64()+1000000;
+        while(time_us_64()<idle_end) {
+            if(!afailed && !can_idle_poll()) {afailed=true;gpio_put(2,true);gpio_put(8,false);}
+            sleep_ms(1);
+        }
     }
 }

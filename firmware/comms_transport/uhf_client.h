@@ -19,7 +19,7 @@ static inline bool uc_receive(uc_state *s,const ul_packet *reply) {
     uint8_t status=reply->payload[1];
     if((reply->type==CF_UHF_ADMITTED && status!=UHF_OK) ||
        (reply->type==CF_UHF_RESULT && status!=UHF_OK && status!=UHF_FAILED && status!=UHF_CANCELLED) ||
-       (reply->type==CF_UHF_REJECTED && (status<UHF_FULL || status>UHF_CONFLICT)))return false;
+       (reply->type==CF_UHF_REJECTED && (status!=UHF_DISABLED && (status<UHF_FULL || status>UHF_CONFLICT))))return false;
     for(unsigned i=0;i<UC_CAPACITY;i++) {
         uc_item *x=&s->items[i];
         if(!x->active || !uhf_matches(reply,&x->packet,x->peer))continue;

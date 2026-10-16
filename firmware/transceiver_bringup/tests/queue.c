@@ -36,5 +36,9 @@ int main(void) {
     p.request=1;assert(rq_admit(&q,&p,&status)==CF_UHF_REJECTED && status==UHF_STALE);
     p.origin=p.sender=125;p.request=1;assert(rq_admit(&q,&p,&status)==CF_UHF_ADMITTED);
     assert(q.count==1 && q.history_count==0);
+    p.request=22;assert(uc_start(&client,&p,456,0));
+    uhf_reply(&p,456,CF_UHF_REJECTED,UHF_DISABLED,&r);
+    bad=r;bad.payload[1]=UHF_FAILED;assert(!uc_receive(&client,&bad));
+    assert(uc_receive(&client,&r) && !uc_count(&client));
     return 0;
 }

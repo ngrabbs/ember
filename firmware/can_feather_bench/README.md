@@ -411,3 +411,8 @@ IHU v6 corrects timed-run recovery after a prior CAN transmit error. Each new
 explicit run snapshots lifetime TX failure/timeout counters; only a subsequent
 change faults that run. Current CAN mode, readiness, peer and EFLG checks remain
 active. Historical counters are preserved for diagnosis rather than cleared.
+
+IHU v7 adds the [expected-device registry](../../system/interfaces/device_registry.md).
+CAN enters normal mode at boot. `devices` reports runtime health; `devices scan`
+expedites the next idle-time probe. Scanning never arms RF. Current EPS is checked
+on I2C; future EPS and payload plus LTE have reserved CAN discovery identities.

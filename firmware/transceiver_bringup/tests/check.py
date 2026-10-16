@@ -26,7 +26,8 @@ stub = r'''
 #define SPI_CPOL_0 0
 #define SPI_CPHA_0 0
 #define SPI_MSB_FIRST 0
-static unsigned delayed_reads, data_high_count;
+static unsigned delayed_reads, data_high_count, idle_sleeps;
+static bool main_running;
 static bool data_test_active, console_abort;
 static bool bad_can, alias_cs, drop_frame, corrupt_frame, refuse_mode;
 static uint8_t regs[2][128];
@@ -74,7 +75,8 @@ static int spi_write_read_blocking(int i,const uint8_t *tx,uint8_t *rx,int n) {
  } else {
   r[addr]=v;
   if(addr==0x30&&(v&8)) {
-   assert((r[0x0e]&0xe0)==0x40);
+   assert((r[0x0e]&0xe0)==0x40 || (r[0x0e]&0xe0)==0);
+   if((r[0x0e]&0xe0)==0) {r[0x2c]|=4;r[0x30]&=~8;return n;}
    if(!drop_frame) {
     for(unsigned j=0;j<13;j++) r[0x61+j]=r[0x31+j];
     r[0x63]=0x3b; r[0x64]=0xf6; r[0x62]|=3; /* Inapplicable EID bits. */
@@ -100,7 +102,7 @@ static void adc_gpio_init(unsigned p) {assert(p==27);}
 static void adc_select_input(unsigned p) {assert(p==1);}
 static unsigned adc_read(void) {return 2048;}
 static void stdio_init_all(void) {}
-static void sleep_ms(int ms) {assert(ms==1000||ms==10||ms==1||ms==2||ms==20||ms==200); if(ms==1000) longjmp(done,1);}
+static void sleep_ms(int ms) {assert(ms==1000||ms==10||ms==1||ms==2||ms==20||ms==200); if(ms==1000 || (ms==1 && main_running && ++idle_sleeps==1000)) longjmp(done,1);}
 '''
 harness = r'''
 #define main firmware_main
@@ -115,10 +117,13 @@ int main(void) {
  call=0; readback=255; assert(disable_clocks());
  call=0; fail_at=1; assert(!disable_clocks());
  regs[0][14]=regs[1][14]=128; regs[0][15]=regs[1][15]=135;
+ main_running=true;idle_sleeps=0;
  if (!setjmp(done)) firmware_main();
- unsigned low[]={10,11,16,6,7}, high[]={2,3,8,9,14,15,12};
+ main_running=false;
+ unsigned low[]={2,10,11,16,6,7}, high[]={3,8,9,14,15,12};
  for(unsigned i=0;i<sizeof(low)/sizeof(*low);i++) assert(directions[low[i]]&&levels[low[i]]==0);
  for(unsigned i=0;i<sizeof(high)/sizeof(*high);i++) assert(directions[high[i]]&&levels[high[i]]==1);
+ assert((regs[0][14]&0xe0)==0);assert(rf_bus_close());
  data_test_active=true; data_high_count=0; call=0; fail_at=0;
  data_input_test(); assert(data_high_count>0 && levels[16]==0 && levels[10]==0);
  data_high_count=0; call=0; fail_at=1;
@@ -130,6 +135,14 @@ int main(void) {
  assert(!configuration_mode(0xff,0xff));
  assert(!configuration_mode(0,0));
  assert(!configuration_mode(0x80,0));
+ assert(rf_bus_open());
+ cf_frame discovery_query;assert(dr_request(DR_COMMS_NODE,77,999,&discovery_query));
+ regs[0][0x61]=(uint8_t)(discovery_query.id>>3);regs[0][0x62]=(uint8_t)(discovery_query.id<<5);
+ regs[0][0x65]=8;memcpy(&regs[0][0x66],discovery_query.data,8);regs[0][0x2c]|=1;
+ assert(can_idle_poll());assert(levels[10]==0 && levels[11]==0 && levels[2]==0);
+ assert(regs[0][0x31]==((DR_RESPONSE_BASE+DR_COMMS_NODE)>>3));
+ assert(ul_u16(&regs[0][0x38])==77 && ul_u32(&regs[0][0x3a])==12345);
+ assert(rf_bus_close());
  assert(independent_registers());
  alias_cs=true; assert(!independent_registers()); alias_cs=false;
  assert(loopback(14,0xa1)==0); assert(loopback(15,0xb2)==0);
@@ -155,7 +168,9 @@ int main(void) {
  assert(levels[8]==0&&levels[9]==0&&last[0]==255&&last[2]==255);
  bad_can=false; assert(wait_can_ready(&attempts,last)&&attempts==1);
  bad_can=true;
+ main_running=true;idle_sleeps=0;
  if (!setjmp(done)) firmware_main();
+ main_running=false;
  assert(levels[8]==0&&levels[9]==0&&levels[2]==1&&levels[3]==1);
  assert(!directions[4]&&!directions[18]&&!directions[19]);
  return 0;

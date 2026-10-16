@@ -42,6 +42,11 @@ static bool rf_service_window(bool automatic) {
             can_modify(0x2c,(uint8_t)(1u<<buffer),0);uint8_t *d=rx+2;
             if((d[1]&0x18) || (d[4]&0x40) || (d[4]&15)>8)continue;
             cf_frame frame={.id=(uint16_t)((d[0]<<3)|(d[1]>>5)),.size=d[4]&15};memcpy(frame.data,d+5,frame.size);
+            cf_frame discovery;
+            if(dr_respond(&frame,DR_COMMS_NODE,responder_boot,&discovery)) {
+                if(!can_send_frame(&discovery,time_us_64()+50000)){ok=false;break;}
+                continue;
+            }
             if(!cf_feed(&f,&frame,CF_IHU_ID,(uint32_t)(time_us_64()/1000)))continue;
             memset(&reader,0,sizeof(reader));unsigned count=0;
             for(size_t i=0;i<f.used;i++)if(ul_feed(&reader,f.wire[i],0,&in))count++;
@@ -94,3 +99,39 @@ static bool rf_service_window(bool automatic) {
 }
 
 static bool rf_service(void) {return rf_service_window(false);}
+
+/* Always-on CAN control plane. No RF admission while the explicit service is off. */
+static bool can_idle_poll(void) {
+    static cf_reader fragments;
+    if((can_read(14,0x0e)&0xe0)!=0 || can_read(14,0x2d))return false;
+    cf_expire(&fragments,(uint32_t)(time_us_64()/1000));
+    uint8_t flags=can_read(14,0x2c);
+    for(unsigned buffer=0;buffer<2;buffer++) {
+        if(!(flags&(1u<<buffer)))continue;
+        uint8_t tx[15]={3,buffer?0x71:0x61},rx[15];
+        gpio_put(14,false);sleep_us(2);spi_write_read_blocking(spi0,tx,rx,15);sleep_us(2);gpio_put(14,true);
+        can_modify(0x2c,(uint8_t)(1u<<buffer),0);uint8_t *d=rx+2;
+        if((d[1]&0x18) || (d[4]&0x40) || (d[4]&15)>8)continue;
+        cf_frame frame={.id=(uint16_t)((d[0]<<3)|(d[1]>>5)),.size=d[4]&15},reply;
+        memcpy(frame.data,d+5,frame.size);
+        if(dr_respond(&frame,DR_COMMS_NODE,responder_boot,&reply)) {
+            if(!can_send_frame(&reply,time_us_64()+50000))return false;
+            continue;
+        }
+        uint32_t errors_before=fragments.errors;
+        bool complete=cf_feed(&fragments,&frame,CF_IHU_ID,(uint32_t)(time_us_64()/1000));
+        if(fragments.errors!=errors_before)printf("[can_idle] fragment_error token=%u index=%u next=%u errors=%lu\n",ul_u16(frame.data+1),frame.data[3],fragments.next,(unsigned long)fragments.errors);
+        if(!complete)continue;
+        printf("[can_idle] complete token=%u bytes=%u\n",fragments.token,(unsigned)fragments.used);
+        static ul_reader reader;static ul_packet in,out;static uint8_t wire[UL_WIRE_MAX];
+        memset(&reader,0,sizeof(reader));unsigned count=0;
+        for(size_t i=0;i<fragments.used;i++)if(ul_feed(&reader,fragments.wire[i],0,&in))count++;
+        if(count!=1 || reader.used || reader.discard || in.version!=1 || in.origin!=in.sender ||
+           (uint16_t)in.request!=fragments.token)continue;
+        if(in.type==CF_UHF_SEND)uhf_reply(&in,responder_boot,CF_UHF_REJECTED,UHF_DISABLED,&out);
+        else ul_reply(&in,responder_boot,&out);
+        size_t size=ul_encode(&out,wire);
+        if(!size || !hello_send(wire,size,in.request,time_us_64()+500000))return false;
+    }
+    return true;
+}

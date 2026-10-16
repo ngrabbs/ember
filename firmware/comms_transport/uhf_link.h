@@ -12,6 +12,7 @@
 #define UHF_CONFLICT 4
 #define UHF_FAILED 5
 #define UHF_CANCELLED 6
+#define UHF_DISABLED 7
 #define UHF_REPLY_SIZE 8
 static inline uint32_t uhf_digest(const uint8_t *p,size_t n) {
     uint32_t c=0xffffffff;while(n--){c^=*p++;for(unsigned i=0;i<8;i++)c=(c>>1)^((c&1)?0xedb88320:0);}return c^0xffffffff;

@@ -84,3 +84,13 @@ On the ground, use a finite receiver capture covering the run. capture.py now
 accepts1–180 seconds; retained IQ is decoded and optionally forwarded after the
 capture ends. This is not yet a continuously running ground decoder service.
 Local RF completion and independent Yamcs byte verification remain separate.
+
+## Boot CAN service and expected-device discovery (v21 / IHU v7)
+
+CAN A now listens at boot and after bounded RF service ends. Idle discovery,
+HELLO and ECHO do not enable RF. Idle UHF requests receive REJECTED status7
+(UHF_DISABLED). IHU CAN also enters normal mode at boot; `devices` reports the
+central [device registry](device_registry.md). The application HELLO and explicit
+RF window are still required before transmitting. Background discovery pauses
+during a UHF run so it does not collide with CAN-muted RF bursts. CAN B remains
+standby. This supersedes earlier descriptions of idle CAN configuration mode.
