@@ -5,6 +5,10 @@
 #include <string.h>
 #define BPSK_BAUD 1200u
 #define BPSK_FRAME_SIZE 101u
+/* Largest current native telemetry is POWER_STATUS (128 bytes).
+ * 191 RF bytes take 1.274s, within the 1.5s payload / 2s hard mute limits. */
+#define BPSK_NATIVE_MAX 128u
+#define BPSK_FRAME_MAX (BPSK_NATIVE_MAX+63u)
 static void bp16(uint8_t *p,uint16_t v){p[0]=v>>8;p[1]=v;}
 static void bp32(uint8_t *p,uint32_t v){p[0]=v>>24;p[1]=v>>16;p[2]=v>>8;p[3]=v;}
 static uint16_t bp_crc16(const uint8_t *p,size_t n){uint16_t c=0xffff;while(n--){c^=(uint16_t)*p++<<8;for(unsigned i=0;i<8;i++)c=(c&0x8000)?(uint16_t)((c<<1)^0x1021):(uint16_t)(c<<1);}return c;}

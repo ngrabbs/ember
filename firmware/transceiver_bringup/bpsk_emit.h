@@ -1,10 +1,12 @@
 #pragma once
-static uint8_t packet_frame[BPSK_FRAME_SIZE];
+static uint8_t packet_frame[BPSK_FRAME_MAX];
+static size_t packet_frame_size=BPSK_FRAME_SIZE;
 /* Absolute symbol deadlines, IRQs enabled. Abort if a symbol is >150us late. */
 static bool bpsk_emit(uint64_t deadline) {
+    if(!packet_frame_size || packet_frame_size>BPSK_FRAME_MAX)return false;
     uint64_t start=time_us_64();
     bool phase=false;
-    for(unsigned bit=0;bit<BPSK_FRAME_SIZE*8u;bit++) {
+    for(unsigned bit=0;bit<packet_frame_size*8u;bit++) {
         uint64_t due=start+(uint64_t)bit*1000000/BPSK_BAUD;
         while(time_us_64()<due)
             if(clock_deadline_fired || getchar_timeout_us(0)>=0)return false;
@@ -14,7 +16,7 @@ static bool bpsk_emit(uint64_t deadline) {
         phase ^= (packet_frame[bit/8]>>(7-bit%8))&1;
         gpio_put(16,phase);
     }
-    uint64_t end=start+(uint64_t)BPSK_FRAME_SIZE*8u*1000000/BPSK_BAUD;
+    uint64_t end=start+(uint64_t)packet_frame_size*8u*1000000/BPSK_BAUD;
     while(time_us_64()<end)
         if(clock_deadline_fired || getchar_timeout_us(0)>=0)return false;
     return time_us_64()<deadline && !clock_deadline_fired;

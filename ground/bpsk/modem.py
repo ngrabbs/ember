@@ -48,10 +48,11 @@ def decode(iq, rate=48000, *, phase_diagnostic=False):
     iq=np.asarray(iq,dtype=np.complex64)
     if iq.ndim!=1 or not np.isfinite(iq).all():raise ValueError('invalid IQ')
     sps=rate//BAUD
-    # Two-second overlapping windows cover this sub-second frame at any alignment.
+    # Four-second windows, one-second stride: cover even a 240-byte native frame
+    # (2.02s on air), including preamble, at every window alignment.
     result=[];seen=set()
     for start in range(0,len(iq),rate):
-        a=iq[start:start+2*rate]
+        a=iq[start:start+4*rate]
         if len(a)<sps*256:continue
         # Squaring removes BPSK sign. Carrier search is limited to +/- rate/4.
         nfft=1 << (len(a)*4-1).bit_length()

@@ -36,6 +36,7 @@ static void bpsk_test(unsigned drive) {
     size_t size=bpsk_frame(packet_frame,sizeof(packet_frame),responder_boot,
                            sequence++,(uint32_t)(time_us_64()/1000));
     if(!size)return;
+    packet_frame_size=size;
     printf("[bpsk] prepared native COMMS heartbeat packet_hex=");
     for(unsigned i=43;i<81;i++)printf("%02x",packet_frame[i]);
     printf("\n");
@@ -183,8 +184,9 @@ static bool hello_send(const uint8_t *wire, size_t size, uint32_t request,
 
 /* Console l=listen-only, n=receive with ACK; both bounded to ten seconds. */
 static bool listen_a(bool acknowledge, bool reply_hello, bool forward_rf) {
-    cf_reader fragments = {0};
-    uint8_t bridge_packet[38];uint32_t bridge_request=0;bool bridge_ready=false;
+    /* Single foreground owner; keep large CAN work buffers off the Pico stack. */
+    static cf_reader fragments;memset(&fragments,0,sizeof(fragments));
+    static uint8_t bridge_packet[BPSK_NATIVE_MAX];size_t bridge_size=0;uint32_t bridge_request=0;bool bridge_ready=false;
     bool reply_attempted = false, reply_ok = false;
     uint32_t reply_request = 0;
     uint8_t mode = acknowledge ? 0 : 0x60;
@@ -196,11 +198,11 @@ static bool listen_a(bool acknowledge, bool reply_hello, bool forward_rf) {
     can_write(14, 0x30, 0); can_write(14, 0x40, 0); can_write(14, 0x50, 0);
     if (!can_mode(14, mode)) return false;
     gpio_put(2, false); /* All TX buffers inactive before connecting to bus. */
-    if(forward_rf)printf("[bridge] ARMED one IHU heartbeat, max10s CAN wait, one RF burst\n");
+    if(forward_rf)printf("[bridge] ARMED one IHU telemetry packet, max10s CAN wait, one RF burst\n");
     printf("[listen_A] START 500000bit/s 10s ACK=%u HELLO_reply=%u\n", acknowledge, reply_hello);
     uint64_t end = time_us_64() + 10000000;
     unsigned frames = 0;
-    uint8_t captured[32][13];
+    static uint8_t captured[CF_FRAMES][13];
     bool mode_ok = true;
     while (time_us_64() < end) {
         if(forward_rf && getchar_timeout_us(0)>=0)break;
@@ -213,7 +215,7 @@ static bool listen_a(bool acknowledge, bool reply_hello, bool forward_rf) {
             gpio_put(14, false); sleep_us(2);
             spi_write_read_blocking(spi0, read_tx, read_rx, 15);
             sleep_us(2); gpio_put(14, true);
-            if (frames < 32)
+            if (frames < CF_FRAMES)
                 for (unsigned i = 0; i < 13; ++i) captured[frames][i] = read_rx[i+2];
             can_modify(0x2c, (uint8_t)(1u<<buffer), 0);
             uint8_t *data = read_rx+2;
@@ -222,9 +224,9 @@ static bool listen_a(bool acknowledge, bool reply_hello, bool forward_rf) {
                 cf_frame f = {.id = (uint16_t)((data[0]<<3)|(data[1]>>5)), .size=data[4]&15};
                 memcpy(f.data, data+5, f.size);
                 if (cf_feed(&fragments, &f, CF_IHU_ID, (uint32_t)(time_us_64()/1000))) {
-                    uint8_t wire[UL_WIRE_MAX];
+                    static uint8_t wire[UL_WIRE_MAX];
                     size_t size = reply_hello ? hello_response(&fragments, responder_boot, wire, &reply_request) : 0;
-                    if(forward_rf)bridge_ready=bridge_heartbeat(&fragments,bridge_packet,&bridge_request);
+                    if(forward_rf)bridge_ready=bridge_telemetry(&fragments,bridge_packet,&bridge_size,&bridge_request);
                     if (size) {
                         reply_attempted = true;
                         reply_ok = hello_send(wire, size, reply_request, end);
@@ -242,7 +244,7 @@ static bool listen_a(bool acknowledge, bool reply_hello, bool forward_rf) {
     gpio_put(2, true); /* Stop physical reception before changing modes. */
     uint8_t errors = can_read(14, 0x2d);
     bool restored = can_mode(14, 0x80);
-    for (unsigned f = 0; f < frames && f < 32; ++f) {
+    for (unsigned f = 0; f < frames && f < CF_FRAMES; ++f) {
         printf("[listen_A] raw");
         for (unsigned i = 0; i < 13; ++i) printf(" %02X", captured[f][i]);
         printf("\n");
@@ -258,9 +260,10 @@ static bool listen_a(bool acknowledge, bool reply_hello, bool forward_rf) {
             return mode_ok && restored;
         }
         printf("[bridge] CAN request=%lu packet_hex=",(unsigned long)bridge_request);
-        for(unsigned i=0;i<38;i++)printf("%02x",bridge_packet[i]);
+        for(unsigned i=0;i<bridge_size;i++)printf("%02x",bridge_packet[i]);
         printf("\n");
-        bridge_frame(packet_frame,bridge_packet,bridge_request);
+        packet_frame_size=bridge_frame(packet_frame,bridge_packet,bridge_size,bridge_request);
+        if(!packet_frame_size)return false;
         bool sent=clock_window_drive(true,false,bpsk_emit,1);
         printf("[bridge] RF_complete=%u request=%lu TX=0 no_ground_ack=1\n",sent,(unsigned long)bridge_request);
         return sent;
@@ -390,7 +393,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v17] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v18] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

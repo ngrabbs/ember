@@ -85,3 +85,12 @@ at2026-10-15T22:51:17.695Z. This is a diagnostic RF telemetry success, **not a
 standard BPSK qualification**. The normal decoder/capture path remains strict;
 there is no automatic diagnostic fallback or synthetic packet injection.
 Next: measure the actual phase states/drive path and resolve the discrepancy.
+
+## Native IHU telemetry (v18)
+
+The `f` bridge supports the existing HEARTBEAT, SYSTEM_STATUS, POWER_STATUS,
+and COMM_STATUS layouts unchanged. POWER_STATUS is 128 native bytes /191 RF
+bytes (1.273 seconds); decoding now uses four-second windows with one-second
+stride. Use a 15-second capture and `--forward` to pass strictly decoded
+telemetry to Yamcs after capture. See the firmware README for the per-packet
+HELLO/arm/command sequence and the intentional absence of application ACKs.
