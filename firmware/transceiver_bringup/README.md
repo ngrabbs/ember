@@ -220,3 +220,19 @@ Lowercase `b` retains the 2 mA baseline. Frame format, 1200-baud timing,
 1.5-second deadline, two-second timer mute and shutdown are unchanged.
 The strict ground decoder is unchanged; passing CRC and byte identity does
 not establish ideal180-degree modulation or link reliability.
+
+## v17: explicitly armed single IHU heartbeat bridge
+
+`f` enables a maximum10-second CAN A receive window, admitting one validated
+CF_CHAIN envelope from IHU containing a38-byte native IHU HEARTBEAT. It checks
+envelope CRC/identity/token and native length/schema/type/source/boot/CRC,
+returns CAN to standby/configuration, then wraps the unchanged packet in the
+existing RF frame and sends once at4 mA. Missing/invalid packets or CAN errors
+produce no RF. Existing RF deadlines and shutdown apply. No automatic service.
+
+The existing IHU `telemetry` command uses a historical CF_CHAIN/Walter-echo
+request. This bridge intentionally sends no CF_CHAIN_ACK: that would falsely
+claim a Walter return. IHU may report request timeout; CAN receipt, RF decode
+and Yamcs archive byte identity establish the one-way path independently.
+Use a separate bounded `h`/IHU `hello` handshake first. No IHU firmware change,
+EPS control, ground ACK, or unsolicited CAN-to-RF forwarding is implemented.
