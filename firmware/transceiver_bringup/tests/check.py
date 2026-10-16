@@ -143,6 +143,8 @@ int main(void) {
  refuse_mode=true; assert(loopback(14,0xa1)==2); refuse_mode=false;
  assert(!can_mode(14,0xa0));
  assert(loopback(14,0xa1)==0);
+ assert(rf_service_window(true));assert(rf_queue.count==0 && levels[10]==0 && levels[2]==1);
+ console_abort=true;assert(rf_service_window(true));console_abort=false;
  assert(rf_service());assert(rf_queue.count==0 && levels[10]==0 && levels[2]==1);
  assert(listen_a(false, false, false)); assert(listen_a(true, false, false)); assert(listen_a(true, false, true)); assert(levels[2]==1&&levels[3]==1);
  unsigned attempts; uint8_t last[4];

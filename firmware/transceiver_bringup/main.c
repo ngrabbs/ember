@@ -349,6 +349,9 @@ int main(void) {
         if ((command == 'l' || command == 'n' || command == 'h') && !afailed) {
             if (!listen_a(command != 'l', command == 'h', false)) {gpio_put(2, true); gpio_put(8, false); afailed = true;}
         }
+        if (command == 'a' && !afailed) {
+            if(!rf_service_window(true)) {gpio_put(2,true);gpio_put(8,false);afailed=true;}
+        }
         if (command == 'g' && !afailed) {
             if(!rf_service()) {gpio_put(2,true);gpio_put(8,false);afailed=true;}
         }
@@ -398,7 +401,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v19] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v20] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

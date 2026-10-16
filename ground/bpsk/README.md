@@ -94,3 +94,8 @@ bytes (1.273 seconds); decoding now uses four-second windows with one-second
 stride. Use a 15-second capture and `--forward` to pass strictly decoded
 telemetry to Yamcs after capture. See the firmware README for the per-packet
 HELLO/arm/command sequence and the intentional absence of application ACKs.
+
+Timed IHU runs can be checked with a finite capture up to180 seconds. For the
+120-second run, use `--seconds 135` and start the producer after BPSK_RX_READY.
+IQ remains retained; decoding and optional Yamcs forwarding happen after the
+capture ends. This does not start a permanent receiver service.

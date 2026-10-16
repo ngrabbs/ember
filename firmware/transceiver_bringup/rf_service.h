@@ -20,13 +20,17 @@ static bool rf_reply_send(const ul_packet *request,uint8_t type,uint8_t status) 
 }
 /* g: collect for 10s, then send at most four queued frames, then stop.
  * CAN is quiesced during RF; no reception or automatic retry during draining. */
-static bool rf_service(void) {
+static bool rf_service_window(bool automatic) {
     static cf_reader f;static ul_reader reader;static ul_packet in;
     static uint8_t native[BPSK_NATIVE_MAX];
-    memset(&f,0,sizeof(f));bool abort=false,ok=true;
-    if(!rf_bus_open())return false;
-    uint64_t end=time_us_64()+10000000;
-    printf("[uhf] COLLECT max10s capacity=4; any console byte cancels; then bounded drain\n");
+    bool abort=false,ok=true;unsigned attempts=0;
+    const uint64_t lease_end=time_us_64()+180000000;
+    printf("[uhf] mode=%s boot_resume=0 max_frames=%u\n",automatic?"TIMED180":"BATCH",automatic?96:4);
+    do {
+    memset(&f,0,sizeof(f));
+    if(!(automatic && (can_read(14,0x0e)&0xe0)==0) && !rf_bus_open()){ok=false;break;}
+    uint64_t end=automatic?lease_end-2500000:time_us_64()+10000000;
+    printf("[uhf] %s capacity=4; any console byte cancels\n",automatic?"LISTEN":"COLLECT max10s");
     while(time_us_64()<end) {
         if(getchar_timeout_us(0)>=0){abort=true;break;}
         if((can_read(14,0x0e)&0xe0)!=0 || can_read(14,0x2d)){ok=false;break;}
@@ -56,7 +60,7 @@ static bool rf_service(void) {
             printf("[uhf] admission request=%lu type=%02X status=%u queued=%u\n",(unsigned long)in.request,type,status,rf_queue.count);
             if(!rf_reply_send(&in,type,status)){ok=false;break;}
         }
-        if(!ok)break;
+        if(!ok || (automatic && rf_queue.count))break;
         sleep_ms(1);
     }
     if(can_read(14,0x2d))ok=false;
@@ -64,24 +68,29 @@ static bool rf_service(void) {
     printf("[uhf] DRAIN queued=%u abort=%u bus_ok=%u\n",rf_queue.count,abort,ok);
     while(rf_queue.count) {
         rq_item *item=&rf_queue.items[0];uint8_t result=UHF_CANCELLED;
+        if(getchar_timeout_us(0)>=0 || (automatic && (time_us_64()+2500000>=lease_end || attempts>=96)))abort=true;
         if(!abort && ok) {
             packet_frame_size=bridge_frame(packet_frame,item->packet.payload,item->packet.size,item->packet.request);
             printf("[uhf] packet request=%lu packet_hex=",(unsigned long)item->packet.request);
             for(unsigned i=0;i<item->packet.size;i++)printf("%02x",item->packet.payload[i]);
             printf("\n");
+            ++attempts;
             bool sent=packet_frame_size && clock_window_drive(true,false,bpsk_emit,1);
             result=sent?UHF_OK:UHF_FAILED;if(!sent)abort=true;
         }
         bool delivered=false;
         if(ok && rf_bus_open()) {
             delivered=rf_reply_send(&item->packet,CF_UHF_RESULT,result);
-            if(!rf_bus_close())ok=false;
+            if(!automatic && !rf_bus_close())ok=false;
         } else ok=false;
         printf("[uhf] result request=%lu status=%u reply_sent=%u ground_ack=0\n",(unsigned long)item->packet.request,result,delivered);
         rq_finish(&rf_queue,result);
         if(!delivered)abort=true;
-        sleep_ms(20);
+        if(!automatic)sleep_ms(20);
     }
+    } while(automatic && ok && !abort && attempts<96 && time_us_64()+2500000<lease_end);
     gpio_put(10,false);gpio_put(16,false);gpio_put(2,true);
     printf("[uhf] STOP queued=0 TX=0\n");return rf_bus_close() && ok;
 }
+
+static bool rf_service(void) {return rf_service_window(false);}

@@ -49,3 +49,38 @@ Validation includes queue capacity/FIFO, duplicate and stale requests, conflicti
 bytes, cancellation/failure history, peer/origin/request/digest/length validation,
 and hardware batch/abort tests recorded in the lab log. RF completion does not
 qualify modulation quality, range, or the receive chain.
+
+## Timed operating mode (COMMS v20 / IHU v5)
+
+Inspired by rt-ihu's separation of boot, downlink state control, telemetry
+collection and radio execution. This is still EMBER bench firmware, with no
+launch/deployment logic, persistent transmit enable, automatic power-mode
+transitions, or demonstrated RF receive path.
+
+Boot leaves the generator IDLE and the radio muted. Explicit COMMS `a` opens a
+maximum180-second service permission window (up to96 RF attempts). The service
+alternates LISTEN and bounded transmit/result handling, returning to LISTEN
+between packets. It reserves2.5 seconds before window expiry for shutdown and
+will not start another burst in that interval. Any COMMS console byte stops it,
+including before another queued burst starts. `g` retains the finite batch test.
+
+After normal CAN and HELLO, IHU `uhf run 120 10` enables a120-second producer
+run, starting a heartbeat/system/EPS cycle every10 seconds. Duration range1–120
+seconds, cycle period5–60 seconds. Only one packet is outstanding; the next
+waits for its RF result and a250 ms turnaround guard. Delayed cycles do not
+accumulate into catch-up bursts. Missing/failed results, bus faults or an EPS
+read/submission failure stop production in FAULT. Health packets report the
+configured cycle period. Modes:0 IDLE,1 RUNNING,2 EXPIRED,3 STOPPED,4 FAULT.
+
+`status` is allowed during the run. `uhf stop` stops future production; an
+already admitted packet may finish. Use COMMS stop for immediate RF interruption.
+Other IHU console operations are refused while RUNNING; existing automatic
+telemetry and LTE queue must be off before starting. All run state is volatile:
+reset returns to IDLE and never resumes a prior run. An expired/stopped/faulted
+run requires a fresh explicit command. The COMMS permission window must cover
+the whole generator run; it is independent of IHU timing and never auto-renews.
+
+On the ground, use a finite receiver capture covering the run. capture.py now
+accepts1–180 seconds; retained IQ is decoded and optionally forwarded after the
+capture ends. This is not yet a continuously running ground decoder service.
+Local RF completion and independent Yamcs byte verification remain separate.

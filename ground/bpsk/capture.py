@@ -68,7 +68,7 @@ def run(args):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--seconds',type=int,choices=range(1,16),default=8)
+    p.add_argument('--seconds',type=int,choices=range(1,181),default=8)
     p.add_argument('--frequency',type=float,default=437000000)
     p.add_argument('--gain',type=float,default=0)
     p.add_argument('--channel',type=int,choices=(0,1),default=0)

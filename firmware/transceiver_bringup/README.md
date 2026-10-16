@@ -298,3 +298,18 @@ receiver must report BPSK_RX_READY before draining begins. CAN is paused during
 RF; submit all requests during collection. The existing `f` and old IHU commands
 retain their prior behavior. See `system/interfaces/transceiver_uhf_bench.md`
 for the wire contract, duplicate suppression and failure semantics.
+
+## v20: timed autonomous packet service
+
+Send `a` once to permit a maximum180-second LISTEN/TX service window (up to96
+bursts). Unlike `g`, each valid queued packet is transmitted promptly and CAN
+listening resumes for the next request. Any console byte stops the service;
+boot never enables it. Existing per-burst timer, lock checks and mute remain.
+
+With IHU v5, initialize normal CAN and HELLO, then use `uhf run 120 10` to send
+heartbeat/system/EPS cycles every10 seconds for two minutes without per-packet
+commands. Wait for receiver BPSK_RX_READY before starting the generator. IHU
+`uhf stop` halts future production; COMMS `x` interrupts RF and closes the
+permission window. IHU `status` reports mode, cycles and submitted count.
+A135-second capture accommodates startup and the120-second run; forwarding
+occurs after capture. See the UHF interface contract for bounds and faults.

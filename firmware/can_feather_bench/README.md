@@ -394,3 +394,15 @@ none implies ground reception. `status` reports `uhf_pending`. Admission has
 5 seconds, final results30 seconds; timeouts are UNKNOWN without automatic
 retry. Existing LTE commands and automatic telemetry defaults are unchanged.
 Health packet producers from the deployed can-bench-v3 are preserved.
+
+## Timed telemetry producer (can-bench-v5)
+
+The default is IDLE, including after resets. With COMMS `a` service running and
+normal CAN/HELLO established, `uhf run 120 10` produces heartbeat/system/EPS
+cycles every10 seconds for120 seconds. One packet is in flight at a time and
+results are checked before advancing. `status` reports progress; `uhf stop`
+stops future production, while an admitted packet may finish. Stop COMMS too
+for an immediate RF abort. Bad/missing results or producer failure enter FAULT;
+there is no automatic retry, restart, or persistent enable. Legacy automatic
+telemetry and LTE queue must be off. Mode numbers and detailed limits are in
+`system/interfaces/transceiver_uhf_bench.md`.
