@@ -99,3 +99,37 @@ Timed IHU runs can be checked with a finite capture up to180 seconds. For the
 120-second run, use `--seconds 135` and start the producer after BPSK_RX_READY.
 IQ remains retained; decoding and optional Yamcs forwarding happen after the
 capture ends. This does not start a permanent receiver service.
+
+## Live UHF demo receiver
+
+On the ground Pi, with other LibreSDR captures stopped:
+
+```bash
+python3 ~/work/ember-y24-bpsk/ground/bpsk/live.py \
+  --seconds 600 --gain 0 --forward \
+  --output ~/work/ember-y24-bpsk/runs/live-$(date +%Y%m%d-%H%M%S)
+```
+
+Wait for `BPSK_RX_READY`. On IHU issue `normal`; on COMMS press `a` (no Enter);
+then IHU `hello` and wait for confirmation. IHU `uhf run 120 10` starts the
+finite two-minute heartbeat/system/EPS cycle. The receiver can stay running
+between runs; renew COMMS `a` and explicitly start another IHU run as needed.
+COMMS `x` stops its service; IHU `uhf stop` stops future telemetry production.
+Receiver Ctrl-C saves results and closes reception. No receiver command starts TX.
+
+Open the existing EPS or health dashboards with `c=ember-uhf__realtime`, not
+`ember__realtime`. Each `BPSK_RX_PACKET` line names a validated packet forwarded
+immediately to local Yamcs UDP10019. Four-second overlapping windows advance
+once per second; this introduces a few seconds of decoding latency, not a
+whole-capture delay. No diagnostic phase fallback is used. Duplicate detections
+of the same RF sequence and native bytes are forwarded only once per session.
+
+The receive loop writes `raw-192k.cf32` (little-endian complex64,192000 samples/s).
+`session.json` describes the capture; `packets.jsonl` records validated original
+packets before forwarding; `result.json` summarizes shutdown. UDP send success
+is not itself an archive acknowledgment. Previously forwarded packets remain
+valid evidence if a later stream or decoder error stops the session. A four-job
+queue bounds DSP backlog; overflow stops rather than silently dropping windows.
+Recording uses approximately92 MB/minute (922 MB for ten minutes). Session
+length is bounded at1–3600 seconds; default600 seconds. It does not auto-start
+on boot or enable transmissions. `capture.py` retains the older offline workflow.

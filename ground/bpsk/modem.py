@@ -43,7 +43,7 @@ def recover_bits(bits):
         result.append(dict(sequence=sequence,hex=packet.hex(),decoded=native))
     return result
 
-def decode(iq, rate=48000, *, phase_diagnostic=False):
+def decode(iq, rate=48000, *, phase_diagnostic=False, single_window=False):
     if rate%BAUD or rate<4*BAUD:raise ValueError('integer samples/symbol required')
     iq=np.asarray(iq,dtype=np.complex64)
     if iq.ndim!=1 or not np.isfinite(iq).all():raise ValueError('invalid IQ')
@@ -51,7 +51,7 @@ def decode(iq, rate=48000, *, phase_diagnostic=False):
     # Four-second windows, one-second stride: cover even a 240-byte native frame
     # (2.02s on air), including preamble, at every window alignment.
     result=[];seen=set()
-    for start in range(0,len(iq),rate):
+    for start in ([0] if single_window else range(0,len(iq),rate)):
         a=iq[start:start+4*rate]
         if len(a)<sps*256:continue
         # Squaring removes BPSK sign. Carrier search is limited to +/- rate/4.
