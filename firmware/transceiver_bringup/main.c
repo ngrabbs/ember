@@ -182,6 +182,8 @@ static bool hello_send(const uint8_t *wire, size_t size, uint32_t request,
     return false;
 }
 
+#include "rf_service.h"
+
 /* Console l=listen-only, n=receive with ACK; both bounded to ten seconds. */
 static bool listen_a(bool acknowledge, bool reply_hello, bool forward_rf) {
     /* Single foreground owner; keep large CAN work buffers off the Pico stack. */
@@ -347,6 +349,9 @@ int main(void) {
         if ((command == 'l' || command == 'n' || command == 'h') && !afailed) {
             if (!listen_a(command != 'l', command == 'h', false)) {gpio_put(2, true); gpio_put(8, false); afailed = true;}
         }
+        if (command == 'g' && !afailed) {
+            if(!rf_service()) {gpio_put(2,true);gpio_put(8,false);afailed=true;}
+        }
         if (command == 'f' && !afailed) {
             if(!listen_a(true,false,true)) {gpio_put(2,true);gpio_put(8,false);afailed=true;}
         }
@@ -393,7 +398,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v18] #%u TX=0 RX=0 CAN_A/B=standby "
+        printf("[y24-safe-v19] #%u TX=0 RX=0 CAN_A/B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

@@ -383,3 +383,14 @@ pre-change backup stays private on m75q:
 `a87c2204f52490a27d47402637e4a63f97754b0e9579091b23b468eeda8dbfd0`.
 Build/flash/source identities are retained with the proof; restoration was not
 exercised. COMMS, Walter and all AMSAT software/images were left unchanged.
+
+## UHF transceiver batch client (can-bench-v4)
+
+After HELLO with the physical transceiver, while its explicit `g` collection
+window is open, use `uhf heartbeat`, `uhf system`, or `uhf eps`. Wait for QUEUED
+before submitting another packet (maximum4 outstanding). A separate local
+RF_TX_COMPLETE / RF_TX_FAILED / CANCELLED reply releases each result tracker;
+none implies ground reception. `status` reports `uhf_pending`. Admission has
+5 seconds, final results30 seconds; timeouts are UNKNOWN without automatic
+retry. Existing LTE commands and automatic telemetry defaults are unchanged.
+Health packet producers from the deployed can-bench-v3 are preserved.

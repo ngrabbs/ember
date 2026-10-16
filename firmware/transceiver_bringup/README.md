@@ -278,3 +278,23 @@ reports a timeout and clears its peer (5 seconds for `telemetry` /
 `status` to show `pending=0`, then repeat the handshake before the next packet. This is a bench limitation, not a ground delivery status. A future
 persistent service needs explicit RF admission/result semantics and queueing;
 this change does not claim a Walter echo, LTE modem acceptance, or ground ACK.
+
+## v19: acknowledged, bounded UHF batch
+
+With IHU can-bench-v4, send COMMS `g` (one byte, no newline). It listens for10
+seconds, accepts at most4 packets, drains them, and returns to muted standby.
+A HELLO can be exchanged during collection, or use the existing `h` handshake
+first. During collection issue IHU `uhf heartbeat`, `uhf system`, or `uhf eps`,
+waiting for `UHF ... outcome=QUEUED` after each. Results subsequently report
+`RF_TX_COMPLETE`, `RF_TX_FAILED`, or `CANCELLED`. These are local RF outcomes,
+not acknowledgments from ground. IHU status retains the peer and reports
+`pending=0 uhf_pending=0` after the final result, allowing the next batch without
+another HELLO. Admission/result timeout means UNKNOWN and is never retried
+silently. Any COMMS console byte stops the batch. No periodic service is started.
+
+Use a fresh finite ground capture spanning the drain; for a three-packet batch,
+start a15-second capture during the latter half of the collection window. The
+receiver must report BPSK_RX_READY before draining begins. CAN is paused during
+RF; submit all requests during collection. The existing `f` and old IHU commands
+retain their prior behavior. See `system/interfaces/transceiver_uhf_bench.md`
+for the wire contract, duplicate suppression and failure semantics.

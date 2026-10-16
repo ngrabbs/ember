@@ -3,13 +3,14 @@
 #include "bpsk_packet.h"
 #include "native_wire.h"
 #include "lte_link.h"
+#include "uhf_link.h"
 /* Bounded admission: one IHU-native telemetry packet inside CF_CHAIN or CF_SEND_PACKET.
  * No commands, synthetic replacement packets, or implied RF acknowledgment. */
-static inline bool bridge_telemetry(const cf_reader *f,uint8_t packet[BPSK_NATIVE_MAX],size_t *size,uint32_t *request) {
+static inline bool bridge_telemetry_type(const cf_reader *f,uint8_t packet[BPSK_NATIVE_MAX],size_t *size,uint32_t *request,bool uhf) {
     ul_reader r={0};ul_packet in={0};unsigned count=0;
     for(size_t i=0;i<f->used;i++)if(ul_feed(&r,f->wire[i],0,&in))++count;
     if(count!=1 || r.used || r.discard || r.crc_errors || r.framing_errors ||
-       r.format_errors || r.overflows || in.version!=UL_VERSION || (in.type!=CF_CHAIN && in.type!=CF_SEND_PACKET) ||
+       r.format_errors || r.overflows || in.version!=UL_VERSION || (uhf?in.type!=CF_UHF_SEND:(in.type!=CF_CHAIN && in.type!=CF_SEND_PACKET)) ||
        in.sender!=in.origin || (uint16_t)in.request!=f->token || in.size< W_PAYLOAD+2 || in.size>BPSK_NATIVE_MAX)return false;
     const uint8_t *p=in.payload;
     uint16_t id=ul_u16(p+W_MESSAGE_ID);
@@ -33,4 +34,8 @@ static inline size_t bridge_frame(uint8_t out[BPSK_FRAME_MAX],const uint8_t *pac
     out[36]=3;bp32(out+37,sequence);bp16(out+41,(uint16_t)size);memcpy(out+43,packet,size);
     bp32(out+43+size,bp_crc32(out+36,7+size));memset(out+47+size,0,16);
     return size+63;
+}
+
+static inline bool bridge_telemetry(const cf_reader *f,uint8_t *packet,size_t *size,uint32_t *request) {
+    return bridge_telemetry_type(f,packet,size,request,false);
 }
