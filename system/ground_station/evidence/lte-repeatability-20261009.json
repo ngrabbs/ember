@@ -1,0 +1,409 @@
+{
+  "date_local": "2026-10-09",
+  "timezone": "America/Chicago",
+  "scope": "Three ground OAI/EPC application restarts and bounded Walter RF windows; IHU/COMMS were kept powered with unchanged boot IDs. No physical power-cycle or unplug/replug qualification.",
+  "usb_mbps": 5000,
+  "ihu_boot": 392647363,
+  "comms_boot": 3340787552,
+  "config": "enb.band13.emtc.ce300tx20diag.conf",
+  "config_sha256": "f3e0bb50c554d240cbd566a4773da981ed04bbd507e9a642a2e84a952541bac8",
+  "cpu_governor_during_test": "performance",
+  "cpu_governor_restored": "ondemand",
+  "requested_window_seconds": 120,
+  "ground_finite_limit_seconds": 150,
+  "rounds_per_trial": 3,
+  "telemetry_per_round": [
+    "HEARTBEAT",
+    "SYSTEM_STATUS",
+    "POWER_STATUS"
+  ],
+  "trials": [
+    {
+      "trial": "health-repeat-20261009-1",
+      "ready_elapsed_s": 16.532,
+      "expected": 9,
+      "modem_accepted": 9,
+      "verified": 9,
+      "send_failure": null,
+      "registration_losses": 0,
+      "ihu_error_counters_before": {
+        "tx_fail": 2,
+        "tx_timeout": 0,
+        "rx_bad": 0,
+        "rx_overflow": 0,
+        "fragments_bad": 0,
+        "fragments_timeout": 0,
+        "unknown": 2
+      },
+      "ihu_error_counters_after": {
+        "tx_fail": 2,
+        "tx_timeout": 0,
+        "rx_bad": 0,
+        "rx_overflow": 0,
+        "fragments_bad": 0,
+        "fragments_timeout": 0,
+        "unknown": 2
+      },
+      "ihu_error_counter_delta": {
+        "tx_fail": 0,
+        "tx_timeout": 0,
+        "rx_bad": 0,
+        "rx_overflow": 0,
+        "fragments_bad": 0,
+        "fragments_timeout": 0,
+        "unknown": 0
+      },
+      "final_modem_status": "SUBMITTED request=84 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=12 rejected=0\r\nRESULT request=84 outcome=LTE_STATUS peer=3340787552 bytes=16 hex=00080000000000000000000c00000000",
+      "packets": [
+        {
+          "name": "HEARTBEAT",
+          "sequence": 3,
+          "hex": "0901c003001f0101000502010000000000000000176752c3003f304600060301000000002fb0",
+          "size": 38,
+          "received_utc": "2026-10-09T14:17:26.587187+00:00",
+          "yamcs_reception_time": "2026-10-09T14:17:26.588Z",
+          "bytes_match": true
+        },
+        {
+          "name": "SYSTEM_STATUS",
+          "sequence": 4,
+          "hex": "0901c00400270101000102010000000000000000176752c3003f355f000e0301000000000000003900000001262c",
+          "size": 46,
+          "received_utc": "2026-10-09T14:17:27.747014+00:00",
+          "yamcs_reception_time": "2026-10-09T14:17:27.747Z",
+          "bytes_match": true
+        },
+        {
+          "name": "POWER_STATUS",
+          "sequence": 5,
+          "hex": "0901c00500790101001002010000000000000000176752c3003f3a990060010202010101010202000000000000000002003f3a9900000000000000020000295e00002712fffffdb60002136d00005b3c0000271000002710000000010800000000000000000000670004191617a3fffc03a0344801e80000000720e200013f10",
+          "size": 128,
+          "received_utc": "2026-10-09T14:17:29.067048+00:00",
+          "yamcs_reception_time": "2026-10-09T14:17:29.067Z",
+          "bytes_match": true
+        },
+        {
+          "name": "HEARTBEAT",
+          "sequence": 6,
+          "hex": "0901c006001f0101000502010000000000000000176752c3003f403400060301000000000763",
+          "size": 38,
+          "received_utc": "2026-10-09T14:17:30.387026+00:00",
+          "yamcs_reception_time": "2026-10-09T14:17:30.387Z",
+          "bytes_match": true
+        },
+        {
+          "name": "SYSTEM_STATUS",
+          "sequence": 7,
+          "hex": "0901c00700270101000102010000000000000000176752c3003f454d000e0301000000000000004200000001cd2e",
+          "size": 46,
+          "received_utc": "2026-10-09T14:17:31.687029+00:00",
+          "yamcs_reception_time": "2026-10-09T14:17:31.687Z",
+          "bytes_match": true
+        },
+        {
+          "name": "POWER_STATUS",
+          "sequence": 8,
+          "hex": "0901c00800790101001002010000000000000000176752c3003f4a860060010202010101010202000000000000000003003f4a8600000000000000020000295e00002716fffffd2300020b6800005b7d0000271000002710000000010800000000000000000000670005191617a5fffb0392344b01f80000000720e200012a91",
+          "size": 128,
+          "received_utc": "2026-10-09T14:17:33.127102+00:00",
+          "yamcs_reception_time": "2026-10-09T14:17:33.127Z",
+          "bytes_match": true
+        },
+        {
+          "name": "HEARTBEAT",
+          "sequence": 9,
+          "hex": "0901c009001f0101000502010000000000000000176752c3003f502200060301000000002590",
+          "size": 38,
+          "received_utc": "2026-10-09T14:17:34.587013+00:00",
+          "yamcs_reception_time": "2026-10-09T14:17:34.587Z",
+          "bytes_match": true
+        },
+        {
+          "name": "SYSTEM_STATUS",
+          "sequence": 10,
+          "hex": "0901c00a00270101000102010000000000000000176752c3003f553b000e0301000000000000004b000000014361",
+          "size": 46,
+          "received_utc": "2026-10-09T14:17:35.767195+00:00",
+          "yamcs_reception_time": "2026-10-09T14:17:35.767Z",
+          "bytes_match": true
+        },
+        {
+          "name": "POWER_STATUS",
+          "sequence": 11,
+          "hex": "0901c00b00790101001002010000000000000000176752c3003f5a750060010202010101010202000000000000000004003f5a750000000000000002000029660000271bfffffe480002426200005b7d0000271000002710000000010800000000000000000000670005191b17a8fffd03f2344b01e70000000720e2000192ea",
+          "size": 128,
+          "received_utc": "2026-10-09T14:17:37.207054+00:00",
+          "yamcs_reception_time": "2026-10-09T14:17:37.207Z",
+          "bytes_match": true
+        }
+      ],
+      "ground_overflows": 0,
+      "ground_late_control": 0,
+      "ground_assertions": 0,
+      "oai_exit": 0,
+      "epc_exit": 0
+    },
+    {
+      "trial": "health-repeat-20261009-2",
+      "ready_elapsed_s": 61.86,
+      "expected": 9,
+      "modem_accepted": 9,
+      "verified": 9,
+      "send_failure": null,
+      "registration_losses": 0,
+      "ihu_error_counters_before": {
+        "tx_fail": 2,
+        "tx_timeout": 0,
+        "rx_bad": 0,
+        "rx_overflow": 0,
+        "fragments_bad": 0,
+        "fragments_timeout": 0,
+        "unknown": 2
+      },
+      "ihu_error_counters_after": {
+        "tx_fail": 2,
+        "tx_timeout": 0,
+        "rx_bad": 0,
+        "rx_overflow": 0,
+        "fragments_bad": 0,
+        "fragments_timeout": 0,
+        "unknown": 2
+      },
+      "ihu_error_counter_delta": {
+        "tx_fail": 0,
+        "tx_timeout": 0,
+        "rx_bad": 0,
+        "rx_overflow": 0,
+        "fragments_bad": 0,
+        "fragments_timeout": 0,
+        "unknown": 0
+      },
+      "final_modem_status": "SUBMITTED request=149 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=21 rejected=0\r\nRESULT request=149 outcome=LTE_STATUS peer=3340787552 bytes=16 hex=00080000000000000000001500000000",
+      "packets": [
+        {
+          "name": "HEARTBEAT",
+          "sequence": 12,
+          "hex": "0901c00c001f0101000502010000000000000000176752c3004186070006030100000000f6a1",
+          "size": 38,
+          "received_utc": "2026-10-09T14:19:59.340107+00:00",
+          "yamcs_reception_time": "2026-10-09T14:19:59.340Z",
+          "bytes_match": true
+        },
+        {
+          "name": "SYSTEM_STATUS",
+          "sequence": 13,
+          "hex": "0901c00d00270101000102010000000000000000176752c300418b20000e0301000000000000007a00000001ad73",
+          "size": 46,
+          "received_utc": "2026-10-09T14:20:00.640118+00:00",
+          "yamcs_reception_time": "2026-10-09T14:20:00.640Z",
+          "bytes_match": true
+        },
+        {
+          "name": "POWER_STATUS",
+          "sequence": 14,
+          "hex": "0901c00e00790101001002010000000000000000176752c3004190590060010202010101010202000000000000000005004190590000000000000002000029690000271efffffdb600020b6800005bd30000271000002710000000010800000000000000000000670005191d17aafffc0392344f01e10000000720e2000147a1",
+          "size": 128,
+          "received_utc": "2026-10-09T14:20:02.060210+00:00",
+          "yamcs_reception_time": "2026-10-09T14:20:02.060Z",
+          "bytes_match": true
+        },
+        {
+          "name": "HEARTBEAT",
+          "sequence": 15,
+          "hex": "0901c00f001f0101000502010000000000000000176752c3004195f30006030100000000dd3b",
+          "size": 38,
+          "received_utc": "2026-10-09T14:20:03.420036+00:00",
+          "yamcs_reception_time": "2026-10-09T14:20:03.420Z",
+          "bytes_match": true
+        },
+        {
+          "name": "SYSTEM_STATUS",
+          "sequence": 16,
+          "hex": "0901c01000270101000102010000000000000000176752c300419b0d000e0301000000000000008300000001f332",
+          "size": 46,
+          "received_utc": "2026-10-09T14:20:04.720120+00:00",
+          "yamcs_reception_time": "2026-10-09T14:20:04.720Z",
+          "bytes_match": true
+        },
+        {
+          "name": "POWER_STATUS",
+          "sequence": 17,
+          "hex": "0901c01100790101001002010000000000000000176752c30041a04700600102020101010102020000000000000000060041a04700000000000005b1000029660000271bfffffd230001fb6000005be80000271000002710000000010800000000000000000000670ecb191b17a8fffb0376345002270000000720e20001f2ba",
+          "size": 128,
+          "received_utc": "2026-10-09T14:20:06.160099+00:00",
+          "yamcs_reception_time": "2026-10-09T14:20:06.160Z",
+          "bytes_match": true
+        },
+        {
+          "name": "HEARTBEAT",
+          "sequence": 18,
+          "hex": "0901c012001f0101000502010000000000000000176752c30041a5e20006030100000000203f",
+          "size": 38,
+          "received_utc": "2026-10-09T14:20:07.500198+00:00",
+          "yamcs_reception_time": "2026-10-09T14:20:07.500Z",
+          "bytes_match": true
+        },
+        {
+          "name": "SYSTEM_STATUS",
+          "sequence": 19,
+          "hex": "0901c01300270101000102010000000000000000176752c30041aafc000e0301000000000000008c000000010236",
+          "size": 46,
+          "received_utc": "2026-10-09T14:20:08.800207+00:00",
+          "yamcs_reception_time": "2026-10-09T14:20:08.800Z",
+          "bytes_match": true
+        },
+        {
+          "name": "POWER_STATUS",
+          "sequence": 20,
+          "hex": "0901c01400790101001002010000000000000000176752c30041b03700600102020101010102020000000000000000070041b0370000000000000002000029660000271cfffffdb600020ffd00005bfe0000271000002710000000010800000000000000000000670005191b17a9fffc039a345101e70000000720e200017c98",
+          "size": 128,
+          "received_utc": "2026-10-09T14:20:10.220126+00:00",
+          "yamcs_reception_time": "2026-10-09T14:20:10.220Z",
+          "bytes_match": true
+        }
+      ],
+      "ground_overflows": 0,
+      "ground_late_control": 0,
+      "ground_assertions": 0,
+      "oai_exit": 124,
+      "epc_exit": 0
+    },
+    {
+      "trial": "health-repeat-20261009-3",
+      "ready_elapsed_s": 16.551,
+      "expected": 9,
+      "modem_accepted": 9,
+      "verified": 9,
+      "send_failure": null,
+      "registration_losses": 0,
+      "ihu_error_counters_before": {
+        "tx_fail": 2,
+        "tx_timeout": 0,
+        "rx_bad": 0,
+        "rx_overflow": 0,
+        "fragments_bad": 0,
+        "fragments_timeout": 0,
+        "unknown": 2
+      },
+      "ihu_error_counters_after": {
+        "tx_fail": 2,
+        "tx_timeout": 0,
+        "rx_bad": 0,
+        "rx_overflow": 0,
+        "fragments_bad": 0,
+        "fragments_timeout": 0,
+        "unknown": 2
+      },
+      "ihu_error_counter_delta": {
+        "tx_fail": 0,
+        "tx_timeout": 0,
+        "rx_bad": 0,
+        "rx_overflow": 0,
+        "fragments_bad": 0,
+        "fragments_timeout": 0,
+        "unknown": 0
+      },
+      "final_modem_status": "SUBMITTED request=192 type=120 bytes=0\r\nLTE_STATUS state=0 step=8 error=0 registered=0 window_ms=0 modem_accepted=30 rejected=0\r\nRESULT request=192 outcome=LTE_STATUS peer=3340787552 bytes=16 hex=00080000000000000000001e00000000",
+      "packets": [
+        {
+          "name": "HEARTBEAT",
+          "sequence": 21,
+          "hex": "0901c015001f0101000502010000000000000000176752c300431d52000603010000000059af",
+          "size": 38,
+          "received_utc": "2026-10-09T14:21:43.633301+00:00",
+          "yamcs_reception_time": "2026-10-09T14:21:43.633Z",
+          "bytes_match": true
+        },
+        {
+          "name": "SYSTEM_STATUS",
+          "sequence": 22,
+          "hex": "0901c01600270101000102010000000000000000176752c30043226c000e030100000000000000a5000000018dba",
+          "size": 46,
+          "received_utc": "2026-10-09T14:21:44.913036+00:00",
+          "yamcs_reception_time": "2026-10-09T14:21:44.913Z",
+          "bytes_match": true
+        },
+        {
+          "name": "POWER_STATUS",
+          "sequence": 23,
+          "hex": "0901c01700790101001002010000000000000000176752c3004327a70060010202010101010202000000000000000008004327a700000000000000020000296800002720fffffd2300021d2900005c130000271000002710000000010800000000000000000000670004191c17abfffb03b1345201e90000000720e20001b9e1",
+          "size": 128,
+          "received_utc": "2026-10-09T14:21:46.333100+00:00",
+          "yamcs_reception_time": "2026-10-09T14:21:46.333Z",
+          "bytes_match": true
+        },
+        {
+          "name": "HEARTBEAT",
+          "sequence": 24,
+          "hex": "0901c018001f0101000502010000000000000000176752c300432d4200060301000000001340",
+          "size": 38,
+          "received_utc": "2026-10-09T14:21:47.693151+00:00",
+          "yamcs_reception_time": "2026-10-09T14:21:47.693Z",
+          "bytes_match": true
+        },
+        {
+          "name": "SYSTEM_STATUS",
+          "sequence": 25,
+          "hex": "0901c01900270101000102010000000000000000176752c30043325c000e030100000000000000ae000000013cdf",
+          "size": 46,
+          "received_utc": "2026-10-09T14:21:48.993092+00:00",
+          "yamcs_reception_time": "2026-10-09T14:21:48.993Z",
+          "bytes_match": true
+        },
+        {
+          "name": "POWER_STATUS",
+          "sequence": 26,
+          "hex": "0901c01a00790101001002010000000000000000176752c3004337970060010202010101010202000000000000000009004337970000000000000002000029690000271efffffdb60002036400005c130000271000002710000000010800000000000000000000670005191d17aafffc0384345201ec0000000720e20001722c",
+          "size": 128,
+          "received_utc": "2026-10-09T14:21:50.413179+00:00",
+          "yamcs_reception_time": "2026-10-09T14:21:50.413Z",
+          "bytes_match": true
+        },
+        {
+          "name": "HEARTBEAT",
+          "sequence": 27,
+          "hex": "0901c01b001f0101000502010000000000000000176752c300433d330006030100000000416b",
+          "size": 38,
+          "received_utc": "2026-10-09T14:21:51.773094+00:00",
+          "yamcs_reception_time": "2026-10-09T14:21:51.773Z",
+          "bytes_match": true
+        },
+        {
+          "name": "SYSTEM_STATUS",
+          "sequence": 28,
+          "hex": "0901c01c00270101000102010000000000000000176752c30043424c000e030100000000000000b7000000010965",
+          "size": 46,
+          "received_utc": "2026-10-09T14:21:53.073106+00:00",
+          "yamcs_reception_time": "2026-10-09T14:21:53.073Z",
+          "bytes_match": true
+        },
+        {
+          "name": "POWER_STATUS",
+          "sequence": 29,
+          "hex": "0901c01d00790101001002010000000000000000176752c300434787006001020201010101020200000000000000000a0043478700000000000000020000296600002721fffffd230002124800005c290000271000002710000000010800000000000000000000670005191b17acfffb039e345301f20000000720e20001d2a9",
+          "size": 128,
+          "received_utc": "2026-10-09T14:21:54.493159+00:00",
+          "yamcs_reception_time": "2026-10-09T14:21:54.493Z",
+          "bytes_match": true
+        }
+      ],
+      "ground_overflows": 0,
+      "ground_late_control": 0,
+      "ground_assertions": 0,
+      "oai_exit": 0,
+      "epc_exit": 0
+    }
+  ],
+  "summary": {
+    "starts_passed": 3,
+    "starts_total": 3,
+    "packets_verified": 27,
+    "packets_expected": 27,
+    "registration_losses_after_readiness": 0,
+    "fresh_ihu_errors": 0,
+    "oai_exit_124_note": "Second ground run reached the configured finite timeout; processes were confirmed stopped afterward.",
+    "radio_processes_stopped": true,
+    "yamcs_and_listener_running": true
+  },
+  "remaining": "Sustained operation, cold power-up, physical fault recovery, and startup latency qualification. Earlier failed trials remain in lte-health-20261009.json."
+}

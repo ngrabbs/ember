@@ -15,6 +15,7 @@ or live service changed during this documentation review.
 | Monitor or command through Yamcs | [Yamcs operation and available features](yamcs.md) | Instance and processor selected in the web header |
 | Power up the demo ground Pi | [Pi readiness and hotspot](../../ground/pi/README.md) | Ethernet first; `EMBER-Ground` fallback Wi-Fi |
 | Send an EPS observation over LTE | [Step-by-step LTE walkthrough](lte-eps-walkthrough.md) | IHU → CAN → Walter → ground Pi → `ember-lte` |
+| Send IHU health telemetry over LTE | [Heartbeat and system status](lte-system-telemetry.md) | Updated CAN bench v3; `heartbeat lte` and `system lte` |
 
 The dedicated spare Pico used for Yamcs command tests is a third application,
 [usb_bench](../../firmware/usb_bench/README.md). Its USB stream carries binary

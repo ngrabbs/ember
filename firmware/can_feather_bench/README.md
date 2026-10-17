@@ -383,3 +383,17 @@ pre-change backup stays private on m75q:
 `a87c2204f52490a27d47402637e4a63f97754b0e9579091b23b468eeda8dbfd0`.
 Build/flash/source identities are retained with the proof; restoration was not
 exercised. COMMS, Walter and all AMSAT software/images were left unchanged.
+## Native LTE health packets (bench v3)
+
+`heartbeat lte` submits the IHU's 38-byte HEARTBEAT and `system lte` submits
+its 46-byte SYSTEM_STATUS through CAN/COMMS/Walter. `eps lte` remains unchanged.
+All three share the IHU boot/uptime/sequence and require an established peer
+and a READY registered modem window. Both forwarding firmware images must
+include the new explicit native-telemetry allowlist for SYSTEM_STATUS.
+
+SAFE/GROUND_TEST are fixed bench labels. Status counters measure admitted CAN
+requests and explicit submission/peer refusals, not radio delivery or flight
+telecommands. Unknown outcomes are not refusals; cadence describes configured
+EPS over CAN, not automatic LTE heartbeats. See the
+[operator guide](../../docs/user/lte-system-telemetry.md) for exact counter scope,
+rollout and receipt checks. `telemetry` keeps the historical non-LTE echo path.
