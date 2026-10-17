@@ -4,14 +4,19 @@ Original Pico only. Formerly `firmware/transceiver_bringup`. The earlier
 FreeRTOS application was removed and remains available in Git history.
 The existing CMake target and output basename `transceiver_bringup` are retained.
 Configure a fresh build directory after moving from the old source path.
-Current release: **0.32.0**. After startup checks, CAN A stays available and RF
+Current release: **0.33.0**. After startup checks, CAN A stays available and RF
 stays muted while idle. Healthy COMMS accepts validated IHU UHF telemetry at
-any time; no COMMS console `a`/`g` enable is required. IHU 0.13.0 still controls
+any time; no COMMS console `a`/`g` enable is required. IHU 0.14.0 controls
 telemetry permission through `output uhf_telem on` and starts work with a
 single `uhf heartbeat` or bounded `uhf run SECONDS PERIOD`.
 
 Each accepted request uses the existing queue, duplicate/result history and
-bounded RF bursts (a firmware identity followed by the requested telemetry).
+bounded RF bursts. One automatic COMMS firmware identity precedes the first
+telemetry request after COMMS boot; later requests and runs omit it. Successful
+local RF transmission sets the volatile announcement flag. It does not reset
+when IHU restarts or a diagnostic window opens. There is no RF at boot.
+IHU `uhf comms firmware` (CF_UHF_FIRMWARE, empty payload) requests exactly one
+fresh identity again and uses the same admission/result/history semantics.
 CAN is quiesced during each burst and resumes afterward. Local completion is
 not a ground acknowledgement. No automatic retry or periodic RF is started by
 COMMS. Native packet CRC/schema/source checks still apply; CAN or RF/clock

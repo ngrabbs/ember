@@ -1,0 +1,104 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "command": "uhf heartbeat",
+      "packet_ids": [
+        50,
+        5
+      ],
+      "result": "SUBMITTED request=2 type=128 bytes=38\nUHF request=2 outcome=QUEUED status=0 bytes=38 digest=3ad0961c ground_ack=0 outstanding=1\nUHF request=2 outcome=RF_TX_COMPLETE status=0 bytes=38 digest=3ad0961c ground_ack=0 outstanding=0"
+    },
+    {
+      "command": "uhf system",
+      "packet_ids": [
+        1
+      ],
+      "result": "SUBMITTED request=3 type=128 bytes=46\nUHF request=3 outcome=QUEUED status=0 bytes=46 digest=0dca9435 ground_ack=0 outstanding=1\nUHF request=3 outcome=RF_TX_COMPLETE status=0 bytes=46 digest=0dca9435 ground_ack=0 outstanding=0"
+    },
+    {
+      "command": "uhf comms firmware",
+      "packet_ids": [
+        50
+      ],
+      "result": "SUBMITTED request=4 type=132 bytes=0\nUHF request=4 outcome=QUEUED status=0 bytes=0 digest=00000000 ground_ack=0 outstanding=1\nUHF request=4 outcome=RF_TX_COMPLETE status=0 bytes=0 digest=00000000 ground_ack=0 outstanding=0"
+    },
+    {
+      "command": "uhf comms firmware",
+      "packet_ids": [
+        50
+      ],
+      "result": "SUBMITTED request=5 type=132 bytes=0\nUHF request=5 outcome=QUEUED status=0 bytes=0 digest=00000000 ground_ack=0 outstanding=1\nUHF request=5 outcome=RF_TX_COMPLETE status=0 bytes=0 digest=00000000 ground_ack=0 outstanding=0"
+    },
+    {
+      "command": "uhf heartbeat",
+      "packet_ids": [
+        5
+      ],
+      "result": "SUBMITTED request=6 type=128 bytes=38\nUHF request=6 outcome=QUEUED status=0 bytes=38 digest=cd601b61 ground_ack=0 outstanding=1\nUHF request=6 outcome=RF_TX_COMPLETE status=0 bytes=38 digest=cd601b61 ground_ack=0 outstanding=0"
+    },
+    {
+      "command": "uhf run 60 10",
+      "packet_ids": [
+        5,
+        1,
+        16,
+        53,
+        5,
+        1,
+        16,
+        53,
+        5,
+        1,
+        16,
+        53,
+        5,
+        1,
+        16,
+        53,
+        5,
+        1,
+        16,
+        53,
+        5,
+        1,
+        16,
+        53
+      ],
+      "status": "FIRMWARE role=IHU_MCU version=0.14.0 git=80eac2c9b1b836e916cfa1ce9cb901a3a63ce7cb dirty=0 boot=1734629348\nMODE configuration=GROUND_TEST mode=SAFE simulated=0 flight_routines=STUB reason=GROUND_TEST_DEFAULT\nOUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=1 lte_telem=0\nCAN_TARGET name=COMMS request=710 reply=711\nSTATUS role=IHU_MCU fw=0.14.0 id=DF641455DB822427 boot=1734629348 peer=4219589316 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=694 tx_fail=0 tx_timeout=0 rx=480 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=59 unknown=0 busy_drops=0 pending=0 uptime_ms=69628 uhf_pending=0 uhf_mode=2 cycles=6 submitted=24"
+    }
+  ],
+  "total_native_packet_ids": [
+    50,
+    5,
+    1,
+    50,
+    50,
+    5,
+    5,
+    1,
+    16,
+    53,
+    5,
+    1,
+    16,
+    53,
+    5,
+    1,
+    16,
+    53,
+    5,
+    1,
+    16,
+    53,
+    5,
+    1,
+    16,
+    53,
+    5,
+    1,
+    16,
+    53
+  ],
+  "independent_ground_reception_checked": false
+}

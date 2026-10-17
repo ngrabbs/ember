@@ -252,7 +252,7 @@ static void receive_impl(const ul_packet *p) {
             ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT remote_status=%u\n",p->payload[1]);
         }
 #endif
-        if(pending.active && pending.packet.type==CF_UHF_SEND && pending.packet.request==p->request)pending.active=false;
+        if(pending.active && uhf_is_request(pending.packet.type) && pending.packet.request==p->request)pending.active=false;
         ++matched;
         LOG("UHF request=%" PRIu32 " outcome=%s status=%u bytes=%u digest=%08" PRIx32 " ground_ack=0 outstanding=%u\n",
             p->request,p->type==CF_UHF_ADMITTED?"QUEUED":p->type==CF_UHF_REJECTED?"REJECTED":
@@ -367,7 +367,7 @@ static void receive(const ul_packet *p){
 static void submit(uint8_t type,const uint8_t *payload,size_t size) {
 #if ROLE_IHU
     if(!ip_test(&policy)){++refused_requests;LOG("REJECT reason=FLIGHT_ROUTINE_STUB\n");return;}
-    if((type==CF_UHF_SEND && !ip_enabled(&policy,IP_UHF_TELEM)) ||
+    if((uhf_is_request(type) && !ip_enabled(&policy,IP_UHF_TELEM)) ||
        (type==CF_SEND_PACKET && !ip_enabled(&policy,IP_LTE_TELEM))){
         ++refused_requests;LOG("REJECT reason=OUTPUT_DISABLED\n");return;
     }
@@ -378,11 +378,11 @@ static void submit(uint8_t type,const uint8_t *payload,size_t size) {
     }
     if((lte_only && !target_lte) || (type==UL_FIRMWARE_INFO && !target_lte && !target_payload) ||
        ((type==PL_STATUS || type==PL_HEARTBEAT || type==PL_FIRE_CHECK) && !target_payload) ||
-       (type==CF_UHF_SEND && target_index!=DR_COMMS_INDEX)) {
+       (uhf_is_request(type) && target_index!=DR_COMMS_INDEX)) {
         ++refused_requests;LOG("REJECT reason=WRONG_TARGET use_hello_comms_lte_or_payload\n");return;
     }
 #endif
-    if(type==CF_UHF_SEND && uc_count(&uhf_client)==UC_CAPACITY) {++refused_requests;LOG("REJECT reason=UHF_TRACKER_FULL\n");return;}
+    if(uhf_is_request(type) && uc_count(&uhf_client)==UC_CAPACITY) {++refused_requests;LOG("REJECT reason=UHF_TRACKER_FULL\n");return;}
     if((mcp_register(0x0e)&0xe0)!=0) {++refused_requests;LOG("REJECT reason=NORMAL_MODE_REQUIRED\n");return;}
     if(pending.active || output.active) {++refused_requests;LOG("REJECT reason=BUSY\n");return;}
     if(type!=UL_HELLO && !peer) {++refused_requests;LOG("REJECT reason=HELLO_REQUIRED\n");return;}
@@ -391,10 +391,10 @@ static void submit(uint8_t type,const uint8_t *payload,size_t size) {
     pending.packet.sender=boot;pending.packet.origin=boot;pending.packet.request=++request_id;
     pending.packet.size=(uint16_t)size;if(size)memcpy(pending.packet.payload,payload,size);
     if(!queue(&pending.packet)) {++refused_requests;LOG("REJECT reason=QUEUE\n");return;}
-    if(type==CF_UHF_SEND)(void)uc_start(&uhf_client,&pending.packet,peer,now_ms());
+    if(uhf_is_request(type))(void)uc_start(&uhf_client,&pending.packet,peer,now_ms());
     #if ROLE_IHU
     pending.console=console_reply;
-    if(type==CF_UHF_SEND && console_reply)
+    if(uhf_is_request(type) && console_reply)
         for(unsigned i=0;i<UC_CAPACITY;i++)if(uhf_client.items[i].active && uhf_client.items[i].packet.request==request_id)uhf_console_requests[i]=request_id;
 #endif
     ++admitted_requests;pending.active=true;pending.started=now_ms();LOG("SUBMITTED request=%" PRIu32 " type=%u bytes=%zu\n",request_id,type,size);
@@ -472,7 +472,7 @@ static void uhf_run_pump(uint32_t now) {
     if(uhf_run.state==UR_EXPIRED)LOG("UHF_RUN EXPIRED submitted=%" PRIu32 " cycles=%" PRIu32 "\n",uhf_run.submitted,uhf_run.cycles);
     if(stage<0)return;
     if(stage<2)health_telemetry(stage==1,2);else if(stage==2)(void)eps_telemetry(2);else device_telemetry();
-    if(pending.active && pending.packet.type==CF_UHF_SEND)ur_submitted(&uhf_run);
+    if(pending.active && uhf_is_request(pending.packet.type))ur_submitted(&uhf_run);
     else {ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT producer_or_submission\n");}
 }
 static void devices_status(void) {
@@ -541,7 +541,7 @@ static void stop_stream(unsigned channel){
     if(channel==IP_UHF_TELEM)ur_stop(&uhf_run,UR_STOPPED);
     /* Do not revoke a solicited fire-check reply. Previously admitted remote
      * packets may finish; no new periodic submission may follow an OFF. */
-    if(pending.active && ((channel==IP_UHF_TELEM&&pending.packet.type==CF_UHF_SEND)||
+    if(pending.active && ((channel==IP_UHF_TELEM&&uhf_is_request(pending.packet.type))||
        (channel==IP_LTE_TELEM&&pending.packet.type==CF_SEND_PACKET))){
         output.active=false;pending.active=false;record_fault(4,now_ms());
     }
@@ -663,6 +663,7 @@ static void command_impl(const char *s) {
         ur_link_snapshot(&uhf_run,can.tx_fail,can.tx_timeout);
         LOG("UHF_RUN START duration_s=%u period_s=%u boot_resume=0\n",duration,period);
     }
+    else if(!strcmp(s,"uhf comms firmware"))submit(CF_UHF_FIRMWARE,NULL,0);
     else if(!strcmp(s,"uhf lte firmware"))identity_telemetry(0);
     else if(!strcmp(s,"uhf modem firmware"))identity_telemetry(1);
     else if(!strcmp(s,"uhf devices"))device_telemetry();
@@ -682,7 +683,7 @@ static void command_impl(const char *s) {
         uint8_t p[4];ul_p32(p,seconds);submit(CF_RF_WINDOW,p,4);
     }
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | hello comms | hello lte | hello payload | payload fire-check | payload ident | payload status | payload heartbeat | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf devices | uhf heartbeat | uhf system | uhf eps | mode [safe/startup/commissioning/nominal] | outputs | output NAME on/off | faults | eps json | eps adc on/off | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | hello comms | hello lte | hello payload | payload fire-check | payload ident | payload status | payload heartbeat | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf comms firmware | uhf devices | uhf heartbeat | uhf system | uhf eps | mode [safe/startup/commissioning/nominal] | outputs | output NAME on/off | faults | eps json | eps adc on/off | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte":"");
     else if(*s)LOG("ERROR unknown command\n");
 }
 static void command(const char *s){
@@ -771,7 +772,7 @@ int main(void) {
 #if ROLE_IHU
             console_reply=previous;
 #endif
-            if(pending.packet.type==CF_UHF_SEND)for(unsigned i=0;i<UC_CAPACITY;i++)
+            if(uhf_is_request(pending.packet.type))for(unsigned i=0;i<UC_CAPACITY;i++)
                 if(uhf_client.items[i].packet.request==pending.packet.request)uhf_client.items[i].active=false;
             pending.active=false;peer=0;++unknown;
         }

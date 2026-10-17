@@ -7,6 +7,16 @@ This directory also builds the LTE CAN Feather role. Existing output names
 retained; the original-Pico UHF application is [COMMS](../comms/README.md).
 Configure a fresh build directory after moving from the old source path.
 
+## COMMS firmware request — 0.14.0
+
+`uhf comms firmware` requests one fresh `COMMS_FIRMWARE` over UHF from COMMS
+0.33.0. It requires UHF permission, normal CAN, a current COMMS HELLO and idle
+transport, and reports the existing QUEUED/local RF result. COMMS constructs
+its own packet; the zero-length request acknowledgement does not represent the
+RF packet length. Install COMMS 0.33.0 before using the new command. COMMS now
+automatically announces once per boot on the first telemetry request, rather
+than before every request. See the [transmission matrix](../../docs/user/ihu-can-console.md#transmission-matrix).
+
 ## Mode/output cleanup —0.13.0
 
 The current IHU boots quietly into SAFE/GROUND_TEST with six output switches

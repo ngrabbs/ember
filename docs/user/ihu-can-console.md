@@ -2,8 +2,9 @@
 
 [Operator guides](README.md) · [Transmission matrix](#transmission-matrix) · [Mode/output matrix and entry gates](../architecture/operations/04-ihu-runtime-policy.md)
 
-This guide describes IHU 0.13.0 and bench bridge 0.4.0, deployed on m75q on
-2026-10-17. See the [deployment record](../../system/ground_station/evidence/ihu-0.13.0-20261017/deployment.json). Earlier 0.12.0 RF validation is
+This guide describes IHU **0.14.0**, COMMS **0.33.0**, and bench bridge **0.4.0**.
+The earlier IHU 0.13.0 [deployment record](../../system/ground_station/evidence/ihu-0.13.0-20261017/deployment.json)
+is retained separately. Earlier 0.12.0 RF validation is
 recorded in the [fire-check runbook](../../ground/yamcs/FIRE_CHECK.md).
 The active controller source is `firmware/ihu`. The retired FreeRTOS UART
 application is available through Git history.
@@ -94,7 +95,7 @@ the separately bounded receive/reply session. No automatic operation retry.
 
 ## Explicit RF telemetry
 
-With COMMS 0.32.0, a healthy board accepts IHU UHF requests immediately over
+With COMMS 0.33.0, a healthy board accepts IHU UHF requests immediately over
 CAN. No COMMS USB console enable or `a`/`g` window is needed. Enabling
 `uhf_telem` permits sends; issue `uhf heartbeat` for one packet or
 `uhf run 60 10` for a bounded run. Each admitted request transmits through the
@@ -106,6 +107,7 @@ Do not let a live receiver and RF command service concurrently own LibreSDR.
 | Commands | Required permission and route |
 |---|---|
 | `uhf heartbeat` / `uhf system` / `uhf eps` / `uhf devices` | uhf_telem ON, normal CAN, COMMS HELLO and idle transport |
+| `uhf comms firmware` | Same UHF gates; request one fresh COMMS-owned firmware packet, no cached LTE identity needed |
 | `uhf lte firmware` / `uhf modem firmware` | Same UHF gates, plus an identity previously queried from LTE and still fresh |
 | `uhf run SECONDS PERIOD` | Same UHF gates; duration1–120s, period5–60s; sequential heartbeat/system/EPS/device cycles |
 | `uhf stop` | Stop future cycles; previously admitted packets may finish |
@@ -113,8 +115,9 @@ Do not let a live receiver and RF command service concurrently own LibreSDR.
 
 ## Transmission matrix
 
-Checked against IHU **0.13.0**, COMMS **0.32.0** (default on-demand service),
-serial bench bridge **0.4.0**, and payload **0.2.0**. These are the implemented
+Checked against IHU **0.14.0**, COMMS **0.33.0** (default on-demand service),
+serial bench bridge **0.4.0**, and payload **0.2.0**. The new cadence and explicit
+identity request passed [hardware checks](../../system/ground_station/evidence/comms-identity-cadence-20261017/deployment.json). These are the implemented
 operational packet paths, not every message defined by the dictionary.
 
 **Yes** means included on a successful operation; **Selected** means only when
@@ -127,7 +130,7 @@ Timeouts, rejected commands and invalid replies do not imply a successful result
 | `SYSTEM_STATUS` | Yes | Selected | Selected | — | — | — |
 | `POWER_STATUS` | Yes | Selected | Selected | — | Yes | — |
 | `DEVICE_STATUS` | Yes | Selected | — | — | — | — |
-| `COMMS_FIRMWARE` | Before each IHU request | Before each IHU request | — | — | — | — |
+| `COMMS_FIRMWARE` | First telemetry request after COMMS boot only | First after boot, or explicit `uhf comms firmware` | — | — | — | — |
 | `LTE_CAN_FIRMWARE` | — | Selected | — | — | — | — |
 | `LTE_MODEM_FIRMWARE` | — | Selected | — | — | — | — |
 | `PAYLOAD_FIRMWARE` | — | — | — | — | — | Selected |
@@ -138,7 +141,8 @@ Timeouts, rejected commands and invalid replies do not imply a successful result
 | `COMM_STATUS` | — | — | — | — | — | — |
 
 UHF single sends are `uhf heartbeat`, `uhf system`, `uhf eps`, `uhf devices`, and
-`uhf lte firmware` / `uhf modem firmware` commands listed above. The latter two
+`uhf comms firmware`, `uhf lte firmware` / `uhf modem firmware` commands listed
+above. The latter two
 require an LTE identity queried within the previous 180 seconds; querying
 `lte firmware` or `lte modem firmware` alone returns a console reply and does
 not put that identity on RF. LTE single sends are `heartbeat lte`, `system lte`
@@ -174,34 +178,49 @@ conversion can still be reported as raw data with validity flags cleared.
 Payload fire checks, payload firmware/status reports and LTE firmware reports
 are not automatically added to a run. No camera/image/detection data is sent.
 
-With default COMMS 0.32.0 on-demand handling, each IHU request gets its own
-firmware prefix, so the successful RF packet sequence per cycle is:
+COMMS 0.33.0 sends one automatic `COMMS_FIRMWARE` before the first admitted
+telemetry request after its boot. It records that announcement only after
+successful local RF transmission. Later packets and runs omit it. Starting a
+new run, opening a diagnostic window, or restarting IHU does not reset this
+COMMS-boot state. There is no RF announcement just because COMMS boots.
+
+A successful first cycle after COMMS boot is:
 
 ```text
-COMMS_FIRMWARE → HEARTBEAT
-COMMS_FIRMWARE → SYSTEM_STATUS
-COMMS_FIRMWARE → POWER_STATUS
-COMMS_FIRMWARE → DEVICE_STATUS
+COMMS_FIRMWARE → HEARTBEAT → SYSTEM_STATUS → POWER_STATUS → DEVICE_STATUS
 ```
 
-`uhf run 60 10` starts the first cycle as soon as transport is ready, then aims
-to start another cycle approximately every 10 seconds for 60 seconds. Six full
-cycles would produce **24 IHU packets + 24 COMMS firmware packets = 48 RF
-packets**. This is an expected count under healthy timing, not a delivery
-promise. Each stage waits for its correlated RF result and a 250 ms turnaround
-guard; delayed cycles do not produce catch-up bursts. A fault stops production.
-The 60-second limit stops new submissions; an already-admitted packet may finish.
+Later cycles contain the four IHU packets only. `uhf run 60 10` starts the first
+cycle as soon as transport is ready, then aims to start another cycle
+approximately every 10 seconds for 60 seconds. Six full cycles produce
+**24 IHU packets**, plus **one COMMS firmware packet if it has not already been
+announced during this COMMS boot**: normally 24 or 25 RF packets, rather than
+the 48 packets in COMMS 0.32.0 on-demand operation.
 
-The optional COMMS USB `a`/`g` diagnostic windows use one firmware prefix per
-window instead. They are not required for normal on-demand operation, and the
-48-packet example assumes they are not running.
+These counts assume healthy timing. Each stage waits for its correlated RF
+result and a 250 ms turnaround guard; delayed cycles do not produce catch-up
+bursts. A fault stops production. The 60-second limit stops new submissions;
+an already-admitted packet may finish.
+
+To reacquire the identity after joining the ground link late, issue
+`uhf comms firmware` outside an active run. This sends exactly one
+`COMMS_FIRMWARE`, using the same permission/HELLO gates and local RF result
+tracking. A new explicit command sends it again; replaying the same transport
+request does not retransmit. It also satisfies the first-boot announcement if
+that has not happened yet. The request payload is empty, so its UHF console
+result reports `bytes=0`; that is the CAN request length, not the RF packet size.
+No synthetic IHU heartbeat accompanies it. Explicit and automatic identity
+sends share the existing RF deadlines, shutdown checks and no-retry behavior.
+
+COMMS USB `a`/`g` diagnostic windows use this same boot-scoped announcement
+state. Solicited RF fire-check replies remain separate and get no identity prefix.
 
 ### Triggers, pacing and output gates
 
 | Path/control | What starts output | Pacing / stop condition |
 |---|---|---|
 | `output uhf_telem on` | Permission only; no packet or run starts | A send or run command is still required; OFF stops the producer/unsent work |
-| UHF single-send commands above | Explicit command, UHF permission, COMMS HELLO and healthy idle transport | One IHU request plus its COMMS prefix; no automatic retry |
+| UHF single-send commands above | Explicit command, UHF permission, COMMS HELLO and healthy idle transport | One requested packet; automatic identity only if not yet announced after COMMS boot; no automatic retry |
 | `uhf run SECONDS PERIOD` | Explicit command with the same UHF gates | Duration 1–120 s, cycle period 5–60 s; stop with `uhf stop`, UHF OFF, mode change, reset, expiry or fault |
 | `output lte_telem on` / `lte N` | Permission / bounded modem window; neither sends telemetry alone | Explicit LTE packet commands still required; window maximum 120 s |
 | `heartbeat lte` / `system lte` / `eps lte` | Explicit command, LTE permission, LTE HELLO and modem readiness/window | One selected packet submission; no periodic LTE producer |
@@ -226,7 +245,7 @@ RF completion is local radio evidence; confirm ground reception separately.
 
 Implementation references: [IHU producers and dispatch](../../firmware/ihu/main.c),
 [run scheduler](../../firmware/ihu/uhf_run.h),
-[COMMS prefix and RF drain](../../firmware/comms/rf_service.h),
+[COMMS announcement and RF drain](../../firmware/comms/rf_service.h),
 [RF solicited replies](../../firmware/comms/uplink_service.h), and
 [serial bridge](../../ground/ember/payload_bridge.py).
 

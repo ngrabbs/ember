@@ -26,6 +26,7 @@ int main(void){
  ul_packet p=pending.packet;p.sender=22;p.type=UL_HELLO_ACK;output.active=false;
  receive(&p);assert(!pending.active && peer==22);
  command("uhf heartbeat");assert(!pending.active && !output.active);
+ command("uhf comms firmware");assert(!pending.active && !output.active);
  target_index=DR_LTE_INDEX;peer=33;
  command("eps lte");assert(!pending.active);
  /* Gate the transport itself, not only the console spelling. */
@@ -41,6 +42,14 @@ int main(void){
  ul_packet admitted={0};uhf_reply(&u,22,CF_UHF_ADMITTED,UHF_OK,&admitted);
  output.active=false;receive(&admitted);assert(!pending.active);
  uhf_reply(&u,22,CF_UHF_RESULT,UHF_OK,&admitted);receive(&admitted);assert(!uc_count(&uhf_client));
+ command("uhf comms firmware");assert(pending.active && queued().type==CF_UHF_FIRMWARE && !queued().size);
+ u=queued();uhf_reply(&u,22,CF_UHF_ADMITTED,UHF_OK,&admitted);output.active=false;receive(&admitted);
+ assert(!pending.active && uc_count(&uhf_client)==1);
+ uhf_reply(&u,22,CF_UHF_RESULT,UHF_OK,&admitted);receive(&admitted);assert(!uc_count(&uhf_client));
+ target_index=DR_LTE_INDEX;command("uhf comms firmware");assert(!pending.active);target_index=DR_COMMS_INDEX;
+ command("uhf comms firmware");assert(pending.active);command("output uhf_telem off");
+ assert(!pending.active && !output.active);memset(&uhf_client,0,sizeof(uhf_client));
+ command("output uhf_telem on");
  command("uhf run 120 10");assert(uhf_run.state==UR_RUNNING);
  command("output uhf_telem off");assert(uhf_run.state==UR_STOPPED && !policy.outputs);
  pending.active=true;pending.packet.type=CF_UHF_SEND;output.active=true;
@@ -77,7 +86,7 @@ class IhuModePolicy(unittest.TestCase):
             p=pathlib.Path(temp);(p/'sdk.h').write_text(SDK)
             for name in ['pico/stdlib.h','pico/stdio_usb.h','pico/unique_id.h','pico/rand.h','hardware/uart.h','hardware/i2c.h']:
                 h=p/name;h.parent.mkdir(exist_ok=True);h.write_text('#include "sdk.h"\n')
-            (p/'build_identity.h').write_text('#define FW_VERSION "0.13.0"\n#define FW_MAJOR 0\n#define FW_MINOR 13\n#define FW_PATCH 0\n#define FW_DIRTY 0\n#define FW_GIT "0123456789012345678901234567890123456789"\n')
+            (p/'build_identity.h').write_text('#define FW_VERSION "0.14.0"\n#define FW_MAJOR 0\n#define FW_MINOR 14\n#define FW_PATCH 0\n#define FW_DIRTY 0\n#define FW_GIT "0123456789012345678901234567890123456789"\n')
             generate(p/'wire.h')
             source=p/'test.c'
             source.write_text('#include <assert.h>\n#define main embedded_main\n#include "'+str(ROOT/'firmware/ihu/main.c')+'"\n#undef main\n'+DRIVER.split('int main(void)')[0]+CHECKS)

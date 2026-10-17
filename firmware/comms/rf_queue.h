@@ -26,7 +26,7 @@ static inline uint8_t rq_admit(rq_state *q,const ul_packet *p,uint8_t *status) {
     for(unsigned group=0;group<2;group++)for(unsigned i=0;i<(group?q->history_count:q->count);i++) {
         rq_item *item=group?&q->history[i]:&q->items[i];
         if(item->packet.request!=p->request)continue;
-        if(item->packet.size!=p->size || memcmp(item->packet.payload,p->payload,p->size)) {
+        if(item->packet.type!=p->type || item->packet.size!=p->size || memcmp(item->packet.payload,p->payload,p->size)) {
             *status=UHF_CONFLICT;return CF_UHF_REJECTED;
         }
         *status=item->status;return group?CF_UHF_RESULT:CF_UHF_ADMITTED;
