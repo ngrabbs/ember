@@ -14,6 +14,7 @@ class SpectralExcess:
             raise ValueError('Spectral detector settings')
         for key in ('continuum_min','k_threshold','excess_min'):bounded(settings[key],.000001 if key=='continuum_min' else 0,1e9,key)
         bounded(settings['min_area_px'],1,2000000,'min_area_px',True)
+        bounded(settings['connectivity'],4,8,'connectivity',True)
         if settings['connectivity'] not in (4,8):raise ValueError('Connectivity')
         bounded(settings['min_valid_fraction'],.000001,1,'min_valid_fraction')
         bounded(settings['max_saturated_fraction'],0,1,'max_saturated_fraction')

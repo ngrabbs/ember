@@ -56,6 +56,8 @@ and resource measurements are recorded in `pi-example-result.json` and
 The live responder stayed active; CAN RX/TX error counters remained zero at the
 post-evaluation check.
 
-The final-source repeat retained exactly the same 107 decisions. Its implementation
-hash matches the committed detector modules. Its per-case median/p95/maximum were
+The repeat at detector checkpoint `2be15b4` retained exactly the same 107 decisions.
+Its implementation hash matches the detector modules at that commit. Subsequent
+integer-type configuration validation changes do not change these profiles or
+the numerical detector; their tests are run separately. Its per-case median/p95/maximum were
 1044/1287/1347 ms; the earlier 4510-ms observation is retained above.

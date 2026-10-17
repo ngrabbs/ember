@@ -16,7 +16,7 @@ except ImportError:
 from ember_detector.model import Scene,Result,Decision
 from ember_detector.spectral import SpectralExcess
 from ember_detector.registry import register,create
-from ember_detector.pipeline import load_config,canonical,digest,run
+from ember_detector.pipeline import load_config,canonical,digest,run,align,matching_image,prepare
 
 
 class DetectorTests(unittest.TestCase):
@@ -81,6 +81,64 @@ class DetectorTests(unittest.TestCase):
             with self.assertRaises(ValueError):load_config(p)
             cfg=dict(self.config);cfg['detector']=dict(self.settings,k_threshold=-1);p.write_text(json.dumps(cfg))
             with self.assertRaises(ValueError):load_config(p)
+            cfg=json.loads(json.dumps(self.config));cfg['registration']['max_features']=2000.0;p.write_text(json.dumps(cfg))
+            with self.assertRaises(ValueError):load_config(p)
+            cfg=json.loads(json.dumps(self.config));cfg['detector']['connectivity']=8.0;p.write_text(json.dumps(cfg))
+            with self.assertRaises(ValueError):load_config(p)
+
+    def test_matching_contrast_configuration(self):
+        config=load_config(ROOT/'firmware/payload/config/stored-images-pass2.json')
+        with tempfile.TemporaryDirectory() as temp:
+            p=Path(temp)/'config.json'
+            for invalid in ([99,1],[1,1],[-1,99],[1,101],[True,99],[1],None):
+                cfg=json.loads(json.dumps(config));cfg['registration']['contrast_percentiles']=invalid
+                p.write_text(json.dumps(cfg))
+                with self.assertRaises(ValueError):load_config(p)
+            for invalid in (0,float('nan'),256):
+                cfg=json.loads(json.dumps(config));cfg['registration']['min_contrast_dn']=invalid
+                p.write_text(json.dumps(cfg))
+                with self.assertRaises(ValueError):load_config(p)
+
+    def test_normalized_registration_recovers_dim_translated_texture(self):
+        settings=load_config(ROOT/'firmware/payload/config/stored-images-pass2.json')['registration']
+        rng=np.random.default_rng(7)
+        source=cv2.GaussianBlur(rng.integers(0,256,(480,640),dtype='uint8'),(5,5),0)
+        source=(source//32+3).astype('uint8');original=source.copy()
+        expected=np.float32([[1,0,11],[0,1,-7]])
+        target=cv2.warpAffine(source,expected,(640,480))
+        matrix,quality=align(source,target,settings)
+        points=np.float32([[[100,100]],[[500,100]],[[100,350]],[[500,350]]])
+        projected=cv2.perspectiveTransform(points,matrix)
+        self.assertLess(float(np.max(np.linalg.norm(projected-(points+[11,-7]),axis=2))),1.0)
+        self.assertGreaterEqual(quality['support_fraction'],.05)
+        self.assertIn('matching_contrast',quality)
+        np.testing.assert_array_equal(source,original)
+        with self.assertRaises(ValueError):align(source,target,self.config['registration'])
+
+    def test_registration_rejects_featureless_or_unrelated_inputs(self):
+        settings=load_config(ROOT/'firmware/payload/config/stored-images-pass2.json')['registration']
+        with self.assertRaisesRegex(ValueError,'REGISTRATION_LOW_CONTRAST'):
+            matching_image(np.full((200,200),10,dtype='uint8'),settings)
+        rng=np.random.default_rng(8)
+        a=rng.integers(0,30,(480,640),dtype='uint8');b=rng.integers(0,30,(480,640),dtype='uint8')
+        with self.assertRaisesRegex(ValueError,'REGISTRATION_'):align(a,b,settings)
+
+    def test_matching_normalization_preserves_photometry(self):
+        config=load_config(ROOT/'firmware/payload/config/stored-images-pass2.json')
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);rng=np.random.default_rng(9)
+            base=(cv2.GaussianBlur(rng.integers(0,256,(480,640),dtype='uint8'),(5,5),0)//32+3).astype('uint8')
+            calibration=root/'cal.npz'
+            np.savez(calibration,**{'gain_'+str(p):np.ones(base.shape,dtype='float32') for p in range(3)})
+            config['calibration_sha256']=digest(calibration.read_bytes());channels={};original=[]
+            for port,wavelength in enumerate([750,770,780]):
+                image=base*(port+1);original.append(image)
+                path=root/(str(port)+'.png');cv2.imwrite(str(path),image)
+                channels[str(wavelength)]=dict(path=path.name,sha256=digest(path.read_bytes()),width=640,height=480,
+                                              port=port,wavelength_nm=wavelength,exposure_us=100)
+            scene,_=prepare({'channels':channels},root,config,calibration)
+            for measured,raw in zip((scene.low,scene.on,scene.high),original):
+                np.testing.assert_allclose(measured[scene.valid],raw[scene.valid],atol=.01)
 
     def test_pipeline_uses_hashes_and_does_not_pass_label_to_detector(self):
         with tempfile.TemporaryDirectory() as temp:
