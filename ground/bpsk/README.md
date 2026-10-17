@@ -3,7 +3,7 @@
 Separate from the working SDRB 1200-baud FSK path. Not a flight modem: no FEC,
 pulse shaping, retransmission, uplink decoder, or continuous telemetry service.
 
-The original Pico's `transceiver_bringup` v11 accepts a single byte `b` (no
+The original Pico's `comms` v11 accepts a single byte `b` (no
 newline). It prepares one **native COMMS HEARTBEAT**, with actual random boot ID,
 monotonic uptime and sequence, COMMISSIONING/GROUND_TEST, telemetry period zero
 (manual). No EPS measurements or ADC values are fabricated. It prints the exact
@@ -28,8 +28,8 @@ transmits. This is not a crash-proof hardware RF inhibit.
 ## Validation before RF
 
 ```
-python3 firmware/transceiver_bringup/tests/check.py
-cc -std=c11 -Wall -Wextra -Werror -Ifirmware/transceiver_bringup firmware/transceiver_bringup/tests/clock.c -o /tmp/clock-test
+python3 firmware/comms/tests/check.py
+cc -std=c11 -Wall -Wextra -Werror -Ifirmware/comms firmware/comms/tests/clock.c -o /tmp/clock-test
 /tmp/clock-test
 python3 ground/bpsk/test_modem.py -v
 ```

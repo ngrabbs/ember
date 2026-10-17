@@ -7,7 +7,7 @@
 #   src/tasks/*.{c,h}       FreeRTOS task implementations
 #   src/drivers/*.{c,h}     chip drivers — LTC4162 today, MR25H40/STWD100 later
 #   src/cli/*.{c,h}         interactive command-line interface
-#   ../../shared/*.h        wire protocols shared with firmware/comms
+#   ../../shared/*.h        wire protocols shared with firmware/legacy_comms
 
 option(IHU_EPS_ALLOW_CHARGER_WRITES "Enable legacy charger configuration and CLI writes" OFF)
 
@@ -45,7 +45,7 @@ pico_enable_stdio_uart(${ProjectName} 1)
 
 target_include_directories(${ProjectName} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
-    ${EMBER_SHARED_DIR}            # comms_hk_proto.h — shared with firmware/comms
+    ${EMBER_SHARED_DIR}            # comms_hk_proto.h — shared with firmware/legacy_comms
     ${CMAKE_SOURCE_DIR}            # makes FreeRTOSConfig.h visible to the kernel
 )
 

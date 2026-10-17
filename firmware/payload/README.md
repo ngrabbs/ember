@@ -6,9 +6,9 @@ COMMS idle service, the payload answers addressed requests; it emits no
 unsolicited boot message or periodic heartbeat. Fire check is a commanded static stub returning NO_FIRE; execution_mode=STATIC_STUB
 explicitly distinguishes it from a real detector. Cameras, images and power commands remain outside this version.
 
-The current IHU application is `firmware/can_feather_bench` (v0.12.0 adds fire check; v0.11.0 added the
-payload target), not the older FreeRTOS prototype in `firmware/ihu`. Current
-transceiver idle startup is implemented in `firmware/transceiver_bringup`.
+The current IHU application is `firmware/ihu` (v0.12.0 adds fire check; v0.11.0 added the
+payload target), not the older FreeRTOS prototype in `firmware/legacy_ihu`. Current
+transceiver idle startup is implemented in `firmware/comms`.
 
 ## Addressing
 

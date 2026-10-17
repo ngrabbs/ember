@@ -3,8 +3,8 @@
 Implementation: IHU CAN Feather **0.13.0**, serial bench bridge **0.4.0**.
 This is the approved ground-test cleanup. Flight operations remain inactive
 stubs; the flight requirements in the other three tables remain a draft.
-This policy applies to `firmware/can_feather_bench`, not the older FreeRTOS
-application in `firmware/ihu`.
+This policy applies to `firmware/ihu`, not the older FreeRTOS
+application in `firmware/legacy_ihu`.
 
 ## Configuration and entry matrix
 

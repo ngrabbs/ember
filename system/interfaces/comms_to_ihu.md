@@ -10,7 +10,7 @@ The [COMMS–Walter plan](comms_walter.md) owns the transport integration checkl
 | Stage | Transport | Use |
 |---|---|---|
 | Legacy bench firmware | I2C, IHU master / COMMS slave at 0x42, jumper wiring | Housekeeping and scratch-echo ping only |
-| New CAN Feather bench | Single classic CAN harness, 500 kbit/s | Peer ping and IHU heartbeat forwarding through COMMS → Walter echo; [evidence](../../firmware/can_feather_bench/README.md) |
+| New CAN Feather bench | Single classic CAN harness, 500 kbit/s | Peer ping and IHU heartbeat forwarding through COMMS → Walter echo; [evidence](../../firmware/ihu/README.md) |
 | Existing PCB allocation | SPI stack signals | Historical data-path allocation; packet firmware not implemented |
 | Intended internal link | CAN A/B | Commands, telemetry packets, heartbeat, faults and queue state; replaces the interim link |
 | Bring-up | UART debug | Logs and diagnostics |

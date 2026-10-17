@@ -4,7 +4,7 @@ Status: CAN Feather bench forwarding demonstrated, 2026-10-02; production
 radio packet service and complete board/application integration remain open.
 The new IHU MCU is also an Adafruit RP2040 CAN Bus Feather. Two onboard MCP25625
 controllers now carry bench packets over a single 500 kbit/s CAN harness.
-[Implementation and evidence](../../firmware/can_feather_bench/README.md) show
+[Implementation and evidence](../../firmware/ihu/README.md) show
 10/10 IHU-generated heartbeats through COMMS → Walter echo and back to IHU.
 
 The RP2040 on the IHU board is the **IHU MCU**. The RP2040 on the communications
@@ -78,8 +78,8 @@ The tracked firmware establishes the present interface:
   seven-bit address `0x42`, common ground. COMMS uses i2c1; its separate
   i2c0 GP20/GP21 remains the Si5351A master bus.
 - `firmware/shared/comms_hk_proto.h` defines the shared status register map.
-  `firmware/ihu/src/drivers/comms_link.c` implements status reads and scratch
-  echo ping; `firmware/comms/src/tasks/hk_slave_task.c` serves them.
+  `firmware/legacy_ihu/src/drivers/comms_link.c` implements status reads and scratch
+  echo ping; `firmware/legacy_comms/src/tasks/hk_slave_task.c` serves them.
 - Only the scratch echo register is writable. There is no current I2C
   telemetry packet queue, uplink forwarding, or transmit-command mailbox.
 - Firmware pin comments explicitly identify this as jumper wiring. The current

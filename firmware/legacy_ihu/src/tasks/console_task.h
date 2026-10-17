@@ -4,7 +4,7 @@
  *
  * For v0.1 this is a one-way print. A real CLI (line buffer +
  * command dispatcher) lands later under Workstream D in
- * firmware/ihu/README.md.
+ * firmware/legacy_ihu/README.md.
  */
 
 #pragma once

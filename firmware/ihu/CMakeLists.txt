@@ -1,25 +1,54 @@
 cmake_minimum_required(VERSION 3.13)
-
-# Project name — also used as the binary basename (ihu.uf2 etc.)
-set(ProjectName ihu)
-
-# FreeRTOS kernel lives as a git submodule under lib/FreeRTOS-Kernel.
-# Run `git submodule update --init --recursive` from the repo root after cloning.
-set(FREERTOS_KERNEL_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/FreeRTOS-Kernel)
-
-# Pico SDK locator (uses PICO_SDK_PATH env var, or fetches from GitHub if
-# PICO_SDK_FETCH_FROM_GIT=ON is also set).
-include(pico_sdk_import.cmake)
-
-# FreeRTOS RP2040 port — must be included before project() so port-specific
-# toolchain settings are picked up.
-include(${FREERTOS_KERNEL_PATH}/portable/ThirdParty/GCC/RP2040/FreeRTOS_Kernel_import.cmake)
-
-project(${ProjectName} C CXX ASM)
+if(NOT PICO_SDK_PATH)
+    set(PICO_SDK_PATH $ENV{PICO_SDK_PATH})
+endif()
+set(PICO_BOARD ember_can_feather)
+list(APPEND PICO_BOARD_HEADER_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/boards)
+include(${PICO_SDK_PATH}/external/pico_sdk_import.cmake)
+project(ember_can_feather_bench C CXX ASM)
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
-
+option(IHU_FLIGHT_CONFIGURATION "Latch FLIGHT configuration (inactive routine stubs) at boot" OFF)
 pico_sdk_init()
-
-# Application sources live under src/
-add_subdirectory(src)
+file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/VERSION" FW_VERSION)
+string(REPLACE "." ";" FW_PARTS "${FW_VERSION}")
+list(GET FW_PARTS 0 FW_MAJOR)
+list(GET FW_PARTS 1 FW_MINOR)
+list(GET FW_PARTS 2 FW_PATCH)
+# Exported build directories have no reliable Git context: require exact inputs.
+string(LENGTH "${EMBER_GIT_REVISION}" REV_LENGTH)
+if(NOT REV_LENGTH EQUAL 40 OR NOT EMBER_GIT_REVISION MATCHES "^[0-9a-f]+$")
+  message(FATAL_ERROR "Supply -DEMBER_GIT_REVISION=<full source commit>")
+endif()
+if(NOT "${EMBER_GIT_DIRTY}" MATCHES "^[01]$")
+  message(FATAL_ERROR "Supply -DEMBER_GIT_DIRTY=0 or 1")
+endif()
+configure_file(build_identity.h.in build_identity.h @ONLY)
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+execute_process(COMMAND ${Python3_EXECUTABLE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../ground/ember/generate_c.py
+    ${CMAKE_CURRENT_BINARY_DIR}/generated/wire.h RESULT_VARIABLE generated)
+if(NOT generated EQUAL 0)
+    message(FATAL_ERROR "Dictionary header generation failed")
+endif()
+foreach(role IN ITEMS ihu comms)
+    add_executable(ember_${role}_can_bench main.c ../comms_transport/mcp25625.c)
+    target_include_directories(ember_${role}_can_bench PRIVATE
+        ../comms_transport ${CMAKE_CURRENT_BINARY_DIR}/generated ${CMAKE_CURRENT_BINARY_DIR})
+    if(role STREQUAL "ihu")
+        target_compile_definitions(ember_${role}_can_bench PRIVATE ROLE_IHU=1 IHU_FLIGHT_CONFIGURATION=$<BOOL:${IHU_FLIGHT_CONFIGURATION}>)
+        target_sources(ember_${role}_can_bench PRIVATE ../usb_bench/protocol.c)
+    else()
+        target_compile_definitions(ember_${role}_can_bench PRIVATE ROLE_IHU=0)
+    endif()
+    target_compile_options(ember_${role}_can_bench PRIVATE -Wall -Wextra -Werror)
+    target_link_libraries(ember_${role}_can_bench pico_stdlib pico_unique_id pico_rand hardware_uart hardware_spi hardware_i2c)
+    pico_enable_stdio_usb(ember_${role}_can_bench 1)
+    pico_enable_stdio_uart(ember_${role}_can_bench 0)
+    target_compile_definitions(ember_${role}_can_bench PRIVATE
+        PICO_STDIO_USB_STDOUT_TIMEOUT_US=20000
+        PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS=0
+        PICO_STDIO_USB_ENABLE_RESET_VIA_BAUD_RATE=0)
+    pico_set_program_name(ember_${role}_can_bench "EMBER ${role} CAN Bench")
+    pico_set_program_version(ember_${role}_can_bench "${FW_VERSION}")
+    pico_add_extra_outputs(ember_${role}_can_bench)
+endforeach()

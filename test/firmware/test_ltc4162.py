@@ -25,8 +25,8 @@ class ReadoutTests(unittest.TestCase):
             with self.subTest(writes=writes), tempfile.TemporaryDirectory() as d:
                 binary=str(Path(d)/'test')
                 subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',f'-DIHU_EPS_ALLOW_CHARGER_WRITES={writes}',
-                    '-I'+str(ROOT/'test/firmware/ltc4162_mocks'),'-I'+str(ROOT/'firmware/ihu/src'),
-                    '-I'+str(ROOT/'firmware/shared'),str(ROOT/'firmware/ihu/src/drivers/ltc4162.c'),
+                    '-I'+str(ROOT/'test/firmware/ltc4162_mocks'),'-I'+str(ROOT/'firmware/legacy_ihu/src'),
+                    '-I'+str(ROOT/'firmware/shared'),str(ROOT/'firmware/legacy_ihu/src/drivers/ltc4162.c'),
                     str(ROOT/'test/firmware/ltc4162_driver_test.c'),'-lm','-o',binary],check=True)
                 subprocess.run([binary],check=True)
 
@@ -35,8 +35,8 @@ class ReadoutTests(unittest.TestCase):
             binary=str(Path(d)/'bench')
             subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',
                 '-DIHU_EPS_ALLOW_CHARGER_WRITES=0','-DIHU_EPS_TIMED_BENCH_TEST=1',
-                '-I'+str(ROOT/'test/firmware/ltc4162_mocks'),'-I'+str(ROOT/'firmware/ihu/src'),
-                '-I'+str(ROOT/'firmware/shared'),str(ROOT/'firmware/ihu/src/drivers/ltc4162.c'),
+                '-I'+str(ROOT/'test/firmware/ltc4162_mocks'),'-I'+str(ROOT/'firmware/legacy_ihu/src'),
+                '-I'+str(ROOT/'firmware/shared'),str(ROOT/'firmware/legacy_ihu/src/drivers/ltc4162.c'),
                 str(ROOT/'test/firmware/ltc4162_bench_test.c'),'-lm','-o',binary],check=True)
             subprocess.run([binary],check=True)
 

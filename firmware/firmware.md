@@ -1,4 +1,8 @@
-# Firmware Roadmap
+# Legacy FreeRTOS firmware roadmap
+
+Current applications: [IHU](ihu/README.md) and [COMMS](comms/README.md).
+The checklist below belongs to the preserved FreeRTOS prototypes in
+`legacy_ihu` and `legacy_comms`; it is not the active firmware status.
 
 **Scope:** FreeRTOS communications-board work. Separate CAN Feather, Walter LTE
 bench applications have newer transport demonstrations; their
@@ -16,7 +20,7 @@ baseline and separates optional exploratory payload work.
 
 - [x] Configure Si5351A outputs for TX and RX operating states
 - [x] Boot self-test: safe the outputs, detect hardware, report
-      ([`firmware/comms/README.md`](comms/README.md))
+      ([`firmware/legacy_comms/README.md`](legacy_comms/README.md))
 - [ ] Implement TX state machine (idle, beacon, packet transmit)
 - [ ] Implement framing and bitstream path for BPSK/DBPSK transmission
 - [ ] Implement RX sampling and command packet decode flow
@@ -70,6 +74,6 @@ framing, queues, forwarding, and controller-reset validation.
 - Firmware references are tracked in
   [`docs/research/firmware_references.md`](../docs/research/firmware_references.md).
 - Communications board firmware status is tracked in
-  [`firmware/comms/README.md`](comms/README.md).
+  [`firmware/legacy_comms/README.md`](legacy_comms/README.md).
 - Internal Housekeeping Unit firmware roadmap is tracked in
-  [`firmware/ihu/README.md`](ihu/README.md).
+  [`firmware/legacy_ihu/README.md`](legacy_ihu/README.md).

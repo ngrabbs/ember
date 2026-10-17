@@ -2,7 +2,7 @@
 
 Draft bench interface, October 3, 2026. SDRB remains an AMSAT system; EMBER
 uses an optional adapter without changing its normal startup or radio flows.
-[Work checklist](../sdrb/TODO.md) · [CAN transport](../../firmware/can_feather_bench/README.md)
+[Work checklist](../sdrb/TODO.md) · [CAN transport](../../firmware/ihu/README.md)
 
 ## Ownership
 

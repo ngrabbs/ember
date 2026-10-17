@@ -1,7 +1,7 @@
 /*
  * FreeRTOS configuration for the comms board (RP2040 + Pico SDK).
  *
- * Kept deliberately identical to firmware/ihu/FreeRTOSConfig.h apart
+ * Kept deliberately identical to firmware/legacy_ihu/FreeRTOSConfig.h apart
  * from this comment, so the two boards behave the same way under the
  * scheduler and anything learned debugging one transfers to the other.
  * Heap, tick rate, and feature flags are sized for the comms workload

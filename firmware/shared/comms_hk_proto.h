@@ -16,7 +16,7 @@
  * already reserves. When CAN lands, the fields keep their meanings and
  * only the framing changes.
  *
- * Shared by BOTH firmware trees. firmware/ihu and firmware/comms each
+ * Shared by BOTH firmware trees. firmware/legacy_ihu and firmware/legacy_comms each
  * add firmware/shared to their include path, so there is exactly one
  * definition of the register map and neither side can drift.
  *

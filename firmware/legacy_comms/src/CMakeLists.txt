@@ -6,7 +6,7 @@
 #   src/tasks/*.{c,h}        FreeRTOS task implementations
 #   ../drivers/*.{c,h}       chip drivers, shared with the standalone
 #                            bench apps that also live in ../drivers/
-#   ../../shared/*.h         wire protocols shared with firmware/ihu
+#   ../../shared/*.h         wire protocols shared with firmware/legacy_ihu
 
 set(COMMS_DRIVERS_DIR ${CMAKE_CURRENT_LIST_DIR}/../drivers)
 set(EMBER_SHARED_DIR ${CMAKE_CURRENT_LIST_DIR}/../../shared)
@@ -61,7 +61,7 @@ target_compile_definitions(${ProjectName} PRIVATE
 target_include_directories(${ProjectName} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
     ${COMMS_DRIVERS_DIR}
-    ${EMBER_SHARED_DIR}       # comms_hk_proto.h — shared with firmware/ihu
+    ${EMBER_SHARED_DIR}       # comms_hk_proto.h — shared with firmware/legacy_ihu
     ${CMAKE_SOURCE_DIR}            # makes FreeRTOSConfig.h visible to the kernel
 )
 

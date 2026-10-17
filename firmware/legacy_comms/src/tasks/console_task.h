@@ -3,7 +3,7 @@
  * confirm the firmware is alive and watch task scheduling.
  *
  * For v0.1 this is a one-way print. A real CLI (line buffer + command
- * dispatcher, as in firmware/ihu/src/cli/) lands alongside the TX/RX
+ * dispatcher, as in firmware/legacy_ihu/src/cli/) lands alongside the TX/RX
  * state machines — see Workstream C in the board README.
  */
 

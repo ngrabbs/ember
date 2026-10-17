@@ -62,7 +62,7 @@ with tempfile.TemporaryDirectory(prefix="ember-si5351-test-") as directory:
     (work / "hardware").mkdir()
     (work / "hardware/i2c.h").write_text(HEADER)
     (work / "test.c").write_text(HARNESS)
-    drivers = ROOT / "firmware/comms/drivers"
+    drivers = ROOT / "firmware/legacy_comms/drivers"
     subprocess.run([
         "cc", "-std=c11", "-Wall", "-Wextra", "-Werror",
         f"-I{work}", f"-I{drivers}", str(work / "test.c"),

@@ -17,7 +17,7 @@
     "evidence": [
       "system/interfaces/board_to_board.md",
       "system/interfaces/comms_to_ihu.md",
-      "firmware/can_feather_bench/main.c"
+      "firmware/ihu/main.c"
     ]
   },
   {
@@ -26,13 +26,13 @@
     "priority": "High",
     "disposition": "Updated",
     "documents": [
-      "firmware/ihu/README.md"
+      "firmware/legacy_ihu/README.md"
     ],
     "finding": "IHU README treated Yamcs integration as remaining work and mixed intended mission responsibilities with implemented CLI.",
     "action": "Link the deployed UART wrapper and operator guide; state that FreeRTOS and CAN Feather are separate applications; preserve unimplemented runtime milestones.",
     "evidence": [
-      "firmware/ihu/src/cli/cli.c",
-      "firmware/ihu/src/CMakeLists.txt",
+      "firmware/legacy_ihu/src/cli/cli.c",
+      "firmware/legacy_ihu/src/CMakeLists.txt",
       "system/ground_station/eps_yamcs_setup.md"
     ]
   },
@@ -73,7 +73,7 @@
     "evidence": [
       "ground/ember/dictionary.json",
       "ground/yamcs/prepare.py",
-      "firmware/can_feather_bench/power_packet.h"
+      "firmware/ihu/power_packet.h"
     ]
   },
   {
@@ -88,9 +88,9 @@
     "finding": "RTOS summary called communications runtime undecided; roadmap still had CAN controller trade and forwarding as wholly future.",
     "action": "Document FreeRTOS communications application and separate standalone Pico SDK bench; retain production integration tasks.",
     "evidence": [
-      "firmware/comms/README.md",
-      "firmware/comms/src/main.c",
-      "firmware/can_feather_bench/CMakeLists.txt"
+      "firmware/legacy_comms/README.md",
+      "firmware/legacy_comms/src/main.c",
+      "firmware/ihu/CMakeLists.txt"
     ]
   },
   {
@@ -99,12 +99,12 @@
     "priority": "High",
     "disposition": "Updated; old milestones retained",
     "documents": [
-      "firmware/can_feather_bench/README.md"
+      "firmware/ihu/README.md"
     ],
     "finding": "CAN README introduction contradicted later native EPS/LTE milestones and presented older UF2 hashes as current.",
     "action": "Correct published native EPS/LTE status and date earlier image hashes. Automatic cadence and SDRB/UHF additions remain local and are excluded until their source is published.",
     "evidence": [
-      "firmware/can_feather_bench/main.c"
+      "firmware/ihu/main.c"
     ]
   },
   {
@@ -218,7 +218,7 @@
     "action": "Use concrete recorded demonstrations and retain production integration/reliability gates.",
     "evidence": [
       "system/ground_station/usb_validation.md",
-      "firmware/can_feather_bench/README.md"
+      "firmware/ihu/README.md"
     ]
   },
   {
@@ -297,8 +297,8 @@
     "finding": "No single operator route explained both IHU applications, all supported commands and endpoint-specific Yamcs capability.",
     "action": "Add source-linked command references, output examples, failure meanings, ownership, freshness and replay procedures.",
     "evidence": [
-      "firmware/ihu/src/cli/cli.c",
-      "firmware/can_feather_bench/main.c",
+      "firmware/legacy_ihu/src/cli/cli.c",
+      "firmware/ihu/main.c",
       "ground/ember/dictionary.json",
       "ground/yamcs/ember-java/EmberResults.java"
     ]

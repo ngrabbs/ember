@@ -15,7 +15,7 @@
  * logical transaction — see config/i2c0_bus.h for why that matters
  * now that two tasks poll this bus.
  *
- * Datasheet equivalent: firmware/comms/src/tasks/hk_slave_task.c
+ * Datasheet equivalent: firmware/legacy_comms/src/tasks/hk_slave_task.c
  */
 
 #pragma once

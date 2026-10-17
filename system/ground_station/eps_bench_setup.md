@@ -86,9 +86,9 @@ Build in the m75q container without flashing:
 ```sh
 docker exec amsat-dev-x86 bash -lc '
   cd /workspace/MSU_Cubesat/ember
-  PICO_SDK_PATH=/opt/pico-sdk cmake -S firmware/ihu \
-    -B firmware/ihu/build-eps-readonly -DIHU_EPS_ALLOW_CHARGER_WRITES=OFF
-  cmake --build firmware/ihu/build-eps-readonly -j4
+  PICO_SDK_PATH=/opt/pico-sdk cmake -S firmware/legacy_ihu \
+    -B firmware/legacy_ihu/build-eps-readonly -DIHU_EPS_ALLOW_CHARGER_WRITES=OFF
+  cmake --build firmware/legacy_ihu/build-eps-readonly -j4
 '
 ```
 

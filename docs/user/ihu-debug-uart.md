@@ -1,8 +1,8 @@
-# IHU debug UART
+# Legacy IHU debug UART
 
-[Operator guides](README.md) · [Firmware and build](../../firmware/ihu/README.md)
+[Operator guides](README.md) · [Firmware and build](../../firmware/legacy_ihu/README.md)
 
-This guide covers `firmware/ihu`, the FreeRTOS Pico prototype with an `ihu>`
+This guide covers `firmware/legacy_ihu`, the FreeRTOS Pico prototype with an `ihu>`
 prompt. It supports local text diagnostics; it does not expose the flight
 command dictionary. The CAN Feather runs a [different USB console](ihu-can-console.md).
 Source reviewed October 4, 2026; numeric examples below are illustrative unless
@@ -230,10 +230,10 @@ runtime state and resets on boot. An unknown top-level name prints
 
 ## Source and validation scope
 
-Behavior: [CLI](../../firmware/ihu/src/cli/cli.c),
-[build options and stdio](../../firmware/ihu/src/CMakeLists.txt),
-[pin configuration](../../firmware/ihu/src/config/pinmap.h), and
-[EPS driver](../../firmware/ihu/src/drivers/ltc4162.c).
+Behavior: [CLI](../../firmware/legacy_ihu/src/cli/cli.c),
+[build options and stdio](../../firmware/legacy_ihu/src/CMakeLists.txt),
+[pin configuration](../../firmware/legacy_ihu/src/config/pinmap.h), and
+[EPS driver](../../firmware/legacy_ihu/src/drivers/ltc4162.c).
 Recorded hardware context and readouts: [EPS bench setup](../../system/ground_station/eps_bench_setup.md).
 UART/Yamcs ownership and quality checks: [October 1 validation](../../system/ground_station/eps_yamcs_setup.md).
 These sources were inspected during documentation work; no charger command was executed.

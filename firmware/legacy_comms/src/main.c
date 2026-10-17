@@ -14,7 +14,7 @@
  *
  * The TX/RX state machines, the BPSK bitstream path, and the SPI
  * transport to the IHU hook in here as further comms_*_task_start()
- * calls. Structure mirrors firmware/ihu so the two boards stay legible
+ * calls. Structure mirrors firmware/legacy_ihu so the two boards stay legible
  * to the same reader.
  *
  * Diagnostics:

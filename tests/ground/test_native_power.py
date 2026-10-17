@@ -32,7 +32,7 @@ int main(void) {
 ''')
             binary=path/'test'
             subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',
-                            '-I'+str(path),'-I'+str(ROOT/'firmware/can_feather_bench'),
+                            '-I'+str(path),'-I'+str(ROOT/'firmware/ihu'),
                             '-I'+str(ROOT/'firmware/comms_transport'),str(path/'main.c'),'-o',str(binary)],check=True)
             logs=json.loads((ROOT/'system/ground_station/evidence/ihu-eps-battery-adc-20261002.json').read_text())
             samples=[json.loads(row['response']) for row in logs if row['command']=='eps json']
