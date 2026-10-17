@@ -110,7 +110,7 @@ python3 ~/work/ember-y24-bpsk/ground/bpsk/live.py \
   --output ~/work/ember-y24-bpsk/runs/live-$(date +%Y%m%d-%H%M%S)
 ```
 
-Wait for `BPSK_RX_READY`. With COMMS v21 / IHU v7, CAN is ready at boot:
+Wait for `BPSK_RX_READY`. With COMMS v22 / IHU v7, CAN is ready at boot:
 issue IHU `hello` and wait for `CAN_HELLO_CONFIRMED`, then press COMMS `a`
 (one byte, no Enter). IHU `uhf run 120 10` starts the
 finite two-minute heartbeat/system/EPS cycle. The receiver can stay running
@@ -153,3 +153,49 @@ session; no sample gap is silently bridged. Result JSON records queue peaks,
 maximum receive-loop scheduling gap and longest storage-chunk processing time.
 This mitigates synchronous disk delays; it does not prove the earlier overflow's
 cause. `Comms-Firmware.opi` shows the received release and full source commit.
+
+### Team demo checklist
+
+Use the UHF Yamcs instance (`c=ember-uhf__realtime`):
+
+- `EPS.opi`: live readout/conversion status and power measurements. Current
+  calibration still depends on confirming the fitted sense resistors.
+- `System.par`: HEARTBEAT and SYSTEM_STATUS values, generation times and uptime.
+- `Comms-Firmware.opi`: received COMMS release, dirty flag and full source SHA.
+
+Overview's endpoint counters and command-report panels are not produced by this
+bounded UHF telemetry cycle; blank panels there do not diagnose packet loss.
+
+For a 10–15-minute rehearsal, start a 690-second receiver session. After READY,
+perform five explicitly bounded `uhf run 120 10` runs. For each run: obtain a
+fresh IHU HELLO, enable COMMS with `a`, start the IHU run, and wait for
+`UHF_RUN EXPIRED submitted=36 cycles=12`. Stop COMMS with `x` and inspect status
+before starting the next run. Never increase the firmware RF limits to make
+this demo continuous. COMMS v22 contributes one identity packet per admitted
+session, for 185 expected packets across five successful runs.
+
+Keep receiver stdout drained (a normal terminal or redirected file is fine).
+During the run, check advancing generation times as well as ACQUIRED status;
+some system parameters retain their last value without an expiry. Stop if the
+receiver reports an error, the IHU reports a run fault, or a queued RF request
+has an unknown outcome. At the end issue IHU `uhf stop` and COMMS `x`, verify
+TX/RX inactive, and confirm a new HELLO works. Compare original native packet
+bytes with the Yamcs archive; UDP send success alone is not delivery proof.
+
+### Controlled storage-stall test, October 17
+
+A receive-only comparison injected a single 1.8-second raw-file write delay
+at approximately eight seconds. The pre-pipeline receiver (`52c0b3e`) stopped
+with `ERROR_CODE_OVERFLOW`. Pipeline v2 completed all 25 seconds without errors:
+its input queue peaked at42/64 chunks, longest storage operation was1.806 seconds,
+and maximum measured receive-call gap was0.710 ms. Neither trial transmitted or
+forwarded packets. This establishes a reproducible failure mechanism and tests
+the mitigation under that load; it does not prove the original incident was
+caused by a disk stall or guarantee tolerance of arbitrarily long stalls.
+
+The subsequent 690-second live rehearsal delivered185/185 packets (60 each of
+HEARTBEAT, SYSTEM_STATUS and POWER_STATUS plus five COMMS identities), with
+exact Yamcs archive matches and no receiver errors. Five-second freshness
+samples remained ACQUIRED; maximum observed EPS age14.58 s. EPS/System displays
+were visually checked across the run. Final RF-off status and CAN HELLO passed.
+See lab-log entry003 for evidence and remaining hardware qualification limits.
