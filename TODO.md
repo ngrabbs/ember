@@ -174,7 +174,6 @@ Open items (from [`hardware/ihu/README.md`](hardware/ihu/README.md)):
 - [ ] Safe-mode entry/exit behaviour
 
 Active firmware: [`firmware/ihu/README.md`](firmware/ihu/README.md).
-Legacy FreeRTOS roadmap: [`firmware/legacy_ihu/README.md`](firmware/legacy_ihu/README.md) (19 open).
 Schematic: [`altium_ihu_schematic.md`](hardware/ihu/design/altium_ihu_schematic.md) (30 open).
 
 ---

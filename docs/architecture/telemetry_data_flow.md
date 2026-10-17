@@ -459,10 +459,11 @@ it does not demodulate the RF signal. Ground software must recover packet
 boundaries, remove any external framing, perform the agreed link checks, and
 feed application packets to a configured Yamcs link.
 
-The [UHF firmware checklist](../../firmware/legacy_comms/README.md) still lists the TX
-state machine, framing/bitstream path for BPSK/DBPSK, and RX packet decoding as
-unfinished. RF framing, coding/FEC, buffer limits, and ground receiver integration
-need agreement and validation. Do not treat the LTE test as proof of UHF delivery.
+The active [COMMS firmware](../../firmware/comms/README.md) implements native
+BPSK transmission and bounded fire-check receive/reply handling. Local RF
+completion and independent ground reception remain separate evidence; consult
+the [UHF interface contract](../../system/interfaces/transceiver_uhf_bench.md)
+and [fire-check runbook](../../ground/yamcs/FIRE_CHECK.md) for current limits.
 
 ## 9. Adding telemetry for your subsystem
 

@@ -7,7 +7,7 @@ unsolicited boot message or periodic heartbeat. Fire check is a commanded static
 explicitly distinguishes it from a real detector. Cameras, images and power commands remain outside this version.
 
 The current IHU application is `firmware/ihu` (v0.12.0 adds fire check; v0.11.0 added the
-payload target), not the older FreeRTOS prototype in `firmware/legacy_ihu`. Current
+payload target). The older FreeRTOS prototype was removed. Current
 transceiver idle startup is implemented in `firmware/comms`.
 
 ## Addressing

@@ -1,7 +1,7 @@
 # IHU firmware
 
 Active IHU CAN Feather application, formerly `firmware/can_feather_bench`.
-The earlier FreeRTOS prototype is preserved in [legacy_ihu](../legacy_ihu/README.md).
+The earlier FreeRTOS prototype was removed and remains available in Git history.
 This directory also builds the LTE CAN Feather role. Existing output names
 `ember_ihu_can_bench` (IHU) and `ember_comms_can_bench` (LTE CAN Feather) are
 retained; the original-Pico UHF application is [COMMS](../comms/README.md).
@@ -60,9 +60,9 @@ See the [migration contract](../../system/interfaces/device_registry.md) for
 blocked target switching, identity telemetry, deployment order and validation.
 Old0x710 LTE firmware must remain off the shared bus until upgraded.
 
-# IHU–COMMS CAN Feather bench
+## Historical CAN Feather development
 
-**Current application summary, reviewed 2026-10-04:** native EPS readout,
+**Historical application summary, reviewed 2026-10-04:** native EPS readout,
 single-bus CAN forwarding and recorded bounded LTE delivery are implemented
 in the standalone bench. Manual telemetry and the opt-in native EPS timer are available. Automatic
 emission defaults off; the timer skips busy or unavailable transport periods. The [USB console guide](../../docs/user/ihu-can-console.md)

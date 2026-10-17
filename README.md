@@ -79,7 +79,7 @@ handling, the radio link, and system integration.
 | Path | Contents |
 |---|---|
 | `hardware/` | Per-board design documentation, bring-up procedures, fabrication releases, datasheets |
-| `firmware/` | Embedded software — housekeeping unit (FreeRTOS on RP2040), comms, payload, shared |
+| `firmware/` | Embedded software — IHU, COMMS, payload, transport and shared definitions |
 | `rf/` | Filter, matching, and gain-stage design; simulations and measured results |
 | `analysis/` | Orbit and access modelling, link budget, power budget, trade studies |
 | `system/` | Board-to-board interfaces, bus pin maps, protocols, integration planning |
@@ -103,7 +103,6 @@ Agents start with [AGENTS.md](AGENTS.md); all KiCad schematic work follows the
 |---|---|---|
 | `firmware/ihu` | IHU CAN Feather; also builds the LTE CAN Feather role | [IHU firmware](firmware/ihu/README.md) |
 | `firmware/comms` | Original-Pico COMMS UHF transceiver | [COMMS firmware](firmware/comms/README.md) |
-| `firmware/legacy_ihu` / `firmware/legacy_comms` | Earlier FreeRTOS prototypes | [Legacy IHU](firmware/legacy_ihu/README.md), [legacy COMMS](firmware/legacy_comms/README.md) |
 
 Build the active IHU from the repository root with the Pico SDK and ARM GCC:
 
@@ -115,7 +114,9 @@ cmake --build build/ihu -j4
 ```
 
 The source directories were renamed from `can_feather_bench` and
-`transceiver_bringup`. Existing binary target names are retained so images
+`transceiver_bringup`. Earlier FreeRTOS prototypes were removed; they remain available in
+[Git history](https://github.com/ngrabbs/ember/tree/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware).
+Existing binary target names are retained so images
 remain identifiable alongside earlier deployment records. Use fresh build
 directories after the move. See the [IHU console guide](docs/user/ihu-can-console.md)
 for current commands.
@@ -127,7 +128,7 @@ for current commands.
 Under active development. Recorded bench work includes EPS readout, dedicated
 USB command/response, and standalone CAN/native EPS telemetry with bounded LTE
 delivery evidence. These demonstrations do not establish flight readiness or
-complete integration of the FreeRTOS applications. Start with the
+complete flight routines or CAN redundancy. Start with the
 [operator guides](docs/user/README.md) and [documentation review](docs/review/README.md).
 
 Open work is tracked in [`TODO.md`](TODO.md) — the current front on each

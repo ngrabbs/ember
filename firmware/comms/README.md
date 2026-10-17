@@ -1,7 +1,7 @@
 # COMMS firmware
 
-Original Pico only. Formerly `firmware/transceiver_bringup`; the earlier
-FreeRTOS application is preserved in [legacy_comms](../legacy_comms/README.md).
+Original Pico only. Formerly `firmware/transceiver_bringup`. The earlier
+FreeRTOS application was removed and remains available in Git history.
 The existing CMake target and output basename `transceiver_bringup` are retained.
 Configure a fresh build directory after moving from the old source path.
 Current release: **0.32.0**. After startup checks, CAN A stays available and RF

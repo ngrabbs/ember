@@ -26,13 +26,13 @@
     "priority": "High",
     "disposition": "Updated",
     "documents": [
-      "firmware/legacy_ihu/README.md"
+      "https://github.com/ngrabbs/ember/blob/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware/ihu/README.md"
     ],
     "finding": "IHU README treated Yamcs integration as remaining work and mixed intended mission responsibilities with implemented CLI.",
     "action": "Link the deployed UART wrapper and operator guide; state that FreeRTOS and CAN Feather are separate applications; preserve unimplemented runtime milestones.",
     "evidence": [
-      "firmware/legacy_ihu/src/cli/cli.c",
-      "firmware/legacy_ihu/src/CMakeLists.txt",
+      "https://github.com/ngrabbs/ember/blob/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware/ihu/src/cli/cli.c",
+      "https://github.com/ngrabbs/ember/blob/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware/ihu/src/CMakeLists.txt",
       "system/ground_station/eps_yamcs_setup.md"
     ]
   },
@@ -88,8 +88,8 @@
     "finding": "RTOS summary called communications runtime undecided; roadmap still had CAN controller trade and forwarding as wholly future.",
     "action": "Document FreeRTOS communications application and separate standalone Pico SDK bench; retain production integration tasks.",
     "evidence": [
-      "firmware/legacy_comms/README.md",
-      "firmware/legacy_comms/src/main.c",
+      "https://github.com/ngrabbs/ember/blob/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware/comms/README.md",
+      "https://github.com/ngrabbs/ember/blob/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware/comms/src/main.c",
       "firmware/ihu/CMakeLists.txt"
     ]
   },
@@ -290,14 +290,14 @@
     "disposition": "New operator guides",
     "documents": [
       "docs/user/README.md",
-      "docs/user/ihu-debug-uart.md",
+      "https://github.com/ngrabbs/ember/blob/e133cf204a10ed47e703e5e5a81f17a4241268de/docs/user/ihu-debug-uart.md",
       "docs/user/ihu-can-console.md",
       "docs/user/yamcs.md"
     ],
     "finding": "No single operator route explained both IHU applications, all supported commands and endpoint-specific Yamcs capability.",
     "action": "Add source-linked command references, output examples, failure meanings, ownership, freshness and replay procedures.",
     "evidence": [
-      "firmware/legacy_ihu/src/cli/cli.c",
+      "https://github.com/ngrabbs/ember/blob/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware/ihu/src/cli/cli.c",
       "firmware/ihu/main.c",
       "ground/ember/dictionary.json",
       "ground/yamcs/ember-java/EmberResults.java"

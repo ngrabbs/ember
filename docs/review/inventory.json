@@ -3,7 +3,7 @@
   "scope": "First-party repository documentation; tracked and untracked working tree",
   "limitations": "Inventory and content triage; code/configuration checks only where cited. No external URL/anchor, CAD, hardware, or live service verification.",
   "counts": {
-    "Implementation reference": 63,
+    "Implementation reference": 61,
     "Work checklist": 5,
     "Navigation or placeholder": 37,
     "Analysis or validation plan": 4,
@@ -11,7 +11,7 @@
     "Proposed operations": 14,
     "Research reference": 6,
     "Historical design": 4,
-    "Operator guide": 4,
+    "Operator guide": 3,
     "Hardware design or procedure": 135,
     "Integration plan": 2
   },
@@ -877,25 +877,6 @@
       "unclosed_code_fence": false
     },
     {
-      "path": "docs/user/ihu-debug-uart.md",
-      "title": "IHU debug UART",
-      "category": "Operator guide",
-      "disposition": "New operator guides",
-      "review_basis": "F17",
-      "lines": 239,
-      "sha256": "70513c330caaca45c7cf42dbd8a12cd9fa648790fed86a508963e13475ec8981",
-      "status_excerpts": [
-        "The device path is specific to the recorded installation. Identify your adapter",
-        "systemctl status ember-eps-bridge",
-        "| `eps` | Prints the latest valid monitor snapshot in engineering units | State, charge status, voltages, currents and chip die temperature; may refuse if no valid snapshot |"
-      ],
-      "finding_ids": [
-        "F17"
-      ],
-      "missing_local_links": [],
-      "unclosed_code_fence": false
-    },
-    {
       "path": "docs/user/yamcs.md",
       "title": "Commanding and monitoring EMBER in Yamcs",
       "category": "Operator guide",
@@ -964,23 +945,6 @@
       "unclosed_code_fence": false
     },
     {
-      "path": "firmware/legacy_comms/README.md",
-      "title": "Comms Board Firmware",
-      "category": "Implementation reference",
-      "disposition": "Keep",
-      "review_basis": "Content/link triage; see findings for verified corrections",
-      "lines": 412,
-      "sha256": "c14988c5adc17fe851d27a184063a7b0f51b0e16035f10fe32a3d3df5a2c800d",
-      "status_excerpts": [
-        "## v0.1 Status \u2014 boots, reports, detects",
-        "2. **Detect.** i2c0 bus scan, Si5351A status probe, RX baseband DC bias.",
-        "| Si5351A | Read-only status register probe at 0x60 \u2014 ACK, `SYS_INIT`, `LOL_A`/`LOL_B`, revision | No ACK \u2192 part absent or unpowered. `SYS_INIT` stuck \u2192 usually a missing or dead 25 MHz crystal (Y1), since the internal init waits on it |"
-      ],
-      "finding_ids": [],
-      "missing_local_links": [],
-      "unclosed_code_fence": false
-    },
-    {
       "path": "firmware/comms_feather_bench/README.md",
       "title": "COMMS CAN Feather UART bench",
       "category": "Implementation reference",
@@ -1029,25 +993,6 @@
       ],
       "finding_ids": [
         "F05"
-      ],
-      "missing_local_links": [],
-      "unclosed_code_fence": false
-    },
-    {
-      "path": "firmware/legacy_ihu/README.md",
-      "title": "Internal Housekeeping Unit Firmware",
-      "category": "Implementation reference",
-      "disposition": "Updated",
-      "review_basis": "F02",
-      "lines": 302,
-      "sha256": "29b35409ec6185d2eb88de7fcd622cdc3bb503535f8e89c202e8a16e17ea09e0",
-      "status_excerpts": [
-        "architecture, implementation milestones, and bring-up status for the",
-        "- Intended system mode manager: [operations draft](../../docs/architecture/operations/README.md); not yet implemented",
-        "## v0.1 Status (proto board: RP2040 riser on top of EPS, GP4/GP5 \u2192 CSKB I2C)"
-      ],
-      "finding_ids": [
-        "F02"
       ],
       "missing_local_links": [],
       "unclosed_code_fence": false

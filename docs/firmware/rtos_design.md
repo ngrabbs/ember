@@ -1,11 +1,10 @@
-# RTOS design
+# Runtime design
 
 [Topic guide](README.md)
 
-The [legacy IHU firmware guide](../../firmware/legacy_ihu/README.md) owns its FreeRTOS implementation.
-The [legacy communications firmware](../../firmware/legacy_comms/README.md) also uses FreeRTOS.
-The active [IHU firmware](../../firmware/ihu/README.md) is a
-standalone Pico SDK application; it does not implement the production RTOS integration. Background material lives in [firmware research](../research/firmware_references.md).
-
-The active [COMMS firmware](../../firmware/comms/README.md) also uses the standalone
-Pico SDK runtime. The FreeRTOS applications remain reference prototypes.
+The active [IHU](../../firmware/ihu/README.md) and
+[COMMS](../../firmware/comms/README.md) applications use the Pico SDK runtime.
+The earlier FreeRTOS prototypes and kernel were removed; inspect
+[Git history](https://github.com/ngrabbs/ember/tree/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware)
+for that implementation. General RTOS background remains in
+[firmware research](../research/firmware_references.md).

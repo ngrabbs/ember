@@ -5,8 +5,8 @@
 This guide describes the IHU 0.13.0 source candidate and bench bridge 0.4.0.
 It does not claim those versions are flashed. Earlier 0.12.0 RF validation is
 recorded in the [fire-check runbook](../../ground/yamcs/FIRE_CHECK.md).
-The active controller source is `firmware/ihu`; the older
-FreeRTOS `firmware/legacy_ihu` has a separate [UART guide](ihu-debug-uart.md).
+The active controller source is `firmware/ihu`. The retired FreeRTOS UART
+application is available through Git history.
 
 ## Connect and identify
 
