@@ -1,112 +1,88 @@
 # EMBER operator displays
 
+Each environment has four operator pages, with the same navigation:
 
-Current operation: one container with **`ember`** for LTE/UHF reception and
-**`ember-bench`** for the IHU serial EPS/payload path. Use the
-[environment guide](OPERATIONAL.md) for active setup; older reference procedures below may describe retired services.
+| Page | Purpose |
+|---|---|
+| `Overview.opi` | Flight: last heartbeat producer, IHU system report and power summary. Bench: serial EPS readout, payload reply and power summary. |
+| `EPS.opi` (Power) | Voltages, provisional currents, charger die temperature, readout/ADC quality, raw charger state and JEITA region. |
+| `Payload.opi` | Last payload status/heartbeat and ping result; bench-only command/history navigation. |
+| `Devices.opi` (Devices & firmware) | IHU discovery snapshot and one fleet firmware table: COMMS, LTE CAN MCU, Walter MCU and payload Pi. |
 
-[Open the Pi overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
+`Ground-Build.opi` is a separate dated deployment audit, not another operational
+dashboard. Native parameter tables keep the detailed diagnostics and plotting
+fields: `System.par`, `EPS.par`, `Payload.par`, `Devices.par`, `Firmware.par`,
+`Comms.par`, `LTE-Firmware.par` and `Command-reports.par`.
 
-Yamcs calls these Displays. Flight selects `ember_displays`; bench selects
-`ember_bench_displays` at instance level; historical upstream data retains its own bucket.
-They use native Yamcs OPI/parameter-table formats, rather than a separate web
-application or a desktop-only profile. Laptop browser access is sufficient.
+The flight bucket is `ember_displays`; the bench bucket is
+`ember_bench_displays`. Navigation retains the selected instance. Both use
+`/ember` packet parameters, but current values and archives are independent.
+Flight pages have no command actions. The bench Send payload command button
+opens the four-command editor; navigation never issues a command itself.
 
-- **Overview.opi:** flight opens native telemetry; bench opens EPS. Both link
-  to Payload and Devices. Only bench exposes command navigation.
-- **System.par:** editable native table of state, heartbeat and packet-specific boot/uptime,
-  with generation time, raw/engineering values and acquisition status.
-- **Comms.par:** packet/error counters and raw RSSI, plus packet-specific boot/uptime.
-- **Command-reports.par:** scrolling live response-field samples with a bounded
-  40-row buffer. This is not a transaction log; native **Command history** owns
-  correlated acceptance/completion, rejected and UNKNOWN/timeout outcomes.
-- **EPS.opi:** actual IHU VIN/battery/output voltage, provisional signed current,
-  die temperature, readout/ADC quality, readout age and last raw charger status.
-  It hides engineering values on invalid readout or expired packets.
-- **EPS.par:** all 19 raw words plus engineering fields, quality, provenance and
-  current-conversion assumptions; use native parameter history for plots.
-- Buttons open these tables, the EPS dashboard and native command console/history.
-  Navigation buttons do not issue commands.
+## What a value means
 
-- **Telemetry.opi / LTE.opi:** heartbeat, system status and EPS values within the selected environment.
-- **Payload.opi / Devices.opi:** payload status and per-device observations in the selected environment.
+- **NO OBSERVATION / No identity:** no received packet supports the field. Missing
+  firmware is not rendered as release `0.0.0` or an all-zero source commit.
+- **LAST RECEIVED · CHECK TIME:** heartbeat/system definitions have no expiry.
+  A cached ACQUIRED value does not establish current liveness; inspect its
+  explicit receive timestamp. This display change does not invent an expiry.
+- **PACKET CURRENT:** an observed parameter is still acquired under its existing
+  MDB expiry policy. This is packet freshness, not a general device-health verdict.
+- **EXPIRED / UNAVAILABLE:** the packet is expired or invalid. Status/measurement
+  fields are hidden. Discovery snapshot expiry does not mean every device failed.
+- **Firmware expired:** retain the last known release and source commit for
+  identification, explicitly mark its release expired, and use `Firmware.par`
+  for packet receive timestamps and device boot/observation fields. Identity
+  acquisition is not continuous attestation of the currently powered device.
 
-## Install and update
+Heartbeat boot ID belongs to that packet's producer (IHU or COMMS), not always
+IHU. System mode/configuration are last reported bench states; SAFE and
+GROUND_TEST do not prove a flight mode manager is active. Ground-wrapped EPS
+header boot identity belongs to the wrapper session, not an IHU reset.
 
-On the Pi or m75q, from `ground/yamcs`:
+POWER_STATUS measurements are shown only when packet and conversion quality are
+valid. EPS readout age is age at packet creation, not ADC conversion age or
+current wall-clock age. Current-sense values remain provisional. Charger die
+temperature is not battery temperature; no thermistor is fitted on this bench.
+The pages send no charger writes. Raw charger-state bits and JEITA region are
+available for diagnostics, without inventing a charge-health interpretation.
+
+Device states/ages were sampled by IHU. Planned EPS_NEXT may legitimately be
+NOT_SEEN. A payload-ready flag means ready at the last reply; payload status is
+requested, not continuously polled. Per-command history owns correlated
+outcomes; a last packet on a dashboard cannot establish a command completed.
+
+Times currently represent ground reception. Replay uses the selected processor's
+historical time/expiry; the scripts do not compare against laptop wall time.
+
+## Install, retire duplicate pages, and recover
+
+From a clean source checkout:
 
 ```sh
-python3 prepare_operational.py --runtime /path/to/active/quickstart
-# Required once after introducing the instance displayBucket setting:
-docker compose restart yamcs
-# Once the server is ready:
-python3 install_displays.py --url http://192.168.1.251:8090
+python3 ground/yamcs/install_displays.py --url http://192.168.1.251:8090
 ```
 
-Use m75q's URL on m75q. `generate_displays.py` builds into ignored
-`.runtime/ember-displays`; table fields come from the bench dictionary.
-The installer creates the bucket if absent, skips unchanged files, backs up
-any modified existing object under `.runtime/display-backups/TIMESTAMP/`, and
-verifies uploaded bytes by downloading them again. It only installs its generated
-managed objects; unrelated displays are preserved. Rerunning installation
-replaces managed files, so preserve/adopt browser table edits in source first.
-Modified files are backed up locally, but that directory is not an archive
-backup. The bucket itself persists in the existing Yamcs data volume.
+The installer creates both buckets if needed, verifies uploads, and backs up
+replaced objects privately under `ground/yamcs/.runtime/display-backups/TIMESTAMP/INSTANCE/`.
+After replacement uploads succeed it backs up and removes only the named old
+generated pages: `Telemetry.opi`, `LTE.opi`, `Comms-Firmware.opi`,
+`LTE-CAN-Firmware.opi`, `LTE-Modem-Firmware.opi` and the duplicate payload build
+audit/manifest. Unknown/user-authored objects and telemetry archives are preserved.
 
-An OPI is edited through source/generation or Yamcs Studio. Parameter tables
-can be edited in the browser and saved. Browser View → Zoom out/in adjusts
-layout for a narrow panel; the native web viewer starts at actual size even
-though the OPI includes Studio's auto-zoom setting. A narrow Codex browser
-panel was checked at 60% scale. No custom browser renderer is installed.
+Update old bookmarks to Overview, Power or Devices. No compatibility duplicate
+pages remain in the display listing. To recover an old page, upload its saved
+backup to its original bucket/object path; the verified backup bytes remain
+local even after the old object is removed from Yamcs.
 
-## Interpret the data
+`generate_displays.py` builds only the four operator pages and parameter tables.
+Its canvas fits beside the Yamcs sidebar at a laptop viewport of 1280×720.
+All table parameters derive from the dictionary. Tests verify known bindings,
+page bounds, context-preserving navigation, missing identity and stale-value
+semantics. Browser inspection verifies actual rendered text and layout.
 
-These are **latest received** snapshots. Yamcs can retain values while the
-physical endpoint is disconnected. Compare last-heartbeat time with mission
-time, and check packet/link counts before treating values as current. The spare Pico overview still relies on heartbeat time. EPS has separate
-readout validity, serial-link status and Yamcs expiration handling; see
-[EPS validation](../../system/ground_station/eps_yamcs_setup.md).
-When replaying, the samples/time follow the selected processor; do not compare
-replayed sample time with the laptop's wall clock.
-
-Bench generation time currently equals Yamcs reception time, not spacecraft
-UTC. Uptime is separate and wraps at 32 bits. RSSI=-32768 is rendered
-**Unavailable** on the overview; USB has no measured radio signal strength.
-Endpoint TX counts mean handed to the SDK USB writer, not acknowledged delivery.
-Counters/cache and period settings reset on Pico reboot.
-
-The common transaction header changes on **every** packet, including periodic
-telemetry with transaction zero. It is deliberately omitted from the command
-card/table, so a cached COMPLETED response is not paired with an unrelated
-header. The native command history contains per-command transaction IDs and
-outcomes. Response fields are also last received snapshots, not a promise that
-the most recently issued command has completed. A new Pico boot can leave old
-response fields cached until another response arrives; check command history.
-
-## Validation — 2026-10-01
-
-- 23 parameter bindings resolve against the live Pi EMBER mission database;
-  all 51 generated widget IDs are unique.
-- Native OPI renders real Pico values, advancing uptime/heartbeat time and
-  packet counts; SAFE / GROUND_TEST and1000ms match the endpoint.
-- A real hardware PING completed after the display configuration restart;
-  the overview shows its COMPLETED / NONE response and report timestamp.
-- System table navigation and received values/timestamps verified in browser;
-  clicking telemetry period opens the native chart with an archived/live1000ms
-  trace. Interactive processor replay is now verified; see the [replay procedure](../../system/ground_station/archive_replay.md).
-- Overview RSSI sentinel shows Unavailable; missing response samples use an
-  unfilled placeholder rather than fabricated success.
-- Installation is idempotent and preserves previous changed object bytes.
-
-References: [Yamcs display support](https://docs.yamcs.org/yamcs-server-manual/web-interface/telemetry/),
-[instance display bucket configuration](https://docs.yamcs.org/yamcs-server-manual/web-interface/configuration/).
-The renderer/format was checked against Yamcs5.13.0 source and @yamcs/opi1.3.3.
-
-The real IHU EPS path was subsequently deployed and validated. POWER_STATUS
-uses a ground wrapper session; the overview and system/comms tables now bind
-packet-specific boot/uptime aliases so EPS cannot overwrite the spare Pico's
-identity. UART disconnect and bridge-stop checks verify numeric suppression
-and INVALID/EXPIRED indications. These EPS freshness checks are verified in
-realtime; interactive replay now verifies play/pause and forward/backward seek.
-The quality label describes the packet link, including during replay; use the
-selected processor clock, not laptop wall time. See the [replay procedure](../../system/ground_station/archive_replay.md).
+Publish separate new audits with `build_identity.py --instance ember` and
+`--instance ember-bench` after installing the pages. Previous manifests remain
+dated evidence; a dashboard cleanup deliberately changes their display hashes.
+See [environment deployment and rollback](OPERATIONAL.md).

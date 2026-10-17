@@ -34,7 +34,7 @@ def generate(destination, instance="ember"):
         f = ET.SubElement(parent, 'font')
         ET.SubElement(f, 'opifont.name', fontName='Liberation Mono' if mono else 'Liberation Sans', height=str(size), style='1' if bold else '0').text = 'EMBER'
 
-    for key, value in {'widget_type':'Display','name':'EMBER bench overview','width':1120,'height':750,'show_grid':False,'auto_zoom_to_fit_all':True}.items():
+    for key, value in {'widget_type':'Display','name':'EMBER bench overview','width':1000,'height':640,'show_grid':False,'auto_zoom_to_fit_all':True}.items():
         prop(display,key,value)
     color(display,'background_color',BG)
     for tag in ('scripts','rules','actions'):
@@ -48,7 +48,7 @@ def generate(destination, instance="ember"):
         for key,value in {'widget_type':{'TextUpdate':'Text Update','ActionButton':'Action Button'}.get(kind,kind),'name':name,'x':x,'y':y,'width':w,'height':h,'visible':True,'enabled':True,'border_style':0,'border_width':0}.items():
             prop(e,key,value)
         prop(e,'wuid','ember-'+str(len(display)))
-        defaults={'horizontal_alignment':0,'wrap_words':False,'tooltip':'','format_type':0,'image':'','push_action_index':0,'release_action_index':0,'toggle_button':False,'gradient':False,'fill_level':0,'horizontal_fill':False,'line_style':0}
+        defaults={'horizontal_alignment':0,'wrap_words':False,'tooltip':'','format_type':0,'image':'','push_action_index':0,'release_action_index':0,'toggle_button':False,'gradient':False,'border_alarm_sensitive':False,'foreground_alarm_sensitive':False,'background_alarm_sensitive':False,'fill_level':0,'horizontal_fill':False,'line_style':0}
         for key,v in defaults.items(): prop(e,key,v)
         for tag in ('scripts','rules','actions'):
             ET.SubElement(e,tag,**({'hook':'false','hook_all':'false'} if tag=='actions' else {}))
@@ -61,22 +61,6 @@ def generate(destination, instance="ember"):
         prop(e,'text',text); prop(e,'transparent',True); prop(e,'vertical_alignment',1)
         color(e,'foreground_color',fg); font(e,size,bold)
         return e
-
-    def value(name,x,y,w=270,h=42,size=26,fg=WHITE):
-        e=widget('TextUpdate',name,x,y,w,h)
-        for key,v in {'pv_name':'/ember/'+name,'text':'—','transparent':True,'show_units':True,'precision':0,'precision_from_pv':False,'vertical_alignment':1,'border_alarm_sensitive':True}.items():
-            prop(e,key,v)
-        color(e,'foreground_color',fg); font(e,size,True,True)
-        return e
-
-    def scripted(text,pv,script,x,y,w,h=26,size=12):
-        e=label(text,x,y,w,h,size=size,fg=WHITE)
-        scripts=e.find('scripts')
-        path=ET.SubElement(scripts,'path',pathString='scripts/'+script,checkConnect='true',sfe='false',seoe='false')
-        ET.SubElement(path,'pv',trig='true').text='/ember/'+pv
-        if script == 'eps-quality.js':
-            for n in ('conversion_valid','link'):
-                ET.SubElement(path,'pv',trig='true').text='/ember/POWER_STATUS_'+n
 
     def box(x,y,w,h):
         e=widget('Rectangle','Panel',x,y,w,h)
@@ -91,260 +75,164 @@ def generate(destination, instance="ember"):
         macros=ET.SubElement(a,'macros'); prop(macros,'include_parent_macros',True)
         prop(a,'path',path); prop(a,'mode',0); prop(a,'description',text)
 
-    label('EMBER',28,20,280,48,32,WHITE,True)
-    label('GROUND OPERATIONS  /  BENCH v1',29,70,720,26,13,ORANGE,True)
-    label('Latest received values • click a value for history / plotting',28,111,1000,24,12)
-    # Three primary panels: state, transport counters, last command report.
-    box(28,149,336,432); box(380,149,336,432); box(732,149,360,432)
-    label('01  /  SPACECRAFT STATE',48,169,295,28,13,BLUE,True)
-    label('Mode',48,215,275); value('SYSTEM_STATUS_mode',48,241)
-    label('Configuration',48,300,275); value('SYSTEM_STATUS_configuration',48,326,size=22)
-    label('Telemetry period',48,385,275); value('HEARTBEAT_telemetry_period_ms',48,411)
-    label('Boot ID',48,478,275); value('HEARTBEAT_source_boot_id',48,504,size=20)
+    # Four operator pages; raw packet details stay in native parameter tables.
+    def new(title, subtitle):
+        nonlocal display
+        for child in list(display.findall('widget')):display.remove(child)
+        prop(display,'name',title)
+        label('EMBER  /  '+title.upper(),22,16,950,36,24,WHITE,True)
+        label(('FLIGHT · UHF / LTE' if instance=='ember' else 'BENCH · IHU SERIAL')+'   /   '+subtitle,22,56,950,22,11,BLUE)
+        for i,(text,path) in enumerate([('Overview','Overview.opi'),('Power','EPS.opi'),('Payload','Payload.opi'),('Devices & firmware','Devices.opi')]):
+            button(text,path,22+i*196,186)
+            prop(display.findall('widget')[-1],'y',90)
+            prop(display.findall('widget')[-1],'height',32)
+        web('Links','/links',806,90,172)
+    def web(text,path,x,y,w):
+        e=widget('ActionButton',text,x,y,w,32);prop(e,'text',text)
+        color(e,'background_color','#30445e');color(e,'foreground_color',WHITE);font(e,11,True)
+        a=ET.SubElement(e.find('actions'),'action',type='OPEN_WEBPAGE')
+        prop(a,'hyperlink',path+('?c='+instance+'__realtime')+('&system=%2Fember' if path=='/commanding/send' else ''))
+    def nav(text,path,x,y,w=210):
+        button(text,path,x,w);prop(display.findall('widget')[-1],'y',y);prop(display.findall('widget')[-1],'height',32)
+    def script(text,pvs,filename,x,y,w,h=24,size=12):
+        e=label(text,x,y,w,h,size,WHITE)
+        path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/'+filename,checkConnect='false',sfe='false',seoe='false')
+        for pv in pvs:ET.SubElement(path,'pv',trig='true').text='/ember/'+pv
+        return e
+    def observed(pv,x,y,w=270,size=20):
+        return script('No observation',[pv],'boolean-value.js' if pv in ('PAYLOAD_STATUS_ready','PAYLOAD_PING_RESULT_echo_ok','POWER_STATUS_adc_valid','POWER_STATUS_conversion_valid') else 'observed-value.js',x,y,w,32,size)
+    def stamp(pv,x,y,w=280):
+        script('No observation',[pv],'sample-time.js',x,y,w,22,10)
+    def fresh(pv,x,y,w=280):
+        script('NO OBSERVATION',[pv],'last-observation.js' if pv.startswith(('HEARTBEAT_','SYSTEM_STATUS_')) else 'observation-status.js',x,y,w,24,11)
+    def eps(pv,x,y,w=260,size=21):
+        script('Unavailable',['POWER_STATUS_'+pv,'POWER_STATUS_conversion_valid'],'eps-value.js',x,y,w,34,size)
+    def save(name):
+        page=ET.fromstring(ET.tostring(display))
+        # Fit the full page beside the Yamcs sidebar at 1280x720.
+        for key in ('width','height'):prop(page,key,round(int(page.findtext(key))*.95))
+        for e in page.findall('widget'):
+            for key in ('x','y','width','height'):prop(e,key,round(int(e.findtext(key))*.95))
+            for f in e.findall('font/opifont.name'):f.set('height',str(max(10,round(int(f.get('height'))*.95))))
+        ET.indent(page);ET.ElementTree(page).write(destination/name,encoding='utf-8',xml_declaration=True)
+    def footer(text):label(text,22,608,950,22,10,MUTED)
 
-    label('02  /  ENDPOINT COUNTERS',400,169,300,28,13,BLUE,True)
-    for title,pv,y in [('Commands received','COMM_STATUS_rx_packets',215),('Packets handed to USB','COMM_STATUS_tx_packets',286),('CRC errors','COMM_STATUS_crc_errors',357),('Dropped frames / packets','COMM_STATUS_dropped_packets',428)]:
-        label(title,400,y,290); value(pv,400,y+25,size=24)
-    label('RSSI',400,509,120); scripted('No sample received','COMM_STATUS_rssi_dbm','rssi.js',475,509,217,size=13)
-    label('Counters reset on Pico reboot',400,547,285,h=20,size=11)
+    new('Overview','Last observations in this environment')
+    for x in (22,348,674):box(x,140,304,292)
+    if instance=='ember':
+        label('HEARTBEAT / PRODUCER',40,154,270,24,12,BLUE,True)
+        fresh('HEARTBEAT_mode',40,184,270)
+        label('Producer boot ID',40,217,270,20,11);observed('HEARTBEAT_source_boot_id',40,239)
+        label('Producer uptime',40,281,270,20,11);observed('HEARTBEAT_uptime_ms',40,303)
+        label('Last packet received',40,365,270,20,10);stamp('HEARTBEAT_mode',40,388)
+        label('SYSTEM / IHU',366,154,270,24,12,BLUE,True)
+        fresh('SYSTEM_STATUS_mode',366,184,270)
+        label('Last reported mode',366,217,270,20,11);observed('SYSTEM_STATUS_mode',366,239)
+        label('Last reported configuration',366,281,270,20,11);observed('SYSTEM_STATUS_configuration',366,303,size=17)
+        stamp('SYSTEM_STATUS_mode',366,388)
+    else:
+        label('SERIAL / EPS READOUT',40,154,270,24,12,BLUE,True)
+        fresh('POWER_STATUS_readout_valid',40,184,270)
+        label('ADC conversion valid',40,217,270,20,11);observed('POWER_STATUS_conversion_valid',40,239)
+        label('Readout age at packet',40,281,270,20,11);observed('POWER_STATUS_readout_age_ms',40,303)
+        stamp('POWER_STATUS_readout_valid',40,388)
+        label('PAYLOAD / LAST REPLY',366,154,270,24,12,BLUE,True)
+        fresh('PAYLOAD_STATUS_ready',366,184,270)
+        label('Ready at reply',366,217,270,20,11);observed('PAYLOAD_STATUS_ready',366,239)
+        label('Reported payload boot ID',366,281,270,20,11);observed('PAYLOAD_STATUS_reported_boot_id',366,303,size=17)
+        stamp('PAYLOAD_STATUS_ready',366,388)
+    label('POWER / EPS',692,154,270,24,12,BLUE,True)
+    fresh('POWER_STATUS_readout_valid',692,184,270)
+    for title,pv,y in [('Charger input','input_mv',217),('Battery pack','battery_mv',281),('Power-path output','output_mv',345)]:
+        label(title,692,y,260,20,11);eps(pv,692,y+21,260,20)
+    box(22,450,956,105)
+    label('WHAT THESE VALUES MEAN',40,461,900,22,11,BLUE,True)
+    label('Heartbeat may come from IHU or COMMS; boot ID belongs to that packet’s producer.' if instance=='ember' else 'EPS is polled every five seconds through one serial owner; payload replies are requested.',40,488,914,21,11)
+    label('Heartbeat/system values do not expire; check timestamps. SAFE / GROUND_TEST are bench labels.' if instance=='ember' else 'The EPS header identifies a ground wrapper session, not an IHU reset or spacecraft UTC.',40,514,914,21,11)
+    nav('System raw / history' if instance=='ember' else 'Power raw / quality','System.par' if instance=='ember' else 'EPS.par',22,568)
+    if instance=='ember-bench':web('Payload commands','/commanding/send',250,568,210);web('Command history','/commanding/history',478,568,210)
+    else:label('Receive-only radio environment · no command uplink configured',252,573,720,24,11,ORANGE)
+    footer('Times are ground reception times. NO OBSERVATION and EXPIRED do not mean a device is healthy or failed.')
+    save('Overview.opi')
 
-    label('03  /  LAST COMMAND REPORT',752,169,317,28,13,BLUE,True)
-    label('Stage',752,215,300); value('COMMAND_RESPONSE_stage',752,241,315,size=24,fg=ORANGE)
-    label('Reason',752,297,300); value('COMMAND_RESPONSE_reason',752,323,315,size=17)
-    label('Command ID',752,378,140); value('COMMAND_RESPONSE_command_id',918,378,150,28,size=17)
-    label('Parameter ID',752,421,150); value('COMMAND_RESPONSE_parameter_id',918,421,150,28,size=17)
-    label('Result value',752,464,140); value('COMMAND_RESPONSE_value',918,464,150,28,size=17)
-    scripted('No command report received','COMMAND_RESPONSE_stage','sample-time.js',752,512,315,size=11)
-    label('Per-command outcome: open command history.',752,547,315,h=20,size=10)
+    new('Power','EPS readout · charger state · measurement quality')
+    script('No EPS observation',['POWER_STATUS_readout_valid','POWER_STATUS_conversion_valid','POWER_STATUS_link'],'eps-quality.js',22,139,956,30,14)
+    stamp('POWER_STATUS_readout_valid',22,174,465)
+    script('No readout',['POWER_STATUS_readout_age_ms'],'eps-age.js',22,199,956,24,10)
+    for x,y,title,pv in [(22,239,'Charger VIN','input_mv'),(348,239,'Battery pack','battery_mv'),(674,239,'Power-path output','output_mv'),(22,345,'Input current *','input_ua'),(348,345,'Battery current *','battery_ua'),(674,345,'Charger die temperature','die_temp_mc')]:
+        box(x,y,304,93);label(title,x+16,y+12,270,20,11,BLUE,True);eps(pv,x+16,y+40,270)
+    for x,title,pv in [(22,'Charger state bits','raw_charger_state'),(348,'JEITA region','raw_jeita_region'),(674,'ADC valid flag','adc_valid')]:
+        label(title,x,454,285,21,11);observed('POWER_STATUS_'+pv,x,478,285,17)
+    label('* Currents use provisional sense-resistor values; confirm calibration before relying on them.',22,520,956,22,10,ORANGE)
+    label('No battery thermistor fitted. Charger die temperature is not battery temperature.',22,545,956,22,10,ORANGE)
+    nav('Power raw / quality','EPS.par',22,574,218)
+    label('Read-only telemetry. No charger controls are sent by these displays.',260,579,715,22,10)
+    footer('Voltage and current are hidden when packet quality/conversion is invalid. Packet age is not ADC conversion age.')
+    save('EPS.opi')
 
-    label('Last heartbeat received',28,603,215,h=24,size=12)
-    scripted('No sample received','HEARTBEAT_telemetry_period_ms','sample-time.js',242,603,387,size=13)
-    label('Uptime',745,603,90,h=24,size=12); value('HEARTBEAT_uptime_ms',835,599,250,34,size=17)
-    button('System details','System.par',28,164)
-    button('Comms details','Comms.par',208,164)
-    button('Command reports','Command-reports.par',388,164)
-    # Navigation opens native commanding/history pages without issuing commands.
-    for text,url,x,w in [('Command console','/commanding/send?c=ember__realtime&system=%2Fember',568,164),('Command history','/commanding/history?c=ember__realtime',748,164),('Link status','/links?c=ember__realtime',928,164)]:
-        e=widget('ActionButton',text,x,652,w,42); prop(e,'text',text)
-        color(e,'background_color','#30445e'); color(e,'foreground_color',WHITE); font(e,12,True)
-        actions=e.find('actions'); a=ET.SubElement(actions,'action',type='OPEN_WEBPAGE'); prop(a,'hyperlink',url)
-    label('BENCH DATA • values can remain cached after link loss; compare heartbeat time with mission time.',28,707,1070,h=24,size=11)
-    button('EPS dashboard','EPS.opi',928,164)
-    # Replace the last navigation button with EPS; link details remain in the sidebar.
-    for e in list(display):
-        if e.tag == 'widget' and e.findtext('name') == 'Link status': display.remove(e)
-    ET.indent(display)
-    prop(display,'height',820)
-    for text,path,x in [('Telemetry','Telemetry.opi',28),('Payload','Payload.opi',208),('Devices','Devices.opi',388),('COMMS firmware','Comms-Firmware.opi',568)]:
-        button(text,path,x,164)
-        prop(display.findall('widget')[-1],'y',754)
-    ET.ElementTree(display).write(destination/'Overview.opi',encoding='utf-8',xml_declaration=True)
-    display = ET.fromstring(ET.tostring(display))
-    for e in list(display):
-        if e.tag == 'widget': display.remove(e)
-    prop(display,'name','EMBER IHU EPS')
-    label('EMBER / IHU EPS',28,20,900,48,30,WHITE,True)
-    label('READ-ONLY EPS / IHU POWER_STATUS / 2 SERIES CELLS',28,76,1050,25,13,ORANGE,True)
-    box(28,120,1064,95)
-    scripted('Waiting for EPS telemetry','POWER_STATUS_readout_valid','eps-quality.js',48,137,1020,35,17)
-    scripted('No readout received','POWER_STATUS_readout_age_ms','eps-age.js',48,178,1020,24,12)
-    for x,y,title,pv in [(28,237,'Charger VIN','input_mv'),(390,237,'Battery pack','battery_mv'),(752,237,'Power-path output','output_mv'),(28,375,'Input current *','input_ua'),(390,375,'Battery current *','battery_ua'),(752,375,'Charger die temperature','die_temp_mc')]:
-        box(x,y,340,120); label(title,x+20,y+15,300,24,13,BLUE,True)
-        e=label('Unavailable',x+20,y+49,300,47,26,WHITE,True)
-        path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/eps-value.js',checkConnect='false',sfe='false',seoe='false')
-        for n in ('POWER_STATUS_'+pv,'POWER_STATUS_conversion_valid'):
-            ET.SubElement(path,'pv',trig='true').text='/ember/'+n
-    label('Last charger state (bits)',28,526,240); value('POWER_STATUS_raw_charger_state',267,521,110,34,19)
-    label('Last JEITA region',399,526,140); value('POWER_STATUS_raw_jeita_region',545,521,100,34,19)
-    label('Last ADC valid',761,526,110); value('POWER_STATUS_adc_valid',893,521,100,34,19)
-    label('* Current uses assumed 10 mOhm sense resistors. Confirm fitted values before relying on it.',28,575,1055,24,12,ORANGE)
-    label('No battery thermistor fitted. Die temperature is not battery temperature. No charger commands are sent.',28,608,1055,24,11)
-    button('Ground overview','Overview.opi',28,250); button('EPS raw / quality','EPS.par',297,250)
-    scripted('No packet received','POWER_STATUS_readout_count','sample-time.js',575,662,500,25,12)
-    label('Use selected processor time; replay link status describes archived data. Readout age is not ADC age.',28,711,1055,24,11)
-    ET.indent(display)
-    ET.ElementTree(display).write(destination/'EPS.opi',encoding='utf-8',xml_declaration=True)
-    # A receive-only LTE overview: no unrelated USB counters or TC buttons.
-    display = ET.fromstring(ET.tostring(display))
-    for e in list(display):
-        if e.tag == 'widget': display.remove(e)
-    prop(display,'name','EMBER LTE telemetry')
-    label('EMBER / TELEMETRY',28,20,1000,48,30,WHITE,True)
-    label('SPACECRAFT TELEMETRY / UHF + LTE' if instance=='ember' else 'IHU SERIAL OBSERVATIONS',28,76,1050,25,13,ORANGE,True)
-    box(28,135,336,440); box(380,135,336,440); box(732,135,360,440)
-    label('01 / HEARTBEAT',48,153,295,28,13,BLUE,True)
-    for title,pv,y in [('IHU boot ID','HEARTBEAT_source_boot_id',205),
-                       ('IHU uptime (ms)','HEARTBEAT_uptime_ms',281),
-                       ('Bench mode','HEARTBEAT_mode',357),
-                       ('Bench configuration','HEARTBEAT_configuration',433)]:
-        label(title,48,y,295); value(pv,48,y+25,295,34,20)
-    scripted('No heartbeat received','HEARTBEAT_mode','sample-time.js',48,531,295,24,11)
-    label('02 / SYSTEM STATUS',400,153,295,28,13,BLUE,True)
-    for title,pv,y in [('Bench mode','mode',205),('Bench configuration','configuration',269),
-                       ('Configured EPS cadence (ms)','telemetry_period_ms',333),
-                       ('Admitted CAN requests','accepted_commands',397),
-                       ('Refused CAN requests','rejected_commands',461)]:
-        label(title,400,y,295); value('SYSTEM_STATUS_'+pv,400,y+25,295,32,20)
-    scripted('No status received','SYSTEM_STATUS_mode','sample-time.js',400,541,295,24,11)
-    label('03 / EPS',752,153,317,28,13,BLUE,True)
-    for title,pv,y in [('Charger VIN','input_mv',218),('Battery voltage','battery_mv',315),
-                       ('Power-path output','output_mv',412)]:
-        label(title,752,y,317)
-        e=value('POWER_STATUS_'+pv,752,y+28,317,42,23); prop(e,'precision',3)
-    scripted('No EPS received','POWER_STATUS_readout_count','sample-time.js',752,531,317,24,11)
-    label('Latest spacecraft values: compare each receive time. Clicking a value opens its history.',28,594,1064,24,12)
-    label('SAFE / GROUND_TEST are fixed bench labels. Counters are CAN requests, not LTE uplink commands.',28,622,1064,24,11,ORANGE)
-    button('EPS dashboard','EPS.opi',28,250); button('System raw / history','System.par',297,250)
-    label('Transport status is on Links. Native and bench observations retain their packet provenance.',28,711,1064,24,11)
-    # Fit the three LTE panels beside Yamcs's sidebar on a laptop-sized window.
-    prop(display,'width',780)
-    for e in display.findall('widget'):
-        for key in ('x','width'):
-            prop(e,key,round(int(e.findtext(key))*0.69))
-        for f in e.findall('font/opifont.name'):
-            f.set('height',str(max(10,round(int(f.get('height'))*0.85))))
-    ET.indent(display)
-    ET.ElementTree(display).write(destination/'Telemetry.opi',encoding='utf-8',xml_declaration=True)
-    ET.ElementTree(display).write(destination/'LTE.opi',encoding='utf-8',xml_declaration=True)
-    for child in list(display):
-        if child.tag=='widget':display.remove(child)
-    prop(display,'name','COMMS firmware identity')
-    prop(display,'width',1120)
-    label('COMMS firmware identity',28,28,1050,48,28,WHITE,True)
-    label('Reported by the running COMMS MCU over RF; last received identity.',28,90)
-    e=label('Waiting for firmware identity',28,150,1050,65,30,WHITE,True)
-    path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/comms-version.js',checkConnect='true',sfe='false',seoe='false')
-    for n in ('version_major','version_minor','version_patch','dirty'):
-        ET.SubElement(path,'pv',trig='true').text='/ember/COMMS_FIRMWARE_'+n
-    label('Full source Git commit',28,240)
-    e=label('Waiting for commit',28,280,1050,48,20,WHITE)
-    path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/comms-git.js',checkConnect='true',sfe='false',seoe='false')
-    for i in range(5):ET.SubElement(path,'pv',trig='true').text='/ember/COMMS_FIRMWARE_git_sha_'+str(i)
-    label('COMMS boot ID',28,380);value('COMMS_FIRMWARE_source_boot_id',28,420,500)
-    scripted('No packet received','COMMS_FIRMWARE_version_major','sample-time.js',28,510,1000)
-    label('Identity is sent once per enabled RF session after its first admitted request.',28,560)
-    label('A stale value is historical evidence, not confirmation of the currently powered image.',28,600)
-    ET.indent(display)
-    ET.ElementTree(display).write(destination/'Comms-Firmware.opi',encoding='utf-8',xml_declaration=True)
-    # Separate observed LTE components; header boot belongs to the reporting IHU.
-    comms_xml=ET.tostring(display,encoding='unicode')
-    for prefix,title,filename in [('LTE_CAN_FIRMWARE','LTE CAN Feather','LTE-CAN-Firmware.opi'),('LTE_MODEM_FIRMWARE','Walter LTE modem MCU','LTE-Modem-Firmware.opi')]:
-        text=comms_xml.replace('COMMS_FIRMWARE',prefix).replace('COMMS firmware identity',title+' firmware identity')
-        text=text.replace('Reported by the running COMMS MCU over RF; last received identity.','Observed by IHU using read-only CAN/UART queries; cached identity.')
-        text=text.replace('COMMS boot ID','Reported device boot ID').replace(prefix+'_source_boot_id',prefix+'_reported_boot_id')
-        text=text.replace('Identity is sent once per enabled RF session after its first admitted request.','Query the device again after a reset or reflash; this is an observation, not a live poll.')
-        text=text.replace('A stale value is historical evidence, not confirmation of the currently powered image.','See LTE-Firmware.par for reported uptime and observation age.')
-        (destination/filename).write_text(text)
-    for child in list(display):
-        if child.tag=='widget':display.remove(child)
-    prop(display,'name','Device discovery')
-    label('Device discovery — IHU observations',28,28,1050,48,26,WHITE,True)
-    scripted('Waiting for registry snapshot','DEVICE_STATUS_payload_version','device-freshness.js',28,90,1060,40,16)
-    label('Device / interface',28,145,280);label('State at snapshot',330,145,330)
-    label('Last seen age (ms)',700,145,220);label('Timeouts',940,145,160)
-    for i,(prefix,title) in enumerate([('eps','EPS / I2C1'),('eps_next','EPS_NEXT / CAN A (planned)'),('comms','COMMS / CAN A'),('lte','LTE / CAN A'),('payload','PAYLOAD / CAN A')]):
-        y=195+i*78
-        label(title,28,y,300,40,15,WHITE)
-        value('DEVICE_STATUS_'+prefix+'_state',330,y,330,40,21)
-        e=label('—',700,y,220,40,18,WHITE)
-        path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/device-age.js',checkConnect='true',sfe='false',seoe='false')
-        for suffix in ('seen','age_ms'):ET.SubElement(path,'pv',trig='true').text='/ember/DEVICE_STATUS_'+prefix+'_'+suffix
-        value('DEVICE_STATUS_'+prefix+'_timeouts',940,y,150,40,20)
-    scripted('No snapshot received','DEVICE_STATUS_payload_version','sample-time.js',28,600,1000)
-    label('NOT_SEEN = no verified response since IHU boot; planned devices may be absent.',28,642,1060,25,12)
-    label('STALE = IHU last saw the device >=30 seconds ago. An expired snapshot is not a new device failure.',28,677,1060,25,12)
-    label('See Devices.par for device boot IDs, scan pause flag and full snapshot fields.',28,712,1060,25,12)
-    ET.indent(display)
-    ET.ElementTree(display).write(destination/'Devices.opi',encoding='utf-8',xml_declaration=True)
-    for child in list(display):
-        if child.tag=='widget':display.remove(child)
-    prop(display,'name','EMBER payload')
-    label('EMBER / PAYLOAD',28,20,1060,48,30,WHITE,True)
-    label('PI 4 + LC2502 / NODE 4 / CAN A 500 kbit/s',28,76,1060,25,14,BLUE,True)
-    label('BENCH LINK: Yamcs → IHU USB console → payload CAN A. Observed replies; no RF transport.',28,108,1060,25,12,ORANGE)
-    box(28,150,520,330);box(568,150,524,330)
-    label('LAST STATUS / HEARTBEAT',48,166,470,28,14,BLUE,True)
-    for title,pv,y in [('Ready at reply','ready',210),('Payload boot ID','reported_boot_id',270),('Payload uptime (ms)','reported_uptime_ms',330),('Fragment errors','fragment_errors',390)]:
-        label(title,48,y,250,24,13);value('PAYLOAD_STATUS_'+pv,310,y-4,215,35,20)
-    label('Received at',48,438,130,24,12)
-    scripted('No verified reply','PAYLOAD_STATUS_ready','sample-time.js',180,438,345,30,12)
-    label('FIRMWARE IDENTITY',588,166,470,28,14,BLUE,True)
-    e=label('Query identification',588,210,470,35,21,WHITE)
-    path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/comms-version.js',checkConnect='true',sfe='false',seoe='false')
-    for n in ('version_major','version_minor','version_patch','dirty'):
-        ET.SubElement(path,'pv',trig='true').text='/ember/PAYLOAD_FIRMWARE_'+n
-    label('Source commit',588,270,470,24,13)
-    e=label('No identity received',588,302,470,54,15,WHITE);prop(e,'wrap_words',True)
-    path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/comms-git.js',checkConnect='true',sfe='false',seoe='false')
-    for i in range(5):ET.SubElement(path,'pv',trig='true').text='/ember/PAYLOAD_FIRMWARE_git_sha_'+str(i)
-    label('Identified boot ID',588,370,240,24,13);value('PAYLOAD_FIRMWARE_reported_boot_id',830,366,240,35,20)
-    scripted('No identity received','PAYLOAD_FIRMWARE_version_major','sample-time.js',588,438,470,30,12)
-    box(28,498,1064,110)
-    label('LAST VERIFIED PING',48,514,300,24,13,BLUE,True)
-    label('Bytes',48,554,75,24,13);value('PAYLOAD_PING_RESULT_bytes',130,548,100,35,20)
-    label('Echo match',270,554,120,24,13);value('PAYLOAD_PING_RESULT_echo_ok',400,548,90,35,20)
-    label('Round trip (ms)',540,554,190,24,13);value('PAYLOAD_PING_RESULT_round_trip_ms',740,548,150,35,20)
-    for text,url,x,w in [('Send payload command','/commanding/send?c=ember__realtime&system=%2Fember',28,320),('Command history','/commanding/history?c=ember__realtime',368,320)]:
-        e=widget('ActionButton',text,x,635,w,42);prop(e,'text',text)
-        color(e,'background_color','#30445e');color(e,'foreground_color',WHITE);font(e,14,True)
-        a=ET.SubElement(e.find('actions'),'action',type='OPEN_WEBPAGE');prop(a,'hyperlink',url)
-    label('Use PAYLOAD_PING, PAYLOAD_IDENT, PAYLOAD_STATUS_QUERY or PAYLOAD_HEARTBEAT_QUERY.',28,690,1060,24,12)
-    label('Values are last observations. Compare reply timestamps; request a new status to verify current liveness.',28,718,1060,24,12,ORANGE)
-    ET.indent(display)
-    ET.ElementTree(display).write(destination/'Payload.opi',encoding='utf-8',xml_declaration=True)
-    groups={'Payload.par':['PAYLOAD_STATUS','PAYLOAD_FIRMWARE','PAYLOAD_PING_RESULT'], 'Devices.par':['DEVICE_STATUS'], 'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'], 'LTE-Firmware.par':['LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
+    new('Payload','Status and ping results · firmware is on Devices & firmware')
+    for x in (22,510):box(x,140,468,330)
+    label('LAST STATUS / HEARTBEAT',40,154,430,22,12,BLUE,True)
+    fresh('PAYLOAD_STATUS_ready',40,184,430)
+    for title,pv,y in [('Ready at reply','ready',222),('Payload boot ID','reported_boot_id',276),('Payload uptime (ms)','reported_uptime_ms',330),('Fragment errors','fragment_errors',384)]:
+        label(title,40,y,240,22,11);observed('PAYLOAD_STATUS_'+pv,290,y-3,170,17)
+    stamp('PAYLOAD_STATUS_ready',40,435,430)
+    label('LAST VERIFIED PING',528,154,430,22,12,BLUE,True)
+    fresh('PAYLOAD_PING_RESULT_echo_ok',528,184,430)
+    for title,pv,y in [('Bytes','bytes',222),('Echo matched','echo_ok',276),('Round-trip time (ms)','round_trip_ms',330)]:
+        label(title,528,y,240,22,11);observed('PAYLOAD_PING_RESULT_'+pv,778,y-3,178,17)
+    stamp('PAYLOAD_PING_RESULT_echo_ok',528,435,430)
+    label('These are observations, not a continuous payload-health poll. Use command history for a command’s outcome.',22,489,956,24,11,ORANGE)
+    label('Bench path: Yamcs → m75q → IHU serial → CAN A → payload Pi.' if instance=='ember-bench' else 'Radio observations only. Missing payload packets are not proof that the payload is offline.',22,523,956,24,11)
+    nav('Payload raw / history','Payload.par',22,568)
+    if instance=='ember-bench':web('Send payload command','/commanding/send',250,568,235);web('Command history','/commanding/history',503,568,210)
+    footer('Payload firmware identity and source commit are consolidated on Devices & firmware.')
+    save('Payload.opi')
+
+    new('Devices & firmware','IHU discovery snapshot and last reported build identities')
+    script('No discovery snapshot',['DEVICE_STATUS_payload_version'],'device-freshness.js',22,138,956,24,11)
+    for text,x,w in [('Device / interface',22,290),('State at snapshot',344,200),('Age at snapshot',564,200),('Timeouts',804,174)]:label(text,x,176,w,22,11,BLUE,True)
+    for i,(prefix,title) in enumerate([('eps','EPS / I2C1'),('eps_next','EPS_NEXT / CAN (planned)'),('comms','COMMS / CAN A'),('lte','LTE / CAN A'),('payload','Payload / CAN A')]):
+        y=208+i*31;label(title,22,y,300,24,11)
+        observed('DEVICE_STATUS_'+prefix+'_state',344,y,200,12)
+        script('No observation',['DEVICE_STATUS_'+prefix+'_seen','DEVICE_STATUS_'+prefix+'_age_ms'],'device-age.js',564,y,210,24,11)
+        observed('DEVICE_STATUS_'+prefix+'_timeouts',804,y,174,12)
+    stamp('DEVICE_STATUS_payload_version',22,366,450)
+    label('Snapshot states are sampled by IHU; NOT_SEEN can be expected for planned or unconnected devices.',22,392,956,21,10)
+    # Single compact fleet identity table replaces three dedicated firmware pages.
+    for text,x,w in [('Firmware component',22,230),('Release / build',258,220),('Full source commit',490,488)]:label(text,x,426,w,22,11,BLUE,True)
+    for i,(prefix,title) in enumerate([('COMMS_FIRMWARE','COMMS MCU'),('LTE_CAN_FIRMWARE','LTE CAN MCU'),('LTE_MODEM_FIRMWARE','Walter MCU'),('PAYLOAD_FIRMWARE','Payload Pi')]):
+        y=456+i*29;label(title,22,y,225,24,11)
+        script('No identity',[prefix+'_'+n for n in ('version_major','version_minor','version_patch','dirty')],'comms-version.js',258,y,225,24,10)
+        script('No identity',[prefix+'_git_sha_'+str(n) for n in range(5)],'comms-git.js',490,y,488,24,10)
+    nav('Discovery raw / boot IDs','Devices.par',22,578,230)
+    nav('All firmware / timestamps','Firmware.par',270,578,250)
+    footer('Firmware rows are last-known reports, not live attestation. Raw table includes each identity’s receive time and boot ID.')
+    save('Devices.opi')
+
+    groups={'Payload.par':['PAYLOAD_STATUS','PAYLOAD_PING_RESULT'], 'Devices.par':['DEVICE_STATUS'],
+            'Firmware.par':['COMMS_FIRMWARE','LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE','PAYLOAD_FIRMWARE'],
+            'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'],
+            'LTE-Firmware.par':['LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE'],
+            'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
     for filename,names in groups.items():
         parameters=[]
-        # Pin header provenance to each message rather than the last packet of any kind.
         for m in D['messages']:
             if m['name'] in names:
                 parameters += ['/ember/'+m['name']+'_'+f['name'] for f in m['fields']]
                 if filename not in ('EPS.par','Command-reports.par'):
                     parameters += ['/ember/'+m['name']+'_'+n for n in ('source_boot_id','uptime_ms')]
-        # The common header is replaced by every packet. Omit it from response
-        # tables: only native command history provides correlated outcomes.
         obj={'$schema':'https://yamcs.org/schema/parameter-table.schema.json','scroll':filename=='Command-reports.par','bufferSize':40,'parameters':parameters}
         (destination/filename).write_text(json.dumps(obj,indent=2)+'\n')
-    scripts=destination/'scripts'; scripts.mkdir(exist_ok=True)
-    for p in (ROOT/'display-scripts').glob('*.js'):
-        shutil.copy2(p,scripts/p.name)
-    # Both instances use /ember wire parameters, but never cross UI contexts.
-    import copy
-    def text_prop(e,key,value):
-        child=e.find(key)
-        if child is None:child=ET.SubElement(e,key)
-        child.text=str(value)
-    for path in destination.glob('*.opi'):
-        text=path.read_text().replace('c=ember__realtime','c='+instance+'__realtime')
-        root=ET.fromstring(text)
-        if instance=='ember':
-            for w in list(root.findall('widget')):
-                if any('/commanding/' in x.text for x in w.findall('.//hyperlink') if x.text):root.remove(w)
-                elif 'BENCH LINK:' in w.findtext('text',''):
-                    text_prop(w,'text','Radio observations. No flight uplink configured.')
-        path.write_bytes(ET.tostring(root,encoding='utf-8',xml_declaration=True))
-    source='EPS.opi' if instance=='ember-bench' else 'Telemetry.opi'
-    root=ET.parse(destination/source).getroot()
-    text_prop(root,'name',instance+' overview')
-    labels=[w for w in root.findall('widget') if w.find('text') is not None and w.findtext('y')=='20']
-    if labels:text_prop(labels[0],'text','EMBER / BENCH' if instance=='ember-bench' else 'EMBER / FLIGHT LINKS')
-    buttons=[w for w in root.findall('widget') if w.find('actions/action') is not None]
-    if buttons:
-        template=buttons[0]
-        for label,target,x in [('Payload','Payload.opi',560),('Devices','Devices.opi',820)]:
-            w=copy.deepcopy(template);text_prop(w,'text',label);text_prop(w,'name',label)
-            text_prop(w,'x',x if instance=='ember-bench' else round(x*.69))
-            text_prop(w,'width',250 if instance=='ember-bench' else 172)
-            text_prop(w.find('actions/action'),'path',target);root.append(w)
-    if instance=='ember-bench':
-        for w in root.findall('widget'):
-            if w.findtext('text')=='Ground overview':
-                text_prop(w,'text','Command history')
-                action=w.find('actions/action');action.clear();action.set('type','OPEN_WEBPAGE')
-                text_prop(action,'hyperlink','/commanding/history?c=ember-bench__realtime')
-    (destination/'Overview.opi').write_bytes(ET.tostring(root,encoding='utf-8',xml_declaration=True))
-    print('Generated EMBER overview, EPS display and native parameter tables:',destination)
+    scripts=destination/'scripts';scripts.mkdir(exist_ok=True)
+    for p in (ROOT/'display-scripts').glob('*.js'):shutil.copy2(p,scripts/p.name)
+    for name in RETIRED_DISPLAYS:
+        path=destination/name
+        if path.exists():path.unlink()
+    print('Generated four EMBER operator displays and native diagnostic tables:',destination)
 
 
-if __name__=='__main__':
-    generate(sys.argv[1])
+RETIRED_DISPLAYS=('Telemetry.opi','LTE.opi','Comms-Firmware.opi','LTE-CAN-Firmware.opi','LTE-Modem-Firmware.opi',
+                  'Payload-Ground-Build.opi','payload-ground-build.json')
+
+if __name__=='__main__':generate(sys.argv[1])

@@ -1,0 +1,82 @@
+{
+  "updated_utc": "2026-10-17T16:15:28.326913+00:00",
+  "operator_pages": [
+    "Overview.opi",
+    "EPS.opi",
+    "Payload.opi",
+    "Devices.opi"
+  ],
+  "separate_audit_page": "Ground-Build.opi",
+  "tests": {
+    "run": 68,
+    "passed": 67,
+    "skipped": 1,
+    "skip": "virtual CAN interface unavailable"
+  },
+  "instances": {
+    "ember": {
+      "bucket": "ember_displays",
+      "pages": [
+        "Devices.opi",
+        "EPS.opi",
+        "Ground-Build.opi",
+        "Overview.opi",
+        "Payload.opi"
+      ],
+      "mdb_unchanged": true,
+      "fingerprint": "48c83f728e026a0c6dbba73fb57bc6e3e0624378132299c8e8759d0d4e033fd8",
+      "audit": "yamcs-flight-dashboards-20261017.json"
+    },
+    "ember-bench": {
+      "bucket": "ember_bench_displays",
+      "pages": [
+        "Devices.opi",
+        "EPS.opi",
+        "Ground-Build.opi",
+        "Overview.opi",
+        "Payload.opi"
+      ],
+      "mdb_unchanged": true,
+      "fingerprint": "a27a66029513454caae30c5460ab42d543d0308bec3b383ba066308c738d0082",
+      "audit": "yamcs-bench-dashboards-20261017.json"
+    }
+  },
+  "semantics": [
+    "Missing identity is not rendered as 0.0.0 or zero commit.",
+    "Heartbeat/system definitions have no expiry: explicitly label last-received values and show timestamps.",
+    "Existing expiry and readout/conversion validity govern EPS and discovery.",
+    "Firmware table retains explicitly expired identities as last-known reports, not live attestation.",
+    "Heartbeat boot ID belongs to its producer; EPS ground-wrapper session is not an IHU boot.",
+    "Bench overview emphasizes serial EPS/payload; command navigation is exclusive to bench."
+  ],
+  "retirement": {
+    "named_objects": [
+      "Telemetry.opi",
+      "LTE.opi",
+      "Comms-Firmware.opi",
+      "LTE-CAN-Firmware.opi",
+      "LTE-Modem-Firmware.opi",
+      "Payload-Ground-Build.opi",
+      "payload-ground-build.json"
+    ],
+    "backup_root": "ground/yamcs/.runtime/display-backups",
+    "verified_backup_before_removal": true,
+    "unknown_user_objects_preserved": true,
+    "additional_private_backup": "ngrabbs@192.168.1.251:/home/ngrabbs/work/deploy-backups/dashboard-cleanup-20261017/display-backups.tgz"
+  },
+  "browser_checks": [
+    "Flight expired discovery and missing/expired identity.",
+    "Current bench payload status, identity and 32-byte ping replies; command navigation retains bench context.",
+    "Bench Power uses valid live EPS measurements, explicit units and calibration notes.",
+    "Four-page layout fits default 1280x720 viewport without manual zoom."
+  ],
+  "no_changes_to": [
+    "packet bytes or dictionary",
+    "MDB freshness policies",
+    "telemetry archives",
+    "firmware",
+    "charger configuration",
+    "radio or serial service ownership"
+  ],
+  "deployment_source": "ngrabbs@192.168.1.251:/home/ngrabbs/work/ember-dashboards-20261017"
+}

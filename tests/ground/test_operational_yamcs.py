@@ -67,7 +67,7 @@ class OperationalYamcs(unittest.TestCase):
             generate(temp,instance='ember-bench')
             s=(Path(temp)/'Payload.opi').read_text()
             self.assertIn('ember-bench__realtime',s);self.assertNotIn('c=ember__realtime',s)
-            for name in ('Payload.opi','Devices.opi','Comms-Firmware.opi'):
+            for name in ('Overview.opi','EPS.opi','Payload.opi','Devices.opi'):
                 root=ET.parse(Path(temp)/name).getroot()
                 width=int(root.findtext('width'))
                 for widget in root.findall('widget'):
