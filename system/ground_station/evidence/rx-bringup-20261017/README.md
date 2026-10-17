@@ -482,3 +482,28 @@ output scaling at these settings. This does not measure spectral purity, packet
 quality, or receiver sensitivity. Same uncalibrated cable/block/pad/analyzer
 uncertainties apply. No full-power claim. Recommend next finite OTA PING at
 amplitude0.20 after the user restores TXRA antenna; no OTA transmission yet.
+
+## First successful OTA uplink at amplitude0.20; CAN response unresolved
+
+User confirmed TXRA antenna restored. One finite PING, sequence2006,
+transaction24, gain70, fixed amplitude0.20. Isolated roundtrip_power020.py scales
+the existing validated0.05 waveform by4 with finite/max-amplitude check; original
+packet helper unchanged. Expected source level approximately -6dBm from prior CW
+measurement, not a new OTA power measurement. IHU0.10.0 boot2786831095 confirmed,
+CAN normal and telemetry stopped before trial.
+
+COMMS0.30.0 decoded sequence2006 in112600us (mixer search1200Hz), and the entire
+32-byte packet matched transmitted bytes exactly. PING_ACCEPTED epoch1381519409,
+transaction24. ADC capture32768samples, no timing overruns, no clipping. This is
+one demonstrated OTA uplink, not a reliability qualification.
+
+COMMS logged forwarded=1 request=1, then UNKNOWN_OR_TIMEOUT response_held=0.
+No RF reply attempted; authorization disarmed, clocks disabled, CAN A normal.
+Ground had no receive errors and no response packets. Post-test IHU status had
+zero CAN transmit failures/timeouts and zero receive overflow; its console was
+not held open during trial, so absence of an UPLINK_PING log is not proof the
+IHU did not receive/process it (logging is gated by stdio_usb_connected()).
+Cannot distinguish IHU rejection/busy/fragment handling or reply loss from this
+capture. Full automatic round-trip remains unproven. Next keep both consoles
+captured during a controlled diagnostic transaction to localize CAN timeout.
+No second OTA transmission was made in this step.

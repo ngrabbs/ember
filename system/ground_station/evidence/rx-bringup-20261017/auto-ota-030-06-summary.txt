@@ -1,0 +1,22 @@
+[auto_reply] BEGIN max20s max_replies=1 boot_resume=0
+[rx_test] prepare lo=1 CLK1=145MHz tripler_target=435MHz max10s TX=0; any byte aborts
+[rx_test] lo=1 complete=1 shutdown_verified=1 status=11 TX=0 RX=0
+[rx_adc] n=32768 interval_us=125 elapsed_us=4095878 late_gt10us=0 min=2061 max=2098 sum=68158383
+[rx_decode] found=1 elapsed_us=112600 diagnostic_only=1 dispatch=0 sequence=2006 mixer_hz=1200 packet_hex=1900c7d600190100000101025258503100000018525854530000000000001552
+[rx_ping] outcome=PING_ACCEPTED epoch=1381519409 transaction=24 ingress_only=1 forwarded=0 rf_reply=0
+[uplink] forwarded=1 request=1 retry=0 RF=0
+[uplink] outcome=UNKNOWN_OR_TIMEOUT response_held=0 retry=0
+[auto_reply] END reply_attempted=0 ok=1 armed=0
+[can] A STAT=00 CTRL=08 NORMAL; B STAT=80 CTRL=88 CONFIG
+[can] A STAT=00 CTRL=08 NORMAL; B STAT=80 CTRL=88 CONFIG
+[can] A STAT=00 CTRL=08 NORMAL; B STAT=80 CTRL=88 CONFIG
+[can] A STAT=00 CTRL=08 NORMAL; B STAT=80 CTRL=88 CONFIG
+[can] A STAT=00 CTRL=08 NORMAL; B STAT=80 CTRL=88 CONFIG
+[can] A STAT=00 CTRL=08 NORMAL; B STAT=80 CTRL=88 CONFIG
+[can] A STAT=00 CTRL=08 NORMAL; B STAT=80 CTRL=88 CONFIG
+[can] A STAT=00 CTRL=08 NORMAL; B STAT=80 CTRL=88 CONFIG
+[can] A STAT=00 CTRL=08 NORMAL; B STAT=80 CTRL=88 CONFIG
+[can] A STAT=00 CTRL=08 NORMAL; B STAT=80 CTRL=88 CONFIG
+[firmware] version=0.30.0 git=aff7509ca707547508208f902ef635b928a25cd4 dirty=0 boot=458828362
+[clock_status] r0=11 r3=FF r16=80 r17=80 r18=80 r183=D2
+[can] A STAT=00 CTRL=08 NORMAL; B STAT=80 CTRL=88 CONFIG
