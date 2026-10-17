@@ -1,7 +1,7 @@
 # Payload ground support 1.3.0
 
 The `ember-bench` instance provides a payload dashboard, parameter table,
-command history and four commands. The first implementation uses a LAN bench
+command history and five commands. The first implementation uses a LAN bench
 route: Yamcs (.251) → UDP → m75q (.252) → IHU USB console → CAN A (500 kbit/s)
 → Pi payload (.253). This is not the transceiver's RF uplink/downlink. Camera
 and image functions are outside this release.
@@ -41,11 +41,11 @@ to Pi UDP10020. It also polls observational EPS JSON every five seconds between
 commands. Stop this service before manual IHU console access, then restart it.
 The retired `ember-payload-bridge` must remain disabled to avoid two serial owners.
 
-Only the four `PAYLOAD_*` commands are routed here. The flight `ember` instance
-has no command definitions or uplink. Its payload dashboard can show radio
+Only the five supported `PAYLOAD_*` commands are routed here. The flight `ember` instance
+now exposes PAYLOAD_FIRE_CHECK through the real bounded RF path; see FIRE_CHECK.md. Its payload dashboard can show radio
 observations when available, but cannot issue a bench command. The original
 payload 1.3.0 manifest below remains historical; audit the current bench with
-`build_identity.py --instance ember-bench`. Bridge version is now 0.2.0.
+`build_identity.py --instance ember-bench`. Bridge version is now 0.3.0.
 
 ## Validation
 
@@ -59,3 +59,7 @@ browser. See `ground/releases/payload-live-validation.json` and the 1.3.0
 manifest for recorded deployment evidence. IHU is 0.11.0, Pi payload is
 0.1.0 and the bench bridge is 0.1.0; deployed firmware build identities retain
 their recorded base commit and dirty flag from the hardware validation build.
+
+Ground1.6.0 adds the commanded fire-check result to both instances; current
+firmware versions are IHU0.12.0 and payload0.2.0. The original manifest above is
+historical. Fire-check telemetry explicitly identifies STATIC_STUB.

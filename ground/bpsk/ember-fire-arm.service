@@ -4,6 +4,8 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
+Type=notify
+TimeoutStartSec=15
 User=ngrabbs
 Environment=PYTHONPATH=/opt/ember-fire/ember
 ExecStart=/usr/bin/python3 -u /opt/ember-fire/bpsk/fire_arm.py --device /dev/serial/by-id/usb-Raspberry_Pi_Pico_E663682593639D39-if00

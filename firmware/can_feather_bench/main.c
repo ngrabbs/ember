@@ -700,6 +700,10 @@ int main(void) {
                 loopback_test=false;
             } else if(cf_feed(&fragments,&frame,RX_ID,now) && envelope_from_fragments(now,&packet))receive(&packet);
         }
+        /* receive() may submit a new request using now_ms(). Refresh before
+         * unsigned elapsed checks: an older loop timestamp would underflow and
+         * expire newly submitted RF work immediately. */
+        now=now_ms();
         cf_expire(&fragments,now);pump_tx(now);
         for(unsigned i=0;i<UC_CAPACITY;i++) {
             uc_item *x=&uhf_client.items[i];

@@ -7,7 +7,7 @@ command history and display buckets are independent.
 
 | Instance | Purpose | Links | Displays |
 |---|---|---|---|
-| `ember` | Flight-oriented radio reception | `lte-tm-in` UDP10018; `uhf-tm-in` UDP10019 | `ember_displays` |
+| `ember` | Radio reception and bounded fire-check command | `lte-tm-in` UDP10018; `uhf-tm-in` UDP10019; fire-check TC UDP10029 | `ember_displays` |
 | `ember-bench` | One physical IHU serial connection | `ihu-serial-in` UDP10020; `ihu-serial-out` to m75q UDP10028 | `ember_bench_displays` |
 
 The bench input/output pair represents the two directions of one serial path,
@@ -19,8 +19,9 @@ Open [flight overview](http://192.168.1.251:8090/telemetry/displays/files/Overvi
 or [bench overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember-bench__realtime).
 Flight Overview summarizes heartbeat/system/power; bench Overview summarizes
 serial EPS/payload/power. Both use Overview, Power, Payload and Devices & firmware.
-Flight has no command definitions or uplink. Bench exposes only `PAYLOAD_PING`,
-`PAYLOAD_IDENT`, `PAYLOAD_STATUS_QUERY` and `PAYLOAD_HEARTBEAT_QUERY`.
+Flight exposes PAYLOAD_FIRE_CHECK through the bounded real RF path. Bench exposes
+PAYLOAD_PING, PAYLOAD_IDENT, PAYLOAD_STATUS_QUERY, PAYLOAD_HEARTBEAT_QUERY and
+PAYLOAD_FIRE_CHECK through serial/CAN. See [fire-check operation](FIRE_CHECK.md).
 
 ## Serial ownership and EPS
 
@@ -74,7 +75,7 @@ remains `/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs/.runtime/quickstart`.
    `ember-payload-bridge` before enabling the new service; never run two serial owners.
 5. Start the normal `ember-ground-starter` service, then resume readiness supervision.
    `/api/instances` must show `ember` and `ember-bench` RUNNING, each with two links.
-   Verify flight has zero command definitions and bench has four.
+   Verify flight has one fire-check command definition and bench has five.
 6. Run `python3 ground/yamcs/install_displays.py --url http://PI:8090` to install
    both buckets. It backs up replaced objects and verifies uploaded bytes; named old
    duplicate pages are retired only after backup. See [display cleanup](DISPLAYS.md).
@@ -83,7 +84,7 @@ remains `/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs/.runtime/quickstart`.
 
 Yamcs and the serial bench service are enabled at boot. Existing Ethernet-first
 hotspot and LibreSDR listener supervision remain in place. This change does not
-start a transmitting radio test or implement a flight uplink.
+transmit automatically at boot; only an explicit flight fire-check command starts a bounded RF transaction.
 
 ## History and rollback
 
@@ -110,7 +111,7 @@ The ground unit suite covers both MDBs, idempotent preparation, command routing,
 shared serial polling and disconnect recovery. `operational_check.py` runs only
 against a separate loopback validation server on HTTP8091 with TM11018/11019/
 11020 and mock TC11028. It verifies radio deduplication, independent bench
-archives, bad-CRC rejection, flight command refusal, bench completion and
+archives, bad-CRC rejection, flight refusal of serial-only commands, bench completion and
 cross-instance reply isolation. Never inject its synthetic packets into production.
 
 See [deployment evidence](../../system/ground_station/evidence/yamcs-environments-20261017.json).

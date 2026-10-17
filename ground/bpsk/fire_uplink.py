@@ -38,7 +38,7 @@ def execute(wire,output,images):
     radio=uhd.usrp.MultiUSRP('type=b200,fpga='+str(fpga));radio.set_master_clock_rate(49152000)
     radio.set_tx_rate(RATE,0);radio.set_rx_rate(RATE,0)
     radio.set_tx_antenna('TX/RX',0);radio.set_rx_antenna('RX2',0)
-    radio.set_tx_gain(55,0);radio.set_rx_gain(0,0)
+    radio.set_tx_gain(70,0);radio.set_rx_gain(0,0)
     radio.set_tx_freq(uhd.types.TuneRequest(434994550-DIGITAL_OFFSET),0)
     radio.set_rx_freq(uhd.types.TuneRequest(437000000),0)
     if abs(radio.get_tx_rate(0)-RATE)>1 or abs(radio.get_rx_rate(0)-RATE)>1:raise ValueError('Unexpected rate')
@@ -52,7 +52,9 @@ def execute(wire,output,images):
         with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as arm:
             arm.settimeout(4);arm.sendto(wire,('192.168.1.252',10030));answer,address=arm.recvfrom(512)
             if address[0]!='192.168.1.252' or answer!=b'ARMED'+wire:raise RuntimeError('COMMS not armed')
-        time.sleep(.3)
+        # The COMMS ADC capture starts one second after clock setup.
+        # Match the previously qualified OTA orchestration timing.
+        time.sleep(1.8)
         md=uhd.types.TXMetadata();md.start_of_burst=True;md.end_of_burst=True
         md.has_time_spec=True;md.time_spec=uhd.types.TimeSpec(radio.get_time_now().get_real_secs()+.25)
         if tx.send(iq.reshape(1,-1),md,3)!=len(iq):raise RuntimeError('Short transmit; no retry')
@@ -94,6 +96,12 @@ def main():
     p.add_argument('--output',type=Path,required=True);a=p.parse_args();seen=OrderedDict()
     with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as sock, socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as out:
         sock.bind(('192.168.1.251',10029))
+        notify=os.environ.get('NOTIFY_SOCKET')
+        if notify:
+            with socket.socket(socket.AF_UNIX,socket.SOCK_DGRAM) as ready:
+                ready.connect(('\0'+notify[1:]) if notify.startswith('@') else notify)
+                ready.sendall(b'READY=1')
+        print('READY listening',flush=True)
         while True:
             wire,address=sock.recvfrom(241)
             try:

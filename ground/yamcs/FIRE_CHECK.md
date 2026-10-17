@@ -27,7 +27,7 @@ Do not run another radio owner concurrently. m75q ember-fire-arm owns only the
 COMMS USB port during the finite window. ember-bench-bridge remains the sole
 IHU serial owner. Services transmit nothing at boot. Each command permits one
 burst at the previously measured OTA settings (434.99455MHz uplink,437MHz
-downlink, gain55, amplitude0.20) and one finite capture. No application retries.
+downlink, gain70, amplitude0.20) and one finite capture. No application retries.
 COMMS bounds its window to20s and at most one response. A missing result times
 out after40s in Yamcs. Duplicate suppression lasts one service/MCU boot and is
 not authentication or persistent replay protection. IHU/COMMS cache capacity

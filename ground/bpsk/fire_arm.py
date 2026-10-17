@@ -1,5 +1,6 @@
 """COMMS one-window arming service. A valid fire-check datagram permits one A window."""
 import argparse
+import os
 import socket
 import time
 import serial
@@ -12,6 +13,12 @@ def main():
     a=p.parse_args()
     with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as sock:
         sock.bind(('192.168.1.252',10030))
+        notify=os.environ.get('NOTIFY_SOCKET')
+        if notify:
+            with socket.socket(socket.AF_UNIX,socket.SOCK_DGRAM) as ready:
+                ready.connect(('\0'+notify[1:]) if notify.startswith('@') else notify)
+                ready.sendall(b'READY=1')
+        print('READY listening',flush=True)
         while True:
             wire,address=sock.recvfrom(241)
             if address[0]!='192.168.1.251':continue

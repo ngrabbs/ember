@@ -1,3 +1,12 @@
+## Fire-check release1.6.0
+
+Both operational instances support payload fire-check results. Flight has one
+PAYLOAD_FIRE_CHECK command using real bounded RF; bench has five payload
+commands using serial/CAN. IHU0.12.0, payload0.2.0, COMMS0.31.0,
+serial bridge0.3.0 and RF bridge0.1.0 are the corresponding components.
+The receiver dictionary/DSP baseline is2.4.0. See ../yamcs/FIRE_CHECK.md and
+new per-instance manifests for deployed content identity and hardware evidence.
+
 # Ground release identities
 
 Operational update (October 17, 2026): select `ember` / `realtime` for USB,

@@ -20,7 +20,7 @@ def api(path,body=None):
     with urlopen(req,timeout=10) as r:return json.load(r)
 def check():
     assert {x['name'] for x in api('/instances')['instances']}=={'ember','ember-bench'}
-    expected={'ember':{'lte-tm-in','uhf-tm-in'},'ember-bench':{'ihu-serial-in','ihu-serial-out'}}
+    expected={'ember':{'lte-tm-in','uhf-tm-in','uhf-command-out'},'ember-bench':{'ihu-serial-in','ihu-serial-out'}}
     for instance,names in expected.items():assert {x['name'] for x in api('/links/'+instance)['links']}==names
     sender=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sink=socket.socket(socket.AF_INET,socket.SOCK_DGRAM);sink.bind(('127.0.0.1',11028))
