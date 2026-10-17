@@ -18,6 +18,347 @@ implemented camera, image acquisition/download, detector configuration,
 payload power-switch, or CAN reboot/shutdown commands. Linux maintenance is
 available separately through SSH.
 
+## Stored-image detector and planned command integration
+
+The offline image pipeline is implemented in
+[`firmware/payload/ember_detector`](../../firmware/payload/ember_detector/README.md),
+with replaceable basic and registration-guarded spectral detectors, validated
+configuration, per-run evidence and batch threshold evaluation. It runs real
+image processing on selected stored files. The running 0.2.0 CAN responder still
+returns the static stub described above; camera acquisition and commanded-image
+integration remain subsequent stages. Its image acquisition adapter uses fixtures;
+the offline detection stage is not a stub.
+
+The baseline is the spectral approach in
+[`koenig_wildfire`](https://github.com/ngrabbs/koenig_wildfire), reviewed at
+commit `d98e8b5f4ba283d4879dfe04be505441480e8abb`. EMBER will implement its own
+small processing modules and configuration contract rather than importing the
+camera daemon or web application. That reference contains documents from
+different stages of development: the August pipeline review predates the
+September burn evidence. Neither its historical thresholds nor its reported
+burn measurements establish thresholds or accuracy for this implementation.
+
+### End-to-end target flow
+
+```mermaid
+flowchart TD
+    A["Fire-check request: IHU / bench / RF"] --> B["Validate session; admit one job; snapshot fixture + config"]
+    B --> C["Acquisition adapter: load one named stored triplet"]
+    C --> D["Validate files, hashes, channel roles and metadata"]
+    D --> E["Decode linear intensities; dark/flat/response correction"]
+    E --> F["Align channels onto one grid; retain common overlap mask"]
+    F --> G["Mask dark, saturated, bad and unsupported pixels"]
+    G --> H["Interpolate continuum; compute absolute and fractional excess"]
+    H --> I["Threshold candidates; group connected regions"]
+    I --> J["Check region evidence and scene quality"]
+    J --> K{"Usable evidence?"}
+    K -->|yes| L{"Qualifying region?"}
+    L -->|yes| M["FIRE candidate in fixture"]
+    L -->|no| N["NO_FIRE detected in usable fixture area"]
+    K -->|no| O["UNKNOWN + reason"]
+    C -. "Future replacement only" .-> P["Three-camera capture adapter: same triplet contract"]
+    M --> Q["Persist run record + diagnostic maps; return correlated result"]
+    N --> Q
+    O --> Q
+```
+
+Every stage may fail to UNKNOWN. Missing inputs, invalid calibration, bad
+registration, timeout or insufficient usable area must never become NO_FIRE.
+NO_FIRE means no qualifying signature was detected within the usable data and
+configured sensitivity; it does not prove that no fire exists in the scene.
+A positive fixture result demonstrates the processing decision, not a current
+observation of the spacecraft's surroundings.
+
+### 1. Select a fixture instead of capturing cameras
+
+A fixture is a named triplet of the **same scene**, with separate low-reference,
+on-line and high-reference images. Start with the reference arrangement
+750/770/780 nm, but store actual channel wavelengths in metadata. The reference
+also supports 760/770/780 nm; that arrangement uses different interpolation
+weights. Do not infer channel assignment solely from camera port or filename.
+
+Each fixture manifest must record:
+
+| Field | Purpose |
+|---|---|
+| `fixture_id`, `scene_id`, `source_kind` | Stable case, grouping for evaluation, and `RECORDED` or `SYNTHETIC` provenance |
+| Per-channel role, wavelength and file SHA-256 | Prove which image was analyzed and prevent silent role swaps |
+| Pixel encoding, bit depth, black/white levels, linearity | Decode intensities without guessing from the file's maximum value |
+| Exposure time and gain per channel | Establish comparable response; arbitrary gain numbers are not necessarily linear multipliers |
+| Calibration ID/hash and processing stage | Distinguish sensor-native, corrected, and already registered inputs; prevent applying corrections twice |
+| Registration transforms/quality, if precomputed | Establish common pixel coordinates and usable overlap |
+| Original timestamps/channel timing, when known | Preserve sequential-capture differences even though fixture replay itself is instantaneous |
+| Evaluation label and its source | FIRE / NO_FIRE / UNKNOWN ground truth, used only by the evaluation runner |
+
+The acquisition adapter returns arrays plus this metadata, with
+`input_source=STORED_FIXTURE` and `camera_capture_performed=false`. Keep the
+original image time separate from analysis time. Re-running one fixture must
+not fabricate new camera acquisition times or count as independent evidence.
+Use an explicitly selected active fixture; do not silently alternate fire and
+no-fire cases across CAN requests. Batch evaluation selects cases explicitly.
+
+Ordinary RGB fire photographs are not interchangeable with these spectral
+triplets. Three copies of one image do not provide independent spectral
+measurements. Synthetic triplets with known injected signals are useful for
+software correctness tests, but do not establish real-world detection accuracy.
+The supplied `payload_images_20261014.zip` has now been inventoried: 411
+JPEGs form 137 complete triplets, with filename roles cam0=770 nm, cam1=750 nm,
+cam2=780 nm. All images decode at 1456 × 1088 in an RGB JPEG container; this
+alone does not establish sensor linearity or independent colour measurements.
+The 13 bracket CSVs cover 405 images (135 complete triplets), list exposure,
+and record gain as `-` (unknown). Two triplets, `20261014_174904_481` and
+`20261014_174917_554`, have no bracket rows. No fire/no-fire labels or identified
+calibration manifest are supplied. The initial inventory left all truth labels UNKNOWN pending review.
+The visual-review selection below now defines the initial development labels. Preserve the original archive and input hashes;
+do not infer labels, calibration status or filter installation from filenames.
+The archive SHA-256 is
+`4a4bedae9231e50a5c62acd84be13fcc7781eb9f80e97c02e2c503cb7fb2d73a`.
+
+### Selected development fixtures
+
+After visual review of all 137 triplets, the operator chose to exclude every
+uncertain case. The initial dataset contains **107 triplets (321 images):
+76 FIRE and 31 NO_FIRE**. The 30 uncertain triplets are excluded from the working
+set, including 21 nearly black captures, one weak early capture and eight
+smoke/fading cases. Original source files remain unchanged.
+
+The versioned [fixture manifest](../../firmware/payload/fixtures/payload_images_20261014/manifest.json)
+records every selected file/hash, its label, metadata and the excluded capture
+IDs. These are user-accepted visual labels, not independent laboratory ground
+truth; NO_FIRE here means no visible flame identified. The selection intentionally
+omits difficult cases, so accuracy measured only on this subset will not describe
+performance on dark, weak or ambiguous scenes. All cases remain development data
+until an independent evaluation split is established.
+
+Capture `20261014_174904_481` remains selected as FIRE but lacks bracket metadata.
+Its exposure and gain stay unknown; classification confidence does not establish
+calibration compatibility. Other retained cases have bracket exposure metadata
+but gain is also unknown. The manifest keeps image-quality/metadata limitations
+separate from the visual class. Raw JPEGs are packaged locally with the manifest
+for copying to the Pi, not added to Git. This selection does not enable the new
+detector or change the running CAN responder.
+
+### Available calibration product
+
+The reference repository includes
+[`calibration/correction_20261003.npz`](https://github.com/ngrabbs/koenig_wildfire/blob/d98e8b5f4ba283d4879dfe04be505441480e8abb/calibration/correction_20261003.npz),
+with gain and dark maps for camera ports 0, 1 and 2. All six maps have shape
+1088 × 1456, matching the supplied October 14 JPEG dimensions. Its SHA-256 is
+`0649ecedd1d68e31f2cc58bd4808946c8a360d157b22db5debfe2b227df58b51`.
+This is a candidate calibration asset, not evidence that every October 14
+capture used the same optics or processing state.
+
+The associated
+[calibration notes](https://github.com/ngrabbs/koenig_wildfire/blob/d98e8b5f4ba283d4879dfe04be505441480e8abb/calibration/README.md)
+describe PTFE-panel flats and lens-cap darks at 24000 microseconds, gain 1.0.
+They supersede older project pages that say no valid flat exists. The notes
+exclude roughly the outer 10% of the field from trusted calibration and void
+the correction if focus/filter placement changes. Retain a documented usable
+ROI; do not assume the NPZ contains a per-pixel validity mask (it does not).
+The original raw calibration frames are documented as living on the original
+payload under `~/payload_images/20261003_*`; they are not committed in the
+reference repository.
+
+October 14 bracket metadata spans 50–800 microseconds and does not establish
+gain. Do not blindly subtract the 24000-microsecond dark maps from those
+frames. Establish the optical configuration, existing image corrections and
+exposure-appropriate dark treatment before calling this a quantitatively
+calibrated test. In particular, near-zero dark values reported by the source
+are not a substitute for a documented compatibility decision.
+
+### 2. Prepare comparable, aligned signals
+
+Decode into floating-point linear intensity using declared encoding. A JPEG
+or display PNG may have unknown gamma, clipping or automatic image processing;
+accept it for exploratory analysis only with an explicit preprocessing profile
+and an uncalibrated provenance flag. File format alone does not establish
+linearity. Use calibrated linear monochrome data for quantitative validation.
+
+For sensor-native images, subtract the applicable dark/black signal, apply
+flat-field maps in **sensor coordinates**, then normalize exposure and calibrated
+channel response. A simple linear response model is:
+
+```text
+S_channel = (raw - dark) * flat_gain * response_scale / exposure_time
+```
+
+The profile must define the units and which exposure/gain effects are already
+included in calibration. Do not divide twice by exposure or assume a sensor's
+reported gain value equals sensitivity. Never normalize every channel to its
+own mean, histogram or maximum: that can remove the spectral excess we seek.
+
+Then register the reference channels onto the selected common grid and carry
+validity masks through the transform. Keep only common overlap; padded borders
+must not become valid zero-valued measurements. Use validated fixed transforms
+for the first controlled fixtures. Add automatic registration later if needed,
+with an explicit quality gate. A failed fit is not a reason to assume identity
+alignment. Calibration must precede resampling; manifest-declared corrected or
+registered inputs skip only the stages already completed and verified.
+
+### 3. Measure spectral excess
+
+For wavelengths `lambda_low < lambda_on < lambda_high`, define:
+
+```text
+w = (lambda_on - lambda_low) / (lambda_high - lambda_low)
+C = (1 - w) * S_low + w * S_high
+E = S_on - C
+K = E / C                  # only where the continuum passes its signal floor
+```
+
+For 750/770/780 nm, `C = S750/3 + 2*S780/3`. For 760/770/780 nm,
+`C = (S760 + S780)/2`. `K=0.25` means the on-line signal is 25% above the
+interpolated continuum; it is not a 25% probability of fire. Positive excess
+alone is not sufficient for a fire decision. Instrument imbalance, scene
+spectral structure, misregistration and sequential capture changes can also
+produce it. The continuum model is a baseline to test, not a universal
+background model.
+
+For a numerical example, let corrected `S750=100`, `S780=130` and
+`S770=160` in the same signal units. Then `C=120`, `E=40` and `K=1/3`.
+An illustrative K threshold of 0.25 would admit that pixel, while 0.40 would
+reject it. It still needs the absolute-excess, validity and region checks.
+This arithmetic example does not select a validated operational threshold.
+
+Build a validity mask from all channels: finite values, sufficient continuum,
+no raw saturation, usable calibration pixels and common registration overlap.
+Preserve raw saturation flags through correction/resampling. Do not convert
+invalid pixels to valid K=0 or manufacture a large ratio by dividing by epsilon.
+
+### 4. Turn pixel evidence into a scene decision
+
+A valid pixel is a candidate only when both `K >= k_threshold` and
+`E >= excess_min`. The absolute-excess gate guards against large fractional
+ratios at low signal. An optional signal-to-noise gate may be added only after
+an uncertainty model exists; K is not itself SNR or confidence.
+
+Group candidates with a defined pixel connectivity. Require a minimum region
+area, and record each region's area, bounding box, peak/median K, excess and
+usable support. Optional morphology must have a defined order, kernel and
+iterations: it can erase small genuine sources or join unrelated artifacts.
+Disable it in the first transparent baseline. Freeze analysis resolution so
+pixel-area thresholds have a stable meaning. Border/saturation-invalidated
+regions and poor registration contribute explicit quality reasons.
+
+A qualifying supported region produces FIRE. No qualifying region produces
+NO_FIRE only when the scene passes coverage and quality gates. A frame whose
+possible source is clipped or outside usable coverage may be UNKNOWN rather
+than a negative. Record masked/candidate fractions and reason codes alongside
+both decisions. Temporal persistence is deferred until independent capture
+sequences exist; repeated replay of one stored image cannot provide it.
+
+### Tunable configuration
+
+Store a versioned, validated configuration file on the Pi. Each job snapshots
+an immutable configuration and records its hash; edits affect subsequent jobs.
+Start by tuning locally over SSH and batch evaluation. New CAN commands for
+remote tuning are outside this first interface; arbitrary file paths or
+threshold mutations must not be smuggled into the current empty FIRE_CHECK
+request. The table below describes the target configuration. Exact implemented offline
+keys and run commands are in the [detector README](../../firmware/payload/ember_detector/README.md)
+and `firmware/payload/config/*.json`; remote tuning is not a current CAN operation.
+
+| Proposed setting | Units / valid domain | What it controls |
+|---|---|---|
+| `input.fixture_id` | Manifest ID | Exact stored case analyzed by a commanded check |
+| `channels.*.wavelength_nm` | Positive, low < on < high | Continuum weights; measured filter metadata, not a classifier tuning shortcut |
+| `preprocess.profile_id`, `calibration.id` | Versioned IDs | Encoding, dark/flat/response and exposure treatment |
+| `registration.mode` | `prealigned` / `fixed_transform` initially | How common scene coordinates are established |
+| `registration.max_error_px` | Nonnegative pixels, defined metric | Maximum acceptable measured alignment residual |
+| `analysis.roi`, `analysis.resolution` | Bounds and width/height in pixels | Fixed analyzed area and scale |
+| `quality.continuum_min` | Positive, calibrated signal units | Minimum denominator for a usable K measurement |
+| `quality.saturation_margin` | Declared raw-code or full-scale units | Reject near-clipped sensor values before correction |
+| `quality.min_valid_fraction` | 0–1 of the declared ROI | Minimum usable coverage for a scene decision |
+| `quality.max_saturated_fraction` | 0–1, plus candidate-region checks | When clipping prevents a defensible decision |
+| `detection.k_threshold` | Nonnegative, dimensionless | Minimum fractional on-line excess |
+| `detection.excess_min` | Nonnegative, same units as E | Minimum absolute on-line excess |
+| `regions.min_area_px` | Positive integer | Minimum connected candidate area at the fixed analysis resolution |
+| `regions.connectivity` | 4 or 8 | Whether diagonal neighbors join |
+| `regions.morphology` | Disabled initially; later bounded kernels/iterations | Optional candidate cleanup, reported explicitly |
+| `runtime.max_analysis_ms` | Positive, within end-to-end deadline | Bound a job instead of hanging CAN service |
+| `runtime.max_pixels`, `runtime.max_input_bytes` | Positive bounds | Bound decoded image memory and file loading |
+| `diagnostics.save_maps`, `diagnostics.retention` | Boolean and bounded disk quota/count | Reproducibility without filling the SD card |
+
+Do not publish empirical detection defaults before reviewing the fixture
+collection. Use an explicitly labeled synthetic test profile for unit tests;
+its thresholds are not deployment recommendations. Calibration constants and
+channel assignments belong to the instrument profile. Detection thresholds
+belong to the experiment profile. Keep these separate so tuning cannot hide
+instrument errors. If a noise/SNR gate is later introduced, its calibrated
+uncertainties and threshold become additional versioned inputs.
+
+### Replaceable detector interface
+
+A detector implements `algorithm_id`, `validate(settings)` and
+`detect(Scene, settings) -> Result`. The Scene contains corrected, aligned
+channels and validity information; the Result contains FIRE/NO_FIRE/UNKNOWN,
+reasons and evidence. A detector does not load fixture files, see evaluation
+labels, control cameras or handle CAN. Add a new factory to the explicit
+registry and select its ID in configuration; acquisition and reporting remain
+independent of the algorithm. The supplied `spectral_excess_v1` and
+`spectral_guarded_v1` implementations exercise that separation. Algorithm-specific
+settings live under `detector`; its implementation validates their schema.
+
+### Outputs, CAN integration and timing
+
+Each analysis should save a compact structured record containing a unique run
+ID, requester/check correlation, fixture/input hashes, config/calibration hashes,
+algorithm version, source/analysis times, per-stage timings, result and reasons,
+quality metrics and candidate-region measurements. Save optional K/validity/
+candidate maps and overlays locally; they need not cross CAN. Ground-truth
+labels must never enter the detection decision. A local batch runner adds
+comparison with labels after inference.
+
+The current v1 FIRE_RESULT has only result 0/1, mode 1/2, boot, uptime and check
+ID. It cannot express fixture provenance, quality failure reasons or a fixture/
+configuration identity. `ALGORITHM` would describe the computation but would
+not tell ground that the images were prerecorded. Before CAN deployment,
+version the result contract and update the Pi, shared IHU validators, bench/RF
+wrappers, dictionary and Yamcs display together. Preserve legacy decoding of
+historical results. Do not repurpose the required-zero reserved byte or silently
+report fixture decisions as current camera observations. Keep processing
+failure distinct from NO_FIRE, with explicit failure telemetry/command outcome.
+
+A bounded worker should perform image work while the CAN loop continues to
+handle discovery and diagnostics. Admit at most one analysis job initially;
+reject additional work as busy without starting another check. Measure Pi 4
+runtime, including loading, decode, calibration, registration and reply transfer.
+Today the bench/client exchange deadline is three seconds and the IHU application
+deadline is five seconds; the RF path adds its own finite window. These are
+integration limits, not demonstrated image-processing budgets. Either prove
+that the complete transaction fits or add coordinated long-job admission/result
+handling and deadlines. Do not simply block the current handler or precompute a
+fixed answer and call it a fresh algorithm run.
+
+### Evaluation and staged delivery
+
+1. **Analytical tests:** matched continuum gives K=0; known injected on-line
+   excess gives the expected K and region; swapped channels, invalid metadata,
+   zero continuum, clipping, corrupt files and misalignment exercise UNKNOWN.
+2. **Stored-image baseline:** run the same detector locally on the Pi over a
+   labeled corpus; retain deterministic outputs and stage timings. Include
+   flames, embers/hot continuum, lamps/reflections, vegetation, low signal,
+   saturation and alignment artifacts where real data is available. Ambiguous
+   labels remain UNKNOWN; different fuels/scenes need separate evidence.
+3. **Tune and hold out:** sweep K/excess/area thresholds over a development
+   subset; report per-scene false positives, misses, precision/recall and
+   UNKNOWN coverage on a separate held-out subset. Keep triplets from the same
+   burn/scene/session together to avoid leakage. Exclude UNKNOWN from binary
+   scores only with its count/rate reported separately. Use the same held-out
+   set and metric definitions when comparing profiles.
+4. **Command integration:** deploy fixture-tagged results and the coordinated
+   protocol/display changes, then verify IHU and Yamcs correlation, timeout,
+   restart and busy behavior. Do not transmit RF merely to tune a threshold.
+5. **Camera integration later:** replace the fixture adapter with three-camera
+   acquisition and preserve the analysis contract. Requalify timing, exposure,
+   calibration and alignment; fixture success does not validate live capture.
+
+Reference sources for the baseline are the pinned
+[K-index implementation](https://github.com/ngrabbs/koenig_wildfire/blob/d98e8b5f4ba283d4879dfe04be505441480e8abb/tools/k_index.py),
+[flat-field tool](https://github.com/ngrabbs/koenig_wildfire/blob/d98e8b5f4ba283d4879dfe04be505441480e8abb/tools/flat_field.py),
+[registration tool](https://github.com/ngrabbs/koenig_wildfire/blob/d98e8b5f4ba283d4879dfe04be505441480e8abb/tools/register_triplets.py)
+and [September detection evidence and limits](https://github.com/ngrabbs/koenig_wildfire/blob/d98e8b5f4ba283d4879dfe04be505441480e8abb/docs/potassium_detection.md).
+
 ## Choose an interface
 
 | Interface | Where to use it | What it provides |
