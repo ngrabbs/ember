@@ -336,3 +336,33 @@ ADC and modem tests pass. Production live receiver service remains unchanged.
 User selected OTA for the return test. Requested removal of the conducted link,
 UHF antennas on COMMS J9 and LibreSDR RXA approximately three feet apart, TXRA
 unconnected, scope probe lifted. RF return awaits physical setup confirmation.
+
+## Genuine IHU completion returned OTA and archived in Yamcs
+
+User confirmed replacing coax with UHF antennas on COMMS J9 and LibreSDR RXA,
+about three feet apart, TXRA disconnected and scope lifted. Started an eight-second
+receive-only capture at 437 MHz, channel 0 RX2 (RXA), gain 0, using isolated
+receiver 2.3.0 (content SHA256
+540142e45bb255c627713d445ce643a33eb828bd1bc8af1db80b948a2c591632).
+Only after receiver readiness, explicitly triggered COMMS console V once.
+
+COMMS transmitted the held IHU response, reported response_RF_complete=1 and
+verified TX shutdown. Receiver recovered exactly one strict DBPSK frame with
+valid CRCs and no streaming errors. All 43 bytes equal the IHU-generated response
+and COMMS CAN-held copy. Estimated carrier offset -6672.752 Hz; this is a decoder
+estimate, not calibrated transmitter frequency. No automatic repeat occurred.
+
+After byte comparison, forwarded that single real response via UDP to ember-uhf.
+Yamcs archive contains exactly the same bytes as /ember/COMMAND_RESPONSE,
+reception 2026-10-17T14:14:49.129Z. Parameters acquired: command_id=1 (PING),
+stage=COMPLETED, reason=NONE. See ihu-ping-return-ota-01-yamcs-proof.json.
+The receiver capture's forwarded=0 records its original receive-only phase;
+proof.forwarded_verified_response=1 records the subsequent verified forwarding.
+
+This demonstrates conducted RF uplink → COMMS → CAN → IHU command engine → CAN
+→ COMMS → OTA downlink → ground decoder → Yamcs. It is one manually staged
+transaction, not continuous receive, automatic turnaround, full OTA round-trip,
+or reliability qualification. Reply is consumed; sources are idle and CAN A is
+normal. Production continuous receiver remains unchanged; version 2.3.0 was
+used in the isolated test directory. Next: continuous/bounded listening and an
+explicitly bounded automatic half-duplex reply path, then repeated OTA trials.

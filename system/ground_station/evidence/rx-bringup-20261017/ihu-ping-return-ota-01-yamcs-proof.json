@@ -1,0 +1,119 @@
+{
+  "receiver": {
+    "utc": "2026-10-17T14:14:18.411496+00:00",
+    "frequency_hz": 436999999.9952314,
+    "channel": 0,
+    "antenna": "RX2",
+    "rate": 191999.99952627943,
+    "gain": 0.0,
+    "fpga_sha256": "7f0e329b4724e0d919a06b9924aaa3c77305b6f25038deebd6171657ac7c8a99",
+    "errors": [],
+    "packets": [
+      {
+        "sequence": 1,
+        "hex": "0901c00100240102003102015258503100000001a61baaf70000a5b7000b000102000000000000000091b7",
+        "decoded": {
+          "name": "COMMAND_RESPONSE",
+          "sequence": 1,
+          "header": {
+            "schema_version": 1,
+            "kind": 2,
+            "message_id": 49,
+            "source": 2,
+            "target": 1,
+            "transaction_epoch": 1381519409,
+            "transaction_id": 1,
+            "source_boot_id": 2786831095,
+            "uptime_ms": 42423,
+            "payload_length": 11
+          },
+          "payload": {
+            "command_id": 1,
+            "stage": 2,
+            "reason": 0,
+            "parameter_id": 0,
+            "value": 0
+          }
+        },
+        "carrier_offset_hz": -6672.752380371094,
+        "window_start": 0,
+        "timing_sample": 16,
+        "decoder": "dbpsk"
+      }
+    ],
+    "samples": 1540096,
+    "peak_magnitude": 0.0011291846167296171,
+    "forwarded": 0
+  },
+  "forwarded_verified_response": 1,
+  "archive_byte_exact": true,
+  "yamcs_packets": [
+    {
+      "packet": "CQHAAQAkAQIAMQIBUlhQMQAAAAGmG6r3AACltwALAAECAAAAAAAAAACRtw==",
+      "sequenceNumber": 151109633,
+      "id": {
+        "name": "/ember/COMMAND_RESPONSE"
+      },
+      "receptionTime": "2026-10-17T14:14:49.129Z",
+      "generationTime": "2026-10-17T14:14:49.129Z",
+      "earthReceptionTime": "2026-10-17T14:14:49.129Z",
+      "link": "eps-uhf-in",
+      "size": 43
+    }
+  ],
+  "parameters": {
+    "command_id": {
+      "id": {
+        "name": "COMMAND_RESPONSE_command_id",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "UINT32",
+        "uint32Value": 1
+      },
+      "engValue": {
+        "type": "UINT32",
+        "uint32Value": 1
+      },
+      "acquisitionTime": "2026-10-17T14:14:49.129Z",
+      "generationTime": "2026-10-17T14:14:49.129Z",
+      "acquisitionStatus": "ACQUIRED"
+    },
+    "stage": {
+      "id": {
+        "name": "COMMAND_RESPONSE_stage",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "UINT32",
+        "uint32Value": 2
+      },
+      "engValue": {
+        "type": "ENUMERATED",
+        "stringValue": "COMPLETED",
+        "sint64Value": "2"
+      },
+      "acquisitionTime": "2026-10-17T14:14:49.129Z",
+      "generationTime": "2026-10-17T14:14:49.129Z",
+      "acquisitionStatus": "ACQUIRED"
+    },
+    "reason": {
+      "id": {
+        "name": "COMMAND_RESPONSE_reason",
+        "namespace": "/ember"
+      },
+      "rawValue": {
+        "type": "UINT32",
+        "uint32Value": 0
+      },
+      "engValue": {
+        "type": "ENUMERATED",
+        "stringValue": "NONE",
+        "sint64Value": "0"
+      },
+      "acquisitionTime": "2026-10-17T14:14:49.129Z",
+      "generationTime": "2026-10-17T14:14:49.129Z",
+      "acquisitionStatus": "ACQUIRED"
+    }
+  }
+}
