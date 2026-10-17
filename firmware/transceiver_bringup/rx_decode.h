@@ -36,9 +36,9 @@ static bool rd_bit(rd_lane *s, unsigned bit, rd_result *out) {
  s->collecting=false;s->sync=0;
  unsigned n=s->wanted-11;const uint8_t *p=s->body+7;
  if(bp_crc32(s->body,s->wanted-4)!=rd_u32(s->body+s->wanted-4))return false;
- /* Native framing and CRC only. Restrict to telemetry fixtures for now. */
- if(rd_u16(p)!=0x0901||(rd_u16(p+2)&0xc000)!=0xc000||rd_u16(p+4)!=n-7||
-    p[6]!=1||p[7]!=1||rd_u16(p+28)!=n-32||bp_crc16(p,n-2)!=rd_u16(p+n-2))return false;
+ /* Envelope validation only; command acceptance is a separate PING-only gate. */
+ if(!((rd_u16(p)==0x0901&&p[7]==1)||(rd_u16(p)==0x1900&&p[7]==0))||(rd_u16(p+2)&0xc000)!=0xc000||rd_u16(p+4)!=n-7||
+    p[6]!=1||rd_u16(p+28)!=n-32||bp_crc16(p,n-2)!=rd_u16(p+n-2))return false;
  out->size=n;out->sequence=rd_u32(s->body+1);memcpy(out->packet,p,n);return true;
 }
 /* Optional callback between frequency candidates keeps control/service bounded. */

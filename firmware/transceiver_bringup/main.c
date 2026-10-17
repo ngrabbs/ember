@@ -33,6 +33,8 @@ static bool disable_clocks(void) {
 #include "rx_test.h"
 #include "bpsk_packet.h"
 #include "rx_decode.h"
+#include "rx_ping.h"
+static rp_cache rx_ping_cache;
 #include "bpsk_emit.h"
 #include "rf_bridge.h"
 static void bpsk_test(unsigned drive) {
@@ -97,13 +99,19 @@ static void rx_test(bool lo, bool packet_capture) {
         rd_result result={0};uint64_t started=time_us_64();
         rx_decode_deadline=started+3000000;
         bool found=rd_decode(rx_samples,rx_count,&result,rx_decode_continue);
-        printf("[rx_decode] found=%u elapsed_us=%llu fixture_only=1 dispatch=0",
+        printf("[rx_decode] found=%u elapsed_us=%llu diagnostic_only=1 dispatch=0",
                found,(unsigned long long)(time_us_64()-started));
         if(found) {
             printf(" sequence=%lu mixer_hz=%u packet_hex=",(unsigned long)result.sequence,result.frequency);
             for(unsigned i=0;i<result.size;i++)printf("%02x",result.packet[i]);
         }
         printf("\n");
+        if(found && result.packet[W_KIND]==W_KINDS_COMMAND) {
+            const char *status=rp_check(&rx_ping_cache,result.packet,result.size);
+            printf("[rx_ping] outcome=%s epoch=%lu transaction=%lu ingress_only=1 forwarded=0 rf_reply=0\n",
+                   status,(unsigned long)rd_u32(result.packet+W_TRANSACTION_EPOCH),
+                   (unsigned long)rd_u32(result.packet+W_TRANSACTION_ID));
+        }
     }
 }
 
@@ -472,7 +480,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v27] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
+        printf("[y24-safe-v28] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

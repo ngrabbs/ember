@@ -433,3 +433,25 @@ continuous command receiver. Three recorded hardware captures and synthetic
 frequency/timing/noise/corruption tests run via
 `python3 firmware/transceiver_bringup/tests/rx_decode_check.py`; hardware runtime
 and a new live decode must be verified before calling the installed path proven.
+
+### 0.28.0 PING-only ingress diagnostic
+
+`R` also decodes command envelopes, then applies a separate PING-only gate.
+Only a zero-payload native PING from ground to IHU, with nonzero transaction
+epoch/ID and source boot ID, can produce `PING_ACCEPTED` on the console.
+This preserves the existing ground→IHU command contract: acceptance means COMMS
+validated ingress only. No IHU forwarding, execution, response or RF transmission
+is enabled. Telemetry fixture decoding remains available.
+
+The 16-entry transaction cache persists across diagnostic windows within a COMMS
+boot. The same epoch/ID is `PING_DUPLICATE` even with a new RF/packet sequence;
+a changed source boot ID under that key is a conflict. The cache does not evict:
+a seventeenth new transaction is rejected until reboot. This is a bench duplicate
+check, not authentication or persistent replay protection. Production uplink and
+continuous listening remain out of scope.
+
+The bounded transmitter adds named `ping`, `ping-wrong-target`, and `ping-bad-crc`
+fixtures. Their fixed test transaction is epoch 0x52585031, ID 1; the latter two
+are deliberate negative cases. All retain finite-burst and explicit GO behavior.
+Tests: `tests/rx_ping.c` (host C with address/undefined-behavior sanitizers),
+`tests/rx_decode_check.py`, startup/fault tests, and `ground/bpsk/test_uplink_probe.py`.

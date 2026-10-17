@@ -4,6 +4,7 @@ Default is waveform generation only. --transmit additionally requires GO on stdi
 within 30 seconds of READY. Fixture packets must never be forwarded to Yamcs.
 """
 import argparse
+import binascii
 import hashlib
 import json
 import os
@@ -21,7 +22,7 @@ FPGA_SHA = '7f0e329b4724e0d919a06b9924aaa3c77305b6f25038deebd6171657ac7c8a99'
 
 
 def waveform(kind, amplitude, sequence):
-    if kind not in ('tone', 'packet') or not 0 < amplitude <= 0.05:
+    if kind not in ('tone', 'packet', 'ping', 'ping-wrong-target', 'ping-bad-crc') or not 0 < amplitude <= 0.05:
         raise ValueError('invalid kind or amplitude; maximum 0.05 full scale')
     if not 0 <= sequence <= 0xffffffff:
         raise ValueError('sequence out of range')
@@ -33,6 +34,17 @@ def waveform(kind, amplitude, sequence):
         packet = encode('HEARTBEAT', sequence=sequence & 0x3fff, source=3,
                         target=1, source_boot_id=0x52585453, uptime_ms=0,
                         payload=dict(mode=2, configuration=1, telemetry_period_ms=0))
+        if kind.startswith('ping'):
+            # Same transaction across RF sequences intentionally exercises duplicates.
+            packet = encode('PING', sequence=sequence & 0x3fff, source=1,
+                            target=2, transaction_epoch=0x52585031, transaction_id=1,
+                            source_boot_id=0x52585453, uptime_ms=0, payload={})
+            if kind == 'ping-wrong-target':
+                p = bytearray(packet); p[11] = 3
+                p[-2:] = binascii.crc_hqx(p[:-2], 0xffff).to_bytes(2, 'big')
+                packet = bytes(p)
+            elif kind == 'ping-bad-crc':
+                packet = packet[:-1] + bytes([packet[-1] ^ 1])
         bits = np.unpackbits(np.frombuffer(frame(packet, sequence), np.uint8))
         a = np.r_[np.zeros(RATE//20),
                   np.repeat(1-2*(np.cumsum(bits) % 2).astype(float), RATE//1200),
@@ -112,7 +124,7 @@ def run(args):
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--kind', choices=('tone', 'packet'), required=True)
+    p.add_argument('--kind', choices=('tone', 'packet', 'ping', 'ping-wrong-target', 'ping-bad-crc'), required=True)
     p.add_argument('--frequency', type=float, required=True)
     p.add_argument('--amplitude', type=float, default=0.01)
     p.add_argument('--gain', type=float, default=0)

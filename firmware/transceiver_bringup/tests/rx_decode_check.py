@@ -20,8 +20,8 @@ with tempfile.TemporaryDirectory() as d:
         actual=run(samples)
         assert f"sequence={proof['tx']['rf_sequence']} " in actual and actual.endswith('hex='+proof['tx']['packet_hex']),actual
     packet=bytes.fromhex(proofs[0]['tx']['packet_hex'])
-    def waveform(freq=1209, delay=.31, corrupt_outer=False, corrupt_native=False, command=False):
-        p=bytearray(packet)
+    def waveform(freq=1209, delay=.31, corrupt_outer=False, corrupt_native=False, command=False, native=None):
+        p=bytearray(packet if native is None else native)
         if corrupt_native:p[-1]^=1
         if command:
             p[7]=0
@@ -46,6 +46,12 @@ with tempfile.TemporaryDirectory() as d:
             assert run(waveform(f,delay)).endswith('hex='+packet.hex()),(f,delay)
     for kwargs in ({'corrupt_outer':True},{'corrupt_native':True},{'command':True}):
         assert run(waveform(**kwargs))=='NO_PACKET',kwargs
+    import sys
+    sys.path.insert(0,str(ROOT/'ground/ember'))
+    from codec import encode
+    ping=encode('PING',sequence=9,source=1,target=2,transaction_epoch=7,
+                transaction_id=1,source_boot_id=123,uptime_ms=0,payload={})
+    assert run(waveform(native=ping)).endswith('hex='+ping.hex())
     assert run([2085]*32768)=='NO_PACKET'
     rng=random.Random(93)
     assert run([round(2085+rng.gauss(0,4)) for _ in range(32768)])=='NO_PACKET'
