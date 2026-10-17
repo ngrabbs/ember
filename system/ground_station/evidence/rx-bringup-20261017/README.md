@@ -193,3 +193,32 @@ User had anticipated excessive attenuation. Requested removal of only the20 dB
 pad, leaving40 dB for the next test; no automatic assumption that rewiring occurred.
 Relative frequency differs from tinySA and must be checked before packet testing.
 Final CAN A normal, clock outputs disabled/powered down. No uplink packet sent yet.
+
+## First captured BPSK uplink: 3/3 exact payload matches
+
+User confirmed TXRA → 30+10 dB pads → DC block → J9, scope lifted,
+tinySA disconnected, IHU telemetry stopped. Removing the 20 dB pad produced a
+clear ADC carrier. The packet tests used requested 434.994550 MHz, channel 0
+TX/RX, gain setting 70 and amplitude 0.05. Absolute input power is uncalibrated.
+Firmware remains clean COMMS 0.26.0 (114c1b8).
+
+Three separately triggered, finite DBPSK bursts (sequences 1901, 1902, 1903)
+were captured through the board RX chain at 8 kS/s, 32768 samples each. Offline
+strict DBPSK decoding recovered exactly one packet per capture; all 38 bytes
+matched each independently recorded transmitted synthetic HEARTBEAT fixture.
+The decoder validates outer CRC32 and native CRC16. Carrier estimates were
+1209.343, 1210.442 and 1208.748 Hz. See libre-packet-40db-proof.json and the raw
+console captures. Each waveform lasted 0.773333 s including zero guards, with
+148480 samples sent and no reported transmitter errors.
+
+All captures completed without >10 us sample timing misses, ADC rail clipping,
+or shutdown failures. Final clock mask FF and controls 80/80/80 confirm clocks
+disabled; CAN A returned to normal. Transmitter finite bursts ended; no ongoing
+RF test was left running.
+
+This demonstrates packet-bearing RF reception through the analog path into the
+Pico ADC and successful host decoding. It is not onboard decoding, command
+execution, sensitivity qualification, or a statistically meaningful reliability
+test. No fixtures were forwarded to Yamcs. Next: onboard demodulation and frame
+validation, followed by a bounded read-only command test. Frequency acquisition
+and tolerance remain open; these tests used a manually selected source offset.
