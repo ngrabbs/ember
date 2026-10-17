@@ -1,4 +1,4 @@
-/* Y24 ordered-board bring-up: internal loopback and bounded CAN A receive windows; RF stays muted. */
+/* Transceiver firmware: boot-ready CAN, bounded half-duplex RF and diagnostic commands. */
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "hardware/adc.h"
@@ -45,7 +45,7 @@ static void bpsk_test(unsigned drive) {
                            sequence++,(uint32_t)(time_us_64()/1000));
     if(!size)return;
     packet_frame_size=size;
-    printf("[bpsk] prepared native COMMS heartbeat packet_hex=");
+    printf("[bpsk] prepared native transceiver heartbeat packet_hex=");
     for(unsigned i=43;i<81;i++)printf("%02x",packet_frame[i]);
     printf("\n");
     printf("[bpsk] drive_mA=%u\n",2*(drive+1));

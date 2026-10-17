@@ -379,7 +379,7 @@ static void submit(uint8_t type,const uint8_t *payload,size_t size) {
     if((lte_only && !target_lte) || (type==UL_FIRMWARE_INFO && !target_lte && !target_payload) ||
        ((type==PL_STATUS || type==PL_HEARTBEAT || type==PL_FIRE_CHECK) && !target_payload) ||
        (uhf_is_request(type) && target_index!=DR_COMMS_INDEX)) {
-        ++refused_requests;LOG("REJECT reason=WRONG_TARGET use_hello_comms_lte_or_payload\n");return;
+        ++refused_requests;LOG("REJECT reason=WRONG_TARGET use_hello_transceiver_lte_or_payload\n");return;
     }
 #endif
     if(uhf_is_request(type) && uc_count(&uhf_client)==UC_CAPACITY) {++refused_requests;LOG("REJECT reason=UHF_TRACKER_FULL\n");return;}
@@ -624,7 +624,7 @@ static void command_impl(const char *s) {
         else {bool ok=mcp_mode(&can,0);LOG("CAN_NORMAL ready=%d\n",ok);peer=0;}
     }
 #if ROLE_IHU
-    else if(!strcmp(s,"hello") || !strcmp(s,"hello comms") || !strcmp(s,"hello lte") || !strcmp(s,"hello payload")) {
+    else if(!strcmp(s,"hello") || !strcmp(s,"hello transceiver") || !strcmp(s,"hello comms") || !strcmp(s,"hello lte") || !strcmp(s,"hello payload")) {
         if(pending.active || output.active || can.pending || uc_count(&uhf_client) ||
            discovery.active || uhf_run.state==UR_RUNNING) {
             LOG("REJECT reason=BUSY_TARGET_SWITCH\n");return;
@@ -663,7 +663,7 @@ static void command_impl(const char *s) {
         ur_link_snapshot(&uhf_run,can.tx_fail,can.tx_timeout);
         LOG("UHF_RUN START duration_s=%u period_s=%u boot_resume=0\n",duration,period);
     }
-    else if(!strcmp(s,"uhf comms firmware"))submit(CF_UHF_FIRMWARE,NULL,0);
+    else if(!strcmp(s,"uhf transceiver firmware") || !strcmp(s,"uhf comms firmware"))submit(CF_UHF_FIRMWARE,NULL,0);
     else if(!strcmp(s,"uhf lte firmware"))identity_telemetry(0);
     else if(!strcmp(s,"uhf modem firmware"))identity_telemetry(1);
     else if(!strcmp(s,"uhf devices"))device_telemetry();
@@ -683,7 +683,7 @@ static void command_impl(const char *s) {
         uint8_t p[4];ul_p32(p,seconds);submit(CF_RF_WINDOW,p,4);
     }
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | hello comms | hello lte | hello payload | payload fire-check | payload ident | payload status | payload heartbeat | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf comms firmware | uhf devices | uhf heartbeat | uhf system | uhf eps | mode [safe/startup/commissioning/nominal] | outputs | output NAME on/off | faults | eps json | eps adc on/off | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | hello transceiver | hello lte | hello payload | payload fire-check | payload ident | payload status | payload heartbeat | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf transceiver firmware | uhf devices | uhf heartbeat | uhf system | uhf eps | mode [safe/startup/commissioning/nominal] | outputs | output NAME on/off | faults | eps json | eps adc on/off | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte":"");
     else if(*s)LOG("ERROR unknown command\n");
 }
 static void command(const char *s){

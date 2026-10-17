@@ -4,16 +4,16 @@ Active IHU CAN Feather application, formerly `firmware/can_feather_bench`.
 The earlier FreeRTOS prototype was removed and remains available in Git history.
 This directory also builds the LTE CAN Feather role. Existing output names
 `ember_ihu_can_bench` (IHU) and `ember_comms_can_bench` (LTE CAN Feather) are
-retained; the original-Pico UHF application is [COMMS](../comms/README.md).
+retained; the original-Pico UHF application is [transceiver](../transceiver/README.md).
 Configure a fresh build directory after moving from the old source path.
 
-## COMMS firmware request — 0.14.0
+## transceiver firmware request — 0.14.0
 
-`uhf comms firmware` requests one fresh `COMMS_FIRMWARE` over UHF from COMMS
-0.33.0. It requires UHF permission, normal CAN, a current COMMS HELLO and idle
-transport, and reports the existing QUEUED/local RF result. COMMS constructs
+`uhf transceiver firmware` requests one fresh `COMMS_FIRMWARE` over UHF from transceiver
+0.33.0. It requires UHF permission, normal CAN, a current transceiver HELLO and idle
+transport, and reports the existing QUEUED/local RF result. transceiver constructs
 its own packet; the zero-length request acknowledgement does not represent the
-RF packet length. Install COMMS 0.33.0 before using the new command. COMMS now
+RF packet length. Install transceiver 0.33.0 before using the new command. transceiver now
 automatically announces once per boot on the first telemetry request, rather
 than before every request. See the [transmission matrix](../../docs/user/ihu-can-console.md#transmission-matrix).
 
@@ -38,10 +38,10 @@ and hardware evidence; their retired command instructions do not apply to0.13.0.
 `payload fire-check` commands the selected payload, validates its16-byte result,
 and prints FIRE_CHECK result=no_fire/fire with STATIC_STUB/ALGORITHM provenance.
 The RF uplink admits PAYLOAD_FIRE_CHECK in addition to PING, establishes payload
-HELLO, and returns one correlated native PAYLOAD_FIRE_RESULT via COMMS.
+HELLO, and returns one correlated native PAYLOAD_FIRE_RESULT via transceiver.
 RF transactions use a separate16-entry fail-closed per-boot duplicate cache;
 there is no automatic retry. Console mutation and background work cannot take
-over the active RF transaction. Existing COMMS/LTE routes are retained.
+over the active RF transaction. Existing transceiver/LTE routes are retained.
 STATUS now reports the same semantic version as FIRMWARE.
 
 ## Payload application route —0.11.0
@@ -49,7 +49,7 @@ STATUS now reports the same semantic version as FIRMWARE.
 IHU adds `hello payload`, `ping N`, `payload ident`, `payload status`, and
 `payload heartbeat`, using request/reply IDs0x740/0x741 and existing discovery
 node4/reply0x704. The responder runs on the Pi/LC2502; see the
-[payload contract](../payload/README.md). COMMS/LTE routing remains unchanged.
+[payload contract](../payload/README.md). transceiver/LTE routing remains unchanged.
 
 ## CAN addressing migration candidate —0.8.0
 
@@ -59,13 +59,13 @@ UHF transceiver. Check board USB identity before flashing.
 
 - LTE application request/reply IDs are now0x720/0x721; transceiver stays0x710/0x711.
 - LTE boots CAN-ready and answers discovery node3 with RF unchanged/off.
-- On IHU use `hello comms` or `hello lte` before that route's commands.
+- On IHU use `hello transceiver` or `hello lte` before that route's commands.
 - `version` / `status` reports semantic version, SHA, dirty flag and boot ID.
 - `lte firmware` and `lte modem firmware` query the two LTE processors without RF.
 
 Builds now require `-DEMBER_GIT_REVISION=<40 lowercase hex>` and
 `-DEMBER_GIT_DIRTY=0|1`. Capture these before exporting source with
-`python3 firmware/comms/source_identity.py` from the source checkout.
+`python3 firmware/transceiver/source_identity.py` from the source checkout.
 See the [migration contract](../../system/interfaces/device_registry.md) for
 blocked target switching, identity telemetry, deployment order and validation.
 Old0x710 LTE firmware must remain off the shared bus until upgraded.
@@ -80,11 +80,11 @@ owns operator syntax. Production FreeRTOS command integration and CAN A/B
 remain open. Version/flash tables below are dated milestones; identify the
 correct application version and its recorded validation before flashing.
 
-The new IHU MCU and COMMS MCU both use Adafruit RP2040 CAN Bus Feathers with
+The new IHU MCU and transceiver MCU both use Adafruit RP2040 CAN Bus Feathers with
 onboard MCP25625 CAN controllers/transceivers. This standalone Pico SDK project
 builds `ember_ihu_can_bench.uf2` and `ember_comms_can_bench.uf2` from one source,
 with distinct roles. It replaces neither the complete FreeRTOS IHU/EPS application
-nor the UHF COMMS application. The IHU role now supports manual read-only EPS
+nor the UHF transceiver application. The IHU role now supports manual read-only EPS
 register observation and explicit battery-only ADC enable; it does not change
 charging policy, activate UHF, execute flight commands, or implement CAN redundancy.
 Version2 adds native EPS packet forwarding and explicit bounded Walter LTE requests.
@@ -129,7 +129,7 @@ The bench driver is local C code, not an imported Arduino library.
 
 ## CAN packet transport
 
-Development IDs: IHU → COMMS `0x710`; COMMS → IHU `0x711`; local loopback test
+Development IDs: IHU → transceiver `0x710`; transceiver → IHU `0x711`; local loopback test
 `0x712`. These are in the existing reserved debug range; they do not assign
 production spacecraft arbitration IDs. Standard data frames only; extended and
 RTR traffic are rejected by the driver.
@@ -154,7 +154,7 @@ There are no fragment retransmissions or automatic application retries.
 
 The [shared UART envelope](../comms_transport/README.md) supplies HELLO and opaque
 ECHO semantics. CAN adds diagnostic CHAIN `0x72` and CHAIN_ACK `0x73`; those IDs
-are not Walter UART message types. COMMS maps CHAIN onto a separately correlated
+are not Walter UART message types. transceiver maps CHAIN onto a separately correlated
 Walter HELLO/ECHO exchange. Error reasons add BUSY=5, remote-link-unknown=6,
 and invalid heartbeat=7. An unknown remote link stays UNKNOWN at the IHU,
 rather than becoming a delivery or command-acceptance report. If a response queue
@@ -184,17 +184,17 @@ readout. All successful raw words are preserved, including invalid/warming ADC
 status. This command is rejected while a CAN request/transmission is pending.
 Reads make no configuration writes. Version2 adds `eps telemetry` for native EPS
 packets through CAN/UART echo and `eps lte` for modem submission; those paths
-require the matching COMMS/Walter updates and hardware qualification below.
+require the matching transceiver/Walter updates and hardware qualification below.
 
 The I2C1 reader-enabled IHU image was built and flash-readback verified on
 2026-10-02. Three consecutive hardware reads returned all 19 registers with
 valid PEC. The charger reported `telemetry_status=0` and zero ADC words;
 these are unavailable engineering measurements. No charger writes were made.
-IHU boot `2021172893` also confirmed CAN HELLO with COMMS boot `4252110043`.
+IHU boot `2021172893` also confirmed CAN HELLO with transceiver boot `4252110043`.
 [Captured readouts and status](../../system/ground_station/evidence/ihu-eps-i2c1-20261002.json).
 Host EPS tests cover valid reads, an independently computed PEC/golden frame,
 corrupt data rejection, all-or-nothing output on a late failed register, and
-recovery; pointer-only writes are asserted. COMMS firmware was not reflashed.
+recovery; pointer-only writes are asserted. transceiver firmware was not reflashed.
 
 `eps adc on` / `eps adc off` explicitly read-modify-write only CONFIG_BITS
 `force_telemetry_on` bit2, then verify the whole register. Other bits, including
@@ -211,7 +211,7 @@ and three PEC-valid readouts with ADC-valid=1: approximately 8.108 V pack (2S
 configuration), 8.089 V output and 21.46 °C charger die temperature. Current
 scaling retains the unverified 10 mOhm resistor assumption. ADC override is left
 enabled for the telemetry bench. IHU boot `117567991` confirmed CAN HELLO with
-COMMS boot `4252110043` after flashing.
+transceiver boot `4252110043` after flashing.
 [Battery-only evidence](../../system/ground_station/evidence/ihu-eps-battery-adc-20261002.json).
 Installed UF2 SHA-256:
 `596e450977b203cea339b74621f6173f5d82a5766e6cac613570a20d7ba2f811`.
@@ -232,15 +232,15 @@ Reads are sequential and do not imply atomic or new ADC conversions.
 queries Walter's state; `eps lte` reads EPS and requests a single UDP submission.
 These require [Walter LTE bench firmware](../walter_lte_bench/README.md).
 CAN types74/75 RF window,76/77 send/modem-accepted,78/79 status.
-COMMS maps them to distinct UART application types, not diagnostic ECHO.
+transceiver maps them to distinct UART application types, not diagnostic ECHO.
 IHU prints RF_WINDOW_ACCEPTED or MODEM_ACCEPTED, neither claiming ground receipt.
 Packet responses preserve exact bytes; status response is16 bytes with correlated
 boot/request identity. One chain request remains active; no automatic retries.
-COMMS bounds UART sends17s, IHU bounds application sends22s. Other requests retain
+transceiver bounds UART sends17s, IHU bounds application sends22s. Other requests retain
 2s/5s bounds. The fragment layer and diagnostic heartbeat transport are unchanged.
 
 Builds and host codec/modem mocks pass. Existing CAN heartbeat hardware evidence
-does not qualify these new EPS/LTE paths. Flash COMMS, prove real EPS echo with
+does not qualify these new EPS/LTE paths. Flash transceiver, prove real EPS echo with
 the current Walter, then flash Walter, test radio-off status and bounded RF.
 
 Prepared artifacts on 2026-10-02:
@@ -248,45 +248,45 @@ Prepared artifacts on 2026-10-02:
 | Image | SHA-256 | Hardware state |
 |---|---|---|
 | IHU v2 UF2 | `3290196ccb7859b1c3069fd717a619a9995986fc18f036baafaece2a2f15fd1e` | Flashed/readback verified; EPS ADC-valid and CAN HELLO pass |
-| COMMS v2 UF2 | `e1a708fa17fef613d007cfbe19aef0f6d8756bbdf18d3c9fcdcf637357594be6` | Flashed/readback verified; CAN loopback, HELLO and 128-byte echo pass |
+| transceiver v2 UF2 | `e1a708fa17fef613d007cfbe19aef0f6d8756bbdf18d3c9fcdcf637357594be6` | Flashed/readback verified; CAN loopback, HELLO and 128-byte echo pass |
 | Walter LTE application bin | `851ef9b67618c3cbf33e7a2af56d2637e30ed1c8ca04246d1869162bbe493669` | Built; not flashed |
 
 IHU v2 boot3148122192 read EPS with ADC-valid1 and confirmed the still-running
-COMMS v1 boot4252110043 over CAN.
-[Pre-COMMS-update evidence](../../system/ground_station/evidence/ihu-eps-v2-pre-comms-20261002.json).
+transceiver v1 boot4252110043 over CAN.
+[Pre-transceiver-update evidence](../../system/ground_station/evidence/ihu-eps-v2-pre-comms-20261002.json).
 Run `ground/ember/can_chain.py --eps --port IHU_SERIAL --output RUN_DIRECTORY`
-after COMMS is updated and its CAN mode set to normal. This checks ten native
+after transceiver is updated and its CAN mode set to normal. This checks ten native
 ADC-valid EPS returns plus five sized CAN echoes and HELLO. Without `--eps` it
 checks the heartbeat baseline. Neither mode activates LTE.
 
-COMMS v2 hardware update completed: boot1790982730, IHU peer3148122192.
+transceiver v2 hardware update completed: boot1790982730, IHU peer3148122192.
 Local loopback, physical CAN HELLO and an exact128-byte CAN echo passed;
-TEC/REC/EFLG and CAN/fragment/timeout errors remained zero. Left COMMS in normal
+TEC/REC/EFLG and CAN/fragment/timeout errors remained zero. Left transceiver in normal
 CAN mode with Walter powered separately; UART chain had not been exercised in
 this post-flash check (`walter_peer=0`, `chain_ok=0`).
-[COMMS post-flash evidence](../../system/ground_station/evidence/comms-eps-v2-flash-check-20261002.json).
+[transceiver post-flash evidence](../../system/ground_station/evidence/comms-eps-v2-flash-check-20261002.json).
 The subsequent real EPS chain test passed: ten native128-byte POWER_STATUS
 returns (sequences0–9, readout_count1–10), ADC/conversion-valid1, IHU boot3148122192
-and COMMS boot1790982730. CRC/header/identity/sequence/engineering quality checks
+and transceiver boot1790982730. CRC/header/identity/sequence/engineering quality checks
 passed along with five sized CAN echoes and HELLO. IHU matched count increased
 by16; CAN/fragment/timeout/BUSY/UNKNOWN errors remained zero. Battery8.099–8.100 V,
 output about8.080 V, die21.464 °C; current scaling remains provisional.
 [Real EPS evidence](../../system/ground_station/evidence/ihu-comms-walter-eps-can-20261002.json).
 This verifies actual EPS reads through CAN and UART echo, not LTE reception.
-COMMS post-chain counters were not independently sampled with USB on IHU.
+transceiver post-chain counters were not independently sampled with USB on IHU.
 Walter LTE upload still follows.
 
 ```text
-IHU heartbeat -- CAN --> COMMS -- framed UART --> Walter bench echo
-IHU validates <-- CAN -- COMMS <-- framed UART -- identical packet
+IHU heartbeat -- CAN --> transceiver -- framed UART --> Walter bench echo
+IHU validates <-- CAN -- transceiver <-- framed UART -- identical packet
 ```
 
-COMMS validates the heartbeat header/inner CRC and preserves the complete inner
-packet. Walter is handshaken when necessary; COMMS verifies its exact echo before
+transceiver validates the heartbeat header/inner CRC and preserves the complete inner
+packet. Walter is handshaken when necessary; transceiver verifies its exact echo before
 returning CHAIN_ACK to IHU. IHU checks peer/session/request/type and the complete
 packet bytes. Only then does it print `WALTER_BENCH_RETURN`. This proves the
 local three-controller path, not LTE reception or spacecraft command execution.
-UART logs are skipped when COMMS USB is disconnected to avoid waiting for an
+UART logs are skipped when transceiver USB is disconnected to avoid waiting for an
 absent console during forwarding. Sustained traffic remains unqualified.
 
 ## Build and flash
@@ -304,7 +304,7 @@ docker exec amsat-dev-x86 cmake --build \
   /workspace/MSU_Cubesat/ember-can/firmware/ihu/build -j4
 ```
 
-Identify the board before flashing. COMMS flash ID is `DF637882D39E4426`, IHU
+Identify the board before flashing. transceiver flash ID is `DF637882D39E4426`, IHU
 `DF641455DB822427`. Native USB descriptors call both Raspberry Pi Pico; the
 unique flash IDs and role status distinguish them. Use the USB-enabled picotool
 at `~/work/ember-comms-feather/picotool-usb`. For a running SDK USB image:
@@ -315,7 +315,7 @@ sudo ~/work/ember-comms-feather/picotool-usb load -v -x -f \
 ```
 
 For a physical BOOTSEL device, inspect `lsusb` and picotool info, then select its
-actual bus/address. Do not use COMMS serial selection or its image for IHU.
+actual bus/address. Do not use transceiver serial selection or its image for IHU.
 Initial IHU bootloader was bus3/address82; that address is historical.
 
 Full 8 MB flash backups were saved and verified before installing these images.
@@ -349,24 +349,24 @@ Passed: all 1–263-byte fragment bounds; missing/duplicate/order/token/route er
 interfragment timeout/timer wrap; recovery; all 1–240-byte real envelope round trips
 with unchanged identity/payload. Both board builds and flash readback passed.
 Both MCP local loopback tests passed. IHU-initiated HELLO plus exact echoes at
-1, 8, 32, 239, and 240 bytes passed across the physical bus. After updating COMMS,
-COMMS-initiated HELLO and a 32-byte echo also passed, with zero reported CAN errors.
+1, 8, 32, 239, and 240 bytes passed across the physical bus. After updating transceiver,
+transceiver-initiated HELLO and a 32-byte echo also passed, with zero reported CAN errors.
 
 The first chain attempt exposed stale loop time after synchronous UART HELLO
 handling started ECHO: unsigned subtraction immediately expired the new request.
-COMMS now refreshes time after UART callbacks before checking expiration. The
+transceiver now refreshes time after UART callbacks before checking expiration. The
 corrected image is installed and verified; the first failed transcript remains
-private in `can-chain-pre-fix-20261002/`. IHU binary is unchanged by this COMMS-only fix.
+private in `can-chain-pre-fix-20261002/`. IHU binary is unchanged by this transceiver-only fix.
 
 The full chain retest passed: CAN HELLO plus all five boundary echoes, followed
 by 10/10 38-byte heartbeats generated on the physical IHU and returned unchanged
-through COMMS and Walter. Heartbeat sequences 1–10 retained IHU boot ID
+through transceiver and Walter. Heartbeat sequences 1–10 retained IHU boot ID
 1272163253, with increasing uptime 430875–438121 ms. Each inner CRC decoded
 correctly. IHU's match count rose 6 → 22 (16 new matches); TX-success/RX counters
 each rose by 317 including the local self-test, with no increase in CAN TX
 failure/timeout, RX bad/overflow, fragment error/timeout, busy drop, or UNKNOWN.
 TEC/REC stayed zero and EFLG was zero at completion. The existing UNKNOWN=1 is
-the earlier clock bug, not a new failure. COMMS post-chain counters were not
+the earlier clock bug, not a new failure. transceiver post-chain counters were not
 independently sampled.
 
 [Saved evidence](../../system/ground_station/evidence/ihu-comms-walter-can-20261002.json)
@@ -377,9 +377,9 @@ the m75q task directory. All 30 existing ground tests also passed.
 Historical heartbeat-chain UF2 SHA-256 (before the later native EPS images):
 
 - IHU: `c5cff5e021e2b21c3b9316193a49fca53891da875be2dc1be7e4b5e2bebee403`
-- COMMS: `507110580861478d2e688fa16053a0457de1bcd6edc59dd8936bbb9ebc5cdf78`
+- transceiver: `507110580861478d2e688fa16053a0457de1bcd6edc59dd8936bbb9ebc5cdf78`
 
-With COMMS in normal mode and Walter powered, connect USB to IHU and run:
+With transceiver in normal mode and Walter powered, connect USB to IHU and run:
 
 ```sh
 python3 ground/ember/can_chain.py \
@@ -405,7 +405,7 @@ attempts. Uncertain outcomes, modem rejection and expiry hold the original
 packet for inspection. Enqueue refuses active CAN exchanges. Queue retirement
 means modem acceptance; independently validate reception/archive.
 [Policy, tests and deployment record](../../ground/lte/results/2026-10-02-queue-preparation.md).
-The operational queue belongs in COMMS; this is bench harness staging.
+The operational queue belongs in transceiver; this is bench harness staging.
 
 ## Opt-in native IHU EPS cadence — October 3, 2026
 
@@ -454,7 +454,7 @@ pre-change backup stays private on m75q:
 `/media/ngrabbs/BACKUP-A/ember-autotelem-20261003/ihu-before-autotelem.uf2`, SHA256
 `a87c2204f52490a27d47402637e4a63f97754b0e9579091b23b468eeda8dbfd0`.
 Build/flash/source identities are retained with the proof; restoration was not
-exercised. COMMS, Walter and all AMSAT software/images were left unchanged.
+exercised. transceiver, Walter and all AMSAT software/images were left unchanged.
 
 ## UHF transceiver batch client (can-bench-v4)
 
@@ -469,11 +469,11 @@ Health packet producers from the deployed can-bench-v3 are preserved.
 
 ## Timed telemetry producer (can-bench-v5)
 
-The default is IDLE, including after resets. With COMMS `a` service running and
+The default is IDLE, including after resets. With transceiver `a` service running and
 normal CAN/HELLO established, `uhf run 120 10` produces heartbeat/system/EPS
 cycles every 10 seconds for 120 seconds. One packet is in flight at a time and
 results are checked before advancing. `status` reports progress; `uhf stop`
-stops future production, while an admitted packet may finish. Stop COMMS too
+stops future production, while an admitted packet may finish. Stop transceiver too
 for an immediate RF abort. Bad/missing results or producer failure enter FAULT;
 there is no automatic retry, restart, or persistent enable. Legacy automatic
 telemetry and LTE queue must be off. Mode numbers and detailed limits are in

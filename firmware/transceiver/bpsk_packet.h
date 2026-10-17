@@ -1,4 +1,4 @@
-/* Native COMMS heartbeat in a version3 differential-BPSK bench frame. */
+/* Native transceiver heartbeat in a version3 differential-BPSK bench frame. */
 #pragma once
 #include <stdint.h>
 #include <stddef.h>

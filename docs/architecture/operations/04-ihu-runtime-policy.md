@@ -67,8 +67,8 @@ copies. This release does not wire another physical UART or allocate new pins;
 UART is a future transport alternative, not a newly enabled port.
 
 The switches are permissions: RF ON does not start a telemetry run, a modem
-window or a ground receiver. With COMMS 0.33.0, healthy idle CAN accepts IHU
-UHF requests without a COMMS console window. Each accepted request uses
+window or a ground receiver. With transceiver 0.33.0, healthy idle CAN accepts IHU
+UHF requests without a transceiver console window. Each accepted request uses
 bounded RF bursts, reports a local result, then returns to muted idle CAN.
 Normal CAN, fresh HELLO, route selection and idle-work checks still apply.
 LTE windows and ground RF command receive/reply sessions remain explicit.
@@ -101,7 +101,7 @@ a real reset is required. `mode nominal` in GROUND_TEST remains a simulation.
 Explicit status, help, observation and correlated command replies remain
 available with all streams OFF, including asynchronous CAN results and RF
 fire-check results. RF command replies still require the separately bounded
-COMMS receive/reply window; they do not enable periodic UHF telemetry.
+transceiver receive/reply window; they do not enable periodic UHF telemetry.
 
 The retained explicit diagnostic commands cover CAN HELLO/ping, EPS JSON/ADC,
 payload checks, LTE status/identity/diagnostics and bounded RF work. Retired
@@ -122,7 +122,7 @@ housekeeping sample instead of a second register-read task. Radio/application
 work defers sampling and discovery; rates are best effort, not deadlines.
 Presence discovery is not detailed subsystem telemetry or a valid battery
 measurement. CLI/umbilical summaries retain EPS validity/sample time and
-COMMS/LTE/payload discovery states. The existing EPS JSON/decoder retains ADC,
+transceiver/LTE/payload discovery states. The existing EPS JSON/decoder retains ADC,
 chemistry, cell-count and sense-resistor qualification rules.
 
 The fault ring retains the latest 16 records in RAM: 1=essential CAN boot check,

@@ -7,9 +7,9 @@ sdk=${EMBER_PICO_SDK_PATH:-/opt/pico-sdk}
 jobs=${EMBER_BUILD_JOBS:-4}
 source_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 # Two whitespace-free CMake flags from the source checkout, not the container.
-set -- $(python3 "$source_root/firmware/comms/source_identity.py" --cmake-args)
+set -- $(python3 "$source_root/firmware/transceiver/source_identity.py" --cmake-args)
 
-for target in comms ihu; do
+for target in transceiver ihu; do
     docker exec "$container" cmake \
         -S "$workspace/firmware/$target" \
         -B "$workspace/firmware/$target/build-baseline" \
@@ -17,5 +17,5 @@ for target in comms ihu; do
     docker exec "$container" cmake --build \
         "$workspace/firmware/$target/build-baseline" -j "$jobs"
 done
-docker exec "$container" python3 "$workspace/firmware/comms/tests/check.py"
+docker exec "$container" python3 "$workspace/firmware/transceiver/tests/check.py"
 docker exec "$container" python3 "$workspace/test/firmware/test_ltc4162.py"

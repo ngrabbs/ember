@@ -3,7 +3,7 @@
 | Application | Source and build guide | Runtime |
 |---|---|---|
 | IHU | [IHU firmware](ihu/README.md) | Pico SDK, CAN Feather; also builds the LTE CAN Feather role |
-| COMMS | [COMMS firmware](comms/README.md) | Pico SDK, original Pico UHF transceiver |
+| Transceiver | [Transceiver firmware](transceiver/README.md) | Pico SDK, original Pico UHF transceiver |
 | Payload | [Payload firmware](payload/README.md) | Payload Pi service |
 
 Use the [IHU console guide](../docs/user/ihu-can-console.md) for commands,

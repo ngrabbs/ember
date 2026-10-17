@@ -22,7 +22,9 @@ int main(void){
  assert(!ip_set_output(&policy,IP_CLI_TELEM,false));
  assert(!ip_set_output(&policy,IP_UMB_TELEM,true));fake_now+=5000;housekeeping_pump(fake_now);
  assert(!ip_set_output(&policy,IP_UMB_TELEM,false));
- command("hello comms");assert(pending.active && pending.console && queued().type==UL_HELLO);
+ command("hello transceiver");assert(pending.active && pending.console && queued().type==UL_HELLO && target_index==DR_COMMS_INDEX);
+ pending.active=false;output.active=false;can.pending=false;
+ command("hello comms");assert(pending.active && pending.console && queued().type==UL_HELLO && target_index==DR_COMMS_INDEX);
  ul_packet p=pending.packet;p.sender=22;p.type=UL_HELLO_ACK;output.active=false;
  receive(&p);assert(!pending.active && peer==22);
  command("uhf heartbeat");assert(!pending.active && !output.active);
@@ -42,7 +44,7 @@ int main(void){
  ul_packet admitted={0};uhf_reply(&u,22,CF_UHF_ADMITTED,UHF_OK,&admitted);
  output.active=false;receive(&admitted);assert(!pending.active);
  uhf_reply(&u,22,CF_UHF_RESULT,UHF_OK,&admitted);receive(&admitted);assert(!uc_count(&uhf_client));
- command("uhf comms firmware");assert(pending.active && queued().type==CF_UHF_FIRMWARE && !queued().size);
+ command("uhf transceiver firmware");assert(pending.active && queued().type==CF_UHF_FIRMWARE && !queued().size);
  u=queued();uhf_reply(&u,22,CF_UHF_ADMITTED,UHF_OK,&admitted);output.active=false;receive(&admitted);
  assert(!pending.active && uc_count(&uhf_client)==1);
  uhf_reply(&u,22,CF_UHF_RESULT,UHF_OK,&admitted);receive(&admitted);assert(!uc_count(&uhf_client));

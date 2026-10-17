@@ -43,17 +43,17 @@ getDouble:p=>p.value,getString:p=>String(p.value),getUnits:p=>p.unit||''};
 
     def test_unreceived_identity_is_not_zero_release_or_zero_sha(self):
         missing=[{'time':0,'severity':-1,'value':0}]*5
-        self.assertEqual(self.run_script('comms-version.js',missing[:4]),'No identity')
-        self.assertEqual(self.run_script('comms-git.js',missing),'No identity received')
+        self.assertEqual(self.run_script('firmware-version.js',missing[:4]),'No identity')
+        self.assertEqual(self.run_script('firmware-git.js',missing),'No identity received')
         live=[{'time':1000,'severity':0,'value':v} for v in (0,30,0,0)]
-        self.assertEqual(self.run_script('comms-version.js',live),'0.30.0 clean')
+        self.assertEqual(self.run_script('firmware-version.js',live),'0.30.0 clean')
 
     def test_expired_value_hidden_and_identity_marked_expired(self):
         stale={'time':1000,'severity':-1,'value':7.5,'unit':'V'}
         self.assertEqual(self.run_script('observed-value.js',[stale]),'—')
         self.assertEqual(self.run_script('observation-status.js',[stale]),'EXPIRED / UNAVAILABLE')
         identity=[dict(stale,value=v) for v in (1,2,3,0)]
-        self.assertIn('expired',self.run_script('comms-version.js',identity))
+        self.assertIn('expired',self.run_script('firmware-version.js',identity))
         self.assertEqual(self.run_script('boolean-value.js',[stale]),'—')
         self.assertEqual(self.run_script('boolean-value.js',[{'time':1000,'severity':0,'value':1}]),'Yes')
         cached={'time':1000,'severity':0,'value':3}

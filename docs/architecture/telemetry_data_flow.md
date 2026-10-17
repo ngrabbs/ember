@@ -459,7 +459,7 @@ it does not demodulate the RF signal. Ground software must recover packet
 boundaries, remove any external framing, perform the agreed link checks, and
 feed application packets to a configured Yamcs link.
 
-The active [COMMS firmware](../../firmware/comms/README.md) implements native
+The active [Transceiver firmware](../../firmware/transceiver/README.md) implements native
 BPSK transmission and bounded fire-check receive/reply handling. Local RF
 completion and independent ground reception remain separate evidence; consult
 the [UHF interface contract](../../system/interfaces/transceiver_uhf_bench.md)

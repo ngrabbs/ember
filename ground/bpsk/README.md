@@ -4,7 +4,7 @@ Separate from the working SDRB 1200-baud FSK path. Not a flight modem: no FEC,
 pulse shaping, retransmission, uplink decoder, or continuous telemetry service.
 
 The original Pico's `comms` v11 accepts a single byte `b` (no
-newline). It prepares one **native COMMS HEARTBEAT**, with actual random boot ID,
+newline). It prepares one **native transceiver HEARTBEAT**, with actual random boot ID,
 monotonic uptime and sequence, COMMISSIONING/GROUND_TEST, telemetry period zero
 (manual). No EPS measurements or ADC values are fabricated. It prints the exact
 38 packet bytes before RF so reception can be compared byte-for-byte.
@@ -28,8 +28,8 @@ transmits. This is not a crash-proof hardware RF inhibit.
 ## Validation before RF
 
 ```
-python3 firmware/comms/tests/check.py
-cc -std=c11 -Wall -Wextra -Werror -Ifirmware/comms firmware/comms/tests/clock.c -o /tmp/clock-test
+python3 firmware/transceiver/tests/check.py
+cc -std=c11 -Wall -Wextra -Werror -Ifirmware/transceiver firmware/transceiver/tests/clock.c -o /tmp/clock-test
 /tmp/clock-test
 python3 ground/bpsk/test_modem.py -v
 ```
@@ -63,7 +63,7 @@ Use `--forward` only for the actual RF acceptance run: recovered original native
 telemetry bytes go to localhost UDP10019 (`ember-uhf`). There is no fake packet
 fallback. Check `result.json` against the Pico's packet_hex and a **new** Yamcs
 archive entry; a displayed cached value is not proof. The first packet is a
-COMMS heartbeat, not IHU EPS data, so use packet archive/heartbeat parameters,
+transceiver heartbeat, not IHU EPS data, so use packet archive/heartbeat parameters,
 not the old EPS proof display.
 
 Offline repeat: `python3 ground/bpsk/modem.py /path/to/baseband-48k.npy`.
@@ -110,12 +110,12 @@ python3 ~/work/ember-y24-bpsk/ground/bpsk/live.py \
   --output ~/work/ember-y24-bpsk/runs/live-$(date +%Y%m%d-%H%M%S)
 ```
 
-Wait for `BPSK_RX_READY`. With COMMS v22 / IHU v7, CAN is ready at boot:
-issue IHU `hello` and wait for `CAN_HELLO_CONFIRMED`, then press COMMS `a`
+Wait for `BPSK_RX_READY`. With transceiver v22 / IHU v7, CAN is ready at boot:
+issue IHU `hello` and wait for `CAN_HELLO_CONFIRMED`, then press transceiver `a`
 (one byte, no Enter). IHU `uhf run 120 10` starts the
 finite two-minute heartbeat/system/EPS cycle. The receiver can stay running
-between runs; renew COMMS `a` and explicitly start another IHU run as needed.
-COMMS `x` stops its service; IHU `uhf stop` stops future telemetry production.
+between runs; renew transceiver `a` and explicitly start another IHU run as needed.
+transceiver `x` stops its service; IHU `uhf stop` stops future telemetry production.
 Receiver Ctrl-C saves results and closes reception. No receiver command starts TX.
 
 Open the existing EPS or health dashboards with `c=ember-uhf__realtime`, not
@@ -137,7 +137,7 @@ on boot or enable transmissions. `capture.py` retains the older offline workflow
 
 ### Hardware regression, October 16
 
-With COMMS v21 / IHU v7, a30-second run (three heartbeat/system/EPS cycles)
+With transceiver v21 / IHU v7, a30-second run (three heartbeat/system/EPS cycles)
 delivered9/9 byte-identical packets live into Yamcs. Archive inspection at ten
 seconds verified arrival during the run. The repeat's55-second receive session
 had no stream/decoder errors, and HELLO/discovery worked after RF stopped.
@@ -161,24 +161,24 @@ Use the UHF Yamcs instance (`c=ember-uhf__realtime`):
 - `EPS.opi`: live readout/conversion status and power measurements. Current
   calibration still depends on confirming the fitted sense resistors.
 - `System.par`: HEARTBEAT and SYSTEM_STATUS values, generation times and uptime.
-- `Comms-Firmware.opi`: received COMMS release, dirty flag and full source SHA.
+- `Comms-Firmware.opi`: received transceiver release, dirty flag and full source SHA.
 
 Overview's endpoint counters and command-report panels are not produced by this
 bounded UHF telemetry cycle; blank panels there do not diagnose packet loss.
 
 For a 10–15-minute rehearsal, start a 690-second receiver session. After READY,
 perform five explicitly bounded `uhf run 120 10` runs. For each run: obtain a
-fresh IHU HELLO, enable COMMS with `a`, start the IHU run, and wait for
-`UHF_RUN EXPIRED submitted=36 cycles=12`. Stop COMMS with `x` and inspect status
+fresh IHU HELLO, enable transceiver with `a`, start the IHU run, and wait for
+`UHF_RUN EXPIRED submitted=36 cycles=12`. Stop transceiver with `x` and inspect status
 before starting the next run. Never increase the firmware RF limits to make
-this demo continuous. COMMS v22 contributes one identity packet per admitted
+this demo continuous. transceiver v22 contributes one identity packet per admitted
 session, for 185 expected packets across five successful runs.
 
 Keep receiver stdout drained (a normal terminal or redirected file is fine).
 During the run, check advancing generation times as well as ACQUIRED status;
 some system parameters retain their last value without an expiry. Stop if the
 receiver reports an error, the IHU reports a run fault, or a queued RF request
-has an unknown outcome. At the end issue IHU `uhf stop` and COMMS `x`, verify
+has an unknown outcome. At the end issue IHU `uhf stop` and transceiver `x`, verify
 TX/RX inactive, and confirm a new HELLO works. Compare original native packet
 bytes with the Yamcs archive; UDP send success alone is not delivery proof.
 
@@ -194,7 +194,7 @@ the mitigation under that load; it does not prove the original incident was
 caused by a disk stall or guarantee tolerance of arbitrarily long stalls.
 
 The subsequent 690-second live rehearsal delivered185/185 packets (60 each of
-HEARTBEAT, SYSTEM_STATUS and POWER_STATUS plus five COMMS identities), with
+HEARTBEAT, SYSTEM_STATUS and POWER_STATUS plus five transceiver identities), with
 exact Yamcs archive matches and no receiver errors. Five-second freshness
 samples remained ACQUIRED; maximum observed EPS age14.58 s. EPS/System displays
 were visually checked across the run. Final RF-off status and CAN HELLO passed.
