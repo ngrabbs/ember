@@ -11,7 +11,7 @@ hardware ACK alone.
 | EPS | I2C1, address0x68 | None | Current LTC4162; PEC-checked config read |
 | EPS_NEXT | CAN A | 1 | Future CAN-enabled EPS |
 | COMMS | CAN A | 2 | Current transceiver, responder implemented |
-| LTE | CAN A | 3 | CAN hardware exists; discovery firmware adoption pending |
+| LTE | CAN A | 3 | Discovery verified alongside COMMS with LTE CAN Feather0.8.0 |
 | PAYLOAD | CAN A | 4 | Future CAN-enabled payload |
 
 The IHU starts CAN in normal mode and probes one registry entry every two
@@ -59,11 +59,142 @@ The independent burst mute/deadline protections remain. Controller faults
 latch that interface in reset until reboot. CAN readiness is not measured RF
 silence, and discovery does not replace the explicit application HELLO.
 
-## Legacy coexistence limitation
+## Application addressing migration
 
-The current transceiver and older LTE bridge both use request0x710/reply0x711
-for their application envelopes. Keep only one of those legacy responders on
-a bus until an explicitly coordinated application-address migration is done.
-Discovery IDs are distinct, but do not resolve that pre-existing collision.
-This change implements discovery only on the transceiver; no LTE, payload or
-future EPS firmware was flashed or claimed compatible.
+| Node | Request | Reply | Discovery reply |
+|---|---|---|---|
+| COMMS transceiver (2) | `0x710` | `0x711` | `0x702` |
+| LTE CAN Feather (3) | `0x720` | `0x721` | `0x703` |
+
+The registry contains the route IDs. Existing transceiver and SDRB IDs remain
+unchanged. The LTE Feather must be upgraded before joining their bus; older LTE
+images still answer0x710 and must stay disconnected. Firmware deployment and a
+simultaneous two-device bench test are required before declaring coexistence
+qualified. Hardware ACK does not prove correct application addressing.
+
+IHU0.8.0 defaults to COMMS. `hello comms` (or bare `hello`) selects COMMS;
+`hello lte` selects LTE. Each selection clears the application peer and fragment
+parser and performs a new HELLO. Switching is rejected during outstanding CAN
+or UHF work, discovery, automatic telemetry or enabled LTE queuing. Only the
+selected reply ID enters application reassembly. One application route is
+active at a time; discovery still observes both nodes. UHF commands reject the
+LTE target and LTE-specific requests reject the COMMS target. The existing
+finite RF limits and no-auto-retry rules remain.
+
+LTE boots CAN-ready and answers node3 discovery without starting Walter RF.
+The modem remains reset until an explicit bounded LTE window request.
+
+## Firmware identity queries
+
+`version` on each Feather or Walter console prints semantic version, full source
+SHA, dirty flag and boot ID. Build identity inputs are mandatory; exported source
+must carry the original checkout's SHA/dirty state rather than the build host's.
+
+With `hello lte` established:
+
+- `lte firmware` reads the Feather identity using application type0x18/reply0x19.
+- `lte modem firmware` requests Walter identity through the Feather using
+  type0x7c/reply0x7d; the UART hop uses0x18/0x19 after HELLO.
+
+Both requests have zero payload. Successful replies carry32 bytes: version
+major/minor/patch/dirty (4), SHA (20), device boot ID (4), and device uptime (4),
+all multibyte numbers big endian. Requests never open RF windows. The Feather
+checks Walter's sender and reported boot ID before forwarding its identity.
+
+Within180 seconds of the observations, select `hello comms`, explicitly enable
+COMMS RF, then use `uhf lte firmware` or `uhf modem firmware` to forward the
+corresponding observation. Each is one ordinary bounded UHF request. It is not
+added to the existing three-packet automatic cycle. COMMS0.23.0 admits the new
+message IDs;0.22.0 does not. Receiver2.1.0 includes their dictionary definitions.
+
+Native `LTE_CAN_FIRMWARE` (51) and `LTE_MODEM_FIRMWARE` (52) are IHU-sourced
+observations, not impersonated LTE packets. Their payload contains the32-byte
+identity plus a4-byte observation age. Header boot/uptime identify IHU;
+`reported_boot_id` and `reported_uptime_ms` identify the queried device. They
+are historical evidence after a reset until queried again. Yamcs displays and
+LTE-Firmware.par expose that distinction. No LTE firmware image has been
+hardware-verified merely because the host tests and builds pass.
+
+## Migration validation status — October 17
+
+Walter hardware milestone: full16MiB pre-update flash saved on the bench host
+and copied locally with matching SHA-256
+`44c99d01b2154e43874c5db0804cf48e869acd58a0ea9f78ed4dbfcfce9317dc`.
+Installed Walter0.3.0 from source
+`9fcb0209f1bb192369fce34d863a3862f8040de6`, dirty0; esptool verified
+all written regions. Application binary SHA-256:
+`0fca229ca82b59e115a630d36eadd97c921979ab4afab48b539000abde9fd98c`.
+USB `version`/`status` confirmed that identity and modem OFF (`state=0`,
+`radio_window_ms=0`, `requests=0`). No RF window was requested. The UART
+identity relay and CAN coexistence remain pending the Feather/IHU updates.
+Full flash backups are private artifacts, not repository files.
+
+LTE CAN Feather hardware milestone: identified flash ID `DF637882D39E4426`,
+previously running can-bench-v3. Full8MiB backup passed picotool read-back
+verification; local and bench-host copies share SHA-256
+`e0acf6f03437c2a3567e2140bb66a7ed37d70a57a429301192c504cb8cd66af0`.
+Installed0.8.0 from the same clean `9fcb020` source, with flash verification.
+UF2 SHA-256:
+`efdce37a4220bf642929b1812e15263b58feef69677bfc4ad24db66f61d2a0fd`.
+USB confirmed `role=LTE_CAN_MCU`, version0.8.0, full matching source SHA,
+dirty0, CAN normal (`can_ready=1 mode=00`) at500kbit/s, zero error counters,
+no pending requests and no active Walter chain. LTE remained isolated from
+CAN A; these checks do not yet establish discovery/addressing coexistence.
+
+IHU hardware milestone: identified `DF641455DB822427`, previously can-bench-v7.
+Full8MiB backup passed read-back verification and local-copy hash comparison:
+`f636fad0362ca93cc56409bfacfa8c1bc070c5e81ef892716ed5e14623f8adc0`.
+Installed0.8.0 from clean `9fcb020` with verified flash; UF2 SHA-256
+`a3a8a027f5a6a42f2e1a479d7dec671874774ae50dbb14049ba1010b38aa678f`.
+USB confirmed the full source identity. Automatic discovery reported EPS and
+COMMS ONLINE and isolated LTE NOT_SEEN. `hello comms` completed and `ping 32`
+returned all32 expected bytes. Final CAN status: normal500kbit/s, TEC/REC0,
+EFLG00, no TX failures/timeouts, RX errors/overflows or fragment errors;
+no pending requests, UHF mode0 and zero RF submissions. Both-node coexistence
+still requires connecting upgraded LTE.
+
+Subsequent integrated-stack test passed: after resetting the host USB controller
+to recover the missing IHU console (USB disk unmounted), automatic discovery
+reported COMMS and LTE ONLINE with distinct boot IDs and no discovery timeouts
+for either. Independent HELLO and32-byte echoes passed on both application
+routes. IHU read LTE_CAN0.8.0 and Walter0.3.0 identities, both clean `9fcb020`,
+through CAN and the Feather/Walter UART relay. Walter status remained OFF with
+zero RF window and zero modem sends. Final IHU status showed seven matched
+requests, zero CAN errors, TX failures/timeouts, RX/fragment errors, unknown
+responses or pending work. The first HELLO met the discovery busy guard and
+was explicitly retried successfully after discovery finished. No RF was started.
+
+- [x] Host tests of actual IHU/LTE Feather handlers: route selection, busy-switch
+  rejection, wrong-ID fragments, per-device discovery/liveness, read-only
+  Feather/Walter identity relay, identity age limit and independent Python decode.
+- [x] Walter host checks: identity query leaves modem OFF/reset; malformed query
+  rejected; existing bounded modem tests pass.
+- [x] 47 ground tests (46 pass, one optional virtual-CAN skip),14 receiver tests,
+  transceiver startup/fault checks and extended native bridge checks pass.
+- [x] ARM Release builds of both Feather roles and original Pico; Walter
+  PlatformIO build passes. Firmware candidates: Feather family0.8.0,
+  Walter0.3.0, COMMS0.23.0; receiver candidate2.1.0.
+- [x] Save and verify backups of the identified LTE Feather and Walter.
+- [x] Flash/verify LTE candidates with LTE still disconnected from CAN A.
+- [x] Flash/verify IHU migration and confirm COMMS-only operation first.
+- [x] Connect upgraded LTE with appropriate two-end termination; observe both
+  discovery replies and independent HELLO/echo/identity queries, RF disabled.
+- [x] Update COMMS/receiver/MDB for new identity messages, query both LTE CPUs,
+  and verify original identity bytes through bounded UHF into Yamcs.
+- [x] Visually inspect both new live identity displays and audit a new Yamcs
+  asset manifest. Deployed Yamcs assets1.1.0 and receiver2.1.0 match their manifests.
+
+Prior LTE source needed its pending PR #20 native SYSTEM_STATUS allowlist;
+that small forwarding change is retained here. No other #19/#20 deployment
+or networking changes are included. This branch builds on PR #21.
+
+RF deployment result: COMMS0.23.0 installed with full2MiB backup and verified
+flash. Original backup SHA-256:
+`839cff3f4159bf78cb183725a3ff2e904f6587bb5728c3173390915b6464a5ee`.
+The 120-second receive session forwarded six of six packets with no receiver
+errors. Both LTE identities, COMMS identity, HEARTBEAT, SYSTEM_STATUS and
+POWER_STATUS matched transmit bytes and new Yamcs `eps-uhf-in` archive entries
+exactly. Both identity dashboards visibly rendered their actual versions,
+clean source SHA and distinct device boot IDs. TX stopped and Si5351 outputs
+verified disabled afterward. See ground/releases/README.md for installed
+versions, manifest scope and reproducible UHF freshness settings.

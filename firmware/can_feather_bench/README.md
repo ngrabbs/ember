@@ -1,3 +1,22 @@
+## CAN addressing migration candidate —0.8.0
+
+This image family builds the IHU and **LTE CAN Feather** roles. The historical
+`ember_comms_can_bench.uf2` filename means the LTE Feather, not the original-Pico
+UHF transceiver. Check board USB identity before flashing.
+
+- LTE application request/reply IDs are now0x720/0x721; transceiver stays0x710/0x711.
+- LTE boots CAN-ready and answers discovery node3 with RF unchanged/off.
+- On IHU use `hello comms` or `hello lte` before that route's commands.
+- `version` / `status` reports semantic version, SHA, dirty flag and boot ID.
+- `lte firmware` and `lte modem firmware` query the two LTE processors without RF.
+
+Builds now require `-DEMBER_GIT_REVISION=<40 lowercase hex>` and
+`-DEMBER_GIT_DIRTY=0|1`. Capture these before exporting source with
+`python3 firmware/transceiver_bringup/source_identity.py` from the source checkout.
+See the [migration contract](../../system/interfaces/device_registry.md) for
+blocked target switching, identity telemetry, deployment order and validation.
+Old0x710 LTE firmware must remain off the shared bus until upgraded.
+
 # IHU–COMMS CAN Feather bench
 
 **Current application summary, reviewed 2026-10-04:** native EPS readout,

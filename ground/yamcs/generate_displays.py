@@ -179,7 +179,16 @@ def generate(destination):
     label('A stale value is historical evidence, not confirmation of the currently powered image.',28,600)
     ET.indent(display)
     ET.ElementTree(display).write(destination/'Comms-Firmware.opi',encoding='utf-8',xml_declaration=True)
-    groups={'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
+    # Separate observed LTE components; header boot belongs to the reporting IHU.
+    comms_xml=ET.tostring(display,encoding='unicode')
+    for prefix,title,filename in [('LTE_CAN_FIRMWARE','LTE CAN Feather','LTE-CAN-Firmware.opi'),('LTE_MODEM_FIRMWARE','Walter LTE modem MCU','LTE-Modem-Firmware.opi')]:
+        text=comms_xml.replace('COMMS_FIRMWARE',prefix).replace('COMMS firmware identity',title+' firmware identity')
+        text=text.replace('Reported by the running COMMS MCU over RF; last received identity.','Observed by IHU using read-only CAN/UART queries; cached identity.')
+        text=text.replace('COMMS boot ID','Reported device boot ID').replace(prefix+'_source_boot_id',prefix+'_reported_boot_id')
+        text=text.replace('Identity is sent once per enabled RF session after its first admitted request.','Query the device again after a reset or reflash; this is an observation, not a live poll.')
+        text=text.replace('A stale value is historical evidence, not confirmation of the currently powered image.','See LTE-Firmware.par for reported uptime and observation age.')
+        (destination/filename).write_text(text)
+    groups={'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'], 'LTE-Firmware.par':['LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
     for filename,names in groups.items():
         parameters=[]
         # Pin header provenance to each message rather than the last packet of any kind.

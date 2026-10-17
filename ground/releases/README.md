@@ -5,10 +5,10 @@ Current baselines:
 | Component | Version | Verification |
 | --- | --- | --- |
 | Yamcs upstream server | 5.13.0 | Running `/api` server version/revision |
-| EMBER UHF definitions + shared dashboards | 1.0.0 | `yamcs-uhf-1.0.0.json` |
-| Live UHF receiver | 2.0.0 | `receiver-2.0.0.json` |
+| EMBER UHF definitions + shared dashboards | 1.1.0 | `yamcs-uhf-1.1.0.json` |
+| Live UHF receiver | 2.1.0 | `receiver-2.1.0.json` |
 
-These are separate from COMMS MCU firmware 0.22.0. Receiver 2.0.0 is the first
+These are separate from COMMS MCU firmware 0.23.0. Receiver 2.0.0 is the first
 semantic release of pipeline v2, with content identity added; wire format and
 DSP behavior are unchanged. `receiver_version: 2` remains the pipeline field
 for old consumers. `receiver_build` contains the release and SHA-256 manifest
@@ -18,8 +18,8 @@ From the repository root, verify an installation before a demo:
 
 ```sh
 python3 ground/yamcs/build_identity.py --url http://192.168.1.251:8090 \
-  --check ground/releases/yamcs-uhf-1.0.0.json
-python3 ground/bpsk/identity.py --check ground/releases/receiver-2.0.0.json
+  --check ground/releases/yamcs-uhf-1.1.0.json
+python3 ground/bpsk/identity.py --check ground/releases/receiver-2.1.0.json
 python3 ground/bpsk/live.py --version
 ```
 
@@ -52,3 +52,29 @@ source together. For example, use `--release 1.1.0 --output ...` for a new
 Yamcs snapshot; `--publish` uploads only Ground-Build.opi and ground-build.json.
 It does not replace the team's operational dashboards or definitions. Keep
 release manifests in Git; the commit identifies the associated source revision.
+
+## Validated CAN-addressing migration — October 17
+
+Receiver 2.1.0 and Yamcs assets 1.1.0 are deployed and match their manifests.
+The UHF MDB adds LTE_CAN_FIRMWARE and LTE_MODEM_FIRMWARE, with two corresponding
+firmware dashboards and LTE-Firmware.par. The existing dashboards are unchanged.
+The USB/LTE instance MDBs remain unchanged; the shared Java WireProfile was
+rebuilt with the additive message definitions. Upstream Yamcs remains 5.13.0.
+
+The 120-second receive session recovered and forwarded all six transmitted
+packets: COMMS identity, both LTE identities, heartbeat, system status and EPS
+POWER_STATUS. Every packet matched the COMMS transmit log and Yamcs archive
+byte-for-byte; receiver errors were empty. Both LTE displays were visually
+checked against the real RF observations (Feather 0.8.0, Walter 0.3.0, clean
+source 9fcb020). RF was stopped with TX=0 and clock outputs verified disabled.
+This is a bounded migration check, not a new long-duration reliability test.
+
+Deployment reproduction: generate MDB and WireProfile.java with
+`python3 ground/ember/generate_mdb.py /tmp/ember-mdb`. For the UHF instance,
+copy ember.xml to ember-uhf.xml and retain POWER_STATUS's DefaultRateInStream
+minimumValue=0.03333333333333333 (30-second expected interval); all other
+containers remain generated unchanged. Install that UHF file and WireProfile,
+restart/recompile Yamcs, and run install_displays.py. Preserve other instance
+MDBs/configuration, archive volumes and previous release manifests. Back up
+runtime sources and receiver files before deployment. Confirm --check against
+both manifests after installation; publish Ground-Build only after that audit.
