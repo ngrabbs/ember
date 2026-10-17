@@ -58,3 +58,20 @@ static bool uplink_transmit_response(void){
  printf("[uplink] response_RF_complete=%u retry=0 ground_ack=0\n",ok);
  return ok;
 }
+
+#include "auto_reply.h"
+/* A: exactly one RX capture and at most one fresh IHU reply. RF lease is local. */
+static bool uplink_auto_window(void){
+ ar_lease lease;ar_start(&lease,time_us_64());
+ uplink_response_valid=false;uplink_pending=false;
+ printf("[auto_reply] BEGIN max20s max_replies=1 boot_resume=0\n");
+ rx_test(true,true);
+ bool fresh=uplink_pending,healthy=true;
+ if(fresh)healthy=uplink_forward();
+ bool allowed=ar_take(&lease,time_us_64(),fresh&&uplink_response_valid,healthy,getchar_timeout_us(0)>=0);
+ bool ok=healthy;
+ if(allowed)ok=uplink_transmit_response();
+ else uplink_response_valid=false;
+ printf("[auto_reply] END reply_attempted=%u ok=%u armed=0\n",allowed,ok);
+ return ok;
+}

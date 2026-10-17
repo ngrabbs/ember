@@ -470,3 +470,19 @@ Uppercase `V` explicitly transmits that held response once through the existing
 bounded BPSK transmitter. It consumes the held response before attempting RF.
 Do not invoke V until the RF return cable/receiver setup has been verified.
 Reception and CAN forwarding do not automatically enable RF transmission.
+
+### 0.30.0 bounded automatic PING round trip
+
+Uppercase `A` arms one local 20-second operation: acquire/decode one RX window,
+forward one newly accepted PING to IHU, and transmit at most one fresh, validated
+IHU completion. Old held responses are invalidated on entry. The authorization
+is consumed once, is never boot-resumed, and requires at least three seconds
+remaining before the existing two-second hard-mute transmitter can start.
+Missing/duplicate/rejected packets, cancellation, expired lease and failed CAN
+exchange cannot trigger a reply. `R` and `V` retain their separately staged modes.
+
+The ground `roundtrip.py` sends one explicitly GO-triggered PING using TXRA,
+then receives on RXA for 16 seconds after TX burst acknowledgment. It never
+retries or forwards automatically. Each run must use a new transaction ID;
+responses must match transaction and expected IHU boot ID. This remains a
+manually initiated bounded trial, not continuous listening.

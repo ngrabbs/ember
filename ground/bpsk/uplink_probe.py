@@ -21,11 +21,13 @@ DIGITAL_OFFSET = 20000
 FPGA_SHA = '7f0e329b4724e0d919a06b9924aaa3c77305b6f25038deebd6171657ac7c8a99'
 
 
-def waveform(kind, amplitude, sequence):
+def waveform(kind, amplitude, sequence, transaction_id=1):
     if kind not in ('tone', 'packet', 'ping', 'ping-wrong-target', 'ping-bad-crc') or not 0 < amplitude <= 0.05:
         raise ValueError('invalid kind or amplitude; maximum 0.05 full scale')
     if not 0 <= sequence <= 0xffffffff:
         raise ValueError('sequence out of range')
+    if not 1 <= transaction_id <= 0xffffffff:
+        raise ValueError('transaction ID out of range')
     packet = b''
     if kind == 'tone':
         a = np.ones(RATE, dtype=float)
@@ -37,7 +39,7 @@ def waveform(kind, amplitude, sequence):
         if kind.startswith('ping'):
             # Same transaction across RF sequences intentionally exercises duplicates.
             packet = encode('PING', sequence=sequence & 0x3fff, source=1,
-                            target=2, transaction_epoch=0x52585031, transaction_id=1,
+                            target=2, transaction_epoch=0x52585031, transaction_id=transaction_id,
                             source_boot_id=0x52585453, uptime_ms=0, payload={})
             if kind == 'ping-wrong-target':
                 p = bytearray(packet); p[11] = 3

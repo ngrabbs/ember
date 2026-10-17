@@ -22,4 +22,20 @@ class UplinkProbeTests(unittest.TestCase):
         for args in [('ping',.1,1),('arbitrary',.01,1),('ping',.01,-1)]:
             with self.assertRaises(ValueError):waveform(*args)
 
+
+class RoundtripTests(unittest.TestCase):
+    def test_response_correlation(self):
+        from roundtrip import matches_response
+        from codec import encode
+        _,command=waveform('ping',.05,2000,20)
+        def response(transaction=20,boot=123):
+            return {'hex':encode('COMMAND_RESPONSE',sequence=1,source=2,target=1,
+                transaction_epoch=0x52585031,transaction_id=transaction,
+                source_boot_id=boot,uptime_ms=10,
+                payload=dict(command_id=1,stage=2,reason=0,parameter_id=0,value=0)).hex()}
+        self.assertTrue(matches_response(response(),command,123))
+        self.assertFalse(matches_response(response(21),command,123))
+        self.assertFalse(matches_response(response(boot=124),command,123))
+        self.assertFalse(matches_response({'hex':command.hex()},command,123))
+
 if __name__=='__main__': unittest.main()

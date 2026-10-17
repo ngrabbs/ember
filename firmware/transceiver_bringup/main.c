@@ -443,6 +443,7 @@ int main(void) {
             rx_test(command != 'e', command == 'R');
             if(uplink_pending && !uplink_forward())afailed=true;
         }
+        if(command=='A' && !afailed && !uplink_auto_window())afailed=true;
         if(command=='V' && !afailed && !uplink_transmit_response())afailed=true;
         if (command == 'd') data_input_test();
         if (command == 'b') bpsk_test(0);
@@ -487,7 +488,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v29] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
+        printf("[y24-safe-v30] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());
