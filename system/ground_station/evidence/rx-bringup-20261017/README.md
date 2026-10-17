@@ -409,3 +409,39 @@ ended disarmed; clocks disabled, CAN A normal. This remains an unsuccessful
 full OTA round-trip, not a demonstrated automatic reply. Raw console, filtered
 summary, ground output and offline result are preserved with prefix
 auto-ota-030-03. No additional RF retries were started.
+
+## Gain70 OTA attempt and command-aware offline comparison
+
+User confirmed antenna placement unchanged and requested higher LibreSDR power.
+Trial04 aborted before RF: GO timeout, transmitted=false. The local orchestration
+script used select() around buffered text readline(), which could delay READY
+processing; replaced readiness handling with a dedicated readline thread/queue.
+Trial05 transmitted one finite PING, sequence2005/transaction23, gain70 and
+amplitude0.05 at434.994550MHz. User independently saw its burst on RTL-SDR/SDR++.
+COMMS captured without timing overruns but decoded no frame; no reply attempted,
+lease disarmed and clocks disabled. Ground reported no errors and no reply.
+
+Correction to trial03 analysis: adc_capture.py uses the telemetry/response modem
+which filters native command kind0. Its empty result alone could not establish
+failure to recover a PING. analyze_ota.py is an OFFLINE forensic tool: it retains
+outer CRC32 checking, permits recovery regardless of native kind, and separately
+validates the recovered native packet. It does not forward or execute anything.
+It additionally searches400..2600Hz in25Hz steps with8 timing phases. This method
+recovers the known-good conducted PING1921 and no frames from OTA trials03 or05.
+Production receive filtering was not changed.
+
+Overlapping0.5s windows show a burst at roughly1.0..2.0s in trial05. Maximum-window
+RMS is1.586ADC counts versus background~0.8, compared with5.081counts in the
+successful conducted PING. Windowed400..2600Hz peak band power is1.910 versus
+25.692 counts squared (background~0.35): approximately12dB less signal after
+rough noise subtraction. These are relative ADC observations, not calibrated
+antenna input power or a sensitivity measurement. Burst squared-spectrum
+candidate frequencies are1285.4Hz for trial05,1238.9Hz for trial03 and1209.7Hz
+for the known-good capture; weak-signal candidates are not precise carrier
+measurements. All are inside the searched frequency range.
+
+Evidence supports inadequate OTA signal margin as a working hypothesis; it does
+not isolate transmitter output, antenna path or receiver gain/noise. Gain70
+still uses digital amplitude0.05, so it must not be described as full transmitter
+power. No further transmissions during this analysis. Next establish actual
+LibreSDR output level with tinySA and compare a controlled conducted input.
