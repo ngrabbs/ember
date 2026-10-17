@@ -1,0 +1,22 @@
+pico_sdk_init()
+file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/VERSION" FW_VERSION)
+string(REPLACE "." ";" FW_PARTS "${FW_VERSION}")
+list(GET FW_PARTS 0 FW_MAJOR)
+list(GET FW_PARTS 1 FW_MINOR)
+list(GET FW_PARTS 2 FW_PATCH)
+# Exported build directories have no reliable Git context: require exact inputs.
+string(LENGTH "${EMBER_GIT_REVISION}" REV_LENGTH)
+if(NOT REV_LENGTH EQUAL 40 OR NOT EMBER_GIT_REVISION MATCHES "^[0-9a-f]+$")
+  message(FATAL_ERROR "Supply -DEMBER_GIT_REVISION=<full source commit>")
+endif()
+if(NOT "${EMBER_GIT_DIRTY}" MATCHES "^[01]$")
+  message(FATAL_ERROR "Supply -DEMBER_GIT_DIRTY=0 or 1")
+endif()
+configure_file(../shared/pico_can/build_identity.h.in build_identity.h @ONLY)
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+execute_process(COMMAND ${Python3_EXECUTABLE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../ground/ember/generate_c.py
+    ${CMAKE_CURRENT_BINARY_DIR}/generated/wire.h RESULT_VARIABLE generated)
+if(NOT generated EQUAL 0)
+    message(FATAL_ERROR "Dictionary header generation failed")
+endif()

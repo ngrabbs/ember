@@ -14,9 +14,11 @@ application is available through Git history.
 The recorded IHU USB identity is `DF641455DB822427`. Verify role=IHU_MCU using
 `version` or `status`. USB CDC carries both console and structured wired
 messages;115200 is an acceptable terminal setting. No additional physical
-UART pins are allocated by this release. The historically named
-`ember_comms_can_bench` image is the LTE CAN Feather, not the original-Pico
-transceiver transceiver. Identify the role/device before any update.
+UART pins are allocated by this release. Current builds produce `ihu.uf2` for
+the IHU and [`walter_mcu.uf2`](../../firmware/walter_mcu/README.md) for the LTE CAN
+Feather (`role=WALTER_MCU`). Walter ESP32-S3 uses the separate `walter` application;
+the original-Pico UHF application is `transceiver`. Identify the role/device
+before any update. Historical LTE Feather images reported `LTE_CAN_MCU`.
 
 On m75q, `ember-bench-bridge` exclusively owns the IHU port. For manual work,
 record whether it is active, stop it, and open the identified port with a

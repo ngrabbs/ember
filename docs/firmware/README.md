@@ -9,6 +9,7 @@ For operator use rather than firmware development, see the
 |---|---|
 | Implement subsystem telemetry | [Telemetry data flow and developer workflow](../architecture/telemetry_data_flow.md) |
 | Housekeeping build and runtime | [IHU firmware](../../firmware/ihu/README.md) |
+| LTE CAN Feather controller | [Walter MCU firmware](../../firmware/walter_mcu/README.md) |
 | Transceiver firmware | [transceiver firmware](../../firmware/transceiver/README.md) |
 | Spacecraft mode-manager behavior | [Operations draft](../architecture/operations/README.md) |
 | Shared command and telemetry contracts | [System references](../../system/README.md) |
