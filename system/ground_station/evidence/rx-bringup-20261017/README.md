@@ -112,3 +112,21 @@ LO frequency. Signal reaches the mixer LO net, but +7 dBm drive remains unverifi
 Window completed and shutdown verified; final registers 3=FF,16/17/18=80.
 Next move to TP5 (RX_IF before the narrow LPF) and reapply a weak RF tone to
 look for a beat outside the baseband filter passband as well as within it.
+
+## TP5 tone tests — probing validation required
+
+At nominal −60 dBm J9 (generator −30 dBm, external 30 dB pad), tone-off/on
+captures did not establish a beat. Raised to nominal −50 dBm J9 and tested
+435.001/435.011 MHz, then repeated at 435.011/435.021 MHz. All three RX
+windows completed with verified shutdown; generator output disabled in cleanup.
+The initial apparent signal increase did not produce a reliably tracking beat.
+Repeat scope traces clipped at 10 mV/div. Its concurrent ADC capture was dominated
+by ~60 Hz (~36.8 counts AC RMS), not an identified mixer beat.
+
+With RX clock and generator off, TP5 at DC coupling, 0.5 V/div, 5 ms/div showed
+1.525 V mean, 3.24 Vpp, 60.24 Hz. This is a substantial mains-frequency signal
+or probing artifact; the current setup cannot support an RF reception claim.
+User asked to identify the ground spring contact and place both tip and spring
+on confirmed board GND before further diagnosis. No component failure assigned.
+Earlier brief 145 MHz / LO observations remain observations under the reported
+probing setup, not calibrated measurements; grounding must now be checked.
