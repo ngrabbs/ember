@@ -130,3 +130,41 @@ User asked to identify the ground spring contact and place both tip and spring
 on confirmed board GND before further diagnosis. No component failure assigned.
 Earlier brief 145 MHz / LO observations remain observations under the reported
 probing setup, not calibrated measurements; grounding must now be checked.
+
+## Corrected ground: first analog receive confirmation
+
+User confirmed tip remained on TP5 and corrected its ground contact. With both
+sources off, TP5 now read 1.670 V DC, ~20 mVpp at coarse 0.5 V/div, no valid
+frequency. This supersedes the earlier 3.24 Vpp/60 Hz observation as evidence
+of receiver behavior; the previous probing setup was not reliable.
+
+At nominal −50 dBm into J9 (tinySA −20 dBm plus external 30 dB pad), a corrected
+frequency-step test produced low-frequency spectral peaks near 8.33 kHz for
+435.001 MHz and 18.33 kHz for 435.011 MHz. The 10 kHz beat shift matches the
+commanded source shift. These are short-scope-FFT estimates, not calibrated RF
+frequencies. Tuning the source to 434.994 MHz brought the beat into the analog
+passband and produced a strong ~1.391 kHz tone in the Pico ADC.
+
+Confirmation with 4096 software-paced samples per capture, 8 kS/s nominal,
+no >10 us timing misses:
+
+| Source at J9 (nominal) | ADC AC RMS (counts) | Fitted tone peak (counts) |
+|---|---:|---:|
+| −50 dBm | 8.669 | 11.074 |
+| −60 dBm | 2.755 | 3.294 |
+| Source off, LO on | 0.829 | 0.072 maximum in searched band |
+
+The fitted tone dropped 10.53 dB for a commanded 10 dB source reduction and
+was absent above the baseline with source off. Sine/cosine/DC least-squares
+fit searched 1385–1397 Hz in 0.05 Hz steps, choosing largest fitted amplitude;
+frequency drift across captures is possible. Assuming a 3.3 V ADC reference,
+the fitted tones are ~17.8 and 5.3 mVpp; those are ADC-derived estimates.
+Raw captures, instrument replies, and analysis JSON are retained here.
+
+This establishes a CW receive response from the shared antenna connection
+through the analog chain into the Pico ADC. It does not qualify sensitivity,
+absolute LO power, calibrated gain/noise, or packet/command reception. Relative
+source/LO frequency offset must be handled before uplink packet tests; it must
+not be assigned solely to either instrument without a frequency reference.
+All windows completed with verified shutdown. Final clock registers 3=FF,
+16/17/18=80, generator off, CAN A normal. No component changes were made.
