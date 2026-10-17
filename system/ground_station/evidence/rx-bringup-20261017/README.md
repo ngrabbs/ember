@@ -270,3 +270,43 @@ Next: define and validate a narrowly scoped read-only uplink command path.
 Continuous reception, broad frequency acquisition, sensitivity and packet-loss
 qualification remain open. Current R mode is a manually triggered capture and
 post-capture decode; CAN service pauses during that diagnostic.
+
+## PING-only ingress verified: COMMS 0.28.0
+
+Installed clean b479c6445036b09d8f4adf4b15890a46cae2b137, version 0.28.0,
+boot 462500884, after verified full-flash backup and verified load. Same
+conducted 40 dB chain and LibreSDR settings as the previous tests. The native
+command contract remains ground→IHU; COMMS validates ingress and prints status,
+but does not forward, execute, or produce a response.
+
+| Sequence | Test | Pico result | Decode time |
+|---|---|---|---:|
+| 1921 | Valid PING | PING_ACCEPTED | 111766 us |
+| 1922 | Same transaction, new sequence | PING_DUPLICATE | 114445 us |
+| 1923 | Wrong destination (COMMS instead of IHU) | REJECT_ROUTE | 113321 us |
+| 1924 | Damaged native CRC, valid outer CRC | No valid packet | 3266545 us |
+
+The negative CRC search finishes its current frequency candidate before checking
+the three-second deadline, explaining the measured 3.267 s duration. RF clocks
+were already shut down during decoding. This is not a strict three-second
+wall-clock bound. CAN service returned to normal after all tests.
+
+Offline forensic recovery validates each outer CRC32 and compares its payload
+byte-for-byte against the independent transmitter log, including the two negative
+cases. The strict native codec separately rejects the wrong route and damaged
+CRC. The audit script intentionally bypasses native validation only in its own
+process to expose malformed outer payloads; it has no forwarding path and is
+not deployed as a production decoder. Both valid PINGs passed strict native
+validation. See ping-028-proof.json and ping-028-outer-audit.json.
+
+Host C tests with address/undefined-behavior sanitizers passed route, CRC, shape,
+identity, duplicate/conflict, cache-full fail-closed, recorded ADC regression,
+synthetic waveform and negative cases. Startup tests and 14 selected Python
+waveform/ADC/modem tests passed; Pico build used warnings as errors. Cache stores
+16 transactions until COMMS reboot, without eviction; it is not authentication
+or persistent anti-replay protection.
+
+Final clocks mask FF, controls 80/80/80, CAN A NORMAL; finite RF bursts ended.
+No IHU command execution, CAN forwarding, RF reply or Yamcs forwarding occurred.
+Next: connect the validated PING to the IHU command/response path, then verify
+its genuine response over RF. Continuous RX and broader qualification remain open.

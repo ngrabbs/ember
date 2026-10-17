@@ -1,0 +1,19 @@
+[INFO] [UHD] linux; GNU C++ version 14.2.0; Boost_108300; UHD_4.8.0.0+ds1-2
+[INFO] [B200] Detected Device: B210
+[INFO] [B200] Operating over USB 3.
+[INFO] [B200] Initialize CODEC control...
+[INFO] [B200] Initialize Radio control...
+[INFO] [B200] Performing register loopback test... 
+[INFO] [B200] Register loopback test passed
+[INFO] [B200] Performing register loopback test... 
+[INFO] [B200] Register loopback test passed
+[INFO] [B200] Setting master clock rate selection to 'automatic'.
+[INFO] [B200] Asking for clock rate 16.000000 MHz... 
+[INFO] [B200] Actually got clock rate 16.000000 MHz.
+[INFO] [MULTI_USRP] Setting master clock rate selection to 'manual'.
+[INFO] [B200] Asking for clock rate 49.152000 MHz... 
+[INFO] [B200] Actually got clock rate 49.152000 MHz.
+[WARNING] [AD936X] Selected Tx sample rate (0.192 MHz) is less than
+analog frontend filter bandwidth (0.2 MHz).
+UPLINK_PROBE_READY {"kind": "ping", "synthetic_fixture": true, "packet_hex": "1900c78200190100000101025258503100000001525854530000000000002054", "rf_sequence": 1922, "requested_signal_hz": 434994550.0, "digital_offset_hz": 20000, "sample_rate_hz": 192000, "amplitude": 0.05, "samples": 140800, "duration_s": 0.7333333333333333, "samples_sent": 0, "errors": [], "transmitted": false, "actual_tune_hz": 434974549.9975979, "actual_rate": 191999.99952627943, "gain": 70.0, "antenna": "TX/RX", "fpga_sha256": "7f0e329b4724e0d919a06b9924aaa3c77305b6f25038deebd6171657ac7c8a99"}
+UPLINK_PROBE_RESULT {"kind": "ping", "synthetic_fixture": true, "packet_hex": "1900c78200190100000101025258503100000001525854530000000000002054", "rf_sequence": 1922, "requested_signal_hz": 434994550.0, "digital_offset_hz": 20000, "sample_rate_hz": 192000, "amplitude": 0.05, "samples": 140800, "duration_s": 0.7333333333333333, "samples_sent": 140800, "errors": [], "transmitted": true, "actual_tune_hz": 434974549.9975979, "actual_rate": 191999.99952627943, "gain": 70.0, "antenna": "TX/RX", "fpga_sha256": "7f0e329b4724e0d919a06b9924aaa3c77305b6f25038deebd6171657ac7c8a99"}

@@ -1,0 +1,114 @@
+[
+  {
+    "capture": "libre-ping-028-valid-console.txt",
+    "outer_crc32_packets": [
+      {
+        "sequence": 1921,
+        "hex": "1900c78100190100000101025258503100000001525854530000000000001ffe",
+        "decoded": {
+          "header": {
+            "kind": 1
+          },
+          "audit_only": "native validation bypassed for outer-frame forensic recovery"
+        },
+        "carrier_offset_hz": 1209.7320556640625,
+        "window_start": 0,
+        "timing_sample": 3,
+        "decoder": "dbpsk",
+        "strict_native": {
+          "name": "PING",
+          "sequence": 1921,
+          "header": {
+            "schema_version": 1,
+            "kind": 0,
+            "message_id": 1,
+            "source": 1,
+            "target": 2,
+            "transaction_epoch": 1381519409,
+            "transaction_id": 1,
+            "source_boot_id": 1381520467,
+            "uptime_ms": 0,
+            "payload_length": 0
+          },
+          "payload": {}
+        }
+      }
+    ]
+  },
+  {
+    "capture": "libre-ping-028-duplicate-console.txt",
+    "outer_crc32_packets": [
+      {
+        "sequence": 1922,
+        "hex": "1900c78200190100000101025258503100000001525854530000000000002054",
+        "decoded": {
+          "header": {
+            "kind": 1
+          },
+          "audit_only": "native validation bypassed for outer-frame forensic recovery"
+        },
+        "carrier_offset_hz": 1212.4099731445312,
+        "window_start": 0,
+        "timing_sample": 0,
+        "decoder": "dbpsk",
+        "strict_native": {
+          "name": "PING",
+          "sequence": 1922,
+          "header": {
+            "schema_version": 1,
+            "kind": 0,
+            "message_id": 1,
+            "source": 1,
+            "target": 2,
+            "transaction_epoch": 1381519409,
+            "transaction_id": 1,
+            "source_boot_id": 1381520467,
+            "uptime_ms": 0,
+            "payload_length": 0
+          },
+          "payload": {}
+        }
+      }
+    ]
+  },
+  {
+    "capture": "libre-ping-028-route-console.txt",
+    "outer_crc32_packets": [
+      {
+        "sequence": 1923,
+        "hex": "1900c7830019010000010103525850310000000152585453000000000000eb2d",
+        "decoded": {
+          "header": {
+            "kind": 1
+          },
+          "audit_only": "native validation bypassed for outer-frame forensic recovery"
+        },
+        "carrier_offset_hz": 1215.5914306640625,
+        "window_start": 0,
+        "timing_sample": 0,
+        "decoder": "dbpsk",
+        "strict_native_error": "bench commands require ground-to-IHU and a transaction"
+      }
+    ]
+  },
+  {
+    "capture": "libre-ping-028-crc-console.txt",
+    "outer_crc32_packets": [
+      {
+        "sequence": 1924,
+        "hex": "1900c78400190100000101025258503100000001525854530000000000005f01",
+        "decoded": {
+          "header": {
+            "kind": 1
+          },
+          "audit_only": "native validation bypassed for outer-frame forensic recovery"
+        },
+        "carrier_offset_hz": 1216.4382934570312,
+        "window_start": 0,
+        "timing_sample": 0,
+        "decoder": "dbpsk",
+        "strict_native_error": "CRC mismatch"
+      }
+    ]
+  }
+]
