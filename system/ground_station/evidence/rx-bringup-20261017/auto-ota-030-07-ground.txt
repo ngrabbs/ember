@@ -1,0 +1,22 @@
+[INFO] [UHD] linux; GNU C++ version 14.2.0; Boost_108300; UHD_4.8.0.0+ds1-2
+[INFO] [B200] Detected Device: B210
+[INFO] [B200] Operating over USB 3.
+[INFO] [B200] Initialize CODEC control...
+[INFO] [B200] Initialize Radio control...
+[INFO] [B200] Performing register loopback test... 
+[INFO] [B200] Register loopback test passed
+[INFO] [B200] Performing register loopback test... 
+[INFO] [B200] Register loopback test passed
+[INFO] [B200] Setting master clock rate selection to 'automatic'.
+[INFO] [B200] Asking for clock rate 16.000000 MHz... 
+[INFO] [B200] Actually got clock rate 16.000000 MHz.
+[INFO] [MULTI_USRP] Setting master clock rate selection to 'manual'.
+[INFO] [B200] Asking for clock rate 49.152000 MHz... 
+[INFO] [B200] Actually got clock rate 49.152000 MHz.
+[WARNING] [AD936X] Selected Tx sample rate (0.192 MHz) is less than
+analog frontend filter bandwidth (0.2 MHz).
+[WARNING] [AD936X] Selected Rx sample rate (0.192 MHz) is less than
+analog frontend filter bandwidth (0.2 MHz).
+ROUNDTRIP_READY {"packet_hex": "1900c7d70019010000010102525850310000001952585453000000000000d87d", "sequence": 2007, "transaction": 25, "expected_ihu_boot": 2786831095, "tx_gain": 70.0, "amplitude": 0.2, "uplink_hz": 434994550, "downlink_hz": 437000000, "tx_port": "TX/RX", "rx_port": "RX2", "transmitted": false, "errors": [], "packets": [], "matching_responses": []}
+ROUNDTRIP_LISTEN
+ROUNDTRIP_RESULT {"packet_hex": "1900c7d70019010000010102525850310000001952585453000000000000d87d", "sequence": 2007, "transaction": 25, "expected_ihu_boot": 2786831095, "tx_gain": 70.0, "amplitude": 0.2, "uplink_hz": 434994550, "downlink_hz": 437000000, "tx_port": "TX/RX", "rx_port": "RX2", "transmitted": true, "errors": [], "packets": [{"sequence": 2, "hex": "0901c00500240102003102015258503100000019a61baaf700223eb7000b000102000000000000000008d8", "decoded": {"name": "COMMAND_RESPONSE", "sequence": 5, "header": {"schema_version": 1, "kind": 2, "message_id": 49, "source": 2, "target": 1, "transaction_epoch": 1381519409, "transaction_id": 25, "source_boot_id": 2786831095, "uptime_ms": 2244279, "payload_length": 11}, "payload": {"command_id": 1, "stage": 2, "reason": 0, "parameter_id": 0, "value": 0}}, "carrier_offset_hz": -6798.820495605469, "window_start": 288000, "timing_sample": 0, "decoder": "dbpsk"}], "matching_responses": [{"sequence": 2, "hex": "0901c00500240102003102015258503100000019a61baaf700223eb7000b000102000000000000000008d8", "decoded": {"name": "COMMAND_RESPONSE", "sequence": 5, "header": {"schema_version": 1, "kind": 2, "message_id": 49, "source": 2, "target": 1, "transaction_epoch": 1381519409, "transaction_id": 25, "source_boot_id": 2786831095, "uptime_ms": 2244279, "payload_length": 11}, "payload": {"command_id": 1, "stage": 2, "reason": 0, "parameter_id": 0, "value": 0}}, "carrier_offset_hz": -6798.820495605469, "window_start": 288000, "timing_sample": 0, "decoder": "dbpsk"}], "samples": 3072000}

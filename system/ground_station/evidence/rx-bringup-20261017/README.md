@@ -507,3 +507,24 @@ Cannot distinguish IHU rejection/busy/fragment handling or reply loss from this
 capture. Full automatic round-trip remains unproven. Next keep both consoles
 captured during a controlled diagnostic transaction to localize CAN timeout.
 No second OTA transmission was made in this step.
+
+## First complete automatic OTA PING round trip
+
+Trial07 captures both USB consoles, same gain70/amplitude0.20 and antennas,
+one finite uplink sequence2007 / transaction25. COMMS decoded the exact32-byte
+command in112335us with no ADC timing overruns. IHU0.10.0 boot2786831095 logged
+UPLINK_PING COMPLETED. The43-byte native response was byte-identical at IHU,
+COMMS CAN reception and ground RF decoding; transaction epoch1381519409/id25,
+command_id1, stageCOMPLETED2, reasonNONE0. One automatic RF reply completed,
+clocks shut down and lease disarmed. Ground errors empty, one matching response,
+carrier offset approximately -6798.82Hz. IHU CAN error counters zero afterward.
+See auto-ota-030-07-proof.json for correlation assertions.
+
+This demonstrates a complete automatic OTA PING →COMMS →CAN →IHU command engine
+→CAN →COMMS →OTA response →ground decoder. It is not a Yamcs forwarding test;
+this receiver deliberately did not forward. It is not continuous RX or a
+reliability qualification. Trial06 CAN timeout remains unexplained: opening the
+IHU console for logging coincides with success but does not prove causality.
+No firmware changed between06 and07. Next test repeatability and console-open
+versus closed behavior while preserving failure evidence; do not call timeout
+fixed. No additional transmission after this successful diagnostic trial.
