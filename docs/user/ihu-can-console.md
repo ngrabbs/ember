@@ -2,8 +2,8 @@
 
 [Operator guides](README.md) · [Mode/output matrix and entry gates](../architecture/operations/04-ihu-runtime-policy.md)
 
-This guide describes the IHU 0.13.0 source candidate and bench bridge 0.4.0.
-It does not claim those versions are flashed. Earlier 0.12.0 RF validation is
+This guide describes IHU 0.13.0 and bench bridge 0.4.0, deployed on m75q on
+2026-10-17. See the [deployment record](../../system/ground_station/evidence/ihu-0.13.0-20261017/deployment.json). Earlier 0.12.0 RF validation is
 recorded in the [fire-check runbook](../../ground/yamcs/FIRE_CHECK.md).
 The active controller source is `firmware/can_feather_bench`; the older
 FreeRTOS `firmware/ihu` has a separate [UART guide](ihu-debug-uart.md).
