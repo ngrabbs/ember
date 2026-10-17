@@ -99,3 +99,16 @@ calibrated out-of-band amplitude claims. Collector supply and clock-dependent
 activity are demonstrated, not adequate mixer drive. Final clock-disable FF,
 CLK0/1/2 power-down 80, RX window completed with verified shutdown; tinySA off.
 Next probe C97 pad 2 / U10 pin 6 for clock-dependent signal at the mixer LO input.
+
+## Mixer LO input / C97 pad 2
+
+User positioned the probe at C97 pad 2 (U10 pin 6). Generator remained off.
+Clock-off scope: mean 1.06 mV, 16 mVpp. Clock-on: mean 1.31 mV, 104 mVpp.
+Short displayed-waveform Hann FFT has its largest bin at 433.33 MHz, adjacent
+bins 425/441.67 MHz, consistent with intended ~435 MHz LO activity. Bin spacing
+8.33 MHz and the out-of-band scope/probe response preclude a precise frequency
+or calibrated power claim. The automatic 22.83 MHz scalar is not accepted as
+LO frequency. Signal reaches the mixer LO net, but +7 dBm drive remains unverified.
+Window completed and shutdown verified; final registers 3=FF,16/17/18=80.
+Next move to TP5 (RX_IF before the narrow LPF) and reapply a weak RF tone to
+look for a beat outside the baseband filter passband as well as within it.
