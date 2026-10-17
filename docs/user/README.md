@@ -15,9 +15,10 @@ dated hardware evidence and current live reception are separate checks.
 | Power up the demo ground Pi | [Pi readiness and hotspot](../../ground/pi/README.md) | Ethernet first; `EMBER-Ground` fallback Wi-Fi |
 | Send an EPS observation over LTE | [Step-by-step LTE walkthrough](lte-eps-walkthrough.md) | IHU → CAN → Walter → ground Pi → `ember` |
 
-The dedicated spare Pico used for Yamcs command tests is a third application,
-[usb_bench](../../firmware/usb_bench/README.md). Its USB stream carries binary
-packets; opening it as an interactive text console conflicts with the bridge.
+The retired standalone USB Pico and UART-only diagnostic applications are
+available through Git history. Current bench commanding uses the IHU serial
+bridge; the portable command engine lives in
+[shared protocol code](../../firmware/shared/ember_protocol/README.md).
 
 Use `ember` / `realtime` for RF and `ember-bench` / `realtime` for the IHU
 serial bridge. See [deployment and history](../../ground/yamcs/OPERATIONAL.md).

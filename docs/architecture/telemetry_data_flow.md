@@ -88,7 +88,7 @@ Paths below are relative to the repository root. The reviewed laptop checkout is
 | [firmware/ihu/main.c](../../firmware/ihu/main.c) | Both IHU and COMMS CAN bench roles, selected at build time; packet submission and relay |
 | [firmware/comms_transport/can_fragment.h](../../firmware/comms_transport/can_fragment.h) | CAN fragmentation and reassembly rules |
 | [firmware/comms_transport/uart_link.h](../../firmware/comms_transport/uart_link.h) | Framed request envelope used across the bench links |
-| [firmware/walter_lte_bench/src/main.cpp](../../firmware/walter_lte_bench/src/main.cpp) | Walter request handling and modem UDP submission |
+| [firmware/walter/src/main.cpp](../../firmware/walter/src/main.cpp) | Walter request handling and modem UDP submission |
 | [ground/ember/lte_receiver.py](../../ground/ember/lte_receiver.py) | Native LTE packet validation and unchanged forwarding to Yamcs |
 | [ground/ember/codec.py](../../ground/ember/codec.py) | Python encoder/decoder using the packet dictionary |
 | [ground/ember/generate_c.py](../../ground/ember/generate_c.py) | Generates firmware IDs, field offsets, and sizes from the packet dictionary |

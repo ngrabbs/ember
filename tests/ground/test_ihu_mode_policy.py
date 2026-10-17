@@ -93,7 +93,7 @@ class IhuModePolicy(unittest.TestCase):
             source=p/'test.c'
             source.write_text('#include <assert.h>\n#define main embedded_main\n#include "'+str(ROOT/'firmware/ihu/main.c')+'"\n#undef main\n'+DRIVER.split('int main(void)')[0]+CHECKS)
             binary=p/'test'
-            subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror','-DROLE_IHU=1','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),str(source),str(ROOT/'firmware/usb_bench/protocol.c'),'-o',str(binary)],check=True)
+            subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror','-DROLE_IHU=1','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),str(source),str(ROOT/'firmware/shared/ember_protocol/protocol.c'),'-o',str(binary)],check=True)
             output=subprocess.check_output([str(binary)],text=True)
             self.assertNotIn('UNSOLICITED_SENTINEL',output)
             self.assertIn('outcome=CAN_HELLO_CONFIRMED',output)

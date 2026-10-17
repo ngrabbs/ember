@@ -160,10 +160,10 @@ policy. UHF remains safe at boot while the Walter path is being exercised.
       Walter framed echo and back, preserving complete packet identity/CRC.
       [Evidence](../ground_station/evidence/ihu-comms-walter-can-20261002.json).
 - [x] Detect Feather BOOTSEL, preserve/verify its full flash, and install a
-      standalone USB/UART diagnostic image; [build and hardware results](../../firmware/comms_feather_bench/README.md).
+      standalone USB/UART diagnostic image; [build and hardware results](https://github.com/ngrabbs/ember/blob/ae5fc3d2fa53ee071c4b79e2851cbe8c079365d1/firmware/comms_feather_bench/README.md).
       USB commands passed; initial probes preceded installation of Walter's peer.
 - [x] Preserve and verify Walter's complete ESP32 flash and build the standalone
-      UART responder with the modem held in reset; [procedure](../../firmware/walter_uart_bench/README.md).
+      UART responder with the modem held in reset; [procedure](https://github.com/ngrabbs/ember/blob/ae5fc3d2fa53ee071c4b79e2851cbe8c079365d1/firmware/walter_uart_bench/README.md).
 - [x] Install/check Walter responder over USB: upload hashes verified; status,
       help, unknown/overlong rejection, and growing uptime passed, with modem held reset.
 - [x] Move USB to Feather and prove matching PING/PONG identifiers over the

@@ -66,14 +66,9 @@ See [machine-readable inventory](inventory.json) for hashes, status excerpts, re
 | [docs/user/yamcs.md](../../docs/user/yamcs.md) | Operator guide | New operator guides | F17 |
 | [docs/writing_guide.md](../../docs/writing_guide.md) | Implementation reference | Keep | Content/link triage |
 | [firmware/ihu/README.md](../../firmware/ihu/README.md) | Implementation reference | Updated; old milestones retained | F06 |
-| [firmware/common/README.md](../../firmware/common/README.md) | Navigation or placeholder | Keep | Content/link triage |
-| [firmware/comms_feather_bench/README.md](../../firmware/comms_feather_bench/README.md) | Implementation reference | Keep | Content/link triage |
 | [firmware/comms_transport/README.md](../../firmware/comms_transport/README.md) | Implementation reference | Keep | Content/link triage |
 | [firmware/firmware.md](../../firmware/firmware.md) | Implementation reference | Updated | F05 |
-| [firmware/usb_bench/README.md](../../firmware/usb_bench/README.md) | Implementation reference | Keep | Content/link triage |
-| [firmware/walter/README.md](../../firmware/walter/README.md) | Implementation reference | Updated; old source review retained | F07 |
-| [firmware/walter_lte_bench/README.md](../../firmware/walter_lte_bench/README.md) | Implementation reference | Updated; old source review retained | F07 |
-| [firmware/walter_uart_bench/README.md](../../firmware/walter_uart_bench/README.md) | Implementation reference | Keep | Content/link triage |
+| [firmware/walter/README.md](../../firmware/walter/README.md) | Implementation reference | Consolidated active application and vendor notes | F07 |
 | [ground/README.md](../../ground/README.md) | Implementation reference | Keep | Content/link triage |
 | [ground/ember/README.md](../../ground/ember/README.md) | Implementation reference | Keep | Content/link triage |
 | [ground/lte/BRINGUP.md](../../ground/lte/BRINGUP.md) | Implementation reference | Keep | Content/link triage |

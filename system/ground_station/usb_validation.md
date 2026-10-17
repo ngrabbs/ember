@@ -1,6 +1,10 @@
 # USB hardware validation — 2026-10-01
 
-[Setup](usb_bench_setup.md) · [Checklist](TODO.md)
+[Retired setup](usb_bench_setup.md) · [Checklist](TODO.md)
+
+This is a dated validation record. The standalone endpoint was removed; its
+[source is available in Git](https://github.com/ngrabbs/ember/blob/ae5fc3d2fa53ee071c4b79e2851cbe8c079365d1/firmware/usb_bench/README.md).
+Current operation uses the [IHU serial guide](../../docs/user/ihu-can-console.md).
 
 Pi5 `ember-ground` (`192.168.1.251`) runs Yamcs 5.13.0 and the host bridge.
 A USB-powered RP2040 Pico B2 / 2 MiB flash, ID `E663682593753535`, runs the

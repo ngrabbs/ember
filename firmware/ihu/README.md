@@ -230,7 +230,7 @@ Reads are sequential and do not imply atomic or new ADC conversions.
 
 `lte N` admits a bounded RF window (0 stops, maximum120 seconds); `lte status`
 queries Walter's state; `eps lte` reads EPS and requests a single UDP submission.
-These require [Walter LTE bench firmware](../walter_lte_bench/README.md).
+These require [Walter LTE bench firmware](../walter/README.md).
 CAN types74/75 RF window,76/77 send/modem-accepted,78/79 status.
 transceiver maps them to distinct UART application types, not diagnostic ECHO.
 IHU prints RF_WINDOW_ACCEPTED or MODEM_ACCEPTED, neither claiming ground receipt.
