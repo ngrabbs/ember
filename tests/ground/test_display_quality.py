@@ -24,7 +24,7 @@ class DisplayQuality(unittest.TestCase):
                         url=action.findtext('hyperlink')
                         if url:
                             self.assertIn('c='+instance+'__realtime',url)
-                            if instance=='ember':self.assertNotIn('/commanding/',url)
+                            self.assertIn(instance+'__realtime',url)
                     for widget in root.findall('widget'):
                         for start,size,bound in [('x','width','width'),('y','height','height')]:
                             self.assertLessEqual(int(widget.findtext(start))+int(widget.findtext(size)),int(root.findtext(bound)),path.name)

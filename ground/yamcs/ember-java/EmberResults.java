@@ -50,7 +50,7 @@ public final class EmberResults {
             command.parameter = Short.toUnsignedInt(b.getShort(WireProfile.SET_PARAMETER_PARAMETER_ID));
             command.value = Integer.toUnsignedLong(b.getInt(WireProfile.SET_PARAMETER_VALUE));
         }
-        command.deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(5);
+        command.deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(command.command == 1028 ? 40 : 5);
         pending.put(key(b), command);
         history.publishAck(id, "Acknowledge_EMBER_Acceptance", TimeEncoding.getWallclockTime(), AckStatus.PENDING);
         history.publishAck(id, CommandHistoryPublisher.CommandComplete_KEY, TimeEncoding.getWallclockTime(), AckStatus.PENDING);
@@ -83,6 +83,24 @@ public final class EmberResults {
             pending.clear();
         }
         boot = currentBoot;
+        if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
+            Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 57) {
+            Pending fire = pending.get(key(b));
+            if (fire == null || fire.command != 1028 || bytes.length != 52 ||
+                b.get(30) != 1 || (b.get(31) != 1 && b.get(31) != 2) ||
+                Byte.toUnsignedInt(b.get(32)) > 1 || (b.get(33) != 1 && b.get(33) != 2) ||
+                b.getInt(38) == 0 || b.getInt(46) == 0) return;
+            long now = TimeEncoding.getWallclockTime();
+            fire.history.publish(fire.id, "ember-fire-result", b.get(32) == 0 ? "NO_FIRE" : "FIRE");
+            fire.history.publish(fire.id, "ember-fire-mode", b.get(33) == 1 ? "STATIC_STUB" : "ALGORITHM");
+            fire.history.publish(fire.id, "ember-result-boot-id", Long.toString(currentBoot));
+            fire.history.publish(fire.id, "ember-outcome", "COMPLETED");
+            if (!fire.accepted) fire.history.publishAck(fire.id, "Acknowledge_EMBER_Acceptance", now,
+                AckStatus.NA, "Correlated payload final result received");
+            fire.history.publishAck(fire.id, CommandHistoryPublisher.CommandComplete_KEY, now, AckStatus.OK);
+            pending.remove(key(b));
+            return;
+        }
         if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) != 2) return;
         Pending command = pending.get(key(b));
         if (command == null || Short.toUnsignedInt(b.getShort(WireProfile.COMMAND_RESPONSE_COMMAND_ID)) != command.command) return;

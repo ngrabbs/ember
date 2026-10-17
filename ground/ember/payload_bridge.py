@@ -15,8 +15,8 @@ import time
 
 from codec import decode, encode, PacketError
 
-VERSION = '0.2.0'
-COMMANDS = {'PAYLOAD_PING', 'PAYLOAD_IDENT', 'PAYLOAD_STATUS_QUERY', 'PAYLOAD_HEARTBEAT_QUERY'}
+VERSION = '0.4.0'
+COMMANDS = {'PAYLOAD_PING', 'PAYLOAD_IDENT', 'PAYLOAD_STATUS_QUERY', 'PAYLOAD_HEARTBEAT_QUERY', 'PAYLOAD_FIRE_CHECK'}
 
 
 class UnknownOutcome(RuntimeError):
@@ -48,10 +48,12 @@ class Console:
                     if ' can_ready=1 ' not in line or ' mode=00 ' not in line:
                         raise RuntimeError('IHU CAN A not ready')
                     return '\n'.join(lines)
-            if text == 'eps json' and line.startswith('{'):
+            if text == 'outputs' and line.startswith('OUTPUTS '):
+                return line
+            if text == 'eps json' and line.startswith('{"profile":"ltc4162-l-readout-v1",'):
                 return line
             match = re.search(r'^SUBMITTED request=(\d+) ', line)
-            if match:
+            if match and outcome is not None:
                 request = int(match[1]); on_submit()
             match = re.search(r'^RESULT request=(\d+) outcome=(\w+)', line)
             if match and request == int(match[1]):
@@ -80,9 +82,9 @@ class Console:
                     raise
                 time.sleep(.1)
         text = {'PAYLOAD_PING':f'ping {size}', 'PAYLOAD_IDENT':'payload ident',
-                'PAYLOAD_STATUS_QUERY':'payload status', 'PAYLOAD_HEARTBEAT_QUERY':'payload heartbeat'}[name]
+                'PAYLOAD_STATUS_QUERY':'payload status', 'PAYLOAD_HEARTBEAT_QUERY':'payload heartbeat', 'PAYLOAD_FIRE_CHECK':'payload fire-check'}[name]
         expected = {'PAYLOAD_PING':'CAN_ECHO_MATCHED', 'PAYLOAD_IDENT':'FIRMWARE_IDENTITY',
-                    'PAYLOAD_STATUS_QUERY':'PAYLOAD_STATUS', 'PAYLOAD_HEARTBEAT_QUERY':'PAYLOAD_HEARTBEAT'}[name]
+                    'PAYLOAD_STATUS_QUERY':'PAYLOAD_STATUS', 'PAYLOAD_HEARTBEAT_QUERY':'PAYLOAD_HEARTBEAT', 'PAYLOAD_FIRE_CHECK':'PAYLOAD_FIRE_RESULT'}[name]
         started=time.monotonic()
         result=self.command(text, expected, on_submit)
         matches=re.findall(r'^RESULT request=\d+ outcome=\w+ peer=(\d+) bytes=(\d+) hex=([0-9a-f]+)$',result,re.M)
@@ -102,6 +104,12 @@ class Console:
 
 def observed(name, raw, peer, elapsed, bridge):
     common={'transport':1,'bridge_session_id':bridge,'reported_boot_id':peer}
+    if name=='PAYLOAD_FIRE_CHECK':
+        if (len(raw)!=16 or raw[0]!=1 or raw[1]>1 or raw[2] not in (1,2) or raw[3] or
+                int.from_bytes(raw[4:8],'big')!=peer or not int.from_bytes(raw[12:16],'big')):
+            raise UnknownOutcome('Fire check result invalid')
+        return 'PAYLOAD_FIRE_RESULT',dict(common,payload_version=1,result=raw[1],execution_mode=raw[2],
+            reported_uptime_ms=int.from_bytes(raw[8:12],'big'),check_id=int.from_bytes(raw[12:16],'big'))
     if name=='PAYLOAD_PING':
         if not 1<=len(raw)<=240 or raw!=bytes(range(len(raw))):
             raise UnknownOutcome('Echo bytes do not match request')
@@ -184,6 +192,13 @@ class EpsMonitor:
 
     def poll(self):
         try:
+            # Fail closed if policy is unavailable; never infer permission from a cached readout.
+            policy=self.console.command('outputs',timeout=2)
+        except RuntimeError as error:
+            print(json.dumps({'eps_poll':'permission_unavailable','reason':str(error)}),flush=True)
+            return
+        if not re.search(r'(?:^| )umb_telem=1(?: |$)',policy):return
+        try:
             line=self.console.command('eps json',timeout=2)
             self.state.accept(line.encode(),time.monotonic())
         except RuntimeError as error:
@@ -198,7 +213,7 @@ def main():
     parser.add_argument('--device',required=True)
     parser.add_argument('--bind',default='192.168.1.252')
     parser.add_argument('--ground',default='192.168.1.251')
-    parser.add_argument('--poll-eps',action='store_true',help='Read eps json every five seconds between commands')
+    parser.add_argument('--poll-eps',action='store_true',help='Check IHU output policy every five seconds; read/forward EPS only while umb_telem is enabled')
     parser.add_argument('--cells',type=int,default=2)
     parser.add_argument('--rsnsb-ohms',type=float,default=.01)
     parser.add_argument('--rsnsi-ohms',type=float,default=.01)

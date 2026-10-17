@@ -18,8 +18,9 @@ See [project scope](project_scope.md) for mission goals and validation scope.
 - **Power:** EPS supplies regulated rails; the documented payload carrier draws
   VBAT into a local converter. See [power interfaces](../../system/interfaces/power_interfaces.md).
 - **Command design intent:** RF uplink → comms → IHU validation → subsystem dispatch.
-  Current Yamcs commanding reaches the simulator or dedicated USB bench Pico;
-  the native EPS LTE and UHF inputs have no telecommand link. See the
+  Current Yamcs bench commanding reaches IHU and payload through the single-owner
+  USB/CAN bridge. The flight instance supports a bounded RF fire-check command
+  and correlated RF reply; this is not an autonomous flight receiver. See the
   [operator guide](../user/yamcs.md).
 - **Implemented telemetry:** FreeRTOS IHU EPS observations reach Yamcs through
   a Pi UART wrapper. The separate CAN Feather application generates native EPS
@@ -37,5 +38,7 @@ read [Telemetry: from a subsystem to the ground](telemetry_data_flow.md).
 
 The [operations draft](operations/README.md) proposes BOOT, STARTUP,
 COMMISSIONING, SAFE, and NOMINAL. It treats the earlier high-duty mode as scheduled
-work within NOMINAL, pending team review. The draft does not establish approved
-flight requirements or implemented behavior.
+work within NOMINAL, pending team review. The draft does not establish approved flight requirements. The
+[IHU0.13.0 runtime policy](operations/04-ihu-runtime-policy.md) implements quiet
+GROUND_TEST operation, independent output controls and inactive flight stubs;
+full flight supervision, history and mission scheduling remain open.

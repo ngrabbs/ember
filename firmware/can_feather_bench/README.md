@@ -1,3 +1,30 @@
+## Mode/output cleanup —0.13.0
+
+The current IHU boots quietly into SAFE/GROUND_TEST with six output switches
+OFF. Essential EPS sampling, presence discovery and command handling remain
+active. Explicit command replies are preserved. `mode` and `outputs` report
+actual state; `output NAME on/off` controls cli_debug, cli_telem, umb_debug,
+umb_telem, uhf_telem and lte_telem independently. Entering a mode or resetting
+clears all switches. Flight builds are inactive stubs and restrict operation
+when qualified flight history is unavailable. No physical test jumper is used.
+
+Read the [runtime matrix, entry gates and migration procedure](../../docs/architecture/operations/04-ihu-runtime-policy.md).
+Pair with bench bridge 0.4.0; periodic EPS forwarding is now permission-gated.
+The old EPS-only `telem` timer, CAN echo telemetry shortcuts and LTE queue
+console/pumps are retired. Older sections below record historical releases
+and hardware evidence; their retired command instructions do not apply to0.13.0.
+
+## Payload fire check —0.12.0
+
+`payload fire-check` commands the selected payload, validates its16-byte result,
+and prints FIRE_CHECK result=no_fire/fire with STATIC_STUB/ALGORITHM provenance.
+The RF uplink admits PAYLOAD_FIRE_CHECK in addition to PING, establishes payload
+HELLO, and returns one correlated native PAYLOAD_FIRE_RESULT via COMMS.
+RF transactions use a separate16-entry fail-closed per-boot duplicate cache;
+there is no automatic retry. Console mutation and background work cannot take
+over the active RF transaction. Existing COMMS/LTE routes are retained.
+STATUS now reports the same semantic version as FIRMWARE.
+
 ## Payload application route —0.11.0
 
 IHU adds `hello payload`, `ping N`, `payload ident`, `payload status`, and
@@ -392,7 +419,7 @@ command is added. Production FreeRTOS scheduling remains a separate integration.
 
 [Saved proof](../../ground/uhf/results/2026-10-03/native-autotelem/result.json):
 three native packets at20-second intervals with passive USB observation, followed
-by one further packet while the USB console was closed/DTR released for25 seconds.
+by one further packet while the USB console was closed/DTR released for 25 seconds.
 All four were delivered over CAN→SDRB→UHF→LibreSDR→Yamcs. The first three have
 IHU returned-byte evidence; the fourth has native counter/closed-console timing
 and byte identity at CAN/socket/RF/archive. The physical cable stayed connected.
@@ -425,7 +452,7 @@ Health packet producers from the deployed can-bench-v3 are preserved.
 
 The default is IDLE, including after resets. With COMMS `a` service running and
 normal CAN/HELLO established, `uhf run 120 10` produces heartbeat/system/EPS
-cycles every10 seconds for120 seconds. One packet is in flight at a time and
+cycles every 10 seconds for 120 seconds. One packet is in flight at a time and
 results are checked before advancing. `status` reports progress; `uhf stop`
 stops future production, while an admitted packet may finish. Stop COMMS too
 for an immediate RF abort. Bad/missing results or producer failure enter FAULT;

@@ -21,7 +21,7 @@ class FakeConsole:
     def execute(self,name,size,on_submit):
         self.calls+=1;on_submit()
         if self.unknown:raise UnknownOutcome('timeout')
-        raw=bytes(range(size)) if name=='PAYLOAD_PING' else bytes([1,4,1,0])+struct.pack('>6I',42,200,3,2,0,0)
+        raw=bytes([1,0,1,0])+struct.pack('>3I',42,200,1) if name=='PAYLOAD_FIRE_CHECK' else bytes(range(size)) if name=='PAYLOAD_PING' else bytes([1,4,1,0])+struct.pack('>6I',42,200,3,2,0,0)
         return raw,42,5
 
 
@@ -44,6 +44,16 @@ class PayloadGroundTests(unittest.TestCase):
         bridge.handle(command('PAYLOAD_STATUS_QUERY',transaction=9))
         self.assertEqual(decode(packets[-2])['payload']['report_kind'],1)
 
+    def test_fire_result_is_correlated_stub_and_duplicates_do_not_repeat(self):
+        console=FakeConsole();packets=[];bridge=Bridge(console,packets.append)
+        wire=command('PAYLOAD_FIRE_CHECK');bridge.handle(wire);bridge.handle(wire)
+        self.assertEqual(console.calls,1)
+        r=decode(packets[1]);self.assertEqual(r['name'],'PAYLOAD_FIRE_RESULT')
+        self.assertEqual(r['payload']['result'],0);self.assertEqual(r['payload']['execution_mode'],1)
+        for bad in (bytes(16), bytes([1,2,1,0])+struct.pack('>3I',42,0,1),
+                    bytes([1,0,1,0])+struct.pack('>3I',43,0,1)):
+            with self.assertRaises(UnknownOutcome):observed('PAYLOAD_FIRE_CHECK',bad,42,0,1)
+
     def test_after_dispatch_timeout_remains_unknown(self):
         console=FakeConsole();console.unknown=True;packets=[];bridge=Bridge(console,packets.append)
         wire=command(bytes=8);bridge.handle(wire)
@@ -58,6 +68,16 @@ class PayloadGroundTests(unittest.TestCase):
         self.assertEqual(decode(packets[0])['payload']['reason'],2)
         with self.assertRaises(UnknownOutcome):observed('PAYLOAD_STATUS_QUERY',bytes(28),42,0,1)
         with self.assertRaises(UnknownOutcome):observed('PAYLOAD_IDENT',bytes(32),42,0,1)
+
+    def test_eps_poll_ignores_unsolicited_rf_transactions(self):
+        class Port:
+            def __init__(self):self.lines=iter([b'SUBMITTED request=3 type=1 bytes=0',
+                b'RESULT request=3 outcome=CAN_HELLO_CONFIRMED peer=42 bytes=0 hex=',b'{"profile":"ltc4162-l-readout-v1","registers":{}}'])
+            def write(self,p):pass
+            def flush(self):pass
+            def readline(self):return next(self.lines)+b'\n'
+        console=Console.__new__(Console);console.port=Port()
+        self.assertEqual(console.command('eps json'),'{"profile":"ltc4162-l-readout-v1","registers":{}}')
 
     def test_target_switch_retries_only_explicit_refusal(self):
         class SelectionConsole(Console):
@@ -107,16 +127,38 @@ class SerialEpsMonitor(unittest.TestCase):
         sample=json.loads((ROOT/'system/ground_station/evidence/ltc4162-input-10v7-20261001.json').read_text())[0]
         class SharedConsole(FakeConsole):
             def __init__(self):super().__init__();self.order=[]
-            def command(self,text,**kwargs):self.order.append(text);return json.dumps(sample)
+            def command(self,text,**kwargs):
+                self.order.append(text)
+                return 'OUTPUTS umb_telem=1' if text=='outputs' else json.dumps(sample)
             def execute(self,name,size,on_submit):self.order.append(name);return super().execute(name,size,on_submit)
         console=SharedConsole();packets=[]
         monitor=EpsMonitor(console,packets.append,cells=2,rsnsb=.01,rsnsi=.01)
         monitor.poll();Bridge(console,packets.append).handle(command(bytes=8));monitor.poll()
-        self.assertEqual(console.order,['eps json','PAYLOAD_PING','eps json'])
+        self.assertEqual(console.order,['outputs','eps json','PAYLOAD_PING','outputs','eps json'])
         power=decode(packets[-1]);self.assertEqual(power['name'],'POWER_STATUS')
         self.assertEqual(power['payload']['provenance'],1)
         self.assertEqual(power['payload']['readout_valid'],1)
         self.assertEqual(power['payload']['readout_count'],2)
+
+    def test_disabled_or_unknown_umbilical_policy_does_not_read_or_emit(self):
+        from payload_bridge import EpsMonitor
+        for answer in ('OUTPUTS umb_telem=0','OUTPUTS cli_telem=1','ERROR unknown command'):
+            class Disabled:
+                def command(self,text,**kwargs):
+                    self.assertion = text
+                    if text!='outputs':raise AssertionError('Unexpected EPS read')
+                    return answer
+            packets=[];console=Disabled()
+            EpsMonitor(console,packets.append,cells=2,rsnsb=.01,rsnsi=.01).poll()
+            self.assertFalse(packets)
+
+    def test_permission_timeout_does_not_emit_a_cached_packet(self):
+        from payload_bridge import EpsMonitor
+        class Unavailable:
+            def command(self,*a,**k):raise UnknownOutcome('policy timeout')
+        packets=[]
+        EpsMonitor(Unavailable(),packets.append,cells=2,rsnsb=.01,rsnsi=.01).poll()
+        self.assertFalse(packets)
 
     def test_disconnect_propagates_for_service_reconnect(self):
         from payload_bridge import EpsMonitor

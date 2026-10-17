@@ -3,10 +3,10 @@
 Raspberry Pi 4 / LC2502 / Raspberry Pi OS Trixie, CAN A only. CAN enters normal
 mode at 500 kbit/s during boot, independently of Wi-Fi or a USB console. Like
 COMMS idle service, the payload answers addressed requests; it emits no
-unsolicited boot message or periodic heartbeat. Cameras, images and power
-commands are outside this version.
+unsolicited boot message or periodic heartbeat. Fire check is a commanded static stub returning NO_FIRE; execution_mode=STATIC_STUB
+explicitly distinguishes it from a real detector. Cameras, images and power commands remain outside this version.
 
-The current IHU application is `firmware/can_feather_bench` (v0.11.0 adds the
+The current IHU application is `firmware/can_feather_bench` (v0.12.0 adds fire check; v0.11.0 added the
 payload target), not the older FreeRTOS prototype in `firmware/ihu`. Current
 transceiver idle startup is implemented in `firmware/transceiver_bringup`.
 
@@ -44,6 +44,7 @@ oversize transfers are discarded. Discovery does not establish an app session.
 | Identification | `0x18 / 0x19` | Empty request; existing32-byte identity |
 | Status | `0x94 / 0x95` | Empty request;28-byte report |
 | Heartbeat | `0x96 / 0x97` | Empty request; fresh28-byte liveness report |
+| Fire check | `0x98 / 0x99` | Empty request;16-byte result |
 | Rejection | `0x7F` | Reason: version1, type2, session3, payload4 |
 
 Identity: version major/minor/patch (3 bytes), dirty (1), full source SHA (20),
@@ -133,3 +134,19 @@ packets/fragments against the real C codec and check CRC, sequence and timeout
 recovery, discovery correlation and session gating. Actual IHU handler tests
 cover route isolation, report validation and preservation of LTE identity.
 Hardware evidence and remaining deployment limits are in `validation.json`.
+
+## Fire check 0.2.0
+
+IHU0.12.0 `hello payload` then `payload fire-check` commands one check. The
+payload returns version1, result0=NO_FIRE/1=FIRE, mode1=STATIC_STUB/2=ALGORITHM,
+reserved0, boot32, uptime_ms32, check_id32 (all integers big endian).
+This release always returns NO_FIRE/STATIC_STUB and increments check_id.
+No camera or detector is invoked. An absent, corrupt or uncorrelated reply is
+UNKNOWN, never NO_FIRE. Session HELLO, envelope CRC and request correlation apply.
+The future detector replaces the explicit stub and reports ALGORITHM.
+
+Yamcs PAYLOAD_FIRE_CHECK is available in both instances. Bench uses serial/CAN;
+flight uses the real finite RF path documented in ground/yamcs/FIRE_CHECK.md.
+
+Fire-check deployment and the two byte-matched Yamcs RF results are recorded in
+[`validation.json`](../../system/ground_station/evidence/fire-check-20261017/validation.json).

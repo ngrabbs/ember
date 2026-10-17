@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-17",
+  "versions": {
+    "ihu": "0.12.0",
+    "payload": "0.2.0",
+    "comms": "0.31.0",
+    "ground": "1.6.0",
+    "bench_bridge": "0.3.0",
+    "rf_bridge": "0.1.0",
+    "receiver": "2.4.0"
+  },
+  "source": {
+    "ihu": "64509a779c58258ab213ff60d29af5a2a46f0a06",
+    "payload": "c35262eda021e9819d4263616769c77ce3736e75",
+    "comms": "c35262eda021e9819d4263616769c77ce3736e75",
+    "firmware_dirty": 0
+  },
+  "firmware_sha256": {
+    "ihu": "ef246e6a7946d0dce203fd4aa5692f9bc95d3cb2a2f47f36251c8181738a2e9c",
+    "comms": "84bdb351e806d3be82d1dcc458ef1a9eed2af331a8de7bd79946ffa6c2642d31"
+  },
+  "checks": {
+    "host_tests": 71,
+    "host_skipped": 3,
+    "dsp_tests_on_ground_pi": 11,
+    "direct_ihu_checks": 3,
+    "final_native_can_check": "PASS",
+    "yamcs_bench_completed": 4,
+    "yamcs_flight_rf_completed": 2,
+    "rf_bytes_match_comms_and_archive": true,
+    "flash_readback": "PASS",
+    "both_ground_manifests": "MATCH",
+    "both_dashboards_visually_inspected": true
+  },
+  "expected": {
+    "result": "NO_FIRE",
+    "execution_mode": "STATIC_STUB",
+    "algorithm_executed": false
+  },
+  "resolved_failures": [
+    "Initial low-gain/early RF burst did not decode; restored prior qualified gain70/amplitude0.20 and1.8s orchestration delay.",
+    "Command sent during RF service restart was not received; Type=notify now reports readiness after UDP bind.",
+    "Decoded RF command initially timed out on CAN. IHU loop used stale time before newly submitted work; refreshed time before unsigned expiry checks.",
+    "Background discovery could refuse addressed work. Fire command now preempts only observational discovery.",
+    "EPS serial polling mistook unsolicited RF SUBMITTED/RESULT lines for its own transaction; observational commands now ignore those transaction lines."
+  ],
+  "limits": [
+    "Static stub only; no camera or fire detector runs.",
+    "Two finite OTA success trials; not long-duration RF reliability qualification.",
+    "COMMS receive/reply window is armed over USB by ground infrastructure; command and result themselves traverse RF.",
+    "16-entry per-MCU-boot fail-closed RF replay cache; no persistent replay protection or authentication.",
+    "No automatic application retry. Silence remains UNKNOWN."
+  ],
+  "backups": {
+    "m75q": "/home/ngrabbs/work/ember-fire-check-20261017/backups",
+    "payload": "/home/ngrabbs/deploy-backups/fire-check-20261017",
+    "ground": "/home/ngrabbs/work/deploy-backups/fire-check-20261017"
+  },
+  "raw_rf_evidence_on_ground": "/home/ngrabbs/work/ember-fire-rf-evidence",
+  "command_history": "command-history.json",
+  "archive_evidence": "archived-fire-results.json",
+  "final_identity_evidence": "final-identities.log"
+}

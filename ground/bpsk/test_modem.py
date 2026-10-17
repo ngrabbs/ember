@@ -23,6 +23,14 @@ class ModemTests(unittest.TestCase):
         a=a*np.exp(1j*(phase+2*np.pi*offset*np.arange(len(a))/48000))
         a+=noise*(rng.normal(size=len(a))+1j*rng.normal(size=len(a)))
         return a.conj() if conjugate else a
+    def test_command_response(self):
+        packet=encode('COMMAND_RESPONSE',sequence=20,source=2,target=1,
+                      transaction_epoch=7,transaction_id=9,source_boot_id=456,uptime_ms=100,
+                      payload=dict(command_id=1,stage=2,reason=0,parameter_id=0,value=0))
+        self.assertEqual([p['hex'] for p in decode(self.iq(raw=frame(packet,20)))],[packet.hex()])
+        command=encode('PING',sequence=21,source=1,target=2,transaction_epoch=7,
+                       transaction_id=9,source_boot_id=111,uptime_ms=0,payload={})
+        self.assertEqual(decode(self.iq(raw=frame(command,21))),[])
     def test_c_python_identity(self):
         with tempfile.TemporaryDirectory() as td:
             exe=str(Path(td)/'packet')

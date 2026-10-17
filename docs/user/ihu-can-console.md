@@ -1,164 +1,123 @@
-# IHU CAN Feather USB console
+# IHU CAN Feather console
 
-[Operator guides](README.md) · [Implementation and bench evidence](../../firmware/can_feather_bench/README.md)
+[Operator guides](README.md) · [Mode/output matrix and entry gates](../architecture/operations/04-ihu-runtime-policy.md)
 
-This guide covers the standalone `ember_ihu_can_bench` application, reviewed
-October 4, 2026, reconciled with main on October 5. It uses USB text stdio. It has no `ihu>` prompt and does not
-implement the FreeRTOS UART command set. The COMMS role shares the six common
-commands below but has no IHU-only EPS/LTE commands.
+This guide describes the IHU 0.13.0 source candidate and bench bridge 0.4.0.
+It does not claim those versions are flashed. Earlier 0.12.0 RF validation is
+recorded in the [fire-check runbook](../../ground/yamcs/FIRE_CHECK.md).
+The active controller source is `firmware/can_feather_bench`; the older
+FreeRTOS `firmware/ihu` has a separate [UART guide](ihu-debug-uart.md).
 
-## Identify and connect
+## Connect and identify
 
-Open the exact IHU USB serial device and run `status` and `help`. The recorded
-IHU flash identity is `DF641455DB822427`; COMMS is `DF637882D39E4426`.
-Their USB vendor descriptors may both say Raspberry Pi Pico. Verify `role=IHU_MCU`
-in the status response before issuing IHU controls. USB CDC carries the text;
-there is no physical UART baud setting for this interface. A terminal can use
-115200. Do not share the port with `can_chain.py` or another diagnostic helper.
+The recorded IHU USB identity is `DF641455DB822427`. Verify role=IHU_MCU using
+`version` or `status`. USB CDC carries both console and structured wired
+messages;115200 is an acceptable terminal setting. No additional physical
+UART pins are allocated by this release. The historically named
+`ember_comms_can_bench` image is the LTE CAN Feather, not the original-Pico
+COMMS transceiver. Identify the role/device before any update.
 
-The source uses exact, case-sensitive line matching with a 39-character limit.
-CR or LF dispatches a line. Long lines are discarded with
-`ERROR command too long`; unknown names return `ERROR unknown command`.
-This parser does not implement the FreeRTOS terminal's editing or command echo;
-send complete literal lines. Status/log output is suppressed when USB is not
-connected, while the MCU keeps running its CAN/UART transport loop.
+On m75q, `ember-bench-bridge` exclusively owns the IHU port. For manual work,
+record whether it is active, stop it, and open the identified port with a
+single serial client. Close that client before restarting the bridge.
+Do not stop `ember-fire-arm` to access IHU: it owns the separate COMMS port.
 
-EPS wiring is **I2C1 GP2 SDA / GP3 SCL, 100 kHz, address 0x68**, with a common
-ground. These are the Feather's labeled I2C pads. The FreeRTOS Pico GP4/GP5
-wiring does not apply to this image.
-
-## Command reference
-
-| Syntax | Effect and prerequisites | Response |
-|---|---|---|
-| `status` | Reads role, boot/peer identity, controller registers, link/error counters and pending work | One `STATUS` line; `mode=00` is normal, `40` loopback, `80` configuration |
-| `help` | Prints compiled role's command list | One `COMMANDS` line |
-| `selftest` | Sends a local MCP loopback frame, leaving controller in loopback mode; requires idle transport | `SELFTEST started=1 kind=LOCAL_LOOPBACK no_peer_proof=1`, then PASS/FAIL |
-| `normal` | Enters normal CAN mode and clears remembered peer; requires idle transport | `CAN_NORMAL ready=1` on success; obtain a fresh HELLO afterward |
-| `hello` | Exchanges CAN identity; normal mode required | `SUBMITTED ...`, then `RESULT ... outcome=CAN_HELLO_CONFIRMED ...` |
-| `ping N` | Exchanges N ascending payload bytes, 1–240; normal mode and HELLO required | `CAN_ECHO_MATCHED` on exact return; this is CAN diagnostic echo |
-| `telemetry` | Builds one native HEARTBEAT and submits it through the CAN chain | `WALTER_BENCH_RETURN` after matching chain reply, or rejection/UNKNOWN |
-| `eps json` | Reads all 19 charger registers with PEC, without configuration writes; requires idle transport | Complete `ltc4162-l-readout-v1` JSON, or `EPS_READ outcome=FAILED ...` |
-| `eps adc on` / `eps adc off` | Explicitly changes CONFIG_BITS bit 2 and verifies readback; requires idle transport | `EPS_ADC outcome=VERIFIED` or `UNKNOWN`, plus requested/before/after fields |
-| `eps telemetry` | Reads EPS, creates native 128-byte POWER_STATUS, submits CAN chain; normal mode, HELLO and idle transport required | `SUBMITTED` and a chain result; no packet on failed read |
-| `telem on [seconds]` | Arms native EPS cadence; default 20 seconds, accepted range 5–3600; normal CAN, HELLO and LTE queue off required | `AUTOTELEM` state or `REJECT` with range/readiness reason |
-| `telem status` / `telem off` | Reads timer state or prevents future timer reads; off does not cancel a pending transaction | `AUTOTELEM enabled=... period_ms=... next_ms=... due=... skipped=... submitted=... failed=... pending=... uptime_ms=...` |
-| `lte N` | Requests bounded Walter RF window, 0 stops, maximum 120 seconds; requires CAN HELLO and compatible Walter firmware | `RF_WINDOW_ACCEPTED` means window admission, not modem registration |
-| `lte status` | Requests Walter link state | `LTE_STATUS` and correlated `RESULT` |
-| `lte diagnostics` | Requests extended Walter diagnostic fields | `LTE_STATUS`, `LTE_DIAG`, then correlated `RESULT` |
-| `eps lte` | Reads EPS and requests one Walter UDP submission | `MODEM_ACCEPTED` means modem submission, not ground reception |
-| `eps enqueue` | Captures one real native EPS packet into volatile four-entry FIFO; requires idle transport | `EPS_QUEUED ...`, or BUSY/full/read failure |
-| `lte queue on` / `lte queue off` | Enables/disables FIFO processing; does not start RF or erase queued packets | `LTE_QUEUE` state and counters |
-| `lte queue status` | Reads FIFO count, state, hold reason and attempts | `LTE_QUEUE enabled=... count=... capacity=4 ...` |
-| `lte queue drop` | Drops the oldest non-active packet | Updated `LTE_QUEUE` or `REJECT reason=QUEUE_EMPTY_OR_ACTIVE` |
-
-## A diagnostic session
-
-For CAN link checks, both controllers need normal mode. If you run `selftest`,
-wait for its result, then return that controller to normal. Run these on IHU,
-waiting for each result before continuing:
-
-```text
-status
-normal
-hello
-ping 32
-eps json
+```sh
+systemctl is-active ember-bench-bridge
+sudo systemctl stop ember-bench-bridge
+# Open /dev/serial/by-id/usb-Raspberry_Pi_Pico_DF641455DB822427-if00
+# Close the manual client when finished, then restore an initially active bridge:
+sudo systemctl start ember-bench-bridge
 ```
 
-Illustrative exchanges below use source-defined labels; identities, request
-numbers and bytes vary. Ellipses are presentation omissions, not literal output:
+Boot is quiet. Send complete case-sensitive lines terminated with CR or LF;
+there is no prompt, terminal editing or command history. The line bound is39
+characters; longer lines are discarded. Opening a console or issuing `status`
+does not turn on any stream. Command replies still work when every stream is OFF.
+
+## Mode and six switches
 
 ```text
-CAN_NORMAL ready=1
-SUBMITTED request=1 type=1 bytes=0
-RESULT request=1 outcome=CAN_HELLO_CONFIRMED peer=4252110043 bytes=0 hex=
+mode
+outputs
+output cli_debug on
+output cli_telem on
+output umb_debug on
+output umb_telem on
+output uhf_telem on
+output lte_telem on
 ```
 
-Do not type `SUBMITTED` or `RESULT`; these are replies. Normal mode clears the
-previous peer, so `hello` must follow `normal`. A local loopback PASS proves the
-controller's local path, not the external CAN harness.
+Use the corresponding `off` command to disable each output. `output all on`
+is not supported. Every boot and accepted mode change clears all six.
 
-`telemetry` sends one HEARTBEAT; `eps telemetry` sends one native EPS packet
-through CAN/Walter echo. A returned echo does not establish radio delivery.
-The native EPS timer is disabled at boot and is not persisted. After normal CAN
-and HELLO, with the LTE queue off, `telem on 20` schedules the first read after
-20 seconds. Busy/unavailable transport periods are skipped without catch-up or
-backlog. The timer continues without an open USB console; `telem off` prevents
-future reads but does not cancel a pending transaction.
-
-An illustrative status reply (timing and counters vary):
-
-```text
-AUTOTELEM enabled=1 period_ms=20000 next_ms=40000 due=1 skipped=0 submitted=1 failed=0 pending=0 uptime_ms=20000
-```
-
-`submitted` counts local CAN submission, not RF delivery. No ADC configuration
-or LTE RF-window change is made by arming the timer. The [UHF runbook](../../ground/uhf/README.md)
-and [optional service runbook](../../ground/uhf/SERVICES.md) own the separate
-SDRB/radio setup and ground/archive checks. Services remain disabled at boot.
-
-For bounded LTE experiments, follow the [LTE runbook](../../ground/lte/BRINGUP.md).
-`lte N` admits a finite RF window and `eps lte` submits one real EPS packet;
-check ground capture and archived byte identity independently of modem acceptance.
-
-## EPS readout and ADC behavior
-
-The JSON schema and quality rules match the [UART readout example](ihu-debug-uart.md#reading-responses).
-The CAN image prints a failure register if any read/PEC check fails:
-
-```text
-EPS_READ outcome=FAILED register=3a reason=I2C_OR_PEC
-```
-
-The register shown is illustrative. Invalid ADC data is still included in a
-successful raw JSON read. Native EPS engineering fields use unavailable sentinels
-when conversion is invalid. Sense-resistor values remain provisional; die
-temperature is not battery temperature.
-
-`eps adc on` explicitly forces telemetry conversion during battery-only use;
-it is a configuration change, not an observational read. An illustrative reply:
-
-```text
-EPS_ADC outcome=VERIFIED requested=1 config_before=0000 config_after=0004
-```
-
-`UNKNOWN` means the write/readback did not establish the requested state. It
-must not be treated as proof that no write occurred. The helper preserves other
-CONFIG_BITS; it does not change charging policy. Low-speed ADC conversions can
-remain about five seconds apart, so repeated reads may return the same conversion.
-
-## Outcomes and recovery
-
-| Reply | Meaning and next step |
+| Command | Effect |
 |---|---|
-| `SUBMITTED` | A local request was queued; wait for a correlated result |
-| `REJECT reason=BUSY` | Existing transport work is active; wait and inspect `status` |
-| `REJECT reason=NORMAL_MODE_REQUIRED` | Set normal mode, then obtain HELLO |
-| `REJECT reason=HELLO_REQUIRED` | No established peer; perform HELLO |
-| `REJECT reason=BUSY_OR_CAN_NOT_READY` | EPS packet submission prerequisites failed; inspect mode, peer and pending state |
-| `RESULT ... outcome=PEER_REJECTED reason=...` | Peer explicitly refused; inspect peer diagnostics |
-| `RESULT ... outcome=UNKNOWN reason=TIMEOUT` | Response deadline expired; inspect actual state and establish a fresh HELLO |
-| `CAN_TX outcome=UNKNOWN reason=FRAME_TX_FAILED` | A fragment failed; local CAN transport does not prove application outcome |
-| `WALTER_BENCH_RETURN` | Exact packet returned through the diagnostic chain; not an RF receipt |
-| `MODEM_ACCEPTED` | Walter modem accepted a submission; check ground capture/archive independently |
+| `version` / `status` | Build identity; status also includes actual configuration/mode, effective switches, CAN state and transport counters |
+| `mode` | Read configuration, mode, simulated-state flag, stub status and entry reason |
+| `mode safe` | Enter SAFE when transport is idle, clear switches and stop UHF producer |
+| `mode startup` / `mode commissioning` / `mode nominal` | GROUND_TEST simulation only; clear switches, no automatic deployment or mission routine; FLIGHT rejects these exits |
+| `outputs` | Read six effective flags |
+| `output NAME on` / `output NAME off` | Set one named switch; RF OFF stops future telemetry submission/unsent fragments; already admitted remote packets may finish |
+| `faults` | Read latest 16 volatile fault records; no persistent history claimed |
+| `help` | Read available command spellings |
 
-Ordinary application requests use a five-second bound; LTE packet submission
-uses a 22-second IHU bound. There is one pending application request. Requests
-are not automatically retried after uncertain outcomes. The experimental LTE
-FIFO retries only explicit pre-submission NOT_READY/BUSY, up to three attempts;
-uncertain, expired or other failed outcomes hold the packet for inspection.
-Queue retirement counts modem acceptance. Review the
-[FIFO policy](../../ground/lte/results/2026-10-02-queue-preparation.md) before use.
+`cli_debug` and `umb_debug` enable tagged asynchronous diagnostic copies.
+`cli_telem` enables a human-readable health summary; `umb_telem` enables
+structured `ihu-health-v1` summaries and permits bridge EPS forwarding.
+These are logical formats on the current USB connection. Summaries and
+internal EPS reads run about every 5 seconds when transport is idle. Discovery
+cycles one entry every 2 seconds. Polling can be deferred during application/RF
+work. EPS validity and discovery presence are distinct forms of evidence.
 
-## Source and evidence
+## Explicit subsystem work
 
-Syntax/output: [command dispatcher](../../firmware/can_feather_bench/main.c),
-[USB build configuration](../../firmware/can_feather_bench/CMakeLists.txt),
-[EPS reader](../../firmware/can_feather_bench/eps_readout.h) and
-[LTE queue policy](../../firmware/comms_transport/lte_queue.h) and
-[native timer policy](../../firmware/can_feather_bench/autotelem.h).
-Recorded hardware checks: [CAN/EPS milestones](../../firmware/can_feather_bench/README.md)
-and [native LTE trials](../../ground/lte/README.md).
-Production RTOS integration, CAN redundancy, reliable continuous LTE, and RF
-command uplink are still separate work.
+| Commands | Purpose |
+|---|---|
+| `devices` / `devices scan` | Read registry or request a background discovery visit |
+| `normal` | Put CAN in normal mode and clear remembered peer; obtain HELLO again |
+| `selftest` | Local CAN loopback only; it leaves loopback mode, so follow with `normal` and HELLO |
+| `hello comms` / `hello lte` / `hello payload` | Select route and establish fresh peer identity; busy target switches are refused |
+| `ping N` | Echo1–240 bytes through selected CAN peer |
+| `eps json` | Explicit19-register PEC-checked read; full valid transport read or failure, never a partial JSON |
+| `eps adc on` / `eps adc off` | Explicit CONFIG_BITS force-ADC override with readback; does not change charging policy |
+| `payload ident` / `payload status` / `payload heartbeat` | Request payload diagnostics after `hello payload` |
+| `payload fire-check` | Request a fire result; payload 0.2.0 returns NO_FIRE/STATIC_STUB |
+| `lte firmware` / `lte modem firmware` / `lte status` / `lte diagnostics` | Query selected LTE route; no RF window is started by these queries |
+| `lte N` | Explicit Walter RF window,0 stops, maximum120 seconds; does not itself send telemetry |
+
+Wait for a correlated terminal RESULT before issuing another application
+command. Quiet output does not hide a solicited asynchronous result. A timeout
+remains UNKNOWN and is never interpreted as NO_FIRE or success. Native RF
+fire-check replies remain available with periodic UHF telemetry OFF, through
+the separately bounded receive/reply session. No automatic operation retry.
+
+## Explicit RF telemetry
+
+Enabling a switch grants permission; it does not acquire a radio or start RF.
+Prepare the matching COMMS/Walter and ground receiver sessions separately.
+Do not let a live receiver and RF command service concurrently own LibreSDR.
+
+| Commands | Required permission and route |
+|---|---|
+| `uhf heartbeat` / `uhf system` / `uhf eps` / `uhf devices` | uhf_telem ON, normal CAN, COMMS HELLO and idle transport |
+| `uhf lte firmware` / `uhf modem firmware` | Same UHF gates, plus an identity previously queried from LTE and still fresh |
+| `uhf run SECONDS PERIOD` | Same UHF gates; duration1–120s, period5–60s; sequential heartbeat/system/EPS/device cycles |
+| `uhf stop` | Stop future cycles; previously admitted packets may finish |
+| `heartbeat lte` / `system lte` / `eps lte` | lte_telem ON, LTE HELLO, matching modem firmware and explicit RF window/readiness |
+
+## Removed controls
+
+The old `telemetry`, `eps telemetry`, `telem on/off/status`, `eps enqueue` and
+`lte queue ...` commands are removed from IHU 0.13.0. There is no hidden EPS-only
+timer or queued LTE sender. Historical test artifacts do not enable those paths.
+Do not apply these instructions to the older FreeRTOS CLI or LTE Feather role.
+
+## Bench forwarding
+
+Bridge0.4.0 with `--poll-eps` checks IHU `outputs` before each periodic EPS
+request. With umb_telem OFF, unknown, or unavailable it emits no periodic EPS
+packet; cached Yamcs values expire. To see bench EPS telemetry deliberately
+select `output umb_telem on` using the sole console owner, then restore the
+bridge. The setting survives bridge reconnects, but not IHU reset or mode change.
+Explicit PAYLOAD_* command/result transactions do not require streaming flags.

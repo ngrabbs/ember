@@ -15,7 +15,7 @@ import time
 from protocol import (Packet, Reassembler, CAN_FRAME, REPORT, QUERY_ID, DISCOVERY_ID,
                       REQUEST_ID, REPLY_ID, NODE, HELLO, HELLO_ACK, ECHO, ECHO_ACK,
                       IDENT, IDENT_ACK, STATUS, STATUS_ACK, HEARTBEAT, HEARTBEAT_ACK,
-                      ERROR, discovery, fragments)
+                      ERROR, FIRE_CHECK, FIRE_RESULT, FIRE_REPORT, discovery, fragments)
 
 
 class Service:
@@ -25,6 +25,7 @@ class Service:
         self.now = now; self.started = now()
         self.peer = 0
         self.requests = self.replies = self.rejected = 0
+        self.checks = 0
 
     def handle(self, packet, fragment_errors=0):
         self.requests += 1
@@ -38,7 +39,7 @@ class Service:
             return reject(1)
         if packet.sender != packet.origin:
             return reject(3)
-        if packet.kind not in (HELLO, ECHO, IDENT, STATUS, HEARTBEAT):
+        if packet.kind not in (HELLO, ECHO, IDENT, STATUS, HEARTBEAT, FIRE_CHECK):
             return reject(2)
         if (packet.kind == ECHO and not packet.payload) or (packet.kind != ECHO and packet.payload):
             return reject(4)
@@ -50,6 +51,10 @@ class Service:
         if packet.kind == ECHO:
             return reply(ECHO_ACK, packet.payload)
         uptime = int((self.now() - self.started) * 1000) & 0xffffffff
+        if packet.kind == FIRE_CHECK:
+            # Replace this explicit stub with the algorithm when it is ready.
+            self.checks = (self.checks % 0xffffffff) + 1
+            return reply(FIRE_RESULT, FIRE_REPORT.pack(1, 0, 1, 0, self.boot, uptime, self.checks))
         if packet.kind == IDENT:
             version = bytes(int(x) for x in self.identity['version'].split('.'))
             data = version + bytes([self.identity['dirty']]) + bytes.fromhex(self.identity['git'])

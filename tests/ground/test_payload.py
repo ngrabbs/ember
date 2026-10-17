@@ -9,7 +9,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'firmware/payload'))
 from protocol import (Packet, Reassembler, REPORT, REQUEST_ID, REPLY_ID, discovery,
-                      fragments, HELLO, ECHO, ECHO_ACK, IDENT, STATUS, HEARTBEAT, ERROR)
+                      fragments, HELLO, ECHO, ECHO_ACK, IDENT, STATUS, HEARTBEAT, ERROR, FIRE_CHECK, FIRE_RESULT, FIRE_REPORT)
 from payload import Service
 
 IDENTITY = dict(version='0.1.0', git='0123456789abcdef0123456789abcdef01234567', dirty=1)
@@ -51,6 +51,16 @@ class PayloadTests(unittest.TestCase):
         self.assertEqual(self.request(ECHO).payload, b'\x04')
         self.assertEqual(self.request(0x80).payload, b'\x02')
         self.assertEqual(self.request(HELLO, version=2).payload, b'\x01')
+
+    def test_fire_check_is_explicit_stub_and_session_gated(self):
+        self.assertEqual(self.request(FIRE_CHECK).kind, ERROR)
+        self.request(HELLO)
+        reply=self.request(FIRE_CHECK)
+        self.assertEqual(reply.kind,FIRE_RESULT)
+        self.assertEqual(FIRE_REPORT.unpack(reply.payload),(1,0,1,0,42,0,1))
+        self.assertEqual(self.request(FIRE_CHECK,b'bad').kind,ERROR)
+        self.assertEqual(self.request(FIRE_CHECK,sender=99).kind,ERROR)
+        self.assertEqual(FIRE_REPORT.unpack(self.request(FIRE_CHECK).payload)[-1],2)
 
     def test_reassembly_rejects_corruption_and_recovers(self):
         packet = Packet(ECHO, 11, 11, 0x12345678, bytes(range(240)))

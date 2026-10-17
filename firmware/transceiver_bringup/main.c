@@ -30,7 +30,13 @@ static bool disable_clocks(void) {
 }
 
 #include "clock_test.h"
+#include "rx_test.h"
 #include "bpsk_packet.h"
+#include "rx_decode.h"
+#include "rx_ping.h"
+static rp_cache rx_ping_cache;
+static bool uplink_pending;
+static uint8_t uplink_ping[32];
 #include "bpsk_emit.h"
 #include "rf_bridge.h"
 static void bpsk_test(unsigned drive) {
@@ -45,6 +51,71 @@ static void bpsk_test(unsigned drive) {
     printf("[bpsk] drive_mA=%u\n",2*(drive+1));
     bool ok=clock_window_drive(true,false,bpsk_emit,drive);
     printf("[bpsk] complete=%u frame_bytes=%u TX=0\n",ok,(unsigned)size);
+}
+
+/* Diagnostic acquisition only: software paced, timestamps expose scheduling jitter.
+ * Dump after verified clock shutdown, never while the LO is enabled. */
+static uint16_t rx_samples[32768];
+static unsigned rx_requested=4096;
+static unsigned rx_count, rx_late;
+static uint64_t rx_elapsed;
+static bool rx_capture(void) {
+    uint64_t start=time_us_64(), next=start;
+    for (rx_count=0; rx_count<rx_requested; ++rx_count) {
+        if (getchar_timeout_us(0)>=0) return false;
+        while (time_us_64()<next) tight_loop_contents();
+        if (time_us_64()-next>10) ++rx_late;
+        rx_samples[rx_count]=adc_read();
+        next+=125; /* 8kS/s nominal; enough for the ~2.1kHz analog LPF. */
+    }
+    rx_elapsed=time_us_64()-start;
+    return true;
+}
+static uint64_t rx_decode_deadline;
+static bool rx_decode_continue(void) {
+    return time_us_64()<rx_decode_deadline && getchar_timeout_us(0)<0;
+}
+static void rx_test(bool lo, bool packet_capture) {
+    rx_requested=packet_capture ? 32768 : 4096;
+    rx_count=rx_late=0; rx_elapsed=0;
+    printf("[rx_test] prepare lo=%u CLK1=145MHz tripler_target=435MHz max10s TX=0; any byte aborts\n",lo);
+    bool ok=rx_window(lo,rx_capture);
+    if (!ok) return; /* Do not label an incomplete/faulted capture valid. */
+    unsigned low=4095,high=0; uint32_t sum=0;
+    for(unsigned i=0;i<rx_count;++i) {
+        if(rx_samples[i]<low)low=rx_samples[i];
+        if(rx_samples[i]>high)high=rx_samples[i];
+        sum+=rx_samples[i];
+    }
+    printf("[rx_adc] n=%u interval_us=125 elapsed_us=%llu late_gt10us=%u min=%u max=%u sum=%lu hex=",
+           rx_count,(unsigned long long)rx_elapsed,rx_late,low,high,(unsigned long)sum);
+    for(unsigned i=0;i<rx_count;++i)printf("%03x",rx_samples[i]);
+    printf("\n");
+    if(lo && packet_capture) {
+        uint64_t expected=(uint64_t)(rx_requested-1)*125;
+        if(rx_count!=rx_requested || rx_late || rx_elapsed+2000<expected ||
+           rx_elapsed>expected+2000 || !low || high>=4095) {
+            printf("[rx_decode] rejected capture timing or clipping\n");
+            return;
+        }
+        rd_result result={0};uint64_t started=time_us_64();
+        rx_decode_deadline=started+3000000;
+        bool found=rd_decode(rx_samples,rx_count,&result,rx_decode_continue);
+        printf("[rx_decode] found=%u elapsed_us=%llu diagnostic_only=1 dispatch=0",
+               found,(unsigned long long)(time_us_64()-started));
+        if(found) {
+            printf(" sequence=%lu mixer_hz=%u packet_hex=",(unsigned long)result.sequence,result.frequency);
+            for(unsigned i=0;i<result.size;i++)printf("%02x",result.packet[i]);
+        }
+        printf("\n");
+        if(found && result.packet[W_KIND]==W_KINDS_COMMAND) {
+            const char *status=rp_check(&rx_ping_cache,result.packet,result.size);
+            if(!strcmp(status,"PING_ACCEPTED")){memcpy(uplink_ping,result.packet,32);uplink_pending=true;}
+            printf("[rx_ping] outcome=%s epoch=%lu transaction=%lu ingress_only=1 forwarded=0 rf_reply=0\n",
+                   status,(unsigned long)rd_u32(result.packet+W_TRANSACTION_EPOCH),
+                   (unsigned long)rd_u32(result.packet+W_TRANSACTION_ID));
+        }
+    }
 }
 
 /* Data-input measurement only: never enables a clock or RF path. */
@@ -185,6 +256,7 @@ static bool hello_send(const uint8_t *wire,size_t size,uint32_t request,uint64_t
 }
 
 #include "rf_service.h"
+#include "uplink_service.h"
 
 /* Console l=listen-only, n=receive with ACK; both bounded to ten seconds. */
 static bool listen_a(bool acknowledge, bool reply_hello, bool forward_rf) {
@@ -367,6 +439,12 @@ int main(void) {
             printf("[firmware] version=%s git=%s dirty=%u boot=%lu\n",FW_VERSION,FW_GIT,FW_DIRTY,(unsigned long)responder_boot);
             clock_status();
         }
+        if (command == 'r' || command == 'e' || command == 'R'){
+            rx_test(command != 'e', command == 'R');
+            if(uplink_pending && !uplink_forward())afailed=true;
+        }
+        if(command=='A' && !afailed && !uplink_auto_window())afailed=true;
+        if(command=='V' && !afailed && !uplink_transmit_response())afailed=true;
         if (command == 'd') data_input_test();
         if (command == 'b') bpsk_test(0);
         if (command == 'B') bpsk_test(1);
@@ -410,7 +488,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v24] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
+        printf("[y24-safe-v30] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

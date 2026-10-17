@@ -8,7 +8,7 @@ import time
 
 from protocol import (Packet, Reassembler, CAN_FRAME, REQUEST_ID, REPLY_ID,
                       HELLO, HELLO_ACK, ECHO, ECHO_ACK, IDENT, IDENT_ACK,
-                      STATUS, STATUS_ACK, HEARTBEAT, HEARTBEAT_ACK, ERROR, fragments)
+                      STATUS, STATUS_ACK, HEARTBEAT, HEARTBEAT_ACK, ERROR, FIRE_CHECK, FIRE_RESULT, fragments)
 
 
 class Client:
@@ -46,7 +46,7 @@ class Client:
             if response.kind == ERROR:
                 raise RuntimeError(f'Payload rejected command: {response.payload.hex()}')
             expected = {HELLO: HELLO_ACK, ECHO: ECHO_ACK, IDENT: IDENT_ACK,
-                        STATUS: STATUS_ACK, HEARTBEAT: HEARTBEAT_ACK}[kind]
+                        STATUS: STATUS_ACK, HEARTBEAT: HEARTBEAT_ACK, FIRE_CHECK: FIRE_RESULT}[kind]
             if response.kind != expected:
                 continue
             if kind == HELLO:
@@ -60,12 +60,12 @@ class Client:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--interface', default='can0')
-    parser.add_argument('command', choices=['ping', 'ident', 'status', 'heartbeat'])
+    parser.add_argument('command', choices=['ping', 'ident', 'status', 'heartbeat', 'fire-check'])
     args = parser.parse_args()
     client = Client(args.interface)
     try:
         client.ask(HELLO)
-        kind = {'ping': ECHO, 'ident': IDENT, 'status': STATUS, 'heartbeat': HEARTBEAT}[args.command]
+        kind = {'ping': ECHO, 'ident': IDENT, 'status': STATUS, 'heartbeat': HEARTBEAT, 'fire-check': FIRE_CHECK}[args.command]
         response = client.ask(kind, b'EMBER' if kind == ECHO else b'')
         print(f'{args.command}: boot={response.sender} request={response.request} payload={response.payload.hex()}')
         if kind == ECHO and response.payload != b'EMBER':

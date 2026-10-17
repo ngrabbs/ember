@@ -29,7 +29,8 @@ class OperationalYamcs(unittest.TestCase):
             self.assertEqual((c/'yamcs.yaml').read_text(),'instances:\n  - ember\n  - ember-bench\nsecretKey: preserve\n')
             self.assertEqual((c/'yamcs.ember-lte.yaml').read_text(),body)
             self.assertIn('port: 10018',flight);self.assertIn('port: 10019',flight)
-            self.assertNotIn('UdpTcDataLink',flight)
+            self.assertIn('port: 10029',flight)
+            self.assertIn('/ember/PAYLOAD_FIRE_CHECK',flight)
             self.assertNotIn('10020',flight)
             self.assertIn('port: 10020',bench);self.assertIn('port: 10028',bench)
             self.assertNotIn('10018',bench);self.assertNotIn('10019',bench)
@@ -38,10 +39,10 @@ class OperationalYamcs(unittest.TestCase):
             pattern=re.findall('tcPatterns: \\["(.*?)"\\]',bench)[0]
             self.assertTrue(re.fullmatch(pattern,'/ember/PAYLOAD_STATUS_QUERY'))
             self.assertFalse(re.fullmatch(pattern,'/ember/PING'))
-            for file,count in [('ember.xml',0),('ember-bench.xml',4)]:
+            for file,count in [('ember.xml',1),('ember-bench.xml',5)]:
                 tree=ET.parse(r/'src/main/yamcs/mdb'/file)
                 self.assertEqual(len(tree.findall('.//{'+op.NS+'}MetaCommand')),count)
-                self.assertEqual(len(tree.findall('.//{'+op.NS+'}Parameter')),188)
+                self.assertEqual(len(tree.findall('.//{'+op.NS+'}Parameter')),198)
 
     def test_legacy_history_has_no_hardware_routes(self):
         with tempfile.TemporaryDirectory() as temp:
