@@ -46,6 +46,8 @@ def waveform(kind, amplitude, sequence):
 def run(args):
     if not 434e6 <= args.frequency <= 436e6:
         raise ValueError('frequency outside RX bench range')
+    if not 0 <= args.gain <= 70:
+        raise ValueError('TX gain outside bounded 0..70 dB range')
     a, packet = waveform(args.kind, args.amplitude, args.sequence)
     args.output.mkdir(parents=True, exist_ok=False)
     np.save(args.output/'tx-iq.npy', a)
@@ -66,10 +68,10 @@ def run(args):
     radio = uhd.usrp.MultiUSRP(f'type=b200,fpga={fpga}')
     radio.set_master_clock_rate(49152000)
     radio.set_tx_rate(RATE, 0)
-    radio.set_tx_gain(0, 0)
+    radio.set_tx_gain(args.gain, 0)
     radio.set_tx_antenna('TX/RX', 0)
     radio.set_tx_freq(uhd.types.TuneRequest(args.frequency-DIGITAL_OFFSET), 0)
-    if abs(radio.get_tx_rate(0)-RATE)>1 or abs(radio.get_tx_gain(0))>0.01:
+    if abs(radio.get_tx_rate(0)-RATE)>1 or abs(radio.get_tx_gain(0)-args.gain)>0.26:
         raise ValueError('unexpected rate/gain')
     report.update(actual_tune_hz=radio.get_tx_freq(0), actual_rate=radio.get_tx_rate(0),
                   gain=radio.get_tx_gain(0), antenna=radio.get_tx_antenna(0), fpga_sha256=FPGA_SHA)
@@ -113,6 +115,7 @@ if __name__ == '__main__':
     p.add_argument('--kind', choices=('tone', 'packet'), required=True)
     p.add_argument('--frequency', type=float, required=True)
     p.add_argument('--amplitude', type=float, default=0.01)
+    p.add_argument('--gain', type=float, default=0)
     p.add_argument('--sequence', type=int, default=901)
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--images', type=Path, default=Path.home()/'work/ember-lte/images')
