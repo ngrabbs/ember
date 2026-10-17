@@ -39,7 +39,7 @@ def recover_bits(bits):
         packet=body[7:-4]
         try: native=decode_native(packet)
         except ValueError:continue
-        if native['header']['kind']!=1:continue
+        if native['header']['kind'] not in (1,2):continue
         result.append(dict(sequence=sequence,hex=packet.hex(),decoded=native))
     return result
 
