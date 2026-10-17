@@ -81,6 +81,10 @@ class DetectorTests(unittest.TestCase):
             with self.assertRaises(ValueError):load_config(p)
             cfg=dict(self.config);cfg['detector']=dict(self.settings,k_threshold=-1);p.write_text(json.dumps(cfg))
             with self.assertRaises(ValueError):load_config(p)
+            cfg=json.loads(json.dumps(self.config));cfg['registration']['max_features']=2000.0;p.write_text(json.dumps(cfg))
+            with self.assertRaises(ValueError):load_config(p)
+            cfg=json.loads(json.dumps(self.config));cfg['detector']['connectivity']=8.0;p.write_text(json.dumps(cfg))
+            with self.assertRaises(ValueError):load_config(p)
 
     def test_pipeline_uses_hashes_and_does_not_pass_label_to_detector(self):
         with tempfile.TemporaryDirectory() as temp:
