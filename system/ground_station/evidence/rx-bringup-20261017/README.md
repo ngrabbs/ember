@@ -366,3 +366,32 @@ or reliability qualification. Reply is consumed; sources are idle and CAN A is
 normal. Production continuous receiver remains unchanged; version 2.3.0 was
 used in the isolated test directory. Next: continuous/bounded listening and an
 explicitly bounded automatic half-duplex reply path, then repeated OTA trials.
+
+## Automatic reply preparation and initial OTA uplink failures
+
+Installed clean COMMS 0.30.0, aff7509, boot 458828362, after verified backup/load.
+IHU remains 0.10.0, boot 2786831095. User clarified all LibreSDR ports have
+antennas; OTA trial uses TXRA uplink then RXA receive, with transmit burst
+acknowledged complete before starting the ground receiver. No cable move required.
+
+Host lease tests cover no boot authorization, one-shot consumption, expiry,
+cancellation, missing response and unhealthy state; startup tests pass. Sixteen
+selected Python tests pass, including response transaction/boot correlation.
+
+Two explicitly triggered automatic trials, sequences 2001/2002 with transaction
+20, at TX gain settings 55/65 and amplitude 0.05, produced no valid uplink decode
+and no RF reply. Both ground captures had no receiver errors and no packets.
+Both COMMS windows ended reply_attempted=0, armed=0, clocks shut down and CAN A
+normal. Failed attempts are retained; these are not successful round trips.
+
+A separate one-second CW burst with the previously proven transmit-only helper,
+gain70/amplitude0.05 at 434.994550 MHz, produced a weak ~1218–1220 Hz beat in the
+ADC only during the source burst. Half-second Hann FFT peak amplitudes were
+approximately 0.60 and 0.79 ADC counts in burst bins, versus ~6 counts in the
+successful conducted carrier test. Broadband RMS rose from ~0.78 to ~0.97–0.99
+counts. A ~2650 Hz background component is present outside the burst too.
+This supports a weak OTA uplink rather than simply failed automatic turnaround;
+absolute RF power and receiver sensitivity remain uncalibrated.
+
+Requested actual antenna separation and a one-foot, parallel-antenna trial
+before further RF testing. No continuing transmission or automatic retry.
