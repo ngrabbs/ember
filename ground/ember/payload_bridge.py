@@ -15,7 +15,7 @@ import time
 
 from codec import decode, encode, PacketError
 
-VERSION = '0.3.0'
+VERSION = '0.4.0'
 COMMANDS = {'PAYLOAD_PING', 'PAYLOAD_IDENT', 'PAYLOAD_STATUS_QUERY', 'PAYLOAD_HEARTBEAT_QUERY', 'PAYLOAD_FIRE_CHECK'}
 
 
@@ -48,7 +48,9 @@ class Console:
                     if ' can_ready=1 ' not in line or ' mode=00 ' not in line:
                         raise RuntimeError('IHU CAN A not ready')
                     return '\n'.join(lines)
-            if text == 'eps json' and line.startswith('{'):
+            if text == 'outputs' and line.startswith('OUTPUTS '):
+                return line
+            if text == 'eps json' and line.startswith('{"profile":"ltc4162-l-readout-v1",'):
                 return line
             match = re.search(r'^SUBMITTED request=(\d+) ', line)
             if match and outcome is not None:
@@ -190,6 +192,9 @@ class EpsMonitor:
 
     def poll(self):
         try:
+            # Fail closed if policy is unavailable; never infer permission from a cached readout.
+            policy=self.console.command('outputs',timeout=2)
+            if not re.search(r'(?:^| )umb_telem=1(?: |$)',policy):return
             line=self.console.command('eps json',timeout=2)
             self.state.accept(line.encode(),time.monotonic())
         except RuntimeError as error:
@@ -204,7 +209,7 @@ def main():
     parser.add_argument('--device',required=True)
     parser.add_argument('--bind',default='192.168.1.252')
     parser.add_argument('--ground',default='192.168.1.251')
-    parser.add_argument('--poll-eps',action='store_true',help='Read eps json every five seconds between commands')
+    parser.add_argument('--poll-eps',action='store_true',help='Check IHU output policy every five seconds; read/forward EPS only while umb_telem is enabled')
     parser.add_argument('--cells',type=int,default=2)
     parser.add_argument('--rsnsb-ohms',type=float,default=.01)
     parser.add_argument('--rsnsi-ohms',type=float,default=.01)

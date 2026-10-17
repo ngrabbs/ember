@@ -1,6 +1,6 @@
 # EMBER mode table
 
-[Operations guide](README.md)
+[Operations guide](README.md) · [Implemented ground runtime and flight-stub boundaries](04-ihu-runtime-policy.md)
 
 Draft 0.1 • September 19, 2026 • Proposed behavior for team review
 

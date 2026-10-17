@@ -1,3 +1,19 @@
+## Mode/output cleanup —0.13.0
+
+The current IHU boots quietly into SAFE/GROUND_TEST with six output switches
+OFF. Essential EPS sampling, presence discovery and command handling remain
+active. Explicit command replies are preserved. `mode` and `outputs` report
+actual state; `output NAME on/off` controls cli_debug, cli_telem, umb_debug,
+umb_telem, uhf_telem and lte_telem independently. Entering a mode or resetting
+clears all switches. Flight builds are inactive stubs and restrict operation
+when qualified flight history is unavailable. No physical test jumper is used.
+
+Read the [runtime matrix, entry gates and migration procedure](../../docs/architecture/operations/04-ihu-runtime-policy.md).
+Pair with bench bridge0.4.0; periodic EPS forwarding is now permission-gated.
+The old EPS-only `telem` timer, CAN echo telemetry shortcuts and LTE queue
+console/pumps are retired. Older sections below record historical releases
+and hardware evidence; their retired command instructions do not apply to0.13.0.
+
 ## Payload fire check —0.12.0
 
 `payload fire-check` commands the selected payload, validates its16-byte result,

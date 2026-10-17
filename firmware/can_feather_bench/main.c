@@ -1,6 +1,7 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include "pico/stdlib.h"
 #include "pico/stdio_usb.h"
 #include "pico/unique_id.h"
@@ -18,6 +19,16 @@ static uc_state uhf_client;
 #include "native_telemetry.h"
 #if ROLE_IHU
 #include "eps_readout.h"
+#include "mode_policy.h"
+#ifndef IHU_FLIGHT_CONFIGURATION
+#define IHU_FLIGHT_CONFIGURATION 0
+#endif
+static ip_state policy;
+static bool console_reply;
+static struct {uint32_t at;uint8_t code;} faults[16];
+static unsigned fault_count;
+static void record_fault(uint8_t code,uint32_t at){unsigned i=fault_count++%16;faults[i].at=at;faults[i].code=code;}
+
 #include "uplink_ping.h"
 #include "../usb_bench/protocol.h"
 static ember_state uplink_engine;
@@ -31,16 +42,26 @@ static void fire_restore(void);
 #include "power_packet.h"
 #include "health_packet.h"
 #include "device_packet.h"
-#include "lte_queue.h"
-#include "autotelem.h"
 #include "uhf_run.h"
 static dr_status devices[DR_COUNT];
 static struct {bool valid;uint32_t observed;uint8_t payload[FI_SIZE];} identities[2];
 static struct {bool active;uint8_t index,next;uint16_t nonce;uint32_t sent,last;} discovery;
 static ur_state uhf_run;
 static uint32_t uhf_last_result;
+static uint32_t uhf_console_requests[UC_CAPACITY];
 #endif
+#if ROLE_IHU
+static void log_output(const char *fmt,...){
+    if(!stdio_usb_connected())return;
+    va_list args;
+    if(console_reply){va_start(args,fmt);vprintf(fmt,args);va_end(args);return;}
+    if(ip_enabled(&policy,IP_CLI_DEBUG)){printf("CLI_DEBUG ");va_start(args,fmt);vprintf(fmt,args);va_end(args);}
+    if(ip_enabled(&policy,IP_UMB_DEBUG)){printf("UMB_DEBUG ");va_start(args,fmt);vprintf(fmt,args);va_end(args);}
+}
+#define LOG(...) log_output(__VA_ARGS__)
+#else
 #define LOG(...) do {if(stdio_usb_connected())printf(__VA_ARGS__);} while(0)
+#endif
 #define ROLE_NAME (ROLE_IHU?"IHU_MCU":"LTE_CAN_MCU")
 #if ROLE_IHU
 static uint8_t target_index=DR_COMMS_INDEX;
@@ -59,7 +80,7 @@ static ul_reader can_reader;
 static uint32_t boot,peer,request_id,matched,unknown,busy_drops;
 static uint32_t admitted_requests,refused_requests;
 static bool loopback_test;
-static struct {bool active;ul_packet packet;uint32_t started;} pending;
+static struct {bool active,console;ul_packet packet;uint32_t started;} pending;
 static struct {
     bool active;
     uint8_t wire[UL_WIRE_MAX];size_t size;
@@ -72,18 +93,19 @@ static struct {bool active;ul_packet incoming,uart;uint32_t started;} chain;
 #else
 static uint16_t telemetry_sequence;
 static uint32_t eps_readout_count;
-static lq_state telemetry_queue;
-static bool queue_owned;
-static bool queue_send_ready;
-static at_state auto_telem;
 #endif
 static uint32_t now_ms(void) {return to_ms_since_boot(get_absolute_time());}
 static void firmware_status(void) {
     LOG("FIRMWARE role=%s version=%s git=%s dirty=%u boot=%" PRIu32 "\n",ROLE_NAME,FW_VERSION,FW_GIT,FW_DIRTY,boot);
 }
+#if ROLE_IHU
+static void mode_status(void);
+static void outputs_status(void);
+#endif
 static void status(void) {
     firmware_status();
 #if ROLE_IHU
+    mode_status();outputs_status();
     LOG("CAN_TARGET name=%s request=%03x reply=%03x\n",dr_devices[target_index].name,TX_ID,RX_ID);
 #endif
     char id[2*PICO_UNIQUE_BOARD_ID_SIZE_BYTES+1];pico_get_unique_board_id_string(id,sizeof(id));
@@ -129,10 +151,10 @@ static void uplink_receive(const cf_frame *frame,uint32_t now){
     static ul_packet p;
     if(!cf_feed(&uplink_fragments,frame,UP_REQUEST_ID,now))return;
     if(!up_envelope(&uplink_fragments,&p)||p.type!=UP_PING||p.origin!=p.sender||(!up_native_ping(p.payload,p.size)&&!up_native_fire(p.payload,p.size)))return;
+    if(!ip_test(&policy))return;
     if(output.active||(can.pending&&!discovery.active)){LOG("UPLINK_PING rejected=BUSY\n");return;}
     if(up_native_fire(p.payload,p.size)){
-        if(fire_uplink.active || pending.active || auto_telem.enabled || telemetry_queue.enabled ||
-           queue_owned || queue_send_ready || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING){LOG("UPLINK_FIRE rejected=BUSY\n");return;}
+        if(fire_uplink.active || pending.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING){LOG("UPLINK_FIRE rejected=BUSY\n");return;}
         uint32_t epoch=ul_u32(p.payload+12),id=ul_u32(p.payload+16);
         for(unsigned i=0;i<fire_keys_used;i++)if(fire_keys[i].epoch==epoch && fire_keys[i].id==id)return;
         if(fire_keys_used==16)return;
@@ -151,6 +173,9 @@ static void uplink_receive(const cf_frame *frame,uint32_t now){
 static void pump_tx(uint32_t now) {
     uint32_t errors=can.tx_fail+can.tx_timeout;mcp_poll_tx(&can,now);
     if(can.tx_fail+can.tx_timeout!=errors) {
+#if ROLE_IHU
+        record_fault(3,now);
+#endif
         output.active=false;LOG("CAN_TX outcome=UNKNOWN reason=FRAME_TX_FAILED\n");
         // Pending application request times out; a CAN hardware outcome is not an app result.
         return;
@@ -217,25 +242,7 @@ static void uart_receive(const ul_packet *p) {
         out.type==CF_RF_WINDOW_ACK?"RF_WINDOW_ACCEPTED":out.type==CF_MODEM_ACCEPTED?"MODEM_ACCEPTED":out.type==CF_LINK_STATUS_ACK?"LTE_STATUS":"WALTER_BENCH_RETURN",out.size,walter_peer);
 }
 #endif
-#if ROLE_IHU
-static void queued_reply(const ul_packet *p,bool valid) {
-    if(!queue_owned)return;
-    queue_owned=false;
-    if(!valid) {lq_hold(&telemetry_queue,LQ_HOLD_UNKNOWN);return;}
-    if(p->type==CF_LINK_STATUS_ACK) {
-        if(telemetry_queue.enabled)queue_send_ready=lq_status(&telemetry_queue,p->payload,now_ms());
-        else telemetry_queue.state=LQ_IDLE;
-    } else if(p->type==CF_MODEM_ACCEPTED)lq_result(&telemetry_queue,0,now_ms());
-    else if(p->type==UL_ERROR) {
-        if(telemetry_queue.state==LQ_SEND)lq_result(&telemetry_queue,p->payload[0],now_ms());
-        else lq_hold(&telemetry_queue,LQ_HOLD_UNKNOWN);
-    }
-}
-#define QUEUED_REPLY(p,valid) queued_reply(p,valid)
-#else
-#define QUEUED_REPLY(p,valid) ((void)0)
-#endif
-static void receive(const ul_packet *p) {
+static void receive_impl(const ul_packet *p) {
     if(p->type==CF_UHF_ADMITTED || p->type==CF_UHF_RESULT || p->type==CF_UHF_REJECTED) {
         if(!uc_receive(&uhf_client,p))return;
 #if ROLE_IHU
@@ -258,11 +265,11 @@ static void receive(const ul_packet *p) {
         uint8_t expected=hello?UL_HELLO_ACK:pending.packet.type==CF_CHAIN?CF_CHAIN_ACK:
             pending.packet.type==CF_RF_WINDOW?CF_RF_WINDOW_ACK:pending.packet.type==CF_SEND_PACKET?CF_MODEM_ACCEPTED:pending.packet.type==CF_LINK_STATUS?CF_LINK_STATUS_ACK:pending.packet.type==CF_LINK_DIAG?CF_LINK_DIAG_ACK:pending.packet.type==UL_FIRMWARE_INFO?UL_FIRMWARE_INFO_ACK:pending.packet.type==CF_MODEM_FIRMWARE?CF_MODEM_FIRMWARE_ACK:pending.packet.type==PL_STATUS?PL_STATUS_ACK:pending.packet.type==PL_HEARTBEAT?PL_HEARTBEAT_ACK:pending.packet.type==PL_FIRE_CHECK?PL_FIRE_RESULT:UL_ECHO_ACK;
         if(p->version!=1 || (!hello && p->sender!=peer)) {
-            QUEUED_REPLY(p,false);
+
             pending.active=false;peer=0;++unknown;LOG("RESULT outcome=UNKNOWN reason=PEER_RESET_OR_VERSION\n");return;
         }
         if(p->type==UL_ERROR && p->size==1) {
-            QUEUED_REPLY(p,true);
+
             pending.active=false;
             bool uncertain=p->payload[0]==CF_LINK_UNKNOWN || p->payload[0]==UL_ERR_MODEM_UNKNOWN;
             if(uncertain) {++unknown;peer=0;}
@@ -298,7 +305,7 @@ static void receive(const ul_packet *p) {
 #if ROLE_IHU
         dr_seen(&devices[target_index],now_ms(),p->sender);
 #endif
-        QUEUED_REPLY(p,true);
+
         pending.active=false;++matched;
         LOG("RESULT request=%" PRIu32 " outcome=%s peer=%" PRIu32 " bytes=%u hex=",p->request,
             hello?"CAN_HELLO_CONFIRMED":fire?"PAYLOAD_FIRE_RESULT":payload_report?(p->type==PL_STATUS_ACK?"PAYLOAD_STATUS":"PAYLOAD_HEARTBEAT"):identity?"FIRMWARE_IDENTITY":p->type==CF_RF_WINDOW_ACK?"RF_WINDOW_ACCEPTED":
@@ -343,8 +350,27 @@ static void receive(const ul_packet *p) {
 #endif
     ul_packet reply;ul_reply(p,boot,&reply);if(!queue(&reply))++busy_drops;
 }
+static void receive(const ul_packet *p){
+#if ROLE_IHU
+    bool previous=console_reply;
+    console_reply=pending.active && pending.console && p->origin==boot && p->request==pending.packet.request;
+    uint32_t matched_before=matched;
+    for(unsigned i=0;i<UC_CAPACITY;i++)if(p->origin==boot && p->request && uhf_console_requests[i]==p->request)console_reply=true;
+#endif
+    receive_impl(p);
+#if ROLE_IHU
+    if(matched!=matched_before && (p->type==CF_UHF_RESULT || p->type==CF_UHF_REJECTED))
+        for(unsigned i=0;i<UC_CAPACITY;i++)if(uhf_console_requests[i]==p->request)uhf_console_requests[i]=0;
+    console_reply=previous;
+#endif
+}
 static void submit(uint8_t type,const uint8_t *payload,size_t size) {
 #if ROLE_IHU
+    if(!ip_test(&policy)){++refused_requests;LOG("REJECT reason=FLIGHT_ROUTINE_STUB\n");return;}
+    if((type==CF_UHF_SEND && !ip_enabled(&policy,IP_UHF_TELEM)) ||
+       (type==CF_SEND_PACKET && !ip_enabled(&policy,IP_LTE_TELEM))){
+        ++refused_requests;LOG("REJECT reason=OUTPUT_DISABLED\n");return;
+    }
     bool lte_only=type==CF_SEND_PACKET || type==CF_RF_WINDOW || type==CF_LINK_STATUS || type==CF_LINK_DIAG || type==CF_MODEM_FIRMWARE;
     if(target_payload && type!=UL_HELLO && type!=UL_ECHO && type!=UL_FIRMWARE_INFO &&
        type!=PL_STATUS && type!=PL_HEARTBEAT && type!=PL_FIRE_CHECK) {
@@ -366,6 +392,11 @@ static void submit(uint8_t type,const uint8_t *payload,size_t size) {
     pending.packet.size=(uint16_t)size;if(size)memcpy(pending.packet.payload,payload,size);
     if(!queue(&pending.packet)) {++refused_requests;LOG("REJECT reason=QUEUE\n");return;}
     if(type==CF_UHF_SEND)(void)uc_start(&uhf_client,&pending.packet,peer,now_ms());
+    #if ROLE_IHU
+    pending.console=console_reply;
+    if(type==CF_UHF_SEND && console_reply)
+        for(unsigned i=0;i<UC_CAPACITY;i++)if(uhf_client.items[i].active && uhf_client.items[i].packet.request==request_id)uhf_console_requests[i]=request_id;
+#endif
     ++admitted_requests;pending.active=true;pending.started=now_ms();LOG("SUBMITTED request=%" PRIu32 " type=%u bytes=%zu\n",request_id,type,size);
 }
 #if ROLE_IHU
@@ -386,6 +417,9 @@ static void eps_adc(bool enable) {
     LOG("EPS_ADC outcome=%s requested=%d config_before=%04x config_after=%04x\n",ok?"VERIFIED":"UNKNOWN",enable,before,after);
 }
 static bool eps_telemetry(unsigned lte) {
+    if((lte==2&&!ip_enabled(&policy,IP_UHF_TELEM)) || (lte==1&&!ip_enabled(&policy,IP_LTE_TELEM))){
+        LOG("REJECT reason=OUTPUT_DISABLED\n");return false;
+    }
     if(pending.active || output.active || can.pending || !peer || (mcp_register(0x0e)&0xe0)) {
         LOG("REJECT reason=BUSY_OR_CAN_NOT_READY\n");return false;
     }
@@ -397,63 +431,10 @@ static bool eps_telemetry(unsigned lte) {
     telemetry_sequence=(telemetry_sequence+1)&0x3fff;submit(lte==2?CF_UHF_SEND:lte?CF_SEND_PACKET:CF_CHAIN,packet,n);
     return pending.active;
 }
-static void auto_status(void) {
-    LOG("AUTOTELEM enabled=%d period_ms=%" PRIu32 " next_ms=%" PRIu32
-        " due=%" PRIu32 " skipped=%" PRIu32 " submitted=%" PRIu32 " failed=%" PRIu32
-        " pending=%d uptime_ms=%" PRIu32 "\n",auto_telem.enabled,auto_telem.period_ms,
-        auto_telem.next_ms,auto_telem.due,auto_telem.skipped,auto_telem.submitted,
-        auto_telem.failed,pending.active,now_ms());
-}
-static void auto_pump(uint32_t now) {
-    if(!at_due(&auto_telem,now))return;
-    bool idle=!pending.active && !output.active && !can.pending && can.ready && peer &&
-        request_id<UINT32_MAX && !telemetry_queue.enabled && !queue_owned &&
-        (mcp_register(0x0e)&0xe0)==0;
-    at_action action=at_poll(&auto_telem,now,idle);
-    if(action==AT_SKIP) {LOG("AUTOTELEM_SKIP reason=BUSY_OR_CAN_NOT_READY\n");}
-    else if(action==AT_READ) {
-        if(eps_telemetry(false)) {
-            ++auto_telem.submitted;
-            LOG("AUTOTELEM_SUBMITTED request=%" PRIu32 " sequence=%u\n",request_id,
-                (unsigned)((telemetry_sequence-1)&0x3fff));
-        } else ++auto_telem.failed;
-    }
-}
-static void queue_status(void) {
-    lq_packet *front=lq_front(&telemetry_queue);
-    LOG("LTE_QUEUE enabled=%d count=%u capacity=%u state=%u hold=%u attempts=%u accepted=%" PRIu32 " full=%" PRIu32 " retries=%" PRIu32 "\n",
-        telemetry_queue.enabled,telemetry_queue.count,LQ_CAPACITY,telemetry_queue.state,telemetry_queue.hold,
-        front?front->attempts:0,telemetry_queue.accepted,telemetry_queue.full,telemetry_queue.retries);
-}
-static void eps_enqueue(void) {
-    // EPS reads are synchronous; do not stall an in-flight CAN exchange.
-    if(pending.active || output.active || can.pending) {LOG("REJECT reason=BUSY\n");return;}
-    if(telemetry_queue.count==LQ_CAPACITY) {++telemetry_queue.full;LOG("REJECT reason=LTE_QUEUE_FULL\n");return;}
-    ltc4162_raw_t raw;uint8_t failed=0;
-    if(!eps_read(&raw,&failed)) {LOG("EPS_READ outcome=FAILED register=%02x reason=I2C_OR_PEC\n",failed);return;}
-    uint8_t packet[W_PAYLOAD+W_SIZE_POWER_STATUS+2];
-    size_t n=power_packet(packet,&raw,boot,telemetry_sequence,now_ms(),++eps_readout_count);
-    if(!lq_push(&telemetry_queue,packet,n,now_ms())) {LOG("REJECT reason=LTE_QUEUE\n");return;}
-    LOG("EPS_QUEUED sequence=%u count=%u bytes=%zu hex=",telemetry_sequence,telemetry_queue.count,n);
-    for(size_t i=0;i<n;++i)LOG("%02x",packet[i]);
-    LOG("\n");telemetry_sequence=(telemetry_sequence+1)&0x3fff;
-}
-static void queue_pump(uint32_t now) {
-    if(!telemetry_queue.enabled || pending.active || output.active || can.pending ||
-       !peer || (mcp_register(0x0e)&0xe0))return;
-    if(queue_send_ready) {
-        queue_send_ready=false;
-        // If disabled between status and submission, retain without sending.
-        lq_packet *front=lq_front(&telemetry_queue);
-        if(front) {submit(CF_SEND_PACKET,front->bytes,front->size);queue_owned=pending.active;}
-    } else if(lq_poll(&telemetry_queue,now)) {submit(CF_LINK_STATUS,NULL,0);queue_owned=pending.active;}
-    if((telemetry_queue.state==LQ_SEND || telemetry_queue.state==LQ_STATUS) && !queue_owned)
-        lq_hold(&telemetry_queue,LQ_HOLD_UNKNOWN);
-}
 static void health_telemetry(bool system,unsigned lte) {
     uint8_t packet[W_PAYLOAD+W_SIZE_SYSTEM_STATUS+2];
     size_t n=health_packet(packet,system,boot,telemetry_sequence,now_ms(),
-        uhf_run.state==UR_RUNNING?uhf_run.period:auto_telem.enabled?auto_telem.period_ms:0,admitted_requests,refused_requests);
+        uhf_run.state==UR_RUNNING?uhf_run.period:0,admitted_requests,refused_requests,policy.mode,policy.configuration);
     telemetry_sequence=(telemetry_sequence+1)&0x3fff;
     submit(lte==2?CF_UHF_SEND:lte?CF_SEND_PACKET:CF_CHAIN,packet,n);
 }
@@ -476,13 +457,13 @@ static void identity_telemetry(unsigned component) {
 }
 static void device_telemetry(void) {
     uint8_t packet[W_PAYLOAD+W_SIZE_DEVICE_STATUS+2];
-    bool paused=auto_telem.enabled || telemetry_queue.enabled || loopback_test;
+    bool paused=loopback_test;
     size_t n=device_packet(packet,devices,paused,boot,telemetry_sequence++,now_ms());
     submit(CF_UHF_SEND,packet,n);
 }
 static void uhf_run_pump(uint32_t now) {
     if(uhf_run.state!=UR_RUNNING)return;
-    if(!peer || !can.ready || (mcp_register(0x0e)&0xe0) || ur_link_changed(&uhf_run,can.tx_fail,can.tx_timeout) || mcp_register(0x2d)) {
+    if(!ip_enabled(&policy,IP_UHF_TELEM) || !peer || !can.ready || (mcp_register(0x0e)&0xe0) || ur_link_changed(&uhf_run,can.tx_fail,can.tx_timeout) || mcp_register(0x2d)) {
         ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT link_not_ready\n");return;
     }
     bool ready=!discovery.active && !pending.active && !output.active && !can.pending && !uc_count(&uhf_client) &&
@@ -522,13 +503,11 @@ static void devices_pump(uint32_t now) {
     }
     /* Background checks never compete with application packets or half-duplex RF. */
     if(discovery.active || pending.active || output.active || can.pending || uc_count(&uhf_client) ||
-       (uhf_run.state==UR_RUNNING && uhf_run.cycle && uhf_run.stage<4) || auto_telem.enabled || telemetry_queue.enabled || loopback_test ||
+       (uhf_run.state==UR_RUNNING && uhf_run.cycle && uhf_run.stage<4) || loopback_test ||
        (uint32_t)(now-discovery.last)<2000)return;
     discovery.last=now;unsigned i=discovery.next;discovery.next=(i+1)%DR_COUNT;
     if(dr_devices[i].interface==DR_I2C) {
-        uint16_t config;
-        if(eps_word(LTC4162_REG_config_bits,&config))dr_seen(&devices[i],now_ms(),0);
-        else devices[i].state=DR_FAULT;
+        /* Full EPS sampling belongs to housekeeping_pump(), not discovery. */
         return;
     }
     if(!can.ready || (mcp_register(0x0e)&0xe0) || mcp_register(0x2d)) {
@@ -548,8 +527,82 @@ static void selftest(void) {
     loopback_test=mcp_mode(&can,0x40) && mcp_send(&can,&frame);
     LOG("SELFTEST started=%d kind=LOCAL_LOOPBACK no_peer_proof=1\n",loopback_test);
 }
-static void command(const char *s) {
 #if ROLE_IHU
+static void outputs_status(void){
+    LOG("OUTPUTS cli_debug=%u cli_telem=%u umb_debug=%u umb_telem=%u uhf_telem=%u lte_telem=%u\n",
+        ip_enabled(&policy,0),ip_enabled(&policy,1),ip_enabled(&policy,2),ip_enabled(&policy,3),ip_enabled(&policy,4),ip_enabled(&policy,5));
+}
+static void mode_status(void){
+    LOG("MODE configuration=%s mode=%s simulated=%u flight_routines=STUB reason=%s\n",
+        policy.configuration==IP_GROUND_TEST?"GROUND_TEST":"FLIGHT",ip_modes[policy.mode],
+        ip_test(&policy)&&policy.mode!=IP_SAFE,policy.reason);
+}
+static void stop_stream(unsigned channel){
+    if(channel==IP_UHF_TELEM)ur_stop(&uhf_run,UR_STOPPED);
+    /* Do not revoke a solicited fire-check reply. Previously admitted remote
+     * packets may finish; no new periodic submission may follow an OFF. */
+    if(pending.active && ((channel==IP_UHF_TELEM&&pending.packet.type==CF_UHF_SEND)||
+       (channel==IP_LTE_TELEM&&pending.packet.type==CF_SEND_PACKET))){
+        output.active=false;pending.active=false;record_fault(4,now_ms());
+    }
+}
+static void policy_command(const char *s){
+    if(!strcmp(s,"outputs")){outputs_status();return;}
+    if(!strcmp(s,"mode")){mode_status();return;}
+    if(!strcmp(s,"faults")){
+        unsigned n=fault_count<16?fault_count:16;
+        LOG("FAULTS total=%u retained=%u persistent=0\n",fault_count,n);
+        for(unsigned j=0;j<n;j++){unsigned i=(fault_count-n+j)%16;LOG("FAULT code=%u uptime_ms=%" PRIu32 "\n",faults[i].code,faults[i].at);}
+        return;
+    }
+    if(!strncmp(s,"mode ",5)){
+        if(pending.active || output.active || can.pending || uc_count(&uhf_client) || fire_uplink.active){LOG("REJECT reason=BUSY\n");return;}
+        unsigned mode;
+        for(mode=1;mode<=IP_NOMINAL;mode++){
+            const char *names[]={"boot","startup","commissioning","safe","nominal"};
+            if(!strcmp(s+5,names[mode]))break;
+        }
+        const char *reason=ip_mode(&policy,mode);
+        if(reason){LOG("REJECT reason=%s\n",reason);return;}
+        ur_stop(&uhf_run,UR_STOPPED);mode_status();outputs_status();return;
+    }
+    char name[16],value[4],extra;
+    if(sscanf(s,"output %15s %3s %c",name,value,&extra)!=2 || (strcmp(value,"on")&&strcmp(value,"off"))){
+        LOG("REJECT reason=USAGE_output_NAME_on_or_off\n");return;
+    }
+    unsigned channel;
+    for(channel=0;channel<IP_OUTPUT_COUNT;channel++)if(!strcmp(name,ip_outputs[channel]))break;
+    const char *reason=ip_set_output(&policy,channel,!strcmp(value,"on"));
+    if(reason){LOG("REJECT reason=%s\n",reason);return;}
+    if(!strcmp(value,"off"))stop_stream(channel);
+    outputs_status();
+}
+static struct {ltc4162_raw_t eps;bool valid,attempted;uint32_t sampled,last;} housekeeping;
+static void housekeeping_pump(uint32_t now){
+    if((uint32_t)(now-housekeeping.last)<5000 || pending.active || output.active || can.pending ||
+       discovery.active || uplink_fragments.active || fire_uplink.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING)return;
+    housekeeping.last=now;uint8_t failed=0;
+    bool was_valid=housekeeping.valid;
+    housekeeping.valid=eps_read(&housekeeping.eps,&failed);
+    if(housekeeping.valid){housekeeping.sampled=now_ms();dr_seen(&devices[DR_EPS_I2C_INDEX],housekeeping.sampled,0);}
+    else {devices[DR_EPS_I2C_INDEX].state=DR_FAULT;if(!housekeeping.attempted||was_valid)record_fault(2,now_ms());}
+    housekeeping.attempted=true;
+    if(!stdio_usb_connected())return;
+    if(ip_enabled(&policy,IP_CLI_TELEM))printf("CLI_TELEM mode=%s eps_valid=%u comms=%s lte=%s payload=%s\n",
+        ip_modes[policy.mode],housekeeping.valid,dr_states[devices[DR_COMMS_INDEX].state],dr_states[devices[DR_LTE_INDEX].state],dr_states[devices[DR_PAYLOAD_INDEX].state]);
+    if(ip_enabled(&policy,IP_UMB_TELEM))printf("{\"profile\":\"ihu-health-v1\",\"mode\":%u,\"configuration\":%u,\"uptime_ms\":%" PRIu32 ",\"eps_valid\":%u,\"eps_sample_ms\":%" PRIu32 ",\"comms_state\":%u,\"lte_state\":%u,\"payload_state\":%u}\n",
+        policy.mode,policy.configuration,now_ms(),housekeeping.valid,housekeeping.sampled,devices[DR_COMMS_INDEX].state,devices[DR_LTE_INDEX].state,devices[DR_PAYLOAD_INDEX].state);
+}
+#endif
+
+static void command_impl(const char *s) {
+#if ROLE_IHU
+    if(!strncmp(s,"output ",7) || !strcmp(s,"outputs") || !strncmp(s,"mode",4) || !strcmp(s,"faults")){
+        policy_command(s);return;
+    }
+    if(!ip_test(&policy) && strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"help") && strcmp(s,"devices") && strcmp(s,"eps json")){
+        LOG("REJECT reason=FLIGHT_ROUTINE_STUB\n");return;
+    }
     if(fire_uplink.active && strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"help")){
         LOG("REJECT reason=RF_FIRE_CHECK_ACTIVE\n");return;
     }
@@ -573,7 +626,7 @@ static void command(const char *s) {
 #if ROLE_IHU
     else if(!strcmp(s,"hello") || !strcmp(s,"hello comms") || !strcmp(s,"hello lte") || !strcmp(s,"hello payload")) {
         if(pending.active || output.active || can.pending || uc_count(&uhf_client) ||
-           auto_telem.enabled || telemetry_queue.enabled || queue_owned || queue_send_ready || discovery.active || uhf_run.state==UR_RUNNING) {
+           discovery.active || uhf_run.state==UR_RUNNING) {
             LOG("REJECT reason=BUSY_TARGET_SWITCH\n");return;
         }
         target_index=!strcmp(s,"hello payload")?DR_PAYLOAD_INDEX:!strcmp(s,"hello lte")?DR_LTE_INDEX:DR_COMMS_INDEX;peer=0;
@@ -593,26 +646,9 @@ static void command(const char *s) {
     else if(!strcmp(s,"payload ident")) {if(target_payload)submit(UL_FIRMWARE_INFO,NULL,0);else LOG("REJECT reason=PAYLOAD_TARGET_REQUIRED\n");}
     else if(!strcmp(s,"payload status"))submit(PL_STATUS,NULL,0);
     else if(!strcmp(s,"payload heartbeat"))submit(PL_HEARTBEAT,NULL,0);
-    else if(!strcmp(s,"telemetry"))health_telemetry(false,false);
     else if(!strcmp(s,"eps json"))eps_json();
     else if(!strcmp(s,"eps adc on"))eps_adc(true);
     else if(!strcmp(s,"eps adc off"))eps_adc(false);
-    else if(!strcmp(s,"eps telemetry"))eps_telemetry(false);
-    else if(!strcmp(s,"telem status"))auto_status();
-    else if(!strcmp(s,"telem off")) {at_disable(&auto_telem);auto_status();}
-    else if(!strcmp(s,"telem on") || !strncmp(s,"telem on ",9)) {
-        unsigned long seconds=AT_DEFAULT_SECONDS;
-        if(s[8]) {
-            char *end;seconds=strtoul(s+9,&end,10);
-            if(s[9]<'0' || s[9]>'9' || *end || seconds<AT_MIN_SECONDS || seconds>AT_MAX_SECONDS) {
-                LOG("REJECT reason=TELEM_PERIOD_RANGE min_seconds=%u max_seconds=%u\n",AT_MIN_SECONDS,AT_MAX_SECONDS);return;
-            }
-        }
-        if(!can.ready || !peer || (mcp_register(0x0e)&0xe0) || telemetry_queue.enabled) {
-            LOG("REJECT reason=NORMAL_CAN_HELLO_AND_LTE_QUEUE_OFF_REQUIRED\n");return;
-        }
-        (void)at_enable(&auto_telem,(uint32_t)seconds,now_ms());auto_status();
-    }
     else if(!strcmp(s,"uhf stop")) {
         ur_stop(&uhf_run,UR_STOPPED);LOG("UHF_RUN STOPPED outstanding=%u accepted_packets_may_finish=1\n",uc_count(&uhf_client));
     }
@@ -620,7 +656,7 @@ static void command(const char *s) {
         unsigned duration,period;char extra;
         if(sscanf(s+8,"%u %u %c",&duration,&period,&extra)!=2 || target_index!=DR_COMMS_INDEX || !can.ready || !peer ||
            (mcp_register(0x0e)&0xe0) || pending.active || output.active || can.pending ||
-           uc_count(&uhf_client) || auto_telem.enabled || telemetry_queue.enabled ||
+           uc_count(&uhf_client) || !ip_enabled(&policy,IP_UHF_TELEM) ||
            !ur_start(&uhf_run,duration,period,now_ms())) {
             LOG("REJECT reason=RUN_RANGE_OR_LINK_BUSY duration=1..120 period=5..60\n");return;
         }
@@ -636,17 +672,6 @@ static void command(const char *s) {
     else if(!strcmp(s,"heartbeat lte"))health_telemetry(false,true);
     else if(!strcmp(s,"system lte"))health_telemetry(true,true);
     else if(!strcmp(s,"eps lte"))eps_telemetry(true);
-    else if(!strcmp(s,"eps enqueue"))eps_enqueue();
-    else if(!strcmp(s,"lte queue status"))queue_status();
-    else if(!strcmp(s,"lte queue on")) {telemetry_queue.enabled=true;queue_status();}
-    else if(!strcmp(s,"lte queue off")) {
-        telemetry_queue.enabled=false;
-        if(queue_send_ready) {queue_send_ready=false;telemetry_queue.state=LQ_IDLE;}
-        queue_status();
-    } else if(!strcmp(s,"lte queue drop")) {
-        if(!lq_drop(&telemetry_queue))LOG("REJECT reason=QUEUE_EMPTY_OR_ACTIVE\n");
-        else queue_status();
-    }
     else if(!strcmp(s,"lte firmware")) {if(target_lte)submit(UL_FIRMWARE_INFO,NULL,0);else LOG("REJECT reason=LTE_TARGET_REQUIRED\n");}
     else if(!strcmp(s,"lte modem firmware"))submit(CF_MODEM_FIRMWARE,NULL,0);
     else if(!strcmp(s,"lte diagnostics"))submit(CF_LINK_DIAG,NULL,0);
@@ -657,16 +682,31 @@ static void command(const char *s) {
         uint8_t p[4];ul_p32(p,seconds);submit(CF_RF_WINDOW,p,4);
     }
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | hello comms | hello lte | hello payload | payload fire-check | payload ident | payload status | payload heartbeat | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf devices | uhf heartbeat | uhf system | uhf eps | telemetry | eps json | eps adc on/off | eps telemetry | telem on [seconds]/off/status | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte | eps enqueue | lte queue on/off/status/drop":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | hello comms | hello lte | hello payload | payload fire-check | payload ident | payload status | payload heartbeat | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf devices | uhf heartbeat | uhf system | uhf eps | mode [safe/startup/commissioning/nominal] | outputs | output NAME on/off | faults | eps json | eps adc on/off | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte":"");
     else if(*s)LOG("ERROR unknown command\n");
+}
+static void command(const char *s){
+#if ROLE_IHU
+    bool previous=console_reply;console_reply=true;
+#endif
+    command_impl(s);
+#if ROLE_IHU
+    console_reply=previous;
+#endif
 }
 int main(void) {
     stdio_init_all();boot=get_rand_32();if(!boot)boot=1;mcp_init(&can);
 #if ROLE_IHU
+    ip_init(&policy,IHU_FLIGHT_CONFIGURATION?IP_FLIGHT:IP_GROUND_TEST);
     eps_bus_init();
     ember_init(&uplink_engine,boot);
 #endif
     if(can.ready)(void)mcp_mode(&can,0);
+#if ROLE_IHU
+    /* No qualified persistent flight history exists yet: FLIGHT stays restricted. */
+    ip_finish_boot(&policy,can.ready,false,false);
+    if(!can.ready)record_fault(1,now_ms());
+#endif
 #if !ROLE_IHU
     uart_init(uart0,115200);gpio_set_function(0,GPIO_FUNC_UART);gpio_set_function(1,GPIO_FUNC_UART);
     gpio_pull_up(1);uart_set_hw_flow(uart0,false,false);uart_set_format(uart0,8,1,UART_PARITY_NONE);uart_set_fifo_enabled(uart0,true);
@@ -711,22 +751,33 @@ int main(void) {
         for(unsigned i=0;i<UC_CAPACITY;i++) {
             uc_item *x=&uhf_client.items[i];
             if(x->active && (uint32_t)(now-x->started)>=UC_RESULT_MS) {
+#if ROLE_IHU
+                record_fault(4,now);bool previous=console_reply;
+                console_reply=uhf_console_requests[i]==x->packet.request;uhf_console_requests[i]=0;
+#endif
                 LOG("UHF request=%" PRIu32 " outcome=UNKNOWN reason=RESULT_TIMEOUT ground_ack=0\n",x->packet.request);x->active=false;++unknown;
 #if ROLE_IHU
+                console_reply=previous;
                 if(uhf_run.state==UR_RUNNING){ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT result_timeout\n");}
 #endif
             }
         }
         if(pending.active && (uint32_t)(now-pending.started)>=(pending.packet.type==CF_SEND_PACKET?REQUEST_TIMEOUT:5000)) {
-            QUEUED_REPLY(NULL,false);
+
+#if ROLE_IHU
+            record_fault(4,now);bool previous=console_reply;console_reply=pending.console;
+#endif
             LOG("RESULT request=%" PRIu32 " outcome=UNKNOWN reason=TIMEOUT\n",pending.packet.request);
+#if ROLE_IHU
+            console_reply=previous;
+#endif
             if(pending.packet.type==CF_UHF_SEND)for(unsigned i=0;i<UC_CAPACITY;i++)
                 if(uhf_client.items[i].packet.request==pending.packet.request)uhf_client.items[i].active=false;
             pending.active=false;peer=0;++unknown;
         }
 #if ROLE_IHU
         if(fire_uplink.active && !pending.active)fire_restore();
-        queue_pump(now_ms());
+
 #endif
         for(unsigned i=0;i<40;++i) {
             int ch=getchar_timeout_us(0);if(ch==PICO_ERROR_TIMEOUT)break;
@@ -735,7 +786,7 @@ int main(void) {
         }
 #if ROLE_IHU
         // Process console off/status commands before considering a due read.
-        auto_pump(now_ms());
+        housekeeping_pump(now_ms());
         uhf_run_pump(now_ms());
         devices_pump(now_ms());
 #endif

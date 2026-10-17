@@ -18,11 +18,12 @@ class HealthPackets(unittest.TestCase):
             (path/'main.c').write_text('''
 #include <stdio.h>
 #include "health_packet.h"
+#include "mode_policy.h"
 #include "native_telemetry.h"
 int main(void) {
     uint8_t b[128];
     for(int system=0;system<2;++system) {
-        size_t n=health_packet(b,system,123,16383,456,20000,42,3);
+        size_t n=health_packet(b,system,123,16383,456,20000,42,3,IP_COMMISSIONING,IP_GROUND_TEST);
         if(!native_telemetry_valid(b,n,123) || native_telemetry_valid(b,n,124))return 1;
         for(size_t i=0;i<n;++i)printf("%02x",b[i]);puts("");
         b[n-1]^=1;if(native_telemetry_valid(b,n,123))return 2;b[n-1]^=1;
@@ -44,6 +45,8 @@ int main(void) {
                 self.assertEqual(packet['header']['source_boot_id'],123)
                 self.assertEqual(packet['header']['uptime_ms'],456)
                 self.assertEqual(packet['payload']['telemetry_period_ms'],20000)
+                self.assertEqual(packet['payload']['mode'],2)
+                self.assertEqual(packet['payload']['configuration'],1)
                 damaged=bytearray(wire);damaged[-1]^=1
                 with self.assertRaises(PacketError):decode(damaged)
             self.assertEqual(decode(wires[1])['payload']['accepted_commands'],42)

@@ -72,12 +72,12 @@ class PayloadGroundTests(unittest.TestCase):
     def test_eps_poll_ignores_unsolicited_rf_transactions(self):
         class Port:
             def __init__(self):self.lines=iter([b'SUBMITTED request=3 type=1 bytes=0',
-                b'RESULT request=3 outcome=CAN_HELLO_CONFIRMED peer=42 bytes=0 hex=',b'{"profile":"sample"}'])
+                b'RESULT request=3 outcome=CAN_HELLO_CONFIRMED peer=42 bytes=0 hex=',b'{"profile":"ltc4162-l-readout-v1","registers":{}}'])
             def write(self,p):pass
             def flush(self):pass
             def readline(self):return next(self.lines)+b'\n'
         console=Console.__new__(Console);console.port=Port()
-        self.assertEqual(console.command('eps json'),' {"profile":"sample"}'.strip())
+        self.assertEqual(console.command('eps json'),'{"profile":"ltc4162-l-readout-v1","registers":{}}')
 
     def test_target_switch_retries_only_explicit_refusal(self):
         class SelectionConsole(Console):
@@ -127,16 +127,30 @@ class SerialEpsMonitor(unittest.TestCase):
         sample=json.loads((ROOT/'system/ground_station/evidence/ltc4162-input-10v7-20261001.json').read_text())[0]
         class SharedConsole(FakeConsole):
             def __init__(self):super().__init__();self.order=[]
-            def command(self,text,**kwargs):self.order.append(text);return json.dumps(sample)
+            def command(self,text,**kwargs):
+                self.order.append(text)
+                return 'OUTPUTS umb_telem=1' if text=='outputs' else json.dumps(sample)
             def execute(self,name,size,on_submit):self.order.append(name);return super().execute(name,size,on_submit)
         console=SharedConsole();packets=[]
         monitor=EpsMonitor(console,packets.append,cells=2,rsnsb=.01,rsnsi=.01)
         monitor.poll();Bridge(console,packets.append).handle(command(bytes=8));monitor.poll()
-        self.assertEqual(console.order,['eps json','PAYLOAD_PING','eps json'])
+        self.assertEqual(console.order,['outputs','eps json','PAYLOAD_PING','outputs','eps json'])
         power=decode(packets[-1]);self.assertEqual(power['name'],'POWER_STATUS')
         self.assertEqual(power['payload']['provenance'],1)
         self.assertEqual(power['payload']['readout_valid'],1)
         self.assertEqual(power['payload']['readout_count'],2)
+
+    def test_disabled_or_unknown_umbilical_policy_does_not_read_or_emit(self):
+        from payload_bridge import EpsMonitor
+        for answer in ('OUTPUTS umb_telem=0','OUTPUTS cli_telem=1','ERROR unknown command'):
+            class Disabled:
+                def command(self,text,**kwargs):
+                    self.assertion = text
+                    if text!='outputs':raise AssertionError('Unexpected EPS read')
+                    return answer
+            packets=[];console=Disabled()
+            EpsMonitor(console,packets.append,cells=2,rsnsb=.01,rsnsi=.01).poll()
+            self.assertFalse(packets)
 
     def test_disconnect_propagates_for_service_reconnect(self):
         from payload_bridge import EpsMonitor

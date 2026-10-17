@@ -1,5 +1,9 @@
 # Commanded payload fire check
 
+**IHU0.13.0 / bridge0.4.0:** [quiet-output policy](../../docs/architecture/operations/04-ihu-runtime-policy.md).
+Fire-check command replies remain available with all six streams OFF. Existing
+0.12.0 OTA evidence below remains historical;0.13.0 has not been deployed.
+
 Versions: IHU0.12.0, payload0.2.0, COMMS0.31.0, serial bridge0.3.0,
 RF command bridge0.1.0; ground release1.6.0. This release uses an explicit
 STATIC_STUB returning NO_FIRE. The camera/detection algorithm does not run.

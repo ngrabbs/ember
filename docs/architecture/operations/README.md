@@ -2,7 +2,10 @@
 
 [Architecture](../README.md)
 
-**Draft 0.1 · September 19, 2026 · For team review.** These three tables describe
+**Ground runtime:** [IHU modes and output policy](04-ihu-runtime-policy.md) defines
+the implemented0.13.0 ground-test behavior and inactive flight stubs.
+
+**Flight draft 0.1 · September 19, 2026 · For team review.** These three tables describe
 proposed behavior; they are not approved flight requirements.
 
 1. [Modes](01-mode-table.md): what the spacecraft does.

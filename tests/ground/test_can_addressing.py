@@ -60,6 +60,8 @@ static ul_packet queued(void){ul_packet p={0};ul_reader r={0};bool found=false;f
 int main(void){
  boot=11;can.ready=true;
 #if ROLE_IHU
+ ip_init(&policy,IP_GROUND_TEST);ip_finish_boot(&policy,true,false,false);
+ command("output uhf_telem on");command("output lte_telem on");
  command("hello comms");assert(TX_ID==0x710 && RX_ID==0x711 && pending.active);
  ul_packet ack=pending.packet;ack.type=UL_HELLO_ACK;ack.sender=22;
  output.active=false;receive(&ack);assert(peer==22 && devices[DR_COMMS_INDEX].boot==22);
