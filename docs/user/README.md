@@ -11,6 +11,7 @@ or live service changed during this documentation review.
 | Task or interface | Guide | Identify it by |
 |---|---|---|
 | Use the active IHU | [IHU USB console](ihu-can-console.md) | `firmware/ihu`; USB text console; `STATUS role=IHU_MCU fw=0.13.0` |
+| Use or diagnose the Pi payload | [Payload commands and operations](payload.md) | Pi 4 / LC2502 CAN A; payload 0.2.0; node 4 |
 | Monitor or command through Yamcs | [Yamcs operation and available features](yamcs.md) | Instance and processor selected in the web header |
 | Power up the demo ground Pi | [Pi readiness and hotspot](../../ground/pi/README.md) | Ethernet first; `EMBER-Ground` fallback Wi-Fi |
 | Send an EPS observation over LTE | [Step-by-step LTE walkthrough](lte-eps-walkthrough.md) | IHU → CAN → Walter → ground Pi → `ember` |
