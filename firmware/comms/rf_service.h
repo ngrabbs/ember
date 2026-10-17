@@ -1,6 +1,8 @@
 #pragma once
 #include "rf_queue.h"
 static rq_state rf_queue;
+/* Volatile COMMS-boot state, shared by on-demand and diagnostic windows. */
+static bool firmware_announced;
 static bool rf_bus_open(void) {
     if(!configuration_mode(can_read(14,0x0e),can_read(14,0x0f)))return false;
     if(can_read(14,0x2a)!=0 || can_read(14,0x29)!=0xf0 || can_read(14,0x28)!=0x86)return false;
@@ -26,7 +28,7 @@ static bool rf_service_window(unsigned mode) {
     if(on_demand && !rf_queue.count)return true;
     static cf_reader f;static ul_reader reader;static ul_packet in;
     static uint8_t native[BPSK_NATIVE_MAX];
-    bool abort=false,ok=true,identity_sent=false,rf_failed=false;unsigned attempts=0;
+    bool abort=false,ok=true,rf_failed=false;unsigned attempts=0;
     static uint32_t identity_sequence;
     const uint64_t lease_end=time_us_64()+180000000;
     printf("[uhf] mode=%s boot_resume=0 max_frames=%u\n",on_demand?"ON_DEMAND":automatic?"TIMED180":"BATCH",automatic?96:5);
@@ -63,9 +65,11 @@ static bool rf_service_window(unsigned mode) {
                 if(!size || !hello_send(wire,size,request,time_us_64()+500000)){ok=false;break;}
                 continue;
             }
-            if(in.type!=CF_UHF_SEND)continue;
+            if(!uhf_is_request(in.type))continue;
             size_t size;uint32_t request;uint8_t status=UHF_INVALID,type=CF_UHF_REJECTED;
-            if(bridge_telemetry_type(&f,native,&size,&request,true))type=rq_admit(&rf_queue,&in,&status);
+            if((in.type==CF_UHF_FIRMWARE && !in.size) ||
+               (in.type==CF_UHF_SEND && bridge_telemetry_type(&f,native,&size,&request,true)))
+                type=rq_admit(&rf_queue,&in,&status);
             printf("[uhf] admission request=%lu type=%02X status=%u queued=%u\n",(unsigned long)in.request,type,status,rf_queue.count);
             if(!rf_reply_send(&in,type,status)){ok=false;break;}
         }
@@ -77,21 +81,23 @@ static bool rf_service_window(unsigned mode) {
     printf("[uhf] DRAIN queued=%u abort=%u bus_ok=%u\n",rf_queue.count,abort,ok);
     while(rf_queue.count) {
         rq_item *item=&rf_queue.items[0];uint8_t result=UHF_CANCELLED;
+        bool identity_only=item->packet.type==CF_UHF_FIRMWARE;
         if(getchar_timeout_us(0)>=0 || (automatic && (time_us_64()+2500000>=lease_end || attempts>=96)))abort=true;
-        if(!abort && ok && !identity_sent) {
-            /* Only after an admitted request, under the same explicit finite RF lease. */
+        if(!abort && ok && (!firmware_announced || identity_only)) {
+            /* No boot beacon: first admitted telemetry request, or explicit identity. */
             size_t n=firmware_packet(native,responder_boot,identity_sequence++,(uint32_t)(time_us_64()/1000));
             printf("[firmware_rf] packet_hex=");
             for(size_t i=0;i<n;i++)printf("%02x",native[i]);
             printf("\n");
             packet_frame_size=bridge_frame(packet_frame,native,n,0x80000000u|(identity_sequence&0x7fffffffu));
             ++attempts;
-            if(!packet_frame_size || !clock_window_drive(true,false,bpsk_emit,1)){abort=true;rf_failed=true;}
-            identity_sent=!abort;
+            bool sent=packet_frame_size && clock_window_drive(true,false,bpsk_emit,1);
+            if(sent)firmware_announced=true;else {abort=true;rf_failed=true;}
+            if(identity_only)result=sent?UHF_OK:UHF_FAILED;
             /* Recheck abort/lease between the two separately bounded bursts. */
             if(getchar_timeout_us(0)>=0 || (automatic && (time_us_64()+2500000>=lease_end || attempts>=96)))abort=true;
         }
-        if(!abort && ok) {
+        if(!identity_only && !abort && ok) {
             packet_frame_size=bridge_frame(packet_frame,item->packet.payload,item->packet.size,item->packet.request);
             printf("[uhf] packet request=%lu packet_hex=",(unsigned long)item->packet.request);
             for(unsigned i=0;i<item->packet.size;i++)printf("%02x",item->packet.payload[i]);
@@ -146,10 +152,11 @@ static bool can_idle_poll(void) {
         for(size_t i=0;i<fragments.used;i++)if(ul_feed(&reader,fragments.wire[i],0,&in))count++;
         if(count!=1 || reader.used || reader.discard || in.version!=1 || in.origin!=in.sender ||
            (uint16_t)in.request!=fragments.token)continue;
-        if(in.type==CF_UHF_SEND) {
+        if(uhf_is_request(in.type)) {
             static uint8_t native[BPSK_NATIVE_MAX];size_t native_size;uint32_t request;
             uint8_t status=UHF_INVALID,type=CF_UHF_REJECTED;
-            if(bridge_telemetry_type(&fragments,native,&native_size,&request,true))
+            if((in.type==CF_UHF_FIRMWARE && !in.size) ||
+               (in.type==CF_UHF_SEND && bridge_telemetry_type(&fragments,native,&native_size,&request,true)))
                 type=rq_admit(&rf_queue,&in,&status);
             uhf_reply(&in,responder_boot,type,status,&out);
             printf("[uhf] admission request=%lu type=%02X status=%u queued=%u on_demand=1\n",

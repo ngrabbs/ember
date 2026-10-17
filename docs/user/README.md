@@ -9,7 +9,7 @@ dated hardware evidence and current live reception are separate checks.
 | Task or interface | Guide | Identify it by |
 |---|---|---|
 | Compare transmission contents and cadence | [Transmission matrix](ihu-can-console.md#transmission-matrix) | UHF/LTE packets, RF replies, bench forwarding and wired streams |
-| Use the active IHU | [IHU USB console](ihu-can-console.md) | `firmware/ihu`; USB text console; `STATUS role=IHU_MCU fw=0.13.0` |
+| Use the active IHU | [IHU USB console](ihu-can-console.md) | `firmware/ihu`; USB text console; `STATUS role=IHU_MCU fw=0.14.0` |
 | Use or diagnose the Pi payload | [Payload commands and operations](payload.md) | Pi 4 / LC2502 CAN A; payload 0.2.0; node 4 |
 | Monitor or command through Yamcs | [Yamcs operation and available features](yamcs.md) | Instance and processor selected in the web header |
 | Power up the demo ground Pi | [Pi readiness and hotspot](../../ground/pi/README.md) | Ethernet first; `EMBER-Ground` fallback Wi-Fi |

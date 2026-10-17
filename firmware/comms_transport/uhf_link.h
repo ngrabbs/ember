@@ -5,6 +5,11 @@
 #define CF_UHF_ADMITTED 0x81
 #define CF_UHF_RESULT 0x82
 #define CF_UHF_REJECTED 0x83
+/* Zero-payload request: COMMS constructs its own native firmware packet. */
+#define CF_UHF_FIRMWARE 0x84
+static inline bool uhf_is_request(uint8_t type) {
+    return type==CF_UHF_SEND || type==CF_UHF_FIRMWARE;
+}
 #define UHF_OK 0
 #define UHF_FULL 1
 #define UHF_INVALID 2

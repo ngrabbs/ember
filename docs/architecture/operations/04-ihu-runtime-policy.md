@@ -1,6 +1,6 @@
 # IHU runtime modes and output policy
 
-Implementation: IHU CAN Feather **0.13.0**, serial bench bridge **0.4.0**.
+Implementation: IHU CAN Feather **0.14.0**, serial bench bridge **0.4.0**.
 This is the approved ground-test cleanup. Flight operations remain inactive
 stubs; the flight requirements in the other three tables remain a draft.
 This policy applies to the active application in `firmware/ihu`.
@@ -67,7 +67,7 @@ copies. This release does not wire another physical UART or allocate new pins;
 UART is a future transport alternative, not a newly enabled port.
 
 The switches are permissions: RF ON does not start a telemetry run, a modem
-window or a ground receiver. With COMMS 0.32.0, healthy idle CAN accepts IHU
+window or a ground receiver. With COMMS 0.33.0, healthy idle CAN accepts IHU
 UHF requests without a COMMS console window. Each accepted request uses
 bounded RF bursts, reports a local result, then returns to muted idle CAN.
 Normal CAN, fresh HELLO, route selection and idle-work checks still apply.
@@ -132,7 +132,7 @@ not implement flight recovery or power protection.
 
 ## Ground bridge and migration
 
-Install IHU 0.13.0 together with bench bridge 0.4.0. With `--poll-eps`, the bridge
+Install IHU 0.14.0 together with bench bridge 0.4.0. With `--poll-eps`, the bridge
 checks `outputs` approximately every 5 seconds between commands and reads/
 forwards EPS only while umb_telem=1. OFF, an unknown policy or a policy-query
 failure never falls back to streaming. Ground values then expire normally.

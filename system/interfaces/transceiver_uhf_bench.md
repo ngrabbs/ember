@@ -13,6 +13,7 @@ firmware. Constants live in `firmware/comms_transport/uhf_link.h`.
 | 0x81 CF_UHF_ADMITTED | Packet validated and retained in the volatile queue |
 | 0x82 CF_UHF_RESULT | Local RF attempt completed, failed, or was cancelled |
 | 0x83 CF_UHF_REJECTED | Request was not admitted |
+| 0x84 CF_UHF_FIRMWARE | Zero-payload request for one COMMS-generated firmware RF packet |
 
 Reply sender is the COMMS boot ID established by HELLO; origin/request match
 IHU boot/request. Eight payload bytes: version1, status8, native length16 BE,
@@ -23,15 +24,20 @@ attempt (possibly partial);6 means cancelled without an attempt. No reply claims
 a ground decode, LTE modem acceptance, or durable storage. A lost reply yields
 UNKNOWN, never automatic retransmission.
 
-COMMS **0.32.0** accepts valid IHU UHF requests through healthy idle CAN at
-boot, without a COMMS USB console lease. IHU **0.13.0** requires the local
+COMMS **0.33.0** accepts valid IHU UHF requests through healthy idle CAN at
+boot, without a COMMS USB console lease. IHU **0.14.0** requires the local
 `uhf_telem` permission and a fresh COMMS HELLO. `uhf heartbeat`, `uhf system`,
 `uhf eps` or a bounded `uhf run` submit existing telemetry producers. Permission
 alone starts no generator. Admission is acknowledged before RF begins; no
 admission reply means no drain, and the fault latches until reboot.
 
-An admitted request is drained immediately, including one COMMS firmware
-identity burst before the requested native telemetry. After terminal results,
+An admitted telemetry request is drained immediately. One COMMS firmware
+identity burst precedes the first such request after COMMS boot; successful
+identity transmission sets a boot-scoped flag. Later requests, IHU reboots and
+diagnostic windows do not repeat it. CF_UHF_FIRMWARE requires an empty payload
+and requests exactly one fresh identity, even after announcement; it also sets
+the same flag on success. Its reply length/digest describe the empty request.
+No identity is emitted merely at boot or on a failed/rejected admission. After terminal results,
 CAN A returns to normal and RF remains muted until another request. Each burst
 retains the 1.5-second payload deadline and independent 2-second mute alarm.
 CAN is quiesced during RF, so wait for a terminal result before another manual
@@ -45,7 +51,7 @@ the historical gate they opened is not required for on-demand transmission.
 
 Queue capacity4; completed-result history8. Repeating an identical request
 returns its queued or completed status and does not retransmit. Reusing a
-request ID with different payload bytes is rejected. Older IDs outside history
+request ID with a different request type or payload bytes is rejected. Older IDs outside history
 are rejected by the per-origin high-water mark. The state is volatile: COMMS
 reset changes boot ID and loses queue/history. A different IHU origin can take
 over only when the queue is empty and resets history/high-water. This is a

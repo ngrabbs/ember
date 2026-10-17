@@ -9,6 +9,7 @@ int main(void) {
     uhf_reply(&p,456,CF_UHF_ADMITTED,0,&r);
     assert(uc_receive(&client,&r) && uc_count(&client)==1 && client.items[0].admitted);
     assert(rq_admit(&q,&p,&status)==CF_UHF_ADMITTED && q.count==1);
+    p.type=CF_UHF_FIRMWARE;assert(rq_admit(&q,&p,&status)==CF_UHF_REJECTED && status==UHF_CONFLICT);p.type=CF_UHF_SEND;
     p.payload[0]^=1;assert(rq_admit(&q,&p,&status)==CF_UHF_REJECTED && status==UHF_CONFLICT);p.payload[0]^=1;
     for(unsigned i=2;i<=4;i++){p.request=i;assert(rq_admit(&q,&p,&status)==CF_UHF_ADMITTED);assert(uc_start(&client,&p,456,0));}
     p.request=5;assert(!uc_start(&client,&p,456,0));
