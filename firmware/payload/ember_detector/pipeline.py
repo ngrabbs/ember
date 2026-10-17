@@ -18,7 +18,7 @@ def canonical(data):return json.dumps(data,sort_keys=True,separators=(',',':'),a
 def bounded(value, low, high, name, integer=False):
     if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value) or not low<=value<=high:
         raise ValueError('Invalid '+name)
-    if integer and int(value)!=value:raise ValueError('Nonintegral '+name)
+    if integer and not isinstance(value,int):raise ValueError('Integer required: '+name)
 
 
 def load_config(path):
