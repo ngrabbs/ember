@@ -1,3 +1,10 @@
+## Payload application route —0.11.0
+
+IHU adds `hello payload`, `ping N`, `payload ident`, `payload status`, and
+`payload heartbeat`, using request/reply IDs0x740/0x741 and existing discovery
+node4/reply0x704. The responder runs on the Pi/LC2502; see the
+[payload contract](../payload/README.md). COMMS/LTE routing remains unchanged.
+
 ## CAN addressing migration candidate —0.8.0
 
 This image family builds the IHU and **LTE CAN Feather** roles. The historical

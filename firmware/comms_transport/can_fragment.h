@@ -9,6 +9,9 @@
 /* Dedicated LTE bridge route; legacy SDRB/transceiver IDs stay unchanged. */
 #define CF_LTE_REQUEST_ID 0x720
 #define CF_LTE_REPLY_ID 0x721
+/* Pi payload route; discovery remains node 4 / reply 0x704. */
+#define CF_PAYLOAD_REQUEST_ID 0x740
+#define CF_PAYLOAD_REPLY_ID 0x741
 #define CF_CHAIN 0x72
 #define CF_CHAIN_ACK 0x73
 #define CF_BUSY 5

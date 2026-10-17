@@ -10,6 +10,8 @@
 #define DR_COMMS_INDEX 2
 #define DR_LTE_NODE 3
 #define DR_LTE_INDEX 3
+#define DR_PAYLOAD_NODE 4
+#define DR_PAYLOAD_INDEX 4
 #define DR_COUNT 5
 #define DR_EPS_I2C_INDEX 0
 #define DR_CAN 1
@@ -24,7 +26,7 @@ static const struct dr_definition {
     {"EPS_NEXT",DR_CAN,1,0,true,0,0},
     {"COMMS",DR_CAN,DR_COMMS_NODE,0,false,CF_IHU_ID,CF_COMMS_ID},
     {"LTE",DR_CAN,DR_LTE_NODE,0,false,CF_LTE_REQUEST_ID,CF_LTE_REPLY_ID},
-    {"PAYLOAD",DR_CAN,4,0,true,0,0}
+    {"PAYLOAD",DR_CAN,DR_PAYLOAD_NODE,0,false,CF_PAYLOAD_REQUEST_ID,CF_PAYLOAD_REPLY_ID}
 };
 enum {DR_NOT_SEEN,DR_ONLINE,DR_STALE,DR_FAULT};
 static const char *const dr_states[]={"NOT_SEEN","ONLINE","STALE","FAULT"};

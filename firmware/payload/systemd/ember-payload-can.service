@@ -1,0 +1,13 @@
+[Unit]
+Description=EMBER LC2502 CAN A initialization
+After=systemd-udev-trigger.service
+Before=ember-payload.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/ember-payload/can_setup.py
+TimeoutStartSec=45
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

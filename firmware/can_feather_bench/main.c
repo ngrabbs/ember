@@ -13,10 +13,15 @@
 #include "device_registry.h"
 #include "build_identity.h"
 #include "firmware_info.h"
+#include "payload_protocol.h"
 static uc_state uhf_client;
 #include "native_telemetry.h"
 #if ROLE_IHU
 #include "eps_readout.h"
+#include "uplink_ping.h"
+#include "../usb_bench/protocol.h"
+static ember_state uplink_engine;
+static cf_reader uplink_fragments;
 #include "power_packet.h"
 #include "health_packet.h"
 #include "device_packet.h"
@@ -32,9 +37,11 @@ static uint32_t uhf_last_result;
 #define LOG(...) do {if(stdio_usb_connected())printf(__VA_ARGS__);} while(0)
 #define ROLE_NAME (ROLE_IHU?"IHU_MCU":"LTE_CAN_MCU")
 #if ROLE_IHU
-static bool target_lte;
-#define TX_ID (dr_devices[target_lte?DR_LTE_INDEX:DR_COMMS_INDEX].request_id)
-#define RX_ID (dr_devices[target_lte?DR_LTE_INDEX:DR_COMMS_INDEX].reply_id)
+static uint8_t target_index=DR_COMMS_INDEX;
+#define target_lte (target_index==DR_LTE_INDEX)
+#define target_payload (target_index==DR_PAYLOAD_INDEX)
+#define TX_ID (dr_devices[target_index].request_id)
+#define RX_ID (dr_devices[target_index].reply_id)
 #else
 #define TX_ID CF_LTE_REPLY_ID
 #define RX_ID CF_LTE_REQUEST_ID
@@ -50,7 +57,7 @@ static struct {bool active;ul_packet packet;uint32_t started;} pending;
 static struct {
     bool active;
     uint8_t wire[UL_WIRE_MAX];size_t size;
-    uint16_t token;unsigned index;uint32_t last;
+    uint16_t token,route;unsigned index;uint32_t last;
 } output;
 #if !ROLE_IHU
 static ul_reader uart_reader;
@@ -71,7 +78,7 @@ static void firmware_status(void) {
 static void status(void) {
     firmware_status();
 #if ROLE_IHU
-    LOG("CAN_TARGET name=%s request=%03x reply=%03x\n",target_lte?"LTE":"COMMS",TX_ID,RX_ID);
+    LOG("CAN_TARGET name=%s request=%03x reply=%03x\n",dr_devices[target_index].name,TX_ID,RX_ID);
 #endif
     char id[2*PICO_UNIQUE_BOARD_ID_SIZE_BYTES+1];pico_get_unique_board_id_string(id,sizeof(id));
     LOG("STATUS role=%s fw=can-bench-v8 id=%s boot=%" PRIu32 " peer=%" PRIu32
@@ -95,8 +102,30 @@ static void status(void) {
 static bool queue(const ul_packet *p) {
     if(output.active)return false;
     size_t size=ul_encode(p,output.wire);if(!size)return false;
-    output.size=size;output.token=(uint16_t)p->request;output.index=0;output.last=now_ms()-2;output.active=true;return true;
+    output.route=TX_ID;output.size=size;output.token=(uint16_t)p->request;output.index=0;output.last=now_ms()-2;output.active=true;return true;
 }
+#if ROLE_IHU
+static bool uplink_emit(const uint8_t *p,size_t n,void *context){
+    const ul_packet *request=context;
+    if(n!=43 || p[W_KIND]!=W_KINDS_RESPONSE)return false;
+    if(p[W_PAYLOAD+W_COMMAND_RESPONSE_STAGE]!=W_STAGE_COMPLETED)return true;
+    ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,
+                     .origin=request->sender,.request=request->request,.size=(uint16_t)n};
+    memcpy(reply.payload,p,n);
+    if(!queue(&reply))return false;
+    output.route=UP_REPLY_ID;
+    LOG("UPLINK_PING COMPLETED epoch=%" PRIu32 " transaction=%" PRIu32 " response_hex=",
+        ul_u32(p+12),ul_u32(p+16));
+    for(size_t i=0;i<n;i++){LOG("%02x",p[i]);}LOG("\n");return true;
+}
+static void uplink_receive(const cf_frame *frame,uint32_t now){
+    static ul_packet p;
+    if(!cf_feed(&uplink_fragments,frame,UP_REQUEST_ID,now))return;
+    if(!up_envelope(&uplink_fragments,&p)||p.type!=UP_PING||p.origin!=p.sender||!up_native_ping(p.payload,p.size))return;
+    if(output.active||can.pending){LOG("UPLINK_PING rejected=BUSY\n");return;}
+    ember_command(&uplink_engine,p.payload,p.size,now,uplink_emit,&p);
+}
+#endif
 static void pump_tx(uint32_t now) {
     uint32_t errors=can.tx_fail+can.tx_timeout;mcp_poll_tx(&can,now);
     if(can.tx_fail+can.tx_timeout!=errors) {
@@ -106,7 +135,7 @@ static void pump_tx(uint32_t now) {
     }
     if(output.active && !can.pending && (uint32_t)(now-output.last)>=2) {
         cf_frame frame;
-        if(!cf_fragment(output.wire,output.size,TX_ID,output.token,output.index,&frame)) {output.active=false;return;}
+        if(!cf_fragment(output.wire,output.size,output.route,output.token,output.index,&frame)) {output.active=false;return;}
         if(mcp_send(&can,&frame)) {
             ++output.index;output.last=now;
             if((size_t)output.index*CF_CHUNK>=output.size)output.active=false;
@@ -205,7 +234,7 @@ static void receive(const ul_packet *p) {
     if(pending.active && p->origin==boot && p->request==pending.packet.request) {
         bool hello=pending.packet.type==UL_HELLO;
         uint8_t expected=hello?UL_HELLO_ACK:pending.packet.type==CF_CHAIN?CF_CHAIN_ACK:
-            pending.packet.type==CF_RF_WINDOW?CF_RF_WINDOW_ACK:pending.packet.type==CF_SEND_PACKET?CF_MODEM_ACCEPTED:pending.packet.type==CF_LINK_STATUS?CF_LINK_STATUS_ACK:pending.packet.type==CF_LINK_DIAG?CF_LINK_DIAG_ACK:pending.packet.type==UL_FIRMWARE_INFO?UL_FIRMWARE_INFO_ACK:pending.packet.type==CF_MODEM_FIRMWARE?CF_MODEM_FIRMWARE_ACK:UL_ECHO_ACK;
+            pending.packet.type==CF_RF_WINDOW?CF_RF_WINDOW_ACK:pending.packet.type==CF_SEND_PACKET?CF_MODEM_ACCEPTED:pending.packet.type==CF_LINK_STATUS?CF_LINK_STATUS_ACK:pending.packet.type==CF_LINK_DIAG?CF_LINK_DIAG_ACK:pending.packet.type==UL_FIRMWARE_INFO?UL_FIRMWARE_INFO_ACK:pending.packet.type==CF_MODEM_FIRMWARE?CF_MODEM_FIRMWARE_ACK:pending.packet.type==PL_STATUS?PL_STATUS_ACK:pending.packet.type==PL_HEARTBEAT?PL_HEARTBEAT_ACK:UL_ECHO_ACK;
         if(p->version!=1 || (!hello && p->sender!=peer)) {
             QUEUED_REPLY(p,false);
             pending.active=false;peer=0;++unknown;LOG("RESULT outcome=UNKNOWN reason=PEER_RESET_OR_VERSION\n");return;
@@ -221,12 +250,18 @@ static void receive(const ul_packet *p) {
         bool identity=pending.packet.type==UL_FIRMWARE_INFO || pending.packet.type==CF_MODEM_FIRMWARE;
         bool diag=pending.packet.type==CF_LINK_DIAG;
         bool health=pending.packet.type==CF_LINK_STATUS || diag;
-        if(p->type!=expected || p->size!=(identity?FI_SIZE:health?(diag?LTE_DIAG_SIZE:16):pending.packet.size) || (!health && !identity && memcmp(p->payload,pending.packet.payload,p->size)) || (identity && (!fi_valid(p->payload,p->size) || (pending.packet.type==UL_FIRMWARE_INFO && ul_u32(p->payload+24)!=p->sender))))return;
+        bool payload_report=pending.packet.type==PL_STATUS || pending.packet.type==PL_HEARTBEAT;
+        if(p->type!=expected || p->size!=(identity?FI_SIZE:payload_report?PL_REPORT_SIZE:health?(diag?LTE_DIAG_SIZE:16):pending.packet.size) || (!health && !identity && !payload_report && memcmp(p->payload,pending.packet.payload,p->size)) || (identity && (!fi_valid(p->payload,p->size) || (pending.packet.type==UL_FIRMWARE_INFO && ul_u32(p->payload+24)!=p->sender))))return;
+        if(payload_report && !pl_report_valid(p->payload,p->size,p->sender))return;
+        if(payload_report)LOG("PAYLOAD_REPORT boot=%" PRIu32 " uptime_ms=%" PRIu32 " requests=%" PRIu32 " replies=%" PRIu32 " rejected=%" PRIu32 " fragment_errors=%" PRIu32 "\n",ul_u32(p->payload+4),ul_u32(p->payload+8),ul_u32(p->payload+12),ul_u32(p->payload+16),ul_u32(p->payload+20),ul_u32(p->payload+24));
         if(health)LOG("LTE_STATUS state=%u step=%u error=%u registered=%u window_ms=%" PRIu32 " modem_accepted=%" PRIu32 " rejected=%" PRIu32 "\n",p->payload[0],p->payload[1],p->payload[2],p->payload[3],ul_u32(p->payload+4),ul_u32(p->payload+8),ul_u32(p->payload+12));
         if(diag)LOG("LTE_DIAG version=%u last_cereg=%u send_cereg=%u failure_cereg=%u command=%u failure_command=%u failure_state=%u flags=%u cme=%" PRIu32 " send_elapsed_ms=%" PRIu32 " registration_losses=%" PRIu32 " last_cereg_ms=%" PRIu32 " uart_send_request=%" PRIu32 " error_kind=%u\n",
             p->payload[16],p->payload[17],p->payload[18],p->payload[19],p->payload[20],p->payload[21],p->payload[22],p->payload[23],ul_u32(p->payload+24),ul_u32(p->payload+28),ul_u32(p->payload+32),ul_u32(p->payload+36),ul_u32(p->payload+40),p->payload[45]);
 #if ROLE_IHU
         if(identity) {
+            LOG("FIRMWARE_REPLY peer=%" PRIu32 " version=%u.%u.%u dirty=%u\n",p->sender,p->payload[0],p->payload[1],p->payload[2],p->payload[3]);
+        }
+        if(identity && target_lte) {
             unsigned index=pending.packet.type==CF_MODEM_FIRMWARE;
             identities[index].valid=true;identities[index].observed=now_ms();
             memcpy(identities[index].payload,p->payload,FI_SIZE);
@@ -237,18 +272,18 @@ static void receive(const ul_packet *p) {
 #endif
         if(hello)peer=p->sender;
 #if ROLE_IHU
-        dr_seen(&devices[target_lte?DR_LTE_INDEX:DR_COMMS_INDEX],now_ms(),p->sender);
+        dr_seen(&devices[target_index],now_ms(),p->sender);
 #endif
         QUEUED_REPLY(p,true);
         pending.active=false;++matched;
         LOG("RESULT request=%" PRIu32 " outcome=%s peer=%" PRIu32 " bytes=%u hex=",p->request,
-            hello?"CAN_HELLO_CONFIRMED":p->type==CF_RF_WINDOW_ACK?"RF_WINDOW_ACCEPTED":
+            hello?"CAN_HELLO_CONFIRMED":payload_report?(p->type==PL_STATUS_ACK?"PAYLOAD_STATUS":"PAYLOAD_HEARTBEAT"):identity?"FIRMWARE_IDENTITY":p->type==CF_RF_WINDOW_ACK?"RF_WINDOW_ACCEPTED":
             p->type==CF_MODEM_ACCEPTED?"MODEM_ACCEPTED":p->type==CF_LINK_STATUS_ACK?"LTE_STATUS":p->type==CF_LINK_DIAG_ACK?"LTE_DIAG":p->type==CF_CHAIN_ACK?"WALTER_BENCH_RETURN":"CAN_ECHO_MATCHED",peer,p->size);
         for(size_t i=0;i<p->size;++i) {LOG("%02x",p->payload[i]);}
         LOG("\n");return;
     }
     if(p->type==UL_HELLO_ACK || p->type==UL_ECHO_ACK || p->type==CF_CHAIN_ACK ||
-       p->type==CF_RF_WINDOW_ACK || p->type==CF_MODEM_ACCEPTED || p->type==CF_LINK_STATUS_ACK || p->type==CF_LINK_DIAG_ACK || p->type==UL_FIRMWARE_INFO_ACK || p->type==CF_MODEM_FIRMWARE_ACK || p->type==UL_ERROR)return;
+       p->type==CF_RF_WINDOW_ACK || p->type==CF_MODEM_ACCEPTED || p->type==CF_LINK_STATUS_ACK || p->type==CF_LINK_DIAG_ACK || p->type==UL_FIRMWARE_INFO_ACK || p->type==CF_MODEM_FIRMWARE_ACK || p->type==PL_STATUS_ACK || p->type==PL_HEARTBEAT_ACK || p->type==UL_ERROR)return;
     if(p->version!=1) {send_error(p,UL_ERR_VERSION);return;}
     if(p->origin!=p->sender) {send_error(p,UL_ERR_REQUEST);return;}
 #if !ROLE_IHU
@@ -267,9 +302,15 @@ static void receive(const ul_packet *p) {
 }
 static void submit(uint8_t type,const uint8_t *payload,size_t size) {
 #if ROLE_IHU
-    bool lte_only=type==CF_SEND_PACKET || type==CF_RF_WINDOW || type==CF_LINK_STATUS || type==CF_LINK_DIAG || type==UL_FIRMWARE_INFO || type==CF_MODEM_FIRMWARE;
-    if((lte_only && !target_lte) || (type==CF_UHF_SEND && target_lte)) {
-        ++refused_requests;LOG("REJECT reason=WRONG_TARGET use_hello_comms_or_hello_lte\n");return;
+    bool lte_only=type==CF_SEND_PACKET || type==CF_RF_WINDOW || type==CF_LINK_STATUS || type==CF_LINK_DIAG || type==CF_MODEM_FIRMWARE;
+    if(target_payload && type!=UL_HELLO && type!=UL_ECHO && type!=UL_FIRMWARE_INFO &&
+       type!=PL_STATUS && type!=PL_HEARTBEAT) {
+        ++refused_requests;LOG("REJECT reason=PAYLOAD_READ_ONLY_SERVICES\n");return;
+    }
+    if((lte_only && !target_lte) || (type==UL_FIRMWARE_INFO && !target_lte && !target_payload) ||
+       ((type==PL_STATUS || type==PL_HEARTBEAT) && !target_payload) ||
+       (type==CF_UHF_SEND && target_index!=DR_COMMS_INDEX)) {
+        ++refused_requests;LOG("REJECT reason=WRONG_TARGET use_hello_comms_lte_or_payload\n");return;
     }
 #endif
     if(type==CF_UHF_SEND && uc_count(&uhf_client)==UC_CAPACITY) {++refused_requests;LOG("REJECT reason=UHF_TRACKER_FULL\n");return;}
@@ -482,12 +523,12 @@ static void command(const char *s) {
         else {bool ok=mcp_mode(&can,0);LOG("CAN_NORMAL ready=%d\n",ok);peer=0;}
     }
 #if ROLE_IHU
-    else if(!strcmp(s,"hello") || !strcmp(s,"hello comms") || !strcmp(s,"hello lte")) {
+    else if(!strcmp(s,"hello") || !strcmp(s,"hello comms") || !strcmp(s,"hello lte") || !strcmp(s,"hello payload")) {
         if(pending.active || output.active || can.pending || uc_count(&uhf_client) ||
-           auto_telem.enabled || telemetry_queue.enabled || queue_owned || queue_send_ready || discovery.active) {
+           auto_telem.enabled || telemetry_queue.enabled || queue_owned || queue_send_ready || discovery.active || uhf_run.state==UR_RUNNING) {
             LOG("REJECT reason=BUSY_TARGET_SWITCH\n");return;
         }
-        target_lte=!strcmp(s,"hello lte");peer=0;
+        target_index=!strcmp(s,"hello payload")?DR_PAYLOAD_INDEX:!strcmp(s,"hello lte")?DR_LTE_INDEX:DR_COMMS_INDEX;peer=0;
         memset(&fragments,0,sizeof(fragments));memset(&can_reader,0,sizeof(can_reader));
         submit(UL_HELLO,NULL,0);
     }
@@ -500,6 +541,9 @@ static void command(const char *s) {
         uint8_t p[240];for(size_t i=0;i<n;++i)p[i]=(uint8_t)i;submit(UL_ECHO,p,n);
 }
 #if ROLE_IHU
+    else if(!strcmp(s,"payload ident")) {if(target_payload)submit(UL_FIRMWARE_INFO,NULL,0);else LOG("REJECT reason=PAYLOAD_TARGET_REQUIRED\n");}
+    else if(!strcmp(s,"payload status"))submit(PL_STATUS,NULL,0);
+    else if(!strcmp(s,"payload heartbeat"))submit(PL_HEARTBEAT,NULL,0);
     else if(!strcmp(s,"telemetry"))health_telemetry(false,false);
     else if(!strcmp(s,"eps json"))eps_json();
     else if(!strcmp(s,"eps adc on"))eps_adc(true);
@@ -525,7 +569,7 @@ static void command(const char *s) {
     }
     else if(!strncmp(s,"uhf run ",8)) {
         unsigned duration,period;char extra;
-        if(sscanf(s+8,"%u %u %c",&duration,&period,&extra)!=2 || target_lte || !can.ready || !peer ||
+        if(sscanf(s+8,"%u %u %c",&duration,&period,&extra)!=2 || target_index!=DR_COMMS_INDEX || !can.ready || !peer ||
            (mcp_register(0x0e)&0xe0) || pending.active || output.active || can.pending ||
            uc_count(&uhf_client) || auto_telem.enabled || telemetry_queue.enabled ||
            !ur_start(&uhf_run,duration,period,now_ms())) {
@@ -554,7 +598,7 @@ static void command(const char *s) {
         if(!lq_drop(&telemetry_queue))LOG("REJECT reason=QUEUE_EMPTY_OR_ACTIVE\n");
         else queue_status();
     }
-    else if(!strcmp(s,"lte firmware"))submit(UL_FIRMWARE_INFO,NULL,0);
+    else if(!strcmp(s,"lte firmware")) {if(target_lte)submit(UL_FIRMWARE_INFO,NULL,0);else LOG("REJECT reason=LTE_TARGET_REQUIRED\n");}
     else if(!strcmp(s,"lte modem firmware"))submit(CF_MODEM_FIRMWARE,NULL,0);
     else if(!strcmp(s,"lte diagnostics"))submit(CF_LINK_DIAG,NULL,0);
     else if(!strcmp(s,"lte status"))submit(CF_LINK_STATUS,NULL,0);
@@ -564,13 +608,14 @@ static void command(const char *s) {
         uint8_t p[4];ul_p32(p,seconds);submit(CF_RF_WINDOW,p,4);
     }
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | hello comms | hello lte | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf devices | uhf heartbeat | uhf system | uhf eps | telemetry | eps json | eps adc on/off | eps telemetry | telem on [seconds]/off/status | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte | eps enqueue | lte queue on/off/status/drop":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | hello comms | hello lte | hello payload | payload ident | payload status | payload heartbeat | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf devices | uhf heartbeat | uhf system | uhf eps | telemetry | eps json | eps adc on/off | eps telemetry | telem on [seconds]/off/status | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte | eps enqueue | lte queue on/off/status/drop":"");
     else if(*s)LOG("ERROR unknown command\n");
 }
 int main(void) {
     stdio_init_all();boot=get_rand_32();if(!boot)boot=1;mcp_init(&can);
 #if ROLE_IHU
     eps_bus_init();
+    ember_init(&uplink_engine,boot);
 #endif
     if(can.ready)(void)mcp_mode(&can,0);
 #if !ROLE_IHU
@@ -593,6 +638,7 @@ int main(void) {
 #endif
         for(unsigned i=0;i<2 && mcp_receive(&can,&frame);++i) {
 #if ROLE_IHU
+            if(frame.id==UP_REQUEST_ID){uplink_receive(&frame,now);continue;}
             if(devices_receive(&frame,now))continue;
 #else
             if(frame.id==DR_QUERY_ID) {
