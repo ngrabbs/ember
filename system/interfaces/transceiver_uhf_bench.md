@@ -1,5 +1,7 @@
 # Transceiver UHF bench admission and results
 
+Operator packet coverage and pacing: [transmission matrix](../../docs/user/ihu-can-console.md#transmission-matrix).
+
 This additive protocol uses the existing version-1 CAN fragment/COBS envelope
 and IDs IHU `0x710`, COMMS `0x711`. It does not change CF_CHAIN, LTE requests,
 native telemetry, or the RF framing. Both endpoints must run the UHF-aware

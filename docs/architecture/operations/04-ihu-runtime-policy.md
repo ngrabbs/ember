@@ -109,6 +109,9 @@ from this application: `telemetry`, `eps telemetry`, `telem on/off/status`,
 `eps enqueue` and `lte queue ...`. Their historical helpers/evidence remain
 for reference, but the runtime has no legacy timer or LTE queue pump.
 
+For exact packet inclusion/exclusion and pacing across links, use the
+[transmission matrix](../../user/ihu-can-console.md#transmission-matrix).
+
 ## Sampling, reporting and fault history
 
 Internal EPS readout is sampled approximately every 5 seconds while transport

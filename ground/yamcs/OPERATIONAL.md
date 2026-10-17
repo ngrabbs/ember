@@ -32,6 +32,13 @@ policy is separate from explicit PAYLOAD_* command replies and the bounded RF
 command session. See the [mode/output matrix](../../docs/architecture/operations/04-ihu-runtime-policy.md).
 The installation history below describes earlier always-polling bridge versions.
 
+## Packet inclusion and transmission pacing
+
+The [IHU transmission matrix](../../docs/user/ihu-can-console.md#transmission-matrix)
+compares UHF run/single-send, LTE single-send, RF fire-check, bench EPS and
+bench payload packet inclusion. It also lists excluded packet families,
+COMMS firmware prefixes, output gates and wired stream formats.
+
 ## IHU-requested UHF telemetry
 
 COMMS 0.32.0 accepts validated UHF telemetry over healthy CAN without opening
