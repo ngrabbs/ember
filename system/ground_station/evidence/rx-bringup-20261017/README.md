@@ -462,3 +462,23 @@ attenuation is already corrected by analyzer; do not add it again. No evidence
 of overload at this level. Production code unchanged. This measures CW at the
 packet test's settings; it is not a calibrated packet power or RX sensitivity
 test. Connection remains conducted to tinySA, no ongoing source transmission.
+
+## Controlled amplitude steps with external30dB pad
+
+With unchanged TXRA → DC block →30dB pad →tinySA RF IN, measured two further
+1-second tones at434.994550MHz and gain70. A separate power_tone_probe.py permits
+up to0.20 amplitude for tone ONLY, retaining0.05 packet limit; existing production
+and packet tools unchanged. Direct synchronized scans use10kHz RBW and10dB
+internal attenuation. Both bursts acknowledged complete with no TX errors,
+then gain reset0. No COMMS receive/reply was armed during these measurements.
+
+Nominal source estimates after external30dB correction:
+- amplitude0.05 (previous): approximately -18dBm (~16uW).
+- amplitude0.10, trial03: -12.47dBm (~57uW), input -42.47dBm.
+- amplitude0.20, trial04: -5.94dBm (~255uW), input -35.94dBm.
+
+The approximately6dB increase per amplitude doubling is consistent with linear
+output scaling at these settings. This does not measure spectral purity, packet
+quality, or receiver sensitivity. Same uncalibrated cable/block/pad/analyzer
+uncertainties apply. No full-power claim. Recommend next finite OTA PING at
+amplitude0.20 after the user restores TXRA antenna; no OTA transmission yet.
