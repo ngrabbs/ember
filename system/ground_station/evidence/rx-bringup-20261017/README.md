@@ -445,3 +445,20 @@ not isolate transmitter output, antenna path or receiver gain/noise. Gain70
 still uses digital amplitude0.05, so it must not be described as full transmitter
 power. No further transmissions during this analysis. Next establish actual
 LibreSDR output level with tinySA and compare a controlled conducted input.
+
+## LibreSDR conducted output measurement
+
+User connected TXRA through DC block and confirmed external30dB pad to tinySA RF
+input. tinySA4_v1.4-156-g4eb315d HW V0.4.5.1.1, generator off, input mode, LNA off,
+external gain correction set0. Two finite1s tones at434.994550MHz, gain70,
+amplitude0.05, completed with burst acknowledgment, gain reset0 afterward.
+First max-hold/data read was ambiguous/no distinct tone and is NOT a power
+measurement. Second used synchronized direct100-point scans434.9..435.1MHz,
+RBW10kHz, internal attenuation10dB. Scans2..5 measured -48.47..-47.97dBm near
+434.992929MHz (scan bin, not precision frequency). Before/after peaks~ -100dBm.
+Nominal external30dB correction gives approximately -18dBm (~16uW) at source,
+excluding uncalibrated DC-block/cable loss and pad/analyzer uncertainty. Internal
+attenuation is already corrected by analyzer; do not add it again. No evidence
+of overload at this level. Production code unchanged. This measures CW at the
+packet test's settings; it is not a calibrated packet power or RX sensitivity
+test. Connection remains conducted to tinySA, no ongoing source transmission.
