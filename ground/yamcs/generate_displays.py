@@ -195,7 +195,7 @@ def generate(destination):
     scripted('Waiting for registry snapshot','DEVICE_STATUS_payload_version','device-freshness.js',28,90,1060,40,16)
     label('Device / interface',28,145,280);label('State at snapshot',330,145,330)
     label('Last seen age (ms)',700,145,220);label('Timeouts',940,145,160)
-    for i,(prefix,title) in enumerate([('eps','EPS / I2C1'),('eps_next','EPS_NEXT / CAN A (planned)'),('comms','COMMS / CAN A'),('lte','LTE / CAN A'),('payload','PAYLOAD / CAN A (planned)')]):
+    for i,(prefix,title) in enumerate([('eps','EPS / I2C1'),('eps_next','EPS_NEXT / CAN A (planned)'),('comms','COMMS / CAN A'),('lte','LTE / CAN A'),('payload','PAYLOAD / CAN A')]):
         y=195+i*78
         label(title,28,y,300,40,15,WHITE)
         value('DEVICE_STATUS_'+prefix+'_state',330,y,330,40,21)
@@ -209,7 +209,43 @@ def generate(destination):
     label('See Devices.par for device boot IDs, scan pause flag and full snapshot fields.',28,712,1060,25,12)
     ET.indent(display)
     ET.ElementTree(display).write(destination/'Devices.opi',encoding='utf-8',xml_declaration=True)
-    groups={'Devices.par':['DEVICE_STATUS'], 'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'], 'LTE-Firmware.par':['LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
+    for child in list(display):
+        if child.tag=='widget':display.remove(child)
+    prop(display,'name','EMBER payload')
+    label('EMBER / PAYLOAD',28,20,1060,48,30,WHITE,True)
+    label('PI 4 + LC2502 / NODE 4 / CAN A 500 kbit/s',28,76,1060,25,14,BLUE,True)
+    label('BENCH LINK: Yamcs → IHU USB console → payload CAN A. Observed replies; no RF transport.',28,108,1060,25,12,ORANGE)
+    box(28,150,520,330);box(568,150,524,330)
+    label('LAST STATUS / HEARTBEAT',48,166,470,28,14,BLUE,True)
+    for title,pv,y in [('Ready at reply','ready',210),('Payload boot ID','reported_boot_id',270),('Payload uptime (ms)','reported_uptime_ms',330),('Fragment errors','fragment_errors',390)]:
+        label(title,48,y,250,24,13);value('PAYLOAD_STATUS_'+pv,310,y-4,215,35,20)
+    label('Received at',48,438,130,24,12)
+    scripted('No verified reply','PAYLOAD_STATUS_ready','sample-time.js',180,438,345,30,12)
+    label('FIRMWARE IDENTITY',588,166,470,28,14,BLUE,True)
+    e=label('Query identification',588,210,470,35,21,WHITE)
+    path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/comms-version.js',checkConnect='true',sfe='false',seoe='false')
+    for n in ('version_major','version_minor','version_patch','dirty'):
+        ET.SubElement(path,'pv',trig='true').text='/ember/PAYLOAD_FIRMWARE_'+n
+    label('Source commit',588,270,470,24,13)
+    e=label('No identity received',588,302,470,54,15,WHITE);prop(e,'wrap_words',True)
+    path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/comms-git.js',checkConnect='true',sfe='false',seoe='false')
+    for i in range(5):ET.SubElement(path,'pv',trig='true').text='/ember/PAYLOAD_FIRMWARE_git_sha_'+str(i)
+    label('Identified boot ID',588,370,240,24,13);value('PAYLOAD_FIRMWARE_reported_boot_id',830,366,240,35,20)
+    scripted('No identity received','PAYLOAD_FIRMWARE_version_major','sample-time.js',588,438,470,30,12)
+    box(28,498,1064,110)
+    label('LAST VERIFIED PING',48,514,300,24,13,BLUE,True)
+    label('Bytes',48,554,75,24,13);value('PAYLOAD_PING_RESULT_bytes',130,548,100,35,20)
+    label('Echo match',270,554,120,24,13);value('PAYLOAD_PING_RESULT_echo_ok',400,548,90,35,20)
+    label('Round trip (ms)',540,554,190,24,13);value('PAYLOAD_PING_RESULT_round_trip_ms',740,548,150,35,20)
+    for text,url,x,w in [('Send payload command','/commanding/send?c=ember-payload__realtime&system=%2Fember',28,320),('Command history','/commanding/history?c=ember-payload__realtime',368,320)]:
+        e=widget('ActionButton',text,x,635,w,42);prop(e,'text',text)
+        color(e,'background_color','#30445e');color(e,'foreground_color',WHITE);font(e,14,True)
+        a=ET.SubElement(e.find('actions'),'action',type='OPEN_WEBPAGE');prop(a,'hyperlink',url)
+    label('Use PAYLOAD_PING, PAYLOAD_IDENT, PAYLOAD_STATUS_QUERY or PAYLOAD_HEARTBEAT_QUERY.',28,690,1060,24,12)
+    label('Values are last observations. Compare reply timestamps; request a new status to verify current liveness.',28,718,1060,24,12,ORANGE)
+    ET.indent(display)
+    ET.ElementTree(display).write(destination/'Payload.opi',encoding='utf-8',xml_declaration=True)
+    groups={'Payload.par':['PAYLOAD_STATUS','PAYLOAD_FIRMWARE','PAYLOAD_PING_RESULT'], 'Devices.par':['DEVICE_STATUS'], 'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'], 'LTE-Firmware.par':['LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
     for filename,names in groups.items():
         parameters=[]
         # Pin header provenance to each message rather than the last packet of any kind.

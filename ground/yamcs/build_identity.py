@@ -17,7 +17,7 @@ from urllib.parse import quote
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 
-EXCLUDED = {'Ground-Build.opi', 'ground-build.json'}
+EXCLUDED = {'Ground-Build.opi', 'ground-build.json', 'Payload-Ground-Build.opi', 'payload-ground-build.json'}
 
 def digest(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
@@ -45,7 +45,7 @@ def snapshot(url, instance):
     return dict(schema_version=1, audited_utc=datetime.now(timezone.utc).isoformat(),
                 fingerprint=digest(components), components=components)
 
-def page(manifest):
+def page(manifest, manifest_name="ground-build.json"):
     with tempfile.TemporaryDirectory() as directory:
         with contextlib.redirect_stdout(io.StringIO()):generate(directory)
         d=ET.parse(Path(directory)/'Comms-Firmware.opi').getroot()
@@ -53,14 +53,14 @@ def page(manifest):
     for w in list(d.findall('widget')):d.remove(w)
     d.find('name').text='EMBER ground build'
     c=manifest['components']
-    lines=['EMBER UHF ground build '+manifest['release'],
+    lines=['EMBER ground build '+manifest['release'],
            'Yamcs server '+c['yamcs_version']+' | Instance: '+c['instance'],
            'Audited UTC: '+manifest['audited_utc'],
            'Deployment fingerprint (compare this across team installations):',manifest['fingerprint'],
            'Loaded EMBER definitions SHA-256:',c['loaded_mdb_sha256'],
            'Shared dashboard/script files audited: '+str(len(c['displays'])),
            'Dated snapshot; rerun build_identity.py --check to detect later drift.',
-           'Manifest: ember_displays / ground-build.json',
+           'Manifest: ember_displays / '+manifest_name,
            'Receiver is separately identified by live.py --version and capture session.json.']
     for i,line in enumerate(lines):
         w=copy.deepcopy(template)
@@ -82,6 +82,7 @@ def main():
     p.add_argument('--output',type=Path)
     p.add_argument('--check',type=Path,help='Compare with a previously approved manifest')
     p.add_argument('--publish',action='store_true')
+    p.add_argument('--payload',action='store_true',help='Publish separate payload-instance build artifacts')
     a=p.parse_args()
     if not a.check and not a.release:p.error('Use --check or an explicit --release for a new baseline')
     m=snapshot(a.url,a.instance);m['release']=a.release
@@ -94,8 +95,9 @@ def main():
     data=(json.dumps(m,indent=2)+'\n').encode()
     if a.output:a.output.write_bytes(data)
     if a.publish:
-        for name,body,mime in [('ground-build.json',data,'application/json'),
-                                ('Ground-Build.opi',page(m),'application/xml')]:
+        names=('payload-ground-build.json','Payload-Ground-Build.opi') if a.payload else ('ground-build.json','Ground-Build.opi')
+        for name,body,mime in [(names[0],data,'application/json'),
+                                (names[1],page(m,names[0]),'application/xml')]:
             url=a.url.rstrip('/')+'/api/storage/buckets/ember_displays/objects/'+name
             with urlopen(Request(url,data=body,headers={'Content-Type':mime}),timeout=20) as r:r.read()
             with urlopen(url,timeout=20) as r:assert r.read()==body

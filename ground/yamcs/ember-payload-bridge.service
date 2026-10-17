@@ -1,0 +1,19 @@
+[Unit]
+Description=EMBER Yamcs payload bench bridge through IHU CAN A
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+User=ngrabbs
+ExecStart=/usr/bin/python3 -u /opt/ember-payload-ground/ember/payload_bridge.py --device /dev/serial/by-id/usb-Raspberry_Pi_Pico_DF641455DB822427-if00
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target
