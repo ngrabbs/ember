@@ -51,7 +51,7 @@ class Console:
             if text == 'eps json' and line.startswith('{'):
                 return line
             match = re.search(r'^SUBMITTED request=(\d+) ', line)
-            if match:
+            if match and outcome is not None:
                 request = int(match[1]); on_submit()
             match = re.search(r'^RESULT request=(\d+) outcome=(\w+)', line)
             if match and request == int(match[1]):

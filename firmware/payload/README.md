@@ -6,7 +6,7 @@ COMMS idle service, the payload answers addressed requests; it emits no
 unsolicited boot message or periodic heartbeat. Fire check is a commanded static stub returning NO_FIRE; execution_mode=STATIC_STUB
 explicitly distinguishes it from a real detector. Cameras, images and power commands remain outside this version.
 
-The current IHU application is `firmware/can_feather_bench` (v0.11.0 adds the
+The current IHU application is `firmware/can_feather_bench` (v0.12.0 adds fire check; v0.11.0 added the
 payload target), not the older FreeRTOS prototype in `firmware/ihu`. Current
 transceiver idle startup is implemented in `firmware/transceiver_bringup`.
 
@@ -147,3 +147,6 @@ The future detector replaces the explicit stub and reports ALGORITHM.
 
 Yamcs PAYLOAD_FIRE_CHECK is available in both instances. Bench uses serial/CAN;
 flight uses the real finite RF path documented in ground/yamcs/FIRE_CHECK.md.
+
+Fire-check deployment and the two byte-matched Yamcs RF results are recorded in
+[`validation.json`](../../system/ground_station/evidence/fire-check-20261017/validation.json).

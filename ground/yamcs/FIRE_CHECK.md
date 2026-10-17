@@ -42,3 +42,14 @@ ground/bpsk plus fire-uplink on .251. Run prepare_operational.py against the
 existing runtime, rebuild Java, install both display buckets and audit each
 instance as release1.6.0. Preserve archive volumes and the previous manifests.
 Stop RF/arming services before manually accessing their radio or COMMS port.
+
+## Verified deployment
+
+The October17 validation passed four Yamcs bench commands and two independent
+Yamcs RF commands. The two RF result packets are byte-identical at COMMS,
+ground decoding and the flight archive. All returned NO_FIRE/STATIC_STUB.
+The initial failed trials are preserved with the timing/admission fixes in
+[validation evidence](../../system/ground_station/evidence/fire-check-20261017/validation.json).
+Services are enabled and idle after testing; COMMS TX/RX are off, clocks disabled.
+Firmware exports report clean identities; final MCU SHAs and rollback locations
+are retained in that evidence. Both1.6.0 ground manifests pass MATCH.

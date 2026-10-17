@@ -69,6 +69,16 @@ class PayloadGroundTests(unittest.TestCase):
         with self.assertRaises(UnknownOutcome):observed('PAYLOAD_STATUS_QUERY',bytes(28),42,0,1)
         with self.assertRaises(UnknownOutcome):observed('PAYLOAD_IDENT',bytes(32),42,0,1)
 
+    def test_eps_poll_ignores_unsolicited_rf_transactions(self):
+        class Port:
+            def __init__(self):self.lines=iter([b'SUBMITTED request=3 type=1 bytes=0',
+                b'RESULT request=3 outcome=CAN_HELLO_CONFIRMED peer=42 bytes=0 hex=',b'{"profile":"sample"}'])
+            def write(self,p):pass
+            def flush(self):pass
+            def readline(self):return next(self.lines)+b'\n'
+        console=Console.__new__(Console);console.port=Port()
+        self.assertEqual(console.command('eps json'),' {"profile":"sample"}'.strip())
+
     def test_target_switch_retries_only_explicit_refusal(self):
         class SelectionConsole(Console):
             def __init__(self, refusal):self.refusal=refusal;self.calls=[]
