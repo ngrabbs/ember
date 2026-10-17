@@ -116,7 +116,8 @@ Do not let a live receiver and RF command service concurrently own LibreSDR.
 ## Transmission matrix
 
 Checked against IHU **0.14.0**, COMMS **0.33.0** (default on-demand service),
-serial bench bridge **0.4.0**, and payload **0.2.0**. These are the implemented
+serial bench bridge **0.4.0**, and payload **0.2.0**. The new cadence and explicit
+identity request passed [hardware checks](../../system/ground_station/evidence/comms-identity-cadence-20261017/deployment.json). These are the implemented
 operational packet paths, not every message defined by the dictionary.
 
 **Yes** means included on a successful operation; **Selected** means only when

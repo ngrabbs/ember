@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-17",
+  "source_git": "80eac2c9b1b836e916cfa1ce9cb901a3a63ce7cb",
+  "dirty": false,
+  "host": "m75q / 192.168.1.252",
+  "ihu": {
+    "device": "DF641455DB822427",
+    "version": "0.14.0",
+    "boot": 1734629348,
+    "uf2_sha256": "60a6ec194c102b7db16af2a4af3c8aa4ce6215dfaed54e0a5ce65196f16ecdc3",
+    "backup": "/home/ngrabbs/work/ember-identity-cadence-20261017/deployment/ihu-before.uf2",
+    "backup_sha256": "8294df9b6fbc551a318ba17a26ee7e6cf058c8b59bd4495e1f19c9515f3d74f2"
+  },
+  "comms": {
+    "device": "E663682593639D39",
+    "version": "0.33.0",
+    "boot": 4219589316,
+    "uf2_sha256": "4512eb4839ba08d7cc605295dfeaf33685f0a0c3f302845fdc3c3d61e45a7787",
+    "backup": "/home/ngrabbs/work/ember-identity-cadence-20261017/deployment/comms-before.uf2",
+    "backup_sha256": "60ef93297f688138e3225e56e2aa2fd57912a1080908528d2376cdb823312071"
+  },
+  "flash": "Both full previous images saved/readback-verified; both new UF2s flashed/readback-verified",
+  "hardware_checks": [
+    "Reset IHU SAFE/GROUND_TEST, all six output flags OFF",
+    "No RF before explicit telemetry request",
+    "First heartbeat: one COMMS_FIRMWARE then one HEARTBEAT",
+    "Later system status and heartbeat: requested packet only",
+    "Two explicit uhf comms firmware commands: exactly one COMMS_FIRMWARE each",
+    "Explicit identity refused with UHF permission OFF, with no RF",
+    "uhf run 60 10: six cycles, exactly 24 IHU packets in repeated HEARTBEAT/SYSTEM_STATUS/POWER_STATUS/DEVICE_STATUS order, zero extra COMMS_FIRMWARE",
+    "Run EXPIRED with zero outstanding requests; no IHU faults",
+    "Original screen session restored with IHU 0.14.0 and current peer",
+    "Original UHF ON selection restored; other flags OFF; bridge inactive and fire-arm active as before"
+  ],
+  "validation": [
+    "Ground suite: 74 tests run, OK (3 dependency skips)",
+    "COMMS check.py host fault and boot-identity/explicit-request harness passed",
+    "Standalone queue type-conflict/duplicate/history test passed",
+    "Cross-builds passed: IHU, LTE Feather role, COMMS, IHU FLIGHT-stub; -Wall -Wextra -Werror",
+    "Guide links, packet matrix dictionary coverage and diff whitespace checks passed"
+  ],
+  "limitations": [
+    "Local RF completion and register shutdown checks; no independent ground capture/decode in this validation",
+    "No new full Yamcs RF fire-check transaction",
+    "Same-command transport replay/reboot/failure branches covered by host harness, not hardware fault injection"
+  ]
+}
