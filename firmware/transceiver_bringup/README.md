@@ -346,3 +346,16 @@ Yamcs exposes `/ember/COMMS_FIRMWARE_*` and the `Comms-Firmware.opi` display in
 `ember-uhf__realtime`. This is the last received identity; it does not imply
 that a later reset/reflash has already been observed. The dirty flag and Git
 SHA are metadata, not secure boot or remote attestation.
+
+Capture build identity automatically in the source checkout before exporting:
+
+```bash
+python3 firmware/transceiver_bringup/source_identity.py
+```
+
+The returned `cmake_args` are the arguments for the remote CMake configure.
+`--cmake-args` prints them one per line. The helper marks tracked modifications
+and non-ignored untracked files dirty; ignored build outputs do not count.
+Capture immediately before copying source, with no intervening edits. Committing
+or cleaning the checkout affects the next build, never an already flashed image.
+Console version queries are for idle use; any console byte cancels active RF.
