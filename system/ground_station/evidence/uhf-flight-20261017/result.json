@@ -1,0 +1,165 @@
+{
+  "tested_utc": "2026-10-17T16:03:16.090568+00:00",
+  "route": "IHU native packets -> CAN A -> EMBER COMMS board DBPSK -> LibreSDR -> ember/realtime uhf-tm-in",
+  "yamcs_main_commit": "a5db3a0",
+  "comms_version": "0.30.0",
+  "comms_source": "aff7509ca707547508208f902ef635b928a25cd4",
+  "receiver_version": "2.2.0",
+  "receiver_sha256": "849d7b72a33caf3481431679ad660d0a1b647b5726ff5763a07da6f881544c1f",
+  "frequency_hz": 436999999.9952314,
+  "receiver_gain": 0.0,
+  "receiver_channel": 0,
+  "receiver_antenna": "RX2",
+  "ihu_run_seconds": 30,
+  "ihu_period_seconds": 10,
+  "native_packets_submitted": 12,
+  "comms_identity_packets": 1,
+  "rf_decoded": 13,
+  "yamcs_byte_matches": 13,
+  "counts": {
+    "COMMS_FIRMWARE": 1,
+    "HEARTBEAT": 3,
+    "SYSTEM_STATUS": 3,
+    "POWER_STATUS": 3,
+    "DEVICE_STATUS": 3
+  },
+  "receiver_errors": [],
+  "pipeline_metrics": {
+    "chunk_queue_peak": 1,
+    "decode_queue_peak": 0,
+    "max_recv_gap_s": 0.00044911098666489124,
+    "max_storage_chunk_s": 0.009113470994634554
+  },
+  "lower_drive_trial": {
+    "clock_drive_ma": 2,
+    "frame_completed": true,
+    "strictly_decoded": 0,
+    "note": "Retained failed standalone heartbeat trial; not part of full-run delivery count."
+  },
+  "standalone_repeat": {
+    "clock_drive_ma": 4,
+    "strictly_decoded": 1,
+    "yamcs_link": "uhf-tm-in"
+  },
+  "cleanup": {
+    "ihu_run_expired": true,
+    "ihu_stop_confirmed": true,
+    "comms_service_stopped": true,
+    "clock_outputs_disabled_verified": true,
+    "post_test_can_hello_confirmed": true,
+    "bench_bridge_restored": true
+  },
+  "limits": [
+    "Finite bench downlink check, not endurance or flight modulation qualification.",
+    "No UHF command sent from Yamcs; no flight TC route added.",
+    "Board/receiver firmware comes from the existing transceiver bring-up deployment, not a firmware update in main.",
+    "EPS battery reading remains near zero; no charger settings changed."
+  ],
+  "matches": [
+    {
+      "name": "COMMS_FIRMWARE",
+      "native_sequence": 0,
+      "rf_sequence": 2147483649,
+      "hex": "0901c00000310101003203010000000000000000dab30ebe00239b790018001e0000aff7509ca707547508208f902ef635b928a25cd4bea6",
+      "archive_reception": "2026-10-17T16:02:28.774Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "HEARTBEAT",
+      "native_sequence": 0,
+      "rf_sequence": 31,
+      "hex": "0901c000001f0101000502010000000000000000c384427200239ab50006030100002710d8d7",
+      "archive_reception": "2026-10-17T16:02:29.802Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "SYSTEM_STATUS",
+      "native_sequence": 1,
+      "rf_sequence": 32,
+      "hex": "0901c00100270101000102010000000000000000c38442720023a204000e0301000027100000001f00000000cc17",
+      "archive_reception": "2026-10-17T16:02:30.784Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "POWER_STATUS",
+      "native_sequence": 2,
+      "rf_sequence": 33,
+      "hex": "0901c00200790101001002010000000000000000c38442720023a65e00600102020101010102020000000000000000010023a65e000000000000000200001d7a00001b22fffffe48000359d700005ba8000027100000271000000001080000000000000000000067000511e0106afffd05da344d01fb0000000720e200018266",
+      "archive_reception": "2026-10-17T16:02:32.789Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "DEVICE_STATUS",
+      "native_sequence": 3,
+      "rf_sequence": 34,
+      "hex": "0901c00300610101003502010000000000000000c38442720023acfd0048010001010000069f00000000000000000000ffffffff00000000000000e90101000000fadab30ebe000000000101000016ce1c2565fc0000000001010000360f3ebe60f500000024ad07",
+      "archive_reception": "2026-10-17T16:02:33.768Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "HEARTBEAT",
+      "native_sequence": 4,
+      "rf_sequence": 35,
+      "hex": "0901c004001f0101000502010000000000000000c38442720023c57d0006030100002710b64c",
+      "archive_reception": "2026-10-17T16:02:39.780Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "SYSTEM_STATUS",
+      "native_sequence": 5,
+      "rf_sequence": 36,
+      "hex": "0901c00500270101000102010000000000000000c38442720023c991000e0301000027100000002300000000ca2e",
+      "archive_reception": "2026-10-17T16:02:40.821Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "POWER_STATUS",
+      "native_sequence": 6,
+      "rf_sequence": 37,
+      "hex": "0901c00600790101001002010000000000000000c38442720023cdea00600102020101010102020000000000000000020023cdea000000000000000200001d7800001b24fffffd230003493b00005be8000027100000271000000001080000000000000000000067000411df106bfffb05bd345001ec0000000720e2000161a5",
+      "archive_reception": "2026-10-17T16:02:42.766Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "DEVICE_STATUS",
+      "native_sequence": 7,
+      "rf_sequence": 38,
+      "hex": "0901c00700610101003502010000000000000000c38442720023d4880048010001010000069e00000000000000000000ffffffff00000000000000ea0101000000fadab30ebe00000000010100003e591c2565fc000000000101000022913ebe60f50000002407c9",
+      "archive_reception": "2026-10-17T16:02:43.797Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "HEARTBEAT",
+      "native_sequence": 8,
+      "rf_sequence": 39,
+      "hex": "0901c008001f0101000502010000000000000000c38442720023ec8d00060301000027108770",
+      "archive_reception": "2026-10-17T16:02:49.764Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "SYSTEM_STATUS",
+      "native_sequence": 9,
+      "rf_sequence": 40,
+      "hex": "0901c00900270101000102010000000000000000c38442720023f09e000e0301000027100000002700000000e48f",
+      "archive_reception": "2026-10-17T16:02:50.794Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "POWER_STATUS",
+      "native_sequence": 10,
+      "rf_sequence": 41,
+      "hex": "0901c00a00790101001002010000000000000000c38442720023f4f700600102020101010102020000000000000000030023f4f7000000000000000100001d7a00001b24fffffdb60003581f00005be8000027100000271000000001080000000000000000000067000311e0106bfffc05d7345001ef0000000720e200018fa5",
+      "archive_reception": "2026-10-17T16:02:52.792Z",
+      "link": "uhf-tm-in"
+    },
+    {
+      "name": "DEVICE_STATUS",
+      "native_sequence": 11,
+      "rf_sequence": 42,
+      "hex": "0901c00b00610101003502010000000000000000c38442720023fb940048010001010000069d00000000000000000000ffffffff00000000000000ea0101000000fadab30ebe00000000010100001a441c2565fc000000000101000012753ebe60f5000000241f6a",
+      "archive_reception": "2026-10-17T16:02:53.769Z",
+      "link": "uhf-tm-in"
+    }
+  ],
+  "raw_iq_host_path": "ngrabbs@192.168.1.251:/home/ngrabbs/work/ember-y24-bpsk/runs/ember-flight-20261017-03/raw-192k.cf32"
+}

@@ -1,0 +1,63 @@
+> status
+FIRMWARE role=IHU_MCU version=0.11.0 git=c6be5ab8d9e5a2b3b590572dd131713141452b6d dirty=1 boot=3280224882
+CAN_TARGET name=COMMS request=710 reply=711
+STATUS role=IHU_MCU fw=can-bench-v8 id=DF641455DB822427 boot=3280224882 peer=3669167806 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=1128 tx_fail=0 tx_timeout=0 rx=926 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=28 unknown=1 busy_drops=0 pending=0 uptime_ms=2332101 uhf_pending=0 uhf_mode=0 cycles=0 submitted=0
+> telem status
+DEVICE_FOUND name=LTE boot=472212988
+AUTOTELEM enabled=0 period_ms=0 next_ms=0 due=0 skipped=0 submitted=0 failed=0 pending=0 uptime_ms=2332218
+> lte queue status
+LTE_QUEUE enabled=0 count=0 capacity=4 state=0 hold=0 attempts=0 accepted=0 full=0 retries=0
+> hello comms
+SUBMITTED request=30 type=1 bytes=0
+RESULT request=30 outcome=CAN_HELLO_CONFIRMED peer=3669167806 bytes=0 hex=
+> uhf run 30 10
+UHF_RUN START duration_s=30 period_s=10 boot_resume=0
+SUBMITTED request=31 type=128 bytes=38
+UHF request=31 outcome=QUEUED status=0 bytes=38 digest=589f0b44 ground_ack=0 outstanding=1
+UHF request=31 outcome=RF_TX_COMPLETE status=0 bytes=38 digest=589f0b44 ground_ack=0 outstanding=0
+SUBMITTED request=32 type=128 bytes=46
+UHF request=32 outcome=QUEUED status=0 bytes=46 digest=75e47683 ground_ack=0 outstanding=1
+UHF request=32 outcome=RF_TX_COMPLETE status=0 bytes=46 digest=75e47683 ground_ack=0 outstanding=0
+SUBMITTED request=33 type=128 bytes=128
+UHF request=33 outcome=QUEUED status=0 bytes=128 digest=cc6fb209 ground_ack=0 outstanding=1
+UHF request=33 outcome=RF_TX_COMPLETE status=0 bytes=128 digest=cc6fb209 ground_ack=0 outstanding=0
+SUBMITTED request=34 type=128 bytes=104
+UHF request=34 outcome=QUEUED status=0 bytes=104 digest=c5aafbf1 ground_ack=0 outstanding=1
+UHF request=34 outcome=RF_TX_COMPLETE status=0 bytes=104 digest=c5aafbf1 ground_ack=0 outstanding=0
+DEVICE_FOUND name=PAYLOAD boot=1052664053
+SUBMITTED request=35 type=128 bytes=38
+UHF request=35 outcome=QUEUED status=0 bytes=38 digest=19235c4b ground_ack=0 outstanding=1
+UHF request=35 outcome=RF_TX_COMPLETE status=0 bytes=38 digest=19235c4b ground_ack=0 outstanding=0
+SUBMITTED request=36 type=128 bytes=46
+UHF request=36 outcome=QUEUED status=0 bytes=46 digest=7ee94e03 ground_ack=0 outstanding=1
+UHF request=36 outcome=RF_TX_COMPLETE status=0 bytes=46 digest=7ee94e03 ground_ack=0 outstanding=0
+SUBMITTED request=37 type=128 bytes=128
+UHF request=37 outcome=QUEUED status=0 bytes=128 digest=f0930371 ground_ack=0 outstanding=1
+UHF request=37 outcome=RF_TX_COMPLETE status=0 bytes=128 digest=f0930371 ground_ack=0 outstanding=0
+SUBMITTED request=38 type=128 bytes=104
+UHF request=38 outcome=QUEUED status=0 bytes=104 digest=19a836bd ground_ack=0 outstanding=1
+UHF request=38 outcome=RF_TX_COMPLETE status=0 bytes=104 digest=19a836bd ground_ack=0 outstanding=0
+DEVICE_FOUND name=COMMS boot=3669167806
+DEVICE_FOUND name=LTE boot=472212988
+DEVICE_FOUND name=PAYLOAD boot=1052664053
+SUBMITTED request=39 type=128 bytes=38
+UHF request=39 outcome=QUEUED status=0 bytes=38 digest=be9553dc ground_ack=0 outstanding=1
+UHF request=39 outcome=RF_TX_COMPLETE status=0 bytes=38 digest=be9553dc ground_ack=0 outstanding=0
+SUBMITTED request=40 type=128 bytes=46
+UHF request=40 outcome=QUEUED status=0 bytes=46 digest=f35b10e0 ground_ack=0 outstanding=1
+UHF request=40 outcome=RF_TX_COMPLETE status=0 bytes=46 digest=f35b10e0 ground_ack=0 outstanding=0
+SUBMITTED request=41 type=128 bytes=128
+UHF request=41 outcome=QUEUED status=0 bytes=128 digest=9e5d9ac2 ground_ack=0 outstanding=1
+UHF request=41 outcome=RF_TX_COMPLETE status=0 bytes=128 digest=9e5d9ac2 ground_ack=0 outstanding=0
+SUBMITTED request=42 type=128 bytes=104
+UHF request=42 outcome=QUEUED status=0 bytes=104 digest=bc0bb24f ground_ack=0 outstanding=1
+UHF request=42 outcome=RF_TX_COMPLETE status=0 bytes=104 digest=bc0bb24f ground_ack=0 outstanding=0
+UHF_RUN EXPIRED submitted=12 cycles=3
+DEVICE_FOUND name=COMMS boot=3669167806
+DEVICE_FOUND name=LTE boot=472212988
+> uhf stop
+UHF_RUN STOPPED outstanding=0 accepted_packets_may_finish=1
+DEVICE_FOUND name=PAYLOAD boot=1052664053
+> hello comms
+SUBMITTED request=43 type=1 bytes=0
+RESULT request=43 outcome=CAN_HELLO_CONFIRMED peer=3669167806 bytes=0 hex=
