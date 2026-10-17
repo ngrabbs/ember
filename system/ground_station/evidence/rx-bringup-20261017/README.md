@@ -395,3 +395,17 @@ absolute RF power and receiver sensitivity remain uncalibrated.
 
 Requested actual antenna separation and a one-foot, parallel-antenna trial
 before further RF testing. No continuing transmission or automatic retry.
+
+## User-requested OTA repeat: automatic trial 03
+
+Repeated one bounded PING after the user requested another attempt; actual
+antenna separation was not reconfirmed. Same firmware boots as above, IHU
+telemetry stopped. Sequence 2003, fresh transaction 21, gain65/amplitude0.05.
+Ground reports transmitted=true, errors=[], no received packets. COMMS captured
+32768 samples with no timing overruns, min2061/max2097, but found no valid frame.
+Independent offline decoding of the same ADC capture also returned no packets.
+No CAN PING was forwarded and no RF reply was attempted. Automatic authorization
+ended disarmed; clocks disabled, CAN A normal. This remains an unsuccessful
+full OTA round-trip, not a demonstrated automatic reply. Raw console, filtered
+summary, ground output and offline result are preserved with prefix
+auto-ota-030-03. No additional RF retries were started.
