@@ -21,3 +21,28 @@ perform attenuated conducted-tone test and baseband/ADC response; then build
 and validate packet reception before any command dispatch. No RX LO has yet
 been enabled in hardware, no signal injected, and no uplink packet received.
 This record does not qualify receiver sensitivity, LO drive, or packet decoding.
+
+## First conducted tone attempts
+
+User confirmed tinySA RF → 30 dB pad → DC block → J9 and Rigol CH1 at
+TP6 with board ground. tinySA ULTRA firmware 1.4-156 accepted the generator
+commands; output levels below are nominal settings, not independently calibrated.
+
+- 435.001 MHz, generator −50 dBm, nominal J9 −80 dBm: RX window completed,
+  ADC range 2075–2084, AC RMS approximately 0.907 counts.
+- 434.973 MHz, generator −30 dBm, nominal J9 −60 dBm: RX window completed,
+  ADC range 2057–2099, AC RMS approximately 1.084 counts. The wider extrema
+  do not represent a clear sinusoid. Neither capture shows a prominent tone
+  above the clock-off baseline in its Hann-windowed FFT.
+
+Both captures had 4096 samples and no >10 us timing misses. First capture's
+scope scalar queries occurred after the RX window and cannot characterize its
+active response. Second scope acquisition was stopped approximately five seconds
+into the RX window; its automatic frequency/Vpp readouts are not accepted as
+proof of a recovered tone without waveform verification. Raw instrument replies
+and ADC samples are retained.
+
+Both windows reported shutdown_verified=1. tinySA output was turned off in
+cleanup. No command packets were decoded. These two frequencies do not exclude
+a frequency-offset problem and do not establish a hardware failure. Next check:
+probe C7 pad 1 for the actual 145 MHz CLK1 signal, then trace the loaded LO path.
