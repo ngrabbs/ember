@@ -1,6 +1,12 @@
 # IHU EPS to Yamcs bench
 
-The [EPS dashboard](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember__realtime)
+Current deployment uses the single-owner `ember-bench-bridge` on m75q and
+the `ember-bench` instance. It polls `eps json` over IHU USB serial and forwards
+to Pi UDP10020. See [current setup](../../ground/yamcs/OPERATIONAL.md).
+The UART-adapter/service procedure below is historical; do not start it alongside
+the active bridge.
+
+The [EPS dashboard](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember-bench__realtime)
 is live on the Pi. The overview's **EPS dashboard** button opens it.
 `EPS.par` provides all raw registers, engineering values, readout age, conversion
 assumptions and transport quality. Native parameter history/plotting is available

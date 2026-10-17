@@ -1,125 +1,115 @@
-# One operational EMBER instance
+# EMBER flight and bench environments
 
-Use **`ember` / `realtime`** at [the Pi](http://192.168.1.251:8090).
-The normal server starts only this instance. USB, UART, UHF, LTE and payload
-arrivals use the same dictionary, parameter namespace, dashboards, alarms and
-new archive. Changing the receiving link does not change the spacecraft.
+One Docker container runs two Yamcs instances at [the Pi](http://192.168.1.251:8090).
+Choose the environment, then stay in its `realtime` processor. Both use the same
+`/ember` packet namespace and dictionary source; archives, current values,
+command history and display buckets are independent.
 
-Open [Overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime),
-[Telemetry](http://192.168.1.251:8090/telemetry/displays/files/Telemetry.opi?c=ember__realtime),
-[EPS](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember__realtime),
-[Payload](http://192.168.1.251:8090/telemetry/displays/files/Payload.opi?c=ember__realtime)
-or [Links](http://192.168.1.251:8090/links?c=ember__realtime).
-`LTE.opi` remains a compatibility copy of the common telemetry page.
+| Instance | Purpose | Links | Displays |
+|---|---|---|---|
+| `ember` | Flight-oriented radio reception | `lte-tm-in` UDP10018; `uhf-tm-in` UDP10019 | `ember_displays` |
+| `ember-bench` | One physical IHU serial connection | `ihu-serial-in` UDP10020; `ihu-serial-out` to m75q UDP10028 | `ember_bench_displays` |
 
-| Link | Existing UDP endpoint | Purpose |
-|---|---|---|
-| `usb-in` | Pi loopback 10016 | USB packet bridge telemetry |
-| `eps-uart-in` | Pi loopback 10017 | Ground-wrapped IHU EPS UART observations |
-| `eps-lte-in` | Pi loopback 10018 | Validated native LTE telemetry |
-| `eps-uhf-in` | Pi loopback 10019 | Validated UHF telemetry |
-| `payload-ihu-bench-in` | Pi LAN 10020 | IHU/payload CAN bench observations |
-| `usb-out` | Docker host gateway 10026 | PING, REQUEST_STATUS, REQUEST_TELEMETRY, SET_PARAMETER |
-| `payload-ihu-bench-out` | m75q 192.168.1.252:10028 | PAYLOAD_PING, PAYLOAD_IDENT, PAYLOAD_STATUS_QUERY, PAYLOAD_HEARTBEAT_QUERY |
+The bench input/output pair represents the two directions of one serial path,
+not two connected devices. The IHU is currently attached by its USB serial
+console to m75q (.252), which bridges it to Yamcs on the ground Pi (.251).
+The old spare-Pico USB and separate EPS UART services are disabled.
 
-Only the two command links can transmit commands. Each has its own TC stream
-with explicit command-name patterns; neither stream is a catch-all. A failed
-payload route does not fall back to the USB bench endpoint. No RF command
-uplink or automatic RF start was added. Existing radio ownership/window
-controls and the LTE listener remain in place.
+Open [flight overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
+or [bench overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember-bench__realtime).
+Flight starts on native telemetry; bench starts on EPS and links to payload/devices.
+Flight has no command definitions or uplink. Bench exposes only `PAYLOAD_PING`,
+`PAYLOAD_IDENT`, `PAYLOAD_STATUS_QUERY` and `PAYLOAD_HEARTBEAT_QUERY`.
 
-The spare USB Pico is still a bench application, not the physical IHU. Its
-response correlation uses the `usb` result domain; physical telemetry/results
-use `spacecraft`. Ground-wrapped EPS uses its bridge session for header boot
-identity, so it is excluded from physical-IHU boot-change detection. Packet
-provenance and boot IDs remain visible; transport consolidation does not make
-bench simulations into spacecraft observations.
+## Serial ownership and EPS
 
-The first CRC-valid exact packet copy is processed/archived with its receiving
-link. Other identical arrivals within 120 seconds are suppressed across links,
-with a 4096-entry bound. Different boot IDs, uptime, payload or provenance are
-distinct. Raw link counters still count arrivals. The filter resets with Yamcs;
-it is not durable duplicate suppression. Per-link sequence gaps are not emitted
-as spacecraft loss alarms in this combined mode, where packets may use different
-paths. POWER_STATUS uses the existing sparse-radio 30-second allowance in the
-shared MDB (57-second expiry with Yamcs's default 1.9 tolerance). Check actual
-receive times and EPS readout validity as well as displayed cached values.
+`ember-bench-bridge.service` on m75q exclusively owns the physical IHU console.
+It polls observational `eps json` every five seconds between payload command
+transactions and sends POWER_STATUS to the bench instance. It does not change
+charger configuration, ADC mode or thermistor protection. Ground wrappers retain
+provenance 1 and a bridge-session boot identity. Their currents use provisional
+10 mΩ sense values; `sense_values_verified` remains false.
 
-## Prepare or update a station
-
-Use a clean source checkout, preserving dirty working trees and local runtime
-customizations. `prepare.py --transport usb` now prepares the consolidated
-operational configuration for a new lab. To migrate an already provisioned Pi,
-use the additive runtime preparation below instead of legacy regeneration.
-The helper saves previous configs, common MDB and Java sources privately under
-`RUNTIME/.unified-backups/TIMESTAMP/`; this is not a data-volume backup.
-
-1. Save the active Compose configuration/environment and runtime. Stop Yamcs
-   before backing up its complete `yamcs-data` volume. Retain both backups.
-2. From the clean source, run:
-
-   ```sh
-   python3 ground/yamcs/prepare_operational.py --runtime /path/to/quickstart
-   ```
-
-3. Retain existing USB, UHF, payload and boot overlays, appending
-   `ground/yamcs/compose.operational.yaml` last in `COMPOSE_FILE`. That overlay
-   removes simulator dependencies and places the reference simulators behind
-   an explicit profile. Stop any already-running reference simulator container.
-   Keep the Pi's Ethernet/hotspot HTTP binding. The telemetry UDP ports above
-   are unchanged, so receiver services need no destination change.
-4. Compile the runtime and recreate only Yamcs using its normal Compose
-   deployment. Verify `/api/instances` lists only `ember` RUNNING, and all seven
-   links are present. Check a fresh observation's link and parameter timestamp.
-5. Run `python3 ground/yamcs/install_displays.py --url http://PI:8090`. It backs
-   up replaced objects and verifies uploaded bytes. Old release/build manifests
-   are dated records, not fingerprints of this new deployment. Publish a new
-   `build_identity.py --instance ember` audit after installing the displays.
-
-The deployed clean source is `/home/ngrabbs/work/ember-unified-20261017` on the
-Pi. Its active runtime remains under
-`/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs/.runtime/quickstart`, in the
-existing service/volume. Private pre-migration backups are at
-`/home/ngrabbs/work/deploy-backups/unified-20261017/` on the Pi. See the committed
-[deployment evidence](../../system/ground_station/evidence/yamcs-unified-20261017.json).
-
-## Existing history and rollback
-
-Old `ember-lte`, `ember-uhf`, `ember-payload` and `myproject` data remains in its
-original archive in the same persistent volume. It was not reinjected into
-realtime, retimestamped, or silently merged into `ember`. A restored copy of
-the pre-migration volume was tested against recorded packet witnesses from
-all five instances. New operational records go only to `ember`.
-
-For occasional access, prepare the runtime with an additional option, then
-restart Yamcs:
+For manual console access, on m75q:
 
 ```sh
-python3 ground/yamcs/prepare_operational.py --runtime /path/to/quickstart \
-  --legacy-history ember-lte
+# Release the IHU console; periodic EPS telemetry and payload commands stop.
+sudo systemctl stop ember-bench-bridge
+# After closing your manual serial program, resume the shared owner.
+sudo systemctl start ember-bench-bridge
+journalctl -u ember-bench-bridge -n 30 --no-pager
 ```
 
-Repeat the option for other old archives if needed. These optional instances
-have **no telemetry or command data links** and an unroutable TC stream; they
-are for historical access. They are not hardware command endpoints. Run the
-helper without these options and restart to return to the single-instance UI.
-Old proof/replay URLs work only when the relevant historical instance and replay
-processor are available; new `ember` does not inherit old replay processors.
+Payload commands traverse IHU → CAN A → payload Pi. Consult [PAYLOAD.md](PAYLOAD.md)
+for command outcomes. A busy/failed route never falls back to another endpoint.
+Bench traffic is not forwarded into flight automatically.
 
-To roll back, stop Yamcs, restore the saved runtime and Compose environment,
-and start its original deployment. Keep the live data volume intact to retain
-new records. Restoring the entire pre-migration data backup would also revert
-post-migration records, so restore it to a separate volume for recovery/history
-inspection rather than overwriting new data.
+Within each instance, exact CRC-valid duplicates are suppressed for 120 seconds,
+with a 4096-entry bound. Flight LTE/UHF copies therefore share one archive entry;
+the same bytes may independently appear in the bench archive. Suppression resets
+with Yamcs. Link counters still count arrivals. POWER_STATUS expiry is 57 seconds
+in flight and 9.5 seconds in bench, using Yamcs's default 1.9 tolerance. Inspect
+receive times and readout validity; cached values alone do not establish liveness.
+
+## Deployment and startup
+
+Preserve dirty source checkouts. The deployed source export is
+`/home/ngrabbs/work/ember-environments-20261017` on the Pi. The active runtime
+remains `/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs/.runtime/quickstart`.
+
+1. Pause `ember-ground-readiness` while maintaining Yamcs, so its unhealthy-container
+   recovery cannot restart the server during backup. Stop Yamcs explicitly and
+   back up its complete runtime, Compose environment and persistent data volume.
+2. Run `python3 ground/yamcs/prepare_operational.py --runtime /path/to/quickstart`
+   from the clean source. The helper also saves configs, both MDBs and Java
+   sources privately under `.unified-backups/TIMESTAMP`; this is not a data backup.
+3. Append `ground/yamcs/compose.operational.yaml` last in `COMPOSE_FILE`, retaining
+   the existing boot/radio overlays and Ethernet/hotspot HTTP binding. It publishes
+   only radio UDP10018/10019 on loopback and bench UDP10020 on the station interface.
+   Reference simulators stay behind an explicit profile.
+4. Stop and disable the Pi's old `ember-usb-bridge` and `ember-eps-bridge`. On m75q,
+   install the complete `ground/ember` directory under `/opt/ember-bench/ember`
+   and install `ember-bench-bridge.service`. Stop/disable the old
+   `ember-payload-bridge` before enabling the new service; never run two serial owners.
+5. Start the normal `ember-ground-starter` service, then resume readiness supervision.
+   `/api/instances` must show `ember` and `ember-bench` RUNNING, each with two links.
+   Verify flight has zero command definitions and bench has four.
+6. Run `python3 ground/yamcs/install_displays.py --url http://PI:8090` to install
+   both buckets. It backs up replaced objects and verifies uploaded bytes.
+   Audit each separately with `build_identity.py --instance ember` and
+   `--instance ember-bench`, using explicit new release/output/publish arguments.
+
+Yamcs and the serial bench service are enabled at boot. Existing Ethernet-first
+hotspot and LibreSDR listener supervision remain in place. This change does not
+start a transmitting radio test or implement a flight uplink.
+
+## History and rollback
+
+Private pre-split backups are at
+`/home/ngrabbs/work/deploy-backups/environments-20261017` on the Pi.
+Existing `ember` history is preserved, including bench records received before
+this split. New serial records go to `ember-bench`; historical records were not
+moved, retimestamped or reinjected. Older `ember-lte`, `ember-uhf`, `ember-payload`
+and `myproject` archives also remain in the same persistent volume.
+
+Optional `--legacy-history ember-lte` (repeat for other legacy names) enables
+historical instances without hardware links. Run preparation without those
+options to return to the normal two-instance UI. Old replay URLs require the
+corresponding historical instance/processor.
+
+To roll back, pause readiness, stop Yamcs and the new bench bridge, restore the
+saved runtime/Compose environment and previous bridge service, then restart.
+Keep the live data volume to retain new records. Restore old data backups to
+separate recovery volumes rather than overwriting post-migration history.
 
 ## Validation
 
-`tests/ground/test_operational_yamcs.py` verifies preparation, idempotence,
-retained legacy files, complete MDB and exclusive command patterns. The Java
-`EmberDuplicatesTest` checks exact bytes, TTL, instance isolation and eviction.
-`operational_check.py` is an integration check for a **separate loopback-only
-validation server on port 8091**, remapped to TM11016–11020 and mock TC11026/
-11028. It sends synthetic packets/commands only there. Do not repoint this
-check at an operational instance. It covers all five inputs, shared duplicates,
-CRC rejection, separate command routes, result-domain isolation, EPS-wrapper
-boot handling and disabled-route refusal without fallback.
+The ground unit suite covers both MDBs, idempotent preparation, command routing,
+shared serial polling and disconnect recovery. `operational_check.py` runs only
+against a separate loopback validation server on HTTP8091 with TM11018/11019/
+11020 and mock TC11028. It verifies radio deduplication, independent bench
+archives, bad-CRC rejection, flight command refusal, bench completion and
+cross-instance reply isolation. Never inject its synthetic packets into production.
+
+See [deployment evidence](../../system/ground_station/evidence/yamcs-environments-20261017.json).
+Physical RF requalification remains separate from configuration and serial tests.

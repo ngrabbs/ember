@@ -1,7 +1,6 @@
-"""Integration check ONLY for the isolated validation server on loopback:8091.
+"""Isolated loopback:8091 check; TM11018/11019 flight, TM11020/TC11028 bench.
 
-Requires its five TM ports remapped to 11016..11020 and TC mock sinks to
-11026/11028. Synthetic packets and commands never go to operational ports.
+Never sends synthetic packets to operational ports or commands to hardware.
 """
 import base64
 import json
@@ -10,68 +9,46 @@ import select
 import socket
 import sys
 import time
+from urllib.error import HTTPError
 from urllib.parse import quote
-from urllib.request import Request, urlopen
+from urllib.request import Request,urlopen
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'ember'))
-from codec import encode,decode,DICTIONARY
+from codec import encode,decode
 BASE='http://127.0.0.1:8091'
-
 def api(path,body=None):
     req=Request(BASE+'/api'+path,data=None if body is None else json.dumps(body).encode(),headers={'Content-Type':'application/json'})
     with urlopen(req,timeout=10) as r:return json.load(r)
-
 def check():
-    assert [x['name'] for x in api('/instances')['instances']]==['ember']
-    wire={};sender=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-    def send(name,port,boot=22,seq=0,**payload):
-        b=encode(name,sequence=seq,source=2,target=1,source_boot_id=boot,uptime_ms=seq+100, payload=payload)
-        sender.sendto(b,('127.0.0.1',port));return b
-    for n,port in enumerate(range(11016,11021)):
-        b=send('HEARTBEAT',port,boot=11 if port==11016 else 22,seq=n,mode=3,configuration=1,telemetry_period_ms=1000)
-        wire[b.hex()]=port;time.sleep(.1)
-    duplicate=encode('HEARTBEAT',sequence=10,source=2,target=1,source_boot_id=22,uptime_ms=10000,payload={'mode':3,'configuration':1,'telemetry_period_ms':1000})
-    for port in range(11016,11021):sender.sendto(duplicate,('127.0.0.1',port));time.sleep(.05)
-    bad=bytearray(duplicate);bad[-1]^=1;sender.sendto(bad,('127.0.0.1',11018))
-    time.sleep(.5)
-    rows=api('/archive/ember/packets?limit=100')['packets']
-    for b in wire:assert any(base64.b64decode(x['packet']).hex()==b for x in rows)
-    assert sum(base64.b64decode(x['packet'])==duplicate for x in rows)==1
-    assert len(rows)==6
-    usb=socket.socket(socket.AF_INET,socket.SOCK_DGRAM);usb.bind(('127.0.0.1',11026))
-    payload=socket.socket(socket.AF_INET,socket.SOCK_DGRAM);payload.bind(('127.0.0.1',11028))
-    report={'tm_ports_verified':list(range(11016,11021)),'duplicate_arrivals':5,'duplicate_archived':1,'bad_crc_archived':False,'commands':[]}
-    # Restore distinct stable bench identities before registering commands.
-    send('HEARTBEAT',11016,boot=11,seq=11,mode=3,configuration=1,telemetry_period_ms=1000)
-    send('HEARTBEAT',11020,boot=22,seq=12,mode=3,configuration=1,telemetry_period_ms=1000)
+    assert {x['name'] for x in api('/instances')['instances']}=={'ember','ember-bench'}
+    expected={'ember':{'lte-tm-in','uhf-tm-in'},'ember-bench':{'ihu-serial-in','ihu-serial-out'}}
+    for instance,names in expected.items():assert {x['name'] for x in api('/links/'+instance)['links']}==names
+    sender=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+    sink=socket.socket(socket.AF_INET,socket.SOCK_DGRAM);sink.bind(('127.0.0.1',11028))
+    packet=encode('HEARTBEAT',sequence=1,source=2,target=1,source_boot_id=22,uptime_ms=100,payload={'mode':3,'configuration':1,'telemetry_period_ms':1000})
+    for port in (11018,11019,11020):sender.sendto(packet,('127.0.0.1',port));time.sleep(.1)
+    bad=bytearray(packet);bad[-1]^=1;sender.sendto(bad,('127.0.0.1',11018));time.sleep(.3)
+    for instance in expected:
+        rows=api('/archive/'+instance+'/packets?limit=100')['packets']
+        assert len(rows)==1 and base64.b64decode(rows[0]['packet'])==packet
+    try:api('/processors/ember/realtime/commands/ember/PAYLOAD_STATUS_QUERY',{'args':{}})
+    except HTTPError as e:assert e.code in (400,404)
+    else:raise AssertionError('Flight accepted a serial bench command')
+    assert not select.select([sink],[],[],.2)[0]
+    ticket=api('/processors/ember-bench/realtime/commands/ember/PAYLOAD_STATUS_QUERY',{'origin':'isolated-environment-check','sequenceNumber':1,'args':{}})
+    assert select.select([sink],[],[],2)[0]
+    cmd=decode(sink.recv(4096));assert cmd['name']=='PAYLOAD_STATUS_QUERY'
+    responses=[]
+    for stage in (0,2):
+        responses.append(encode('COMMAND_RESPONSE',sequence=10+stage,source=2,target=1,source_boot_id=22,uptime_ms=200+stage,
+            transaction_epoch=cmd['header']['transaction_epoch'],transaction_id=cmd['header']['transaction_id'],
+            payload={'command_id':cmd['header']['message_id'],'stage':stage,'reason':0,'parameter_id':0,'value':0}))
+    for response in responses:sender.sendto(response,('127.0.0.1',11018))
     time.sleep(.2)
-    for name,sink,port,boot in [('PING',usb,11016,11),('PAYLOAD_STATUS_QUERY',payload,11020,22)]:
-        ticket=api('/processors/ember/realtime/commands/ember/'+name,{'origin':'isolated-unification-check','sequenceNumber':int(time.time()),'args':{}})
-        readable,_,_=select.select([usb,payload],[],[],2)
-        assert readable==[sink],(name,'wrong command route')
-        cmd=decode(sink.recv(4096));assert cmd['name']==name
-        assert not select.select([usb,payload],[],[],.15)[0],'command sent twice'
-        if name.startswith('PAYLOAD'):
-            # Neither a ground EPS wrapper nor spare USB boot is an IHU reset.
-            fields=next(m['fields'] for m in DICTIONARY['messages'] if m['name']=='POWER_STATUS')
-            p={x['name']:0 for x in fields};p.update(payload_version=1,provenance=1,bridge_session_id=999)
-            send('POWER_STATUS',11017,boot=999,seq=13,**p)
-            send('HEARTBEAT',11016,boot=11,seq=14,mode=3,configuration=1,telemetry_period_ms=1000)
-        for stage in (0,2):
-            result=encode('COMMAND_RESPONSE',sequence=20+stage+(10 if boot==22 else 0),source=2,target=1,
-                          source_boot_id=boot,uptime_ms=200+stage,
-                          transaction_epoch=cmd['header']['transaction_epoch'],transaction_id=cmd['header']['transaction_id'],
-                          payload={'command_id':cmd['header']['message_id'],'stage':stage,'reason':0,'parameter_id':0,'value':0})
-            sender.sendto(result,('127.0.0.1',port));time.sleep(.1)
-        history=api('/archive/ember/commands/'+quote(ticket['id'],safe=''))
-        attrs={x['name']:x['value'] for x in history['attr']}
-        assert attrs['ember-outcome']['stringValue']=='COMPLETED',attrs
-        report['commands'].append({'name':name,'udp_port':11026 if boot==11 else 11028,'completed':True,'cross_route_delivery':False})
-    api('/links/ember/payload-ihu-bench-out:disable',{})
-    ticket=api('/processors/ember/realtime/commands/ember/PAYLOAD_IDENT',{'origin':'isolated-unification-check','sequenceNumber':int(time.time())+1,'args':{}})
-    assert not select.select([usb,payload],[],[],.3)[0],'disabled payload route fell back to USB'
-    report['disabled_payload_route_does_not_fall_back']=True
-    report['history']=ticket['id'];print(json.dumps(report,indent=2))
-    sender.close();usb.close();payload.close()
-    return report
-
+    def history():return {x['name']:x['value'] for x in api('/archive/ember-bench/commands/'+quote(ticket['id'],safe=''))['attr']}
+    assert 'ember-outcome' not in history(),'Flight packets completed a bench command'
+    for response in responses:sender.sendto(response,('127.0.0.1',11020));time.sleep(.1)
+    assert history()['ember-outcome']['stringValue']=='COMPLETED'
+    assert not select.select([sink],[],[],.2)[0],'duplicate send'
+    report={'instances':list(expected),'link_sets':{k:sorted(v) for k,v in expected.items()},'radio_duplicate_copies_archived':1,'same_bytes_in_bench_archive':True,'bad_crc_rejected':True,'flight_rejects_bench_command':True,'flight_reply_cannot_complete_bench_command':True,'bench_mock_command_completed':True}
+    print(json.dumps(report,indent=2));sender.close();sink.close();return report
 if __name__=='__main__':check()

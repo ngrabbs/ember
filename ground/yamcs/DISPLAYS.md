@@ -1,21 +1,19 @@
 # EMBER operator displays
 
-Operational update (October 17, 2026): select `ember` / `realtime` for USB,
-EPS UART, LTE, UHF and payload. [Shared deployment and history access](OPERATIONAL.md).
-Older isolated-instance setup/proof instructions below are historical; use
-operational preparation for the running Pi.
+
+Current operation: one container with **`ember`** for LTE/UHF reception and
+**`ember-bench`** for the IHU serial EPS/payload path. Use the
+[environment guide](OPERATIONAL.md) for active setup; older reference procedures below may describe retired services.
 
 [Open the Pi overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
 
-Yamcs calls these Displays. EMBER selects its own `ember_displays` bucket at
-instance level; historical upstream data retains its own bucket.
+Yamcs calls these Displays. Flight selects `ember_displays`; bench selects
+`ember_bench_displays` at instance level; historical upstream data retains its own bucket.
 They use native Yamcs OPI/parameter-table formats, rather than a separate web
 application or a desktop-only profile. Laptop browser access is sufficient.
 
-- **Overview.opi:** spacecraft mode/configuration, telemetry period, boot ID,
-  endpoint RX/TX/CRC/drop counters, RSSI, latest response stage/reason/command/
-  parameter/value, last heartbeat reception time and uptime. Click a numeric
-  value to open its native parameter history/plotting page.
+- **Overview.opi:** flight opens native telemetry; bench opens EPS. Both link
+  to Payload and Devices. Only bench exposes command navigation.
 - **System.par:** editable native table of state, heartbeat and packet-specific boot/uptime,
   with generation time, raw/engineering values and acquisition status.
 - **Comms.par:** packet/error counters and raw RSSI, plus packet-specific boot/uptime.
@@ -30,8 +28,8 @@ application or a desktop-only profile. Laptop browser access is sufficient.
 - Buttons open these tables, the EPS dashboard and native command console/history.
   Navigation buttons do not issue commands.
 
-- **Telemetry.opi / LTE.opi:** shared heartbeat, system status and EPS values from all arrival paths.
-- **Payload.opi / Devices.opi:** payload status and per-device observations in the same instance.
+- **Telemetry.opi / LTE.opi:** heartbeat, system status and EPS values within the selected environment.
+- **Payload.opi / Devices.opi:** payload status and per-device observations in the selected environment.
 
 ## Install and update
 

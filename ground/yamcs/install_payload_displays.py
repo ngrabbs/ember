@@ -8,7 +8,7 @@ from generate_displays import generate
 
 def install(url):
     with tempfile.TemporaryDirectory() as temp:
-        root=Path(temp);generate(root)
+        root=Path(temp);generate(root,instance="ember-bench")
         display=(root/'Payload.opi').read_text()
         files={'Payload.par':(root/'Payload.par').read_bytes()}
         for name in ('comms-version','comms-git','sample-time'):
@@ -16,7 +16,7 @@ def install(url):
             files['scripts/payload-'+name+'.js']=(root/'scripts'/(name+'.js')).read_bytes()
         files['Payload.opi']=display.encode()
         for name,body in files.items():
-            destination=url.rstrip('/')+'/api/storage/buckets/ember_displays/objects/'+name
+            destination=url.rstrip('/')+'/api/storage/buckets/ember_bench_displays/objects/'+name
             with urlopen(Request(destination,data=body,headers={'Content-Type':'application/octet-stream'}),timeout=20) as response:response.read()
             with urlopen(destination,timeout=20) as response:assert response.read()==body
         print('Installed and verified: '+', '.join(files))

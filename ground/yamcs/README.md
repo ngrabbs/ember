@@ -1,9 +1,9 @@
 # Yamcs ground lab
 
-Operational update (October 17, 2026): select `ember` / `realtime` for USB,
-EPS UART, LTE, UHF and payload. [Shared deployment and history access](OPERATIONAL.md).
-Older isolated-instance setup/proof instructions below are historical; use
-operational preparation for the running Pi.
+
+Current operation: one container with **`ember`** for LTE/UHF reception and
+**`ember-bench`** for the IHU serial EPS/payload path. Use the
+[environment guide](OPERATIONAL.md) for active setup; older reference procedures below may describe retired services.
 
 For day-to-day commanding, responses, displays and replay, start with the
 [Yamcs operator guide](../../docs/user/yamcs.md).
@@ -17,7 +17,7 @@ The default configuration uses software only; the USB override connects
 EMBER to the dedicated Pico bench endpoint. EMBER returns correlated acceptance,
 rejection and completion reports; the upstream sample only counts commands.
 
-## Start
+## Historical software-only reference setup
 
 Requires Git, Python 3, Docker Engine and Docker Compose. The Maven/Java and
 simulator runtimes are containerized. Run from this folder:
@@ -77,37 +77,14 @@ shows received state, counters, heartbeat time and latest command report.
 [Display setup and interpretation](DISPLAYS.md) covers installation, native
 detail tables and the distinction between cached values and live connectivity.
 
-## Smoke check
+## Current bench smoke check
 
-For EMBER, open [the Pi command console](http://192.168.1.251:8090/commanding/send?c=ember__realtime&system=%2Fember).
-Select `SET_PARAMETER`, show arguments with defaults, set `parameter_id=1`
-and `value=2000` (ms), and Send. The report separates Yamcs Sent from
-EMBER_Acceptance and Completion. Inspect `ember-outcome`, transaction identity
-and result boot ID. Requested telemetry and results echo the same transaction;
-periodic telemetry uses transaction zero. `Resend this command` allocates a
-new transaction; an identity-preserving retry is not yet exposed in the UI.
+Open the [bench command console](http://192.168.1.251:8090/commanding/send?c=ember-bench__realtime&system=%2Fember).
+Send `PAYLOAD_STATUS_QUERY` once, then inspect its native Command history for
+COMPLETED and the fresh payload status. The earlier simulator `SET_PARAMETER`
+workflow belongs to a separate reference environment, not these active instances.
 
-The automated check verifies accepted/completed 1000→2000 ms changes using
-actual archived heartbeat uptime deltas, all four commands, correlated query
-data and invalid-argument rejection. It restores the original period. The
-optional fault test suppresses one transaction's returned packets and checks
-TIMEOUT with `ember-outcome=UNKNOWN`, without automatic retries:
-
-```sh
-python3 ember_smoke.py --url http://192.168.1.251:8090 --fault-test
-```
-
-Run `--fault-test` on the Docker host. Its loopback-only control socket lives
-inside `ember-simulator` and is never published. All ordinary command and
-telemetry UDP remains on the private Compose network (10026 and 10016).
-Acceptance timeout is 5 s; terminal timeout after acceptance is 10 s.
-Outstanding correlation is bounded to 256 commands and held in memory;
-reconciliation after a Yamcs restart and late-result handling remain open.
-The simulator's last-64 transaction cache prevents duplicate execution during
-a boot; changed contents with the same identity are rejected. A simulator
-restart changes boot ID and restores the default 1000 ms period.
-
-### Upstream reference check
+## Upstream reference check
 
 Open the `myproject` instance and `realtime` processor. Confirm inbound link
 counts grow, packets decode, and parameters update. Issue the example
@@ -215,7 +192,7 @@ remove `COMPOSE_FILE` from `.env`, set `EMBER_PACKET_TRANSPORT=simulator`, run
 configurations retain the existing archives. Use the matching `--transport`
 for `ember_smoke.py`.
 
-## UHF / SDRB channel
+## Historical UHF / SDRB setup
 
 The [UHF section](../uhf/README.md) adds isolated `ember-uhf` / UDP10019 with the existing MDB and EPS display. The [optional services](../uhf/SERVICES.md) remain disabled at boot; IHU cadence is armed separately. USB and LTE archives stay separate.
 

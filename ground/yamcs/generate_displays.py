@@ -15,7 +15,7 @@ ORANGE = '#ffac60'
 BLUE = '#88c9df'
 
 
-def generate(destination):
+def generate(destination, instance="ember"):
     destination = Path(destination)
     destination.mkdir(parents=True, exist_ok=True)
     display = ET.Element('display', typeId='org.csstudio.opibuilder.Display', version='1.0.0')
@@ -170,7 +170,7 @@ def generate(destination):
         if e.tag == 'widget': display.remove(e)
     prop(display,'name','EMBER LTE telemetry')
     label('EMBER / TELEMETRY',28,20,1000,48,30,WHITE,True)
-    label('SHARED SPACECRAFT VALUES / USB + UHF + LTE',28,76,1050,25,13,ORANGE,True)
+    label('SPACECRAFT TELEMETRY / UHF + LTE' if instance=='ember' else 'IHU SERIAL OBSERVATIONS',28,76,1050,25,13,ORANGE,True)
     box(28,135,336,440); box(380,135,336,440); box(732,135,360,440)
     label('01 / HEARTBEAT',48,153,295,28,13,BLUE,True)
     for title,pv,y in [('IHU boot ID','HEARTBEAT_source_boot_id',205),
@@ -209,6 +209,7 @@ def generate(destination):
     for child in list(display):
         if child.tag=='widget':display.remove(child)
     prop(display,'name','COMMS firmware identity')
+    prop(display,'width',1120)
     label('COMMS firmware identity',28,28,1050,48,28,WHITE,True)
     label('Reported by the running COMMS MCU over RF; last received identity.',28,90)
     e=label('Waiting for firmware identity',28,150,1050,65,30,WHITE,True)
@@ -307,6 +308,41 @@ def generate(destination):
     scripts=destination/'scripts'; scripts.mkdir(exist_ok=True)
     for p in (ROOT/'display-scripts').glob('*.js'):
         shutil.copy2(p,scripts/p.name)
+    # Both instances use /ember wire parameters, but never cross UI contexts.
+    import copy
+    def text_prop(e,key,value):
+        child=e.find(key)
+        if child is None:child=ET.SubElement(e,key)
+        child.text=str(value)
+    for path in destination.glob('*.opi'):
+        text=path.read_text().replace('c=ember__realtime','c='+instance+'__realtime')
+        root=ET.fromstring(text)
+        if instance=='ember':
+            for w in list(root.findall('widget')):
+                if any('/commanding/' in x.text for x in w.findall('.//hyperlink') if x.text):root.remove(w)
+                elif 'BENCH LINK:' in w.findtext('text',''):
+                    text_prop(w,'text','Radio observations. No flight uplink configured.')
+        path.write_bytes(ET.tostring(root,encoding='utf-8',xml_declaration=True))
+    source='EPS.opi' if instance=='ember-bench' else 'Telemetry.opi'
+    root=ET.parse(destination/source).getroot()
+    text_prop(root,'name',instance+' overview')
+    labels=[w for w in root.findall('widget') if w.find('text') is not None and w.findtext('y')=='20']
+    if labels:text_prop(labels[0],'text','EMBER / BENCH' if instance=='ember-bench' else 'EMBER / FLIGHT LINKS')
+    buttons=[w for w in root.findall('widget') if w.find('actions/action') is not None]
+    if buttons:
+        template=buttons[0]
+        for label,target,x in [('Payload','Payload.opi',560),('Devices','Devices.opi',820)]:
+            w=copy.deepcopy(template);text_prop(w,'text',label);text_prop(w,'name',label)
+            text_prop(w,'x',x if instance=='ember-bench' else round(x*.69))
+            text_prop(w,'width',250 if instance=='ember-bench' else 172)
+            text_prop(w.find('actions/action'),'path',target);root.append(w)
+    if instance=='ember-bench':
+        for w in root.findall('widget'):
+            if w.findtext('text')=='Ground overview':
+                text_prop(w,'text','Command history')
+                action=w.find('actions/action');action.clear();action.set('type','OPEN_WEBPAGE')
+                text_prop(action,'hyperlink','/commanding/history?c=ember-bench__realtime')
+    (destination/'Overview.opi').write_bytes(ET.tostring(root,encoding='utf-8',xml_declaration=True))
     print('Generated EMBER overview, EPS display and native parameter tables:',destination)
 
 

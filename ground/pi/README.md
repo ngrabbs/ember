@@ -1,5 +1,9 @@
 # Pi power-on readiness
 
+
+Current operation: one container with **`ember`** for LTE/UHF reception and
+**`ember-bench`** for the IHU serial EPS/payload path. Use the
+[environment guide](../yamcs/OPERATIONAL.md) for active setup; older reference procedures below may describe retired services.
 The provisioned Pi 5 (`ember-ground`) starts Yamcs without a laptop terminal.
 It prefers connected Ethernet and supplies a fallback demo Wi-Fi access point.
 This layer preserves the installed Yamcs runtime, MDB and archive volumes.
@@ -14,7 +18,7 @@ The hotspot password is stored privately on the deployed Pi at
 uses the existing authorized keys. The hotspot supplies DHCP and works
 without Internet. The radio country is US; installation elsewhere must set
 the appropriate country. Yamcs binds HTTP to all Pi IPv4 interfaces so both
-addresses work. Telemetry input ports remain loopback-bound.
+addresses work. Radio telemetry ports are loopback-bound; the bench bridge uses LAN UDP10020.
 
 ## Power up and use it
 
@@ -22,7 +26,7 @@ addresses work. Telemetry input ports remain loopback-bound.
 2. With connected Ethernet, browse the existing lab address. Without connected
    Ethernet, join `EMBER-Ground` and browse the hotspot address above.
 3. Allow about a minute for Yamcs to initialize. Select `ember` / `realtime`
-   for every operational dashboard. The LTE packet listener is already running when
+   for radio dashboards, or `ember-bench` / `realtime` for IHU serial EPS/payload. The LTE packet listener is already running when
    LibreSDR is present; do not open a second receiver on UDP 51000.
 4. Start the bounded LTE cell and the IHU/Walter RF window using the established
    [LTE walkthrough](../../docs/user/lte-eps-walkthrough.md).

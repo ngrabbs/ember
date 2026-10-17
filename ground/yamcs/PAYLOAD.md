@@ -1,12 +1,12 @@
 # Payload ground support 1.3.0
 
-The shared `ember` instance provides a payload dashboard, parameter table,
+The `ember-bench` instance provides a payload dashboard, parameter table,
 command history and four commands. The first implementation uses a LAN bench
 route: Yamcs (.251) → UDP → m75q (.252) → IHU USB console → CAN A (500 kbit/s)
 → Pi payload (.253). This is not the transceiver's RF uplink/downlink. Camera
 and image functions are outside this release.
 
-Open `http://192.168.1.251:8090/telemetry/displays/files/Payload.opi?c=ember__realtime`.
+Open `http://192.168.1.251:8090/telemetry/displays/files/Payload.opi?c=ember-bench__realtime`.
 The display's command button selects the correct instance. Commands are
 `PAYLOAD_PING` (1–240 bytes), `PAYLOAD_IDENT`, `PAYLOAD_STATUS_QUERY` and
 `PAYLOAD_HEARTBEAT_QUERY`. Heartbeat is explicitly requested; the bridge does
@@ -33,24 +33,18 @@ separate clean checkout/export for these scripts. Back up the active runtime,
 Compose configuration and environment before deployment. The tested backup is
 `/home/ngrabbs/work/deploy-backups/payload-20261017/yamcs-before.tgz` on .251.
 
-Use [operational preparation](OPERATIONAL.md) for the shared instance/MDB,
-Compose overlays and all displays. The legacy `prepare_payload.py` refuses to
-recreate a separate instance once operational consolidation has been applied.
-The existing m75q bridge remains at `/opt/ember-payload-ground/ember`, uses the
-same stable IHU USB identity, accepts UDP 10028 from .251, and forwards to .251
-UDP 10020. Command names and wire formats are unchanged. Only the four
-`PAYLOAD_*` commands are assigned to this route; other bench commands use USB.
+Use [operational preparation](OPERATIONAL.md) for the two environments and displays.
+The m75q service is now `ember-bench-bridge`, installed under `/opt/ember-bench/ember`.
+It owns the same IHU serial port, accepts commands on UDP10028 and sends telemetry
+to Pi UDP10020. It also polls observational EPS JSON every five seconds between
+commands. Stop this service before manual IHU console access, then restart it.
+The retired `ember-payload-bridge` must remain disabled to avoid two serial owners.
 
-The payload 1.3.0 manifest below is historical. Audit the unified deployment
-with `build_identity.py --instance ember`; dated old manifests are not current
-fingerprints after MDB/display consolidation.
-
-The bridge exclusively owns the IHU USB console. Stop it with
-`sudo systemctl stop ember-payload-bridge` before manual console work; it
-attempts to select COMMS before releasing ownership. Restart afterward.
-Stopping the bridge is enough to disable this command route. To roll back
-Yamcs, remove the added Compose overlay and restore the backed-up runtime
-while Yamcs is stopped; retain its persistent data volume.
+Only the four `PAYLOAD_*` commands are routed here. The flight `ember` instance
+has no command definitions or uplink. Its payload dashboard can show radio
+observations when available, but cannot issue a bench command. The original
+payload 1.3.0 manifest below remains historical; audit the current bench with
+`build_identity.py --instance ember-bench`. Bridge version is now 0.2.0.
 
 ## Validation
 

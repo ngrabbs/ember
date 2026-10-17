@@ -27,7 +27,7 @@ def snapshot(url, instance):
         with urlopen(url.rstrip('/')+path, timeout=20) as r:
             return r.read()
     server = json.loads(get('/api'))
-    bucket = '/api/storage/buckets/ember_displays/objects'
+    bucket = '/api/storage/buckets/'+('ember_bench_displays' if instance=='ember-bench' else 'ember_displays')+'/objects'
     listing = json.loads(get(bucket))
     assert not listing.get('continuationToken'), 'Display list truncated'
     displays = {o['name']: hashlib.sha256(get(bucket+'/'+quote(o['name'], safe='/'))).hexdigest()
@@ -60,7 +60,7 @@ def page(manifest, manifest_name="ground-build.json"):
            'Loaded EMBER definitions SHA-256:',c['loaded_mdb_sha256'],
            'Shared dashboard/script files audited: '+str(len(c['displays'])),
            'Dated snapshot; rerun build_identity.py --check to detect later drift.',
-           'Manifest: ember_displays / '+manifest_name,
+           'Manifest: '+('ember_bench_displays' if c['instance']=='ember-bench' else 'ember_displays')+' / '+manifest_name,
            'Receiver is separately identified by live.py --version and capture session.json.']
     for i,line in enumerate(lines):
         w=copy.deepcopy(template)
@@ -98,7 +98,7 @@ def main():
         names=('payload-ground-build.json','Payload-Ground-Build.opi') if a.payload else ('ground-build.json','Ground-Build.opi')
         for name,body,mime in [(names[0],data,'application/json'),
                                 (names[1],page(m,names[0]),'application/xml')]:
-            url=a.url.rstrip('/')+'/api/storage/buckets/ember_displays/objects/'+name
+            url=a.url.rstrip('/')+'/api/storage/buckets/'+('ember_bench_displays' if a.instance=='ember-bench' else 'ember_displays')+'/objects/'+name
             with urlopen(Request(url,data=body,headers={'Content-Type':mime}),timeout=20) as r:r.read()
             with urlopen(url,timeout=20) as r:assert r.read()==body
         assert snapshot(a.url,a.instance)['fingerprint']==m['fingerprint'], 'Assets changed during audit'
