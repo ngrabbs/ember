@@ -17,7 +17,8 @@ The old spare-Pico USB and separate EPS UART services are disabled.
 
 Open [flight overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
 or [bench overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember-bench__realtime).
-Flight starts on native telemetry; bench starts on EPS and links to payload/devices.
+Flight Overview summarizes heartbeat/system/power; bench Overview summarizes
+serial EPS/payload/power. Both use Overview, Power, Payload and Devices & firmware.
 Flight has no command definitions or uplink. Bench exposes only `PAYLOAD_PING`,
 `PAYLOAD_IDENT`, `PAYLOAD_STATUS_QUERY` and `PAYLOAD_HEARTBEAT_QUERY`.
 
@@ -75,7 +76,8 @@ remains `/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs/.runtime/quickstart`.
    `/api/instances` must show `ember` and `ember-bench` RUNNING, each with two links.
    Verify flight has zero command definitions and bench has four.
 6. Run `python3 ground/yamcs/install_displays.py --url http://PI:8090` to install
-   both buckets. It backs up replaced objects and verifies uploaded bytes.
+   both buckets. It backs up replaced objects and verifies uploaded bytes; named old
+   duplicate pages are retired only after backup. See [display cleanup](DISPLAYS.md).
    Audit each separately with `build_identity.py --instance ember` and
    `--instance ember-bench`, using explicit new release/output/publish arguments.
 

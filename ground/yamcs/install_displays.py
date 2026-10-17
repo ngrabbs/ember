@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
-from generate_displays import generate
+from generate_displays import generate, RETIRED_DISPLAYS
 
 ROOT = Path(__file__).resolve().parent
 BUCKET = 'ember_displays'
@@ -18,9 +18,9 @@ def install_instance(url, instance):
     output=ROOT/'.runtime/ember-displays'/instance
     generate(output,instance=instance)
 
-    def request(path, data=None, content_type=None):
+    def request(path, data=None, content_type=None, method=None):
         headers={'Content-Type':content_type} if content_type else {}
-        with urlopen(Request(url+path, data=data, headers=headers),timeout=15) as response:
+        with urlopen(Request(url+path, data=data, headers=headers, method=method),timeout=15) as response:
             return response.read()
 
     try:
@@ -52,6 +52,23 @@ def install_instance(url, instance):
         request(path,data,mime)
         assert request(path)==data, 'Uploaded display differs: '+name
         print('Installed:',name)
+    # Retire only the named generated pages, after verifying replacement uploads.
+    # Unknown/user-authored files and all telemetry archives remain untouched.
+    for name in RETIRED_DISPLAYS:
+        path='/api/storage/buckets/'+bucket+'/objects/'+quote(name,safe='/')
+        try:previous=request(path)
+        except HTTPError as error:
+            if error.code==404:continue
+            raise
+        saved=backup/instance/name;saved.parent.mkdir(parents=True,exist_ok=True)
+        saved.write_bytes(previous)
+        assert saved.read_bytes()==previous
+        request(path,method='DELETE')
+        try:request(path)
+        except HTTPError as error:
+            if error.code!=404:raise
+        else:raise RuntimeError('Retired object still present: '+name)
+        print('Retired after backup:',name,'saved at',saved)
     print(url+'/telemetry/displays/files/Overview.opi?c='+instance+'__realtime')
 
 

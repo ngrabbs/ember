@@ -64,7 +64,7 @@ on UDP 10019. Use [operational preparation](../yamcs/OPERATIONAL.md), keeping
 `prepare_yamcs.py` against a consolidated station; it refuses that operation.
 
 Open [EPS](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember__realtime)
-or [Telemetry](http://192.168.1.251:8090/telemetry/displays/files/Telemetry.opi?c=ember__realtime).
+or [Overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime).
 The historical UHF proof/replay and release fingerprints below describe the
 previous separate archive, which is retained for history mode.
 

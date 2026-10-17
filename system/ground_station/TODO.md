@@ -330,3 +330,14 @@ monitoring, simultaneous tones/telemetry and excluded limiter/diagnostic failure
   in the flight environment.
 - [ ] Investigate payload Pi CAN boot probe exhaustion after a power cycle;
   restarting the existing CAN initialization service recovered it on October 17.
+
+## Operator dashboard cleanup — October 17, 2026
+
+- [x] Consolidate operation into Overview, Power, Payload and Devices & firmware
+  in both environments; merge individual firmware identity views.
+- [x] Remove duplicate LTE/Telemetry pages after private byte-verified backups;
+  retain raw parameter diagnostics and the separate ground-build audit.
+- [x] Correct heartbeat producer labeling, missing identity, packet expiry and
+  cached heartbeat/system semantics; keep commands exclusive to bench.
+- [x] Verify layout/bindings and script quality semantics, then inspect rendered
+  pages with current bench EPS and expired/missing flight observations.

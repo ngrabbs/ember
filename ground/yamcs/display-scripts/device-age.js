@@ -1,2 +1,4 @@
 importPackage(Packages.org.csstudio.opibuilder.scriptUtil);
-widget.setPropertyValue("text", PVUtil.getLong(pvs[0]) === 1 ? String(PVUtil.getLong(pvs[1])) : "Never seen");
+var known = PVUtil.getTimeInMilliseconds(pvs[0]) > 0;
+var current = known && PVUtil.getSeverity(pvs[0]) >= 0;
+widget.setPropertyValue("text", !current ? "—" : PVUtil.getLong(pvs[0]) === 1 ? (PVUtil.getLong(pvs[1])/1000).toFixed(1)+" s" : "Never seen");

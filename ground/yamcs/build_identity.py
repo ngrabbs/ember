@@ -48,7 +48,8 @@ def snapshot(url, instance):
 def page(manifest, manifest_name="ground-build.json"):
     with tempfile.TemporaryDirectory() as directory:
         with contextlib.redirect_stdout(io.StringIO()):generate(directory)
-        d=ET.parse(Path(directory)/'Comms-Firmware.opi').getroot()
+        d=ET.parse(Path(directory)/'Overview.opi').getroot()
+        d.find('width').text='1120';d.find('height').text='750'
     template=copy.deepcopy(d.find('widget'))
     for w in list(d.findall('widget')):d.remove(w)
     d.find('name').text='EMBER ground build'

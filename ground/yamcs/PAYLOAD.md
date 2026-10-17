@@ -7,7 +7,8 @@ route: Yamcs (.251) → UDP → m75q (.252) → IHU USB console → CAN A (500 k
 and image functions are outside this release.
 
 Open `http://192.168.1.251:8090/telemetry/displays/files/Payload.opi?c=ember-bench__realtime`.
-The display's command button selects the correct instance. Commands are
+The display's command button selects the correct instance. Firmware identity
+is on Devices & firmware; Payload keeps status and ping results. Commands are
 `PAYLOAD_PING` (1–240 bytes), `PAYLOAD_IDENT`, `PAYLOAD_STATUS_QUERY` and
 `PAYLOAD_HEARTBEAT_QUERY`. Heartbeat is explicitly requested; the bridge does
 not poll autonomously. Cached values remain visible after link loss; compare

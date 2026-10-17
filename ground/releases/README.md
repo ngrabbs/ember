@@ -97,3 +97,8 @@ independently of the IHU's last verified response from a particular device.
 October 17 environment split: `yamcs-flight-20261017.json` audits flight `ember`;
 `yamcs-bench-20261017.json` audits serial `ember-bench`. Earlier operational and
 transport manifests are retained as dated history, not current fingerprints.
+
+The dashboard cleanup is audited independently in
+`yamcs-flight-dashboards-20261017.json` and `yamcs-bench-dashboards-20261017.json`.
+It keeps the same MDB and changes the display/script inventory to four operator
+pages plus a dated build audit. Previous fingerprints are historical.

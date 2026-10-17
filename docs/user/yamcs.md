@@ -18,11 +18,19 @@ in these operational instances.
 ## View telemetry
 
 Open [flight overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
-for radio heartbeat, system and EPS telemetry, or
+for last heartbeat/system reports and a power summary, or
 [bench overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember-bench__realtime)
-for directly polled EPS. Payload and Devices pages are available in both;
-flight pages show received observations, while bench pages also offer commands.
-Flight has no implemented command uplink or command definitions.
+for serial EPS and payload observations. Every page has the same four tabs:
+Overview, Power, Payload, and Devices & firmware. Firmware identity is consolidated
+on Devices; raw tables remain available for diagnostics and charts.
+Only bench offers payload command/history buttons. Flight has no implemented
+command uplink or command definitions. Old Telemetry/LTE and individual firmware
+page bookmarks should use Overview or Devices instead.
+
+Heartbeat and system fields are last reports with receive timestamps; their
+current definitions do not expire. Other pages distinguish missing, current
+and expired observations using existing packet expiry/validity. Missing firmware
+is shown as No identity. A cached firmware version is not a liveness check.
 
 Compare packet timestamps, link activity and validity before trusting a value.
 The bench bridge polls `eps json` every five seconds between command transactions;
