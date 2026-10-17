@@ -46,3 +46,16 @@ Both windows reported shutdown_verified=1. tinySA output was turned off in
 cleanup. No command packets were decoded. These two frequencies do not exclude
 a frequency-offset problem and do not establish a hardware failure. Next check:
 probe C7 pad 1 for the actual 145 MHz CLK1 signal, then trace the loaded LO path.
+
+## CLK1 at C7 pad 1
+
+User moved the CH1 10× probe to C7 pad 1 with nearby ground. tinySA output
+was explicitly disabled. A bounded RX window completed with verified shutdown.
+Scope frozen about four seconds into the window: 2.50 Vpp, 1.821 V average,
+1 GS/s acquisition. The 1200-point displayed waveform spans 120 ns and has
+17 rising crossings; interpolated crossing spacing gives approximately
+144.94 MHz. This short, display-interpolated trace confirms a clock near
+145 MHz, not a calibrated frequency-offset measurement. The automatic scope
+frequency scalar (147.06 MHz) is too coarse here to establish oscillator error.
+Next compare C7 pad 2 under the same probe conditions. No mixer LO drive or
+receiver sensitivity qualification follows from this source-side result.
