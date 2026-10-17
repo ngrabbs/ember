@@ -239,3 +239,34 @@ cases, bad outer/native CRCs, command rejection, silence, noise and clipping.
 The decoder also checks invalid size and cancellation; address/undefined-behavior
 sanitizers report no errors. Pico build uses warnings as errors. Actual hardware
 runtime of the corrected search is checked separately below.
+
+## Onboard decode verified: COMMS 0.27.1
+
+Installed clean 728f537d360c6918631504712c61df338edf0518, version 0.27.1,
+boot 2510462400. Flash readback verified. ELF reports text 75848 bytes and
+BSS 80420 bytes; decoder workspace is static rather than on the Pico stack.
+Same 40 dB conducted chain, requested 434.994550 MHz, gain setting 70,
+amplitude 0.05. No rewiring or component changes.
+
+| RF sequence | Pico decode time | Payload comparison |
+|---|---:|---|
+| 1912 | 119554 us | all 38 bytes exact |
+| 1913 | 116240 us | all 38 bytes exact |
+
+The Pico itself prints the decoded bytes after verifying outer CRC32, native
+CRC16 and framing. These are synthetic telemetry fixtures, not commands.
+Both use mixer search setting 1200 Hz; that is not a carrier estimate. Proof
+JSON compares each console result with its independent transmitter result.
+Each transmitter sent exactly 148480 samples and reported no errors.
+
+A following source-off capture returned found=0 after 3011194 us, exercising
+the search deadline. This is a bounded negative check, not a complete scan of
+every frequency or sensitivity qualification. All three captures had zero
+>10 us sample misses and verified clock shutdown. Final registers 3=FF and
+16/17/18=80, CAN A NORMAL, no ongoing RF burst. No command dispatch, RF reply,
+CAN forwarding or Yamcs forwarding occurred.
+
+Next: define and validate a narrowly scoped read-only uplink command path.
+Continuous reception, broad frequency acquisition, sensitivity and packet-loss
+qualification remain open. Current R mode is a manually triggered capture and
+post-capture decode; CAN service pauses during that diagnostic.
