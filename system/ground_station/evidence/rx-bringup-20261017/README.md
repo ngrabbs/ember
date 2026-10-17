@@ -59,3 +59,16 @@ Scope frozen about four seconds into the window: 2.50 Vpp, 1.821 V average,
 frequency scalar (147.06 MHz) is too coarse here to establish oscillator error.
 Next compare C7 pad 2 under the same probe conditions. No mixer LO drive or
 receiver sensitivity qualification follows from this source-side result.
+
+## CLK1 after C7 (pad 2)
+
+With the tip moved to C7 pad 2 and the same nominal scope settings, another
+bounded RX window completed and verified shutdown. tinySA remained off.
+Scope reports 1.24 Vpp and 1.517 V mean. The displayed waveform has 17 rising
+crossings over 120 ns, giving approximately 144.94 MHz by interpolated spacing.
+The signal is present on both sides of C7. The separately probed 2.50/1.24 Vpp
+values are not a calibrated insertion-loss measurement: the 10× probe changes
+loading, and this inter-capacitor node has no intentional DC reference. Its
+reported mean is not an established transistor bias voltage. No C7 replacement
+is justified by this measurement alone. Next probe C83 pad 1 / R33 pad 1 at
+Q4 base to establish the tripler input drive.
