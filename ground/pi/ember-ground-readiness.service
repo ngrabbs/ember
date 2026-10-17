@@ -1,0 +1,12 @@
+[Unit]
+Description=EMBER Ethernet-first hotspot and LibreSDR listener supervision
+Wants=NetworkManager.service ember-ground-starter.service
+After=NetworkManager.service
+
+[Service]
+ExecStart=/usr/bin/python3 -u /opt/ember-ground/readiness.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

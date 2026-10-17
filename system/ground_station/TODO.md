@@ -1,6 +1,6 @@
 # Ground station lab TODO
 
-Updated 2026-10-02. This checklist owns the ground station lab build; the
+Updated 2026-10-08. This checklist owns the ground station lab build; the
 [root TODO](../../TODO.md) links here. Packet specifications belong in
 [command](../protocols/command.md) and [telemetry](../protocols/telemetry.md).
 Host locations and Pico build commands are recorded in the
@@ -103,6 +103,14 @@ Existing firmware references (separate repositories):
 - [x] Set hostname, network access, and browser-accessible Yamcs on the Pi:
   `http://192.168.1.251:8090`.
 - [x] Configure startup on boot and bounded container logs; verify a full Pi reboot.
+- [x] Deploy [Ethernet-first demo hotspot and persistent LibreSDR-triggered
+  LTE packet listener](../../ground/pi/README.md); check AP/DHCP activation,
+  both HTTP interfaces, receiver filtering and process crash recovery.
+- [x] Verify the new readiness services across a full reboot and Ethernet
+  disconnect/reconnect; user confirmed authentication, DHCP and Yamcs access
+  on the hotspot. Yamcs archive survived; [record](evidence/pi-readiness-20261008.json).
+- [ ] Confirm a cold power-up with Ethernet absent and physical LibreSDR
+  unplug/replug before relying on the complete demo module.
 - [ ] Configure telemetry retention and archive backup.
 - [x] Add a pinned, reproducible [Yamcs starter lab](../../ground/yamcs/README.md)
   with isolated simulator and persistent archive storage.
