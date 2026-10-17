@@ -76,6 +76,7 @@ static void reset(void) {
 #include "rx_test.h"
 static unsigned captures;
 static bool capture_ok(void) {++captures;assert(!tx_level);sleep_ms(512);return true;}
+static bool capture_long(void) {++captures;assert(!tx_level);sleep_ms(4096);return true;}
 static bool capture_abort(void) {return false;}
 int main(void) {
     reset();assert(rx_window(true,capture_ok));
@@ -87,6 +88,7 @@ int main(void) {
         assert(!tx_level && !rx_level && (regs[3]==255 || regs[17]==0x80));
         assert(now<10200000);
     }
+    reset();assert(rx_window(true,capture_long));assert(now<10200000 && !tx_level && !rx_level);
     reset();no_lock=true;assert(!rx_window(true,capture_ok)&&!enable_count);
     reset();bad_readback=true;assert(!rx_window(true,capture_ok)&&!enable_count);
     reset();abort_input=true;assert(!rx_window(true,capture_ok));

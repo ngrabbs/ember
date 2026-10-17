@@ -50,12 +50,13 @@ static void bpsk_test(unsigned drive) {
 
 /* Diagnostic acquisition only: software paced, timestamps expose scheduling jitter.
  * Dump after verified clock shutdown, never while the LO is enabled. */
-static uint16_t rx_samples[4096];
+static uint16_t rx_samples[32768];
+static unsigned rx_requested=4096;
 static unsigned rx_count, rx_late;
 static uint64_t rx_elapsed;
 static bool rx_capture(void) {
     uint64_t start=time_us_64(), next=start;
-    for (rx_count=0; rx_count<4096; ++rx_count) {
+    for (rx_count=0; rx_count<rx_requested; ++rx_count) {
         if (getchar_timeout_us(0)>=0) return false;
         while (time_us_64()<next) tight_loop_contents();
         if (time_us_64()-next>10) ++rx_late;
@@ -65,7 +66,8 @@ static bool rx_capture(void) {
     rx_elapsed=time_us_64()-start;
     return true;
 }
-static void rx_test(bool lo) {
+static void rx_test(bool lo, bool packet_capture) {
+    rx_requested=packet_capture ? 32768 : 4096;
     rx_count=rx_late=0; rx_elapsed=0;
     printf("[rx_test] prepare lo=%u CLK1=145MHz tripler_target=435MHz max10s TX=0; any byte aborts\n",lo);
     bool ok=rx_window(lo,rx_capture);
@@ -402,7 +404,8 @@ int main(void) {
             printf("[firmware] version=%s git=%s dirty=%u boot=%lu\n",FW_VERSION,FW_GIT,FW_DIRTY,(unsigned long)responder_boot);
             clock_status();
         }
-        if (command == 'r' || command == 'e') rx_test(command == 'r');
+        if (command == 'r' || command == 'e' || command == 'R')
+            rx_test(command != 'e', command == 'R');
         if (command == 'd') data_input_test();
         if (command == 'b') bpsk_test(0);
         if (command == 'B') bpsk_test(1);
@@ -446,7 +449,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v25] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
+        printf("[y24-safe-v26] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

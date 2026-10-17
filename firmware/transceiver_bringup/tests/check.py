@@ -112,7 +112,8 @@ harness = r'''
 int main(void) {
  rx_count=rx_late=0;assert(rx_capture());assert(rx_count==4096);
  for(unsigned i=0;i<rx_count;++i)assert(rx_samples[i]==2048);
- console_abort=true;assert(!rx_capture()&&rx_count==0);console_abort=false;
+ rx_requested=32768;assert(rx_capture()&&rx_count==32768);
+ console_abort=true;assert(!rx_capture()&&rx_count==0);console_abort=false;rx_requested=4096;
  for (int fault=0; fault<=3; ++fault) {
   call=0; fail_at=fault;
   assert(disable_clocks()==(fault==0));

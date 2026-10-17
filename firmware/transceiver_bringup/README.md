@@ -396,3 +396,20 @@ python3 firmware/transceiver_bringup/tests/check.py
 The clock plan follows [Skyworks AN619 rev 0.8](https://www.skyworksinc.com/-/media/Skyworks/SL/documents/public/application-notes/AN619.pdf).
 Register readback does not establish actual LO drive, frequency, or RF silence.
 Use a low-level conducted source and document attenuation before injecting RF.
+
+### Packet capture preparation (0.26.0)
+
+Uppercase `R` keeps the same 10-second RX-only window but records 32768 ADC
+samples (4.096 seconds) after the one-second settling interval. Lowercase `r`
+and `e` retain the 4096-sample diagnostic capture. All data prints after shutdown.
+The longer acquisition still pauses CAN service and does not parse or execute
+received packets. Host tests cover both buffer lengths and the window deadline.
+
+`ground/bpsk/adc_capture.py CONSOLE.txt` validates completion, shutdown, sample
+count, timing and summary integrity, then constructs an analytic signal from the
+real ADC capture and uses the strict existing DBPSK/CRC decoder offline. It has
+no forwarding path. Native telemetry fixtures used for modem tests are synthetic
+bench payloads, not spacecraft telemetry and not evidence of command handling.
+Host simulation covers a real IF at 1.0/1.391/1.7 kHz with the nominal analog LPF,
+quantization and noise, plus timing/capture-integrity failures and noise rejection.
+Hardware packet reception has not yet been demonstrated.
