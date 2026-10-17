@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "pipeline_version": "0.1.0",
+  "code_sha256": "5e8270c8e3e411a158fb172a8723299bbb61c75b87c71d6732cc1f666ea1e706",
+  "dependencies": {
+    "numpy": "2.5.4",
+    "opencv": "5.0.0",
+    "python": "3.13.5",
+    "machine": "aarch64"
+  },
+  "fixture_id": "20261014_163143_865",
+  "input_source": "STORED_FIXTURE",
+  "camera_capture_performed": false,
+  "algorithm": "spectral_guarded_v1",
+  "config_sha256": "9b9b1f969d1f046d883ed99b99702d9fd2e3e900aadc4a00b2de5ad6291b869a",
+  "calibration_sha256": "0649ecedd1d68e31f2cc58bd4808946c8a360d157b22db5debfe2b227df58b51",
+  "analysis_unix_ms": 1792272194671,
+  "warnings": [
+    "EXPLORATORY_JPEG_LINEARITY_UNVERIFIED",
+    "OPTICAL_COMPATIBILITY_UNVERIFIED",
+    "GAIN_UNKNOWN",
+    "DARK_NOT_SUBTRACTED"
+  ],
+  "manifest_sha256": "23b91bf24e015b8527a996111247004581059b1017db4196692ad1fa2baf0d60",
+  "inputs": {
+    "770": {
+      "path": "images/20261014_163143_865_cam0_770nm.jpg",
+      "sha256": "4fa51a48f2acacdddec789fb242a2fa28909378132f900f7f28af5a4d4f88b90",
+      "exposure_us": 100
+    },
+    "750": {
+      "path": "images/20261014_163143_865_cam1_750nm.jpg",
+      "sha256": "052a1672ba47d51bc6cf43e87eae5692997304d83af325456ee52ea4dc70a05f",
+      "exposure_us": 100
+    },
+    "780": {
+      "path": "images/20261014_163143_865_cam2_780nm.jpg",
+      "sha256": "fa5dee14fded5a9fb32fb383d905cedee0117ba40c375da4764ecdd5fb2b164c",
+      "exposure_us": 100
+    }
+  },
+  "preparation_ms": 1059.537,
+  "result": "FIRE",
+  "reason": "SPECTRAL_REGION",
+  "metrics": {
+    "registration": [
+      {
+        "mode": "orb_homography",
+        "inliers": 111,
+        "matches": 137,
+        "rms_px": 0.892657458782196,
+        "support_fraction": 0.059198532578866564
+      },
+      {
+        "mode": "reference"
+      },
+      {
+        "mode": "orb_homography",
+        "inliers": 89,
+        "matches": 110,
+        "rms_px": 0.9334900975227356,
+        "support_fraction": 0.1482433236767277
+      }
+    ],
+    "overlap_fraction": 0.7576677726428882,
+    "valid_fraction": 0.6692015246672196,
+    "saturated_fraction": 0.0,
+    "interpolation_weight": 0.6666666666666666,
+    "candidate_pixels": 48,
+    "region_count": 1,
+    "alignment_guard_px": 2
+  },
+  "regions": [
+    {
+      "area_px": 21,
+      "bbox": [
+        720,
+        430,
+        7,
+        8
+      ],
+      "peak_k": 1.989459753036499,
+      "median_k": 1.1934242248535156,
+      "mean_excess": 9.968595504760742
+    }
+  ],
+  "elapsed_ms": 1157.26
+}

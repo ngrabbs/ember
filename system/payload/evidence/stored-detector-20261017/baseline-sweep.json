@@ -1,0 +1,576 @@
+{
+  "development_only": true,
+  "independent_holdout": false,
+  "config_sha256": "488ac119fefc0c933f23d17a5c235cf3feee001cb07e7aafbe160c9c9e145000",
+  "manifest_sha256": "23b91bf24e015b8527a996111247004581059b1017db4196692ad1fa2baf0d60",
+  "preparation_failures": [
+    {
+      "fixture_id": "20261014_155007_192",
+      "reason": "REGISTRATION_LOCALIZED_FIT"
+    },
+    {
+      "fixture_id": "20261014_162843_870",
+      "reason": "REGISTRATION_LOCALIZED_FIT"
+    },
+    {
+      "fixture_id": "20261014_163139_693",
+      "reason": "REGISTRATION_LOCALIZED_FIT"
+    },
+    {
+      "fixture_id": "20261014_163141_780",
+      "reason": "REGISTRATION_LOCALIZED_FIT"
+    },
+    {
+      "fixture_id": "20261014_163143_865",
+      "reason": "REGISTRATION_LOCALIZED_FIT"
+    },
+    {
+      "fixture_id": "20261014_163254_942",
+      "reason": "REGISTRATION_LOCALIZED_FIT"
+    },
+    {
+      "fixture_id": "20261014_174638_683",
+      "reason": "REGISTRATION_NO_FEATURES"
+    },
+    {
+      "fixture_id": "20261014_174710_220",
+      "reason": "REGISTRATION_WEAK_FIT"
+    },
+    {
+      "fixture_id": "20261014_174714_355",
+      "reason": "REGISTRATION_WEAK_FIT"
+    },
+    {
+      "fixture_id": "20261014_174724_734",
+      "reason": "REGISTRATION_WEAK_FIT"
+    },
+    {
+      "fixture_id": "20261014_174726_773",
+      "reason": "REGISTRATION_WEAK_FIT"
+    },
+    {
+      "fixture_id": "20261014_174728_902",
+      "reason": "REGISTRATION_WEAK_FIT"
+    },
+    {
+      "fixture_id": "20261014_174730_938",
+      "reason": "REGISTRATION_WEAK_FIT"
+    },
+    {
+      "fixture_id": "20261014_174904_481",
+      "reason": "Invalid exposure"
+    },
+    {
+      "fixture_id": "20261014_175114_156",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175116_214",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175118_228",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175120_363",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175122_385",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175124_469",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175126_490",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175128_521",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175130_617",
+      "reason": "REGISTRATION_NO_FEATURES"
+    },
+    {
+      "fixture_id": "20261014_175132_640",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175134_661",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175136_761",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175138_783",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175140_875",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175142_893",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175216_213",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175218_271",
+      "reason": "REGISTRATION_NO_FEATURES"
+    },
+    {
+      "fixture_id": "20261014_175220_286",
+      "reason": "REGISTRATION_NO_FEATURES"
+    },
+    {
+      "fixture_id": "20261014_175222_203",
+      "reason": "REGISTRATION_NO_FEATURES"
+    },
+    {
+      "fixture_id": "20261014_175224_229",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175226_290",
+      "reason": "REGISTRATION_NO_FEATURES"
+    },
+    {
+      "fixture_id": "20261014_175230_335",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    },
+    {
+      "fixture_id": "20261014_175232_216",
+      "reason": "REGISTRATION_TOO_FEW_MATCHES"
+    }
+  ],
+  "trials": [
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 0.5,
+        "excess_min": 5,
+        "min_area_px": 8,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "FIRE": 57,
+        "NO_FIRE": 13,
+        "UNKNOWN": 37
+      },
+      "confusion": {
+        "NO_FIRE->FIRE": 17,
+        "NO_FIRE->NO_FIRE": 13,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->FIRE": 40,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 0.5,
+        "excess_min": 5,
+        "min_area_px": 32,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "FIRE": 41,
+        "NO_FIRE": 29,
+        "UNKNOWN": 37
+      },
+      "confusion": {
+        "NO_FIRE->FIRE": 4,
+        "NO_FIRE->NO_FIRE": 26,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->FIRE": 37,
+        "FIRE->NO_FIRE": 3,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 0.5,
+        "excess_min": 10,
+        "min_area_px": 8,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 35,
+        "UNKNOWN": 37,
+        "FIRE": 35
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 29,
+        "NO_FIRE->UNKNOWN": 1,
+        "NO_FIRE->FIRE": 1,
+        "FIRE->FIRE": 34,
+        "FIRE->NO_FIRE": 6,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 0.5,
+        "excess_min": 10,
+        "min_area_px": 32,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 54,
+        "UNKNOWN": 37,
+        "FIRE": 16
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 24,
+        "FIRE->FIRE": 16,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 0.5,
+        "excess_min": 20,
+        "min_area_px": 8,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 57,
+        "UNKNOWN": 37,
+        "FIRE": 13
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 27,
+        "FIRE->FIRE": 13,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 0.5,
+        "excess_min": 20,
+        "min_area_px": 32,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 68,
+        "UNKNOWN": 37,
+        "FIRE": 2
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 38,
+        "FIRE->UNKNOWN": 36,
+        "FIRE->FIRE": 2
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 1,
+        "excess_min": 5,
+        "min_area_px": 8,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 23,
+        "FIRE": 47,
+        "UNKNOWN": 37
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 23,
+        "NO_FIRE->FIRE": 7,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->FIRE": 40,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 1,
+        "excess_min": 5,
+        "min_area_px": 32,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 42,
+        "UNKNOWN": 37,
+        "FIRE": 28
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 29,
+        "NO_FIRE->UNKNOWN": 1,
+        "NO_FIRE->FIRE": 1,
+        "FIRE->NO_FIRE": 13,
+        "FIRE->FIRE": 27,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 1,
+        "excess_min": 10,
+        "min_area_px": 8,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 35,
+        "UNKNOWN": 37,
+        "FIRE": 35
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 29,
+        "NO_FIRE->UNKNOWN": 1,
+        "NO_FIRE->FIRE": 1,
+        "FIRE->FIRE": 34,
+        "FIRE->NO_FIRE": 6,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 1,
+        "excess_min": 10,
+        "min_area_px": 32,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 54,
+        "UNKNOWN": 37,
+        "FIRE": 16
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 24,
+        "FIRE->FIRE": 16,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 1,
+        "excess_min": 20,
+        "min_area_px": 8,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 57,
+        "UNKNOWN": 37,
+        "FIRE": 13
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 27,
+        "FIRE->FIRE": 13,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 1,
+        "excess_min": 20,
+        "min_area_px": 32,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 68,
+        "UNKNOWN": 37,
+        "FIRE": 2
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 38,
+        "FIRE->UNKNOWN": 36,
+        "FIRE->FIRE": 2
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 2,
+        "excess_min": 5,
+        "min_area_px": 8,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 46,
+        "UNKNOWN": 37,
+        "FIRE": 24
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 16,
+        "FIRE->FIRE": 24,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 2,
+        "excess_min": 5,
+        "min_area_px": 32,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 62,
+        "UNKNOWN": 37,
+        "FIRE": 8
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 32,
+        "FIRE->FIRE": 8,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 2,
+        "excess_min": 10,
+        "min_area_px": 8,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 46,
+        "UNKNOWN": 37,
+        "FIRE": 24
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 16,
+        "FIRE->FIRE": 24,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 2,
+        "excess_min": 10,
+        "min_area_px": 32,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 62,
+        "UNKNOWN": 37,
+        "FIRE": 8
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 32,
+        "FIRE->FIRE": 8,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 2,
+        "excess_min": 20,
+        "min_area_px": 8,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 59,
+        "UNKNOWN": 37,
+        "FIRE": 11
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 29,
+        "FIRE->FIRE": 11,
+        "FIRE->UNKNOWN": 36
+      }
+    },
+    {
+      "settings": {
+        "continuum_min": 4.0,
+        "k_threshold": 2,
+        "excess_min": 20,
+        "min_area_px": 32,
+        "connectivity": 8,
+        "min_valid_fraction": 0.1,
+        "max_saturated_fraction": 0.02
+      },
+      "counts": {
+        "NO_FIRE": 69,
+        "UNKNOWN": 37,
+        "FIRE": 1
+      },
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 30,
+        "NO_FIRE->UNKNOWN": 1,
+        "FIRE->NO_FIRE": 39,
+        "FIRE->UNKNOWN": 36,
+        "FIRE->FIRE": 1
+      }
+    }
+  ]
+}

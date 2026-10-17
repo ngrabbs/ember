@@ -1,0 +1,5333 @@
+{
+  "schema_version": 1,
+  "dataset_id": "payload-images-20261014-visual-selected-v1",
+  "source_archive": "payload_images_20261014.zip",
+  "source_archive_sha256": "4a4bedae9231e50a5c62acd84be13fcc7781eb9f80e97c02e2c503cb7fb2d73a",
+  "selection": "Exclude all 30 visually uncertain triplets; keep 107 visual labels as instructed by user.",
+  "label_provenance": "ASSISTANT_VISUAL_REVIEW_ACCEPTED_BY_USER",
+  "label_limitations": "Labels describe visible flame in recorded images, not independently measured ground truth. NO_FIRE means no visible flame identified. Calibration compatibility and detector validity remain unverified.",
+  "purpose": "Detector development; no independent train/test split established.",
+  "calibration_candidate": {
+    "status": "Candidate found; optical/exposure compatibility not established",
+    "repository": "https://github.com/ngrabbs/koenig_wildfire",
+    "commit": "d98e8b5f4ba283d4879dfe04be505441480e8abb",
+    "asset": "calibration/correction_20261003.npz",
+    "sha256": "0649ecedd1d68e31f2cc58bd4808946c8a360d157b22db5debfe2b227df58b51",
+    "ports": [
+      0,
+      1,
+      2
+    ],
+    "shape": [
+      1088,
+      1456
+    ],
+    "calibration_exposure_us": 24000,
+    "science_exposures_us": [
+      50,
+      100,
+      150,
+      200,
+      400,
+      800
+    ],
+    "notes": "Outer field untrusted; optical configuration must match; raw calibration frames not in reference repo."
+  },
+  "counts": {
+    "triplets": 107,
+    "images": 321,
+    "FIRE": 76,
+    "NO_FIRE": 31,
+    "excluded_triplets": 30
+  },
+  "fixtures": [
+    {
+      "fixture_id": "20261014_154710_733",
+      "review_id": "001",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_154710_733_cam0_770nm.jpg",
+          "sha256": "e9378790a00d89c4170c965203a998ec1b3da024a1d866f7ea5810bdbdf11639",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_154710_733_cam1_750nm.jpg",
+          "sha256": "65833485d297b79f82d447fd8c4d95aa6628b2dec8aabd87819a9af80a9ac2ce",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_154710_733_cam2_780nm.jpg",
+          "sha256": "750176fec7a3c43af1334d9917a4fbdb1c0e48dd72a65b1fc1a41d19c2cd97a3",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_154712_831",
+      "review_id": "002",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_154712_831_cam0_770nm.jpg",
+          "sha256": "d8b501c49de0b2f630141747283049e6c687a009807a840373302cc803f55392",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_154712_831_cam1_750nm.jpg",
+          "sha256": "106a91b8193c2aedd8b5e24ea1b21c31cd017220ab59655c8490eea6eb873967",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_154712_831_cam2_780nm.jpg",
+          "sha256": "190847322608aa52f92ab026075bd97e60eb94c3266c62a003e0492ae098301a",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_154714_933",
+      "review_id": "003",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_154714_933_cam0_770nm.jpg",
+          "sha256": "d5580af91a7561f12a4c3b289d6c07074999547f1c4dc91e7b5f06cb9c0d3b89",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_154714_933_cam1_750nm.jpg",
+          "sha256": "60a17af8c98c4d9e83c9eb4d6f038ef0c6f888387158be32fca21ec478628164",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_154714_933_cam2_780nm.jpg",
+          "sha256": "51d246d56d3cd033bbe6ceb49dd5f2ad0036cf5b8ecb0aebd837bd6fa1f99f2a",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_154716_986",
+      "review_id": "004",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_154716_986_cam0_770nm.jpg",
+          "sha256": "381f8a7a877dd62f853121a3340558fe9af21dba4f9eb4cbe74f8739d65f30be",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_154716_986_cam1_750nm.jpg",
+          "sha256": "494a010fa21720474fdc903c0a1938f9c66c34cf9855e29247814d4fa2b80325",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_154716_986_cam2_780nm.jpg",
+          "sha256": "43f42d361b996d25891560f195c3dda7e4f4f350d5d2f4216df952e083f2c820",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_154719_035",
+      "review_id": "005",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_154719_035_cam0_770nm.jpg",
+          "sha256": "6d9702b6e9e7cef0e08376c7c6496eca1f378550bd0398331c3bb3e3d514174b",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_154719_035_cam1_750nm.jpg",
+          "sha256": "b63e10643a78771262110d4777bb379b22b012121b04624a67c561b17dfa57fa",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_154719_035_cam2_780nm.jpg",
+          "sha256": "e2e3799ee9071113f88e8c71b020f0fa5b069f77f232fd5a260624258b3780d8",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_154721_159",
+      "review_id": "006",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_154721_159_cam0_770nm.jpg",
+          "sha256": "9954b19c0d85db1e4686abb2f90d277b12a8368acb309d3011276a6850b805cf",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_154721_159_cam1_750nm.jpg",
+          "sha256": "215623e7eb3beffd83cd5db4d8a9fc1acc9c8634783e14d4e88cf83702b6e246",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_154721_159_cam2_780nm.jpg",
+          "sha256": "8825f8d491523f115b67369bc4415ca578e7d52592b830f45be0ba88c64404fb",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_154723_215",
+      "review_id": "007",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_154723_215_cam0_770nm.jpg",
+          "sha256": "2a4c148fb9d184373b13b0d325c5abcc5697b3f681c1b47d0caa3dd913c64991",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_154723_215_cam1_750nm.jpg",
+          "sha256": "b0265cb342fb00a968431d4d4ee3c2a9048aa45002141404c3fdc1fc12e3193b",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_154723_215_cam2_780nm.jpg",
+          "sha256": "fb86790ddd900f8ec12eb3493ae003ebcb7cd68a6e97b7c6e6118e212cfa5344",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_154725_271",
+      "review_id": "008",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_154725_271_cam0_770nm.jpg",
+          "sha256": "06c8048e93e390d8c30d8d07890187d6c798ba827e75e7da3f9515cd82281b9a",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_154725_271_cam1_750nm.jpg",
+          "sha256": "7302d4faf52d108f589e7f0fa916a360250ff6dc44cc8a688947e5f394725e23",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_154725_271_cam2_780nm.jpg",
+          "sha256": "4b909ef7df88004fdd2ea9b57790f55fa592620f921018f617984ccfda12253c",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_154727_442",
+      "review_id": "009",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_154727_442_cam0_770nm.jpg",
+          "sha256": "af55b0f835ec74babfb01e398103bedfd66178e1ee431aa4e6f5c0b1b4b24537",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_154727_442_cam1_750nm.jpg",
+          "sha256": "effeef5aad01b3e061b2f0ac770b51df0719193353aecef9a8caa29bedb0846b",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_154727_442_cam2_780nm.jpg",
+          "sha256": "5eb44269115abcf738fbbcede8b0d46385370a52d3e417234aca7909e098792c",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_154729_498",
+      "review_id": "010",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_154729_498_cam0_770nm.jpg",
+          "sha256": "e43140cc569afbfe0acae05ed3f0a19f39e1d52d5c17b28798b58eadd753bbc7",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_154729_498_cam1_750nm.jpg",
+          "sha256": "a45e1a9c8f68b891325746f53c4f78d7ae654083d8a1139b6b87ee851af825b5",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_154729_498_cam2_780nm.jpg",
+          "sha256": "99a6652c71739efa76c53b8df518d21894f2414da0f59d1e74339423f51b09b6",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155001_002",
+      "review_id": "011",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155001_002_cam0_770nm.jpg",
+          "sha256": "d51810b682a0c98a12e52108e20ce0158082532b92570fef496fe4df5cc3836f",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155001_002_cam1_750nm.jpg",
+          "sha256": "582a3199e8d5cb07ced1f1744e3e16b3b700f9d428b7dfe69abc3abe2b60d13e",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155001_002_cam2_780nm.jpg",
+          "sha256": "5ae1ebd0c06a1e08001b3ae56abb8479cc3f907034d4ae6c923b7fd180aa12f1",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155003_072",
+      "review_id": "012",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155003_072_cam0_770nm.jpg",
+          "sha256": "5eaf2e9b824ab2f38b31fcd7015e688726cad214b711bc28291d8365ee1f8818",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155003_072_cam1_750nm.jpg",
+          "sha256": "9afa7c5ce7eed7689fae9817f6b9144acd0b3bfbdd0f5c13b39a23aaef3b7827",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155003_072_cam2_780nm.jpg",
+          "sha256": "5348cbe0073dcf3595ca4f27fdd561dd7635619f5863aedf30196cbb1c3e257e",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155005_156",
+      "review_id": "013",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155005_156_cam0_770nm.jpg",
+          "sha256": "48821740f24b727731219be96e97c083b15e7410ad261303853d507d96e8e9fd",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155005_156_cam1_750nm.jpg",
+          "sha256": "331b625d55e5092a10c8a23ea8a427ab46c0370bb19ea4bf0a6fc0dad32b0a67",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155005_156_cam2_780nm.jpg",
+          "sha256": "6051de393282f8104f5ca959d1c4b988103f2ea84ebe8e5e4ec60f7d9e8aa8ad",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155007_192",
+      "review_id": "014",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155007_192_cam0_770nm.jpg",
+          "sha256": "052c250fa2841cb603196838f217d3980726c021bd2c596536932f23a4808097",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155007_192_cam1_750nm.jpg",
+          "sha256": "500d98884837cfd5f6cbf60d53bae875ce61a9384a1990b24e0b378b32d33b11",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155007_192_cam2_780nm.jpg",
+          "sha256": "d8d0910a123f504f8b9363a74ccfb7fe813723c35888af9061cba0291a9ca2b5",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155009_228",
+      "review_id": "015",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155009_228_cam0_770nm.jpg",
+          "sha256": "551dcf6d71623fd324af2784169780352778eb85f193fb49ae75596c53176d98",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155009_228_cam1_750nm.jpg",
+          "sha256": "54abc764caa0fdac8084ff1c86d420e692de7648a271d7ba3bd5467365866096",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155009_228_cam2_780nm.jpg",
+          "sha256": "bbc5b429803febac4de410f2a9eb7fe4153725077eb8560709a35a9cdfa041b2",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155011_645",
+      "review_id": "016",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155011_645_cam0_770nm.jpg",
+          "sha256": "5b6850d72b6c1c2ff0e810e6d91dc7d468151b1de9c64408e27cec08b74d406e",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155011_645_cam1_750nm.jpg",
+          "sha256": "6a9df4cb642823438dff32ac5022c1adb95dc4a48bcdf81aa26dbfbf4a94a1c2",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155011_645_cam2_780nm.jpg",
+          "sha256": "be777a54307bfd03a78f44a709eb89c464dfa18095495461301c2c3b852eacf0",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155013_698",
+      "review_id": "017",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155013_698_cam0_770nm.jpg",
+          "sha256": "ac8c2d27bf4e8246e875f42f70098b8d16471df272c7c5b3d3169de3c9848f9c",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155013_698_cam1_750nm.jpg",
+          "sha256": "89cff1a0e248a8eb90dbd0b4d13643678b290324d61103b17827ef0ce38d2ac2",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155013_698_cam2_780nm.jpg",
+          "sha256": "8edd5136da59e595da9992ce13ecaf9a9be225db61613fbb88a23b0f7cbc7293",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155015_805",
+      "review_id": "018",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155015_805_cam0_770nm.jpg",
+          "sha256": "c26913168384b53483f838c158253a079e1a84c41d3ba7e651ea01b283ac0036",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155015_805_cam1_750nm.jpg",
+          "sha256": "85af8f74a88dbd33399e18cd4d0fa635b6c7b2a1241f827a681212dc06d78cb2",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155015_805_cam2_780nm.jpg",
+          "sha256": "c95047e4b4449d59950fb3eca447cfa0fe8ca1f334a94df34c666fc721fe1234",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155017_858",
+      "review_id": "019",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155017_858_cam0_770nm.jpg",
+          "sha256": "79b446acb45c6211df903db662a9b519ce3a2dd70205f211bb35ec991a37a11f",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155017_858_cam1_750nm.jpg",
+          "sha256": "522a23111cf4426ff1d87d2dd8ad30e1f252bef7da9ab5d37db5ac675bcf9daf",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155017_858_cam2_780nm.jpg",
+          "sha256": "8c279bc0462e0dabbcc9ffd2fcbf2ad03fba8038533d66dc737ad1a8395b1283",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155019_902",
+      "review_id": "020",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155019_902_cam0_770nm.jpg",
+          "sha256": "f08dfac7818e45057e8405cce900c930c01476df693a329ebed5a0ae170e78a5",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155019_902_cam1_750nm.jpg",
+          "sha256": "6ddf0c0ee8a4039ee929aca5fbf45b9227ffafe4735b531cc8f625eaf807636c",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155019_902_cam2_780nm.jpg",
+          "sha256": "7b5c26ec0cd91e116e75f74124f334057baeec380ed7bb7a8ad50f007f3bbada",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155022_323",
+      "review_id": "021",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155022_323_cam0_770nm.jpg",
+          "sha256": "32925aa8b76023ef49bb0c7d804def4e4889cffad5facae46b3238ac400d56d7",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155022_323_cam1_750nm.jpg",
+          "sha256": "e836243ac715bc1741e037b288a5c9377a3c9957a9c037eedec0b72a61571af6",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155022_323_cam2_780nm.jpg",
+          "sha256": "417034976f209357237dd757f3ca6a6921fbb94a1aab2ed117d78699367fa033",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155024_362",
+      "review_id": "022",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155024_362_cam0_770nm.jpg",
+          "sha256": "7133e8732217b477744d4090319af375c60acbfca9f7a979bb3f2a44dc6ee144",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155024_362_cam1_750nm.jpg",
+          "sha256": "66b331b84747eabea7e0b1b57b8605309690c58cd139e069d9e2f9b9f90c1f86",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155024_362_cam2_780nm.jpg",
+          "sha256": "44afd7d8b84106ffcbf8470812a75fae3b359d712b4a56364d6eecf3698a7e10",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155026_476",
+      "review_id": "023",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155026_476_cam0_770nm.jpg",
+          "sha256": "121e7824d54864ef6e271a289730b8fe3545f1372c4fb999c28738fe4ef7e1c4",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155026_476_cam1_750nm.jpg",
+          "sha256": "d15cbad926ac78367bed85249fcffeb8b04c264d885a7e8de2a0e0a344362bf7",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155026_476_cam2_780nm.jpg",
+          "sha256": "b623909352645d5048e55fcf58ef7b9df2c2b270bde27619b3e27476852ec1f5",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155028_533",
+      "review_id": "024",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155028_533_cam0_770nm.jpg",
+          "sha256": "26929b4a51a4a2e37dc08ae0f9420585b4315396e35b3cdd2cafab2cb351f26e",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155028_533_cam1_750nm.jpg",
+          "sha256": "5c7b63f586747363582a3bf6ea749ec7760ded27bdfda82eaf94e7c58c805638",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155028_533_cam2_780nm.jpg",
+          "sha256": "c4455825beb7d344c42818ce9d5d45ecc46d3a3da581abddf102fdcc76d953d7",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155030_584",
+      "review_id": "025",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155030_584_cam0_770nm.jpg",
+          "sha256": "944d2b1b94861473380ccedcbc3c92a3dc0412fa20d32ebeb32312e776dc09c7",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155030_584_cam1_750nm.jpg",
+          "sha256": "eb1bcf4aa2ecd09f7ac582c615677832f1c7c856a9cd3f04350bcbbd6a6faa5b",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155030_584_cam2_780nm.jpg",
+          "sha256": "1ade5a859870eaf0e4dc6f7746280e47b9bf375a4f3116c8b52ea697be3b7841",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155033_037",
+      "review_id": "026",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155033_037_cam0_770nm.jpg",
+          "sha256": "e6c61f12ccd69170a08e8082b5eaa1b69b337ceee1e60ca94e08d04ca46c3498",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155033_037_cam1_750nm.jpg",
+          "sha256": "9e3ec2ab1e0625ecd9de49a5ccd1c4e6b8d23fca2f1ce57823e4e88db0ca04a5",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155033_037_cam2_780nm.jpg",
+          "sha256": "91001b42492423d70aa01a4d3604985e7b07c3924c20fbdfb946b971bf45b853",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155035_108",
+      "review_id": "027",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155035_108_cam0_770nm.jpg",
+          "sha256": "4f7fea17ea888b22d287770b9b6414d179e6602fa8c2f3129b2dfb0978c1512d",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155035_108_cam1_750nm.jpg",
+          "sha256": "54a6899f0cacb1319a62e97fb85c12c5b7c443da442d7cd1792661fc381ef852",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155035_108_cam2_780nm.jpg",
+          "sha256": "dcdd23845eed8c53f8590daae27a82715f007dd1cf025f1890218d826a9ab99c",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155037_238",
+      "review_id": "028",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155037_238_cam0_770nm.jpg",
+          "sha256": "84993fb47336813be177f3c914d26bc1285c196827bb1b59e61232e345d4e616",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155037_238_cam1_750nm.jpg",
+          "sha256": "3d59d956f76b89ebb2324c5fc03726553f8818f7c336f160f1a06d80c4ba47b2",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155037_238_cam2_780nm.jpg",
+          "sha256": "334bee0016bc23ef6f751dbfbf77a409578281c92a308e170908d43dcebf7716",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155039_305",
+      "review_id": "029",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155039_305_cam0_770nm.jpg",
+          "sha256": "34aecfaa327128207b99665f5044fedd153cf1f8da87009a58147def887c8beb",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155039_305_cam1_750nm.jpg",
+          "sha256": "6b824de313d5335a3e258859ce2f697315b33b508730c4ee457e9ad35485cbe6",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155039_305_cam2_780nm.jpg",
+          "sha256": "d6656c3b4a02ed283828130b116f9cb44f86a184a8c1d8e0d97319b26d228ba1",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155041_174",
+      "review_id": "030",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155041_174_cam0_770nm.jpg",
+          "sha256": "01fb1ab6482f2c4602c5be42b4d383908f512b8fa161cea102869757845f5217",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155041_174_cam1_750nm.jpg",
+          "sha256": "333729185a98a5d8ba876f0bc6e20bbd95cc2cb2b7272b2df34d578ca1652793",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155041_174_cam2_780nm.jpg",
+          "sha256": "001af7aa4c5581f487b3dec26d042bacdb81c0e50d1236ec292bcff285b8e1f6",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_155148_113",
+      "review_id": "031",
+      "label": "NO_FIRE",
+      "label_basis": "Yard/background visible; no obvious flame in 770 nm overview",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_155148_113_cam0_770nm.jpg",
+          "sha256": "746a8912af3d047ee990bc6b03a146d90fb332d9410d951a3d50208c50cf6eba",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_155148_113_cam1_750nm.jpg",
+          "sha256": "16b0c905113f2a7cc2c33b27315d684f291dae159d3cb76b430f0899982facd0",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_155148_113_cam2_780nm.jpg",
+          "sha256": "7933989ac1ec7de171d1cda058fd845fcb8f867212e2abcac09f7d7d85812c96",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 800,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162757_263",
+      "review_id": "054",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162757_263_cam0_770nm.jpg",
+          "sha256": "a062fdbe333869e5835502bf491ac6063e2fa9f8daf093bfeb12c97b8644979c",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162757_263_cam1_750nm.jpg",
+          "sha256": "889ac08863bc898258762cebf437669e92b0d5824e5a780700358937ebe9ef5b",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162757_263_cam2_780nm.jpg",
+          "sha256": "34a267560be0f271012a0a5a1ce2dc53c5f6afd9fb28835099b88f425e203949",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162759_696",
+      "review_id": "055",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162759_696_cam0_770nm.jpg",
+          "sha256": "681b5228097d172e8afd4e28c5abb735730db4af513da447a1a9c9185a9f8fe5",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162759_696_cam1_750nm.jpg",
+          "sha256": "e64b41911e2ad6ec95d5d3a03ed53e51dbb28b2475aced140837fcd7ddd00cee",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162759_696_cam2_780nm.jpg",
+          "sha256": "f5daa47cee50fc368cf64c9b62d14ba5791f1dc26e7e0140935c8afd1ba482c3",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162802_072",
+      "review_id": "056",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162802_072_cam0_770nm.jpg",
+          "sha256": "00c32263b4928adea26a94c97d8f6a27a98910df78b0420dfcf644c64648914e",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162802_072_cam1_750nm.jpg",
+          "sha256": "fc6c2af9fb7c6c724dd620a770550f900ec41a7618cb4771aabc6c51a4a0469c",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162802_072_cam2_780nm.jpg",
+          "sha256": "5ff9139b2deada09ba18dc72906c0cd3b76ce892835d6e8a978ae911e95f6e53",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162825_097",
+      "review_id": "057",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162825_097_cam0_770nm.jpg",
+          "sha256": "027ebe833fd4befcc8986dcc53b1622a15873639e3118f792487651d094dac9e",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162825_097_cam1_750nm.jpg",
+          "sha256": "5a448851548d3fa1b4700a25cc94265f0b9478989c9d4b115fa600b32cc4e7f0",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162825_097_cam2_780nm.jpg",
+          "sha256": "ba30030085c90d94dab8dc5381035a84ce9a7c98daa3c07396e2a142057e0ef8",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162827_195",
+      "review_id": "058",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162827_195_cam0_770nm.jpg",
+          "sha256": "f655a9b2a92fdd56c08f4a5e8954742f4a1b633242ddfe181ec2396c132e201f",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162827_195_cam1_750nm.jpg",
+          "sha256": "ab182c214020eabb93d3aebe3e71bf32ff71a8dcae5e2e74674cfb0362bfff2c",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162827_195_cam2_780nm.jpg",
+          "sha256": "60406a8fa647b2dd08d2b49de7e3e1925e1ae14bc34b03006aef32e0b667afdc",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162829_380",
+      "review_id": "059",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162829_380_cam0_770nm.jpg",
+          "sha256": "ca32fa92b901974e1ccf40cf4e422211ec1526d799ef5c98eb9ac1c8d4aed57a",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162829_380_cam1_750nm.jpg",
+          "sha256": "a0294f7034b3a75d47d7b178512766585c2218596758c6c156beb427a5a1797b",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162829_380_cam2_780nm.jpg",
+          "sha256": "7040ab932b227eb0a8e96ede70b1cd2f6193c070ff621d50d8c96438ac0f1962",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162831_437",
+      "review_id": "060",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162831_437_cam0_770nm.jpg",
+          "sha256": "8f0dc14220023ab8754ef86a50bed7aaabe0ba88c7dee33fcbb00e0cd3f19309",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162831_437_cam1_750nm.jpg",
+          "sha256": "d4279353dadf218751200b832f21bbd03556bb51cbe7bc135fd17c49e5f5dd01",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162831_437_cam2_780nm.jpg",
+          "sha256": "13e73424a602ffff62a376c33cf673245d21cfdc16eea60d74ec0e595b4f9e24",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162833_494",
+      "review_id": "061",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162833_494_cam0_770nm.jpg",
+          "sha256": "f011cf98ccd34f6fbf22c4a70aba8abe7a35b4abf4b9714c90ef4e9d6525719d",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162833_494_cam1_750nm.jpg",
+          "sha256": "89a55a42ecbe686adafb5dafca1751416ad32826f3b3a5ac000e9245fb014b3b",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162833_494_cam2_780nm.jpg",
+          "sha256": "3b0765080aedee4300812c0a8cbb899b9d51fc071cef1afcfc3ae62d628615d1",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162835_690",
+      "review_id": "062",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162835_690_cam0_770nm.jpg",
+          "sha256": "f7364e5ce0661c717878eb6baa2b5e440bf555bb239f313176c95671e87d306e",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162835_690_cam1_750nm.jpg",
+          "sha256": "44c17f5042c3187abf941d9f1bfad514431ef88c99cca75e9ed530afb7844c7d",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162835_690_cam2_780nm.jpg",
+          "sha256": "6bf2a66b1e08f63f3c0811eacf65abad6ae33ce9309c6146d65a6b6963a4725d",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162837_756",
+      "review_id": "063",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162837_756_cam0_770nm.jpg",
+          "sha256": "33fc317a957ac51248de6805c5ed1c8e76e0fd2568d2bdc38fe28a2965133659",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162837_756_cam1_750nm.jpg",
+          "sha256": "b7d508e665b22bea658ba5cef1e9ab15b2f3c8bf578dedde2bea9f0fff2eed5c",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162837_756_cam2_780nm.jpg",
+          "sha256": "4aff9c6758a0dacbf9705bb1d485c0cbd3b3a532cf1cc7460983ca9eabab878e",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162839_815",
+      "review_id": "064",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162839_815_cam0_770nm.jpg",
+          "sha256": "6839cae7743041b6c0a8d5a845c15341a537eae5dd6946fb3ee251ef3c2bbcdc",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162839_815_cam1_750nm.jpg",
+          "sha256": "4a4acf44e58505ef32b8360b65dd2bcb30ed38c9f0b33730be0b887414eed588",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162839_815_cam2_780nm.jpg",
+          "sha256": "d1b70f0b84ecf729ea9277c4d92b00e9e06794ed3b501f75cd359c4d1b250158",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162841_810",
+      "review_id": "065",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162841_810_cam0_770nm.jpg",
+          "sha256": "818c7ca02195812ca15c821184c07300d5d0c02cd83c6628a6011d415110d02b",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162841_810_cam1_750nm.jpg",
+          "sha256": "548dbdfdc5cbb0eec9dc8d1225502b273f05fe6d2847eb2fc82f5a5a33264780",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162841_810_cam2_780nm.jpg",
+          "sha256": "ba9955e0cef281d596291cb1570721399dbadbda356c81db1a1ba7955340e945",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_162843_870",
+      "review_id": "066",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_162843_870_cam0_770nm.jpg",
+          "sha256": "8231817831e01371f5a4eb81a09bfbb05f88152a5afa88869f7e135a8f16bac5",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_162843_870_cam1_750nm.jpg",
+          "sha256": "55b72612f6cbe16baacb0fe551c430217e40883edc1e9b42441758666e82858e",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_162843_870_cam2_780nm.jpg",
+          "sha256": "1e11be383ac8c14933ce7ebe7fbc88b703f8acd07c3f588d3842fbd9b9620013",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163139_693",
+      "review_id": "067",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163139_693_cam0_770nm.jpg",
+          "sha256": "ad679d8536700b5f61ca08c9c9fe2f49aec08b425bd33e716845cd1dc8f7e3fd",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163139_693_cam1_750nm.jpg",
+          "sha256": "d7ae492875a528eeff845b49ab4c82561e11acdb2e06c26c52df3247fecb4f56",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163139_693_cam2_780nm.jpg",
+          "sha256": "dbe2169749c770c9fdafb66a92e3e553541df75f5134e825253b37680779730d",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163141_780",
+      "review_id": "068",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163141_780_cam0_770nm.jpg",
+          "sha256": "46aa081affb089236fb7bb59ace9dc4528bb7437b3dbf260987ee1fce5136dce",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163141_780_cam1_750nm.jpg",
+          "sha256": "4c85f8c82f15a596339bf9a31dd2972691fd14cd816101061d7e3364c23908b9",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163141_780_cam2_780nm.jpg",
+          "sha256": "f99e5b185dd60d5db54cde4e1bcf3c9df43a1aba0a0fcd5dc5a9a5099c7aefe9",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163143_865",
+      "review_id": "069",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163143_865_cam0_770nm.jpg",
+          "sha256": "4fa51a48f2acacdddec789fb242a2fa28909378132f900f7f28af5a4d4f88b90",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163143_865_cam1_750nm.jpg",
+          "sha256": "052a1672ba47d51bc6cf43e87eae5692997304d83af325456ee52ea4dc70a05f",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163143_865_cam2_780nm.jpg",
+          "sha256": "fa5dee14fded5a9fb32fb383d905cedee0117ba40c375da4764ecdd5fb2b164c",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163145_921",
+      "review_id": "070",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163145_921_cam0_770nm.jpg",
+          "sha256": "aa5efbc4aa0a04680b52b9caa42fea1f041576af4621e2f8952db50662e2ca7b",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163145_921_cam1_750nm.jpg",
+          "sha256": "8ebb5d5da8b60e0493771672d1767c06284d62322a7eac6349d5d95977a1ce38",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163145_921_cam2_780nm.jpg",
+          "sha256": "ea5a9cb5c6a16785e3644c46923e6972a6a8f63806dd611d058357c1137fb542",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163147_980",
+      "review_id": "071",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163147_980_cam0_770nm.jpg",
+          "sha256": "4a858dcc9c7c089b7881f032f20800372c05b6250a5e3178a6889c5ad5877157",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163147_980_cam1_750nm.jpg",
+          "sha256": "6010756851a3d9f1e60af00cebc3ccba979f7d964a0fdc44010c1555ef2e037a",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163147_980_cam2_780nm.jpg",
+          "sha256": "7edb0bc1c146582168cf61f33647963bafedbdc32866184fb50a4f6d129e3e90",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163150_147",
+      "review_id": "072",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163150_147_cam0_770nm.jpg",
+          "sha256": "adf4afcd1e68b91eb1f1cb81fae93ebf34f8983ab4509d6246497c03c24c8684",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163150_147_cam1_750nm.jpg",
+          "sha256": "a0fbc51e77e405455a6104cb3a88f7c119ee2b483f9fc8ebfa90ee0029ddf52f",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163150_147_cam2_780nm.jpg",
+          "sha256": "6c6560b0310ef8637d71c6840b0a98d309739f080f39bc58e748d01b84aef17d",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163152_206",
+      "review_id": "073",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163152_206_cam0_770nm.jpg",
+          "sha256": "b992b715aee30008bae817ef2ee9cd393a79f79f252f7ac47a8cd4ea42d78709",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163152_206_cam1_750nm.jpg",
+          "sha256": "68c778a24043f04d266239e7389000c10bb9073954c0785aeb4bcda5d36e300b",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163152_206_cam2_780nm.jpg",
+          "sha256": "239ad4f8e496236bcfd212b605e6c9530feb4253210ac7680f1ca4043e7e8bf7",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163154_251",
+      "review_id": "074",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163154_251_cam0_770nm.jpg",
+          "sha256": "ca5bc15641fc06874ea9b738ddb1fec7541d96806362234651b1f12c317c67ce",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163154_251_cam1_750nm.jpg",
+          "sha256": "2f10d65e82022e434a732d687bb0264ee6a9c1f65bb98a2eba071ff8940a624d",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163154_251_cam2_780nm.jpg",
+          "sha256": "453d5a373a471d6da0c74ca1bb50d97161c7f4bcd1f10994ac06d2d078eb5b90",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163156_416",
+      "review_id": "075",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163156_416_cam0_770nm.jpg",
+          "sha256": "d131be61ae61f90b916aef00981e0b9a80230448218bc8b7f113f7a33959e417",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163156_416_cam1_750nm.jpg",
+          "sha256": "af9faca8cf83b5e5253a2532c59dd2e2b3941c5d28517d079964a18c1aff1161",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163156_416_cam2_780nm.jpg",
+          "sha256": "b33a5571e7fa0d39170f1ed217f6d15a98449d1075419cadcd13972d5aa5f434",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163158_468",
+      "review_id": "076",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163158_468_cam0_770nm.jpg",
+          "sha256": "17828240af4e4c82d2762e40e1a67ea20e410aa8073bc512bd05da0d92422b52",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163158_468_cam1_750nm.jpg",
+          "sha256": "e45a731aab9de7dafa12027d8c0cdf91c65838eb2691b078e44caf63ac6d1ecd",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163158_468_cam2_780nm.jpg",
+          "sha256": "9bbfc4905c1d6ff7917216538103a638bf7b72c37e106d58ff2b19463f41d931",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163254_942",
+      "review_id": "077",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163254_942_cam0_770nm.jpg",
+          "sha256": "829906f6977508c61ef73d91b4ec7fb131e7d6c241774fbcd17a55993a983bce",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163254_942_cam1_750nm.jpg",
+          "sha256": "fdf41881d832c42e791799c867b920520fb8e124500ad7615c0559bd74ff788b",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163254_942_cam2_780nm.jpg",
+          "sha256": "53bb97aa9eb371e191867f1310eb24cd0bd320e49403e4c653d468a173ce12e3",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163257_035",
+      "review_id": "078",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163257_035_cam0_770nm.jpg",
+          "sha256": "036d5f217a605d1288b183f75e01a9af93d32d5a70036e02e27b88c629810f29",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163257_035_cam1_750nm.jpg",
+          "sha256": "546dc7ad7694d7485688548a9cc7f32a19c511e371ae8a472fa67200de832b60",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163257_035_cam2_780nm.jpg",
+          "sha256": "48dd2057b0209f306116206dbf530b1bbfd183bc2ef5ce51c84c4cbecc2e341c",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163259_149",
+      "review_id": "079",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163259_149_cam0_770nm.jpg",
+          "sha256": "ef167780913a6c9062f238113cfe5e86a78a82107fa6d4f6ee41aca94002cca9",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163259_149_cam1_750nm.jpg",
+          "sha256": "82216ce198f39400e485270d9cb2bfb2b6bfe21d3ee183c5df52c120adf21b56",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163259_149_cam2_780nm.jpg",
+          "sha256": "42df992da4f034198ef1014fc3683f5a733a6b3b2e2b350078b0dac2443bcb09",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163301_211",
+      "review_id": "080",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163301_211_cam0_770nm.jpg",
+          "sha256": "303a66ef643414eed9f14903d938cf788d97939f7b6044a87afe594477c43798",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163301_211_cam1_750nm.jpg",
+          "sha256": "3e032b7d5067fe5ce35565988a9c1727fa2edd77209ec41d26623f41b331888d",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163301_211_cam2_780nm.jpg",
+          "sha256": "bbae4c4d6e09de9a83e8e15463af6b35e50f0a8c92738d9e9e4bc2ad565520c8",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163303_279",
+      "review_id": "081",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163303_279_cam0_770nm.jpg",
+          "sha256": "4088851cf2ddbbbc56427464295e9fb01a065681196475d81c837a70d39ae3d2",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163303_279_cam1_750nm.jpg",
+          "sha256": "024b1d35ef2af6860ce376badd7c92ee6656c94a448d33574782c0ea7cc5c3c8",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163303_279_cam2_780nm.jpg",
+          "sha256": "decf40bf9e6bb58cdc4ac9378815a0c77388351725c4ee43a691467b1dd4e7df",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163305_409",
+      "review_id": "082",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163305_409_cam0_770nm.jpg",
+          "sha256": "f1028143d843ef20cc8ecbafb4de755789d97af6bd74006621770498252f6334",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163305_409_cam1_750nm.jpg",
+          "sha256": "d6b747b6fbfe8c54d06e56b8ec9b52388b8e0781c78e8ead82c510986b98db59",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163305_409_cam2_780nm.jpg",
+          "sha256": "45f5f34065d6b779e57d15d557f01e4c8883c36b0e4416acb32298bca4e8ec8e",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163307_471",
+      "review_id": "083",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163307_471_cam0_770nm.jpg",
+          "sha256": "df8fa853edbe525c5a22da55021047d963d01da486bb8afdcdffa50c9bed49de",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163307_471_cam1_750nm.jpg",
+          "sha256": "843bd6bd84fcd544e09866a9ec20a2096141a6f4c66f80097c2af858a850fa48",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163307_471_cam2_780nm.jpg",
+          "sha256": "59bc7a11fe70e23b7510a39cfc20ea364328c3712c9784cef6571cf724ac84e7",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163309_538",
+      "review_id": "084",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163309_538_cam0_770nm.jpg",
+          "sha256": "a6aafc061d0c7912e890d6fdc9998b471af9907a2802de47f21b9d5f7fb71840",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163309_538_cam1_750nm.jpg",
+          "sha256": "42ac27e173da5aa5b9eb3f0efc56b1c537257db26735460b1575052b95858d61",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163309_538_cam2_780nm.jpg",
+          "sha256": "5b46f5a1a222c8d13c0d1a207a727194a4150c781abf73187802f1e93f839ba6",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163311_721",
+      "review_id": "085",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163311_721_cam0_770nm.jpg",
+          "sha256": "fa1208dd8bbbf7777b3c0f4a7f13c8749c59b0b2e1065406b1ea20bfa57eab2f",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163311_721_cam1_750nm.jpg",
+          "sha256": "65f25442e47ddb95d5f6260289d2e41c21ae4a41bccf010462c29f787be96dbc",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163311_721_cam2_780nm.jpg",
+          "sha256": "e8ba0f019c386b5458d27301b53a2e8e85a282216c728abe133bf8c27e3ebe24",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_163313_777",
+      "review_id": "086",
+      "label": "FIRE",
+      "label_basis": "Enlarged, rotated 770 nm source crop shows flame-like lobes above burn tray; checked against 750/780 nm source-region previews",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_163313_777_cam0_770nm.jpg",
+          "sha256": "ab2ef0ac80a9bf9174a184ca65498ea80bb83bae987488c18e9d651c40bdec4e",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_163313_777_cam1_750nm.jpg",
+          "sha256": "71b1d1fbea4b1d77bea62dec69453e7e551e28cb18acd6162479d756803ea85a",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_163313_777_cam2_780nm.jpg",
+          "sha256": "119e6824804ad1bd8e9dd6a3e675c244d095765098370aae6687869dcc708b67",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 150,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174638_683",
+      "review_id": "087",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174638_683_cam0_770nm.jpg",
+          "sha256": "1861791b73a5976427e8ea7d155771cc7a893584f345369f8afb604f1ab5e624",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174638_683_cam1_750nm.jpg",
+          "sha256": "a4284b1d6949a61f7346ccdb932cf1079da5f64ffd041cae190f570069d2eb5a",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174638_683_cam2_780nm.jpg",
+          "sha256": "7ceba18f33f5a8b1c812a67ba42c434d7fc878d9091f26d43e35b2529bdac6bf",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174641_057",
+      "review_id": "088",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174641_057_cam0_770nm.jpg",
+          "sha256": "70b93ec77c389b9df498ef34cc535f245dbeb33d84aad6247230d0348d0557fa",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174641_057_cam1_750nm.jpg",
+          "sha256": "d3e472daadffbbf1fc437d4e7979a188b56d53a5a0267a5ec805360c4a055a18",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174641_057_cam2_780nm.jpg",
+          "sha256": "043b03f32a7a9a50f4e01b845f10802ad2e26b448566a59181bf9fe7c3052c26",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174643_484",
+      "review_id": "089",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174643_484_cam0_770nm.jpg",
+          "sha256": "e7a6bee7159b10856d5ea5795fd6ae30b310279dd583bfabfb5f80d10a11eae1",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174643_484_cam1_750nm.jpg",
+          "sha256": "c3f65c2183eff0ab9ec1fad09543dde01ebc47c3f7a38c16ec8858513bb418b9",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174643_484_cam2_780nm.jpg",
+          "sha256": "5afeea0936798478e4188b3a85311ca5e5d14c8c81b0a4653fcac34cb35f7192",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 200,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174645_845",
+      "review_id": "090",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174645_845_cam0_770nm.jpg",
+          "sha256": "1c8a245d552f5a2c2fc3e748855bf3986021ec9322e6e5edfbb036b2f1edc4bb",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174645_845_cam1_750nm.jpg",
+          "sha256": "986eaf6294d29a4924701d9d2a649efd80e1dcc02ad189be85be61f3de1c6f35",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174645_845_cam2_780nm.jpg",
+          "sha256": "25dad9b5746e60382bd5c218a6ae7b44cea7221e7a7a5971fe05cc2fad86f0e3",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 400,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174701_978",
+      "review_id": "091",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174701_978_cam0_770nm.jpg",
+          "sha256": "6706634bfab5bd9a3c82a76210987672cd9bc8d9ba215c0e50f6e90106ed5b3b",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174701_978_cam1_750nm.jpg",
+          "sha256": "fdfb3694ba3ebc3117984841bc26da5fa6b4e2178df9942d6e12b0daee0996fe",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174701_978_cam2_780nm.jpg",
+          "sha256": "b41d9364cef33cb88025dda7d09c3864b9f3d9fe33a070ebef83f79c56881f0d",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174704_056",
+      "review_id": "092",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174704_056_cam0_770nm.jpg",
+          "sha256": "c154f36ff06c78e5ccb94fdc9585933d2cf9add4f9e27cc0c62464f1924c4417",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174704_056_cam1_750nm.jpg",
+          "sha256": "5caf6fecf7612bbb3793071fdbda1731d7ce1b11f3b67bb3893d8e38c3bef563",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174704_056_cam2_780nm.jpg",
+          "sha256": "fceb194297c428c8b8d87ec355e6bd4b28213387b02a32622fa5b020566b38eb",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174706_149",
+      "review_id": "093",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174706_149_cam0_770nm.jpg",
+          "sha256": "b73a918329033a04507f8cce62524dfcac5bfc6876d2a82169634c0854973ddf",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174706_149_cam1_750nm.jpg",
+          "sha256": "db1c8cd57e892d7284d7486cf663f7ffbb45689b1736ae4352edd03ac016d4f4",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174706_149_cam2_780nm.jpg",
+          "sha256": "5e98b44b76189078d2c2d9ea40c7bf9925eaeb01d10c6820f8442ab2c4156a01",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174708_189",
+      "review_id": "094",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174708_189_cam0_770nm.jpg",
+          "sha256": "bd8143cb2d5bfd5124c5c2b07e5cc4407cce7b9e8bcd4039f977536915ccff0f",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174708_189_cam1_750nm.jpg",
+          "sha256": "f12aaaf25f80f6f8be853827070ab59949e7076fefe5a952a84ded9017f616d3",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174708_189_cam2_780nm.jpg",
+          "sha256": "d5e8089afcbfadf3e523b5aebd4bd46cf640c5164e64d1216b841a7af9b5941d",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174710_220",
+      "review_id": "095",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174710_220_cam0_770nm.jpg",
+          "sha256": "c26d1bdf30fc31ed05c1806e3c3759d8da894860a9ac74bbfb7b30777536136d",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174710_220_cam1_750nm.jpg",
+          "sha256": "2b3539c124dc7154180c1d007cae7bebd371d5c577cf2c16b13ad0f4301d430b",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174710_220_cam2_780nm.jpg",
+          "sha256": "5863b04c99b01187af3a5ae3ccc0791370fe27d8febb195768623326ee0e68ca",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174712_322",
+      "review_id": "096",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174712_322_cam0_770nm.jpg",
+          "sha256": "a6006de77a610815442a75c6b6951b3b329cfe5ad18407a473f29a0377d52d38",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174712_322_cam1_750nm.jpg",
+          "sha256": "8ddb93345f75419a32c67b4f8b641d725d2a49973e8603d7a745f27d93ddcc9f",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174712_322_cam2_780nm.jpg",
+          "sha256": "290d2268862c51db66db7caad0887f20ec513527a6751f99c5f8c06a272b1596",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174714_355",
+      "review_id": "097",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174714_355_cam0_770nm.jpg",
+          "sha256": "6b6ce1320a27694d1122c3e76734df3927df49c8fe407418afbadb1a72835bec",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174714_355_cam1_750nm.jpg",
+          "sha256": "c88b137291e3e59e21549dba82e399c8011d5ac6677adef0ff7e44eedb2c4a8c",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174714_355_cam2_780nm.jpg",
+          "sha256": "178b7c82a982858c25fa2ed51c77f7c3c6fa8d54f2c56a6f9e4d09380931bc47",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174716_404",
+      "review_id": "098",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174716_404_cam0_770nm.jpg",
+          "sha256": "5771f654b1f53536d8456fc9157ba11574eaa9015c22bb5208b6e03ffb6dc568",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174716_404_cam1_750nm.jpg",
+          "sha256": "6ca0125fab9f32813930cd186e4e64b174b9b7de8c42bab0f7c1f0e36d3347e5",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174716_404_cam2_780nm.jpg",
+          "sha256": "ae13f36aeba9054e70b0b28b56e4803d4ea1a30855e27b4ae92bfd4844feeae0",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174718_526",
+      "review_id": "099",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174718_526_cam0_770nm.jpg",
+          "sha256": "902d626209a34902b316876992780f8b38df453bec4461723a6408ae153c527c",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174718_526_cam1_750nm.jpg",
+          "sha256": "e995945941bd5c3a6574e4f92fafd183e40944c8a5cbb7c390af5f3cb5e9a99b",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174718_526_cam2_780nm.jpg",
+          "sha256": "2f0f64d52c4d93a88f534ea2ef1db506e594ed6588d4b9c239da0cbd3ec2c36b",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174720_576",
+      "review_id": "100",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174720_576_cam0_770nm.jpg",
+          "sha256": "348c30682db06b31e2375f8bf1d3fc821ae3a4f5e87272dd4aa97c3862aeeb06",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174720_576_cam1_750nm.jpg",
+          "sha256": "de570bde2dd2425f8bdb2052c197956f612fcccdc373dc10d7bae27f51b8561e",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174720_576_cam2_780nm.jpg",
+          "sha256": "74fcbb32705a245bdd73f7dfe6ff6ab7660344a7e745bbe2389488664b6ab080",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174722_696",
+      "review_id": "101",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174722_696_cam0_770nm.jpg",
+          "sha256": "67c6f68a12dbfe3c4b81228279880a6c6bd35ba6fa5c16f79a977052e693df72",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174722_696_cam1_750nm.jpg",
+          "sha256": "c86af5b8e567f7676b25bfe9e9c3b75bd91cf5f7dab7a98d41cd94bbaa635c4d",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174722_696_cam2_780nm.jpg",
+          "sha256": "c7423ef0ca904a081164e44dc8c6909c2e61696d4a8e9655ab02b8c20d15adc3",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174724_734",
+      "review_id": "102",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174724_734_cam0_770nm.jpg",
+          "sha256": "4c951da3eed66a0c0dc412bdd3fc96a7ccb28650b0b0257d77dc32b86ca40957",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174724_734_cam1_750nm.jpg",
+          "sha256": "c4c8caf80ea500c49eab44d93516f37ad41728dec6acc6c1df7e43c37357343f",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174724_734_cam2_780nm.jpg",
+          "sha256": "e4fbf584613249af9fc7b908d5d9c8c00a269c3fafbba563664749275fcb7b47",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174726_773",
+      "review_id": "103",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174726_773_cam0_770nm.jpg",
+          "sha256": "6ceb322403c369841e3be93a06eee84f27245ef25ac1d33ae71d890dc4cd5f36",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174726_773_cam1_750nm.jpg",
+          "sha256": "62625157aa19460be9fa694b54170241d29538229f8395db2ea02810d1afa3cf",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174726_773_cam2_780nm.jpg",
+          "sha256": "40a01c46c03545ffa724142143b60dcfd904dec599a900818845fe693d26f21c",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174728_902",
+      "review_id": "104",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174728_902_cam0_770nm.jpg",
+          "sha256": "f67bf40c6a25f6e31d2cbdb8d849b75949f5814b5ca5ac5750156160a0c40e73",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174728_902_cam1_750nm.jpg",
+          "sha256": "149a78b036054db979331e231b16b5a1676c0ee03d277fc4e12232ea7a124daa",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174728_902_cam2_780nm.jpg",
+          "sha256": "d31c833db2b99f73bc786c540b5e2559dc27536766d4a9759cbd64076e4b0f9b",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174730_938",
+      "review_id": "105",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174730_938_cam0_770nm.jpg",
+          "sha256": "2eb6dcad61ce16e061906486a7cce2cdb10c1f7b06df3aacbd18fb0f0f5d0ca6",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174730_938_cam1_750nm.jpg",
+          "sha256": "73b49fd701fc0138b51685845bdc5aa3f7c822e992f1ea23e19c755f30e39d2c",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174730_938_cam2_780nm.jpg",
+          "sha256": "8fadaa76941e06e85721a8ca3affd6235af82ffb018c0ac4836b06def1ea87cf",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 100,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_174904_481",
+      "review_id": "106",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_174904_481_cam0_770nm.jpg",
+          "sha256": "fb3271b4c89970e6a31e08349c5a785a3f716753d1329ba0a807ca2f51007a15",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": null,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_174904_481_cam1_750nm.jpg",
+          "sha256": "370697cda9af25b89ea429ba64aa1686d40c8661740b2411df1f5ca0288c7de8",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": null,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_174904_481_cam2_780nm.jpg",
+          "sha256": "48617b34820773e1109fd069dc0484b1c50d758f5d97e8e2c275428a743edb25",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": null,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_METADATA_MISSING"
+    },
+    {
+      "fixture_id": "20261014_175114_156",
+      "review_id": "108",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175114_156_cam0_770nm.jpg",
+          "sha256": "f47e9ddb6baaf831e48bbc9bc6036cbb229911922927ff972d137612fc5cf4aa",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175114_156_cam1_750nm.jpg",
+          "sha256": "22f539e9a5f6cbd1fb337b19ec34a0dadc3b6b469e24d338a55cbbcfb0d04a8b",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175114_156_cam2_780nm.jpg",
+          "sha256": "255da6e5e30a49ad111c6f7ea29eb916da12ba6d52ee0277a9341a976a223128",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175116_214",
+      "review_id": "109",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175116_214_cam0_770nm.jpg",
+          "sha256": "e016cc2104f965b2fa572012906c0cced4d8e0e6452c068da296870012f41b22",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175116_214_cam1_750nm.jpg",
+          "sha256": "57f26e40053d84c26f7db3acbce129f1de853224b40dbd6291d4ef08a855b675",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175116_214_cam2_780nm.jpg",
+          "sha256": "ee3acdf77d5d008905c72c209ea8b66c5cafa8663a921d4a69f4dd2746e5be01",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175118_228",
+      "review_id": "110",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175118_228_cam0_770nm.jpg",
+          "sha256": "7df8fa013be3f2565f5415a73c6d18c350c462937b05bdbe1b4a33eeb983d605",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175118_228_cam1_750nm.jpg",
+          "sha256": "68d9ab98c0454a6cf248c27aed682faa4179e691fd67a6617a998ea9591eb598",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175118_228_cam2_780nm.jpg",
+          "sha256": "711a75823204c9085af9f5373d1c074ddd96173ef1001288b8369e63e56035d7",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175120_363",
+      "review_id": "111",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175120_363_cam0_770nm.jpg",
+          "sha256": "d616368ce79e0d2ae9ba47d1ecef942c5acc932bd6fc08f1ec06597817b55655",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175120_363_cam1_750nm.jpg",
+          "sha256": "546559dc4c9595b94516c13237f86b828a4c16b44f52b8dd18635f6c9601195c",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175120_363_cam2_780nm.jpg",
+          "sha256": "d800f1676e10f20088a467c9f6dda1424aa20e1c00db3a2654ce33c80855592d",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175122_385",
+      "review_id": "112",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175122_385_cam0_770nm.jpg",
+          "sha256": "145b684e9fc064259d958a40264415eda820379f5b8f813d68ebd12424ed5a3a",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175122_385_cam1_750nm.jpg",
+          "sha256": "f7d660fbe9c831a48bafbcfc9a2e93c94c80efbe7648c7aa227eda041a797fb9",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175122_385_cam2_780nm.jpg",
+          "sha256": "94442602213bcf182fac491e203228227187c01d4a531d2c3b57c2662fc2e1b4",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175124_469",
+      "review_id": "113",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175124_469_cam0_770nm.jpg",
+          "sha256": "28e70dbadf1d0af677001953ff29ec1c05e6fa852865aee6e1e10fc37e533e49",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175124_469_cam1_750nm.jpg",
+          "sha256": "75d0da15bbcf2a5c16947f3cc1113b4d137d0ca263cc7e474017633853d5bba2",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175124_469_cam2_780nm.jpg",
+          "sha256": "71da3cbb4cf1df33067cc0046819f380722fbdd08ed93c4851630606f5500d38",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175126_490",
+      "review_id": "114",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175126_490_cam0_770nm.jpg",
+          "sha256": "2bc2e41b075677eef21f96232e59809bffa3db5a9c7dbb134466f545152319c8",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175126_490_cam1_750nm.jpg",
+          "sha256": "a5ac37eacdf6428c1c0db4384a5e5199185c953e6ab7340a8cc977d98604c69a",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175126_490_cam2_780nm.jpg",
+          "sha256": "3641f135981c6c5e65b866f2bb1ace0b6350f66bb48652373452a25752218f86",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175128_521",
+      "review_id": "115",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175128_521_cam0_770nm.jpg",
+          "sha256": "877faf8b9488896a81115986b060938128fc1e027cb35c246f4cb1bfb9c832a8",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175128_521_cam1_750nm.jpg",
+          "sha256": "60a9b59dbde129d3f2fa71cbd67b73d1221d4f4c58f1e1f09a5a2139aff5e24f",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175128_521_cam2_780nm.jpg",
+          "sha256": "2017a3a3aedd6a4d6ff23440c1fd8a2778c6130011bc3e2ac1a6f6f6d7c00eeb",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175130_617",
+      "review_id": "116",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175130_617_cam0_770nm.jpg",
+          "sha256": "0d9bd53af1d520ebe7895d0d4505405d2d344c1a9ddb6077e7d5827cdd033bc2",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175130_617_cam1_750nm.jpg",
+          "sha256": "72ef8dc1be68e10b36edbf9261b51cad2b84e945caf63d63b567dee37fddf6f0",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175130_617_cam2_780nm.jpg",
+          "sha256": "1fa39958c9c9fd5912a97fb15479b7e664cbfa2e598e7bcc633c2cef075c3823",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175132_640",
+      "review_id": "117",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175132_640_cam0_770nm.jpg",
+          "sha256": "2acab0b575d5dd11b778e72487ae885f8f4c85b417b4e4c8772616f3b12840ac",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175132_640_cam1_750nm.jpg",
+          "sha256": "29aa9a7c33af06628f430e1e35796f2d66ead280b7e8dacd21db21f18b1d041a",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175132_640_cam2_780nm.jpg",
+          "sha256": "cab06ce965fc1e4817110e8fa338c9132ac5eeed78dd922ad817e7e12ab1a8ca",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175134_661",
+      "review_id": "118",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175134_661_cam0_770nm.jpg",
+          "sha256": "4d1bee8cae25da7ea1814f3923427a8fd314d69081bc8542bb73d30e311e3042",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175134_661_cam1_750nm.jpg",
+          "sha256": "9a4ceb904d8f3d27634d2acdde1d80fb849df38948e59be938634b3827d0cf15",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175134_661_cam2_780nm.jpg",
+          "sha256": "14a0dbb4c84b62df41a2cb9e254eef8232ae940d802c3b4a94cdea24bbdaefc8",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175136_761",
+      "review_id": "119",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175136_761_cam0_770nm.jpg",
+          "sha256": "c2ec9bc33ba9d67465f1e1143688437cb098ed8a9abcc8c4855a3c314430b5fe",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175136_761_cam1_750nm.jpg",
+          "sha256": "03ee957f3de4c945d556a7823a22ea5b70b88b8152bc9fc18538920ba1ced7be",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175136_761_cam2_780nm.jpg",
+          "sha256": "1f3806262c1447cde6338c75e1b31622a0433710c17f025d1e8d4c3a0d80f363",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175138_783",
+      "review_id": "120",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175138_783_cam0_770nm.jpg",
+          "sha256": "bf8244022cc34108b5bbf2e10311312bfeb6a86e1fc702bdc4c06eba0bf14fe9",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175138_783_cam1_750nm.jpg",
+          "sha256": "88807b552b94fe79f140dacf7e6d08e397a79c9896a08b4969c8eeaf57d2e0c2",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175138_783_cam2_780nm.jpg",
+          "sha256": "b094698be1ae784484551423619e6e4122512419bb339de0e6ca3d94c5182117",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175140_875",
+      "review_id": "121",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175140_875_cam0_770nm.jpg",
+          "sha256": "d22d252938af1a8431e5f4b42ce8276b664a6078434f33c0dd5adf392d98be01",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175140_875_cam1_750nm.jpg",
+          "sha256": "51c1d46d46def51e54608dd1d5e8963c31c028b421193c4e8ca06754885c6398",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175140_875_cam2_780nm.jpg",
+          "sha256": "24de85d5f2c475093c256ab6bac646d1e68233aa65d7720d8cdecf5dcae6f661",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175142_893",
+      "review_id": "122",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175142_893_cam0_770nm.jpg",
+          "sha256": "638d0eef8999124e4d47e31215e6e558cbbb517ad8726b0247c95b0a3001bb4b",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175142_893_cam1_750nm.jpg",
+          "sha256": "adc8ae5a0bd0ef03d48d74f1af75152ec3f64322f2172dd52af9e5cd3eccb260",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175142_893_cam2_780nm.jpg",
+          "sha256": "90d910082846d18dae5db30b7f69190b2080c0a4fda4173b5d11ba2740e412e4",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175216_213",
+      "review_id": "123",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175216_213_cam0_770nm.jpg",
+          "sha256": "2742582b46775df1f9acbcc42466bb693d5a7d124aa2f45e26c7e67616d5b6f5",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175216_213_cam1_750nm.jpg",
+          "sha256": "cf745aef791f1a25796408e1433cc071eff98a4c6b9c2d1ccfe535342a0c4c36",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175216_213_cam2_780nm.jpg",
+          "sha256": "b47526d7e3adecf87c1a916859e000f7f7993143ec4025f9dfa3c8b3521d4984",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175218_271",
+      "review_id": "124",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175218_271_cam0_770nm.jpg",
+          "sha256": "e3dee42c66fc6095c1bdc5089bb76cf46a8d1f9b104d814f5cccba2d69e7362e",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175218_271_cam1_750nm.jpg",
+          "sha256": "a02b730ca11db2dd9a14180e4b2fe500ee60b113f2427d8b4ef1d5ddfb90b91d",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175218_271_cam2_780nm.jpg",
+          "sha256": "3933643ec912a12e766673e99c177124dcd70d5f8b39e73bc395d3782128b5fa",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175220_286",
+      "review_id": "125",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175220_286_cam0_770nm.jpg",
+          "sha256": "99e6810bf963888dcbea2881cfbb5b07cf7850bbf1f7a06908c630edfd22b65b",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175220_286_cam1_750nm.jpg",
+          "sha256": "e82ee2db23edeb4214a253387d61ce5f47503067f95d870327421e26f9ae9e07",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175220_286_cam2_780nm.jpg",
+          "sha256": "383ec285da08ed23102d99b20cbef09fa1e403ac6d3373aa85a89bcbd5c69fbc",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175222_203",
+      "review_id": "126",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175222_203_cam0_770nm.jpg",
+          "sha256": "e8d08f84422b0e9ee49a468e684a648eee95c58438b44d830f58cfe5d48cbef3",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175222_203_cam1_750nm.jpg",
+          "sha256": "5fd2b7ac5631e8af6e0c9e2544f565223b450f327aee01a10310ac3e59d5cfab",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175222_203_cam2_780nm.jpg",
+          "sha256": "1823cfc93984f38589dc2c5d6a44f82a28463db1b0dfcaa90716216f4bcb60cb",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175224_229",
+      "review_id": "127",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175224_229_cam0_770nm.jpg",
+          "sha256": "b4506a67b8ab72199d437ce7dbdc2d355046bb2eae1265de2c5a2d910e0c9c6c",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175224_229_cam1_750nm.jpg",
+          "sha256": "13a4a26469c084705b3ecf0577d8f8df449059755f47fc4c93e0e8a1646d3a2c",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175224_229_cam2_780nm.jpg",
+          "sha256": "ca11795d9f415c5b5c89b64c9904dff1752479f34363c60365642ee0be23211e",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175226_290",
+      "review_id": "128",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175226_290_cam0_770nm.jpg",
+          "sha256": "c3e711c9c96157df3cc5818aed1a3c05852c39cb757898264dd00e52145709e3",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175226_290_cam1_750nm.jpg",
+          "sha256": "9b60d755d18445a836aa0ca6905a53baf2cae7ec9ad663bbc591e3c41d76d1b4",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175226_290_cam2_780nm.jpg",
+          "sha256": "296c1010deb3fe1063c8cc721e3bf3e302e5e1942933fc7cb6cafc37ceb9f8ba",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175230_335",
+      "review_id": "130",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175230_335_cam0_770nm.jpg",
+          "sha256": "47609f830b7e81e05913d5cb55394f59748dd33c02f821d62bfcd6c200b489cf",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175230_335_cam1_750nm.jpg",
+          "sha256": "7b2c054b4f60fdac6f829368c1d344c101a2fa7cad6a79820871224598dfc047",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175230_335_cam2_780nm.jpg",
+          "sha256": "2b1fd5bbd7ceac0792f1eeae256abf4b1a366efddf22e1f25e1aa5479870b1bb",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    },
+    {
+      "fixture_id": "20261014_175232_216",
+      "review_id": "131",
+      "label": "FIRE",
+      "label_basis": "Compact irregular flame-like bright feature at apparatus; morphology varies across sequential captures",
+      "input_source": "STORED_FIXTURE",
+      "camera_capture_performed": false,
+      "channels": {
+        "770": {
+          "path": "images/20261014_175232_216_cam0_770nm.jpg",
+          "sha256": "fa59f1973f7ba2d5797cb615641c0f64a4b833f3f1b4398973903d790dbbee44",
+          "port": 0,
+          "wavelength_nm": 770,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "750": {
+          "path": "images/20261014_175232_216_cam1_750nm.jpg",
+          "sha256": "be4b6466407fcad5024b008fb67719d7dd1cf2c7839531aa37e36f7014ebfefe",
+          "port": 1,
+          "wavelength_nm": 750,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        },
+        "780": {
+          "path": "images/20261014_175232_216_cam2_780nm.jpg",
+          "sha256": "1647ee4a4df72f4a679de34641742e41562a299a63fe80c0b064aee527177ea7",
+          "port": 2,
+          "wavelength_nm": 780,
+          "width": 1456,
+          "height": 1088,
+          "encoding": "JPEG_RGB_CONTAINER",
+          "linearity": "UNVERIFIED",
+          "exposure_us": 50,
+          "gain": null
+        }
+      },
+      "calibration_status": "COMPATIBILITY_UNVERIFIED",
+      "metadata_status": "BRACKET_EXPOSURE_PRESENT_GAIN_UNKNOWN"
+    }
+  ],
+  "excluded": [
+    {
+      "capture_id": "20261014_155643_978",
+      "review_id": "032",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155651_562",
+      "review_id": "033",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155653_589",
+      "review_id": "034",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155655_631",
+      "review_id": "035",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155657_620",
+      "review_id": "036",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155659_611",
+      "review_id": "037",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155701_987",
+      "review_id": "038",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155703_975",
+      "review_id": "039",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155706_021",
+      "review_id": "040",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155708_016",
+      "review_id": "041",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155710_004",
+      "review_id": "042",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155712_351",
+      "review_id": "043",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155714_346",
+      "review_id": "044",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155716_378",
+      "review_id": "045",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155718_368",
+      "review_id": "046",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155720_358",
+      "review_id": "047",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155722_721",
+      "review_id": "048",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155724_711",
+      "review_id": "049",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155726_763",
+      "review_id": "050",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155728_759",
+      "review_id": "051",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_155730_751",
+      "review_id": "052",
+      "reason": "Nearly black frame; dark/calibration capture or insufficient scene signal"
+    },
+    {
+      "capture_id": "20261014_162754_869",
+      "review_id": "053",
+      "reason": "Faint localized 770 nm feature at burn apparatus; flame versus reflection/embers needs operator context"
+    },
+    {
+      "capture_id": "20261014_174917_554",
+      "review_id": "107",
+      "reason": "Smoke and/or faint residual bright points; active flame versus embers/extinguished uncertain"
+    },
+    {
+      "capture_id": "20261014_175228_316",
+      "review_id": "129",
+      "reason": "Smoke and/or faint residual bright points; active flame versus embers/extinguished uncertain"
+    },
+    {
+      "capture_id": "20261014_175234_243",
+      "review_id": "132",
+      "reason": "Smoke and/or faint residual bright points; active flame versus embers/extinguished uncertain"
+    },
+    {
+      "capture_id": "20261014_175236_264",
+      "review_id": "133",
+      "reason": "Smoke and/or faint residual bright points; active flame versus embers/extinguished uncertain"
+    },
+    {
+      "capture_id": "20261014_175238_382",
+      "review_id": "134",
+      "reason": "Smoke and/or faint residual bright points; active flame versus embers/extinguished uncertain"
+    },
+    {
+      "capture_id": "20261014_175240_409",
+      "review_id": "135",
+      "reason": "Smoke and/or faint residual bright points; active flame versus embers/extinguished uncertain"
+    },
+    {
+      "capture_id": "20261014_175242_294",
+      "review_id": "136",
+      "reason": "Smoke and/or faint residual bright points; active flame versus embers/extinguished uncertain"
+    },
+    {
+      "capture_id": "20261014_175244_315",
+      "review_id": "137",
+      "reason": "Smoke and/or faint residual bright points; active flame versus embers/extinguished uncertain"
+    }
+  ]
+}
