@@ -23,9 +23,9 @@ Flight exposes PAYLOAD_FIRE_CHECK through the bounded real RF path. Bench expose
 PAYLOAD_PING, PAYLOAD_IDENT, PAYLOAD_STATUS_QUERY, PAYLOAD_HEARTBEAT_QUERY and
 PAYLOAD_FIRE_CHECK through serial/CAN. See [fire-check operation](FIRE_CHECK.md).
 
-## IHU0.13.0 quiet-output policy
+## IHU 0.13.0 quiet-output policy
 
-With bench bridge0.4.0, all IHU streams start OFF. The bridge checks `outputs`
+With bench bridge 0.4.0, all IHU streams start OFF. The bridge checks `outputs`
 and forwards periodic EPS only when `output umb_telem on` has been deliberately
 selected. Disabling it stops new forwarding; old ground values expire. This
 policy is separate from explicit PAYLOAD_* command replies and the bounded RF

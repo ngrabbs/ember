@@ -9,7 +9,7 @@ clears all switches. Flight builds are inactive stubs and restrict operation
 when qualified flight history is unavailable. No physical test jumper is used.
 
 Read the [runtime matrix, entry gates and migration procedure](../../docs/architecture/operations/04-ihu-runtime-policy.md).
-Pair with bench bridge0.4.0; periodic EPS forwarding is now permission-gated.
+Pair with bench bridge 0.4.0; periodic EPS forwarding is now permission-gated.
 The old EPS-only `telem` timer, CAN echo telemetry shortcuts and LTE queue
 console/pumps are retired. Older sections below record historical releases
 and hardware evidence; their retired command instructions do not apply to0.13.0.
@@ -419,7 +419,7 @@ command is added. Production FreeRTOS scheduling remains a separate integration.
 
 [Saved proof](../../ground/uhf/results/2026-10-03/native-autotelem/result.json):
 three native packets at20-second intervals with passive USB observation, followed
-by one further packet while the USB console was closed/DTR released for25 seconds.
+by one further packet while the USB console was closed/DTR released for 25 seconds.
 All four were delivered over CAN→SDRB→UHF→LibreSDR→Yamcs. The first three have
 IHU returned-byte evidence; the fourth has native counter/closed-console timing
 and byte identity at CAN/socket/RF/archive. The physical cable stayed connected.
@@ -452,7 +452,7 @@ Health packet producers from the deployed can-bench-v3 are preserved.
 
 The default is IDLE, including after resets. With COMMS `a` service running and
 normal CAN/HELLO established, `uhf run 120 10` produces heartbeat/system/EPS
-cycles every10 seconds for120 seconds. One packet is in flight at a time and
+cycles every 10 seconds for 120 seconds. One packet is in flight at a time and
 results are checked before advancing. `status` reports progress; `uhf stop`
 stops future production, while an admitted packet may finish. Stop COMMS too
 for an immediate RF abort. Bad/missing results or producer failure enter FAULT;

@@ -2,8 +2,8 @@
 
 [Operator guides](README.md) · [Mode/output matrix and entry gates](../architecture/operations/04-ihu-runtime-policy.md)
 
-This guide describes the IHU0.13.0 source candidate and bench bridge0.4.0.
-It does not claim those versions are flashed. Earlier0.12.0 RF validation is
+This guide describes the IHU 0.13.0 source candidate and bench bridge 0.4.0.
+It does not claim those versions are flashed. Earlier 0.12.0 RF validation is
 recorded in the [fire-check runbook](../../ground/yamcs/FIRE_CHECK.md).
 The active controller source is `firmware/can_feather_bench`; the older
 FreeRTOS `firmware/ihu` has a separate [UART guide](ihu-debug-uart.md).
@@ -59,15 +59,15 @@ is not supported. Every boot and accepted mode change clears all six.
 | `mode startup` / `mode commissioning` / `mode nominal` | GROUND_TEST simulation only; clear switches, no automatic deployment or mission routine; FLIGHT rejects these exits |
 | `outputs` | Read six effective flags |
 | `output NAME on` / `output NAME off` | Set one named switch; RF OFF stops future telemetry submission/unsent fragments; already admitted remote packets may finish |
-| `faults` | Read latest16 volatile fault records; no persistent history claimed |
+| `faults` | Read latest 16 volatile fault records; no persistent history claimed |
 | `help` | Read available command spellings |
 
 `cli_debug` and `umb_debug` enable tagged asynchronous diagnostic copies.
 `cli_telem` enables a human-readable health summary; `umb_telem` enables
 structured `ihu-health-v1` summaries and permits bridge EPS forwarding.
 These are logical formats on the current USB connection. Summaries and
-internal EPS reads run about every5 seconds when transport is idle. Discovery
-cycles one entry every2 seconds. Polling can be deferred during application/RF
+internal EPS reads run about every 5 seconds when transport is idle. Discovery
+cycles one entry every 2 seconds. Polling can be deferred during application/RF
 work. EPS validity and discovery presence are distinct forms of evidence.
 
 ## Explicit subsystem work
@@ -82,7 +82,7 @@ work. EPS validity and discovery presence are distinct forms of evidence.
 | `eps json` | Explicit19-register PEC-checked read; full valid transport read or failure, never a partial JSON |
 | `eps adc on` / `eps adc off` | Explicit CONFIG_BITS force-ADC override with readback; does not change charging policy |
 | `payload ident` / `payload status` / `payload heartbeat` | Request payload diagnostics after `hello payload` |
-| `payload fire-check` | Request a fire result; payload0.2.0 returns NO_FIRE/STATIC_STUB |
+| `payload fire-check` | Request a fire result; payload 0.2.0 returns NO_FIRE/STATIC_STUB |
 | `lte firmware` / `lte modem firmware` / `lte status` / `lte diagnostics` | Query selected LTE route; no RF window is started by these queries |
 | `lte N` | Explicit Walter RF window,0 stops, maximum120 seconds; does not itself send telemetry |
 
@@ -109,7 +109,7 @@ Do not let a live receiver and RF command service concurrently own LibreSDR.
 ## Removed controls
 
 The old `telemetry`, `eps telemetry`, `telem on/off/status`, `eps enqueue` and
-`lte queue ...` commands are removed from IHU0.13.0. There is no hidden EPS-only
+`lte queue ...` commands are removed from IHU 0.13.0. There is no hidden EPS-only
 timer or queued LTE sender. Historical test artifacts do not enable those paths.
 Do not apply these instructions to the older FreeRTOS CLI or LTE Feather role.
 

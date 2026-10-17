@@ -56,7 +56,7 @@ command. These control streams, not reception or a solicited command response.
 | Switch | ON permits | OFF behavior |
 |---|---|---|
 | cli_debug | Human-readable asynchronous diagnostic lines, tagged CLI_DEBUG | No unsolicited CLI diagnostics |
-| cli_telem | Human-readable health summary approximately every5 seconds when idle | No periodic human-readable summary |
+| cli_telem | Human-readable health summary approximately every 5 seconds when idle | No periodic human-readable summary |
 | umb_debug | Asynchronous wired diagnostic lines tagged UMB_DEBUG | No unsolicited wired diagnostics |
 | umb_telem | Structured `ihu-health-v1` summaries and the host's periodic EPS forwarding | No periodic structured summary or bridge EPS forwarding |
 | uhf_telem | Explicit bounded UHF telemetry submissions/runs | Refuse new UHF telemetry; stop its producer and unsent fragments |
@@ -109,10 +109,10 @@ for reference, but the runtime has no legacy timer or LTE queue pump.
 
 ## Sampling, reporting and fault history
 
-Internal EPS readout is sampled approximately every5 seconds while transport
+Internal EPS readout is sampled approximately every 5 seconds while transport
 is idle, regardless of output flags. A failed full read invalidates the cache;
 its transition records a fault. Discovery visits one of five entries every
-2 seconds when idle (roughly10 seconds per cycle). EPS discovery uses the
+2 seconds when idle (roughly 10 seconds per cycle). EPS discovery uses the
 housekeeping sample instead of a second register-read task. Radio/application
 work defers sampling and discovery; rates are best effort, not deadlines.
 Presence discovery is not detailed subsystem telemetry or a valid battery
@@ -120,15 +120,15 @@ measurement. CLI/umbilical summaries retain EPS validity/sample time and
 COMMS/LTE/payload discovery states. The existing EPS JSON/decoder retains ADC,
 chemistry, cell-count and sense-resistor qualification rules.
 
-The fault ring retains the latest16 records in RAM: 1=essential CAN boot check,
+The fault ring retains the latest 16 records in RAM: 1=essential CAN boot check,
 2=EPS read failure transition, 3=CAN TX failure, 4=timeout/cancelled unsent
 telemetry. `faults` is an explicit reply. History is not persistent and does
 not implement flight recovery or power protection.
 
 ## Ground bridge and migration
 
-Install IHU0.13.0 together with bench bridge0.4.0. With `--poll-eps`, the bridge
-checks `outputs` approximately every5 seconds between commands and reads/
+Install IHU 0.13.0 together with bench bridge 0.4.0. With `--poll-eps`, the bridge
+checks `outputs` approximately every 5 seconds between commands and reads/
 forwards EPS only while umb_telem=1. OFF, an unknown policy or a policy-query
 failure never falls back to streaming. Ground values then expire normally.
 A manual `eps json` is still a solicited diagnostic reply. Other PAYLOAD_*
@@ -140,7 +140,7 @@ image. Reopen one console owner, confirm SAFE/GROUND_TEST and all outputs OFF,
 then deliberately enable only the wanted channels. Existing RF command and
 live telemetry services still require coordinated radio ownership.
 
-This PR is source/build validation only. Earlier0.12.0 OTA records establish
-that earlier deployment; they do not qualify0.13.0 hardware behavior. Validate
+This PR is source/build validation only. Earlier 0.12.0 OTA records establish
+that earlier deployment; they do not qualify 0.13.0 hardware behavior. Validate
 quiet boot, each switch, OFF during work, reset defaults, solicited replies,
 EPS validity and a bounded RF regression before replacing a running bench.

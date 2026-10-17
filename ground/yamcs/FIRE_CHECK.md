@@ -1,11 +1,11 @@
 # Commanded payload fire check
 
-**IHU0.13.0 / bridge0.4.0:** [quiet-output policy](../../docs/architecture/operations/04-ihu-runtime-policy.md).
+**IHU 0.13.0 / bridge 0.4.0:** [quiet-output policy](../../docs/architecture/operations/04-ihu-runtime-policy.md).
 Fire-check command replies remain available with all six streams OFF. Existing
 0.12.0 OTA evidence below remains historical;0.13.0 has not been deployed.
 
-Versions: IHU0.12.0, payload0.2.0, COMMS0.31.0, serial bridge0.3.0,
-RF command bridge0.1.0; ground release1.6.0. This release uses an explicit
+Versions: IHU 0.12.0, payload 0.2.0, COMMS 0.31.0, serial bridge 0.3.0,
+RF command bridge 0.1.0; ground release 1.6.0. This release uses an explicit
 STATIC_STUB returning NO_FIRE. The camera/detection algorithm does not run.
 
 Select PAYLOAD_FIRE_CHECK in the instance's realtime command page. Inspect
@@ -44,7 +44,7 @@ never confuse the LTE Feather's historical filename with COMMS. Install the
 payload runtime on .253, ground/ember plus fire-arm on .252, and ground/ember,
 ground/bpsk plus fire-uplink on .251. Run prepare_operational.py against the
 existing runtime, rebuild Java, install both display buckets and audit each
-instance as release1.6.0. Preserve archive volumes and the previous manifests.
+instance as release 1.6.0. Preserve archive volumes and the previous manifests.
 Stop RF/arming services before manually accessing their radio or COMMS port.
 
 ## Verified deployment
