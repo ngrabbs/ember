@@ -72,3 +72,17 @@ loading, and this inter-capacitor node has no intentional DC reference. Its
 reported mean is not an established transistor bias voltage. No C7 replacement
 is justified by this measurement alone. Next probe C83 pad 1 / R33 pad 1 at
 Q4 base to establish the tripler input drive.
+
+## Q4 base / C83 pad 1
+
+User confirmed probe positioning at Q4 base. Initial 0.2 V/div acquisition
+clipped at the lower display limit; automatic Vavg/Vpp returned 9.9E37 and
+are invalid. Repeated at 0.5 V/div without requesting a probe move: scope
+reports 2.50 Vpp, mean −0.366 V; exported waveform extrema −1.66/+0.82 V.
+A near-145 MHz periodic drive is present. Positive limiting is consistent
+with base-emitter conduction, not proof of adequate 435 MHz mixer drive.
+Probe loading and separately acquired node amplitudes prevent treating their
+ratios as calibrated insertion loss/gain. Both bounded windows completed with
+verified shutdown; tinySA output remained off. Next: C86 pad 1 / Q4 collector,
+supplied from +5V through L18. The DS1202Z-E bandwidth cannot establish the
+absolute 435 MHz LO amplitude with this probe arrangement.
