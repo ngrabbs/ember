@@ -413,3 +413,22 @@ bench payloads, not spacecraft telemetry and not evidence of command handling.
 Host simulation covers a real IF at 1.0/1.391/1.7 kHz with the nominal analog LPF,
 quantization and noise, plus timing/capture-integrity failures and noise rejection.
 Hardware packet reception has not yet been demonstrated.
+
+### 0.27.0 captured onboard DBPSK diagnostic
+
+`R` still acquires 32768 samples in the existing bounded RX window, then verifies
+clock shutdown and dumps the raw capture. It now also attempts a fixed-memory
+integer DBPSK decode after shutdown. Bad sample timing or ADC clipping rejects
+the capture. Decoding searches 400–2600 Hz in 25 Hz increments and eight timing
+hypotheses, stops at the first outer CRC32/native CRC16-valid telemetry frame,
+and has a three-second deadline checked between frequency candidates. Any
+console byte cancels decoding. CAN service resumes after this diagnostic.
+
+The reported `mixer_hz` is the first successful search setting, **not a measured
+carrier frequency**. Successful decode prints bytes only: `fixture_only=1
+ dispatch=0`. Commands are rejected; no RF response, CAN forwarding or Yamcs
+forwarding occurs. This remains a manually triggered capture diagnostic, not a
+continuous command receiver. Three recorded hardware captures and synthetic
+frequency/timing/noise/corruption tests run via
+`python3 firmware/transceiver_bringup/tests/rx_decode_check.py`; hardware runtime
+and a new live decode must be verified before calling the installed path proven.

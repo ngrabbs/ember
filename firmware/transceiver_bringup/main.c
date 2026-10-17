@@ -32,6 +32,7 @@ static bool disable_clocks(void) {
 #include "clock_test.h"
 #include "rx_test.h"
 #include "bpsk_packet.h"
+#include "rx_decode.h"
 #include "bpsk_emit.h"
 #include "rf_bridge.h"
 static void bpsk_test(unsigned drive) {
@@ -66,6 +67,10 @@ static bool rx_capture(void) {
     rx_elapsed=time_us_64()-start;
     return true;
 }
+static uint64_t rx_decode_deadline;
+static bool rx_decode_continue(void) {
+    return time_us_64()<rx_decode_deadline && getchar_timeout_us(0)<0;
+}
 static void rx_test(bool lo, bool packet_capture) {
     rx_requested=packet_capture ? 32768 : 4096;
     rx_count=rx_late=0; rx_elapsed=0;
@@ -82,6 +87,24 @@ static void rx_test(bool lo, bool packet_capture) {
            rx_count,(unsigned long long)rx_elapsed,rx_late,low,high,(unsigned long)sum);
     for(unsigned i=0;i<rx_count;++i)printf("%03x",rx_samples[i]);
     printf("\n");
+    if(lo && packet_capture) {
+        uint64_t expected=(uint64_t)(rx_requested-1)*125;
+        if(rx_count!=rx_requested || rx_late || rx_elapsed+2000<expected ||
+           rx_elapsed>expected+2000 || !low || high>=4095) {
+            printf("[rx_decode] rejected capture timing or clipping\n");
+            return;
+        }
+        rd_result result={0};uint64_t started=time_us_64();
+        rx_decode_deadline=started+3000000;
+        bool found=rd_decode(rx_samples,rx_count,&result,rx_decode_continue);
+        printf("[rx_decode] found=%u elapsed_us=%llu fixture_only=1 dispatch=0",
+               found,(unsigned long long)(time_us_64()-started));
+        if(found) {
+            printf(" sequence=%lu mixer_hz=%u packet_hex=",(unsigned long)result.sequence,result.frequency);
+            for(unsigned i=0;i<result.size;i++)printf("%02x",result.packet[i]);
+        }
+        printf("\n");
+    }
 }
 
 /* Data-input measurement only: never enables a clock or RF path. */
@@ -449,7 +472,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v26] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
+        printf("[y24-safe-v27] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());
