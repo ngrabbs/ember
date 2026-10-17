@@ -310,3 +310,29 @@ Final clocks mask FF, controls 80/80/80, CAN A NORMAL; finite RF bursts ended.
 No IHU command execution, CAN forwarding, RF reply or Yamcs forwarding occurred.
 Next: connect the validated PING to the IHU command/response path, then verify
 its genuine response over RF. Continuous RX and broader qualification remain open.
+
+## RF PING forwarded to the real IHU command engine
+
+Installed COMMS 0.29.0 and IHU 0.10.0, both clean firmware source 08b3620,
+after full-flash backups and readback verification. IHU boot 2786831095;
+COMMS boot 3644629636. The initial IHU load attempt immediately after backup
+found no accessible device during USB re-enumeration; a subsequent load verified
+successfully. LTE firmware was not changed.
+
+Conducted uplink sequence 1931, native epoch 1381519409 / transaction 1, decoded
+on COMMS and forwarded once on dedicated CAN 0x730. IHU generated a native
+COMMAND_RESPONSE (kind 2, message 49), PING COMPLETED, reason NONE, and returned
+it on 0x731. COMMS validated and held exactly the same 43 bytes. Independent
+native codec validation confirms IHU source/boot and transaction identity.
+Both endpoints report normal CAN; IHU counters show no TX failures/timeouts,
+RX errors or fragment failures. No RF return was automatically transmitted.
+
+Host integration exercises actual IHU command engine, fragmentation, duplicate
+caching, response correlation and malformed-route/unsupported-command rejection.
+Startup tests passed. Both Pico builds passed warnings-as-errors. The isolated
+ground test receiver is now 2.3.0 with native response decoding; 15 waveform,
+ADC and modem tests pass. Production live receiver service remains unchanged.
+
+User selected OTA for the return test. Requested removal of the conducted link,
+UHF antennas on COMMS J9 and LibreSDR RXA approximately three feet apart, TXRA
+unconnected, scope probe lifted. RF return awaits physical setup confirmation.
