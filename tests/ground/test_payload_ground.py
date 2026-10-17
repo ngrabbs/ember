@@ -152,6 +152,14 @@ class SerialEpsMonitor(unittest.TestCase):
             EpsMonitor(console,packets.append,cells=2,rsnsb=.01,rsnsi=.01).poll()
             self.assertFalse(packets)
 
+    def test_permission_timeout_does_not_emit_a_cached_packet(self):
+        from payload_bridge import EpsMonitor
+        class Unavailable:
+            def command(self,*a,**k):raise UnknownOutcome('policy timeout')
+        packets=[]
+        EpsMonitor(Unavailable(),packets.append,cells=2,rsnsb=.01,rsnsi=.01).poll()
+        self.assertFalse(packets)
+
     def test_disconnect_propagates_for_service_reconnect(self):
         from payload_bridge import EpsMonitor
         class Disconnected:

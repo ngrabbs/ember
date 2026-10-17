@@ -194,7 +194,11 @@ class EpsMonitor:
         try:
             # Fail closed if policy is unavailable; never infer permission from a cached readout.
             policy=self.console.command('outputs',timeout=2)
-            if not re.search(r'(?:^| )umb_telem=1(?: |$)',policy):return
+        except RuntimeError as error:
+            print(json.dumps({'eps_poll':'permission_unavailable','reason':str(error)}),flush=True)
+            return
+        if not re.search(r'(?:^| )umb_telem=1(?: |$)',policy):return
+        try:
             line=self.console.command('eps json',timeout=2)
             self.state.accept(line.encode(),time.monotonic())
         except RuntimeError as error:
