@@ -192,4 +192,8 @@ with tempfile.TemporaryDirectory() as directory:
     (root/'check.c').write_text(harness)
     subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror','-I'+str(root),'-I'+str(src),'-I'+str(src.parent/'comms_transport'),str(root/'check.c'),'-o',str(root/'check')],check=True)
     subprocess.run([str(root/'check')],check=True)
+    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror','-Wno-unused-function',
+                    '-I'+str(root),'-I'+str(src),'-I'+str(src.parent/'comms_transport'),
+                    str(src/'tests/on_demand.c'),'-o',str(root/'on-demand')],check=True)
+    subprocess.run([str(root/'on-demand')],check=True)
 print('PASS: ordered pad nets, safe output initialization, clock-disable faults, CS independence, loopback payload/timeout/mode faults')

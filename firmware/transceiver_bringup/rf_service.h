@@ -20,19 +20,22 @@ static bool rf_reply_send(const ul_packet *request,uint8_t type,uint8_t status) 
 }
 /* g: collect for 10s, then send at most four queued frames, then stop.
  * CAN is quiesced during RF; no reception or automatic retry during draining. */
-static bool rf_service_window(bool automatic) {
+enum { RF_BATCH, RF_TIMED, RF_ON_DEMAND };
+static bool rf_service_window(unsigned mode) {
+    bool automatic=mode==RF_TIMED,on_demand=mode==RF_ON_DEMAND;
+    if(on_demand && !rf_queue.count)return true;
     static cf_reader f;static ul_reader reader;static ul_packet in;
     static uint8_t native[BPSK_NATIVE_MAX];
-    bool abort=false,ok=true,identity_sent=false;unsigned attempts=0;
+    bool abort=false,ok=true,identity_sent=false,rf_failed=false;unsigned attempts=0;
     static uint32_t identity_sequence;
     const uint64_t lease_end=time_us_64()+180000000;
-    printf("[uhf] mode=%s boot_resume=0 max_frames=%u\n",automatic?"TIMED180":"BATCH",automatic?96:5);
+    printf("[uhf] mode=%s boot_resume=0 max_frames=%u\n",on_demand?"ON_DEMAND":automatic?"TIMED180":"BATCH",automatic?96:5);
     do {
     memset(&f,0,sizeof(f));
-    if(!(automatic && (can_read(14,0x0e)&0xe0)==0) && !rf_bus_open()){ok=false;break;}
+    if(!((automatic || on_demand) && (can_read(14,0x0e)&0xe0)==0) && !rf_bus_open()){ok=false;break;}
     uint64_t end=automatic?lease_end-2500000:time_us_64()+10000000;
-    printf("[uhf] %s capacity=4; any console byte cancels\n",automatic?"LISTEN":"COLLECT max10s");
-    while(time_us_64()<end) {
+    if(!on_demand)printf("[uhf] %s capacity=4; any console byte cancels\n",automatic?"LISTEN":"COLLECT max10s");
+    while(!on_demand && time_us_64()<end) {
         if(getchar_timeout_us(0)>=0){abort=true;break;}
         if((can_read(14,0x0e)&0xe0)!=0 || can_read(14,0x2d)){ok=false;break;}
         uint8_t flags=can_read(14,0x2c);
@@ -83,7 +86,7 @@ static bool rf_service_window(bool automatic) {
             printf("\n");
             packet_frame_size=bridge_frame(packet_frame,native,n,0x80000000u|(identity_sequence&0x7fffffffu));
             ++attempts;
-            if(!packet_frame_size || !clock_window_drive(true,false,bpsk_emit,1))abort=true;
+            if(!packet_frame_size || !clock_window_drive(true,false,bpsk_emit,1)){abort=true;rf_failed=true;}
             identity_sent=!abort;
             /* Recheck abort/lease between the two separately bounded bursts. */
             if(getchar_timeout_us(0)>=0 || (automatic && (time_us_64()+2500000>=lease_end || attempts>=96)))abort=true;
@@ -95,7 +98,7 @@ static bool rf_service_window(bool automatic) {
             printf("\n");
             ++attempts;
             bool sent=packet_frame_size && clock_window_drive(true,false,bpsk_emit,1);
-            result=sent?UHF_OK:UHF_FAILED;if(!sent)abort=true;
+            result=sent?UHF_OK:UHF_FAILED;if(!sent){abort=true;rf_failed=true;}
         }
         bool delivered=false;
         if(ok && rf_bus_open()) {
@@ -109,12 +112,13 @@ static bool rf_service_window(bool automatic) {
     }
     } while(automatic && ok && !abort && attempts<96 && time_us_64()+2500000<lease_end);
     gpio_put(10,false);gpio_put(16,false);gpio_put(2,true);
-    printf("[uhf] STOP queued=0 TX=0\n");return rf_bus_close() && ok;
+    printf("[uhf] STOP queued=0 TX=0\n");return rf_bus_close() && ok && !rf_failed;
 }
 
-static bool rf_service(void) {return rf_service_window(false);}
+static bool rf_service(void) {return rf_service_window(RF_BATCH);}
 
-/* Always-on CAN control plane. No RF admission while the explicit service is off. */
+/* Healthy idle CAN accepts validated IHU telemetry without a USB console lease.
+ * Admission alone queues work; main drains it through bounded RF windows. */
 static bool can_idle_poll(void) {
     static cf_reader fragments;
     if((can_read(14,0x0e)&0xe0)!=0 || can_read(14,0x2d))return false;
@@ -142,7 +146,15 @@ static bool can_idle_poll(void) {
         for(size_t i=0;i<fragments.used;i++)if(ul_feed(&reader,fragments.wire[i],0,&in))count++;
         if(count!=1 || reader.used || reader.discard || in.version!=1 || in.origin!=in.sender ||
            (uint16_t)in.request!=fragments.token)continue;
-        if(in.type==CF_UHF_SEND)uhf_reply(&in,responder_boot,CF_UHF_REJECTED,UHF_DISABLED,&out);
+        if(in.type==CF_UHF_SEND) {
+            static uint8_t native[BPSK_NATIVE_MAX];size_t native_size;uint32_t request;
+            uint8_t status=UHF_INVALID,type=CF_UHF_REJECTED;
+            if(bridge_telemetry_type(&fragments,native,&native_size,&request,true))
+                type=rq_admit(&rf_queue,&in,&status);
+            uhf_reply(&in,responder_boot,type,status,&out);
+            printf("[uhf] admission request=%lu type=%02X status=%u queued=%u on_demand=1\n",
+                (unsigned long)in.request,type,status,rf_queue.count);
+        }
         else ul_reply(&in,responder_boot,&out);
         size_t size=ul_encode(&out,wire);
         if(!size || !hello_send(wire,size,in.request,time_us_64()+500000))return false;

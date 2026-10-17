@@ -1,9 +1,24 @@
 # Y24 transceiver bring-up
 
-Original Pico only. This deliberately bounded image is separate from the legacy
-`comms` application. It holds TX/RX inactive, both MCP25625 transceivers in standby,
-and disables Si5351 outputs at boot and while idle. External CAN operation is limited to
-explicit console test windows: `l`, `n`, and `h` (see below).
+Original Pico only. This image is separate from the legacy `comms` application.
+Current release: **0.32.0**. After startup checks, CAN A stays available and RF
+stays muted while idle. Healthy COMMS accepts validated IHU UHF telemetry at
+any time; no COMMS console `a`/`g` enable is required. IHU 0.13.0 still controls
+telemetry permission through `output uhf_telem on` and starts work with a
+single `uhf heartbeat` or bounded `uhf run SECONDS PERIOD`.
+
+Each accepted request uses the existing queue, duplicate/result history and
+bounded RF bursts (a firmware identity followed by the requested telemetry).
+CAN is quiesced during each burst and resumes afterward. Local completion is
+not a ground acknowledgement. No automatic retry or periodic RF is started by
+COMMS. Native packet CRC/schema/source checks still apply; CAN or RF/clock
+failures latch the board unavailable until reboot. Idle clock-disable failure
+also latches that fault. The boot state contains no queued work.
+
+USB RF commands remain available for diagnostic tests; they are not required
+for IHU UHF operation. Ground fire-check reception still uses its separate
+receive/reply path. The versioned sections below preserve historical behavior;
+in particular the v19–v21 manual admission gate is superseded by 0.32.0.
 
 Version 3 performs one boot-time independent-register test using opposite
 patterns in inactive TXB0D0 RAM, restores those bytes, then runs one internal

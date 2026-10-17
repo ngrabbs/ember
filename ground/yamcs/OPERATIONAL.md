@@ -32,6 +32,16 @@ policy is separate from explicit PAYLOAD_* command replies and the bounded RF
 command session. See the [mode/output matrix](../../docs/architecture/operations/04-ihu-runtime-policy.md).
 The installation history below describes earlier always-polling bridge versions.
 
+## IHU-requested UHF telemetry
+
+COMMS 0.32.0 accepts validated UHF telemetry over healthy CAN without opening
+its USB console window. In the sole IHU console, enable `output uhf_telem on`,
+obtain `hello comms`, wait for confirmation, then issue `uhf heartbeat` or
+`uhf run 60 10`. COMMS transmits bounded bursts and returns to muted idle.
+The flight receiver must independently own the ground radio and be running;
+local RF completion does not establish ground reception. The fire-check
+receive/reply service remains a separate path.
+
 ## Serial ownership and EPS
 
 `ember-bench-bridge.service` on m75q exclusively owns the physical IHU console.
