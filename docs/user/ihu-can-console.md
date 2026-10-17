@@ -94,8 +94,13 @@ the separately bounded receive/reply session. No automatic operation retry.
 
 ## Explicit RF telemetry
 
-Enabling a switch grants permission; it does not acquire a radio or start RF.
-Prepare the matching COMMS/Walter and ground receiver sessions separately.
+With COMMS 0.32.0, a healthy board accepts IHU UHF requests immediately over
+CAN. No COMMS USB console enable or `a`/`g` window is needed. Enabling
+`uhf_telem` permits sends; issue `uhf heartbeat` for one packet or
+`uhf run 60 10` for a bounded run. Each admitted request transmits through the
+existing finite RF bursts and returns to idle CAN, with RF muted.
+The ground receiver must be running to observe packets. LTE still requires
+an explicit Walter RF window.
 Do not let a live receiver and RF command service concurrently own LibreSDR.
 
 | Commands | Required permission and route |
@@ -115,7 +120,7 @@ Do not apply these instructions to the older FreeRTOS CLI or LTE Feather role.
 
 ## Bench forwarding
 
-Bridge0.4.0 with `--poll-eps` checks IHU `outputs` before each periodic EPS
+Bridge 0.4.0 with `--poll-eps` checks IHU `outputs` before each periodic EPS
 request. With umb_telem OFF, unknown, or unavailable it emits no periodic EPS
 packet; cached Yamcs values expire. To see bench EPS telemetry deliberately
 select `output umb_telem on` using the sole console owner, then restore the

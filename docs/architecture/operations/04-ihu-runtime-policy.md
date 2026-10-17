@@ -67,9 +67,12 @@ console on this Feather. Enabling both debug formats produces both tagged
 copies. This release does not wire another physical UART or allocate new pins;
 UART is a future transport alternative, not a newly enabled port.
 
-The switches are permissions: RF ON does not itself arm COMMS, start a modem
-window, run a scheduler, or acquire LibreSDR. Existing bounded RF sessions,
-normal CAN, fresh HELLO, route selection and idle-work checks still apply.
+The switches are permissions: RF ON does not start a telemetry run, a modem
+window or a ground receiver. With COMMS 0.32.0, healthy idle CAN accepts IHU
+UHF requests without a COMMS console window. Each accepted request uses
+bounded RF bursts, reports a local result, then returns to muted idle CAN.
+Normal CAN, fresh HELLO, route selection and idle-work checks still apply.
+LTE windows and ground RF command receive/reply sessions remain explicit.
 Already admitted remote RF packets may finish after OFF. A switch cannot
 recall a packet already accepted by another processor.
 

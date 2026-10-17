@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-17",
+  "host": "m75q / 192.168.1.252",
+  "device": "E663682593639D39",
+  "role": "original-Pico COMMS transceiver",
+  "version": "0.32.0",
+  "git": "a7f0ecea0942e2333e2c7bb0c947fa405cfa0dc0",
+  "dirty": false,
+  "boot": 1340915111,
+  "uf2_sha256": "8ec996dd352fb19e57e75e7d7a81fe1efc0e36fb1420c1fa87d5b11ead9538e3",
+  "backup_path": "/home/ngrabbs/work/ember-comms-on-demand-20261017/deployment/comms-before-0.32.0.uf2",
+  "backup_sha256": "5e4e91c6b1b9f48971906088d8a234797d5143443e5a8a44cf319805cc21fe66",
+  "ihu_version": "0.13.0",
+  "ihu_boot": 1765436985,
+  "checks": [
+    "Verified full previous flash backup",
+    "Flash/readback verification passed",
+    "No COMMS a/g enable command sent after boot; v status query only",
+    "IHU hello comms request6 established current COMMS boot",
+    "IHU request7 heartbeat: QUEUED then RF_TX_COMPLETE status0",
+    "IHU request8 system status: QUEUED then RF_TX_COMPLETE status0 after first request returned idle",
+    "COMMS logs ON_DEMAND, successful RF shutdown verification and CAN A NORMAL after both requests",
+    "Fire-check arming service restored active",
+    "IHU screen remains sole console owner; bench bridge remains inactive",
+    "IHU uhf_telem left enabled as selected by operator; no periodic run started"
+  ],
+  "validation": [
+    "Host ground suite: 74 tests, OK, 3 skipped",
+    "COMMS check.py: existing fault-injection checks plus new real admission/drain harness passed",
+    "Pico cross-build passed with -Wall -Wextra -Werror"
+  ],
+  "limitations": [
+    "Local RF completion and clock register shutdown verification only; no new independent ground capture/decode",
+    "Flight receive/reply path unchanged; simultaneous RF activities still require radio ownership coordination",
+    "No long-duration endurance test"
+  ]
+}

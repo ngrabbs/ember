@@ -427,7 +427,7 @@ int main(void) {
             if (!listen_a(command != 'l', command == 'h', false)) {gpio_put(2, true); gpio_put(8, false); afailed = true;}
         }
         if (command == 'a' && !afailed) {
-            if(!rf_service_window(true)) {gpio_put(2,true);gpio_put(8,false);afailed=true;}
+            if(!rf_service_window(RF_TIMED)) {gpio_put(2,true);gpio_put(8,false);afailed=true;}
         }
         if (command == 'g' && !afailed) {
             if(!rf_service()) {gpio_put(2,true);gpio_put(8,false);afailed=true;}
@@ -481,6 +481,7 @@ int main(void) {
         }
         if(!afailed && (can_read(14,0x0e)&0xe0)==0x80 && !rf_bus_open())afailed=true;
         bool clocks_disabled = disable_clocks();
+        afailed |= !clocks_disabled;
         uint8_t as = can_read(14, 0x0e), ac = can_read(14, 0x0f);
         uint8_t bs = can_read(15, 0x0e), bc = can_read(15, 0x0f);
         bool aok = (as&0xe0)==0 && (ac&0xe0)==0, bok = configuration_mode(bs, bc);
@@ -506,7 +507,9 @@ int main(void) {
         }
         uint64_t idle_end=time_us_64()+1000000;
         while(time_us_64()<idle_end) {
-            if(!afailed && !can_idle_poll()) {afailed=true;gpio_put(2,true);gpio_put(8,false);}
+            if(!afailed && (!can_idle_poll() || (rf_queue.count && (!rf_service_window(RF_ON_DEMAND) || !rf_bus_open())))) {
+                afailed=true;gpio_put(2,true);gpio_put(8,false);
+            }
             sleep_ms(1);
         }
     }
