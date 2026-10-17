@@ -383,3 +383,36 @@ pre-change backup stays private on m75q:
 `a87c2204f52490a27d47402637e4a63f97754b0e9579091b23b468eeda8dbfd0`.
 Build/flash/source identities are retained with the proof; restoration was not
 exercised. COMMS, Walter and all AMSAT software/images were left unchanged.
+
+## UHF transceiver batch client (can-bench-v4)
+
+After HELLO with the physical transceiver, while its explicit `g` collection
+window is open, use `uhf heartbeat`, `uhf system`, or `uhf eps`. Wait for QUEUED
+before submitting another packet (maximum4 outstanding). A separate local
+RF_TX_COMPLETE / RF_TX_FAILED / CANCELLED reply releases each result tracker;
+none implies ground reception. `status` reports `uhf_pending`. Admission has
+5 seconds, final results30 seconds; timeouts are UNKNOWN without automatic
+retry. Existing LTE commands and automatic telemetry defaults are unchanged.
+Health packet producers from the deployed can-bench-v3 are preserved.
+
+## Timed telemetry producer (can-bench-v5)
+
+The default is IDLE, including after resets. With COMMS `a` service running and
+normal CAN/HELLO established, `uhf run 120 10` produces heartbeat/system/EPS
+cycles every10 seconds for120 seconds. One packet is in flight at a time and
+results are checked before advancing. `status` reports progress; `uhf stop`
+stops future production, while an admitted packet may finish. Stop COMMS too
+for an immediate RF abort. Bad/missing results or producer failure enter FAULT;
+there is no automatic retry, restart, or persistent enable. Legacy automatic
+telemetry and LTE queue must be off. Mode numbers and detailed limits are in
+`system/interfaces/transceiver_uhf_bench.md`.
+
+IHU v6 corrects timed-run recovery after a prior CAN transmit error. Each new
+explicit run snapshots lifetime TX failure/timeout counters; only a subsequent
+change faults that run. Current CAN mode, readiness, peer and EFLG checks remain
+active. Historical counters are preserved for diagnosis rather than cleared.
+
+IHU v7 adds the [expected-device registry](../../system/interfaces/device_registry.md).
+CAN enters normal mode at boot. `devices` reports runtime health; `devices scan`
+expedites the next idle-time probe. Scanning never arms RF. Current EPS is checked
+on I2C; future EPS and payload plus LTE have reserved CAN discovery identities.

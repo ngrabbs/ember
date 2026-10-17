@@ -745,3 +745,18 @@ python3 ground/uhf/results/2026-10-03/native-autotelem/verify.py
 `ihu_autotelem.py` is an optional finite arm/observe/off helper, with zero USB
 packet triggers. The additional closed-console check is preserved in the saved
 bench tools; it is not a spacecraft scheduler or operational startup service.
+
+### UHF dashboard freshness
+
+`prepare_yamcs.py` creates an instance-specific `mdb/ember-uhf.xml` from the
+shared EMBER MDB. POWER_STATUS gets a 30-second display allowance; Yamcs's
+default expiration tolerance of 1.9 makes parameter expiry 57 seconds after
+acquisition. This accommodates the transceiver's ten-second telemetry cycles.
+LTE/USB rates, packet fields, conversion validity and dashboards are unchanged.
+Re-run preparation after regenerating the shared MDB, then restart Yamcs to reload its cached configuration. For an already
+built runtime, copy the new instance YAML and MDB into `target/yamcs` too. Repeated preparation is safe.
+
+This is a display freshness allowance, not a change to transmission cadence or
+measurement age. The finite BPSK capture still forwards after decoding; silence
+after a capture eventually expires values. Old archived readings are not
+re-injected to make the realtime display appear live.

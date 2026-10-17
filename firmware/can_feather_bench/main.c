@@ -9,11 +9,21 @@
 #include "mcp25625.h"
 #include "wire.h"
 #include "lte_link.h"
+#include "uhf_client.h"
+static uc_state uhf_client;
+#include "native_telemetry.h"
 #if ROLE_IHU
 #include "eps_readout.h"
 #include "power_packet.h"
+#include "health_packet.h"
 #include "lte_queue.h"
 #include "autotelem.h"
+#include "uhf_run.h"
+#include "device_registry.h"
+static dr_status devices[DR_COUNT];
+static struct {bool active;uint8_t index,next;uint16_t nonce;uint32_t sent,last;} discovery;
+static ur_state uhf_run;
+static uint32_t uhf_last_result;
 #endif
 #define LOG(...) do {if(stdio_usb_connected())printf(__VA_ARGS__);} while(0)
 #define ROLE_NAME (ROLE_IHU?"IHU_MCU":"COMMS_MCU")
@@ -24,6 +34,7 @@ static mcp_state can;
 static cf_reader fragments;
 static ul_reader can_reader;
 static uint32_t boot,peer,request_id,matched,unknown,busy_drops;
+static uint32_t admitted_requests,refused_requests;
 static bool loopback_test;
 static struct {bool active;ul_packet packet;uint32_t started;} pending;
 static struct {
@@ -46,7 +57,7 @@ static at_state auto_telem;
 static uint32_t now_ms(void) {return to_ms_since_boot(get_absolute_time());}
 static void status(void) {
     char id[2*PICO_UNIQUE_BOARD_ID_SIZE_BYTES+1];pico_get_unique_board_id_string(id,sizeof(id));
-    LOG("STATUS role=%s fw=can-bench-v2 id=%s boot=%" PRIu32 " peer=%" PRIu32
+    LOG("STATUS role=%s fw=can-bench-v7 id=%s boot=%" PRIu32 " peer=%" PRIu32
         " can_ready=%d mode=%02x cnf=%02x,%02x,%02x bitrate=500000 tec=%u rec=%u eflg=%02x"
         " tx_ok=%" PRIu32 " tx_fail=%" PRIu32 " tx_timeout=%" PRIu32 " rx=%" PRIu32
         " rx_bad=%" PRIu32 " rx_overflow=%" PRIu32 " fragments_bad=%" PRIu32 " fragments_timeout=%" PRIu32
@@ -57,6 +68,10 @@ static void status(void) {
 #if !ROLE_IHU
     LOG(" walter_peer=%" PRIu32 " chain_active=%d chain_ok=%" PRIu32 " chain_unknown=%" PRIu32,
         walter_peer,chain.active,chain_ok,chain_unknown);
+#endif
+    LOG(" uhf_pending=%u",uc_count(&uhf_client));
+#if ROLE_IHU
+    LOG(" uhf_mode=%u cycles=%" PRIu32 " submitted=%" PRIu32,uhf_run.state,uhf_run.cycles,uhf_run.submitted);
 #endif
     LOG("\n");
 }
@@ -94,15 +109,7 @@ static void send_error(const ul_packet *p,uint8_t reason) {
 }
 #if !ROLE_IHU
 static bool valid_telemetry(const ul_packet *p) {
-    const uint8_t *b=p->payload;size_t n=p->size;
-    if(n<W_PAYLOAD+2)return false;
-    uint16_t id=ul_u16(b+W_MESSAGE_ID);
-    size_t payload=id==W_ID_HEARTBEAT?W_SIZE_HEARTBEAT:id==W_ID_POWER_STATUS?W_SIZE_POWER_STATUS:0;
-    return payload && n==W_PAYLOAD+payload+2 && ul_u16(b)==W_TM_IDENTITY && (ul_u16(b+2)>>14)==3 &&
-        (size_t)ul_u16(b+4)+7==n && b[W_SCHEMA_VERSION]==W_VERSION && b[W_KIND]==W_KINDS_TELEMETRY &&
-        b[W_SOURCE]==W_ENDPOINTS_IHU && b[W_TARGET]==W_ENDPOINTS_GROUND &&
-        ul_u32(b+W_SOURCE_BOOT_ID)==p->sender && ul_u16(b+W_PAYLOAD_LENGTH)==payload &&
-        ul_crc(b,n-2)==ul_u16(b+n-2);
+    return native_telemetry_valid(p->payload,p->size,p->sender);
 }
 static void uart_submit(uint8_t type) {
     memset(&chain.uart,0,sizeof(chain.uart));chain.uart.version=1;chain.uart.type=type;
@@ -159,6 +166,23 @@ static void queued_reply(const ul_packet *p,bool valid) {
 #define QUEUED_REPLY(p,valid) ((void)0)
 #endif
 static void receive(const ul_packet *p) {
+    if(p->type==CF_UHF_ADMITTED || p->type==CF_UHF_RESULT || p->type==CF_UHF_REJECTED) {
+        if(!uc_receive(&uhf_client,p))return;
+#if ROLE_IHU
+        dr_seen(&devices[DR_COMMS_INDEX],now_ms(),p->sender);
+        if(p->type!=CF_UHF_ADMITTED)uhf_last_result=now_ms();
+        if(p->payload[1]!=UHF_OK && uhf_run.state==UR_RUNNING) {
+            ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT remote_status=%u\n",p->payload[1]);
+        }
+#endif
+        if(pending.active && pending.packet.type==CF_UHF_SEND && pending.packet.request==p->request)pending.active=false;
+        ++matched;
+        LOG("UHF request=%" PRIu32 " outcome=%s status=%u bytes=%u digest=%08" PRIx32 " ground_ack=0 outstanding=%u\n",
+            p->request,p->type==CF_UHF_ADMITTED?"QUEUED":p->type==CF_UHF_REJECTED?"REJECTED":
+            p->payload[1]==UHF_OK?"RF_TX_COMPLETE":p->payload[1]==UHF_CANCELLED?"CANCELLED":"RF_TX_FAILED",
+            p->payload[1],ul_u16(p->payload+2),ul_u32(p->payload+4),uc_count(&uhf_client));
+        return;
+    }
     if(pending.active && p->origin==boot && p->request==pending.packet.request) {
         bool hello=pending.packet.type==UL_HELLO;
         uint8_t expected=hello?UL_HELLO_ACK:pending.packet.type==CF_CHAIN?CF_CHAIN_ACK:
@@ -172,6 +196,7 @@ static void receive(const ul_packet *p) {
             pending.active=false;
             bool uncertain=p->payload[0]==CF_LINK_UNKNOWN || p->payload[0]==UL_ERR_MODEM_UNKNOWN;
             if(uncertain) {++unknown;peer=0;}
+            else ++refused_requests;
             LOG("RESULT request=%" PRIu32 " outcome=%s reason=%u\n",p->request,uncertain?"UNKNOWN_REMOTE_LINK":"PEER_REJECTED",p->payload[0]);return;
         }
         bool diag=pending.packet.type==CF_LINK_DIAG;
@@ -181,6 +206,9 @@ static void receive(const ul_packet *p) {
         if(diag)LOG("LTE_DIAG version=%u last_cereg=%u send_cereg=%u failure_cereg=%u command=%u failure_command=%u failure_state=%u flags=%u cme=%" PRIu32 " send_elapsed_ms=%" PRIu32 " registration_losses=%" PRIu32 " last_cereg_ms=%" PRIu32 " uart_send_request=%" PRIu32 " error_kind=%u\n",
             p->payload[16],p->payload[17],p->payload[18],p->payload[19],p->payload[20],p->payload[21],p->payload[22],p->payload[23],ul_u32(p->payload+24),ul_u32(p->payload+28),ul_u32(p->payload+32),ul_u32(p->payload+36),ul_u32(p->payload+40),p->payload[45]);
         if(hello)peer=p->sender;
+#if ROLE_IHU
+        dr_seen(&devices[DR_COMMS_INDEX],now_ms(),p->sender);
+#endif
         QUEUED_REPLY(p,true);
         pending.active=false;++matched;
         LOG("RESULT request=%" PRIu32 " outcome=%s peer=%" PRIu32 " bytes=%u hex=",p->request,
@@ -203,15 +231,17 @@ static void receive(const ul_packet *p) {
     ul_packet reply;ul_reply(p,boot,&reply);if(!queue(&reply))++busy_drops;
 }
 static void submit(uint8_t type,const uint8_t *payload,size_t size) {
-    if((mcp_register(0x0e)&0xe0)!=0) {LOG("REJECT reason=NORMAL_MODE_REQUIRED\n");return;}
-    if(pending.active || output.active) {LOG("REJECT reason=BUSY\n");return;}
-    if(type!=UL_HELLO && !peer) {LOG("REJECT reason=HELLO_REQUIRED\n");return;}
-    if(request_id==UINT32_MAX) {LOG("REJECT reason=REQUEST_ID_EXHAUSTED\n");return;}
+    if(type==CF_UHF_SEND && uc_count(&uhf_client)==UC_CAPACITY) {++refused_requests;LOG("REJECT reason=UHF_TRACKER_FULL\n");return;}
+    if((mcp_register(0x0e)&0xe0)!=0) {++refused_requests;LOG("REJECT reason=NORMAL_MODE_REQUIRED\n");return;}
+    if(pending.active || output.active) {++refused_requests;LOG("REJECT reason=BUSY\n");return;}
+    if(type!=UL_HELLO && !peer) {++refused_requests;LOG("REJECT reason=HELLO_REQUIRED\n");return;}
+    if(request_id==UINT32_MAX) {++refused_requests;LOG("REJECT reason=REQUEST_ID_EXHAUSTED\n");return;}
     memset(&pending.packet,0,sizeof(pending.packet));pending.packet.version=1;pending.packet.type=type;
     pending.packet.sender=boot;pending.packet.origin=boot;pending.packet.request=++request_id;
     pending.packet.size=(uint16_t)size;if(size)memcpy(pending.packet.payload,payload,size);
-    if(!queue(&pending.packet)) {LOG("REJECT reason=QUEUE\n");return;}
-    pending.active=true;pending.started=now_ms();LOG("SUBMITTED request=%" PRIu32 " type=%u bytes=%zu\n",request_id,type,size);
+    if(!queue(&pending.packet)) {++refused_requests;LOG("REJECT reason=QUEUE\n");return;}
+    if(type==CF_UHF_SEND)(void)uc_start(&uhf_client,&pending.packet,peer,now_ms());
+    ++admitted_requests;pending.active=true;pending.started=now_ms();LOG("SUBMITTED request=%" PRIu32 " type=%u bytes=%zu\n",request_id,type,size);
 }
 #if ROLE_IHU
 static void eps_json(void) {
@@ -230,15 +260,16 @@ static void eps_adc(bool enable) {
     uint16_t before=0,after=0;bool ok=eps_force_adc(enable,&before,&after);
     LOG("EPS_ADC outcome=%s requested=%d config_before=%04x config_after=%04x\n",ok?"VERIFIED":"UNKNOWN",enable,before,after);
 }
-static bool eps_telemetry(bool lte) {
+static bool eps_telemetry(unsigned lte) {
     if(pending.active || output.active || can.pending || !peer || (mcp_register(0x0e)&0xe0)) {
         LOG("REJECT reason=BUSY_OR_CAN_NOT_READY\n");return false;
     }
     ltc4162_raw_t raw;uint8_t failed=0;
     if(!eps_read(&raw,&failed)) {LOG("EPS_READ outcome=FAILED register=%02x reason=I2C_OR_PEC\n",failed);return false;}
+    dr_seen(&devices[DR_EPS_I2C_INDEX],now_ms(),0);
     uint8_t packet[W_PAYLOAD+W_SIZE_POWER_STATUS+2];
     size_t n=power_packet(packet,&raw,boot,telemetry_sequence,now_ms(),++eps_readout_count);
-    telemetry_sequence=(telemetry_sequence+1)&0x3fff;submit(lte?CF_SEND_PACKET:CF_CHAIN,packet,n);
+    telemetry_sequence=(telemetry_sequence+1)&0x3fff;submit(lte==2?CF_UHF_SEND:lte?CF_SEND_PACKET:CF_CHAIN,packet,n);
     return pending.active;
 }
 static void auto_status(void) {
@@ -294,17 +325,75 @@ static void queue_pump(uint32_t now) {
     if((telemetry_queue.state==LQ_SEND || telemetry_queue.state==LQ_STATUS) && !queue_owned)
         lq_hold(&telemetry_queue,LQ_HOLD_UNKNOWN);
 }
-static void heartbeat(void) {
-    uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2]={0};size_t size=sizeof(p);
-    ul_p16(p,W_TM_IDENTITY);ul_p16(p+2,(uint16_t)(0xc000|telemetry_sequence));
-    telemetry_sequence=(uint16_t)((telemetry_sequence+1)&0x3fff);ul_p16(p+4,(uint16_t)(size-7));
-    p[W_SCHEMA_VERSION]=W_VERSION;p[W_KIND]=W_KINDS_TELEMETRY;ul_p16(p+W_MESSAGE_ID,W_ID_HEARTBEAT);
-    p[W_SOURCE]=W_ENDPOINTS_IHU;p[W_TARGET]=W_ENDPOINTS_GROUND;ul_p32(p+W_SOURCE_BOOT_ID,boot);
-    ul_p32(p+W_UPTIME_MS,now_ms());ul_p16(p+W_PAYLOAD_LENGTH,W_SIZE_HEARTBEAT);
-    p[W_PAYLOAD+W_HEARTBEAT_MODE]=W_MODE_SAFE;p[W_PAYLOAD+W_HEARTBEAT_CONFIGURATION]=W_CONFIGURATION_GROUND_TEST;
-    ul_p32(p+W_PAYLOAD+W_HEARTBEAT_TELEMETRY_PERIOD_MS,auto_telem.enabled?auto_telem.period_ms:0);
-    ul_p16(p+size-2,ul_crc(p,size-2));submit(CF_CHAIN,p,size);
+static void health_telemetry(bool system,unsigned lte) {
+    uint8_t packet[W_PAYLOAD+W_SIZE_SYSTEM_STATUS+2];
+    size_t n=health_packet(packet,system,boot,telemetry_sequence,now_ms(),
+        uhf_run.state==UR_RUNNING?uhf_run.period:auto_telem.enabled?auto_telem.period_ms:0,admitted_requests,refused_requests);
+    telemetry_sequence=(telemetry_sequence+1)&0x3fff;
+    submit(lte==2?CF_UHF_SEND:lte?CF_SEND_PACKET:CF_CHAIN,packet,n);
 }
+
+static void uhf_run_pump(uint32_t now) {
+    if(uhf_run.state!=UR_RUNNING)return;
+    if(!peer || !can.ready || (mcp_register(0x0e)&0xe0) || ur_link_changed(&uhf_run,can.tx_fail,can.tx_timeout) || mcp_register(0x2d)) {
+        ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT link_not_ready\n");return;
+    }
+    bool ready=!pending.active && !output.active && !can.pending && !uc_count(&uhf_client) &&
+        (uint32_t)(now-uhf_last_result)>=250;
+    int stage=ur_due(&uhf_run,now,ready);
+    if(uhf_run.state==UR_EXPIRED)LOG("UHF_RUN EXPIRED submitted=%" PRIu32 " cycles=%" PRIu32 "\n",uhf_run.submitted,uhf_run.cycles);
+    if(stage<0)return;
+    if(stage<2)health_telemetry(stage==1,2);else (void)eps_telemetry(2);
+    if(pending.active && pending.packet.type==CF_UHF_SEND)ur_submitted(&uhf_run);
+    else {ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT producer_or_submission\n");}
+}
+static void devices_status(void) {
+    uint32_t now=now_ms();
+    for(unsigned i=0;i<DR_COUNT;i++) {
+        dr_age(&devices[i],now);
+        const struct dr_definition *d=&dr_devices[i];dr_status *v=&devices[i];
+        LOG("DEVICE name=%s interface=%s node=%u address=%02x revision=%s state=%s seen=%u age_ms=%" PRIu32 " boot=%" PRIu32 " timeouts=%" PRIu32 "\n",
+            d->name,d->interface==DR_CAN?"CAN_A":"I2C1",d->node,d->address,d->future?"planned":"current",
+            dr_states[v->state],v->seen,v->seen?(uint32_t)(now-v->last_seen):0,v->boot,v->timeouts);
+    }
+}
+static bool devices_receive(const cf_frame *frame,uint32_t now) {
+    if(frame->id<=DR_RESPONSE_BASE || frame->id>DR_RESPONSE_BASE+4)return false;
+    if(discovery.active && (uint32_t)(now-discovery.sent)<DR_TIMEOUT_MS &&
+       dr_matches(frame,dr_devices[discovery.index].node,discovery.nonce)) {
+        dr_seen(&devices[discovery.index],now,ul_u32(frame->data+4));
+        /* Discovery observes identity; application HELLO remains explicit. */
+        LOG("DEVICE_FOUND name=%s boot=%" PRIu32 "\n",dr_devices[discovery.index].name,devices[discovery.index].boot);
+        discovery.active=false;
+    }
+    return true;
+}
+static void devices_pump(uint32_t now) {
+    for(unsigned i=0;i<DR_COUNT;i++)dr_age(&devices[i],now);
+    if(discovery.active && (uint32_t)(now-discovery.sent)>=DR_TIMEOUT_MS) {
+        ++devices[discovery.index].timeouts;discovery.active=false;
+    }
+    /* Background checks never compete with application packets or half-duplex RF. */
+    if(discovery.active || pending.active || output.active || can.pending || uc_count(&uhf_client) ||
+       uhf_run.state==UR_RUNNING || auto_telem.enabled || telemetry_queue.enabled || loopback_test ||
+       (uint32_t)(now-discovery.last)<2000)return;
+    discovery.last=now;unsigned i=discovery.next;discovery.next=(i+1)%DR_COUNT;
+    if(dr_devices[i].interface==DR_I2C) {
+        uint16_t config;
+        if(eps_word(LTC4162_REG_config_bits,&config))dr_seen(&devices[i],now_ms(),0);
+        else devices[i].state=DR_FAULT;
+        return;
+    }
+    if(!can.ready || (mcp_register(0x0e)&0xe0) || mcp_register(0x2d)) {
+        devices[i].state=DR_FAULT;return;
+    }
+    if(discovery.nonce==UINT16_MAX)return; /* No nonce reuse within a boot. */
+    cf_frame f;
+    if(dr_request(dr_devices[i].node,++discovery.nonce,boot,&f) && mcp_send(&can,&f)) {
+        discovery.active=true;discovery.index=i;discovery.sent=now;
+    } else devices[i].state=DR_FAULT;
+}
+
 #endif
 static void selftest(void) {
     if(pending.active || output.active || can.pending) {LOG("REJECT reason=BUSY\n");return;}
@@ -313,10 +402,19 @@ static void selftest(void) {
     LOG("SELFTEST started=%d kind=LOCAL_LOOPBACK no_peer_proof=1\n",loopback_test);
 }
 static void command(const char *s) {
+#if ROLE_IHU
+    if(uhf_run.state==UR_RUNNING && strcmp(s,"status") && strcmp(s,"devices") && strcmp(s,"uhf stop")) {
+        LOG("REJECT reason=UHF_RUN_ACTIVE use_status_or_uhf_stop\n");return;
+    }
+#endif
     if(!strcmp(s,"status"))status();
+#if ROLE_IHU
+    else if(!strcmp(s,"devices"))devices_status();
+    else if(!strcmp(s,"devices scan")) {discovery.last=now_ms()-2000;LOG("DEVICE_SCAN scheduled background=1\n");}
+#endif
     else if(!strcmp(s,"selftest"))selftest();
     else if(!strcmp(s,"normal")) {
-        if(pending.active || output.active || can.pending)LOG("REJECT reason=BUSY\n");
+        if(pending.active || output.active || can.pending || uc_count(&uhf_client))LOG("REJECT reason=BUSY\n");
         else {bool ok=mcp_mode(&can,0);LOG("CAN_NORMAL ready=%d\n",ok);peer=0;}
     } else if(!strcmp(s,"hello"))submit(UL_HELLO,NULL,0);
     else if(!strncmp(s,"ping ",5)) {
@@ -325,7 +423,7 @@ static void command(const char *s) {
         uint8_t p[240];for(size_t i=0;i<n;++i)p[i]=(uint8_t)i;submit(UL_ECHO,p,n);
 }
 #if ROLE_IHU
-    else if(!strcmp(s,"telemetry"))heartbeat();
+    else if(!strcmp(s,"telemetry"))health_telemetry(false,false);
     else if(!strcmp(s,"eps json"))eps_json();
     else if(!strcmp(s,"eps adc on"))eps_adc(true);
     else if(!strcmp(s,"eps adc off"))eps_adc(false);
@@ -345,6 +443,25 @@ static void command(const char *s) {
         }
         (void)at_enable(&auto_telem,(uint32_t)seconds,now_ms());auto_status();
     }
+    else if(!strcmp(s,"uhf stop")) {
+        ur_stop(&uhf_run,UR_STOPPED);LOG("UHF_RUN STOPPED outstanding=%u accepted_packets_may_finish=1\n",uc_count(&uhf_client));
+    }
+    else if(!strncmp(s,"uhf run ",8)) {
+        unsigned duration,period;char extra;
+        if(sscanf(s+8,"%u %u %c",&duration,&period,&extra)!=2 || !can.ready || !peer ||
+           (mcp_register(0x0e)&0xe0) || pending.active || output.active || can.pending ||
+           uc_count(&uhf_client) || auto_telem.enabled || telemetry_queue.enabled ||
+           !ur_start(&uhf_run,duration,period,now_ms())) {
+            LOG("REJECT reason=RUN_RANGE_OR_LINK_BUSY duration=1..120 period=5..60\n");return;
+        }
+        ur_link_snapshot(&uhf_run,can.tx_fail,can.tx_timeout);
+        LOG("UHF_RUN START duration_s=%u period_s=%u boot_resume=0\n",duration,period);
+    }
+    else if(!strcmp(s,"uhf heartbeat"))health_telemetry(false,2);
+    else if(!strcmp(s,"uhf system"))health_telemetry(true,2);
+    else if(!strcmp(s,"uhf eps"))eps_telemetry(2);
+    else if(!strcmp(s,"heartbeat lte"))health_telemetry(false,true);
+    else if(!strcmp(s,"system lte"))health_telemetry(true,true);
     else if(!strcmp(s,"eps lte"))eps_telemetry(true);
     else if(!strcmp(s,"eps enqueue"))eps_enqueue();
     else if(!strcmp(s,"lte queue status"))queue_status();
@@ -365,13 +482,14 @@ static void command(const char *s) {
         uint8_t p[4];ul_p32(p,seconds);submit(CF_RF_WINDOW,p,4);
     }
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | telemetry | eps json | eps adc on/off | eps telemetry | telem on [seconds]/off/status | lte N | lte status | lte diagnostics | eps lte | eps enqueue | lte queue on/off/status/drop":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf heartbeat | uhf system | uhf eps | telemetry | eps json | eps adc on/off | eps telemetry | telem on [seconds]/off/status | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte | eps enqueue | lte queue on/off/status/drop":"");
     else if(*s)LOG("ERROR unknown command\n");
 }
 int main(void) {
     stdio_init_all();boot=get_rand_32();if(!boot)boot=1;mcp_init(&can);
 #if ROLE_IHU
     eps_bus_init();
+    if(can.ready)(void)mcp_mode(&can,0);
 #endif
 #if !ROLE_IHU
     uart_init(uart0,115200);gpio_set_function(0,GPIO_FUNC_UART);gpio_set_function(1,GPIO_FUNC_UART);
@@ -392,6 +510,9 @@ int main(void) {
         if(chain.active && (uint32_t)(now-chain.started)>=(chain.uart.type==UL_SEND_PACKET?17000:UL_REQUEST_MS))chain_fail(CF_LINK_UNKNOWN);
 #endif
         for(unsigned i=0;i<2 && mcp_receive(&can,&frame);++i) {
+#if ROLE_IHU
+            if(devices_receive(&frame,now))continue;
+#endif
             if(loopback_test && frame.id==0x712) {
                 const uint8_t expected[8]={0x45,0x4d,0x42,0x45,0x52,0,0x55,0xaa};
                 LOG("SELFTEST outcome=%s kind=LOCAL_LOOPBACK\n",frame.size==8 && !memcmp(frame.data,expected,8)?"PASS":"FAIL");
@@ -399,9 +520,20 @@ int main(void) {
             } else if(cf_feed(&fragments,&frame,RX_ID,now) && envelope_from_fragments(now,&packet))receive(&packet);
         }
         cf_expire(&fragments,now);pump_tx(now);
+        for(unsigned i=0;i<UC_CAPACITY;i++) {
+            uc_item *x=&uhf_client.items[i];
+            if(x->active && (uint32_t)(now-x->started)>=UC_RESULT_MS) {
+                LOG("UHF request=%" PRIu32 " outcome=UNKNOWN reason=RESULT_TIMEOUT ground_ack=0\n",x->packet.request);x->active=false;++unknown;
+#if ROLE_IHU
+                if(uhf_run.state==UR_RUNNING){ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT result_timeout\n");}
+#endif
+            }
+        }
         if(pending.active && (uint32_t)(now-pending.started)>=(pending.packet.type==CF_SEND_PACKET?REQUEST_TIMEOUT:5000)) {
             QUEUED_REPLY(NULL,false);
             LOG("RESULT request=%" PRIu32 " outcome=UNKNOWN reason=TIMEOUT\n",pending.packet.request);
+            if(pending.packet.type==CF_UHF_SEND)for(unsigned i=0;i<UC_CAPACITY;i++)
+                if(uhf_client.items[i].packet.request==pending.packet.request)uhf_client.items[i].active=false;
             pending.active=false;peer=0;++unknown;
         }
 #if ROLE_IHU
@@ -415,6 +547,8 @@ int main(void) {
 #if ROLE_IHU
         // Process console off/status commands before considering a due read.
         auto_pump(now_ms());
+        uhf_run_pump(now_ms());
+        devices_pump(now_ms());
 #endif
         if((uint32_t)(now-blink)>=500) {blink=now;led=!led;gpio_put(13,led);}sleep_us(500);
     }
