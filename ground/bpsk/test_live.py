@@ -1,9 +1,13 @@
 import tempfile
 import unittest
+import json
+import sys
+import time
+from types import SimpleNamespace
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 import numpy as np
-from live import Windows, Decoder, RATE
+from live import Windows, Decoder, RATE, run, FPGA_SHA
 from modem import frame
 from codec import encode, DICTIONARY
 
@@ -37,6 +41,33 @@ class LiveTests(unittest.TestCase):
             for start, samples in jobs:
                 np.testing.assert_array_equal(samples,raw[start:start+len(samples)])
             self.assertEqual([start for start,_ in jobs],[0,RATE,2*RATE,3*RATE])
+    def test_storage_backlog_stops_without_forwarding_or_hanging(self):
+        # Simulate a stalled SD card while USB samples arrive faster than storage.
+        radio=MagicMock();stream=MagicMock();radio.get_rx_stream.return_value=stream
+        radio.get_rx_rate.return_value=RATE;radio.get_rx_freq.return_value=437e6
+        radio.get_rx_gain.return_value=0
+        def recv(buf,md,timeout):
+            buf[:]=0;return 8192
+        stream.recv.side_effect=recv
+        fake=SimpleNamespace(usrp=SimpleNamespace(MultiUSRP=lambda _:radio,
+            StreamArgs=lambda *_:SimpleNamespace()),types=SimpleNamespace(
+            RXMetadata=lambda:SimpleNamespace(error_code=0),RXMetadataErrorCode=SimpleNamespace(none=0),
+            TuneRequest=lambda x:x,StreamCMD=lambda x:SimpleNamespace(mode=x),
+            StreamMode=SimpleNamespace(start_cont=1,stop_cont=2)))
+        original=Windows.feed
+        def slow(self,samples):
+            time.sleep(.05);yield from original(self,samples)
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp);(d/'usrp_b210_fpga.bin').write_bytes(b'test only')
+            args=SimpleNamespace(images=d,output=d/'capture',frequency=437e6,channel=0,gain=0,seconds=1,forward=True)
+            with patch.dict(sys.modules,uhd=fake),patch('live.hashlib.sha256') as sha,patch.object(Windows,'feed',slow),patch('live.socket.socket') as sock:
+                sha.return_value.hexdigest.return_value=FPGA_SHA
+                self.assertEqual(run(args),1)
+                sock.assert_not_called()
+            report=json.loads((args.output/'result.json').read_text())
+            self.assertIn('storage backlog exceeded 64 chunks',report['errors'])
+            self.assertEqual(report['forwarded'],0)
+            self.assertEqual(stream.issue_stream_cmd.call_args[0][0].mode,2)
     def test_noise_not_forwarded(self):
         rng=np.random.default_rng(3)
         with tempfile.TemporaryDirectory() as tmp, patch('live.socket.socket') as sock:
