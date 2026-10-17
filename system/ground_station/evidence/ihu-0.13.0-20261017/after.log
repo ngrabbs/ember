@@ -1,0 +1,71 @@
+> version
+FIRMWARE role=IHU_MCU version=0.13.0 git=f575ed6973ad4555431d2a630f6be3b957a1ce54 dirty=0 boot=1165170013
+> mode
+MODE configuration=GROUND_TEST mode=SAFE simulated=0 flight_routines=STUB reason=GROUND_TEST_DEFAULT
+> outputs
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> status
+FIRMWARE role=IHU_MCU version=0.13.0 git=f575ed6973ad4555431d2a630f6be3b957a1ce54 dirty=0 boot=1165170013
+MODE configuration=GROUND_TEST mode=SAFE simulated=0 flight_routines=STUB reason=GROUND_TEST_DEFAULT
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+CAN_TARGET name=COMMS request=710 reply=711
+STATUS role=IHU_MCU fw=0.13.0 id=DF641455DB822427 boot=1165170013 peer=0 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=5 tx_fail=0 tx_timeout=0 rx=3 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=0 unknown=0 busy_drops=0 pending=0 uptime_ms=15094 uhf_pending=0 uhf_mode=0 cycles=0 submitted=0
+> faults
+FAULTS total=0 retained=0 persistent=0
+> output cli_debug on
+OUTPUTS cli_debug=1 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> output cli_debug off
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> output cli_telem on
+OUTPUTS cli_debug=0 cli_telem=1 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> output cli_telem off
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> output umb_debug on
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=1 umb_telem=0 uhf_telem=0 lte_telem=0
+> output umb_debug off
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> output umb_telem on
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=1 uhf_telem=0 lte_telem=0
+> output umb_telem off
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> output uhf_telem on
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=1 lte_telem=0
+> output uhf_telem off
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> output lte_telem on
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=1
+> output lte_telem off
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> output cli_telem on
+OUTPUTS cli_debug=0 cli_telem=1 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+CLI_TELEM mode=SAFE eps_valid=1 comms=ONLINE lte=ONLINE payload=ONLINE
+> output cli_telem off
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> output cli_telem on
+OUTPUTS cli_debug=0 cli_telem=1 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+CLI_TELEM mode=SAFE eps_valid=1 comms=ONLINE lte=ONLINE payload=ONLINE
+CLI_TELEM mode=SAFE eps_valid=1 comms=ONLINE lte=ONLINE payload=ONLINE
+> output cli_telem off
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> output umb_telem on
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=1 uhf_telem=0 lte_telem=0
+{"profile":"ihu-health-v1","mode":3,"configuration":1,"uptime_ms":50014,"eps_valid":1,"eps_sample_ms":50014,"comms_state":1,"lte_state":1,"payload_state":1}
+> output umb_telem off
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> output cli_debug on
+OUTPUTS cli_debug=1 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> mode nominal
+MODE configuration=GROUND_TEST mode=NOMINAL simulated=1 flight_routines=STUB reason=GROUND_SIMULATION_COMMAND
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> mode safe
+MODE configuration=GROUND_TEST mode=SAFE simulated=0 flight_routines=STUB reason=GROUND_SAFE_COMMAND
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> outputs
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+FIRE_CHECK_NO_FIRE raw=010001005cf6893100862e110000000d
+> outputs
+FIRE_CHECK result=no_fire mode=STATIC_STUB check_id=13
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+> faults
+FAULTS total=0 retained=0 persistent=0
+PASS

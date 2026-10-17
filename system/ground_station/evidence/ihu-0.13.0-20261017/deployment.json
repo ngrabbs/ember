@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-17",
+  "host": "m75q / 192.168.1.252",
+  "device": "DF641455DB822427",
+  "firmware_version": "0.13.0",
+  "firmware_git": "f575ed6973ad4555431d2a630f6be3b957a1ce54",
+  "firmware_dirty": false,
+  "uf2_sha256": "7d948b728ee602310589be72c25a829bfd365da23e828648cfa5468cbbd9722d",
+  "configuration": "GROUND_TEST",
+  "mode": "SAFE",
+  "final_boot": 1765436985,
+  "outputs": {
+    "cli_debug": false,
+    "cli_telem": false,
+    "umb_debug": false,
+    "umb_telem": false,
+    "uhf_telem": false,
+    "lte_telem": false
+  },
+  "bridge_version": "0.4.0",
+  "bridge_sha256": "aa784c5bb1a067d1edba1e72f7ca070dca85c5bb17cf7e8ab578a268ef870401",
+  "bridge_service": "active",
+  "backup_path": "/home/ngrabbs/work/ember-mode-policy-20261017/deployment/ihu-before-0.13.0.uf2",
+  "backup_sha256": "ae497fd95876632483a1a9fca3615b7c6b60547960a7bbb3bf862ad0758ca4f0",
+  "checks_passed": [
+    "Full 8MB flash backup and readback verification",
+    "Targeted IHU flash and readback verification",
+    "Quiet default output",
+    "Six independent output permission toggles",
+    "CLI telemetry with valid EPS and discovered peers",
+    "Structured umbilical health summary",
+    "Simulated NOMINAL entry clears outputs; return to SAFE",
+    "Solicited EPS JSON with streams off",
+    "Payload fire-check returns static NO_FIRE with streams off",
+    "Reset restores SAFE/GROUND_TEST and all switches OFF",
+    "No recorded faults after reset",
+    "Updated bridge restarts and observes all switches OFF"
+  ],
+  "limitations": [
+    "No new RF transmission or end-to-end Yamcs RF regression in this deployment",
+    "No OFF-during-active-radio-packet hardware test",
+    "Initial verification script used incorrect HEALTH substring for CLI_TELEM; corrected assertion passed without firmware change",
+    "Flight routines remain inactive stubs"
+  ]
+}
