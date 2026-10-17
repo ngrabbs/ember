@@ -35,23 +35,22 @@ and replays its validated packets locally with recorded receive times and
 source context. See [session recording and replay](../../system/ground_station/telemetry_sessions.md)
 for commands, the demonstrated 60-packet session, and quality/time limitations.
 
-## USB hardware endpoint
+## Shared command engine and historical USB tools
 
-`generate_c.py` generates C wire constants from the same dictionary. The
-standalone [Pico application](../../firmware/usb_bench/README.md) serializes
-fields explicitly and implements the command subset and last-64 cache.
-`tests/ground/test_firmware.py` compiles the actual C protocol/framing core on
-the host and decodes its output with the Python codec; a host C compiler is
-required for those tests.
+`generate_c.py` generates wire constants from the same dictionary. The portable
+[C command engine](../../firmware/shared/ember_protocol/README.md) serializes
+fields explicitly and retains the bounded command/result cache. Active IHU
+uses its diagnostic RF PING handler; `tests/ground/test_firmware.py` compiles
+the engine on the host and independently decodes results with the Python codec.
+The active RF command allowlist is narrower than the generic engine's handlers.
 
-`framing.py` and firmware C framing implement COBS with a zero delimiter,
-bounded to 240 decoded bytes / 242 stream bytes. `usb_bridge.py` requires
-pyserial and an exact stable device path, forwards valid packets between USB
-and Yamcs UDP, reconnects only that identity and never automatically retries
-an uncertain command. `usb_probe.py` checks hardware duplicates, conflict,
-invalid/unknown commands, CRC, oversized/partial frames and optional reset.
-Stop the bridge before direct probing; its exclusive serial port cannot be
-shared. See [USB setup](../../system/ground_station/usb_bench_setup.md).
+The standalone USB Pico application and its C-only USB framing were removed.
+Python `framing.py`, `usb_bridge.py` and `usb_probe.py` remain test/diagnostic tools
+for the historical binary USB protocol; they are not the operational IHU text
+console bridge. Dated hardware results remain in
+[USB validation](../../system/ground_station/usb_validation.md). Use
+[`payload_bridge.py`](payload_bridge.py) for the current sole-owner IHU serial
+bench connection and its payload commands/EPS forwarding.
 
 ## Real IHU EPS observations
 

@@ -91,14 +91,15 @@ Its configured push URL remains SSH; pushes for this reconciliation are made
 from macOS. Repair and verify m75q's GitHub SSH trust/authentication before
 expecting direct pushes from that host.
 
-## Dedicated USB bench build
+## Historical USB bench build
 
-On m75q, run `sh tools/build_usb_bench.sh`; output is
-`firmware/usb_bench/build/ember_usb_bench.uf2`. This builds a standalone Pico SDK
-endpoint and does not change or flash the FreeRTOS IHU/comms applications.
-The SDK is 2.1.1 (`ee68c78d0afae2b69c03ae1a72bf5cc267a2d94c`); GCC ARM is
-14.2.1. SDK picotool discovery fetched develop revision
-`ba3df406c37774144a059b2bdae73ab52587a1d2` (2.3.2-develop). That cached
-build tool revision is recorded, but a clean SDK build can fetch newer develop;
-fully pinning the build tool remains a reproducibility improvement. Pi flash
-installation uses Debian picotool 2.1.1+dfsg-1.
+The standalone USB Pico application and `tools/build_usb_bench.sh` were removed.
+Their [source and original build instructions](https://github.com/ngrabbs/ember/blob/ae5fc3d2fa53ee071c4b79e2851cbe8c079365d1/firmware/usb_bench/README.md)
+remain in Git. Its portable command engine now lives in
+[`firmware/shared/ember_protocol`](../../firmware/shared/ember_protocol/README.md).
+Use the [active firmware index](../../firmware/firmware.md) for current builds.
+
+The earlier SDK was 2.1.1 (`ee68c78d0afae2b69c03ae1a72bf5cc267a2d94c`), GCC ARM
+14.2.1, and the cached SDK picotool was develop revision
+`ba3df406c37774144a059b2bdae73ab52587a1d2` (2.3.2-develop). Pi installation used
+Debian picotool 2.1.1+dfsg-1. These are dated environment observations.

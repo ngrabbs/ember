@@ -52,7 +52,7 @@
     "action": "Keep mission draft; add explicit bench links and availability limits rather than deleting planned commands.",
     "evidence": [
       "ground/ember/dictionary.json",
-      "firmware/usb_bench/protocol.c",
+      "firmware/shared/ember_protocol/protocol.c",
       "ground/ember/simulator.py"
     ]
   },
@@ -114,12 +114,12 @@
     "disposition": "Updated; old source review retained",
     "documents": [
       "firmware/walter/README.md",
-      "firmware/walter_lte_bench/README.md"
+      "firmware/walter/README.md"
     ],
     "finding": "Walter entry point said forwarding was future despite implemented bench sender and later LTE evidence.",
     "action": "Link current bench application and evidence; explicitly date initial radio-off/vendor review narrative.",
     "evidence": [
-      "firmware/walter_lte_bench/src/main.cpp",
+      "firmware/walter/src/main.cpp",
       "ground/lte/README.md"
     ]
   },

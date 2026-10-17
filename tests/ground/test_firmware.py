@@ -1,4 +1,4 @@
-"""Compile the actual C endpoint on the host, decode its packets independently."""
+"""Compile the shared C command engine on the host, decode its packets independently."""
 import ctypes
 import json
 from pathlib import Path
@@ -24,18 +24,16 @@ class FirmwareTests(unittest.TestCase):
         path = Path(cls.temp.name)
         subprocess.run([sys.executable, str(ROOT / "ground/ember/generate_c.py"), str(path / "wire.h")], check=True)
         (path / "size.c").write_text('#include "protocol.h"\nsize_t state_size(void) { return sizeof(ember_state); }\n')
-        source = ROOT / "firmware/usb_bench"
+        source = ROOT / "firmware/shared/ember_protocol"
         subprocess.run([compiler, "-std=c11", "-Wall", "-Wextra", "-Werror", "-shared", "-fPIC",
                         "-I" + str(path), "-I" + str(source), str(source / "protocol.c"),
-                        str(source / "framing.c"), str(path / "size.c"), "-o", str(path / "endpoint.so")], check=True)
+                        str(path / "size.c"), "-o", str(path / "endpoint.so")], check=True)
         cls.lib = ctypes.CDLL(str(path / "endpoint.so"))
         cls.lib.state_size.restype = ctypes.c_size_t
         cls.callback_type = ctypes.CFUNCTYPE(ctypes.c_bool, ctypes.c_void_p, ctypes.c_size_t, ctypes.c_void_p)
         cls.lib.ember_init.argtypes = [ctypes.c_void_p, ctypes.c_uint32]
         cls.lib.ember_command.argtypes = [ctypes.c_void_p, ctypes.c_void_p, ctypes.c_size_t,
                                          ctypes.c_uint32, cls.callback_type, ctypes.c_void_p]
-        cls.lib.cobs_encode.argtypes = cls.lib.cobs_decode.argtypes = [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_void_p, ctypes.c_size_t]
-        cls.lib.cobs_encode.restype = cls.lib.cobs_decode.restype = ctypes.c_size_t
 
     @classmethod
     def tearDownClass(cls):
@@ -86,12 +84,6 @@ class FirmwareTests(unittest.TestCase):
         self.assertEqual(encode_frame(b"\x11\x00\x22"), b"\x02\x11\x02\x22\x00")
         for packet in (bytes(240), bytes(range(240)), self.command(parameter_id=1, value=2000)):
             expected = encode_frame(packet)
-            out = ctypes.create_string_buffer(242)
-            size = self.lib.cobs_encode(packet, len(packet), out, 242)
-            self.assertEqual(out.raw[:size], expected)
-            decoded = ctypes.create_string_buffer(240)
-            size = self.lib.cobs_decode(expected[:-1], len(expected)-1, decoded, 240)
-            self.assertEqual(decoded.raw[:size], packet)
             self.assertEqual(decode_frame(expected[:-1]), packet)
         reader = FrameReader()
         self.assertEqual(reader.feed(b"x" * 300 + b"\x00"), [])

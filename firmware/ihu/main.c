@@ -30,7 +30,7 @@ static unsigned fault_count;
 static void record_fault(uint8_t code,uint32_t at){unsigned i=fault_count++%16;faults[i].at=at;faults[i].code=code;}
 
 #include "uplink_ping.h"
-#include "../usb_bench/protocol.h"
+#include "../shared/ember_protocol/protocol.h"
 static ember_state uplink_engine;
 static cf_reader uplink_fragments;
 static struct {bool active;ul_packet request;uint8_t target;uint32_t peer;} fire_uplink;

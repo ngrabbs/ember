@@ -167,7 +167,7 @@ class AddressingTests(unittest.TestCase):
    source=p/'test.c';source.write_text('#include <assert.h>\n#define main embedded_main\n#include "'+str(ROOT/'firmware/ihu/main.c')+'"\n#undef main\n'+DRIVER)
    for role in (0,1):
     binary=p/f'role{role}'
-    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',f'-DROLE_IHU={role}','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),str(source),str(ROOT/'firmware/usb_bench/protocol.c'),'-o',str(binary)],check=True)
+    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',f'-DROLE_IHU={role}','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),str(source),str(ROOT/'firmware/shared/ember_protocol/protocol.c'),'-o',str(binary)],check=True)
     output=subprocess.check_output([str(binary)],text=True)
     if role:
      wire=next(line.split()[1] for line in output.splitlines() if line.startswith('IDENTITY_PACKET '))

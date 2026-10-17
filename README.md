@@ -103,6 +103,12 @@ Agents start with [AGENTS.md](AGENTS.md); all KiCad schematic work follows the
 |---|---|---|
 | `firmware/ihu` | IHU CAN Feather; also builds the LTE CAN Feather role | [IHU firmware](firmware/ihu/README.md) |
 | `firmware/transceiver` | Original-Pico UHF transceiver | [Transceiver firmware](firmware/transceiver/README.md) |
+| `firmware/walter` | Walter ESP32-S3 LTE-M modem application | [Walter firmware](firmware/walter/README.md) |
+| `firmware/payload` | Payload Pi CAN responder | [Payload firmware](firmware/payload/README.md) |
+
+Shared code lives in `firmware/comms_transport` (CAN/UART protocols and drivers)
+and `firmware/shared` (EPS definitions and the portable command engine). Retired
+UART/USB diagnostics and the unused `common` placeholder were removed.
 
 Build the active IHU from the repository root with the Pico SDK and ARM GCC:
 
