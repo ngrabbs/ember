@@ -455,3 +455,18 @@ fixtures. Their fixed test transaction is epoch 0x52585031, ID 1; the latter two
 are deliberate negative cases. All retain finite-burst and explicit GO behavior.
 Tests: `tests/rx_ping.c` (host C with address/undefined-behavior sanitizers),
 `tests/rx_decode_check.py`, startup/fault tests, and `ground/bpsk/test_uplink_probe.py`.
+
+### 0.29.0 PING forwarding and held response
+
+An accepted PING now makes one bounded CAN request on 0x730 after RX shutdown;
+COMMS waits at most approximately two seconds for a correlated 0x731 response.
+There is no automatic retry. The IHU independently gates PING, uses the native
+command engine, and returns its actual COMPLETED response. COMMS validates
+native CRC, response identity/stage, IHU boot consistency and transaction match.
+It holds one validated 43-byte response for up to ten minutes. New accepted
+requests invalidate the old response. An uncertain CAN outcome is not retried.
+
+Uppercase `V` explicitly transmits that held response once through the existing
+bounded BPSK transmitter. It consumes the held response before attempting RF.
+Do not invoke V until the RF return cable/receiver setup has been verified.
+Reception and CAN forwarding do not automatically enable RF transmission.

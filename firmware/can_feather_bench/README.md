@@ -435,3 +435,15 @@ IHU v7 adds the [expected-device registry](../../system/interfaces/device_regist
 CAN enters normal mode at boot. `devices` reports runtime health; `devices scan`
 expedites the next idle-time probe. Scanning never arms RF. Current EPS is checked
 on I2C; future EPS and payload plus LTE have reserved CAN discovery identities.
+
+### IHU 0.10.0: PING-only UHF ingress
+
+The IHU role accepts fragmented requests on dedicated CAN 0x730 and returns
+completed responses on 0x731 (envelope types 0x90/0x91). Both ingress and native
+command layers validate PING; arbitrary/state-changing commands cannot reach
+the engine through this entry point. The existing USB-bench native engine owns
+response generation and duplicate transaction caching. The CAN output queue
+captures its route when queued, keeping concurrent discovery/target selection
+from redirecting fragments. Busy output drops the request without automatic
+retry; COMMS reports an unknown/timeout outcome. The LTE role is not deployed
+as part of this IHU update.

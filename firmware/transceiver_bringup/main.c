@@ -35,6 +35,8 @@ static bool disable_clocks(void) {
 #include "rx_decode.h"
 #include "rx_ping.h"
 static rp_cache rx_ping_cache;
+static bool uplink_pending;
+static uint8_t uplink_ping[32];
 #include "bpsk_emit.h"
 #include "rf_bridge.h"
 static void bpsk_test(unsigned drive) {
@@ -108,6 +110,7 @@ static void rx_test(bool lo, bool packet_capture) {
         printf("\n");
         if(found && result.packet[W_KIND]==W_KINDS_COMMAND) {
             const char *status=rp_check(&rx_ping_cache,result.packet,result.size);
+            if(!strcmp(status,"PING_ACCEPTED")){memcpy(uplink_ping,result.packet,32);uplink_pending=true;}
             printf("[rx_ping] outcome=%s epoch=%lu transaction=%lu ingress_only=1 forwarded=0 rf_reply=0\n",
                    status,(unsigned long)rd_u32(result.packet+W_TRANSACTION_EPOCH),
                    (unsigned long)rd_u32(result.packet+W_TRANSACTION_ID));
@@ -253,6 +256,7 @@ static bool hello_send(const uint8_t *wire,size_t size,uint32_t request,uint64_t
 }
 
 #include "rf_service.h"
+#include "uplink_service.h"
 
 /* Console l=listen-only, n=receive with ACK; both bounded to ten seconds. */
 static bool listen_a(bool acknowledge, bool reply_hello, bool forward_rf) {
@@ -435,8 +439,11 @@ int main(void) {
             printf("[firmware] version=%s git=%s dirty=%u boot=%lu\n",FW_VERSION,FW_GIT,FW_DIRTY,(unsigned long)responder_boot);
             clock_status();
         }
-        if (command == 'r' || command == 'e' || command == 'R')
+        if (command == 'r' || command == 'e' || command == 'R'){
             rx_test(command != 'e', command == 'R');
+            if(uplink_pending && !uplink_forward())afailed=true;
+        }
+        if(command=='V' && !afailed && !uplink_transmit_response())afailed=true;
         if (command == 'd') data_input_test();
         if (command == 'b') bpsk_test(0);
         if (command == 'B') bpsk_test(1);
@@ -480,7 +487,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v28] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
+        printf("[y24-safe-v29] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

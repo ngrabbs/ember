@@ -17,6 +17,10 @@ static uc_state uhf_client;
 #include "native_telemetry.h"
 #if ROLE_IHU
 #include "eps_readout.h"
+#include "uplink_ping.h"
+#include "../usb_bench/protocol.h"
+static ember_state uplink_engine;
+static cf_reader uplink_fragments;
 #include "power_packet.h"
 #include "health_packet.h"
 #include "device_packet.h"
@@ -50,7 +54,7 @@ static struct {bool active;ul_packet packet;uint32_t started;} pending;
 static struct {
     bool active;
     uint8_t wire[UL_WIRE_MAX];size_t size;
-    uint16_t token;unsigned index;uint32_t last;
+    uint16_t token,route;unsigned index;uint32_t last;
 } output;
 #if !ROLE_IHU
 static ul_reader uart_reader;
@@ -95,8 +99,30 @@ static void status(void) {
 static bool queue(const ul_packet *p) {
     if(output.active)return false;
     size_t size=ul_encode(p,output.wire);if(!size)return false;
-    output.size=size;output.token=(uint16_t)p->request;output.index=0;output.last=now_ms()-2;output.active=true;return true;
+    output.route=TX_ID;output.size=size;output.token=(uint16_t)p->request;output.index=0;output.last=now_ms()-2;output.active=true;return true;
 }
+#if ROLE_IHU
+static bool uplink_emit(const uint8_t *p,size_t n,void *context){
+    const ul_packet *request=context;
+    if(n!=43 || p[W_KIND]!=W_KINDS_RESPONSE)return false;
+    if(p[W_PAYLOAD+W_COMMAND_RESPONSE_STAGE]!=W_STAGE_COMPLETED)return true;
+    ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,
+                     .origin=request->sender,.request=request->request,.size=(uint16_t)n};
+    memcpy(reply.payload,p,n);
+    if(!queue(&reply))return false;
+    output.route=UP_REPLY_ID;
+    LOG("UPLINK_PING COMPLETED epoch=%" PRIu32 " transaction=%" PRIu32 " response_hex=",
+        ul_u32(p+12),ul_u32(p+16));
+    for(size_t i=0;i<n;i++){LOG("%02x",p[i]);}LOG("\n");return true;
+}
+static void uplink_receive(const cf_frame *frame,uint32_t now){
+    static ul_packet p;
+    if(!cf_feed(&uplink_fragments,frame,UP_REQUEST_ID,now))return;
+    if(!up_envelope(&uplink_fragments,&p)||p.type!=UP_PING||p.origin!=p.sender||!up_native_ping(p.payload,p.size))return;
+    if(output.active||can.pending){LOG("UPLINK_PING rejected=BUSY\n");return;}
+    ember_command(&uplink_engine,p.payload,p.size,now,uplink_emit,&p);
+}
+#endif
 static void pump_tx(uint32_t now) {
     uint32_t errors=can.tx_fail+can.tx_timeout;mcp_poll_tx(&can,now);
     if(can.tx_fail+can.tx_timeout!=errors) {
@@ -106,7 +132,7 @@ static void pump_tx(uint32_t now) {
     }
     if(output.active && !can.pending && (uint32_t)(now-output.last)>=2) {
         cf_frame frame;
-        if(!cf_fragment(output.wire,output.size,TX_ID,output.token,output.index,&frame)) {output.active=false;return;}
+        if(!cf_fragment(output.wire,output.size,output.route,output.token,output.index,&frame)) {output.active=false;return;}
         if(mcp_send(&can,&frame)) {
             ++output.index;output.last=now;
             if((size_t)output.index*CF_CHUNK>=output.size)output.active=false;
@@ -571,6 +597,7 @@ int main(void) {
     stdio_init_all();boot=get_rand_32();if(!boot)boot=1;mcp_init(&can);
 #if ROLE_IHU
     eps_bus_init();
+    ember_init(&uplink_engine,boot);
 #endif
     if(can.ready)(void)mcp_mode(&can,0);
 #if !ROLE_IHU
@@ -593,6 +620,7 @@ int main(void) {
 #endif
         for(unsigned i=0;i<2 && mcp_receive(&can,&frame);++i) {
 #if ROLE_IHU
+            if(frame.id==UP_REQUEST_ID){uplink_receive(&frame,now);continue;}
             if(devices_receive(&frame,now))continue;
 #else
             if(frame.id==DR_QUERY_ID) {
