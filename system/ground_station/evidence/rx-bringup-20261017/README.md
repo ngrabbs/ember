@@ -168,3 +168,28 @@ source/LO frequency offset must be handled before uplink packet tests; it must
 not be assigned solely to either instrument without a frequency reference.
 All windows completed with verified shutdown. Final clock registers 3=FF,
 16/17/18=80, generator off, CAN A normal. No component changes were made.
+
+## LibreSDR uplink preparation and first carrier
+
+Installed clean COMMS 0.26.0 from 114c1b8 after full-flash backup/readback.
+Uppercase R provides 32768 samples in the existing bounded RX window. Host
+startup/RX fault tests and 17 BPSK tests pass; real-IF simulations decode native
+bench fixtures offline, including LPF and noise. No onboard packet parser or
+command execution has been added.
+
+User connected TXRA → 30+20+10 dB pads → DC block → J9 and lifted the scope
+probe. Existing custom FPGA hash verified. A one-second LibreSDR CW burst at
+requested 434.994 MHz, channel0 TX/RX, gain70, amplitude0.05 completed with full
+sample count and burst acknowledgment, no streaming errors. Gain is a device
+setting, not measured dBm. Digital carrier offset20 kHz separates the intended
+signal from center-frequency leakage. Source waits for an explicit GO and sends
+only a finite waveform, with an end-of-burst cleanup; no continuous RF enabled.
+
+The 32768-sample ADC capture completed with no >10 us timing misses and verified
+shutdown. Two half-second regions during the burst show ~654–658 Hz with peak
+amplitude ~0.6 count, compared with ~0.9 count broadband RMS noise. This is
+weak, time-correlated carrier evidence, insufficient for packet qualification.
+User had anticipated excessive attenuation. Requested removal of only the20 dB
+pad, leaving40 dB for the next test; no automatic assumption that rewiring occurred.
+Relative frequency differs from tinySA and must be checked before packet testing.
+Final CAN A normal, clock outputs disabled/powered down. No uplink packet sent yet.
