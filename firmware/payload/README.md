@@ -2,13 +2,13 @@
 
 Raspberry Pi 4 / LC2502 / Raspberry Pi OS Trixie, CAN A only. CAN enters normal
 mode at 500 kbit/s during boot, independently of Wi-Fi or a USB console. Like
-COMMS idle service, the payload answers addressed requests; it emits no
+transceiver idle service, the payload answers addressed requests; it emits no
 unsolicited boot message or periodic heartbeat. Fire check is a commanded static stub returning NO_FIRE; execution_mode=STATIC_STUB
 explicitly distinguishes it from a real detector. Cameras, images and power commands remain outside this version.
 
 The current IHU application is `firmware/ihu` (v0.12.0 adds fire check; v0.11.0 added the
 payload target). The older FreeRTOS prototype was removed. Current
-transceiver idle startup is implemented in `firmware/comms`.
+transceiver idle startup is implemented in `firmware/transceiver`.
 
 ## Addressing
 
@@ -19,7 +19,7 @@ transceiver idle startup is implemented in `firmware/comms`.
 | New IHU-to-payload application route | `0x740` |
 | New payload-to-IHU application route | `0x741` |
 
-COMMS `0x710/0x711`, LTE `0x720/0x721`, and deployed RF uplink
+transceiver `0x710/0x711`, LTE `0x720/0x721`, and deployed RF uplink
 `0x730/0x731` remain unchanged. Payload uses `0x740/0x741` specifically
 to avoid the RF uplink allocation, which is newer than main. The candidate
 preserves the installed IHU uplink implementation from `08b36205d8e324ae31fb3ea5c2cdc3b32c38ce62`. Source of truth:
@@ -113,7 +113,7 @@ ping 32
 payload ident
 payload status
 payload heartbeat
-hello comms
+hello transceiver
 ```
 
 Wait for each correlated RESULT before the next command. Background discovery

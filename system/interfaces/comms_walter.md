@@ -74,7 +74,7 @@ This is a proposed carrier mapping, not a schematic edit or tested hookup.
 
 The retired FreeRTOS prototypes used the following jumper interface; they are
 retained only in Git history. Current CAN/UHF behavior is described by the
-[IHU](../../firmware/ihu/README.md) and [COMMS](../../firmware/comms/README.md) guides:
+[IHU](../../firmware/ihu/README.md) and [COMMS](../../firmware/transceiver/README.md) guides:
 
 - IHU master: GP4 SDA / GP5 SCL; COMMS slave: GP14 SDA / GP15 SCL,
   seven-bit address `0x42`, common ground. COMMS uses i2c1; its separate

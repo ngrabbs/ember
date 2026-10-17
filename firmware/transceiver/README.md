@@ -1,25 +1,25 @@
-# COMMS firmware
+# Transceiver firmware
 
-Original Pico only. Formerly `firmware/transceiver_bringup`. The earlier
+Original Pico only. Source: `firmware/transceiver`. The earlier
 FreeRTOS application was removed and remains available in Git history.
-The existing CMake target and output basename `transceiver_bringup` are retained.
+The CMake target is `transceiver`; the output image is `transceiver.uf2`.
 Configure a fresh build directory after moving from the old source path.
-Current release: **0.33.0**. After startup checks, CAN A stays available and RF
-stays muted while idle. Healthy COMMS accepts validated IHU UHF telemetry at
-any time; no COMMS console `a`/`g` enable is required. IHU 0.14.0 controls
+Current release: **0.34.0**. After startup checks, CAN A stays available and RF
+stays muted while idle. Healthy transceiver accepts validated IHU UHF telemetry at
+any time; no transceiver console `a`/`g` enable is required. IHU 0.14.0 controls
 telemetry permission through `output uhf_telem on` and starts work with a
 single `uhf heartbeat` or bounded `uhf run SECONDS PERIOD`.
 
 Each accepted request uses the existing queue, duplicate/result history and
-bounded RF bursts. One automatic COMMS firmware identity precedes the first
-telemetry request after COMMS boot; later requests and runs omit it. Successful
+bounded RF bursts. One automatic transceiver firmware identity precedes the first
+telemetry request after transceiver boot; later requests and runs omit it. Successful
 local RF transmission sets the volatile announcement flag. It does not reset
 when IHU restarts or a diagnostic window opens. There is no RF at boot.
-IHU `uhf comms firmware` (CF_UHF_FIRMWARE, empty payload) requests exactly one
+IHU `uhf transceiver firmware` (CF_UHF_FIRMWARE, empty payload) requests exactly one
 fresh identity again and uses the same admission/result/history semantics.
 CAN is quiesced during each burst and resumes afterward. Local completion is
 not a ground acknowledgement. No automatic retry or periodic RF is started by
-COMMS. Native packet CRC/schema/source checks still apply; CAN or RF/clock
+transceiver. Native packet CRC/schema/source checks still apply; CAN or RF/clock
 failures latch the board unavailable until reboot. Idle clock-disable failure
 also latches that fault. The boot state contains no queued work.
 
@@ -56,11 +56,11 @@ CAN interrupts GP18/19, I2C SDA/SCL GP20/21, RX ADC GP27.
 Build with the Pico SDK and ARM GCC:
 
 ```sh
-cmake -S firmware/comms -B build/comms -DPICO_BOARD=pico \
+cmake -S firmware/transceiver -B build/transceiver -DPICO_BOARD=pico \
   -DPICO_SDK_PATH="$PICO_SDK_PATH" \
-  $(python3 firmware/comms/source_identity.py --cmake-args)
-cmake --build build/comms -j4
-# Image: build/comms/transceiver_bringup.uf2
+  $(python3 firmware/transceiver/source_identity.py --cmake-args)
+cmake --build build/transceiver -j4
+# Image: build/transceiver/transceiver.uf2
 ```
 
 Before flashing, save and verify the existing Pico flash. Before installation,
@@ -103,8 +103,8 @@ is the evidence of an end-to-end test.
 Host checks:
 
 ```sh
-python3 firmware/comms/tests/check.py
-cc -std=c11 -Wall -Wextra -Werror -Ifirmware/comms -Ifirmware/comms_transport firmware/comms/tests/hello.c -o /tmp/y24-hello-test
+python3 firmware/transceiver/tests/check.py
+cc -std=c11 -Wall -Wextra -Werror -Ifirmware/transceiver -Ifirmware/comms_transport firmware/transceiver/tests/hello.c -o /tmp/y24-hello-test
 /tmp/y24-hello-test
 ```
 
@@ -152,7 +152,7 @@ before sending `c`; a successful register test alone does not verify RF mute.
 Additional host test:
 
 ```sh
-cc -std=c11 -Wall -Wextra -Werror -Ifirmware/comms firmware/comms/tests/clock.c -o /tmp/y24-clock-test
+cc -std=c11 -Wall -Wextra -Werror -Ifirmware/transceiver firmware/transceiver/tests/clock.c -o /tmp/y24-clock-test
 /tmp/y24-clock-test
 ```
 
@@ -196,7 +196,7 @@ assembled crystal load. TX/RX/BPSK stay low throughout.
 
 ## v11: one bounded DBPSK heartbeat
 
-Single byte `b` sends one native COMMS heartbeat at1200 baud, approximately
+Single byte `b` sends one native transceiver heartbeat at1200 baud, approximately
 673ms, with a2-second independent timer mute and checked cleanup. No automatic
 transmission. See [waveform, limits and ground procedure](../../ground/bpsk/README.md).
 C1/C2 removal and C6 replacement are physical prototype reworks documented in
@@ -275,7 +275,7 @@ Dictionary constants are generated into `native_wire.h`; the decoder test
 checks that file against `ground/ember/dictionary.json`. Regenerate with:
 
 ```
-python3 ground/ember/generate_c.py firmware/comms/native_wire.h
+python3 ground/ember/generate_c.py firmware/transceiver/native_wire.h
 ```
 
 The largest admitted packet takes 1.273 seconds at 1200 baud, within the
@@ -284,13 +284,13 @@ Receiver windows are now four seconds with one-second stride, avoiding
 truncation of longer packets at window boundaries. CAN remains unavailable
 while this bench firmware transmits; this is still one explicitly armed packet.
 
-For each transmission, using separate IHU and COMMS consoles:
+For each transmission, using separate IHU and transceiver consoles:
 
-1. On IHU, `normal`; on COMMS send `h` (single byte, no newline), then on IHU
-   `hello`. Wait for `CAN_HELLO_CONFIRMED` and the COMMS receive window to end.
+1. On IHU, `normal`; on transceiver send `h` (single byte, no newline), then on IHU
+   `hello`. Wait for `CAN_HELLO_CONFIRMED` and the transceiver receive window to end.
 2. On the ground Pi, start a 15-second capture with a fresh output directory:
    `python3 /home/ngrabbs/work/ember-y24-bpsk/ground/bpsk/capture.py --seconds 15 --gain 0 --output /home/ngrabbs/work/ember-y24-bpsk/runs/UNIQUE_RUN --forward`
-3. Wait for `BPSK_RX_READY`. On COMMS send `f` without a newline. After
+3. Wait for `BPSK_RX_READY`. On transceiver send `f` without a newline. After
    `[bridge] ARMED`, issue one IHU command: `eps telemetry` for EPS,
    `telemetry` for heartbeat, or `system lte` for system status. The existing
    `heartbeat lte` and `eps lte` commands also use the supported packet envelope;
@@ -307,7 +307,7 @@ this change does not claim a Walter echo, LTE modem acceptance, or ground ACK.
 
 ## v19: acknowledged, bounded UHF batch
 
-With IHU can-bench-v4, send COMMS `g` (one byte, no newline). It listens for10
+With IHU can-bench-v4, send transceiver `g` (one byte, no newline). It listens for10
 seconds, accepts at most4 packets, drains them, and returns to muted standby.
 A HELLO can be exchanged during collection, or use the existing `h` handshake
 first. During collection issue IHU `uhf heartbeat`, `uhf system`, or `uhf eps`,
@@ -316,7 +316,7 @@ waiting for `UHF ... outcome=QUEUED` after each. Results subsequently report
 not acknowledgments from ground. IHU status retains the peer and reports
 `pending=0 uhf_pending=0` after the final result, allowing the next batch without
 another HELLO. Admission/result timeout means UNKNOWN and is never retried
-silently. Any COMMS console byte stops the batch. No periodic service is started.
+silently. Any transceiver console byte stops the batch. No periodic service is started.
 
 Use a fresh finite ground capture spanning the drain; for a three-packet batch,
 start a15-second capture during the latter half of the collection window. The
@@ -335,12 +335,12 @@ boot never enables it. Existing per-burst timer, lock checks and mute remain.
 With IHU v5, initialize normal CAN and HELLO, then use `uhf run 120 10` to send
 heartbeat/system/EPS cycles every10 seconds for two minutes without per-packet
 commands. Wait for receiver BPSK_RX_READY before starting the generator. IHU
-`uhf stop` halts future production; COMMS `x` interrupts RF and closes the
+`uhf stop` halts future production; transceiver `x` interrupts RF and closes the
 permission window. IHU `status` reports mode, cycles and submitted count.
 A135-second capture accommodates startup and the120-second run; forwarding
 occurs after capture. See the UHF interface contract for bounds and faults.
 
-COMMS v21 boots into CAN A normal mode after controller self-checks, with RF
+transceiver v21 boots into CAN A normal mode after controller self-checks, with RF
 muted. Discovery, HELLO and ECHO work without opening a console window. UHF
 requests are explicitly rejected while RF service is disabled. `a`/`g` still
 require explicit action and remain bounded; stopping returns to idle CAN
@@ -360,9 +360,9 @@ not reproducible from the commit alone. Release numbers must be updated with
 changes intended as a new release; commit identity distinguishes builds.
 
 Once per explicitly enabled `a`/`g` session, after its first admitted request,
-COMMS sends its own COMMS_FIRMWARE telemetry before draining the IHU packet.
+transceiver sends its own COMMS_FIRMWARE telemetry before draining the IHU packet.
 It contains version major/minor/patch, dirty flag and the full160-bit Git SHA
-as five big-endian words. Its native source and boot ID are COMMS, not IHU.
+as five big-endian words. Its native source and boot ID are transceiver, not IHU.
 The burst uses the existing timer/mute/abort checks and counts toward the96
 attempt timed limit; a batch permits at most four data bursts plus one identity.
 No queued data means no identity transmission; boot never enables RF. A failed
@@ -376,7 +376,7 @@ SHA are metadata, not secure boot or remote attestation.
 Capture build identity automatically in the source checkout before exporting:
 
 ```bash
-python3 firmware/comms/source_identity.py
+python3 firmware/transceiver/source_identity.py
 ```
 
 The returned `cmake_args` are the arguments for the remote CMake configure.
@@ -414,9 +414,9 @@ executed, and no TX window is opened by these commands.
 Host validation:
 
 ```sh
-cc -std=c11 -Wall -Wextra -Werror -Wno-unused-function -I firmware/comms firmware/comms/tests/rx.c -o /tmp/ember-rx-test
+cc -std=c11 -Wall -Wextra -Werror -Wno-unused-function -I firmware/transceiver firmware/transceiver/tests/rx.c -o /tmp/ember-rx-test
 /tmp/ember-rx-test
-python3 firmware/comms/tests/check.py
+python3 firmware/transceiver/tests/check.py
 ```
 
 The clock plan follows [Skyworks AN619 rev 0.8](https://www.skyworksinc.com/-/media/Skyworks/SL/documents/public/application-notes/AN619.pdf).
@@ -457,7 +457,7 @@ carrier frequency**. Successful decode prints bytes only: `fixture_only=1
 forwarding occurs. This remains a manually triggered capture diagnostic, not a
 continuous command receiver. Three recorded hardware captures and synthetic
 frequency/timing/noise/corruption tests run via
-`python3 firmware/comms/tests/rx_decode_check.py`; hardware runtime
+`python3 firmware/transceiver/tests/rx_decode_check.py`; hardware runtime
 and a new live decode must be verified before calling the installed path proven.
 
 ### 0.28.0 PING-only ingress diagnostic
@@ -465,11 +465,11 @@ and a new live decode must be verified before calling the installed path proven.
 `R` also decodes command envelopes, then applies a separate PING-only gate.
 Only a zero-payload native PING from ground to IHU, with nonzero transaction
 epoch/ID and source boot ID, can produce `PING_ACCEPTED` on the console.
-This preserves the existing ground→IHU command contract: acceptance means COMMS
+This preserves the existing ground→IHU command contract: acceptance means transceiver
 validated ingress only. No IHU forwarding, execution, response or RF transmission
 is enabled. Telemetry fixture decoding remains available.
 
-The 16-entry transaction cache persists across diagnostic windows within a COMMS
+The 16-entry transaction cache persists across diagnostic windows within a transceiver
 boot. The same epoch/ID is `PING_DUPLICATE` even with a new RF/packet sequence;
 a changed source boot ID under that key is a conflict. The cache does not evict:
 a seventeenth new transaction is rejected until reboot. This is a bench duplicate
@@ -485,9 +485,9 @@ Tests: `tests/rx_ping.c` (host C with address/undefined-behavior sanitizers),
 ### 0.29.0 PING forwarding and held response
 
 An accepted PING now makes one bounded CAN request on 0x730 after RX shutdown;
-COMMS waits at most approximately two seconds for a correlated 0x731 response.
+transceiver waits at most approximately two seconds for a correlated 0x731 response.
 There is no automatic retry. The IHU independently gates PING, uses the native
-command engine, and returns its actual COMPLETED response. COMMS validates
+command engine, and returns its actual COMPLETED response. transceiver validates
 native CRC, response identity/stage, IHU boot consistency and transaction match.
 It holds one validated 43-byte response for up to ten minutes. New accepted
 requests invalidate the old response. An uncertain CAN outcome is not retried.
@@ -512,3 +512,19 @@ then receives on RXA for 16 seconds after TX burst acknowledgment. It never
 retries or forwards automatically. Each run must use a new transaction ID;
 responses must match transaction and expected IHU boot ID. This remains a
 manually initiated bounded trial, not continuous listening.
+
+## Naming and compatibility
+
+Release 0.34.0 renames the former `firmware/comms` application and its
+`transceiver_bringup` build target to `firmware/transceiver` and `transceiver`.
+Use a fresh build directory; the image is `transceiver.uf2`. IHU 0.14.1 accepts
+`hello transceiver` and `uhf transceiver firmware`; the former `comms` spellings
+remain compatibility aliases for installed ground tools.
+
+Numeric CAN/node/message identifiers and the published `COMMS_FIRMWARE` and
+`DEVICE_STATUS_comms_*` fields are unchanged. They are protocol compatibility
+names, not the application name. Existing Yamcs archives and deployed receivers
+continue to work. `hardware/comms` is the existing board project; shared
+`comms_transport` and the older LTE bridge sources are not this application.
+Historical logs, source hashes, deployment manifests and commit-pinned links
+retain their original names. This rename does not flash a board or deploy Yamcs.

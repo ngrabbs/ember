@@ -79,7 +79,7 @@ handling, the radio link, and system integration.
 | Path | Contents |
 |---|---|
 | `hardware/` | Per-board design documentation, bring-up procedures, fabrication releases, datasheets |
-| `firmware/` | Embedded software — IHU, COMMS, payload, transport and shared definitions |
+| `firmware/` | Embedded software — IHU, transceiver, payload, transport and shared definitions |
 | `rf/` | Filter, matching, and gain-stage design; simulations and measured results |
 | `analysis/` | Orbit and access modelling, link budget, power budget, trade studies |
 | `system/` | Board-to-board interfaces, bus pin maps, protocols, integration planning |
@@ -102,13 +102,13 @@ Agents start with [AGENTS.md](AGENTS.md); all KiCad schematic work follows the
 | Source | Role | Guide |
 |---|---|---|
 | `firmware/ihu` | IHU CAN Feather; also builds the LTE CAN Feather role | [IHU firmware](firmware/ihu/README.md) |
-| `firmware/comms` | Original-Pico COMMS UHF transceiver | [COMMS firmware](firmware/comms/README.md) |
+| `firmware/transceiver` | Original-Pico UHF transceiver | [Transceiver firmware](firmware/transceiver/README.md) |
 
 Build the active IHU from the repository root with the Pico SDK and ARM GCC:
 
 ```bash
 cmake -S firmware/ihu -B build/ihu -DPICO_SDK_PATH="$PICO_SDK_PATH" \
-  $(python3 firmware/comms/source_identity.py --cmake-args)
+  $(python3 firmware/transceiver/source_identity.py --cmake-args)
 cmake --build build/ihu -j4
 # IHU image: build/ihu/ember_ihu_can_bench.uf2
 ```
@@ -116,8 +116,7 @@ cmake --build build/ihu -j4
 The source directories were renamed from `can_feather_bench` and
 `transceiver_bringup`. Earlier FreeRTOS prototypes were removed; they remain available in
 [Git history](https://github.com/ngrabbs/ember/tree/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware).
-Existing binary target names are retained so images
-remain identifiable alongside earlier deployment records. Use fresh build
+The transceiver output is now `transceiver.uf2`; the IHU output name is unchanged. Use fresh build
 directories after the move. See the [IHU console guide](docs/user/ihu-can-console.md)
 for current commands.
 

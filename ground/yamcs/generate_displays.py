@@ -147,7 +147,7 @@ def generate(destination, instance="ember"):
         label(title,692,y,260,20,11);eps(pv,692,y+21,260,20)
     box(22,450,956,105)
     label('WHAT THESE VALUES MEAN',40,461,900,22,11,BLUE,True)
-    label('Heartbeat may come from IHU or COMMS; boot ID belongs to that packet’s producer.' if instance=='ember' else 'EPS is polled every five seconds through one serial owner; payload replies are requested.',40,488,914,21,11)
+    label('Heartbeat may come from IHU or transceiver; boot ID belongs to that packet’s producer.' if instance=='ember' else 'EPS is polled every five seconds through one serial owner; payload replies are requested.',40,488,914,21,11)
     label('Heartbeat/system values do not expire; check timestamps. SAFE / GROUND_TEST are bench labels.' if instance=='ember' else 'The EPS header identifies a ground wrapper session, not an IHU reset or spacecraft UTC.',40,514,914,21,11)
     nav('System raw / history' if instance=='ember' else 'Power raw / quality','System.par' if instance=='ember' else 'EPS.par',22,568)
     if instance=='ember-bench':web('Payload commands','/commanding/send',250,568,210);web('Command history','/commanding/history',478,568,210)
@@ -187,7 +187,7 @@ def generate(destination, instance="ember"):
     observed('PAYLOAD_FIRE_RESULT_execution_mode',395,479,200,17)
     stamp('PAYLOAD_FIRE_RESULT_result',610,481,360)
     label('STATIC_STUB returns NO_FIRE without running the detector. Missing replies remain UNKNOWN.',22,513,956,24,11,ORANGE)
-    label('Bench path: Yamcs → m75q → IHU serial → CAN A → payload Pi.' if instance=='ember-bench' else 'Flight command path: Yamcs → LibreSDR RF → COMMS → IHU → CAN A → payload; result returns over RF.',22,541,956,20,10)
+    label('Bench path: Yamcs → m75q → IHU serial → CAN A → payload Pi.' if instance=='ember-bench' else 'Flight command path: Yamcs → LibreSDR RF → transceiver → IHU → CAN A → payload; result returns over RF.',22,541,956,20,10)
     nav('Payload raw / history','Payload.par',22,568)
     web('Send payload command','/commanding/send',250,568,235);web('Command history','/commanding/history',503,568,210)
     footer('Payload firmware identity and source commit are consolidated on Devices & firmware.')
@@ -196,7 +196,7 @@ def generate(destination, instance="ember"):
     new('Devices & firmware','IHU discovery snapshot and last reported build identities')
     script('No discovery snapshot',['DEVICE_STATUS_payload_version'],'device-freshness.js',22,138,956,24,11)
     for text,x,w in [('Device / interface',22,290),('State at snapshot',344,200),('Age at snapshot',564,200),('Timeouts',804,174)]:label(text,x,176,w,22,11,BLUE,True)
-    for i,(prefix,title) in enumerate([('eps','EPS / I2C1'),('eps_next','EPS_NEXT / CAN (planned)'),('comms','COMMS / CAN A'),('lte','LTE / CAN A'),('payload','Payload / CAN A')]):
+    for i,(prefix,title) in enumerate([('eps','EPS / I2C1'),('eps_next','EPS_NEXT / CAN (planned)'),('comms','Transceiver / CAN A'),('lte','LTE / CAN A'),('payload','Payload / CAN A')]):
         y=208+i*31;label(title,22,y,300,24,11)
         observed('DEVICE_STATUS_'+prefix+'_state',344,y,200,12)
         script('No observation',['DEVICE_STATUS_'+prefix+'_seen','DEVICE_STATUS_'+prefix+'_age_ms'],'device-age.js',564,y,210,24,11)
@@ -205,10 +205,10 @@ def generate(destination, instance="ember"):
     label('Snapshot states are sampled by IHU; NOT_SEEN can be expected for planned or unconnected devices.',22,392,956,21,10)
     # Single compact fleet identity table replaces three dedicated firmware pages.
     for text,x,w in [('Firmware component',22,230),('Release / build',258,220),('Full source commit',490,488)]:label(text,x,426,w,22,11,BLUE,True)
-    for i,(prefix,title) in enumerate([('COMMS_FIRMWARE','COMMS MCU'),('LTE_CAN_FIRMWARE','LTE CAN MCU'),('LTE_MODEM_FIRMWARE','Walter MCU'),('PAYLOAD_FIRMWARE','Payload Pi')]):
+    for i,(prefix,title) in enumerate([('COMMS_FIRMWARE','Transceiver MCU'),('LTE_CAN_FIRMWARE','LTE CAN MCU'),('LTE_MODEM_FIRMWARE','Walter MCU'),('PAYLOAD_FIRMWARE','Payload Pi')]):
         y=456+i*29;label(title,22,y,225,24,11)
-        script('No identity',[prefix+'_'+n for n in ('version_major','version_minor','version_patch','dirty')],'comms-version.js',258,y,225,24,10)
-        script('No identity',[prefix+'_git_sha_'+str(n) for n in range(5)],'comms-git.js',490,y,488,24,10)
+        script('No identity',[prefix+'_'+n for n in ('version_major','version_minor','version_patch','dirty')],'firmware-version.js',258,y,225,24,10)
+        script('No identity',[prefix+'_git_sha_'+str(n) for n in range(5)],'firmware-git.js',490,y,488,24,10)
     nav('Discovery raw / boot IDs','Devices.par',22,578,230)
     nav('All firmware / timestamps','Firmware.par',270,578,250)
     footer('Firmware rows are last-known reports, not live attestation. Raw table includes each identity’s receive time and boot ID.')

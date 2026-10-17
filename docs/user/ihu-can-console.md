@@ -2,7 +2,7 @@
 
 [Operator guides](README.md) · [Transmission matrix](#transmission-matrix) · [Mode/output matrix and entry gates](../architecture/operations/04-ihu-runtime-policy.md)
 
-This guide describes IHU **0.14.0**, COMMS **0.33.0**, and bench bridge **0.4.0**.
+This guide describes IHU **0.14.0**, transceiver **0.33.0**, and bench bridge **0.4.0**.
 The earlier IHU 0.13.0 [deployment record](../../system/ground_station/evidence/ihu-0.13.0-20261017/deployment.json)
 is retained separately. Earlier 0.12.0 RF validation is
 recorded in the [fire-check runbook](../../ground/yamcs/FIRE_CHECK.md).
@@ -16,12 +16,12 @@ The recorded IHU USB identity is `DF641455DB822427`. Verify role=IHU_MCU using
 messages;115200 is an acceptable terminal setting. No additional physical
 UART pins are allocated by this release. The historically named
 `ember_comms_can_bench` image is the LTE CAN Feather, not the original-Pico
-COMMS transceiver. Identify the role/device before any update.
+transceiver transceiver. Identify the role/device before any update.
 
 On m75q, `ember-bench-bridge` exclusively owns the IHU port. For manual work,
 record whether it is active, stop it, and open the identified port with a
 single serial client. Close that client before restarting the bridge.
-Do not stop `ember-fire-arm` to access IHU: it owns the separate COMMS port.
+Do not stop `ember-fire-arm` to access IHU: it owns the separate transceiver port.
 
 ```sh
 systemctl is-active ember-bench-bridge
@@ -78,7 +78,7 @@ work. EPS validity and discovery presence are distinct forms of evidence.
 | `devices` / `devices scan` | Read registry or request a background discovery visit |
 | `normal` | Put CAN in normal mode and clear remembered peer; obtain HELLO again |
 | `selftest` | Local CAN loopback only; it leaves loopback mode, so follow with `normal` and HELLO |
-| `hello comms` / `hello lte` / `hello payload` | Select route and establish fresh peer identity; busy target switches are refused |
+| `hello transceiver` / `hello lte` / `hello payload` | Select route and establish fresh peer identity; busy target switches are refused |
 | `ping N` | Echo1–240 bytes through selected CAN peer |
 | `eps json` | Explicit19-register PEC-checked read; full valid transport read or failure, never a partial JSON |
 | `eps adc on` / `eps adc off` | Explicit CONFIG_BITS force-ADC override with readback; does not change charging policy |
@@ -95,8 +95,8 @@ the separately bounded receive/reply session. No automatic operation retry.
 
 ## Explicit RF telemetry
 
-With COMMS 0.33.0, a healthy board accepts IHU UHF requests immediately over
-CAN. No COMMS USB console enable or `a`/`g` window is needed. Enabling
+With transceiver 0.33.0, a healthy board accepts IHU UHF requests immediately over
+CAN. No transceiver USB console enable or `a`/`g` window is needed. Enabling
 `uhf_telem` permits sends; issue `uhf heartbeat` for one packet or
 `uhf run 60 10` for a bounded run. Each admitted request transmits through the
 existing finite RF bursts and returns to idle CAN, with RF muted.
@@ -106,8 +106,8 @@ Do not let a live receiver and RF command service concurrently own LibreSDR.
 
 | Commands | Required permission and route |
 |---|---|
-| `uhf heartbeat` / `uhf system` / `uhf eps` / `uhf devices` | uhf_telem ON, normal CAN, COMMS HELLO and idle transport |
-| `uhf comms firmware` | Same UHF gates; request one fresh COMMS-owned firmware packet, no cached LTE identity needed |
+| `uhf heartbeat` / `uhf system` / `uhf eps` / `uhf devices` | uhf_telem ON, normal CAN, transceiver HELLO and idle transport |
+| `uhf transceiver firmware` | Same UHF gates; request one fresh transceiver-owned firmware packet, no cached LTE identity needed |
 | `uhf lte firmware` / `uhf modem firmware` | Same UHF gates, plus an identity previously queried from LTE and still fresh |
 | `uhf run SECONDS PERIOD` | Same UHF gates; duration1–120s, period5–60s; sequential heartbeat/system/EPS/device cycles |
 | `uhf stop` | Stop future cycles; previously admitted packets may finish |
@@ -115,7 +115,7 @@ Do not let a live receiver and RF command service concurrently own LibreSDR.
 
 ## Transmission matrix
 
-Checked against IHU **0.14.0**, COMMS **0.33.0** (default on-demand service),
+Checked against IHU **0.14.0**, transceiver **0.33.0** (default on-demand service),
 serial bench bridge **0.4.0**, and payload **0.2.0**. The new cadence and explicit
 identity request passed [hardware checks](../../system/ground_station/evidence/comms-identity-cadence-20261017/deployment.json). These are the implemented
 operational packet paths, not every message defined by the dictionary.
@@ -130,7 +130,7 @@ Timeouts, rejected commands and invalid replies do not imply a successful result
 | `SYSTEM_STATUS` | Yes | Selected | Selected | — | — | — |
 | `POWER_STATUS` | Yes | Selected | Selected | — | Yes | — |
 | `DEVICE_STATUS` | Yes | Selected | — | — | — | — |
-| `COMMS_FIRMWARE` | First telemetry request after COMMS boot only | First after boot, or explicit `uhf comms firmware` | — | — | — | — |
+| `COMMS_FIRMWARE` | First telemetry request after transceiver boot only | First after boot, or explicit `uhf transceiver firmware` | — | — | — | — |
 | `LTE_CAN_FIRMWARE` | — | Selected | — | — | — | — |
 | `LTE_MODEM_FIRMWARE` | — | Selected | — | — | — | — |
 | `PAYLOAD_FIRMWARE` | — | — | — | — | — | Selected |
@@ -141,7 +141,7 @@ Timeouts, rejected commands and invalid replies do not imply a successful result
 | `COMM_STATUS` | — | — | — | — | — | — |
 
 UHF single sends are `uhf heartbeat`, `uhf system`, `uhf eps`, `uhf devices`, and
-`uhf comms firmware`, `uhf lte firmware` / `uhf modem firmware` commands listed
+`uhf transceiver firmware`, `uhf lte firmware` / `uhf modem firmware` commands listed
 above. The latter two
 require an LTE identity queried within the previous 180 seconds; querying
 `lte firmware` or `lte modem firmware` alone returns a console reply and does
@@ -157,7 +157,7 @@ FIRE_CHECK → `PAYLOAD_FIRE_RESULT`. The bridge separately emits
 reply data; it does not itself generate those ground wrappers.
 
 The operational RF fire-check transaction returns one native
-`PAYLOAD_FIRE_RESULT`, with no COMMS firmware prefix or extra heartbeat/status
+`PAYLOAD_FIRE_RESULT`, with no transceiver firmware prefix or extra heartbeat/status
 set. The separate diagnostic native RF PING path returns `COMMAND_RESPONSE`;
 it is not part of `uhf run` or the Yamcs flight fire-check command.
 
@@ -170,7 +170,7 @@ The four IHU producers run in this order:
 | `HEARTBEAT` | Mode, configuration, configured telemetry period; header boot ID and uptime | Detailed subsystem measurements |
 | `SYSTEM_STATUS` | Mode/configuration, period, admitted/refused request counters | Payload diagnostics or radio diagnostics |
 | `POWER_STATUS` | Fresh 19-register PEC-checked EPS read, raw values, ADC/conversion validity, derived voltage/current/temperature | Other subsystem measurements |
-| `DEVICE_STATUS` | Cached registry state, seen flag, age, boot ID and timeout count for EPS, EPS_NEXT, COMMS, LTE and payload | A fresh status/heartbeat/IDENT query to every subsystem |
+| `DEVICE_STATUS` | Cached registry state, seen flag, age, boot ID and timeout count for EPS, EPS_NEXT, transceiver, LTE and payload | A fresh status/heartbeat/IDENT query to every subsystem |
 
 Discovery is deferred during the run; registry ages can increase. The EPS stage
 makes its own read. A failed EPS transaction stops the run; an invalid ADC
@@ -178,13 +178,13 @@ conversion can still be reported as raw data with validity flags cleared.
 Payload fire checks, payload firmware/status reports and LTE firmware reports
 are not automatically added to a run. No camera/image/detection data is sent.
 
-COMMS 0.33.0 sends one automatic `COMMS_FIRMWARE` before the first admitted
+transceiver 0.33.0 sends one automatic `COMMS_FIRMWARE` before the first admitted
 telemetry request after its boot. It records that announcement only after
 successful local RF transmission. Later packets and runs omit it. Starting a
 new run, opening a diagnostic window, or restarting IHU does not reset this
-COMMS-boot state. There is no RF announcement just because COMMS boots.
+transceiver-boot state. There is no RF announcement just because transceiver boots.
 
-A successful first cycle after COMMS boot is:
+A successful first cycle after transceiver boot is:
 
 ```text
 COMMS_FIRMWARE → HEARTBEAT → SYSTEM_STATUS → POWER_STATUS → DEVICE_STATUS
@@ -193,9 +193,9 @@ COMMS_FIRMWARE → HEARTBEAT → SYSTEM_STATUS → POWER_STATUS → DEVICE_STATU
 Later cycles contain the four IHU packets only. `uhf run 60 10` starts the first
 cycle as soon as transport is ready, then aims to start another cycle
 approximately every 10 seconds for 60 seconds. Six full cycles produce
-**24 IHU packets**, plus **one COMMS firmware packet if it has not already been
-announced during this COMMS boot**: normally 24 or 25 RF packets, rather than
-the 48 packets in COMMS 0.32.0 on-demand operation.
+**24 IHU packets**, plus **one transceiver firmware packet if it has not already been
+announced during this transceiver boot**: normally 24 or 25 RF packets, rather than
+the 48 packets in transceiver 0.32.0 on-demand operation.
 
 These counts assume healthy timing. Each stage waits for its correlated RF
 result and a 250 ms turnaround guard; delayed cycles do not produce catch-up
@@ -203,7 +203,7 @@ bursts. A fault stops production. The 60-second limit stops new submissions;
 an already-admitted packet may finish.
 
 To reacquire the identity after joining the ground link late, issue
-`uhf comms firmware` outside an active run. This sends exactly one
+`uhf transceiver firmware` outside an active run. This sends exactly one
 `COMMS_FIRMWARE`, using the same permission/HELLO gates and local RF result
 tracking. A new explicit command sends it again; replaying the same transport
 request does not retransmit. It also satisfies the first-boot announcement if
@@ -212,7 +212,7 @@ result reports `bytes=0`; that is the CAN request length, not the RF packet size
 No synthetic IHU heartbeat accompanies it. Explicit and automatic identity
 sends share the existing RF deadlines, shutdown checks and no-retry behavior.
 
-COMMS USB `a`/`g` diagnostic windows use this same boot-scoped announcement
+transceiver USB `a`/`g` diagnostic windows use this same boot-scoped announcement
 state. Solicited RF fire-check replies remain separate and get no identity prefix.
 
 ### Triggers, pacing and output gates
@@ -220,11 +220,11 @@ state. Solicited RF fire-check replies remain separate and get no identity prefi
 | Path/control | What starts output | Pacing / stop condition |
 |---|---|---|
 | `output uhf_telem on` | Permission only; no packet or run starts | A send or run command is still required; OFF stops the producer/unsent work |
-| UHF single-send commands above | Explicit command, UHF permission, COMMS HELLO and healthy idle transport | One requested packet; automatic identity only if not yet announced after COMMS boot; no automatic retry |
+| UHF single-send commands above | Explicit command, UHF permission, transceiver HELLO and healthy idle transport | One requested packet; automatic identity only if not yet announced after transceiver boot; no automatic retry |
 | `uhf run SECONDS PERIOD` | Explicit command with the same UHF gates | Duration 1–120 s, cycle period 5–60 s; stop with `uhf stop`, UHF OFF, mode change, reset, expiry or fault |
 | `output lte_telem on` / `lte N` | Permission / bounded modem window; neither sends telemetry alone | Explicit LTE packet commands still required; window maximum 120 s |
 | `heartbeat lte` / `system lte` / `eps lte` | Explicit command, LTE permission, LTE HELLO and modem readiness/window | One selected packet submission; no periodic LTE producer |
-| RF fire-check response | Addressed ground command and bounded COMMS receive/reply session | At most one validated reply per session; independent of UHF/LTE telemetry switches |
+| RF fire-check response | Addressed ground command and bounded transceiver receive/reply session | At most one validated reply per session; independent of UHF/LTE telemetry switches |
 | Bench EPS forwarding | Running bridge with `--poll-eps` and `umb_telem=1` | Approximately every 5 s between command transactions; unknown/OFF permission stops forwarding |
 | Bench payload result | One supported Yamcs bench payload command | Solicited result/stages; streaming switches may all remain OFF |
 | `cli_telem` | Explicit ON | Compact text health summary approximately every 5 s when idle; not an RF/native packet set |
@@ -245,8 +245,8 @@ RF completion is local radio evidence; confirm ground reception separately.
 
 Implementation references: [IHU producers and dispatch](../../firmware/ihu/main.c),
 [run scheduler](../../firmware/ihu/uhf_run.h),
-[COMMS announcement and RF drain](../../firmware/comms/rf_service.h),
-[RF solicited replies](../../firmware/comms/uplink_service.h), and
+[transceiver announcement and RF drain](../../firmware/transceiver/rf_service.h),
+[RF solicited replies](../../firmware/transceiver/uplink_service.h), and
 [serial bridge](../../ground/ember/payload_bridge.py).
 
 ## Removed controls
