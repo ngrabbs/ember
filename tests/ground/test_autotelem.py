@@ -12,7 +12,7 @@ class AutoTelemetry(unittest.TestCase):
             target=Path(directory)/'test'
             subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',
                             '-fsanitize=address,undefined',
-                            '-I'+str(ROOT/'firmware/can_feather_bench'),
+                            '-I'+str(ROOT/'firmware/ihu'),
                             str(ROOT/'test/firmware/autotelem_test.c'),'-o',str(target)],check=True)
             subprocess.run([str(target)],check=True)
 

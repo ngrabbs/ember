@@ -35,7 +35,7 @@ int main(void) {
 ''')
             binary=path/'test'
             subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',
-                '-I'+str(path),'-I'+str(ROOT/'firmware/can_feather_bench'),
+                '-I'+str(path),'-I'+str(ROOT/'firmware/ihu'),
                 '-I'+str(ROOT/'firmware/comms_transport'),str(path/'main.c'),'-o',str(binary)],check=True)
             wires=[bytes.fromhex(line) for line in subprocess.check_output([binary],text=True).splitlines()]
             for wire,name,length in zip(wires,('HEARTBEAT','SYSTEM_STATUS'),(38,46)):

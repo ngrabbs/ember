@@ -173,7 +173,7 @@ Open items (from [`hardware/ihu/README.md`](hardware/ihu/README.md)):
 - [ ] Watchdog policy
 - [ ] Safe-mode entry/exit behaviour
 
-Firmware roadmap: [`firmware/ihu/README.md`](firmware/ihu/README.md) (19 open).
+Active firmware: [`firmware/ihu/README.md`](firmware/ihu/README.md).
 Schematic: [`altium_ihu_schematic.md`](hardware/ihu/design/altium_ihu_schematic.md) (30 open).
 
 ---

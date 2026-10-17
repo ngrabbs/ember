@@ -80,7 +80,7 @@ class IhuModePolicy(unittest.TestCase):
             (p/'build_identity.h').write_text('#define FW_VERSION "0.13.0"\n#define FW_MAJOR 0\n#define FW_MINOR 13\n#define FW_PATCH 0\n#define FW_DIRTY 0\n#define FW_GIT "0123456789012345678901234567890123456789"\n')
             generate(p/'wire.h')
             source=p/'test.c'
-            source.write_text('#include <assert.h>\n#define main embedded_main\n#include "'+str(ROOT/'firmware/can_feather_bench/main.c')+'"\n#undef main\n'+DRIVER.split('int main(void)')[0]+CHECKS)
+            source.write_text('#include <assert.h>\n#define main embedded_main\n#include "'+str(ROOT/'firmware/ihu/main.c')+'"\n#undef main\n'+DRIVER.split('int main(void)')[0]+CHECKS)
             binary=p/'test'
             subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror','-DROLE_IHU=1','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),str(source),str(ROOT/'firmware/usb_bench/protocol.c'),'-o',str(binary)],check=True)
             output=subprocess.check_output([str(binary)],text=True)

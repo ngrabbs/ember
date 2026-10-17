@@ -83,9 +83,9 @@ Paths below are relative to the repository root. The reviewed laptop checkout is
 | [Operations telemetry dictionary](operations/Ground_Operations_Command_Telemetry/04-telemetry-dictionary.md) | Application meanings and proposed telemetry groups; operations material remains draft |
 | [ground/ember/ltc4162.json](../../ground/ember/ltc4162.json) | Charger register addresses, signed interpretation, and physical conversion factors |
 | [ground/ember/dictionary.json](../../ground/ember/dictionary.json) | Implemented bench wire contract: schema, packet IDs, field order/types, enums, units, scales, and unavailable values |
-| [firmware/can_feather_bench/eps_readout.h](../../firmware/can_feather_bench/eps_readout.h) | Actual Feather IHU register reader with SMBus PEC checks |
-| [firmware/can_feather_bench/power_packet.h](../../firmware/can_feather_bench/power_packet.h) | Native IHU EPS conversion and packet construction |
-| [firmware/can_feather_bench/main.c](../../firmware/can_feather_bench/main.c) | Both IHU and COMMS CAN bench roles, selected at build time; packet submission and relay |
+| [firmware/ihu/eps_readout.h](../../firmware/ihu/eps_readout.h) | Actual Feather IHU register reader with SMBus PEC checks |
+| [firmware/ihu/power_packet.h](../../firmware/ihu/power_packet.h) | Native IHU EPS conversion and packet construction |
+| [firmware/ihu/main.c](../../firmware/ihu/main.c) | Both IHU and COMMS CAN bench roles, selected at build time; packet submission and relay |
 | [firmware/comms_transport/can_fragment.h](../../firmware/comms_transport/can_fragment.h) | CAN fragmentation and reassembly rules |
 | [firmware/comms_transport/uart_link.h](../../firmware/comms_transport/uart_link.h) | Framed request envelope used across the bench links |
 | [firmware/walter_lte_bench/src/main.cpp](../../firmware/walter_lte_bench/src/main.cpp) | Walter request handling and modem UDP submission |
@@ -268,7 +268,7 @@ fragments the envelope across frames. Each frame carries:
 Development CAN IDs are `0x710` for IHU → COMMS and `0x711` for the return path.
 COMMS checks ordering, token, size, timeout, envelope integrity, and telemetry
 structure before forwarding. Detailed rules are in the
-[CAN bench reference](../../firmware/can_feather_bench/README.md).
+[CAN bench reference](../../firmware/ihu/README.md).
 
 **CAN ID `0x710` is not telemetry message ID `0x10`.** The former identifies
 internal bus traffic; the latter identifies the application packet's meaning.
@@ -459,10 +459,11 @@ it does not demodulate the RF signal. Ground software must recover packet
 boundaries, remove any external framing, perform the agreed link checks, and
 feed application packets to a configured Yamcs link.
 
-The [UHF firmware checklist](../../firmware/comms/README.md) still lists the TX
-state machine, framing/bitstream path for BPSK/DBPSK, and RX packet decoding as
-unfinished. RF framing, coding/FEC, buffer limits, and ground receiver integration
-need agreement and validation. Do not treat the LTE test as proof of UHF delivery.
+The active [COMMS firmware](../../firmware/comms/README.md) implements native
+BPSK transmission and bounded fire-check receive/reply handling. Local RF
+completion and independent ground reception remain separate evidence; consult
+the [UHF interface contract](../../system/interfaces/transceiver_uhf_bench.md)
+and [fire-check runbook](../../ground/yamcs/FIRE_CHECK.md) for current limits.
 
 ## 9. Adding telemetry for your subsystem
 
@@ -516,7 +517,7 @@ Start with these files side by side:
 
 1. [Packet dictionary](../../ground/ember/dictionary.json): find `POWER_STATUS`,
    `battery_mv`, and `battery_ua`.
-2. [Native producer](../../firmware/can_feather_bench/power_packet.h): follow the
+2. [Native producer](../../firmware/ihu/power_packet.h): follow the
    conversion expressions and serialization.
 3. [MDB generator](../../ground/ember/generate_mdb.py): follow parameter names,
    container matching, scales, and validity rules.
@@ -551,7 +552,7 @@ Expected values include `raw_vbat=20777`, `battery_mv=7995`,
 
 For transport reproduction and current qualification limits, use the
 [queued hardware delivery record](../../ground/lte/results/2026-10-02-queued-eps.md),
-[CAN bench reference](../../firmware/can_feather_bench/README.md), and
+[CAN bench reference](../../firmware/ihu/README.md), and
 [Yamcs runbook](../../ground/yamcs/README.md). Some earlier overview/status prose
 predates these tests; use dated implementation evidence for bench capability
 and the owning interface/operations documents for architectural decisions.

@@ -63,16 +63,13 @@ See [machine-readable inventory](inventory.json) for hashes, status excerpts, re
 | [docs/review/verification.md](../../docs/review/verification.md) | Implementation reference | Keep | Content/link triage |
 | [docs/user/README.md](../../docs/user/README.md) | Operator guide | New operator guides | F17 |
 | [docs/user/ihu-can-console.md](../../docs/user/ihu-can-console.md) | Operator guide | New operator guides | F17 |
-| [docs/user/ihu-debug-uart.md](../../docs/user/ihu-debug-uart.md) | Operator guide | New operator guides | F17 |
 | [docs/user/yamcs.md](../../docs/user/yamcs.md) | Operator guide | New operator guides | F17 |
 | [docs/writing_guide.md](../../docs/writing_guide.md) | Implementation reference | Keep | Content/link triage |
-| [firmware/can_feather_bench/README.md](../../firmware/can_feather_bench/README.md) | Implementation reference | Updated; old milestones retained | F06 |
+| [firmware/ihu/README.md](../../firmware/ihu/README.md) | Implementation reference | Updated; old milestones retained | F06 |
 | [firmware/common/README.md](../../firmware/common/README.md) | Navigation or placeholder | Keep | Content/link triage |
-| [firmware/comms/README.md](../../firmware/comms/README.md) | Implementation reference | Keep | Content/link triage |
 | [firmware/comms_feather_bench/README.md](../../firmware/comms_feather_bench/README.md) | Implementation reference | Keep | Content/link triage |
 | [firmware/comms_transport/README.md](../../firmware/comms_transport/README.md) | Implementation reference | Keep | Content/link triage |
 | [firmware/firmware.md](../../firmware/firmware.md) | Implementation reference | Updated | F05 |
-| [firmware/ihu/README.md](../../firmware/ihu/README.md) | Implementation reference | Updated | F02 |
 | [firmware/usb_bench/README.md](../../firmware/usb_bench/README.md) | Implementation reference | Keep | Content/link triage |
 | [firmware/walter/README.md](../../firmware/walter/README.md) | Implementation reference | Updated; old source review retained | F07 |
 | [firmware/walter_lte_bench/README.md](../../firmware/walter_lte_bench/README.md) | Implementation reference | Updated; old source review retained | F07 |

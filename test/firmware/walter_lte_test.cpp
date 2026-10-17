@@ -2,7 +2,7 @@
 #include "Arduino.h"
 uint32_t test_time=0;int test_reset=-1;HardwareSerial Serial(9);
 #include "../../firmware/walter_lte_bench/src/main.cpp"
-#include "../../firmware/can_feather_bench/power_packet.h"
+#include "../../firmware/ihu/power_packet.h"
 static ul_packet request(uint8_t type) {
     ul_packet p={};p.version=1;p.type=type;p.sender=99;p.origin=99;p.request=10;return p;
 }

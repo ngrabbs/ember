@@ -7,7 +7,7 @@ static i2c_inst_t bus;
 static void i2c_init(i2c_inst_t *i,unsigned hz) {assert(i==i2c1 && hz==100000);}
 static void gpio_set_function(unsigned pin,unsigned fn) {assert((pin==2 || pin==3) && fn==GPIO_FUNC_I2C);}
 static void gpio_pull_up(unsigned pin) {assert(pin==2 || pin==3);}
-#include "../../firmware/can_feather_bench/eps_readout.h"
+#include "../../firmware/ihu/eps_readout.h"
 static unsigned pointer,reads;
 static int fail=-1;
 static bool corrupt;

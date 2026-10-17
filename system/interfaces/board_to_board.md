@@ -6,7 +6,7 @@
 IHU and COMMS now each use an Adafruit RP2040 CAN Bus Feather for this bench,
 with onboard MCP25625 controllers/transceivers. A 500 kbit/s CAN harness has
 carried an IHU-generated heartbeat through COMMS to Walter and back.
-[Implementation/evidence](../../firmware/can_feather_bench/README.md).
+[Implementation/evidence](../../firmware/ihu/README.md).
 EPS is currently charger/regulation hardware, not a full CAN node. RP2040 has
 no native CAN peripheral; the selected bench boards supply external controllers.
 

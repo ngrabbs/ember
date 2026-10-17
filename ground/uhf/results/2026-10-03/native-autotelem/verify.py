@@ -23,7 +23,7 @@ assert f['accepted']==f['service_admitted']==4 and f['local_tx_failed']==f['queu
 assert f['worker_stopped']
 pre=read('firmware/postflash-preflight.json');assert pre['passed'] and pre['boot_disabled'] and pre['manual_still_works_with_timer_disabled']
 identity=read('firmware/build-identity.json');assert identity['flash_readback_verified'] and identity['flash_id']=='DF641455DB822427'
-for source,name in [('firmware/can_feather_bench/main.c','main.c'),('firmware/can_feather_bench/autotelem.h','autotelem.h'),('firmware/can_feather_bench/CMakeLists.txt','CMakeLists.txt')]:
+for source,name in [('firmware/ihu/main.c','main.c'),('firmware/ihu/autotelem.h','autotelem.h'),('firmware/ihu/CMakeLists.txt','CMakeLists.txt')]:
     assert hashlib.sha256((p/'tools'/name).read_bytes()).hexdigest()==identity['files'][source]
 assert 'OK' in (p/'firmware/flash.log').read_text() and 'OK' in (p/'firmware/backup.log').read_text()
 i=read('ihu/result.json');assert i['error'] is None and i['count']==3 and i['host_telemetry_triggers']==0

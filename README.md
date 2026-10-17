@@ -79,7 +79,7 @@ handling, the radio link, and system integration.
 | Path | Contents |
 |---|---|
 | `hardware/` | Per-board design documentation, bring-up procedures, fabrication releases, datasheets |
-| `firmware/` | Embedded software — housekeeping unit (FreeRTOS on RP2040), comms, payload, shared |
+| `firmware/` | Embedded software — IHU, COMMS, payload, transport and shared definitions |
 | `rf/` | Filter, matching, and gain-stage design; simulations and measured results |
 | `analysis/` | Orbit and access modelling, link budget, power budget, trade studies |
 | `system/` | Board-to-board interfaces, bus pin maps, protocols, integration planning |
@@ -97,17 +97,29 @@ Agents start with [AGENTS.md](AGENTS.md); all KiCad schematic work follows the
 
 ---
 
-## Building the housekeeping firmware
+## Active firmware
+
+| Source | Role | Guide |
+|---|---|---|
+| `firmware/ihu` | IHU CAN Feather; also builds the LTE CAN Feather role | [IHU firmware](firmware/ihu/README.md) |
+| `firmware/comms` | Original-Pico COMMS UHF transceiver | [COMMS firmware](firmware/comms/README.md) |
+
+Build the active IHU from the repository root with the Pico SDK and ARM GCC:
 
 ```bash
-git submodule update --init --recursive     # FreeRTOS kernel
-cd firmware/ihu && mkdir -p build && cd build
-cmake .. && make -j
-# Result: build/src/ihu.uf2
+cmake -S firmware/ihu -B build/ihu -DPICO_SDK_PATH="$PICO_SDK_PATH" \
+  $(python3 firmware/comms/source_identity.py --cmake-args)
+cmake --build build/ihu -j4
+# IHU image: build/ihu/ember_ihu_can_bench.uf2
 ```
 
-Requires the Pico SDK (`PICO_SDK_PATH`) and `arm-none-eabi-gcc`. Full bring-up
-notes are in [`firmware/ihu/README.md`](firmware/ihu/README.md).
+The source directories were renamed from `can_feather_bench` and
+`transceiver_bringup`. Earlier FreeRTOS prototypes were removed; they remain available in
+[Git history](https://github.com/ngrabbs/ember/tree/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware).
+Existing binary target names are retained so images
+remain identifiable alongside earlier deployment records. Use fresh build
+directories after the move. See the [IHU console guide](docs/user/ihu-can-console.md)
+for current commands.
 
 ---
 
@@ -116,7 +128,7 @@ notes are in [`firmware/ihu/README.md`](firmware/ihu/README.md).
 Under active development. Recorded bench work includes EPS readout, dedicated
 USB command/response, and standalone CAN/native EPS telemetry with bounded LTE
 delivery evidence. These demonstrations do not establish flight readiness or
-complete integration of the FreeRTOS applications. Start with the
+complete flight routines or CAN redundancy. Start with the
 [operator guides](docs/user/README.md) and [documentation review](docs/review/README.md).
 
 Open work is tracked in [`TODO.md`](TODO.md) — the current front on each

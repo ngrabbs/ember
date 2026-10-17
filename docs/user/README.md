@@ -10,8 +10,7 @@ or live service changed during this documentation review.
 
 | Task or interface | Guide | Identify it by |
 |---|---|---|
-| Use IHU debug UART | [FreeRTOS IHU debug UART](ihu-debug-uart.md) | 3.3 V UART adapter on Pico GP0/GP1; `ihu>` prompt |
-| Use the newer IHU CAN bench | [CAN Feather USB console](ihu-can-console.md) | USB text console; `STATUS role=IHU_MCU fw=can-bench-v2` |
+| Use the active IHU | [IHU USB console](ihu-can-console.md) | `firmware/ihu`; USB text console; `STATUS role=IHU_MCU fw=0.13.0` |
 | Monitor or command through Yamcs | [Yamcs operation and available features](yamcs.md) | Instance and processor selected in the web header |
 | Power up the demo ground Pi | [Pi readiness and hotspot](../../ground/pi/README.md) | Ethernet first; `EMBER-Ground` fallback Wi-Fi |
 | Send an EPS observation over LTE | [Step-by-step LTE walkthrough](lte-eps-walkthrough.md) | IHU → CAN → Walter → ground Pi → `ember` |

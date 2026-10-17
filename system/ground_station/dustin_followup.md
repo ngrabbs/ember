@@ -70,6 +70,6 @@ to one subsystem:
   machine-readable schema, with known byte vectors; eventual SatNOGS decoding
   must use the same engineering conversions.
 
-The restored `firmware/shared/comms_hk_proto.h` provides real internal bench
+The restored [historical housekeeping register map](https://github.com/ngrabbs/ember/blob/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware/shared/comms_hk_proto.h) provides real internal bench
 health fields for `COMM_STATUS`; its I2C register map is not the RF packet format.
 Do not copy its little-endian register layout into an unspecified CCSDS envelope.
