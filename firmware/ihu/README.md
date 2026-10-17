@@ -1,5 +1,9 @@
 # Internal Housekeeping Unit Firmware
 
+**Current controller:** the CAN Feather mode/output policy is documented
+[here](../../docs/architecture/operations/04-ihu-runtime-policy.md). This older
+FreeRTOS application retains its separate CLI and monitoring behavior.
+
 **Application scope:** this is the FreeRTOS Pico/UART prototype. The newer
 [CAN Feather bench](../can_feather_bench/README.md) is a separate application
 with USB console and different EPS pins. See the [UART user guide](../../docs/user/ihu-debug-uart.md).
