@@ -23,7 +23,7 @@ NOT_SEEN, ONLINE, STALE after30 seconds without new evidence, or FAULT for a
 local transport/I2C error. A later successful check restores ONLINE. Silence
 alone cannot distinguish absent hardware from firmware without discovery.
 
-Scanning pauses during a UHF run, outstanding application requests, pending CAN
+Scanning pauses during an active UHF packet cycle, outstanding application requests, pending CAN
 transmission, automatic telemetry, LTE queuing or local loopback. Validated UHF
 results refresh COMMS liveness; successful EPS packet reads refresh EPS
 liveness. EPS liveness is independent of ADC validity/calibration. No scan
@@ -198,3 +198,27 @@ exactly. Both identity dashboards visibly rendered their actual versions,
 clean source SHA and distinct device boot IDs. TX stopped and Si5351 outputs
 verified disabled afterward. See ground/releases/README.md for installed
 versions, manifest scope and reproducible UHF freshness settings.
+
+## Device status downlink (IHU 0.9.0 / COMMS 0.24.0)
+
+DEVICE_STATUS (53) carries a version1,72-byte payload: payload_version and
+scan_paused bytes, followed by five14-byte records in registry order (EPS,
+EPS_NEXT, COMMS, LTE, PAYLOAD). Each record has state8, seen8, age_ms32,
+boot_id32 and timeouts32, with integers big endian. Never-seen age is UINT32_MAX;
+seen is authoritative. Header boot and uptime identify the reporting IHU.
+
+`uhf devices` sends a manual snapshot through the selected COMMS route. Each
+explicit bounded `uhf run` cycle now sends heartbeat, system, EPS and device
+status (four packets). Discovery can run between completed cycles, never while
+application packets/results or CAN transmission are pending; a pending discovery
+reply delays the next telemetry cycle. No additional RF window or boot transmit
+is introduced. At short periods scan opportunities may be limited: device age
+and STALE report that limitation honestly. Existing run duration/period bounds
+and no catch-up/retry behavior remain.
+
+Devices.opi and Devices.par show the snapshot; NOT_SEEN means no verified reply
+since IHU boot, not proof of physical absence. EPS_NEXT/PAYLOAD are labelled
+planned. STALE is assigned by IHU after30 seconds without evidence; FAULT is a
+local interface/read fault. Yamcs snapshot expiration (90-second expected
+interval under the existing processor policy) is separate from device state.
+RF-off means the display eventually expires and retains historical rows.

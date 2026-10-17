@@ -83,6 +83,17 @@ int main(void){
  ul_packet encoded=queued();printf("IDENTITY_PACKET ");for(unsigned i=0;i<encoded.size;i++)printf("%02x",encoded.payload[i]);puts("");
  output.active=false;pending.active=false;memset(&uhf_client,0,sizeof(uhf_client));
  fake_now+=180001;command("uhf lte firmware");assert(!pending.active);
+ memset(devices,0,sizeof(devices));
+ dr_seen(&devices[0],fake_now,0);dr_seen(&devices[2],fake_now-30000,22);
+ devices[3].state=DR_FAULT;
+ command("uhf devices");encoded=queued();assert(native_telemetry_valid(encoded.payload,encoded.size,boot));
+ printf("DEVICE_PACKET ");for(unsigned i=0;i<encoded.size;i++)printf("%02x",encoded.payload[i]);puts("");
+ output.active=false;pending.active=false;memset(&uhf_client,0,sizeof(uhf_client));
+ uhf_run.state=UR_RUNNING;uhf_run.cycle=true;uhf_run.stage=2;
+ discovery.next=3;discovery.last=0;devices_pump(fake_now);assert(!discovery.active);
+ uhf_run.stage=4;devices_pump(fake_now);assert(discovery.active && discovery.index==3);
+ dr_status wrap={0};dr_seen(&wrap,UINT32_MAX-10,44);dr_age(&wrap,30000);assert(wrap.state==DR_STALE);
+
 #else
  assert(TX_ID==0x721 && RX_ID==0x720);
  ul_packet query={.version=1,.type=UL_FIRMWARE_INFO,.origin=22,.sender=22,.request=99};
@@ -121,3 +132,13 @@ class AddressingTests(unittest.TestCase):
      self.assertEqual(decoded['payload']['reported_uptime_ms'],100)
      self.assertEqual(decoded['payload']['version_minor'],8)
      self.assertEqual(decoded['payload']['observation_age_ms'],0)
+
+     wire=next(line.split()[1] for line in output.splitlines() if line.startswith('DEVICE_PACKET '))
+     packet=decode(bytes.fromhex(wire));fields=packet['payload']
+     self.assertEqual(packet['name'],'DEVICE_STATUS')
+     self.assertEqual(fields['eps_state'],1)
+     self.assertEqual(fields['comms_state'],2)
+     self.assertEqual(fields['comms_age_ms'],30000)
+     self.assertEqual(fields['lte_state'],3)
+     self.assertEqual(fields['payload_seen'],0)
+     self.assertEqual(fields['payload_age_ms'],4294967295)
