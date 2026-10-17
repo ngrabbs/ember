@@ -1,0 +1,54 @@
+{
+  "tested_utc": "2026-10-17T15:06:00Z",
+  "route": "Yamcs LAN -> m75q IHU USB console -> CAN A payload",
+  "tests": [
+    {
+      "command": "PAYLOAD_PING",
+      "args": {
+        "bytes": 32
+      },
+      "yamcs_id": "1792249642177-payload-validation-0",
+      "outcome": "COMPLETED",
+      "ihu_boot_id": "1411835684"
+    },
+    {
+      "command": "PAYLOAD_IDENT",
+      "args": {},
+      "yamcs_id": "1792249643288-payload-validation-0",
+      "outcome": "COMPLETED",
+      "ihu_boot_id": "1411835684"
+    },
+    {
+      "command": "PAYLOAD_STATUS_QUERY",
+      "args": {},
+      "yamcs_id": "1792249643690-payload-validation-0",
+      "outcome": "COMPLETED",
+      "ihu_boot_id": "1411835684"
+    },
+    {
+      "command": "PAYLOAD_HEARTBEAT_QUERY",
+      "args": {},
+      "yamcs_id": "1792249644099-payload-validation-0",
+      "outcome": "COMPLETED",
+      "ihu_boot_id": "1411835684"
+    },
+    {
+      "command": "PAYLOAD_PING",
+      "args": {
+        "bytes": 240
+      },
+      "yamcs_id": "1792249644501-payload-validation-0",
+      "outcome": "COMPLETED",
+      "ihu_boot_id": "1411835684"
+    },
+    {
+      "command": "PAYLOAD_PING",
+      "args": {
+        "bytes": 241
+      },
+      "yamcs_id": "1792249645141-payload-validation-0",
+      "outcome": "REJECTED",
+      "ihu_boot_id": "1411835684"
+    }
+  ]
+}

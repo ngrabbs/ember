@@ -1,0 +1,22 @@
+[Unit]
+Description=EMBER Pi payload CAN responder
+Requires=ember-payload-can.service
+After=ember-payload-can.service
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=ngrabbs
+RuntimeDirectory=ember-payload
+ExecStart=/usr/bin/python3 /opt/ember-payload/payload.py
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+RestrictAddressFamilies=AF_CAN AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

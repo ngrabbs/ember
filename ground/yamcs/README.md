@@ -215,3 +215,5 @@ for `ember_smoke.py`.
 The [UHF section](../uhf/README.md) adds isolated `ember-uhf` / UDP10019 with the existing MDB and EPS display. The [optional services](../uhf/SERVICES.md) remain disabled at boot; IHU cadence is armed separately. USB and LTE archives stay separate.
 
 Version comparison and deployment checks: [ground release identities](../releases/README.md).
+
+Payload displays and commands through the IHU: [deployment and validation](PAYLOAD.md).

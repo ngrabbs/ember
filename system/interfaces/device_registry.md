@@ -12,7 +12,7 @@ hardware ACK alone.
 | EPS_NEXT | CAN A | 1 | Future CAN-enabled EPS |
 | COMMS | CAN A | 2 | Current transceiver, responder implemented |
 | LTE | CAN A | 3 | Discovery verified alongside COMMS with LTE CAN Feather0.8.0 |
-| PAYLOAD | CAN A | 4 | Future CAN-enabled payload |
+| PAYLOAD | CAN A | 4 | Pi/LC2502 responder; see `firmware/payload` |
 
 The IHU starts CAN in normal mode and probes one registry entry every two
 seconds when application transport is idle (one complete cycle about ten
@@ -65,6 +65,8 @@ silence, and discovery does not replace the explicit application HELLO.
 |---|---|---|---|
 | COMMS transceiver (2) | `0x710` | `0x711` | `0x702` |
 | LTE CAN Feather (3) | `0x720` | `0x721` | `0x703` |
+| RF uplink (reverse COMMS to IHU; deployed ahead of main) | `0x730` | `0x731` | None |
+| Pi payload (4) | `0x740` | `0x741` | `0x704` |
 
 The registry contains the route IDs. Existing transceiver and SDRB IDs remain
 unchanged. The LTE Feather must be upgraded before joining their bus; older LTE
@@ -83,6 +85,12 @@ finite RF limits and no-auto-retry rules remain.
 
 LTE boots CAN-ready and answers node3 discovery without starting Walter RF.
 The modem remains reset until an explicit bounded LTE window request.
+
+The Pi payload starts CAN A at500 kbit/s during boot and answers node4
+discovery. IHU v0.11.0 adds `hello payload`, existing `ping N`, and `payload
+ident`, `payload status`, `payload heartbeat`. These read-only services emit
+no unsolicited telemetry and operate no cameras. See the
+[payload contract](../../firmware/payload/README.md).
 
 ## Firmware identity queries
 

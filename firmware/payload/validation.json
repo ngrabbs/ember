@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-17",
+  "source_base": "c6be5ab8d9e5a2b3b590572dd131713141452b6d",
+  "source_dirty": true,
+  "preserved_ihu_uplink_source": "08b36205d8e324ae31fb3ea5c2cdc3b32c38ce62",
+  "routes": {
+    "discovery_request": "0x700",
+    "payload_node": 4,
+    "discovery_reply": "0x704",
+    "payload_request": "0x740",
+    "payload_reply": "0x741",
+    "existing_uplink": "0x730/0x731"
+  },
+  "payload": {
+    "host": "192.168.1.253",
+    "version": "0.1.0",
+    "boot_id": 2697132890,
+    "runtime": "/opt/ember-payload",
+    "boot_services_enabled": true,
+    "software_reboot_startup_passed": true,
+    "power_cycle_tested": false,
+    "can_bitrate": 500000,
+    "unsolicited_heartbeat": false
+  },
+  "ihu": {
+    "usb_serial": "DF641455DB822427",
+    "version": "0.11.0",
+    "boot_id": 1411835684,
+    "flash_load_and_verify": "PASS",
+    "uf2_sha256": "297a3360f4cec894e53eb9a2b1700f0e24285596074aea5390f5137dab85d4c7",
+    "backup_on_m75q": "/home/ngrabbs/ember-payload-build/ihu-before-payload.uf2"
+  },
+  "checks": {
+    "host_suite": {
+      "run": 53,
+      "skipped": 1,
+      "failures": 0
+    },
+    "python_C_wire_interoperability": "PASS",
+    "preserved_uplink_C_regression": "PASS",
+    "physical_ihu_hello_payload": "PASS",
+    "physical_ping_bytes": [
+      1,
+      8,
+      32,
+      239,
+      240
+    ],
+    "physical_ident": "PASS",
+    "physical_status": "PASS",
+    "physical_heartbeat": "PASS",
+    "physical_registry_payload": "ONLINE",
+    "physical_return_to_comms_hello": "PASS",
+    "ihu_matched_requests": 9,
+    "ihu_unknown": 0,
+    "ihu_tx_fail": 0,
+    "ihu_tx_timeout": 0,
+    "ihu_rx_bad": 0,
+    "ihu_rx_overflow": 0,
+    "ihu_fragment_errors": 0,
+    "ihu_fragment_timeouts": 0
+  },
+  "transcript_on_m75q": "/home/ngrabbs/ember-payload-build/ihu-payload-validation.log",
+  "limits": [
+    "Software reboot tested; cold power-cycle not tested.",
+    "RF uplink handler preserved and C regression passed; no RF transmission test performed.",
+    "Development protocol provides correlation, not authentication."
+  ]
+}

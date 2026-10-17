@@ -83,6 +83,27 @@ int main(void){
  ul_packet encoded=queued();printf("IDENTITY_PACKET ");for(unsigned i=0;i<encoded.size;i++)printf("%02x",encoded.payload[i]);puts("");
  output.active=false;pending.active=false;memset(&uhf_client,0,sizeof(uhf_client));
  fake_now+=180001;command("uhf lte firmware");assert(!pending.active);
+
+ command("hello payload");assert(TX_ID==CF_PAYLOAD_REQUEST_ID && RX_ID==CF_PAYLOAD_REPLY_ID && !peer);
+ ack=pending.packet;ack.type=UL_HELLO_ACK;ack.sender=44;output.active=false;receive(&ack);
+ assert(peer==44 && devices[DR_PAYLOAD_INDEX].boot==44);
+ command("payload ident");assert(pending.active && queued().type==UL_FIRMWARE_INFO);
+ ack=pending.packet;ack.type=UL_FIRMWARE_INFO_ACK;ack.sender=44;ack.size=FI_SIZE;
+ fi_payload(ack.payload,44,100);output.active=false;receive(&ack);assert(!pending.active);
+ assert(ul_u32(identities[0].payload+24)==33); /* Payload identity must not overwrite LTE identity. */
+ command("payload status");assert(pending.active && queued().type==PL_STATUS);
+ ack=pending.packet;ack.type=PL_STATUS_ACK;ack.sender=44;ack.size=PL_REPORT_SIZE;
+ memset(ack.payload,0,ack.size);ack.payload[0]=1;ack.payload[1]=4;ack.payload[2]=1;
+ ul_p32(ack.payload+4,45);output.active=false;receive(&ack);assert(pending.active); /* wrong boot */
+ ul_p32(ack.payload+4,44);receive(&ack);assert(!pending.active);
+ command("payload heartbeat");assert(pending.active && queued().type==PL_HEARTBEAT);
+ ack=pending.packet;ack.type=PL_HEARTBEAT_ACK;ack.sender=44;ack.size=PL_REPORT_SIZE;
+ memset(ack.payload,0,ack.size);ack.payload[0]=1;ack.payload[1]=4;ack.payload[2]=1;
+ ul_p32(ack.payload+4,44);output.active=false;receive(&ack);assert(!pending.active);
+ submit(CF_SEND_PACKET,NULL,0);submit(CF_CHAIN,NULL,0);submit(CF_UHF_SEND,NULL,0);
+ assert(!pending.active && !output.active);
+ command("hello comms");ack=pending.packet;ack.type=UL_HELLO_ACK;ack.sender=22;
+ output.active=false;receive(&ack);assert(peer==22);
  memset(devices,0,sizeof(devices));
  dr_seen(&devices[0],fake_now,0);dr_seen(&devices[2],fake_now-30000,22);
  devices[3].state=DR_FAULT;
@@ -121,7 +142,7 @@ class AddressingTests(unittest.TestCase):
    source=p/'test.c';source.write_text('#include <assert.h>\n#define main embedded_main\n#include "'+str(ROOT/'firmware/can_feather_bench/main.c')+'"\n#undef main\n'+DRIVER)
    for role in (0,1):
     binary=p/f'role{role}'
-    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',f'-DROLE_IHU={role}','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),str(source),'-o',str(binary)],check=True)
+    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',f'-DROLE_IHU={role}','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),str(source),str(ROOT/'firmware/usb_bench/protocol.c'),'-o',str(binary)],check=True)
     output=subprocess.check_output([str(binary)],text=True)
     if role:
      wire=next(line.split()[1] for line in output.splitlines() if line.startswith('IDENTITY_PACKET '))
