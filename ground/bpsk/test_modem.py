@@ -69,6 +69,16 @@ class ModemTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/'wire.h';generate(path)
             self.assertEqual(path.read_bytes(),(ROOT/'firmware/transceiver_bringup/native_wire.h').read_bytes())
+    def test_firmware_identity_matches_c_and_full_git(self):
+        with tempfile.TemporaryDirectory() as td:
+            d=Path(td);sha='0123456789abcdef0123456789abcdef01234567'
+            (d/'build_identity.h').write_text('#define FW_MAJOR 0u\n#define FW_MINOR 22u\n#define FW_PATCH 0u\n#define FW_DIRTY 1u\n#define FW_GIT "'+sha+'"\n')
+            (d/'test.c').write_text('#include <stdio.h>\n#include "firmware_identity.h"\nint main(void){uint8_t p[128];size_t n=firmware_packet(p,123,7,456);fwrite(p,1,n,stdout);return 0;}')
+            subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror','-Wno-unused-function','-I'+td,'-I'+str(ROOT/'firmware/transceiver_bringup'),str(d/'test.c'),'-o',str(d/'test')],check=True)
+            packet=subprocess.check_output([str(d/'test')])
+            payload=dict(version_major=0,version_minor=22,version_patch=0,dirty=1)
+            payload.update({f'git_sha_{i}':int(sha[i*8:i*8+8],16) for i in range(5)})
+            self.assertEqual(packet,encode('COMMS_FIRMWARE',sequence=7,source=3,target=1,source_boot_id=123,uptime_ms=456,payload=payload))
     def test_two_packets(self):
         second=frame(self.packet,20)
         r=decode(np.r_[self.iq(),self.iq(raw=second)])

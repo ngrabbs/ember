@@ -7,6 +7,7 @@
 #include "pico/rand.h"
 #include "hello.h"
 #include "device_registry.h"
+#include "firmware_identity.h"
 static uint32_t responder_boot;
 
 static void output(unsigned pin, bool level) {
@@ -346,9 +347,10 @@ int main(void) {
     if (afailed) gpio_put(8, false);
     if (bfailed) gpio_put(9, false);
     if(!afailed && !rf_bus_open())afailed=true;
+    printf("[firmware] version=%s git=%s dirty=%u boot=%lu\n",FW_VERSION,FW_GIT,FW_DIRTY,(unsigned long)responder_boot);
     while (true) {
         int command = getchar_timeout_us(0);
-        if(command>=0 && command!='s' && !afailed && !rf_bus_close())afailed=true;
+        if(command>=0 && command!='s' && command!='v' && !afailed && !rf_bus_close())afailed=true;
         if ((command == 'l' || command == 'n' || command == 'h') && !afailed) {
             if (!listen_a(command != 'l', command == 'h', false)) {gpio_put(2, true); gpio_put(8, false); afailed = true;}
         }
@@ -361,7 +363,10 @@ int main(void) {
         if (command == 'f' && !afailed) {
             if(!listen_a(true,false,true)) {gpio_put(2,true);gpio_put(8,false);afailed=true;}
         }
-        if (command == 's') clock_status();
+        if (command == 's' || command == 'v') {
+            printf("[firmware] version=%s git=%s dirty=%u boot=%lu\n",FW_VERSION,FW_GIT,FW_DIRTY,(unsigned long)responder_boot);
+            clock_status();
+        }
         if (command == 'd') data_input_test();
         if (command == 'b') bpsk_test(0);
         if (command == 'B') bpsk_test(1);
@@ -405,7 +410,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v21] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
+        printf("[y24-safe-v22] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());

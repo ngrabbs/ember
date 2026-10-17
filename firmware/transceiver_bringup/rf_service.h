@@ -23,9 +23,10 @@ static bool rf_reply_send(const ul_packet *request,uint8_t type,uint8_t status) 
 static bool rf_service_window(bool automatic) {
     static cf_reader f;static ul_reader reader;static ul_packet in;
     static uint8_t native[BPSK_NATIVE_MAX];
-    bool abort=false,ok=true;unsigned attempts=0;
+    bool abort=false,ok=true,identity_sent=false;unsigned attempts=0;
+    static uint32_t identity_sequence;
     const uint64_t lease_end=time_us_64()+180000000;
-    printf("[uhf] mode=%s boot_resume=0 max_frames=%u\n",automatic?"TIMED180":"BATCH",automatic?96:4);
+    printf("[uhf] mode=%s boot_resume=0 max_frames=%u\n",automatic?"TIMED180":"BATCH",automatic?96:5);
     do {
     memset(&f,0,sizeof(f));
     if(!(automatic && (can_read(14,0x0e)&0xe0)==0) && !rf_bus_open()){ok=false;break;}
@@ -74,6 +75,19 @@ static bool rf_service_window(bool automatic) {
     while(rf_queue.count) {
         rq_item *item=&rf_queue.items[0];uint8_t result=UHF_CANCELLED;
         if(getchar_timeout_us(0)>=0 || (automatic && (time_us_64()+2500000>=lease_end || attempts>=96)))abort=true;
+        if(!abort && ok && !identity_sent) {
+            /* Only after an admitted request, under the same explicit finite RF lease. */
+            size_t n=firmware_packet(native,responder_boot,identity_sequence++,(uint32_t)(time_us_64()/1000));
+            printf("[firmware_rf] packet_hex=");
+            for(size_t i=0;i<n;i++)printf("%02x",native[i]);
+            printf("\n");
+            packet_frame_size=bridge_frame(packet_frame,native,n,0x80000000u|(identity_sequence&0x7fffffffu));
+            ++attempts;
+            if(!packet_frame_size || !clock_window_drive(true,false,bpsk_emit,1))abort=true;
+            identity_sent=!abort;
+            /* Recheck abort/lease between the two separately bounded bursts. */
+            if(getchar_timeout_us(0)>=0 || (automatic && (time_us_64()+2500000>=lease_end || attempts>=96)))abort=true;
+        }
         if(!abort && ok) {
             packet_frame_size=bridge_frame(packet_frame,item->packet.payload,item->packet.size,item->packet.request);
             printf("[uhf] packet request=%lu packet_hex=",(unsigned long)item->packet.request);

@@ -179,6 +179,7 @@ int main(void) {
 with tempfile.TemporaryDirectory() as directory:
     root = pathlib.Path(directory)
     (root/'stub.h').write_text(stub)
+    (root/'build_identity.h').write_text('#define FW_MAJOR 0u\n#define FW_MINOR 22u\n#define FW_PATCH 0u\n#define FW_DIRTY 1u\n#define FW_VERSION "0.22.0"\n#define FW_GIT "0123456789012345678901234567890123456789"\n')
     for name in ['pico/stdlib.h', 'hardware/adc.h', 'hardware/i2c.h', 'hardware/spi.h', 'pico/rand.h']:
         path = root/name
         path.parent.mkdir(exist_ok=True)

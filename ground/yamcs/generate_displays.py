@@ -160,7 +160,26 @@ def generate(destination):
     label('Use selected processor time; replay link status describes archived data. Readout age is not ADC age.',28,711,1055,24,11)
     ET.indent(display)
     ET.ElementTree(display).write(destination/'EPS.opi',encoding='utf-8',xml_declaration=True)
-    groups={'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
+    for child in list(display):
+        if child.tag=='widget':display.remove(child)
+    prop(display,'name','COMMS firmware identity')
+    label('COMMS firmware identity',28,28,1050,48,28,WHITE,True)
+    label('Reported by the running COMMS MCU over RF; last received identity.',28,90)
+    e=label('Waiting for firmware identity',28,150,1050,65,30,WHITE,True)
+    path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/comms-version.js',checkConnect='true',sfe='false',seoe='false')
+    for n in ('version_major','version_minor','version_patch','dirty'):
+        ET.SubElement(path,'pv',trig='true').text='/ember/COMMS_FIRMWARE_'+n
+    label('Full source Git commit',28,240)
+    e=label('Waiting for commit',28,280,1050,48,20,WHITE)
+    path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/comms-git.js',checkConnect='true',sfe='false',seoe='false')
+    for i in range(5):ET.SubElement(path,'pv',trig='true').text='/ember/COMMS_FIRMWARE_git_sha_'+str(i)
+    label('COMMS boot ID',28,380);value('COMMS_FIRMWARE_source_boot_id',28,420,500)
+    scripted('No packet received','COMMS_FIRMWARE_version_major','sample-time.js',28,510,1000)
+    label('Identity is sent once per enabled RF session after its first admitted request.',28,560)
+    label('A stale value is historical evidence, not confirmation of the currently powered image.',28,600)
+    ET.indent(display)
+    ET.ElementTree(display).write(destination/'Comms-Firmware.opi',encoding='utf-8',xml_declaration=True)
+    groups={'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
     for filename,names in groups.items():
         parameters=[]
         # Pin header provenance to each message rather than the last packet of any kind.

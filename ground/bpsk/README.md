@@ -144,3 +144,12 @@ had no stream/decoder errors, and HELLO/discovery worked after RF stopped.
 An initial capture also delivered9/9 packets but then stopped on a sample-stream
 overflow; its cause remains unresolved. Do not treat the clean repeat as a
 long-duration reliability qualification. See lab-log entry003 for both records.
+
+Receiver pipeline v2 moves raw IQ storage and window construction off the USB
+receive loop into a64-chunk bounded queue (about2.7 seconds at8192 samples per
+chunk). Overlap windows use preallocated storage. The existing four-window DSP
+queue remains bounded. Any stream error or exhausted queue still stops the
+session; no sample gap is silently bridged. Result JSON records queue peaks,
+maximum receive-loop scheduling gap and longest storage-chunk processing time.
+This mitigates synchronous disk delays; it does not prove the earlier overflow's
+cause. `Comms-Firmware.opi` shows the received release and full source commit.

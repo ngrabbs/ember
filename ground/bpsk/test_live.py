@@ -28,6 +28,15 @@ class LiveTests(unittest.TestCase):
             self.assertEqual(d.forwarded,3)
             self.assertEqual(sock.return_value.__enter__.return_value.sendto.call_count,3)
             self.assertEqual(len((Path(tmp)/'packets.jsonl').read_text().splitlines()),3)
+    def test_window_bytes_and_arbitrary_chunk_boundaries(self):
+        raw=np.arange(6*RATE+17,dtype=np.float32).astype(np.complex64)
+        for chunk_size in [8192, 5*RATE, 13791]:
+            w=Windows();jobs=[]
+            for at in range(0,len(raw),chunk_size):jobs.extend(w.feed(raw[at:at+chunk_size]))
+            jobs.append(w.finish())
+            for start, samples in jobs:
+                np.testing.assert_array_equal(samples,raw[start:start+len(samples)])
+            self.assertEqual([start for start,_ in jobs],[0,RATE,2*RATE,3*RATE])
     def test_noise_not_forwarded(self):
         rng=np.random.default_rng(3)
         with tempfile.TemporaryDirectory() as tmp, patch('live.socket.socket') as sock:

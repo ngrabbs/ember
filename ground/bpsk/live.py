@@ -26,18 +26,25 @@ def utc():
     return datetime.now(timezone.utc).isoformat()
 
 class Windows:
+    """Preallocated overlap buffer; no growing-array copy on each USB read."""
     def __init__(self):
-        self.buffer = np.empty(0, np.complex64)
+        self.buffer = np.empty(WINDOW, np.complex64)
+        self.used = 0
         self.start = 0
     def feed(self, samples):
-        self.buffer = np.concatenate((self.buffer, samples))
-        while len(self.buffer) >= WINDOW:
-            yield self.start, self.buffer[:WINDOW].copy()
-            self.buffer = self.buffer[HOP:].copy()
-            self.start += HOP
+        at = 0
+        while at < len(samples):
+            n = min(WINDOW-self.used, len(samples)-at)
+            self.buffer[self.used:self.used+n] = samples[at:at+n]
+            self.used += n; at += n
+            if self.used == WINDOW:
+                yield self.start, self.buffer.copy()
+                self.buffer[:WINDOW-HOP] = self.buffer[HOP:].copy()
+                self.used -= HOP
+                self.start += HOP
     def finish(self):
-        if len(self.buffer):
-            return self.start, self.buffer.copy()
+        if self.used:
+            return self.start, self.buffer[:self.used].copy()
 
 def downsample(raw):
     n = np.arange(129) - 64
@@ -90,7 +97,7 @@ def run(args):
     radio.set_rx_antenna('RX2', args.channel)
     if abs(radio.get_rx_rate(args.channel)-RATE)>1:
         raise ValueError('unexpected sample rate')
-    report = dict(utc=utc(), frequency_hz=radio.get_rx_freq(args.channel),
+    report = dict(receiver_version=2, utc=utc(), frequency_hz=radio.get_rx_freq(args.channel),
                   channel=args.channel, antenna='RX2', rate=radio.get_rx_rate(args.channel),
                   gain=radio.get_rx_gain(args.channel), fpga_sha256=FPGA_SHA,
                   raw_format='little-endian complex64, 192000 samples/s', errors=[])
@@ -110,39 +117,77 @@ def run(args):
                 report['errors'].append('decoder: '+repr(exc));failed.set()
             finally:jobs.task_done()
     thread=threading.Thread(target=worker,daemon=True);thread.start()
-    windows=Windows(); samples=0
+    # Keep SD-card writes and window construction out of the USB receive loop.
+    # 64 chunks provide about 2.7 seconds of bounded scheduling/storage headroom.
+    chunks=queue.Queue(maxsize=64)
+    metrics=dict(chunk_queue_peak=0, decode_queue_peak=0, max_recv_gap_s=0.0,
+                 max_storage_chunk_s=0.0)
+    def storage_worker():
+        windows=Windows()
+        try:
+            with (args.output/'raw-192k.cf32').open('wb') as rawfile:
+                while True:
+                    chunk=chunks.get()
+                    try:
+                        if chunk is None:break
+                        if failed.is_set():continue
+                        begun=time.monotonic()
+                        rawfile.write(chunk.astype('<c8',copy=False).tobytes())
+                        for job in windows.feed(chunk):
+                            try:jobs.put_nowait(job)
+                            except queue.Full:
+                                report['errors'].append('decoder backlog exceeded four windows')
+                                failed.set();break
+                        metrics['decode_queue_peak']=max(metrics['decode_queue_peak'],jobs.qsize())
+                        metrics['max_storage_chunk_s']=max(metrics['max_storage_chunk_s'],time.monotonic()-begun)
+                    finally:chunks.task_done()
+                if not failed.is_set():
+                    tail=windows.finish()
+                    if tail is not None:jobs.put(tail)
+        except Exception as exc:
+            report['errors'].append('storage: '+repr(exc));failed.set()
+        finally:
+            # Drain any already queued chunks if disk failed, unblocking shutdown.
+            while True:
+                try:chunks.get_nowait();chunks.task_done()
+                except queue.Empty:break
+    storage=threading.Thread(target=storage_worker,daemon=True);storage.start()
+    samples=0
     command=uhd.types.StreamCMD(uhd.types.StreamMode.start_cont);command.stream_now=True
     stream.issue_stream_cmd(command)
     print('BPSK_RX_READY '+json.dumps(report),flush=True)
     end=time.monotonic()+args.seconds
     next_status=time.monotonic()+10
+    last_recv=time.monotonic()
     try:
-        with (args.output/'raw-192k.cf32').open('wb') as rawfile:
-            while time.monotonic()<end and not failed.is_set():
-                if time.monotonic()>=next_status:
-                    print('BPSK_RX_STATUS '+json.dumps(dict(
-                        captured_s=round(samples/RATE,1), packets=len(decoder.packets),
-                        forwarded=decoder.forwarded, queued_windows=jobs.qsize())),flush=True)
-                    next_status=time.monotonic()+10
-                n=stream.recv(buf,md,.5)
-                if md.error_code!=uhd.types.RXMetadataErrorCode.none:
-                    report['errors'].append(md.strerror());failed.set();break
-                if not n:continue
-                chunk=buf[0,:n].copy();rawfile.write(chunk.astype('<c8',copy=False).tobytes());samples+=n
-                for job in windows.feed(chunk):
-                    try:jobs.put_nowait(job)
-                    except queue.Full:
-                        report['errors'].append('decoder backlog exceeded four windows');failed.set();break
+        while time.monotonic()<end and not failed.is_set():
+            if time.monotonic()>=next_status:
+                print('BPSK_RX_STATUS '+json.dumps(dict(
+                    captured_s=round(samples/RATE,1), packets=len(decoder.packets),
+                    forwarded=decoder.forwarded, queued_windows=jobs.qsize(),
+                    queued_chunks=chunks.qsize())),flush=True)
+                next_status=time.monotonic()+10
+            before=time.monotonic()
+            metrics['max_recv_gap_s']=max(metrics['max_recv_gap_s'],before-last_recv)
+            n=stream.recv(buf,md,.5);last_recv=time.monotonic()
+            if md.error_code!=uhd.types.RXMetadataErrorCode.none:
+                report['errors'].append(md.strerror());failed.set();break
+            if not n:continue
+            try:chunks.put_nowait(buf[0,:n].copy())
+            except queue.Full:
+                report['errors'].append('storage backlog exceeded 64 chunks');failed.set();break
+            samples+=n
+            metrics['chunk_queue_peak']=max(metrics['chunk_queue_peak'],chunks.qsize())
     except KeyboardInterrupt:
         report['stopped_by_user']=True
     except Exception as exc:
         report['errors'].append('capture: '+repr(exc));failed.set()
     finally:
         stream.issue_stream_cmd(uhd.types.StreamCMD(uhd.types.StreamMode.stop_cont))
-        if not failed.is_set():
-            tail=windows.finish()
-            if tail is not None:jobs.put(tail)
+        if storage.is_alive():chunks.put(None)
+        storage.join()
         jobs.put(None);thread.join()
+        report['pipeline_metrics']=metrics
         report.update(samples=samples,packets=decoder.packets,forwarded=decoder.forwarded,ended_utc=utc())
         (args.output/'result.json').write_text(json.dumps(report,indent=2)+'\n')
         print('BPSK_RX_RESULT '+json.dumps(dict(samples=samples,packets=len(decoder.packets),

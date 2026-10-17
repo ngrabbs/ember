@@ -320,3 +320,29 @@ requests are explicitly rejected while RF service is disabled. `a`/`g` still
 require explicit action and remain bounded; stopping returns to idle CAN
 service. See the [device registry contract](../../system/interfaces/device_registry.md),
 including the legacy LTE application-ID collision and future-node adoption.
+
+## v22 / release 0.22.0: firmware identity
+
+`VERSION` is the release version. Console `v` (or `s`) reports release, full
+source Git SHA, dirty flag and boot ID. Exported builds must configure CMake
+with `-DEMBER_GIT_REVISION=<40-character source commit>` and
+`-DEMBER_GIT_DIRTY=0|1`; missing metadata fails configuration. Determine both
+from the source checkout at export time, not the remote build directory.
+Record the resulting UF2 SHA-256 separately; the Git SHA identifies source,
+not an exact binary or toolchain. Dirty builds are explicitly marked and are
+not reproducible from the commit alone. Release numbers must be updated with
+changes intended as a new release; commit identity distinguishes builds.
+
+Once per explicitly enabled `a`/`g` session, after its first admitted request,
+COMMS sends its own COMMS_FIRMWARE telemetry before draining the IHU packet.
+It contains version major/minor/patch, dirty flag and the full160-bit Git SHA
+as five big-endian words. Its native source and boot ID are COMMS, not IHU.
+The burst uses the existing timer/mute/abort checks and counts toward the96
+attempt timed limit; a batch permits at most four data bursts plus one identity.
+No queued data means no identity transmission; boot never enables RF. A failed
+identity burst cancels the queued data rather than transmitting unchecked.
+
+Yamcs exposes `/ember/COMMS_FIRMWARE_*` and the `Comms-Firmware.opi` display in
+`ember-uhf__realtime`. This is the last received identity; it does not imply
+that a later reset/reflash has already been observed. The dirty flag and Git
+SHA are metadata, not secure boot or remote attestation.
