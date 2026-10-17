@@ -1,5 +1,13 @@
 # UHF / AMSAT SDRB ground channel
 
+October 17: the newer EMBER COMMS board DBPSK path was also tested against
+flight `ember`. Its 30-second IHU run delivered 13/13 packets (three each of
+heartbeat, system, EPS and device status plus COMMS firmware identity), with
+exact RF/archive byte identity and no receiver errors. The deployed COMMS
+bring-up firmware was 0.30.0 and receiver 2.2.0; this did not update firmware or
+qualify a Yamcs command uplink. [Recorded settings and limits](../../system/ground_station/evidence/uhf-flight-20261017/result.json).
+The SDRB procedures below describe the separate older FSK application.
+
 [Ground software](../README.md) · [SDRB workstreams](../../system/sdrb/TODO.md)
 
 Optional [application supervision and operation](SERVICES.md) now provides explicit
@@ -58,7 +66,7 @@ not required for the UHF path. Only one application may own LibreSDR at a time.
 
 ## Shared Yamcs input
 
-The operational receiver now feeds `ember` / `realtime` through `eps-uhf-in`
+The operational receiver now feeds `ember` / `realtime` through `uhf-tm-in`
 on UDP 10019. Use [operational preparation](../yamcs/OPERATIONAL.md), keeping
 `compose.uhf.yaml` in the Compose overlays. Do not run the legacy isolated
 `prepare_yamcs.py` against a consolidated station; it refuses that operation.

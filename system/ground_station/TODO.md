@@ -324,8 +324,11 @@ monitoring, simultaneous tones/telemetry and excluded limiter/diagnostic failure
 - [x] Preserve existing mixed `ember` history and old transport archives; take
   stopped-server backups before migration. [Guide](../../ground/yamcs/OPERATIONAL.md).
 - [x] Verify live bench EPS and payload commands after deployment.
-- [ ] Repeat a physical UHF/LTE session against flight `ember`; configuration and
-  serial tests do not requalify the radio paths.
+- [x] Repeat the EMBER board DBPSK downlink against flight `ember`: 13/13
+  native/identity packets byte-matched at COMMS, RF decoder and archive with no
+  receiver errors. [Evidence](evidence/uhf-flight-20261017/result.json). The
+  standalone 2 mA clock-drive trial did not decode; the 4 mA repeat passed.
+- [ ] Repeat a physical LTE session against flight `ember`.
 - [ ] Implement and qualify the flight UHF command uplink before exposing commands
   in the flight environment.
 - [ ] Investigate payload Pi CAN boot probe exhaustion after a power cycle;
