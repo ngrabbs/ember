@@ -33,8 +33,16 @@ def load_config(path):
     bounded(config['roi_margin_fraction'],.1,.45,'ROI margin')
     for key in ('max_pixels','max_input_bytes'):bounded(config[key],1,20000000,key,True)
     reg=config['registration']
-    if set(reg)!={'mode','max_features','min_inliers','min_inlier_fraction','max_error_px','min_overlap_fraction'}:raise ValueError('Registration keys')
-    if reg['mode'] not in ('prealigned','orb_homography'):raise ValueError('Registration mode')
+    reg_keys={'mode','max_features','min_inliers','min_inlier_fraction','max_error_px','min_overlap_fraction'}
+    if reg.get('mode')=='normalized_orb_homography':
+        reg_keys|={'contrast_percentiles','min_contrast_dn'}
+        percentiles=reg.get('contrast_percentiles')
+        if not isinstance(percentiles,list) or len(percentiles)!=2:raise ValueError('Contrast percentiles')
+        for value in percentiles:bounded(value,0,100,'contrast percentile')
+        if percentiles[0]>=percentiles[1]:raise ValueError('Contrast percentile order')
+        bounded(reg.get('min_contrast_dn'),1,255,'minimum matching contrast')
+    if set(reg)!=reg_keys:raise ValueError('Registration keys')
+    if reg['mode'] not in ('prealigned','orb_homography','normalized_orb_homography'):raise ValueError('Registration mode')
     for key in ('max_features','min_inliers'):bounded(reg[key],4,10000,key,True)
     for key in ('min_inlier_fraction','min_overlap_fraction'):bounded(reg[key],.01,1,key)
     bounded(reg['max_error_px'],.01,10,'registration error')
@@ -43,9 +51,21 @@ def load_config(path):
     return config
 
 
+def matching_image(image, settings):
+    """Stretch a COPY for feature matching; never normalize measured signals."""
+    low,high=np.percentile(image,settings['contrast_percentiles'])
+    if high-low<settings['min_contrast_dn']:raise ValueError('REGISTRATION_LOW_CONTRAST')
+    stretched=np.clip((image.astype(np.float32)-low)*255/(high-low),0,255).astype('uint8')
+    return stretched,[float(low),float(high)]
+
+
 def align(source, target, settings):
     if settings['mode']=='prealigned':return np.eye(3),{'mode':'prealigned_asserted_by_profile'}
     # Contrast enhancement affects matching only, never the measured signals.
+    contrast={}
+    if settings['mode']=='normalized_orb_homography':
+        source,contrast['source_dn']=matching_image(source,settings)
+        target,contrast['target_dn']=matching_image(target,settings)
     clahe=cv2.createCLAHE(clipLimit=2,tileGridSize=(8,8))
     orb=cv2.ORB_create(nfeatures=settings['max_features'])
     a,da=orb.detectAndCompute(clahe.apply(source),None)
@@ -66,7 +86,10 @@ def align(source, target, settings):
     # A fit localized to one bright object does not establish scene alignment.
     spread=cv2.contourArea(cv2.convexHull(src[keep]))/(source.shape[0]*source.shape[1])
     if spread<.05:raise ValueError('REGISTRATION_LOCALIZED_FIT')
-    return matrix,dict(mode='orb_homography',inliers=n,matches=len(matches),rms_px=rms,support_fraction=spread)
+    quality=dict(mode=settings['mode'],inliers=n,matches=len(matches),rms_px=rms,
+                 support_fraction=spread,source_to_reference=matrix.tolist())
+    if contrast:quality['matching_contrast']=contrast
+    return matrix,quality
 
 
 def prepare(fixture, root, config, calibration):
@@ -118,7 +141,7 @@ def prepare(fixture, root, config, calibration):
 def run(manifest_path, fixture_id, config, calibration):
     start=time.monotonic();manifest_path=Path(manifest_path)
     code=digest(b''.join(p.name.encode()+p.read_bytes() for p in sorted(Path(__file__).parent.glob('*.py')) if not p.name.startswith('.')))
-    record=dict(schema_version=1,pipeline_version='0.1.0',code_sha256=code,
+    record=dict(schema_version=1,pipeline_version='0.2.0',code_sha256=code,
                 dependencies={'numpy':np.__version__,'opencv':cv2.__version__,'python':platform.python_version(),'machine':platform.machine()},fixture_id=fixture_id,input_source='STORED_FIXTURE',camera_capture_performed=False,
                 algorithm=config['algorithm'],config_sha256=digest(canonical(config)),
                 calibration_sha256=config['calibration_sha256'],analysis_unix_ms=time.time_ns()//1000000,

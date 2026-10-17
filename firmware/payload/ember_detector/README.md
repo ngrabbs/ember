@@ -1,4 +1,4 @@
-# Replaceable stored-image detectors (pipeline 0.1.0)
+# Replaceable stored-image detectors (pipeline 0.2.0)
 
 This is an **offline development pipeline**. The CAN responder remains payload
 0.2.0 with its static stub. This module never opens CAN, camera, mux, or RF devices.
@@ -63,6 +63,23 @@ UNKNOWN; there is no identity-transform fallback. `prealigned` is only an explic
 profile assertion for already corresponding sensor grids (e.g. synthetic tests),
 not permission to skip alignment on arbitrary real fixtures.
 
+The second-pass profile uses `normalized_orb_homography`: each raw image's
+1st–99th percentile interval is stretched into an 8-bit **matching copy**, then
+CLAHE and ORB find corresponding features. This recovers background texture in
+dim inputs that the original matcher often rejected. Measured intensities still
+come from the original decoded image, gain map and exposure; neither stretching
+nor CLAHE enters the spectral calculation. Tests check this separation using
+three channels with different brightness.
+
+`contrast_percentiles` and `min_contrast_dn` belong only to this registration
+mode. Too little contrast returns `REGISTRATION_LOW_CONTRAST`; it does not invent
+an alignment. The profile retains the original 20-inlier, 50%-inlier, 2-pixel RMS,
+5%-spatial-support and 60%-overlap gates, and increases the feature cap from 2000
+to 4000. Each accepted fit records its transform and the actual matching contrast
+intervals. Noise and JPEG artifacts can also be amplified, so these gates and
+the detector's reference-neighborhood guard remain necessary. The old
+`orb_homography` profiles are retained for comparison.
+
 The supplied JPEGs have unverified linearity and gain. Profiles must explicitly
 opt into exploratory JPEG processing. The October 3 calibration uses 24000-us
 darks; this development pipeline deliberately does not subtract them from the
@@ -94,7 +111,7 @@ in the fixture manifest. It is not bundled in Git or the image archive.
 ```sh
 python3 firmware/payload/detect.py \
   --manifest /path/to/fixtures/manifest.json \
-  --config firmware/payload/config/stored-images-conservative.json \
+  --config firmware/payload/config/stored-images-pass2.json \
   --calibration /path/to/correction_20261003.npz \
   --fixture 20261014_174701_978 \
   --output /tmp/payload-one-run --maps
@@ -107,9 +124,12 @@ prediction, confusion counts and UNKNOWN outcomes. Run records include source,
 fixture/config/calibration/implementation hashes, dependency versions and timings.
 They explicitly report `camera_capture_performed=false`.
 
-The conservative profile is a **development comparison**, selected from a sweep
-on these same images. It is not a recommended deployment threshold. Compare the
-basic and guarded profiles rather than hiding their error tradeoffs.
+The pass-2 profile is a **development comparison**, selected from sweeps on these
+same images. It retains K=0.5, absolute excess=7.5, area=16 and guard=2: lower
+thresholds and wider guards did not improve the zero-observed-false-alarm choice
+on the Pi. The gain comes from matching normalization and 4000 features. This
+is not a recommended deployment threshold. Retain the original basic, guarded
+and conservative profiles for comparison. See the [second-pass evidence](../../../system/payload/evidence/stored-detector-pass2-20261017/README.md).
 
 ```sh
 python3 firmware/payload/tune_detector.py \
@@ -124,6 +144,13 @@ The sweep prepares each scene once and varies only detector settings. It is
 specific to the two spectral implementations; a future algorithm supplies its
 own tuning dimensions. JSON configuration validation rejects unknown detector
 IDs, wrong settings, invalid bounds and nonfinite thresholds.
+
+For the guarded detector, `--guard 2 3 4` adds the reference-neighborhood radius
+to the sweep. Larger radii suppress displaced background edges but can also
+hide weak or small flames. Every tested setting, including false alarms and
+UNKNOWNs, is retained in the report. The report also records the base profile,
+implementation/tuner hashes and dependency versions. Run on the target Pi:
+matching results and downstream decisions can differ across OpenCV builds/CPUs.
 
 ## Remaining command integration
 
@@ -146,7 +173,7 @@ ssh ngrabbs@192.168.1.253
 cd ~/ember-detector-dev-20261017
 .venv/bin/python firmware/payload/detect.py \
   --manifest fixtures/manifest.json \
-  --config firmware/payload/config/stored-images-conservative.json \
+  --config firmware/payload/config/stored-images-pass2.json \
   --calibration correction_20261003.npz \
   --fixture 20261014_163143_865 \
   --output /tmp/payload-detector-example-001 --maps

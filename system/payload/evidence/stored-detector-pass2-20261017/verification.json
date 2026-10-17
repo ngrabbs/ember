@@ -1,0 +1,41 @@
+{
+  "tests": {
+    "ground": {
+      "run": 84,
+      "passed": 81,
+      "skipped": 3
+    },
+    "pi_detector": {
+      "run": 10,
+      "passed": 10
+    }
+  },
+  "timing": {
+    "mac": {
+      "median_ms": 182.139,
+      "p95_ms": 198.76,
+      "maximum_ms": 247.695,
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 31,
+        "FIRE->NO_FIRE": 12,
+        "FIRE->FIRE": 62,
+        "FIRE->UNKNOWN": 2
+      }
+    },
+    "pi": {
+      "median_ms": 1976.491,
+      "p95_ms": 2092.464,
+      "maximum_ms": 2113.434,
+      "confusion": {
+        "NO_FIRE->NO_FIRE": 31,
+        "FIRE->NO_FIRE": 10,
+        "FIRE->FIRE": 64,
+        "FIRE->UNKNOWN": 2
+      }
+    }
+  },
+  "selected_results_match_sweeps": true,
+  "config_sha256": "e206291cbc555cfc2c7930739e27df184cb8ed5e7dc6d203482493e2809ce938",
+  "code_sha256": "b68f844058a2240033d34e771e35d8d20e179a452b3060a6d64a8226c6c8a49c",
+  "timing_scope": "Loading, preparation and inference; excludes interpreter startup and output/map writes"
+}

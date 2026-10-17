@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "algorithm": "spectral_guarded_v1",
+  "exploratory_jpeg": true,
+  "calibration_sha256": "0649ecedd1d68e31f2cc58bd4808946c8a360d157b22db5debfe2b227df58b51",
+  "dark_policy": "none",
+  "reference_exposure_us": 100,
+  "roi_margin_fraction": 0.1,
+  "max_pixels": 2000000,
+  "max_input_bytes": 1000000,
+  "registration": {
+    "mode": "normalized_orb_homography",
+    "max_features": 4000,
+    "min_inliers": 20,
+    "min_inlier_fraction": 0.5,
+    "max_error_px": 2.0,
+    "min_overlap_fraction": 0.6,
+    "contrast_percentiles": [
+      1,
+      99
+    ],
+    "min_contrast_dn": 1
+  },
+  "detector": {
+    "continuum_min": 4.0,
+    "k_threshold": 0.5,
+    "excess_min": 7.5,
+    "min_area_px": 16,
+    "connectivity": 8,
+    "min_valid_fraction": 0.1,
+    "max_saturated_fraction": 0.02,
+    "alignment_guard_px": 2
+  }
+}

@@ -189,11 +189,21 @@ own mean, histogram or maximum: that can remove the spectral excess we seek.
 
 Then register the reference channels onto the selected common grid and carry
 validity masks through the transform. Keep only common overlap; padded borders
-must not become valid zero-valued measurements. Use validated fixed transforms
-for the first controlled fixtures. Add automatic registration later if needed,
-with an explicit quality gate. A failed fit is not a reason to assume identity
-alignment. Calibration must precede resampling; manifest-declared corrected or
-registered inputs skip only the stages already completed and verified.
+must not become valid zero-valued measurements. The implemented pipeline uses
+ORB feature matches and a RANSAC homography with quality gates. A failed fit is
+not a reason to assume identity alignment. `prealigned` is reserved for inputs
+whose grids already correspond, such as synthetic correctness tests. Fixed
+transforms and manifest-declared preprocessed inputs remain future adapters;
+the current fixture loader always applies its documented correction steps.
+
+The second-pass registration mode stretches the 1st–99th percentile range into
+a matching copy before feature extraction and retains up to 4000 features.
+This makes dim background texture usable for alignment. **Only the matching
+copy is normalized.** The spectral detector receives the original intensities
+after gain/exposure correction and geometric resampling. Fits still require
+20 inliers, at least 50% inliers, RMS error at most 2 pixels, spatial support of
+at least 5% of the source image, and 60% common ROI overlap. Insufficient contrast
+or a failed fit returns UNKNOWN. These gates are not weakened to improve counts.
 
 ### 3. Measure spectral excess
 
@@ -263,7 +273,9 @@ and `firmware/payload/config/*.json`; remote tuning is not a current CAN operati
 | `input.fixture_id` | Manifest ID | Exact stored case analyzed by a commanded check |
 | `channels.*.wavelength_nm` | Positive, low < on < high | Continuum weights; measured filter metadata, not a classifier tuning shortcut |
 | `preprocess.profile_id`, `calibration.id` | Versioned IDs | Encoding, dark/flat/response and exposure treatment |
-| `registration.mode` | `prealigned` / `fixed_transform` initially | How common scene coordinates are established |
+| `registration.mode` | Implemented: `orb_homography`, `normalized_orb_homography`, `prealigned` | How common scene coordinates are established; `prealigned` requires already corresponding grids |
+| `registration.contrast_percentiles`, `min_contrast_dn` | Ordered 0–100 pair; positive raw-code range | Matching-copy stretch and minimum contrast, required only for normalized ORB |
+| `registration.max_features` | Integer, 4–10000 | Feature cap; more features can improve spatial support at a runtime cost |
 | `registration.max_error_px` | Nonnegative pixels, defined metric | Maximum acceptable measured alignment residual |
 | `analysis.roi`, `analysis.resolution` | Bounds and width/height in pixels | Fixed analyzed area and scale |
 | `quality.continuum_min` | Positive, calibrated signal units | Minimum denominator for a usable K measurement |
@@ -274,6 +286,7 @@ and `firmware/payload/config/*.json`; remote tuning is not a current CAN operati
 | `detection.excess_min` | Nonnegative, same units as E | Minimum absolute on-line excess |
 | `regions.min_area_px` | Positive integer | Minimum connected candidate area at the fixed analysis resolution |
 | `regions.connectivity` | 4 or 8 | Whether diagonal neighbors join |
+| `detector.alignment_guard_px` | Integer, 0–5 pixels, guarded detector only | Local reference maximum radius; suppresses displaced background edges at a cost in small-flame sensitivity |
 | `regions.morphology` | Disabled initially; later bounded kernels/iterations | Optional candidate cleanup, reported explicitly |
 | `runtime.max_analysis_ms` | Positive, within end-to-end deadline | Bound a job instead of hanging CAN service |
 | `runtime.max_pixels`, `runtime.max_input_bytes` | Positive bounds | Bound decoded image memory and file loading |
@@ -298,6 +311,38 @@ registry and select its ID in configuration; acquisition and reporting remain
 independent of the algorithm. The supplied `spectral_excess_v1` and
 `spectral_guarded_v1` implementations exercise that separation. Algorithm-specific
 settings live under `detector`; its implementation validates their schema.
+
+The second pass changes preparation and the guarded detector's profile, so the
+same replaceable algorithm interface remains in place. Compare profiles with
+`detect.py --config ...`; use `tune_detector.py --guard 2 3 4` to include the
+alignment guard in a threshold sweep. Keep all false alarms, misses and UNKNOWNs
+in the comparison. A scene-level FIRE label does not establish that every
+reported region is flame; inspect overlays for background-edge detections too.
+
+The selected [`stored-images-pass2.json`](../../firmware/payload/config/stored-images-pass2.json)
+retains K=0.5, absolute excess=7.5, minimum area=16 pixels and guard radius=2.
+The improvement comes from normalized matching and the larger feature cap;
+lowering thresholds introduced false alarms on the Pi. On the same 107
+development triplets, the Pi comparison is:
+
+| Outcome | Original conservative profile | Second-pass profile |
+|---|---:|---:|
+| Fire-labeled triplets detected | 33 | 64 |
+| Fire-labeled triplets reported NO_FIRE | 10 | 10 |
+| Fire-labeled triplets UNKNOWN | 33 | 2 |
+| Negative triplets correctly reported NO_FIRE | 30 | 31 |
+| Negative triplets UNKNOWN | 1 | 0 |
+| Negative triplets falsely reported FIRE | 0 | 0 |
+
+These are development results after tuning on these same images. The two
+remaining UNKNOWNs are `20261014_162837_756` (localized registration fit on the
+Pi) and `20261014_174904_481` (missing exposure). Inspect the
+[full second-pass evidence](../../system/payload/evidence/stored-detector-pass2-20261017/README.md)
+for every tested setting, Mac/Pi differences, timing and limitations. This
+comparison measures scene-level decisions; it does not validate every reported
+region or performance on unseen scenes. Median Pi processing time increased
+from 1.04 to 1.98 seconds per triplet (new p95: 2.09 seconds), excluding Python
+startup and output writes. These are observed times, not guaranteed CAN deadlines.
 
 ### Outputs, CAN integration and timing
 

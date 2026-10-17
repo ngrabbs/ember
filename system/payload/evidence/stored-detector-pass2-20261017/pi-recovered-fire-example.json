@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "pipeline_version": "0.2.0",
+  "code_sha256": "b68f844058a2240033d34e771e35d8d20e179a452b3060a6d64a8226c6c8a49c",
+  "dependencies": {
+    "numpy": "2.5.4",
+    "opencv": "5.0.0",
+    "python": "3.13.5",
+    "machine": "aarch64"
+  },
+  "fixture_id": "20261014_175122_385",
+  "input_source": "STORED_FIXTURE",
+  "camera_capture_performed": false,
+  "algorithm": "spectral_guarded_v1",
+  "config_sha256": "e206291cbc555cfc2c7930739e27df184cb8ed5e7dc6d203482493e2809ce938",
+  "calibration_sha256": "0649ecedd1d68e31f2cc58bd4808946c8a360d157b22db5debfe2b227df58b51",
+  "analysis_unix_ms": 1792274360061,
+  "warnings": [
+    "EXPLORATORY_JPEG_LINEARITY_UNVERIFIED",
+    "OPTICAL_COMPATIBILITY_UNVERIFIED",
+    "GAIN_UNKNOWN",
+    "DARK_NOT_SUBTRACTED"
+  ],
+  "manifest_sha256": "23b91bf24e015b8527a996111247004581059b1017db4196692ad1fa2baf0d60",
+  "inputs": {
+    "770": {
+      "path": "images/20261014_175122_385_cam0_770nm.jpg",
+      "sha256": "145b684e9fc064259d958a40264415eda820379f5b8f813d68ebd12424ed5a3a",
+      "exposure_us": 50
+    },
+    "750": {
+      "path": "images/20261014_175122_385_cam1_750nm.jpg",
+      "sha256": "f7d660fbe9c831a48bafbcfc9a2e93c94c80efbe7648c7aa227eda041a797fb9",
+      "exposure_us": 50
+    },
+    "780": {
+      "path": "images/20261014_175122_385_cam2_780nm.jpg",
+      "sha256": "94442602213bcf182fac491e203228227187c01d4a531d2c3b57c2662fc2e1b4",
+      "exposure_us": 50
+    }
+  },
+  "preparation_ms": 1996.312,
+  "result": "FIRE",
+  "reason": "SPECTRAL_REGION",
+  "metrics": {
+    "registration": [
+      {
+        "mode": "normalized_orb_homography",
+        "inliers": 70,
+        "matches": 100,
+        "rms_px": 1.0597379207611084,
+        "support_fraction": 0.08689714071492695,
+        "source_to_reference": [
+          [
+            1.0288604461606428,
+            -0.006695681752794072,
+            -61.213053311556735
+          ],
+          [
+            0.00666985561589523,
+            0.9837763578910892,
+            -114.57155287057974
+          ],
+          [
+            1.0470482865448826e-05,
+            3.1908695188188455e-05,
+            1.0
+          ]
+        ],
+        "matching_contrast": {
+          "source_dn": [
+            0.0,
+            7.0
+          ],
+          "target_dn": [
+            0.0,
+            6.0
+          ]
+        }
+      },
+      {
+        "mode": "reference"
+      },
+      {
+        "mode": "normalized_orb_homography",
+        "inliers": 76,
+        "matches": 111,
+        "rms_px": 1.1172235012054443,
+        "support_fraction": 0.12988609541757834,
+        "source_to_reference": [
+          [
+            1.034701602551094,
+            -0.03460709883774033,
+            58.99600415890405
+          ],
+          [
+            0.009025566810482426,
+            1.0272159414720086,
+            -64.81104836652959
+          ],
+          [
+            2.0563152045728e-05,
+            2.814669476082838e-05,
+            1.0
+          ]
+        ],
+        "matching_contrast": {
+          "source_dn": [
+            0.0,
+            6.0
+          ],
+          "target_dn": [
+            0.0,
+            6.0
+          ]
+        }
+      }
+    ],
+    "overlap_fraction": 0.7398615554765573,
+    "valid_fraction": 0.27462574554647073,
+    "saturated_fraction": 0.0,
+    "interpolation_weight": 0.6666666666666666,
+    "candidate_pixels": 1605,
+    "region_count": 4,
+    "alignment_guard_px": 2
+  },
+  "regions": [
+    {
+      "area_px": 1451,
+      "bbox": [
+        741,
+        430,
+        68,
+        68
+      ],
+      "peak_k": 12.391706466674805,
+      "median_k": 2.007805347442627,
+      "mean_excess": 24.833112716674805
+    },
+    {
+      "area_px": 65,
+      "bbox": [
+        802,
+        440,
+        9,
+        14
+      ],
+      "peak_k": 3.9414100646972656,
+      "median_k": 1.3210698366165161,
+      "mean_excess": 20.876094818115234
+    },
+    {
+      "area_px": 20,
+      "bbox": [
+        298,
+        639,
+        10,
+        9
+      ],
+      "peak_k": 2.741896390914917,
+      "median_k": 1.6690994501113892,
+      "mean_excess": 12.099569320678711
+    },
+    {
+      "area_px": 19,
+      "bbox": [
+        732,
+        440,
+        10,
+        4
+      ],
+      "peak_k": 2.6015892028808594,
+      "median_k": 1.4838048219680786,
+      "mean_excess": 11.37853717803955
+    }
+  ],
+  "elapsed_ms": 2085.71
+}
