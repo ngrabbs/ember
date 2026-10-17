@@ -86,3 +86,16 @@ ratios as calibrated insertion loss/gain. Both bounded windows completed with
 verified shutdown; tinySA output remained off. Next: C86 pad 1 / Q4 collector,
 supplied from +5V through L18. The DS1202Z-E bandwidth cannot establish the
 absolute 435 MHz LO amplitude with this probe arrangement.
+
+## Q4 collector / C86 pad 1
+
+With the probe at the collector, captured both clock-off and clock-on states
+at 2 V/div, 10 ns/div, DC coupling, 10×, bandwidth limit off. Off: 4.964 V
+mean and 0.320 Vpp. On: 4.965 V mean and 1.040 Vpp. A short displayed-waveform
+FFT shows increased periodic content (largest bin near 291.7 MHz, with content
+near 145 MHz); neither that FFT nor the automatic 250 MHz frequency reading
+establishes a correct 435 MHz LO. The 200 MHz scope and probe loading prevent
+calibrated out-of-band amplitude claims. Collector supply and clock-dependent
+activity are demonstrated, not adequate mixer drive. Final clock-disable FF,
+CLK0/1/2 power-down 80, RX window completed with verified shutdown; tinySA off.
+Next probe C97 pad 2 / U10 pin 6 for clock-dependent signal at the mixer LO input.
