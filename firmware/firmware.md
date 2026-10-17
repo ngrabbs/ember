@@ -2,7 +2,8 @@
 
 | Application | Source and build guide | Runtime |
 |---|---|---|
-| IHU | [IHU firmware](ihu/README.md) | Pico SDK, CAN Feather; also builds the LTE CAN Feather role |
+| IHU | [IHU firmware](ihu/README.md) | Pico SDK, IHU CAN Feather; target/output `ihu` |
+| Walter MCU | [Walter MCU firmware](walter_mcu/README.md) | Pico SDK, LTE CAN Feather; target/output `walter_mcu` |
 | Transceiver | [Transceiver firmware](transceiver/README.md) | Pico SDK, original Pico UHF transceiver |
 | Walter | [Walter firmware](walter/README.md) | ESP32-S3, UART-controlled LTE-M modem |
 | Payload | [Payload firmware](payload/README.md) | Payload Pi service |
@@ -21,6 +22,8 @@ Shared dependencies:
 
 - [`comms_transport`](comms_transport/README.md): CAN fragmentation, UART framing,
   correlation/discovery and the MCP25625 driver used across the active applications.
+- [`shared/pico_can`](shared/pico_can/README.md): common CAN Feather board profile
+  and build identity/dictionary configuration; each application owns its version.
 - `shared/ltc4162_registers.h`: generated EPS register definitions used by IHU.
 - [`shared/ember_protocol`](shared/ember_protocol/README.md): portable command engine
   linked by IHU and host tests.

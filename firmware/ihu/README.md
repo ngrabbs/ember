@@ -2,10 +2,24 @@
 
 Active IHU CAN Feather application, formerly `firmware/can_feather_bench`.
 The earlier FreeRTOS prototype was removed and remains available in Git history.
-This directory also builds the LTE CAN Feather role. Existing output names
-`ember_ihu_can_bench` (IHU) and `ember_comms_can_bench` (LTE CAN Feather) are
-retained; the original-Pico UHF application is [transceiver](../transceiver/README.md).
-Configure a fresh build directory after moving from the old source path.
+This directory builds only the IHU: CMake project/target `ihu`, output `ihu.uf2`.
+The LTE CAN Feather has its own [Walter MCU application](../walter_mcu/README.md),
+project/target/output `walter_mcu`. Walter ESP32-S3 firmware remains in
+[`firmware/walter`](../walter/README.md); the original-Pico UHF application is
+[transceiver](../transceiver/README.md). Configure fresh build directories.
+Each application owns its source and VERSION file; the split retains version
+0.14.1 and does not flash hardware. Shared board/build configuration lives in
+[`shared/pico_can`](../shared/pico_can/README.md).
+
+```sh
+cmake -S firmware/ihu -B build/ihu -DPICO_SDK_PATH="$PICO_SDK_PATH" \
+  $(python3 firmware/transceiver/source_identity.py --cmake-args)
+cmake --build build/ihu --target ihu -j4
+# build/ihu/ihu.uf2
+```
+
+For the inactive FLIGHT stub build, use a separate build directory with
+`-DIHU_FLIGHT_CONFIGURATION=ON`. No LTE Feather target is generated here.
 
 ## transceiver firmware request — 0.14.0
 
@@ -53,7 +67,7 @@ node4/reply0x704. The responder runs on the Pi/LC2502; see the
 
 ## CAN addressing migration candidate —0.8.0
 
-This image family builds the IHU and **LTE CAN Feather** roles. The historical
+At this historical milestone, one image family built the IHU and **LTE CAN Feather** roles. The historical
 `ember_comms_can_bench.uf2` filename means the LTE Feather, not the original-Pico
 UHF transceiver. Check board USB identity before flashing.
 
@@ -82,8 +96,8 @@ correct application version and its recorded validation before flashing.
 
 The new IHU MCU and transceiver MCU both use Adafruit RP2040 CAN Bus Feathers with
 onboard MCP25625 CAN controllers/transceivers. This standalone Pico SDK project
-builds `ember_ihu_can_bench.uf2` and `ember_comms_can_bench.uf2` from one source,
-with distinct roles. It replaces neither the complete FreeRTOS IHU/EPS application
+historically built `ember_ihu_can_bench.uf2` and `ember_comms_can_bench.uf2` from
+one source with distinct roles; current builds use the separate projects above. It replaces neither the complete FreeRTOS IHU/EPS application
 nor the UHF transceiver application. The IHU role now supports manual read-only EPS
 register observation and explicit battery-only ADC enable; it does not change
 charging policy, activate UHF, execute flight commands, or implement CAN redundancy.
@@ -289,7 +303,11 @@ local three-controller path, not LTE reception or spacecraft command execution.
 UART logs are skipped when transceiver USB is disconnected to avoid waiting for an
 absent console during forwarding. Sustained traffic remains unqualified.
 
-## Build and flash
+## Historical build and flash
+
+These commands and identities record the earlier combined application. Use
+the current build command at the top of this guide or the separate
+[Walter MCU build guide](../walter_mcu/README.md).
 
 Keep the repository layout: this project needs sibling `comms_transport` and
 `ground/ember/generate_c.py`, `codec.py`, and `dictionary.json`.

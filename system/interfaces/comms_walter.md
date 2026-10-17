@@ -1,4 +1,14 @@
-# COMMS MCU and Walter transport
+# Walter MCU and Walter transport
+
+Current applications: IHU (`firmware/ihu`) → CAN → LTE Feather
+([`firmware/walter_mcu`](../../firmware/walter_mcu/README.md)) → UART →
+Walter ESP32-S3 ([`firmware/walter`](../../firmware/walter/README.md)).
+The LTE Feather builds as `walter_mcu` and reports `role=WALTER_MCU`;
+`transceiver` is the separate original-Pico UHF application. CAN wire identities
+retain their existing LTE names/IDs. The dated notes below use the older
+COMMS MCU terminology for the Feather.
+
+## Historical transport development
 
 Status: CAN Feather bench forwarding demonstrated, 2026-10-02; production
 radio packet service and complete board/application integration remain open.

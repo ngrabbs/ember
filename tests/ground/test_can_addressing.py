@@ -59,7 +59,7 @@ uint8_t mcp_register(uint8_t r){(void)r;return 0;}
 static ul_packet queued(void){ul_packet p={0};ul_reader r={0};bool found=false;for(size_t i=0;i<output.size;i++)if(ul_feed(&r,output.wire[i],fake_now,&p))found=true;assert(found);return p;}
 int main(void){
  boot=11;can.ready=true;
-#if ROLE_IHU
+#if TEST_IHU
  ip_init(&policy,IP_GROUND_TEST);ip_finish_boot(&policy,true,false,false);
  command("output uhf_telem on");command("output lte_telem on");
  command("hello comms");assert(TX_ID==0x710 && RX_ID==0x711 && pending.active);
@@ -150,6 +150,20 @@ int main(void){
  assert(chain.uart.type==UL_FIRMWARE_INFO && chain.active);
  w=chain.uart;w.type=UL_FIRMWARE_INFO_ACK;w.sender=44;w.size=FI_SIZE;fi_payload(w.payload,44,777);uart_receive(&w);
  ack=queued();assert(!chain.active && ack.type==CF_MODEM_FIRMWARE_ACK && ul_u32(ack.payload+24)==44);
+ /* Exercise the extracted gateway's bounded RF request and boot correlation. */
+ assert(!strcmp(ROLE_NAME,"WALTER_MCU"));
+ output.active=false;query.type=CF_RF_WINDOW;query.size=4;ul_p32(query.payload,60);
+ receive(&query);assert(chain.active && chain.uart.type==UL_RF_WINDOW);
+ assert(chain.uart.size==4 && ul_u32(chain.uart.payload)==60);
+ w=chain.uart;w.type=UL_RF_WINDOW_ACK;w.sender=45;uart_receive(&w);
+ assert(!chain.active && !walter_peer);ack=queued();assert(ack.type==UL_ERROR);
+ output.active=false;receive(&query);assert(chain.active && chain.uart.type==UL_HELLO);
+ w=chain.uart;w.type=UL_HELLO_ACK;w.sender=44;uart_receive(&w);
+ w=chain.uart;w.type=UL_RF_WINDOW_ACK;w.sender=44;uart_receive(&w);
+ ack=queued();assert(!chain.active && ack.type==CF_RF_WINDOW_ACK && ack.sender==boot);
+ assert(ack.origin==query.origin && ack.request==query.request && ul_u32(ack.payload)==60);
+ output.active=false;ul_p32(query.payload,121);receive(&query);
+ ack=queued();assert(!chain.active && ack.type==UL_ERROR && ack.payload[0]==CF_BAD_PACKET);
  cf_frame q,r;assert(dr_request(2,1,22,&q));assert(!dr_respond(&q,DR_LTE_NODE,boot,&r));
  assert(dr_request(3,1,22,&q));assert(dr_respond(&q,DR_LTE_NODE,boot,&r));assert(r.id==0x703);
 #endif
@@ -164,10 +178,13 @@ class AddressingTests(unittest.TestCase):
     h=p/name;h.parent.mkdir(exist_ok=True);h.write_text('#include "sdk.h"\n')
    (p/'build_identity.h').write_text('#define FW_VERSION "0.8.0"\n#define FW_MAJOR 0\n#define FW_MINOR 8\n#define FW_PATCH 0\n#define FW_DIRTY 0\n#define FW_GIT "0123456789012345678901234567890123456789"\n')
    generate(p/'wire.h')
-   source=p/'test.c';source.write_text('#include <assert.h>\n#define main embedded_main\n#include "'+str(ROOT/'firmware/ihu/main.c')+'"\n#undef main\n'+DRIVER)
-   for role in (0,1):
+   source=p/'test.c'
+   for role,app in ((0,'walter_mcu'),(1,'ihu')):
+    source.write_text('#include <assert.h>\n#define main embedded_main\n#include "'+str(ROOT/'firmware'/app/'main.c')+'"\n#undef main\n'+DRIVER)
     binary=p/f'role{role}'
-    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',f'-DROLE_IHU={role}','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),str(source),str(ROOT/'firmware/shared/ember_protocol/protocol.c'),'-o',str(binary)],check=True)
+    sources=[str(source)]
+    if role:sources.append(str(ROOT/'firmware/shared/ember_protocol/protocol.c'))
+    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',f'-DTEST_IHU={role}','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),*sources,'-o',str(binary)],check=True)
     output=subprocess.check_output([str(binary)],text=True)
     if role:
      wire=next(line.split()[1] for line in output.splitlines() if line.startswith('IDENTITY_PACKET '))

@@ -101,7 +101,8 @@ Agents start with [AGENTS.md](AGENTS.md); all KiCad schematic work follows the
 
 | Source | Role | Guide |
 |---|---|---|
-| `firmware/ihu` | IHU CAN Feather; also builds the LTE CAN Feather role | [IHU firmware](firmware/ihu/README.md) |
+| `firmware/ihu` | IHU CAN Feather | [IHU firmware](firmware/ihu/README.md) |
+| `firmware/walter_mcu` | LTE CAN Feather controlling Walter over UART | [Walter MCU firmware](firmware/walter_mcu/README.md) |
 | `firmware/transceiver` | Original-Pico UHF transceiver | [Transceiver firmware](firmware/transceiver/README.md) |
 | `firmware/walter` | Walter ESP32-S3 LTE-M modem application | [Walter firmware](firmware/walter/README.md) |
 | `firmware/payload` | Payload Pi CAN responder | [Payload firmware](firmware/payload/README.md) |
@@ -116,14 +117,19 @@ Build the active IHU from the repository root with the Pico SDK and ARM GCC:
 cmake -S firmware/ihu -B build/ihu -DPICO_SDK_PATH="$PICO_SDK_PATH" \
   $(python3 firmware/transceiver/source_identity.py --cmake-args)
 cmake --build build/ihu -j4
-# IHU image: build/ihu/ember_ihu_can_bench.uf2
+# IHU image: build/ihu/ihu.uf2
+
+cmake -S firmware/walter_mcu -B build/walter_mcu -DPICO_SDK_PATH="$PICO_SDK_PATH" \
+  $(python3 firmware/transceiver/source_identity.py --cmake-args)
+cmake --build build/walter_mcu --target walter_mcu -j4
+# LTE Feather image: build/walter_mcu/walter_mcu.uf2
 ```
 
 The source directories were renamed from `can_feather_bench` and
 `transceiver_bringup`. Earlier FreeRTOS prototypes were removed; they remain available in
 [Git history](https://github.com/ngrabbs/ember/tree/e133cf204a10ed47e703e5e5a81f17a4241268de/firmware).
-The transceiver output is now `transceiver.uf2`; the IHU output name is unchanged. Use fresh build
-directories after the move. See the [IHU console guide](docs/user/ihu-can-console.md)
+Outputs are `ihu.uf2`, `walter_mcu.uf2` and `transceiver.uf2`; Walter ESP32-S3
+uses PlatformIO environment `walter`. Use fresh build directories after the split. See the [IHU console guide](docs/user/ihu-can-console.md)
 for current commands.
 
 ---

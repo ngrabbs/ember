@@ -1,5 +1,9 @@
 # Walter LTE-M firmware
 
+This application runs on Walter's ESP32-S3. Its CAN Feather controller is the
+separate [`walter_mcu`](../walter_mcu/README.md) application. The IHU talks CAN to
+that Feather, which controls Walter over framed UART.
+
 Active source: `firmware/walter`, formerly `firmware/walter_lte_bench`.
 PlatformIO environment: `walter`; output `.pio/build/walter/firmware.bin`.
 The source move and environment rename do not change runtime behavior or the
