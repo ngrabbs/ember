@@ -5,10 +5,10 @@ Current baselines:
 | Component | Version | Verification |
 | --- | --- | --- |
 | Yamcs upstream server | 5.13.0 | Running `/api` server version/revision |
-| EMBER UHF definitions + shared dashboards | 1.1.0 | `yamcs-uhf-1.1.0.json` |
-| Live UHF receiver | 2.1.0 | `receiver-2.1.0.json` |
+| EMBER UHF definitions + shared dashboards | 1.2.0 | `yamcs-uhf-1.2.0.json` |
+| Live UHF receiver | 2.2.0 | `receiver-2.2.0.json` |
 
-These are separate from COMMS MCU firmware 0.23.0. Receiver 2.0.0 is the first
+These are separate from COMMS MCU firmware 0.24.0. Receiver 2.0.0 is the first
 semantic release of pipeline v2, with content identity added; wire format and
 DSP behavior are unchanged. `receiver_version: 2` remains the pipeline field
 for old consumers. `receiver_build` contains the release and SHA-256 manifest
@@ -18,8 +18,8 @@ From the repository root, verify an installation before a demo:
 
 ```sh
 python3 ground/yamcs/build_identity.py --url http://192.168.1.251:8090 \
-  --check ground/releases/yamcs-uhf-1.1.0.json
-python3 ground/bpsk/identity.py --check ground/releases/receiver-2.1.0.json
+  --check ground/releases/yamcs-uhf-1.2.0.json
+python3 ground/bpsk/identity.py --check ground/releases/receiver-2.2.0.json
 python3 ground/bpsk/live.py --version
 ```
 
@@ -78,3 +78,13 @@ restart/recompile Yamcs, and run install_displays.py. Preserve other instance
 MDBs/configuration, archive volumes and previous release manifests. Back up
 runtime sources and receiver files before deployment. Confirm --check against
 both manifests after installation; publish Ground-Build only after that audit.
+
+## Device discovery release
+
+Receiver2.2.0 and Yamcs UHF assets1.2.0 add DEVICE_STATUS (53), Devices.opi,
+Devices.par and two display scripts. IHU0.9.0 adds a registry snapshot as the
+fourth packet of each explicit UHF run cycle; COMMS0.24.0 admits it. LTE Feather
+remains on0.8.0 and Walter on0.3.0; no LTE reflash is needed for this downlink.
+The expected snapshot interval is90 seconds; IHU's device STALE threshold is
+30 seconds. These represent different ages: the ground snapshot can expire
+independently of the IHU's last verified response from a particular device.

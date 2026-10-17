@@ -19,6 +19,7 @@ static uc_state uhf_client;
 #include "eps_readout.h"
 #include "power_packet.h"
 #include "health_packet.h"
+#include "device_packet.h"
 #include "lte_queue.h"
 #include "autotelem.h"
 #include "uhf_run.h"
@@ -389,17 +390,23 @@ static void identity_telemetry(unsigned component) {
     ul_p32(p+W_PAYLOAD+FI_SIZE,now_ms()-identities[component].observed);
     ul_p16(p+n-2,ul_crc(p,n-2));submit(CF_UHF_SEND,p,n);
 }
+static void device_telemetry(void) {
+    uint8_t packet[W_PAYLOAD+W_SIZE_DEVICE_STATUS+2];
+    bool paused=auto_telem.enabled || telemetry_queue.enabled || loopback_test;
+    size_t n=device_packet(packet,devices,paused,boot,telemetry_sequence++,now_ms());
+    submit(CF_UHF_SEND,packet,n);
+}
 static void uhf_run_pump(uint32_t now) {
     if(uhf_run.state!=UR_RUNNING)return;
     if(!peer || !can.ready || (mcp_register(0x0e)&0xe0) || ur_link_changed(&uhf_run,can.tx_fail,can.tx_timeout) || mcp_register(0x2d)) {
         ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT link_not_ready\n");return;
     }
-    bool ready=!pending.active && !output.active && !can.pending && !uc_count(&uhf_client) &&
+    bool ready=!discovery.active && !pending.active && !output.active && !can.pending && !uc_count(&uhf_client) &&
         (uint32_t)(now-uhf_last_result)>=250;
     int stage=ur_due(&uhf_run,now,ready);
     if(uhf_run.state==UR_EXPIRED)LOG("UHF_RUN EXPIRED submitted=%" PRIu32 " cycles=%" PRIu32 "\n",uhf_run.submitted,uhf_run.cycles);
     if(stage<0)return;
-    if(stage<2)health_telemetry(stage==1,2);else (void)eps_telemetry(2);
+    if(stage<2)health_telemetry(stage==1,2);else if(stage==2)(void)eps_telemetry(2);else device_telemetry();
     if(pending.active && pending.packet.type==CF_UHF_SEND)ur_submitted(&uhf_run);
     else {ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT producer_or_submission\n");}
 }
@@ -431,7 +438,7 @@ static void devices_pump(uint32_t now) {
     }
     /* Background checks never compete with application packets or half-duplex RF. */
     if(discovery.active || pending.active || output.active || can.pending || uc_count(&uhf_client) ||
-       uhf_run.state==UR_RUNNING || auto_telem.enabled || telemetry_queue.enabled || loopback_test ||
+       (uhf_run.state==UR_RUNNING && uhf_run.cycle && uhf_run.stage<4) || auto_telem.enabled || telemetry_queue.enabled || loopback_test ||
        (uint32_t)(now-discovery.last)<2000)return;
     discovery.last=now;unsigned i=discovery.next;discovery.next=(i+1)%DR_COUNT;
     if(dr_devices[i].interface==DR_I2C) {
@@ -529,6 +536,7 @@ static void command(const char *s) {
     }
     else if(!strcmp(s,"uhf lte firmware"))identity_telemetry(0);
     else if(!strcmp(s,"uhf modem firmware"))identity_telemetry(1);
+    else if(!strcmp(s,"uhf devices"))device_telemetry();
     else if(!strcmp(s,"uhf heartbeat"))health_telemetry(false,2);
     else if(!strcmp(s,"uhf system"))health_telemetry(true,2);
     else if(!strcmp(s,"uhf eps"))eps_telemetry(2);
@@ -556,7 +564,7 @@ static void command(const char *s) {
         uint8_t p[4];ul_p32(p,seconds);submit(CF_RF_WINDOW,p,4);
     }
 #endif
-    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | hello comms | hello lte | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf heartbeat | uhf system | uhf eps | telemetry | eps json | eps adc on/off | eps telemetry | telem on [seconds]/off/status | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte | eps enqueue | lte queue on/off/status/drop":"");
+    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | selftest | normal | hello | ping N%s\n",ROLE_IHU?" | hello comms | hello lte | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf devices | uhf heartbeat | uhf system | uhf eps | telemetry | eps json | eps adc on/off | eps telemetry | telem on [seconds]/off/status | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte | eps enqueue | lte queue on/off/status/drop":"");
     else if(*s)LOG("ERROR unknown command\n");
 }
 int main(void) {

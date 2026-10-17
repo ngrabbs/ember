@@ -17,6 +17,7 @@ static inline bool bridge_telemetry_type(const cf_reader *f,uint8_t packet[BPSK_
     size_t payload=id==W_ID_HEARTBEAT?W_SIZE_HEARTBEAT:
         id==W_ID_SYSTEM_STATUS?W_SIZE_SYSTEM_STATUS:
         id==W_ID_POWER_STATUS?W_SIZE_POWER_STATUS:
+        id==W_ID_DEVICE_STATUS?W_SIZE_DEVICE_STATUS:
         id==W_ID_COMM_STATUS?W_SIZE_COMM_STATUS:
         id==W_ID_LTE_CAN_FIRMWARE?W_SIZE_LTE_CAN_FIRMWARE:
         id==W_ID_LTE_MODEM_FIRMWARE?W_SIZE_LTE_MODEM_FIRMWARE:0;
