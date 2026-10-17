@@ -10,6 +10,22 @@ static inline bool up_native_ping(const uint8_t *p,size_t n){
   p[6]==1 && p[7]==0 && ul_u16(p+8)==1 && p[10]==1 && p[11]==2 &&
   ul_u32(p+12) && ul_u32(p+16) && ul_u32(p+20) && !ul_u16(p+28) && ul_crc(p,30)==ul_u16(p+30);
 }
+/* Same bounded zero-argument envelope; separate command allowlist. */
+static inline bool up_native_fire(const uint8_t *p,size_t n){
+ if(n!=32 || ul_u16(p+8)!=1028)return false;
+ uint8_t copy[32];memcpy(copy,p,32);ul_p16(copy+8,1);ul_p16(copy+30,ul_crc(copy,30));
+ return ul_crc(p,30)==ul_u16(p+30) && up_native_ping(copy,32);
+}
+static inline bool up_fire_completed(const ul_packet *reply,const ul_packet *sent){
+ const uint8_t *p=reply->payload;
+ return reply->version==1 && reply->type==UP_RESULT && reply->sender && reply->origin==sent->sender &&
+  reply->request==sent->request && reply->size==52 && ul_u16(p)==0x0901 &&
+  (ul_u16(p+2)&0xc000)==0xc000 && ul_u16(p+4)==45 && p[6]==1 && p[7]==1 &&
+  ul_u16(p+8)==57 && p[10]==2 && p[11]==1 && ul_u32(p+20)==reply->sender &&
+  !memcmp(p+12,sent->payload+12,8) && ul_u16(p+28)==20 &&
+  p[30]==1 && p[31]==2 && p[32]<=1 && (p[33]==1 || p[33]==2) && !ul_u32(p+34) &&
+  ul_u32(p+38) && ul_u32(p+46) && ul_crc(p,50)==ul_u16(p+50);
+}
 static inline bool up_envelope(const cf_reader *f,ul_packet *out){
  ul_reader r={0};unsigned count=0;
  for(size_t i=0;i<f->used;i++)if(ul_feed(&r,f->wire[i],0,out))++count;

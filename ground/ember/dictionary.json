@@ -19,8 +19,10 @@
     {"name": "payload_length", "type": "u16"}
   ],
   "enums": {
-    "payload_transport": {"IHU_CONSOLE_CAN_BENCH": 1},
+    "payload_transport": {"IHU_CONSOLE_CAN_BENCH": 1, "IHU_NATIVE_RF": 2},
     "payload_report_kind": {"STATUS": 1, "HEARTBEAT": 2},
+    "fire_result": {"NO_FIRE": 0, "FIRE": 1},
+    "fire_check_mode": {"STATIC_STUB": 1, "ALGORITHM": 2},
     "device_state": {"NOT_SEEN": 0, "ONLINE": 1, "STALE": 2, "FAULT": 3},
     "eps_link": {"DISCONNECTED": 0, "WAITING": 1, "LIVE": 2, "READ_TIMEOUT": 3, "INVALID_READOUT": 4},
     "eps_provenance": {"IHU_UART_PI_WRAPPER": 1,
@@ -55,6 +57,8 @@
     {"name": "PAYLOAD_HEARTBEAT_QUERY", "kind": "command", "id": 1027, "fields": []},
     {"name": "PAYLOAD_STATUS", "kind": "telemetry", "id": 54, "expected_interval_ms": 15000, "fields": [{"name": "payload_version", "type": "u8"}, {"name": "transport", "type": "u8", "enum": "payload_transport"}, {"name": "report_kind", "type": "u8", "enum": "payload_report_kind"}, {"name": "node", "type": "u8"}, {"name": "ready", "type": "u8"}, {"name": "bridge_session_id", "type": "u32"}, {"name": "reported_boot_id", "type": "u32"}, {"name": "reported_uptime_ms", "type": "u32"}, {"name": "requests", "type": "u32"}, {"name": "replies", "type": "u32"}, {"name": "rejected", "type": "u32"}, {"name": "fragment_errors", "type": "u32"}]},
     {"name": "PAYLOAD_FIRMWARE", "kind": "telemetry", "id": 55, "expected_interval_ms": 15000, "fields": [{"name": "transport", "type": "u8", "enum": "payload_transport"}, {"name": "bridge_session_id", "type": "u32"}, {"name": "version_major", "type": "u8"}, {"name": "version_minor", "type": "u8"}, {"name": "version_patch", "type": "u8"}, {"name": "dirty", "type": "u8"}, {"name": "git_sha_0", "type": "u32"}, {"name": "git_sha_1", "type": "u32"}, {"name": "git_sha_2", "type": "u32"}, {"name": "git_sha_3", "type": "u32"}, {"name": "git_sha_4", "type": "u32"}, {"name": "reported_boot_id", "type": "u32"}, {"name": "reported_uptime_ms", "type": "u32"}, {"name": "observation_age_ms", "type": "u32"}]},
-    {"name": "PAYLOAD_PING_RESULT", "kind": "telemetry", "id": 56, "expected_interval_ms": 15000, "fields": [{"name": "transport", "type": "u8", "enum": "payload_transport"}, {"name": "bridge_session_id", "type": "u32"}, {"name": "reported_boot_id", "type": "u32"}, {"name": "bytes", "type": "u16"}, {"name": "echo_ok", "type": "u8"}, {"name": "round_trip_ms", "type": "u32"}]}
+    {"name": "PAYLOAD_PING_RESULT", "kind": "telemetry", "id": 56, "expected_interval_ms": 15000, "fields": [{"name": "transport", "type": "u8", "enum": "payload_transport"}, {"name": "bridge_session_id", "type": "u32"}, {"name": "reported_boot_id", "type": "u32"}, {"name": "bytes", "type": "u16"}, {"name": "echo_ok", "type": "u8"}, {"name": "round_trip_ms", "type": "u32"}]},
+    {"name": "PAYLOAD_FIRE_CHECK", "kind": "command", "id": 1028, "fields": []},
+    {"name": "PAYLOAD_FIRE_RESULT", "kind": "telemetry", "id": 57, "fields": [{"name": "payload_version", "type": "u8"}, {"name": "transport", "type": "u8", "enum": "payload_transport"}, {"name": "result", "type": "u8", "enum": "fire_result"}, {"name": "execution_mode", "type": "u8", "enum": "fire_check_mode"}, {"name": "bridge_session_id", "type": "u32"}, {"name": "reported_boot_id", "type": "u32"}, {"name": "reported_uptime_ms", "type": "u32"}, {"name": "check_id", "type": "u32"}]}
   ]
 }

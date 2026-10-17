@@ -39,7 +39,16 @@ def prepare(runtime, legacy_history=()):
       resultDomain: spacecraft
 '''
     flight = services+'\ndataLinks:\n'+tm('lte-tm-in',10018)+tm('uhf-tm-in',10019)
-    flight += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember.xml\n'+tc_tail('(?!)')
+    flight += """  - name: uhf-command-out
+    class: org.yamcs.tctm.UdpTcDataLink
+    stream: tc_realtime
+    host: 192.168.1.251
+    port: 10029
+    commandPostprocessorClassName: com.example.ember.EmberCommandPostprocessor
+    commandPostprocessorArgs:
+      resultDomain: spacecraft
+"""
+    flight += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember.xml\n'+tc_tail('/ember/PAYLOAD_FIRE_CHECK')
     bench = services+'\ndataLinks:\n'+tm('ihu-serial-in',10020)+'''  - name: ihu-serial-out
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_realtime
@@ -49,7 +58,7 @@ def prepare(runtime, legacy_history=()):
     commandPostprocessorArgs:
       resultDomain: spacecraft
 '''
-    bench += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember-bench.xml\n'+tc_tail('/ember/PAYLOAD_(PING|IDENT|STATUS_QUERY|HEARTBEAT_QUERY)')
+    bench += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember-bench.xml\n'+tc_tail('/ember/PAYLOAD_(PING|IDENT|STATUS_QUERY|HEARTBEAT_QUERY|FIRE_CHECK)')
     bench=bench.replace('displayBucket: ember_displays','displayBucket: ember_bench_displays')
     current = main.read_text()
     # Remove live transport instances and upstream demo from the default server.
@@ -70,7 +79,7 @@ def prepare(runtime, legacy_history=()):
     if java.exists():shutil.copytree(java, backup/'java')
     java.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory() as temp:
-        generate(temp, command_filter=set())
+        generate(temp, command_filter={'PAYLOAD_FIRE_CHECK'})
         tree=ET.parse(Path(temp)/'ember.xml')
         # Shared sparse-radio freshness policy; sample timestamps stay visible.
         rates=tree.findall('.//{'+NS+'}SequenceContainer[@name="POWER_STATUS"]/{'+NS+'}DefaultRateInStream')
@@ -80,7 +89,7 @@ def prepare(runtime, legacy_history=()):
         shutil.copy2(Path(temp)/'WireProfile.java',java/'WireProfile.java')
         for source in (ROOT/'ember-java').glob('*.java'):shutil.copy2(source,java/source.name)
     with tempfile.TemporaryDirectory() as temp:
-        generate(temp, command_filter={'PAYLOAD_PING','PAYLOAD_IDENT','PAYLOAD_STATUS_QUERY','PAYLOAD_HEARTBEAT_QUERY'})
+        generate(temp, command_filter={'PAYLOAD_PING','PAYLOAD_IDENT','PAYLOAD_STATUS_QUERY','PAYLOAD_HEARTBEAT_QUERY','PAYLOAD_FIRE_CHECK'})
         tree=ET.parse(Path(temp)/'ember.xml')
         rate=tree.find('.//{'+NS+'}SequenceContainer[@name="POWER_STATUS"]/{'+NS+'}DefaultRateInStream')
         rate.set('minimumValue',str(1/5))

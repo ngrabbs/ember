@@ -21,7 +21,7 @@ class FakeConsole:
     def execute(self,name,size,on_submit):
         self.calls+=1;on_submit()
         if self.unknown:raise UnknownOutcome('timeout')
-        raw=bytes(range(size)) if name=='PAYLOAD_PING' else bytes([1,4,1,0])+struct.pack('>6I',42,200,3,2,0,0)
+        raw=bytes([1,0,1,0])+struct.pack('>3I',42,200,1) if name=='PAYLOAD_FIRE_CHECK' else bytes(range(size)) if name=='PAYLOAD_PING' else bytes([1,4,1,0])+struct.pack('>6I',42,200,3,2,0,0)
         return raw,42,5
 
 
@@ -43,6 +43,16 @@ class PayloadGroundTests(unittest.TestCase):
         bridge.handle(command(bytes=33));self.assertEqual(console.calls,1)
         bridge.handle(command('PAYLOAD_STATUS_QUERY',transaction=9))
         self.assertEqual(decode(packets[-2])['payload']['report_kind'],1)
+
+    def test_fire_result_is_correlated_stub_and_duplicates_do_not_repeat(self):
+        console=FakeConsole();packets=[];bridge=Bridge(console,packets.append)
+        wire=command('PAYLOAD_FIRE_CHECK');bridge.handle(wire);bridge.handle(wire)
+        self.assertEqual(console.calls,1)
+        r=decode(packets[1]);self.assertEqual(r['name'],'PAYLOAD_FIRE_RESULT')
+        self.assertEqual(r['payload']['result'],0);self.assertEqual(r['payload']['execution_mode'],1)
+        for bad in (bytes(16), bytes([1,2,1,0])+struct.pack('>3I',42,0,1),
+                    bytes([1,0,1,0])+struct.pack('>3I',43,0,1)):
+            with self.assertRaises(UnknownOutcome):observed('PAYLOAD_FIRE_CHECK',bad,42,0,1)
 
     def test_after_dispatch_timeout_remains_unknown(self):
         console=FakeConsole();console.unknown=True;packets=[];bridge=Bridge(console,packets.append)

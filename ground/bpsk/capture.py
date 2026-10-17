@@ -1,7 +1,7 @@
 """Finite receive-only LibreSDR capture for Y24 DBPSK; no transmit configuration.
 
 Retains IQ and CRC-valid native telemetry. --forward explicitly sends recovered
-original bytes to local Yamcs ember; archive byte identity is a separate check.
+original bytes to local Yamcs ember-uhf; archive byte identity is a separate check.
 """
 import argparse
 from datetime import datetime,timezone

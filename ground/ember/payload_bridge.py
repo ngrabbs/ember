@@ -15,8 +15,8 @@ import time
 
 from codec import decode, encode, PacketError
 
-VERSION = '0.2.0'
-COMMANDS = {'PAYLOAD_PING', 'PAYLOAD_IDENT', 'PAYLOAD_STATUS_QUERY', 'PAYLOAD_HEARTBEAT_QUERY'}
+VERSION = '0.3.0'
+COMMANDS = {'PAYLOAD_PING', 'PAYLOAD_IDENT', 'PAYLOAD_STATUS_QUERY', 'PAYLOAD_HEARTBEAT_QUERY', 'PAYLOAD_FIRE_CHECK'}
 
 
 class UnknownOutcome(RuntimeError):
@@ -80,9 +80,9 @@ class Console:
                     raise
                 time.sleep(.1)
         text = {'PAYLOAD_PING':f'ping {size}', 'PAYLOAD_IDENT':'payload ident',
-                'PAYLOAD_STATUS_QUERY':'payload status', 'PAYLOAD_HEARTBEAT_QUERY':'payload heartbeat'}[name]
+                'PAYLOAD_STATUS_QUERY':'payload status', 'PAYLOAD_HEARTBEAT_QUERY':'payload heartbeat', 'PAYLOAD_FIRE_CHECK':'payload fire-check'}[name]
         expected = {'PAYLOAD_PING':'CAN_ECHO_MATCHED', 'PAYLOAD_IDENT':'FIRMWARE_IDENTITY',
-                    'PAYLOAD_STATUS_QUERY':'PAYLOAD_STATUS', 'PAYLOAD_HEARTBEAT_QUERY':'PAYLOAD_HEARTBEAT'}[name]
+                    'PAYLOAD_STATUS_QUERY':'PAYLOAD_STATUS', 'PAYLOAD_HEARTBEAT_QUERY':'PAYLOAD_HEARTBEAT', 'PAYLOAD_FIRE_CHECK':'PAYLOAD_FIRE_RESULT'}[name]
         started=time.monotonic()
         result=self.command(text, expected, on_submit)
         matches=re.findall(r'^RESULT request=\d+ outcome=\w+ peer=(\d+) bytes=(\d+) hex=([0-9a-f]+)$',result,re.M)
@@ -102,6 +102,12 @@ class Console:
 
 def observed(name, raw, peer, elapsed, bridge):
     common={'transport':1,'bridge_session_id':bridge,'reported_boot_id':peer}
+    if name=='PAYLOAD_FIRE_CHECK':
+        if (len(raw)!=16 or raw[0]!=1 or raw[1]>1 or raw[2] not in (1,2) or raw[3] or
+                int.from_bytes(raw[4:8],'big')!=peer or not int.from_bytes(raw[12:16],'big')):
+            raise UnknownOutcome('Fire check result invalid')
+        return 'PAYLOAD_FIRE_RESULT',dict(common,payload_version=1,result=raw[1],execution_mode=raw[2],
+            reported_uptime_ms=int.from_bytes(raw[8:12],'big'),check_id=int.from_bytes(raw[12:16],'big'))
     if name=='PAYLOAD_PING':
         if not 1<=len(raw)<=240 or raw!=bytes(range(len(raw))):
             raise UnknownOutcome('Echo bytes do not match request')

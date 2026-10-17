@@ -1,3 +1,14 @@
+## Payload fire check —0.12.0
+
+`payload fire-check` commands the selected payload, validates its16-byte result,
+and prints FIRE_CHECK result=no_fire/fire with STATIC_STUB/ALGORITHM provenance.
+The RF uplink admits PAYLOAD_FIRE_CHECK in addition to PING, establishes payload
+HELLO, and returns one correlated native PAYLOAD_FIRE_RESULT via COMMS.
+RF transactions use a separate16-entry fail-closed per-boot duplicate cache;
+there is no automatic retry. Console mutation and background work cannot take
+over the active RF transaction. Existing COMMS/LTE routes are retained.
+STATUS now reports the same semantic version as FIRMWARE.
+
 ## Payload application route —0.11.0
 
 IHU adds `hello payload`, `ping N`, `payload ident`, `payload status`, and

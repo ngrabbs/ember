@@ -366,3 +366,123 @@ Adds IHU-sourced LTE_CAN_FIRMWARE/LTE_MODEM_FIRMWARE to the explicit UHF native
 allowlist. CAN request/reply IDs and bounded RF behavior stay unchanged. The
 installed0.22.0 demo image requires updating before these new packet types can
 be forwarded. See the [CAN migration contract](../../system/interfaces/device_registry.md).
+
+## Receive characterization (0.25.0)
+
+`e` captures an ADC baseline with all Si5351 outputs disabled. `r` enables only
+CLK1 at nominal 145 MHz (PLLA 870 MHz /6, 4 mA) for the RX tripler's 435 MHz LO.
+Both are explicit, bounded 10-second tests; any console byte aborts. TX_ACTIVE
+and BPSK_DATA remain low. RX_ACTIVE is only the indicator, not the antenna switch;
+TX_ACTIVE low selects the RX antenna branch. CAN application service pauses during
+these bench windows and returns through the existing main-loop reopen path.
+
+After one second of settling, each test captures 4096 ADC1/GP27 samples at a
+nominal 8 kS/s using software pacing. After verified shutdown, `[rx_adc]` reports
+min/max/sum, elapsed microseconds, missed timing targets (>10 us), and 3 hexadecimal
+digits per sample. Timing misses must be checked before using spectral results;
+this is diagnostic acquisition, not a production demodulator. A failed or aborted
+window does not emit a valid capture. Shutdown independently attempts output-disable
+and power-down on CLK0/1/2, even after I2C failure. No receive packet is decoded or
+executed, and no TX window is opened by these commands.
+
+Host validation:
+
+```sh
+cc -std=c11 -Wall -Wextra -Werror -Wno-unused-function -I firmware/transceiver_bringup firmware/transceiver_bringup/tests/rx.c -o /tmp/ember-rx-test
+/tmp/ember-rx-test
+python3 firmware/transceiver_bringup/tests/check.py
+```
+
+The clock plan follows [Skyworks AN619 rev 0.8](https://www.skyworksinc.com/-/media/Skyworks/SL/documents/public/application-notes/AN619.pdf).
+Register readback does not establish actual LO drive, frequency, or RF silence.
+Use a low-level conducted source and document attenuation before injecting RF.
+
+### Packet capture preparation (0.26.0)
+
+Uppercase `R` keeps the same 10-second RX-only window but records 32768 ADC
+samples (4.096 seconds) after the one-second settling interval. Lowercase `r`
+and `e` retain the 4096-sample diagnostic capture. All data prints after shutdown.
+The longer acquisition still pauses CAN service and does not parse or execute
+received packets. Host tests cover both buffer lengths and the window deadline.
+
+`ground/bpsk/adc_capture.py CONSOLE.txt` validates completion, shutdown, sample
+count, timing and summary integrity, then constructs an analytic signal from the
+real ADC capture and uses the strict existing DBPSK/CRC decoder offline. It has
+no forwarding path. Native telemetry fixtures used for modem tests are synthetic
+bench payloads, not spacecraft telemetry and not evidence of command handling.
+Host simulation covers a real IF at 1.0/1.391/1.7 kHz with the nominal analog LPF,
+quantization and noise, plus timing/capture-integrity failures and noise rejection.
+Hardware packet reception has not yet been demonstrated.
+
+### 0.27.1 captured onboard DBPSK diagnostic
+
+`R` still acquires 32768 samples in the existing bounded RX window, then verifies
+clock shutdown and dumps the raw capture. It now also attempts a fixed-memory
+integer DBPSK decode after shutdown. Bad sample timing or ADC clipping rejects
+the capture. Decoding tries the intended 1200 Hz IF first, then searches outward within
+400–2600 Hz in 25 Hz increments and eight timing
+hypotheses, stops at the first outer CRC32/native CRC16-valid telemetry frame,
+and has a three-second deadline checked between frequency candidates. Any
+console byte cancels decoding. CAN service resumes after this diagnostic.
+
+The reported `mixer_hz` is the first successful search setting, **not a measured
+carrier frequency**. Successful decode prints bytes only: `fixture_only=1
+ dispatch=0`. Commands are rejected; no RF response, CAN forwarding or Yamcs
+forwarding occurs. This remains a manually triggered capture diagnostic, not a
+continuous command receiver. Three recorded hardware captures and synthetic
+frequency/timing/noise/corruption tests run via
+`python3 firmware/transceiver_bringup/tests/rx_decode_check.py`; hardware runtime
+and a new live decode must be verified before calling the installed path proven.
+
+### 0.28.0 PING-only ingress diagnostic
+
+`R` also decodes command envelopes, then applies a separate PING-only gate.
+Only a zero-payload native PING from ground to IHU, with nonzero transaction
+epoch/ID and source boot ID, can produce `PING_ACCEPTED` on the console.
+This preserves the existing ground→IHU command contract: acceptance means COMMS
+validated ingress only. No IHU forwarding, execution, response or RF transmission
+is enabled. Telemetry fixture decoding remains available.
+
+The 16-entry transaction cache persists across diagnostic windows within a COMMS
+boot. The same epoch/ID is `PING_DUPLICATE` even with a new RF/packet sequence;
+a changed source boot ID under that key is a conflict. The cache does not evict:
+a seventeenth new transaction is rejected until reboot. This is a bench duplicate
+check, not authentication or persistent replay protection. Production uplink and
+continuous listening remain out of scope.
+
+The bounded transmitter adds named `ping`, `ping-wrong-target`, and `ping-bad-crc`
+fixtures. Their fixed test transaction is epoch 0x52585031, ID 1; the latter two
+are deliberate negative cases. All retain finite-burst and explicit GO behavior.
+Tests: `tests/rx_ping.c` (host C with address/undefined-behavior sanitizers),
+`tests/rx_decode_check.py`, startup/fault tests, and `ground/bpsk/test_uplink_probe.py`.
+
+### 0.29.0 PING forwarding and held response
+
+An accepted PING now makes one bounded CAN request on 0x730 after RX shutdown;
+COMMS waits at most approximately two seconds for a correlated 0x731 response.
+There is no automatic retry. The IHU independently gates PING, uses the native
+command engine, and returns its actual COMPLETED response. COMMS validates
+native CRC, response identity/stage, IHU boot consistency and transaction match.
+It holds one validated 43-byte response for up to ten minutes. New accepted
+requests invalidate the old response. An uncertain CAN outcome is not retried.
+
+Uppercase `V` explicitly transmits that held response once through the existing
+bounded BPSK transmitter. It consumes the held response before attempting RF.
+Do not invoke V until the RF return cable/receiver setup has been verified.
+Reception and CAN forwarding do not automatically enable RF transmission.
+
+### 0.30.0 bounded automatic PING round trip
+
+Uppercase `A` arms one local 20-second operation: acquire/decode one RX window,
+forward one newly accepted PING to IHU, and transmit at most one fresh, validated
+IHU completion. Old held responses are invalidated on entry. The authorization
+is consumed once, is never boot-resumed, and requires at least three seconds
+remaining before the existing two-second hard-mute transmitter can start.
+Missing/duplicate/rejected packets, cancellation, expired lease and failed CAN
+exchange cannot trigger a reply. `R` and `V` retain their separately staged modes.
+
+The ground `roundtrip.py` sends one explicitly GO-triggered PING using TXRA,
+then receives on RXA for 16 seconds after TX burst acknowledgment. It never
+retries or forwards automatically. Each run must use a new transaction ID;
+responses must match transaction and expected IHU boot ID. This remains a
+manually initiated bounded trial, not continuous listening.

@@ -100,6 +100,29 @@ int main(void){
  ack=pending.packet;ack.type=PL_HEARTBEAT_ACK;ack.sender=44;ack.size=PL_REPORT_SIZE;
  memset(ack.payload,0,ack.size);ack.payload[0]=1;ack.payload[1]=4;ack.payload[2]=1;
  ul_p32(ack.payload+4,44);output.active=false;receive(&ack);assert(!pending.active);
+ command("payload fire-check");assert(pending.active && queued().type==PL_FIRE_CHECK);
+ ack=pending.packet;ack.type=PL_FIRE_RESULT;ack.sender=44;ack.size=PL_FIRE_SIZE;
+ memset(ack.payload,0,ack.size);ack.payload[0]=1;ack.payload[2]=1;ul_p32(ack.payload+4,44);ul_p32(ack.payload+12,1);
+ output.active=false;ack.payload[1]=2;receive(&ack);assert(pending.active);
+ ack.payload[1]=0;receive(&ack);assert(!pending.active);
+ /* Real RF handler must handshake, ask payload, then return correlated native result. */
+ uint8_t tc[32]={0};ul_p16(tc,0x1900);ul_p16(tc+2,0xc000);ul_p16(tc+4,25);tc[6]=1;tc[10]=1;tc[11]=2;
+ ul_p16(tc+8,1028);ul_p32(tc+12,77);ul_p32(tc+16,88);ul_p32(tc+20,99);ul_p16(tc+30,ul_crc(tc,30));
+ assert(up_native_fire(tc,32));tc[31]^=1;assert(!up_native_fire(tc,32));tc[31]^=1;
+ ul_packet rf={.version=1,.type=UP_PING,.sender=55,.origin=55,.request=7,.size=32};memcpy(rf.payload,tc,32);
+ uint8_t rw[UL_WIRE_MAX];size_t rn=ul_encode(&rf,rw);cf_frame ff;
+ memset(&discovery,0,sizeof(discovery));
+ for(unsigned i=0;i<(rn+3)/4;i++){assert(cf_fragment(rw,rn,UP_REQUEST_ID,7,i,&ff));uplink_receive(&ff,fake_now);}
+ assert(fire_uplink.active && pending.active && queued().type==UL_HELLO);
+ ack=pending.packet;ack.type=UL_HELLO_ACK;ack.sender=44;output.active=false;receive(&ack);
+ assert(fire_uplink.active && pending.active && queued().type==PL_FIRE_CHECK);
+ ack=pending.packet;ack.type=PL_FIRE_RESULT;ack.sender=44;ack.size=PL_FIRE_SIZE;
+ memset(ack.payload,0,ack.size);ack.payload[0]=1;ack.payload[2]=1;ul_p32(ack.payload+4,44);ul_p32(ack.payload+12,2);
+ output.active=false;receive(&ack);assert(!fire_uplink.active && !pending.active && output.route==UP_REPLY_ID);
+ ul_packet rr=queued();assert(up_fire_completed(&rr,&rf));rr.payload[32]=2;assert(!up_fire_completed(&rr,&rf));
+ output.active=false;
+ for(unsigned i=0;i<(rn+3)/4;i++){assert(cf_fragment(rw,rn,UP_REQUEST_ID,7,i,&ff));uplink_receive(&ff,fake_now);}
+ assert(!pending.active); /* no second execution of same RF transaction */
  submit(CF_SEND_PACKET,NULL,0);submit(CF_CHAIN,NULL,0);submit(CF_UHF_SEND,NULL,0);
  assert(!pending.active && !output.active);
  command("hello comms");ack=pending.packet;ack.type=UL_HELLO_ACK;ack.sender=22;
