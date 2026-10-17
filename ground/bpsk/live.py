@@ -16,6 +16,7 @@ import threading
 import time
 import numpy as np
 from modem import decode
+from identity import identity
 
 RATE = 192000
 WINDOW = 4 * RATE
@@ -97,7 +98,7 @@ def run(args):
     radio.set_rx_antenna('RX2', args.channel)
     if abs(radio.get_rx_rate(args.channel)-RATE)>1:
         raise ValueError('unexpected sample rate')
-    report = dict(receiver_version=2, utc=utc(), frequency_hz=radio.get_rx_freq(args.channel),
+    report = dict(receiver_version=2, receiver_build=identity(), utc=utc(), frequency_hz=radio.get_rx_freq(args.channel),
                   channel=args.channel, antenna='RX2', rate=radio.get_rx_rate(args.channel),
                   gain=radio.get_rx_gain(args.channel), fpga_sha256=FPGA_SHA,
                   raw_format='little-endian complex64, 192000 samples/s', errors=[])
@@ -196,6 +197,7 @@ def run(args):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--version', action='version', version=json.dumps(identity(), sort_keys=True))
     p.add_argument('--seconds',type=int,default=600)
     p.add_argument('--frequency',type=float,default=437000000)
     p.add_argument('--gain',type=float,default=0)

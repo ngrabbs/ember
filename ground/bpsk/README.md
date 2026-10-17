@@ -199,3 +199,5 @@ exact Yamcs archive matches and no receiver errors. Five-second freshness
 samples remained ACQUIRED; maximum observed EPS age14.58 s. EPS/System displays
 were visually checked across the run. Final RF-off status and CAN HELLO passed.
 See lab-log entry003 for evidence and remaining hardware qualification limits.
+
+Version comparison and deployment checks: [ground release identities](../releases/README.md).
