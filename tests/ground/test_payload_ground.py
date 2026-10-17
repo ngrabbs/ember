@@ -100,5 +100,30 @@ class PayloadGroundTests(unittest.TestCase):
             names={n.attrib['name'] for n in tree.findall('.//{'+NS+'}MetaCommand')}
             self.assertEqual(names,{'PAYLOAD_PING','PAYLOAD_IDENT','PAYLOAD_STATUS_QUERY','PAYLOAD_HEARTBEAT_QUERY'})
 
+class SerialEpsMonitor(unittest.TestCase):
+    def test_eps_and_commands_share_one_console_with_provenance(self):
+        import json
+        from payload_bridge import EpsMonitor
+        sample=json.loads((ROOT/'system/ground_station/evidence/ltc4162-input-10v7-20261001.json').read_text())[0]
+        class SharedConsole(FakeConsole):
+            def __init__(self):super().__init__();self.order=[]
+            def command(self,text,**kwargs):self.order.append(text);return json.dumps(sample)
+            def execute(self,name,size,on_submit):self.order.append(name);return super().execute(name,size,on_submit)
+        console=SharedConsole();packets=[]
+        monitor=EpsMonitor(console,packets.append,cells=2,rsnsb=.01,rsnsi=.01)
+        monitor.poll();Bridge(console,packets.append).handle(command(bytes=8));monitor.poll()
+        self.assertEqual(console.order,['eps json','PAYLOAD_PING','eps json'])
+        power=decode(packets[-1]);self.assertEqual(power['name'],'POWER_STATUS')
+        self.assertEqual(power['payload']['provenance'],1)
+        self.assertEqual(power['payload']['readout_valid'],1)
+        self.assertEqual(power['payload']['readout_count'],2)
+
+    def test_disconnect_propagates_for_service_reconnect(self):
+        from payload_bridge import EpsMonitor
+        class Disconnected:
+            def command(self,*a,**k):raise OSError('disconnected')
+        monitor=EpsMonitor(Disconnected(),lambda p:None,cells=2,rsnsb=.01,rsnsi=.01)
+        with self.assertRaises(OSError):monitor.poll()
+
 
 if __name__=='__main__':unittest.main()

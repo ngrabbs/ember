@@ -1,0 +1,323 @@
+{
+  "tested_utc": "2026-10-17T15:56:02.899732+00:00",
+  "deployment": "one Docker container, separate flight and serial-bench Yamcs instances",
+  "unit_tests": {
+    "run": 65,
+    "passed": 64,
+    "skipped": 1,
+    "skip_reason": "explicit virtual CAN interface unavailable"
+  },
+  "isolated_validation": {
+    "http": "127.0.0.1:8091",
+    "tm_ports": [
+      11018,
+      11019,
+      11020
+    ],
+    "mock_tc_port": 11028,
+    "radio_duplicate_copies_archived": 1,
+    "independent_bench_archive": true,
+    "bad_crc_rejected": true,
+    "flight_rejects_bench_commands": true,
+    "flight_reply_cannot_complete_bench_command": true,
+    "bench_mock_command_completed": true,
+    "synthetic_packets_in_production": false
+  },
+  "live": {
+    "instances": {
+      "ember": {
+        "state": "RUNNING",
+        "command_count": 0,
+        "links": [
+          {
+            "name": "lte-tm-in",
+            "status": "OK",
+            "dataInCount": "0",
+            "dataOutCount": "0"
+          },
+          {
+            "name": "uhf-tm-in",
+            "status": "OK",
+            "dataInCount": "0",
+            "dataOutCount": "0"
+          }
+        ]
+      },
+      "ember-bench": {
+        "state": "RUNNING",
+        "command_count": 4,
+        "links": [
+          {
+            "name": "ihu-serial-in",
+            "status": "OK",
+            "dataInCount": "9",
+            "dataOutCount": "0"
+          },
+          {
+            "name": "ihu-serial-out",
+            "status": "OK",
+            "dataInCount": "0",
+            "dataOutCount": "0"
+          }
+        ]
+      }
+    },
+    "commands": [
+      {
+        "command": "PAYLOAD_STATUS_QUERY",
+        "args": {},
+        "yamcs_id": "1792252445815-environment-live-check-0",
+        "outcome": "COMPLETED"
+      },
+      {
+        "command": "PAYLOAD_IDENT",
+        "args": {},
+        "yamcs_id": "1792252446262-environment-live-check-0",
+        "outcome": "COMPLETED"
+      },
+      {
+        "command": "PAYLOAD_HEARTBEAT_QUERY",
+        "args": {},
+        "yamcs_id": "1792252446648-environment-live-check-0",
+        "outcome": "COMPLETED"
+      },
+      {
+        "command": "PAYLOAD_PING",
+        "args": {
+          "bytes": 32
+        },
+        "yamcs_id": "1792252447038-environment-live-check-0",
+        "outcome": "COMPLETED"
+      }
+    ],
+    "eps": {
+      "link": "ihu-serial-in",
+      "receptionTime": "2026-10-17T15:53:27.533Z",
+      "decoded": {
+        "name": "POWER_STATUS",
+        "sequence": 13,
+        "header": {
+          "schema_version": 1,
+          "kind": 1,
+          "message_id": 16,
+          "source": 2,
+          "target": 1,
+          "transaction_epoch": 0,
+          "transaction_id": 0,
+          "source_boot_id": 3210950605,
+          "uptime_ms": 65366,
+          "payload_length": 96
+        },
+        "payload": {
+          "payload_version": 1,
+          "provenance": 1,
+          "link": 2,
+          "readout_present": 1,
+          "readout_valid": 1,
+          "conversion_valid": 1,
+          "adc_valid": 1,
+          "configured_cells": 2,
+          "detected_cells": 2,
+          "sense_values_verified": 0,
+          "bridge_session_id": 3210950605,
+          "readout_count": 14,
+          "ihu_readout_uptime_ms": 1793449,
+          "readout_age_ms": 0,
+          "battery_mv": 2,
+          "input_mv": 7546,
+          "output_mv": 6943,
+          "battery_ua": -586,
+          "input_ua": 215795,
+          "die_temp_mc": 23442,
+          "rsnsb_microohms": 10000,
+          "rsnsi_microohms": 10000,
+          "raw_config_bits": 0,
+          "raw_charger_config_bits": 1,
+          "raw_charger_state": 2048,
+          "raw_charge_status": 0,
+          "raw_limit_alerts": 0,
+          "raw_charger_state_alerts": 0,
+          "raw_charge_status_alerts": 0,
+          "raw_system_status": 103,
+          "raw_vbat": 4,
+          "raw_vin": 4576,
+          "raw_vout": 4200,
+          "raw_ibat": 65532,
+          "raw_iin": 1472,
+          "raw_die_temp": 13388,
+          "raw_thermistor_voltage": 490,
+          "raw_bsr": 0,
+          "raw_jeita_region": 7,
+          "raw_chem_cells": 8418,
+          "raw_telemetry_status": 1
+        }
+      }
+    },
+    "flight_unchanged_during_bench_test": true
+  },
+  "services": {
+    "pi_enabled": [
+      "ember-ground-starter",
+      "ember-ground-readiness",
+      "ember-lte-listener"
+    ],
+    "pi_disabled": [
+      "ember-eps-bridge",
+      "ember-usb-bridge"
+    ],
+    "m75q_enabled": [
+      "ember-bench-bridge"
+    ],
+    "m75q_disabled": [
+      "ember-payload-bridge"
+    ]
+  },
+  "backup": {
+    "pi_directory": "/home/ngrabbs/work/deploy-backups/environments-20261017",
+    "runtime_sha256": "5e5e199a7e6226408f36c9b1500711e0402ad9bfef149921e2b27ec0fb08c03e",
+    "stopped_data_sha256": "bba3c8ebcf10b1a70d05afb54e33e43ea3018cc7ca237a2eba75261c15ae3a1a",
+    "archive_integrity_verified": true,
+    "note": "Readiness supervision was paused before the final stopped-data backup. An initial live-data attempt was rejected and retained separately as inconsistent-discard; only the stopped backup above is a recovery artifact."
+  },
+  "history": "Existing mixed ember and legacy transport archives retained in place; new serial records go to ember-bench. No retimestamping or reinjection.",
+  "limitations": [
+    "No physical LTE/UHF session repeated for this migration.",
+    "Flight command uplink is not implemented.",
+    "EPS currents use provisional 10 mOhm sense values; no charger writes performed.",
+    "Payload cold-start CAN probe exhaustion remains tracked on TODO."
+  ],
+  "live_after_restart": {
+    "instances": {
+      "ember": {
+        "state": "RUNNING",
+        "command_count": 0,
+        "links": [
+          {
+            "name": "lte-tm-in",
+            "status": "OK",
+            "dataInCount": "0",
+            "dataOutCount": "0"
+          },
+          {
+            "name": "uhf-tm-in",
+            "status": "OK",
+            "dataInCount": "0",
+            "dataOutCount": "0"
+          }
+        ]
+      },
+      "ember-bench": {
+        "state": "RUNNING",
+        "command_count": 4,
+        "links": [
+          {
+            "name": "ihu-serial-in",
+            "status": "OK",
+            "dataInCount": "4",
+            "dataOutCount": "0"
+          },
+          {
+            "name": "ihu-serial-out",
+            "status": "OK",
+            "dataInCount": "0",
+            "dataOutCount": "0"
+          }
+        ]
+      }
+    },
+    "commands": [
+      {
+        "command": "PAYLOAD_STATUS_QUERY",
+        "args": {},
+        "yamcs_id": "1792252639641-environment-live-check-0",
+        "outcome": "COMPLETED"
+      },
+      {
+        "command": "PAYLOAD_IDENT",
+        "args": {},
+        "yamcs_id": "1792252640742-environment-live-check-0",
+        "outcome": "COMPLETED"
+      },
+      {
+        "command": "PAYLOAD_HEARTBEAT_QUERY",
+        "args": {},
+        "yamcs_id": "1792252641133-environment-live-check-0",
+        "outcome": "COMPLETED"
+      },
+      {
+        "command": "PAYLOAD_PING",
+        "args": {
+          "bytes": 32
+        },
+        "yamcs_id": "1792252641551-environment-live-check-0",
+        "outcome": "COMPLETED"
+      }
+    ],
+    "eps": {
+      "link": "ihu-serial-in",
+      "receptionTime": "2026-10-17T15:56:43.663Z",
+      "decoded": {
+        "name": "POWER_STATUS",
+        "sequence": 52,
+        "header": {
+          "schema_version": 1,
+          "kind": 1,
+          "message_id": 16,
+          "source": 2,
+          "target": 1,
+          "transaction_epoch": 0,
+          "transaction_id": 0,
+          "source_boot_id": 3210950605,
+          "uptime_ms": 261497,
+          "payload_length": 96
+        },
+        "payload": {
+          "payload_version": 1,
+          "provenance": 1,
+          "link": 2,
+          "readout_present": 1,
+          "readout_valid": 1,
+          "conversion_valid": 1,
+          "adc_valid": 1,
+          "configured_cells": 2,
+          "detected_cells": 2,
+          "sense_values_verified": 0,
+          "bridge_session_id": 3210950605,
+          "readout_count": 53,
+          "ihu_readout_uptime_ms": 1989577,
+          "readout_age_ms": 0,
+          "battery_mv": 2,
+          "input_mv": 7543,
+          "output_mv": 6943,
+          "battery_ua": -586,
+          "input_ua": 218434,
+          "die_temp_mc": 23507,
+          "rsnsb_microohms": 10000,
+          "rsnsi_microohms": 10000,
+          "raw_config_bits": 0,
+          "raw_charger_config_bits": 1,
+          "raw_charger_state": 2048,
+          "raw_charge_status": 0,
+          "raw_limit_alerts": 0,
+          "raw_charger_state_alerts": 0,
+          "raw_charge_status_alerts": 0,
+          "raw_system_status": 103,
+          "raw_vbat": 4,
+          "raw_vin": 4574,
+          "raw_vout": 4200,
+          "raw_ibat": 65532,
+          "raw_iin": 1490,
+          "raw_die_temp": 13391,
+          "raw_thermistor_voltage": 488,
+          "raw_bsr": 0,
+          "raw_jeita_region": 7,
+          "raw_chem_cells": 8418,
+          "raw_telemetry_status": 1
+        }
+      }
+    },
+    "flight_unchanged_during_bench_test": true
+  },
+  "startup_service_restart_verified": true,
+  "per_instance_build_audit_matches": true
+}

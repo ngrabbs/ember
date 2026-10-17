@@ -71,17 +71,17 @@ cd ~/work/MSU_Cubesat/ember/ground/yamcs
 docker compose ps
 
 # PI SHELL: verify the separate LTE instance exists and responds.
-curl -fsS http://127.0.0.1:8090/api/instances/ember-lte
+curl -fsS http://127.0.0.1:8090/api/instances/ember
 ```
 
 The service can show `active (exited)` because it launches Docker Compose and
 then returns. The Yamcs container must be running. If containers are stopped,
 run `docker compose up -d` from this same directory, then repeat the checks.
-If `ember-lte` returns 404, stop here: the runtime needs the LTE configuration;
+If `ember` returns 404, stop here: the runtime needs the LTE configuration;
 the ordinary `ember` instance is not a substitute.
 
-Open the [LTE EPS dashboard](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember-lte__realtime)
-on your laptop. Confirm **instance `ember-lte`, processor `realtime`**. A
+Open the [LTE EPS dashboard](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember__realtime)
+on your laptop. Confirm **instance `ember`, processor `realtime`**. A
 purple header with Play/Pause controls indicates replay. Old or expired values
 do not prove reception in this session.
 
@@ -339,7 +339,7 @@ In the listener terminal, expect a decoded packet followed by
 The shell prints the capture path after the receiver finishes. No packet means no demonstrated
 ground delivery, even if the modem reported acceptance.
 
-On the laptop's **`ember-lte` / `realtime` EPS display**, check:
+On the laptop's **`ember` / `realtime` EPS display**, check:
 
 - A new packet timestamp matching this session, not an old replay/cached value.
 - Valid readout and ADC conversion. With the battery connected, check a
@@ -424,7 +424,7 @@ to retain and inspect the archive.
 | ADC valid but `vbat=3–4` | Charger reports approximately zero battery voltage | Check **battery connector and measured pack voltage**. Input power alone does not demonstrate battery sensing. |
 | RF accepted but LTE not READY/registered | Modem window admitted but usable bearer not established | Wait within the bound; inspect **Pi** cell output and **IHU** `lte status`. Stop with `lte 0` if it does not become ready. |
 | `MODEM_ACCEPTED`, receiver got nothing | Ground delivery unproven | Check **Pi** listener is still running, correct cell/profile and peer address. Inspect capture/logs; do not relabel modem acceptance as reception. |
-| Receiver got packet, LTE dashboard did not update | Ground forwarding/Yamcs path needs checking | Verify **Pi** Yamcs container and loopback UDP10018 mapping, then laptop context `ember-lte__realtime`. |
+| Receiver got packet, LTE dashboard did not update | Ground forwarding/Yamcs path needs checking | Verify **Pi** Yamcs container and loopback UDP10018 mapping, then laptop context `ember__realtime`. |
 
 The `telem on 20` timer and `eps telemetry` are different paths: they submit
 native telemetry through the normal CAN chain; they do not automatically open

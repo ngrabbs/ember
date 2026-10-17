@@ -1,5 +1,9 @@
 # Pi power-on readiness
 
+
+Current operation: one container with **`ember`** for LTE/UHF reception and
+**`ember-bench`** for the IHU serial EPS/payload path. Use the
+[environment guide](../yamcs/OPERATIONAL.md) for active setup; older reference procedures below may describe retired services.
 The provisioned Pi 5 (`ember-ground`) starts Yamcs without a laptop terminal.
 It prefers connected Ethernet and supplies a fallback demo Wi-Fi access point.
 This layer preserves the installed Yamcs runtime, MDB and archive volumes.
@@ -14,20 +18,20 @@ The hotspot password is stored privately on the deployed Pi at
 uses the existing authorized keys. The hotspot supplies DHCP and works
 without Internet. The radio country is US; installation elsewhere must set
 the appropriate country. Yamcs binds HTTP to all Pi IPv4 interfaces so both
-addresses work. Telemetry input ports remain loopback-bound.
+addresses work. Radio telemetry ports are loopback-bound; the bench bridge uses LAN UDP10020.
 
 ## Power up and use it
 
 1. Connect the Pi's normal power supply and LibreSDR USB cable.
 2. With connected Ethernet, browse the existing lab address. Without connected
    Ethernet, join `EMBER-Ground` and browse the hotspot address above.
-3. Allow about a minute for Yamcs to initialize. Select `ember-lte` / `realtime`
-   for the LTE EPS display. The LTE packet listener is already running when
+3. Allow about a minute for Yamcs to initialize. Select `ember` / `realtime`
+   for radio dashboards, or `ember-bench` / `realtime` for IHU serial EPS/payload. The LTE packet listener is already running when
    LibreSDR is present; do not open a second receiver on UDP 51000.
 4. Start the bounded LTE cell and the IHU/Walter RF window using the established
    [LTE walkthrough](../../docs/user/lte-eps-walkthrough.md).
 
-The receiver accepts native IHU POWER_STATUS packets from Walter
+The receiver accepts native IHU POWER_STATUS, HEARTBEAT and SYSTEM_STATUS packets from Walter
 `172.16.0.2:51001` at UDP 51000 and forwards unchanged bytes to Yamcs UDP 10018.
 It does not configure LibreSDR, start EPC/eNodeB, register Walter or transmit RF.
 Those actions retain their separate bounded trial controls. A plugged-in SDR
@@ -64,7 +68,7 @@ nmcli device status
 journalctl -u ember-ground-readiness -u ember-lte-listener -n 30 --no-pager
 
 # PI SHELL: check the live LTE instance, not an old display value.
-curl -fsS http://127.0.0.1:8090/api/instances/ember-lte
+curl -fsS http://127.0.0.1:8090/api/instances/ember
 
 # PI SHELL: see private received packet captures; Yamcs archives are separate.
 sudo tail -n 1 /var/lib/ember-lte-listener/packets.jsonl

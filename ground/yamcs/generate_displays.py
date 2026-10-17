@@ -15,7 +15,7 @@ ORANGE = '#ffac60'
 BLUE = '#88c9df'
 
 
-def generate(destination):
+def generate(destination, instance="ember"):
     destination = Path(destination)
     destination.mkdir(parents=True, exist_ok=True)
     display = ET.Element('display', typeId='org.csstudio.opibuilder.Display', version='1.0.0')
@@ -134,6 +134,10 @@ def generate(destination):
     for e in list(display):
         if e.tag == 'widget' and e.findtext('name') == 'Link status': display.remove(e)
     ET.indent(display)
+    prop(display,'height',820)
+    for text,path,x in [('Telemetry','Telemetry.opi',28),('Payload','Payload.opi',208),('Devices','Devices.opi',388),('COMMS firmware','Comms-Firmware.opi',568)]:
+        button(text,path,x,164)
+        prop(display.findall('widget')[-1],'y',754)
     ET.ElementTree(display).write(destination/'Overview.opi',encoding='utf-8',xml_declaration=True)
     display = ET.fromstring(ET.tostring(display))
     for e in list(display):
@@ -160,9 +164,52 @@ def generate(destination):
     label('Use selected processor time; replay link status describes archived data. Readout age is not ADC age.',28,711,1055,24,11)
     ET.indent(display)
     ET.ElementTree(display).write(destination/'EPS.opi',encoding='utf-8',xml_declaration=True)
+    # A receive-only LTE overview: no unrelated USB counters or TC buttons.
+    display = ET.fromstring(ET.tostring(display))
+    for e in list(display):
+        if e.tag == 'widget': display.remove(e)
+    prop(display,'name','EMBER LTE telemetry')
+    label('EMBER / TELEMETRY',28,20,1000,48,30,WHITE,True)
+    label('SPACECRAFT TELEMETRY / UHF + LTE' if instance=='ember' else 'IHU SERIAL OBSERVATIONS',28,76,1050,25,13,ORANGE,True)
+    box(28,135,336,440); box(380,135,336,440); box(732,135,360,440)
+    label('01 / HEARTBEAT',48,153,295,28,13,BLUE,True)
+    for title,pv,y in [('IHU boot ID','HEARTBEAT_source_boot_id',205),
+                       ('IHU uptime (ms)','HEARTBEAT_uptime_ms',281),
+                       ('Bench mode','HEARTBEAT_mode',357),
+                       ('Bench configuration','HEARTBEAT_configuration',433)]:
+        label(title,48,y,295); value(pv,48,y+25,295,34,20)
+    scripted('No heartbeat received','HEARTBEAT_mode','sample-time.js',48,531,295,24,11)
+    label('02 / SYSTEM STATUS',400,153,295,28,13,BLUE,True)
+    for title,pv,y in [('Bench mode','mode',205),('Bench configuration','configuration',269),
+                       ('Configured EPS cadence (ms)','telemetry_period_ms',333),
+                       ('Admitted CAN requests','accepted_commands',397),
+                       ('Refused CAN requests','rejected_commands',461)]:
+        label(title,400,y,295); value('SYSTEM_STATUS_'+pv,400,y+25,295,32,20)
+    scripted('No status received','SYSTEM_STATUS_mode','sample-time.js',400,541,295,24,11)
+    label('03 / EPS',752,153,317,28,13,BLUE,True)
+    for title,pv,y in [('Charger VIN','input_mv',218),('Battery voltage','battery_mv',315),
+                       ('Power-path output','output_mv',412)]:
+        label(title,752,y,317)
+        e=value('POWER_STATUS_'+pv,752,y+28,317,42,23); prop(e,'precision',3)
+    scripted('No EPS received','POWER_STATUS_readout_count','sample-time.js',752,531,317,24,11)
+    label('Latest spacecraft values: compare each receive time. Clicking a value opens its history.',28,594,1064,24,12)
+    label('SAFE / GROUND_TEST are fixed bench labels. Counters are CAN requests, not LTE uplink commands.',28,622,1064,24,11,ORANGE)
+    button('EPS dashboard','EPS.opi',28,250); button('System raw / history','System.par',297,250)
+    label('Transport status is on Links. Native and bench observations retain their packet provenance.',28,711,1064,24,11)
+    # Fit the three LTE panels beside Yamcs's sidebar on a laptop-sized window.
+    prop(display,'width',780)
+    for e in display.findall('widget'):
+        for key in ('x','width'):
+            prop(e,key,round(int(e.findtext(key))*0.69))
+        for f in e.findall('font/opifont.name'):
+            f.set('height',str(max(10,round(int(f.get('height'))*0.85))))
+    ET.indent(display)
+    ET.ElementTree(display).write(destination/'Telemetry.opi',encoding='utf-8',xml_declaration=True)
+    ET.ElementTree(display).write(destination/'LTE.opi',encoding='utf-8',xml_declaration=True)
     for child in list(display):
         if child.tag=='widget':display.remove(child)
     prop(display,'name','COMMS firmware identity')
+    prop(display,'width',1120)
     label('COMMS firmware identity',28,28,1050,48,28,WHITE,True)
     label('Reported by the running COMMS MCU over RF; last received identity.',28,90)
     e=label('Waiting for firmware identity',28,150,1050,65,30,WHITE,True)
@@ -237,7 +284,7 @@ def generate(destination):
     label('Bytes',48,554,75,24,13);value('PAYLOAD_PING_RESULT_bytes',130,548,100,35,20)
     label('Echo match',270,554,120,24,13);value('PAYLOAD_PING_RESULT_echo_ok',400,548,90,35,20)
     label('Round trip (ms)',540,554,190,24,13);value('PAYLOAD_PING_RESULT_round_trip_ms',740,548,150,35,20)
-    for text,url,x,w in [('Send payload command','/commanding/send?c=ember-payload__realtime&system=%2Fember',28,320),('Command history','/commanding/history?c=ember-payload__realtime',368,320)]:
+    for text,url,x,w in [('Send payload command','/commanding/send?c=ember__realtime&system=%2Fember',28,320),('Command history','/commanding/history?c=ember__realtime',368,320)]:
         e=widget('ActionButton',text,x,635,w,42);prop(e,'text',text)
         color(e,'background_color','#30445e');color(e,'foreground_color',WHITE);font(e,14,True)
         a=ET.SubElement(e.find('actions'),'action',type='OPEN_WEBPAGE');prop(a,'hyperlink',url)
@@ -261,6 +308,41 @@ def generate(destination):
     scripts=destination/'scripts'; scripts.mkdir(exist_ok=True)
     for p in (ROOT/'display-scripts').glob('*.js'):
         shutil.copy2(p,scripts/p.name)
+    # Both instances use /ember wire parameters, but never cross UI contexts.
+    import copy
+    def text_prop(e,key,value):
+        child=e.find(key)
+        if child is None:child=ET.SubElement(e,key)
+        child.text=str(value)
+    for path in destination.glob('*.opi'):
+        text=path.read_text().replace('c=ember__realtime','c='+instance+'__realtime')
+        root=ET.fromstring(text)
+        if instance=='ember':
+            for w in list(root.findall('widget')):
+                if any('/commanding/' in x.text for x in w.findall('.//hyperlink') if x.text):root.remove(w)
+                elif 'BENCH LINK:' in w.findtext('text',''):
+                    text_prop(w,'text','Radio observations. No flight uplink configured.')
+        path.write_bytes(ET.tostring(root,encoding='utf-8',xml_declaration=True))
+    source='EPS.opi' if instance=='ember-bench' else 'Telemetry.opi'
+    root=ET.parse(destination/source).getroot()
+    text_prop(root,'name',instance+' overview')
+    labels=[w for w in root.findall('widget') if w.find('text') is not None and w.findtext('y')=='20']
+    if labels:text_prop(labels[0],'text','EMBER / BENCH' if instance=='ember-bench' else 'EMBER / FLIGHT LINKS')
+    buttons=[w for w in root.findall('widget') if w.find('actions/action') is not None]
+    if buttons:
+        template=buttons[0]
+        for label,target,x in [('Payload','Payload.opi',560),('Devices','Devices.opi',820)]:
+            w=copy.deepcopy(template);text_prop(w,'text',label);text_prop(w,'name',label)
+            text_prop(w,'x',x if instance=='ember-bench' else round(x*.69))
+            text_prop(w,'width',250 if instance=='ember-bench' else 172)
+            text_prop(w.find('actions/action'),'path',target);root.append(w)
+    if instance=='ember-bench':
+        for w in root.findall('widget'):
+            if w.findtext('text')=='Ground overview':
+                text_prop(w,'text','Command history')
+                action=w.find('actions/action');action.clear();action.set('type','OPEN_WEBPAGE')
+                text_prop(action,'hyperlink','/commanding/history?c=ember-bench__realtime')
+    (destination/'Overview.opi').write_bytes(ET.tostring(root,encoding='utf-8',xml_declaration=True))
     print('Generated EMBER overview, EPS display and native parameter tables:',destination)
 
 

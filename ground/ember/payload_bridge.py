@@ -15,7 +15,7 @@ import time
 
 from codec import decode, encode, PacketError
 
-VERSION = '0.1.0'
+VERSION = '0.2.0'
 COMMANDS = {'PAYLOAD_PING', 'PAYLOAD_IDENT', 'PAYLOAD_STATUS_QUERY', 'PAYLOAD_HEARTBEAT_QUERY'}
 
 
@@ -48,6 +48,8 @@ class Console:
                     if ' can_ready=1 ' not in line or ' mode=00 ' not in line:
                         raise RuntimeError('IHU CAN A not ready')
                     return '\n'.join(lines)
+            if text == 'eps json' and line.startswith('{'):
+                return line
             match = re.search(r'^SUBMITTED request=(\d+) ', line)
             if match:
                 request = int(match[1]); on_submit()
@@ -137,7 +139,7 @@ class Bridge:
     def handle(self,wire):
         command=decode(wire)
         if command['name'] not in COMMANDS:
-            return  # Separate instance accepts only this explicit command set.
+            return  # The serial bench accepts only this explicit command set.
         key=(command['header']['transaction_epoch'],command['header']['transaction_id'])
         if key in self.cache:
             previous,packets=self.cache[key]
@@ -173,23 +175,51 @@ class Bridge:
             # After dispatch, a transport failure remains UNKNOWN.
 
 
+class EpsMonitor:
+    """Observational polling between commands, using the same serial owner."""
+    def __init__(self,console,emit,*,cells,rsnsb,rsnsi):
+        from eps_bridge import State
+        self.console,self.emit=console,emit
+        self.state=State(cells=cells,rsnsb=rsnsb,rsnsi=rsnsi)
+
+    def poll(self):
+        try:
+            line=self.console.command('eps json',timeout=2)
+            self.state.accept(line.encode(),time.monotonic())
+        except RuntimeError as error:
+            self.state.link='READ_TIMEOUT'
+            print(json.dumps({'eps_poll':'failed','reason':str(error)}),flush=True)
+        self.emit(self.state.packet(time.monotonic()))
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--version',action='version',version=VERSION)
     parser.add_argument('--device',required=True)
     parser.add_argument('--bind',default='192.168.1.252')
     parser.add_argument('--ground',default='192.168.1.251')
+    parser.add_argument('--poll-eps',action='store_true',help='Read eps json every five seconds between commands')
+    parser.add_argument('--cells',type=int,default=2)
+    parser.add_argument('--rsnsb-ohms',type=float,default=.01)
+    parser.add_argument('--rsnsi-ohms',type=float,default=.01)
     args=parser.parse_args()
     incoming=socket.socket(socket.AF_INET,socket.SOCK_DGRAM);incoming.bind((args.bind,10028))
     outgoing=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     console=Console(args.device)
     console.command('status')
     bridge=Bridge(console,lambda packet:outgoing.sendto(packet,(args.ground,10020)))
+    monitor=EpsMonitor(console,bridge.emit,cells=args.cells,rsnsb=args.rsnsb_ohms,rsnsi=args.rsnsi_ohms) if args.poll_eps else None
+    incoming.settimeout(.2)
+    next_poll=0
     def stop(signum,frame):raise KeyboardInterrupt
     signal.signal(signal.SIGTERM,stop)
     try:
         while True:
-            wire,address=incoming.recvfrom(241)
+            if monitor and time.monotonic()>=next_poll:
+                monitor.poll()
+                next_poll=time.monotonic()+5
+            try:wire,address=incoming.recvfrom(241)
+            except socket.timeout:continue
             if address[0]!=args.ground:continue
             try:bridge.handle(wire)
             except (PacketError,ValueError) as error:print('INVALID '+str(error),flush=True)

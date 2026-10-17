@@ -1,6 +1,6 @@
 # Ground station lab TODO
 
-Updated 2026-10-08. This checklist owns the ground station lab build; the
+Updated 2026-10-17. This checklist owns the ground station lab build; the
 [root TODO](../../TODO.md) links here. Packet specifications belong in
 [command](../protocols/command.md) and [telemetry](../protocols/telemetry.md).
 Host locations and Pico build commands are recorded in the
@@ -46,10 +46,10 @@ read-only IHU/EPS diagnostics and live [EPS Yamcs path](eps_yamcs_setup.md) on
 - Ground host: provisioned Pi 5 / 8 GB, `ember-ground`, Ethernet
   `192.168.1.251`, 128 GB SD. Laptop runs the browser. Yamcs is running;
   modem performance, cooling and USB power remain to verify.
-- Software: Yamcs `ember` instance and simulated command loop verified on the
-  Pi; `myproject` preserves the upstream reference. USB packet bridge and Pico endpoint are verified; the
-  radio bridge and GNU Radio BPSK modem remain to implement. The
-  [bench v1 dictionary](../protocols/ember_bench_v1.md) uses CCSDS SPP;
+- Software: one Yamcs container runs flight `ember` and serial `ember-bench`.
+  The bench bridge polls EPS and routes payload CAN commands through one IHU
+  console owner. Earlier simulator/spare-Pico tests remain reference evidence.
+  The [bench v1 dictionary](../protocols/ember_bench_v1.md) uses CCSDS SPP;
   flight allocation and a possible ECSS PUS subset remain open.
 - First hardware transport: direct USB from Pi to one spare RP2040 Pico.
   Then use two Pico + SX1280 endpoints, reusing the existing 2.4 GHz work.
@@ -312,3 +312,21 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
 [Subsequent conducted proof](../../ground/uhf/results/2026-10-03/conducted-proof/result.json)
 records gain-only forwarding scale16,250ms TX priming, explicit RX/TX error
 monitoring, simultaneous tones/telemetry and excluded limiter/diagnostic failures.
+
+## Flight and bench environments — October 17, 2026
+
+- [x] Run `ember` (LTE/UHF receive links) and `ember-bench` (one IHU serial
+  input/output pair) in one container, with separate archives and display buckets.
+- [x] Restrict the four payload commands to bench; flight has no command uplink.
+  Verify cross-instance response isolation and per-instance duplicate suppression.
+- [x] Share one physical serial owner for EPS polling and payload commands;
+  retire spare-USB, separate EPS and payload-only bridge services.
+- [x] Preserve existing mixed `ember` history and old transport archives; take
+  stopped-server backups before migration. [Guide](../../ground/yamcs/OPERATIONAL.md).
+- [x] Verify live bench EPS and payload commands after deployment.
+- [ ] Repeat a physical UHF/LTE session against flight `ember`; configuration and
+  serial tests do not requalify the radio paths.
+- [ ] Implement and qualify the flight UHF command uplink before exposing commands
+  in the flight environment.
+- [ ] Investigate payload Pi CAN boot probe exhaustion after a power cycle;
+  restarting the existing CAN initialization service recovered it on October 17.

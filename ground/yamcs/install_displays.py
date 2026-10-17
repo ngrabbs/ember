@@ -12,10 +12,11 @@ ROOT = Path(__file__).resolve().parent
 BUCKET = 'ember_displays'
 
 
-def install(url):
+def install_instance(url, instance):
     url=url.rstrip('/')
-    output=ROOT/'.runtime/ember-displays'
-    generate(output)
+    bucket='ember_bench_displays' if instance=='ember-bench' else BUCKET
+    output=ROOT/'.runtime/ember-displays'/instance
+    generate(output,instance=instance)
 
     def request(path, data=None, content_type=None):
         headers={'Content-Type':content_type} if content_type else {}
@@ -23,17 +24,17 @@ def install(url):
             return response.read()
 
     try:
-        request('/api/storage/buckets/'+BUCKET)
+        request('/api/storage/buckets/'+bucket)
     except HTTPError as error:
         if error.code != 404:
             raise
-        request('/api/storage/buckets',json.dumps({'name':BUCKET}).encode(),'application/json')
+        request('/api/storage/buckets',json.dumps({'name':bucket}).encode(),'application/json')
     backup=ROOT/'.runtime/display-backups'/datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     for source in sorted(output.rglob('*')):
         if not source.is_file():
             continue
         name=source.relative_to(output).as_posix()
-        path='/api/storage/buckets/'+BUCKET+'/objects/'+quote(name,safe='/')
+        path='/api/storage/buckets/'+bucket+'/objects/'+quote(name,safe='/')
         data=source.read_bytes()
         try:
             previous=request(path)
@@ -45,13 +46,17 @@ def install(url):
             print('Unchanged:',name)
             continue
         if previous is not None:
-            saved=backup/name; saved.parent.mkdir(parents=True,exist_ok=True); saved.write_bytes(previous)
+            saved=backup/instance/name; saved.parent.mkdir(parents=True,exist_ok=True); saved.write_bytes(previous)
             print('Previous object saved:',saved)
         mime='application/json' if source.suffix=='.par' else 'application/xml' if source.suffix=='.opi' else 'text/javascript'
         request(path,data,mime)
         assert request(path)==data, 'Uploaded display differs: '+name
         print('Installed:',name)
-    print(url+'/telemetry/displays/files/Overview.opi?c=ember__realtime')
+    print(url+'/telemetry/displays/files/Overview.opi?c='+instance+'__realtime')
+
+
+def install(url):
+    for instance in ('ember','ember-bench'):install_instance(url,instance)
 
 
 if __name__=='__main__':

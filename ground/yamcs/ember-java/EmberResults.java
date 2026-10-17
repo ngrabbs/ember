@@ -73,6 +73,10 @@ public final class EmberResults {
         ByteBuffer b = ByteBuffer.wrap(bytes);
         int source = Byte.toUnsignedInt(b.get(WireProfile.SOURCE));
         if (source != 2) return;
+        // A host-wrapped EPS observation uses the bridge's session as its boot.
+        // It is telemetry provenance, never evidence that the physical IHU reset.
+        if (Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 0x10 &&
+            Byte.toUnsignedInt(b.get(WireProfile.POWER_STATUS_PROVENANCE)) != 2) return;
         long currentBoot = Integer.toUnsignedLong(b.getInt(WireProfile.SOURCE_BOOT_ID));
         if (boot != 0 && boot != currentBoot) {
             pending.values().forEach(command -> unknown(command, "Unknown outcome: IHU boot identity changed"));

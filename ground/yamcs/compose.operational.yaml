@@ -1,0 +1,13 @@
+# One container, flight and serial-bench instances. Apply last on the Pi.
+services:
+  yamcs:
+    depends_on: !reset {}
+    ports: !override
+      - "${EMBER_HTTP_BIND:-127.0.0.1}:${EMBER_HTTP_PORT:-8090}:8090"
+      - "127.0.0.1:10018:10018/udp"
+      - "127.0.0.1:10019:10019/udp"
+      - "${EMBER_HTTP_BIND:-127.0.0.1}:10020:10020/udp"
+  simulator:
+    profiles: ["simulator-reference"]
+  ember-simulator:
+    profiles: ["simulator-reference"]

@@ -12,10 +12,12 @@ import org.yamcs.utils.TimeEncoding;
 public class EmberPacketPreprocessor extends AbstractPacketPreprocessor {
     private final Map<String, Integer> previous = new HashMap<>();
     private final EmberResults results;
+    private final EmberDuplicates duplicates;
     public EmberPacketPreprocessor(String instance) { this(instance, YConfiguration.emptyConfig()); }
     public EmberPacketPreprocessor(String instance, YConfiguration config) {
         super(instance, config);
-        results = EmberResults.forInstance(instance);
+        results = EmberResults.forInstance(instance + ":" + config.getString("resultDomain", "default"));
+        duplicates = config.getBoolean("deduplicate", false) ? EmberDuplicates.forInstance(instance) : null;
     }
 
     private TmPacket discard(String reason) {
@@ -52,6 +54,7 @@ public class EmberPacketPreprocessor extends AbstractPacketPreprocessor {
         if (WireChecks.crc(bytes, bytes.length - 2) != Short.toUnsignedInt(b.getShort(bytes.length - 2))) {
             return discard("CRC mismatch");
         }
+        if (duplicates != null && !duplicates.first(bytes, System.nanoTime())) return null;
         // Bound tracking to one active boot per source (three allowed sources).
         String key = Integer.toString(source);
         int count = seq & 0x3fff;
@@ -59,7 +62,7 @@ public class EmberPacketPreprocessor extends AbstractPacketPreprocessor {
         if (previous.getOrDefault(bootKey, (int) boot) != (int) boot) previous.remove(key);
         Integer old = previous.put(key, count);
         previous.put(bootKey, (int) boot);
-        if (old != null && ((count - old) & 0x3fff) != 1) {
+        if (duplicates == null && old != null && ((count - old) & 0x3fff) != 1) {
             eventProducer.sendWarning("EMBER_SEQUENCE_GAP", "Source " + source + " previous " + old + " current " + count);
         }
         // Archive generationTime is ground reception time, not spacecraft UTC.

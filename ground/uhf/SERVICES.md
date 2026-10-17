@@ -56,7 +56,7 @@ SDRB logout or reboot. No SDRB login/startup policy was changed.
 4. In the IHU console, use `telem on 20`. The MCU now schedules fresh EPS reads
    every 20 seconds; USB does not trigger each packet. Observe the ground run's
    `receiver/packets.jsonl` and new Yamcs `ember-uhf` archive arrivals. Use the
-   [realtime EPS display](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember-uhf__realtime);
+   [realtime EPS display](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember__realtime);
    the old paused proof processor will not advance.
 5. Stop the IHU timer first (`telem off`), then stop the services:
 

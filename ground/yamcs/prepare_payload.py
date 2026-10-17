@@ -15,6 +15,8 @@ ROOT=Path(__file__).resolve().parent
 
 
 def prepare(runtime):
+    if (runtime / '.operational-consolidated').exists():
+        raise ValueError('Operational links are in ember; use ground/yamcs/prepare_operational.py')
     config=runtime/'src/main/yamcs/etc'
     template=config/'yamcs.ember-uhf.yaml'
     if not template.exists():template=config/'yamcs.ember.yaml'

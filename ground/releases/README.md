@@ -1,5 +1,10 @@
 # Ground release identities
 
+Operational update (October 17, 2026): select `ember` / `realtime` for USB,
+EPS UART, LTE, UHF and payload. [Shared deployment and history access](../yamcs/OPERATIONAL.md).
+Older isolated-instance setup/proof instructions below are historical; use
+operational preparation for the running Pi.
+
 Current baselines:
 
 | Component | Version | Verification |
@@ -88,3 +93,7 @@ remains on0.8.0 and Walter on0.3.0; no LTE reflash is needed for this downlink.
 The expected snapshot interval is90 seconds; IHU's device STALE threshold is
 30 seconds. These represent different ages: the ground snapshot can expire
 independently of the IHU's last verified response from a particular device.
+
+October 17 environment split: `yamcs-flight-20261017.json` audits flight `ember`;
+`yamcs-bench-20261017.json` audits serial `ember-bench`. Earlier operational and
+transport manifests are retained as dated history, not current fingerprints.

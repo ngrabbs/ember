@@ -1,5 +1,10 @@
 # LTE-M spacecraft telemetry bench
 
+Operational update (October 17, 2026): select `ember` / `realtime` for USB,
+EPS UART, LTE, UHF and payload. [Shared deployment and history access](../yamcs/OPERATIONAL.md).
+Older isolated-instance setup/proof instructions below are historical; use
+operational preparation for the running Pi.
+
 Walter is the proposed spacecraft UE; an SDR eNodeB and EPC operate on the ground.
 The first milestone is a repeatable bench LTE-M attach and IP telemetry transfer.
 An orbital link is a later experiment, with its own timing, Doppler, power, and RF validation.
@@ -120,7 +125,7 @@ This is one successful packet following failed windows, not a reliability result
 [Dashboard screenshot](../../system/ground_station/evidence/native-eps-lte-replay-20261002.png).
 The [paused replay dashboard](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember-lte__eps-lte-proof)
 is held at the archived reception; it does not transmit hardware commands.
-[Realtime dashboard](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember-lte__realtime)
+[Realtime dashboard](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember__realtime)
 expires between bursts. Replay processors are session state; recreate after
 server restart using Yamcs [Create Processor](https://docs.yamcs.org/yamcs-http-api/processing/create-processor/)
 and [Edit Processor](https://docs.yamcs.org/yamcs-http-api/processing/edit-processor/).
