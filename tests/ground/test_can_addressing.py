@@ -111,9 +111,9 @@ int main(void){
  assert(up_native_fire(tc,32));tc[31]^=1;assert(!up_native_fire(tc,32));tc[31]^=1;
  ul_packet rf={.version=1,.type=UP_PING,.sender=55,.origin=55,.request=7,.size=32};memcpy(rf.payload,tc,32);
  uint8_t rw[UL_WIRE_MAX];size_t rn=ul_encode(&rf,rw);cf_frame ff;
- memset(&discovery,0,sizeof(discovery));
+ memset(&discovery,0,sizeof(discovery));discovery.active=true; /* addressed command preempts discovery */
  for(unsigned i=0;i<(rn+3)/4;i++){assert(cf_fragment(rw,rn,UP_REQUEST_ID,7,i,&ff));uplink_receive(&ff,fake_now);}
- assert(fire_uplink.active && pending.active && queued().type==UL_HELLO);
+ assert(!discovery.active && fire_uplink.active && pending.active && queued().type==UL_HELLO);
  ack=pending.packet;ack.type=UL_HELLO_ACK;ack.sender=44;output.active=false;receive(&ack);
  assert(fire_uplink.active && pending.active && queued().type==PL_FIRE_CHECK);
  ack=pending.packet;ack.type=PL_FIRE_RESULT;ack.sender=44;ack.size=PL_FIRE_SIZE;

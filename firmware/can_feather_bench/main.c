@@ -129,14 +129,17 @@ static void uplink_receive(const cf_frame *frame,uint32_t now){
     static ul_packet p;
     if(!cf_feed(&uplink_fragments,frame,UP_REQUEST_ID,now))return;
     if(!up_envelope(&uplink_fragments,&p)||p.type!=UP_PING||p.origin!=p.sender||(!up_native_ping(p.payload,p.size)&&!up_native_fire(p.payload,p.size)))return;
-    if(output.active||can.pending){LOG("UPLINK_PING rejected=BUSY\n");return;}
+    if(output.active||(can.pending&&!discovery.active)){LOG("UPLINK_PING rejected=BUSY\n");return;}
     if(up_native_fire(p.payload,p.size)){
         if(fire_uplink.active || pending.active || auto_telem.enabled || telemetry_queue.enabled ||
-           queue_owned || queue_send_ready || discovery.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING)return;
+           queue_owned || queue_send_ready || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING){LOG("UPLINK_FIRE rejected=BUSY\n");return;}
         uint32_t epoch=ul_u32(p.payload+12),id=ul_u32(p.payload+16);
         for(unsigned i=0;i<fire_keys_used;i++)if(fire_keys[i].epoch==epoch && fire_keys[i].id==id)return;
         if(fire_keys_used==16)return;
         fire_keys[fire_keys_used].epoch=epoch;fire_keys[fire_keys_used++].id=id;
+        /* Addressed commands take precedence over an observational probe. */
+        discovery.active=false;
+        LOG("UPLINK_FIRE admitted epoch=%" PRIu32 " transaction=%" PRIu32 "\n",epoch,id);
         fire_uplink.active=true;fire_uplink.request=p;fire_uplink.target=target_index;fire_uplink.peer=peer;
         target_index=DR_PAYLOAD_INDEX;peer=0;memset(&fragments,0,sizeof(fragments));
         submit(UL_HELLO,NULL,0);return;
