@@ -30,9 +30,9 @@ int main(void) {
     cf_reader f={0};f.token=19;f.used=ul_encode(&in,f.wire);f.wire[f.used++]=1;uint32_t request;size_t size;
     assert(!bridge_telemetry(&f,out,&size,&request));
     f.used=ul_encode(&in,f.wire);f.wire[5]^=1;assert(!bridge_telemetry(&f,out,&size,&request));
-    const unsigned ids[]={W_ID_HEARTBEAT,W_ID_SYSTEM_STATUS,W_ID_POWER_STATUS,W_ID_COMM_STATUS};
-    const unsigned sizes[]={W_SIZE_HEARTBEAT,W_SIZE_SYSTEM_STATUS,W_SIZE_POWER_STATUS,W_SIZE_COMM_STATUS};
-    for(unsigned i=0;i<4;i++)for(unsigned type=0;type<3;type++) {
+    const unsigned ids[]={W_ID_HEARTBEAT,W_ID_SYSTEM_STATUS,W_ID_POWER_STATUS,W_ID_COMM_STATUS,W_ID_LTE_CAN_FIRMWARE,W_ID_LTE_MODEM_FIRMWARE};
+    const unsigned sizes[]={W_SIZE_HEARTBEAT,W_SIZE_SYSTEM_STATUS,W_SIZE_POWER_STATUS,W_SIZE_COMM_STATUS,W_SIZE_LTE_CAN_FIRMWARE,W_SIZE_LTE_MODEM_FIRMWARE};
+    for(unsigned i=0;i<6;i++)for(unsigned type=0;type<3;type++) {
         in.type=type==2?CF_UHF_SEND:type?CF_SEND_PACKET:CF_CHAIN;in.size=W_PAYLOAD+sizes[i]+2;
         assert(in.size<=BPSK_NATIVE_MAX);
         memset(in.payload,0,in.size);bp16(in.payload,W_TM_IDENTITY);bp16(in.payload+2,0xc001);

@@ -3,7 +3,10 @@
 #include <esp_system.h>
 #include "uart_link.h"
 #include "lte_link.h"
+#include "build_identity.h"
+#include "firmware_info.h"
 #include "wire.h"
+#include "native_telemetry.h"
 #include "cereg.h"
 static HardwareSerial comms(0),modem(1);
 static ul_reader reader;
@@ -96,13 +99,7 @@ static void configuration(void) {
     else {state=REGISTER;wait_until=millis();}
 }
 static bool valid_packet(const ul_packet &p) {
-    const uint8_t *b=p.payload;size_t n=p.size;if(n<W_PAYLOAD+2)return false;
-    uint16_t id=ul_u16(b+W_MESSAGE_ID);
-    size_t payload=id==W_ID_POWER_STATUS?W_SIZE_POWER_STATUS:id==W_ID_HEARTBEAT?W_SIZE_HEARTBEAT:0;
-    return payload && n==W_PAYLOAD+payload+2 && ul_u16(b)==W_TM_IDENTITY && (ul_u16(b+2)>>14)==3 &&
-        (size_t)ul_u16(b+4)+7==n && b[W_SCHEMA_VERSION]==W_VERSION && b[W_KIND]==W_KINDS_TELEMETRY &&
-        b[W_SOURCE]==W_ENDPOINTS_IHU && b[W_TARGET]==W_ENDPOINTS_GROUND && ul_u32(b+W_SOURCE_BOOT_ID) &&
-        ul_u16(b+W_PAYLOAD_LENGTH)==payload && ul_crc(b,n-2)==ul_u16(b+n-2);
+    return native_telemetry_valid(p.payload,p.size,0);
 }
 static void receive(const ul_packet &p) {
     ++requests;
@@ -110,6 +107,11 @@ static void receive(const ul_packet &p) {
     if(p.type==UL_HELLO) {peer=p.sender;reply(p,UL_HELLO_ACK);return;}
     if(p.type==UL_ECHO) {reply(p,UL_ECHO_ACK);return;}
     if(p.sender!=peer) {reply(p,UL_ERROR,UL_ERR_REQUEST);return;}
+    if(p.type==UL_FIRMWARE_INFO) {
+        if(p.size){reply(p,UL_ERROR,UL_ERR_PAYLOAD);return;}
+        ul_packet result=p;result.size=FI_SIZE;fi_payload(result.payload,boot,millis());
+        reply(result,UL_FIRMWARE_INFO_ACK);return;
+    }
     if(p.type==UL_LINK_STATUS || p.type==UL_LINK_DIAG) {
         if(p.size) {reply(p,UL_ERROR,UL_ERR_PAYLOAD);return;}
         ul_packet result=p;result.size=p.type==UL_LINK_DIAG?LTE_DIAG_SIZE:16;
@@ -190,8 +192,12 @@ static void poll_modem(uint32_t now) {
     }
     if(at_busy && (uint32_t)(millis()-at_started)>=at_timeout) {failure_snapshot();last_error=4;off();}
 }
+static void firmware_status(void) {
+    Serial.printf("FIRMWARE role=WALTER_LTE version=%s git=%s dirty=%u boot=%lu\n",FW_VERSION,FW_GIT,FW_DIRTY,(unsigned long)boot);
+}
 static void status(void) {
-    Serial.printf("STATUS role=WALTER_LTE_BENCH fw=lte-bench-v2 boot=%lu peer=%lu state=%u cereg=%u radio_window_ms=%lu requests=%lu "
+    firmware_status();
+    Serial.printf("STATUS role=WALTER_LTE_BENCH fw=lte-bench-v3 boot=%lu peer=%lu state=%u cereg=%u radio_window_ms=%lu requests=%lu "
         "modem_accepted=%lu rejected=%lu cobs=%lu crc=%lu overflow=%lu gaps=%lu\n",
         (unsigned long)boot,(unsigned long)peer,(unsigned)state,(unsigned)cereg_status,
         (unsigned long)(state==OFF?0:deadline-millis()),(unsigned long)requests,(unsigned long)accepted,
@@ -214,7 +220,7 @@ void loop() {
     for(unsigned i=0;i<40 && Serial.available();++i) {
         int ch=Serial.read();
         if(ch=='\r' || ch=='\n') {
-            if(!usb_discard) {usb[usb_used]=0;if(!strcmp(usb,"status"))status();else if(!strcmp(usb,"off"))off();}
+            if(!usb_discard) {usb[usb_used]=0;if(!strcmp(usb,"version"))firmware_status();else if(!strcmp(usb,"status"))status();else if(!strcmp(usb,"off"))off();}
             usb_used=0;usb_discard=false;
         } else if(!usb_discard) {
             if(ch && usb_used+1<sizeof(usb))usb[usb_used++]=(char)ch;else usb_discard=true;

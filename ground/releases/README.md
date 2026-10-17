@@ -52,3 +52,12 @@ source together. For example, use `--release 1.1.0 --output ...` for a new
 Yamcs snapshot; `--publish` uploads only Ground-Build.opi and ground-build.json.
 It does not replace the team's operational dashboards or definitions. Keep
 release manifests in Git; the commit identifies the associated source revision.
+
+## Pending CAN-addressing migration
+
+Receiver2.1.0 adds LTE_CAN_FIRMWARE and LTE_MODEM_FIRMWARE decoding. Its manifest
+is a **candidate**, not proof that the ground host has been updated. The current
+installed2.0.0 and Yamcs1.0.0 baselines remain recorded above until migration.
+New LTE firmware displays must be installed alongside regenerated MDB/Java wire
+profile definitions; then audit a new Yamcs asset release. Never relabel the old
+1.0.0 hash as matching changed definitions.
