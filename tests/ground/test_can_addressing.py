@@ -182,7 +182,9 @@ class AddressingTests(unittest.TestCase):
    for role,app in ((0,'walter_mcu'),(1,'ihu')):
     source.write_text('#include <assert.h>\n#define main embedded_main\n#include "'+str(ROOT/'firmware'/app/'main.c')+'"\n#undef main\n'+DRIVER)
     binary=p/f'role{role}'
-    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',f'-DTEST_IHU={role}','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),str(source),str(ROOT/'firmware/shared/ember_protocol/protocol.c'),'-o',str(binary)],check=True)
+    sources=[str(source)]
+    if role:sources.append(str(ROOT/'firmware/shared/ember_protocol/protocol.c'))
+    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',f'-DTEST_IHU={role}','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),*sources,'-o',str(binary)],check=True)
     output=subprocess.check_output([str(binary)],text=True)
     if role:
      wire=next(line.split()[1] for line in output.splitlines() if line.startswith('IDENTITY_PACKET '))

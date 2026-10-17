@@ -8,7 +8,7 @@ project/target/output `walter_mcu`. Walter ESP32-S3 firmware remains in
 [`firmware/walter`](../walter/README.md); the original-Pico UHF application is
 [transceiver](../transceiver/README.md). Configure fresh build directories.
 Each application owns its source and VERSION file; the split retains version
-0.14.0 and does not flash hardware. Shared board/build configuration lives in
+0.14.1 and does not flash hardware. Shared board/build configuration lives in
 [`shared/pico_can`](../shared/pico_can/README.md).
 
 ```sh
@@ -303,7 +303,11 @@ local three-controller path, not LTE reception or spacecraft command execution.
 UART logs are skipped when transceiver USB is disconnected to avoid waiting for an
 absent console during forwarding. Sustained traffic remains unqualified.
 
-## Build and flash
+## Historical build and flash
+
+These commands and identities record the earlier combined application. Use
+the current build command at the top of this guide or the separate
+[Walter MCU build guide](../walter_mcu/README.md).
 
 Keep the repository layout: this project needs sibling `comms_transport` and
 `ground/ember/generate_c.py`, `codec.py`, and `dictionary.json`.

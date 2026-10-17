@@ -26,7 +26,7 @@ cmake --build build/walter_mcu --target walter_mcu -j4
 CMake project, target, program name and artifact basename are all `walter_mcu`.
 USB `version`/`status` reports `role=WALTER_MCU`, version, source SHA, dirty flag
 and boot identity. This application owns its VERSION file; the source split
-retains 0.14.0 from the former combined project. There is no ROLE_IHU build
+retains 0.14.1 from the former combined project. There is no ROLE_IHU build
 switch and no IHU source dependency. Start with a fresh build directory.
 
 The former `ember_comms_can_bench.uf2` was this Feather's image and reported
@@ -58,8 +58,7 @@ or change the deployed firmware.
 (`N=1..240`) are the existing case-sensitive console commands. `selftest` is
 local MCP loopback; `normal` restores normal CAN mode. The USB HELLO/ping
 request behavior is retained from the former combined application; operational
-LTE requests originate on IHU. Console output does not require a USB host to
-forward CAN/UART traffic.
+LTE requests originate on IHU. Forwarding CAN/UART traffic does not require a USB console connection.
 
 Shared protocols and MCP25625 driver live in
 [`comms_transport`](../comms_transport/README.md); shared board/identity build
