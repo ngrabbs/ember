@@ -19,7 +19,7 @@ public class EmberCommandPostprocessor implements CommandPostprocessor {
     private EmberResults results;
 
     private int newEpoch() { return random.nextInt(Integer.MAX_VALUE) + 1; }
-    @Override public void init(String instance, YConfiguration config, Link link) { results = EmberResults.forInstance(instance); }
+    @Override public void init(String instance, YConfiguration config, Link link) { results = EmberResults.forInstance(instance + ":" + config.getString("resultDomain", "default")); }
     @Override public void setCommandHistoryPublisher(CommandHistoryPublisher publisher) { history = publisher; }
 
     @Override public synchronized byte[] process(PreparedCommand command) {

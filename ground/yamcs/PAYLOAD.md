@@ -1,12 +1,12 @@
 # Payload ground support 1.3.0
 
-The `ember-payload` instance provides a payload dashboard, parameter table,
+The shared `ember` instance provides a payload dashboard, parameter table,
 command history and four commands. The first implementation uses a LAN bench
 route: Yamcs (.251) → UDP → m75q (.252) → IHU USB console → CAN A (500 kbit/s)
 → Pi payload (.253). This is not the transceiver's RF uplink/downlink. Camera
 and image functions are outside this release.
 
-Open `http://192.168.1.251:8090/telemetry/displays/files/Payload.opi?c=ember-payload__realtime`.
+Open `http://192.168.1.251:8090/telemetry/displays/files/Payload.opi?c=ember__realtime`.
 The display's command button selects the correct instance. Commands are
 `PAYLOAD_PING` (1–240 bytes), `PAYLOAD_IDENT`, `PAYLOAD_STATUS_QUERY` and
 `PAYLOAD_HEARTBEAT_QUERY`. Heartbeat is explicitly requested; the bridge does
@@ -33,29 +33,17 @@ separate clean checkout/export for these scripts. Back up the active runtime,
 Compose configuration and environment before deployment. The tested backup is
 `/home/ngrabbs/work/deploy-backups/payload-20261017/yamcs-before.tgz` on .251.
 
-1. On the ground host, run `python3 ground/yamcs/prepare_payload.py --runtime
-   /path/to/active/.runtime/quickstart`. This adds an isolated Java package,
-   MDB and instance and preserves the existing instances/classes. It needs an
-   existing ember or ember-uhf instance template.
-2. Add `ground/yamcs/compose.payload.yaml` to the existing Compose overlays.
-   It exposes UDP 10020 at `EMBER_HTTP_BIND`. Compile the runtime using the
-   existing Maven container, then recreate only the Yamcs service. Verify all
-   existing instances are RUNNING alongside `ember-payload`.
-3. On m75q, install `ground/ember` under `/opt/ember-payload-ground/ember`,
-   install the system pyserial package and install/enable
-   `ground/yamcs/ember-payload-bridge.service`. Adjust the stable IHU serial
-   path if different. It binds .252:10028 and accepts only .251 source IP.
-   This is a trusted bench LAN service, not an authenticated command endpoint.
-4. Run `python3 ground/yamcs/install_payload_displays.py --url
-   http://192.168.1.251:8090`. Only payload files and namespaced script copies
-   are uploaded; existing displays/scripts are preserved.
-5. Run `python3 ground/yamcs/build_identity.py --url
-   http://192.168.1.251:8090 --instance ember-payload --release 1.3.0 --payload
-   --publish --output ground/releases/yamcs-payload-1.3.0.json`.
-   `Payload-Ground-Build.opi` and `payload-ground-build.json` are separate
-   from the existing UHF release audit. The fingerprint covers the loaded
-   payload MDB and shared display bucket. Use `--check` against that manifest
-   to detect later drift.
+Use [operational preparation](OPERATIONAL.md) for the shared instance/MDB,
+Compose overlays and all displays. The legacy `prepare_payload.py` refuses to
+recreate a separate instance once operational consolidation has been applied.
+The existing m75q bridge remains at `/opt/ember-payload-ground/ember`, uses the
+same stable IHU USB identity, accepts UDP 10028 from .251, and forwards to .251
+UDP 10020. Command names and wire formats are unchanged. Only the four
+`PAYLOAD_*` commands are assigned to this route; other bench commands use USB.
+
+The payload 1.3.0 manifest below is historical. Audit the unified deployment
+with `build_identity.py --instance ember`; dated old manifests are not current
+fingerprints after MDB/display consolidation.
 
 The bridge exclusively owns the IHU USB console. Stop it with
 `sudo systemctl stop ember-payload-bridge` before manual console work; it

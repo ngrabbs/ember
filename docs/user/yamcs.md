@@ -2,40 +2,45 @@
 
 [Operator guides](README.md) · [Lab installation](../../ground/yamcs/README.md)
 
-This guide describes the EMBER integration pinned to Yamcs 5.13.0, reviewed
-October 4, 2026 against repository dictionary, adapters and configuration,
-with LTE/UHF publication reconciled on October 5.
-Deployment/UI checks cited below were recorded October 1–3; this review did not
-connect to or change the running Pi. Check the selected instance, processor and
-endpoint before sending a command.
+The running Pi was consolidated on October 17, 2026. Select **`ember` /
+`realtime`** for all operational telemetry and commands. Transport changes do
+not require changing the instance. See [operational deployment and rollback](../../ground/yamcs/OPERATIONAL.md).
 
-## Instances and endpoints
+## One spacecraft, several links
 
-The recorded bench web address is [Pi Yamcs](http://192.168.1.251:8090).
-Use your configured host if different. The instance and processor appear in
-Yamcs's header/context selector.
+The recorded bench address is [Pi Yamcs](http://192.168.1.251:8090).
+All five telemetry links update the same `/ember` parameter namespace,
+processor, alarms, dashboards and new archive:
 
-| Instance / processor | Data source | Command capability |
+| Link | Input | Commands |
 |---|---|---|
-| `ember` / `realtime`, simulator configuration | Software GROUND_TEST endpoint | Four bench commands below |
-| `ember` / `realtime`, USB configuration | Dedicated spare USB Pico, plus separate real IHU UART EPS input | Four commands reach the spare Pico; EPS UART input is observational only |
-| `ember-lte` / `realtime` | Native IHU EPS received through Walter LTE-M; `eps-lte-in`, UDP 10018 | No telecommand data link configured |
-| `ember-uhf` / `realtime` | Native IHU EPS over CAN → SDRB → UHF → LibreSDR; `eps-uhf-in`, UDP 10019 | No telecommand data link configured |
-| `myproject` / `realtime` | Upstream quickstart sample | Upstream demonstration commands; not EMBER device controls |
-| An Archive replay processor | Previously archived packets in its instance | Replay does not reissue hardware commands |
+| `usb-in` | USB packet bridge, UDP 10016 | Four spare-Pico bench commands through `usb-out`, UDP 10026 |
+| `eps-uart-in` | IHU EPS UART observations, UDP 10017 | Observational only |
+| `eps-lte-in` | Native Walter LTE telemetry, UDP 10018 | Receive only |
+| `eps-uhf-in` | SDRB/LibreSDR UHF telemetry, UDP 10019 | Receive only |
+| `payload-ihu-bench-in` | IHU/payload CAN bench observations, UDP 10020 | Four `PAYLOAD_*` commands through m75q, UDP 10028 |
 
-The optional `ember-uhf` configuration and native IHU cadence are now published.
-Follow the [UHF setup](../../ground/uhf/README.md) and
-[service runbook](../../ground/uhf/SERVICES.md) for an explicitly started bench.
-Services remain disabled at boot; instance configuration does not establish an
-active RF session. LTE and UHF share LibreSDR and require separate radio ownership.
+The four USB bench commands and four payload commands use different command
+streams. A disabled/unavailable payload route never falls back to the spare
+Pico. The spare Pico is a bench endpoint, not the physical IHU; their response
+correlation is separated even though both wire profiles call their source IHU.
+Host EPS wrappers retain their bridge provenance and cannot establish an IHU reset.
 
-All EMBER instances share the generated dictionary/displays; presence of a
-command definition in an MDB does not establish a configured uplink. USB and
-simulator configurations are alternatives for the `ember` command endpoint.
-Have the lab operator confirm which is selected in `.env` and the active bridge
-before changing its telemetry period. A wire endpoint named IHU does not turn
-the spare command-test Pico into the physical EPS controller.
+The first exact copy of a packet is processed/archived with its receiving link;
+identical arrivals within 120 seconds are suppressed across links (4096-entry
+bound). Raw link counters still show arrivals. Different boot IDs, timestamps,
+payloads and provenance are distinct packets. Reordered packets are not
+classified as loss solely by per-link sequence gaps. Use Links and archive
+link filters to inspect transport provenance.
+
+The previous transport instances and upstream sample are not started normally.
+Their old archives are retained, not rewritten with new reception times or
+silently merged. Historical instances can be enabled without hardware links
+using the deployment guide. Old proof/replay links require that history mode.
+New archive records all go to `ember`; replay remains separate from realtime.
+
+Radio applications still require explicit bounded startup and share the
+LibreSDR. Consolidating Yamcs does not start RF or add a radio command uplink.
 
 ## Send a first command
 
@@ -162,7 +167,7 @@ produce TRANSACTION_CONFLICT.
 Open [Overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
 for the simulator/spare Pico, or [EPS](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember__realtime)
 for the UART wrapper. For received native LTE EPS, explicitly select
-[LTE EPS](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember-lte__realtime).
+[LTE EPS](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember__realtime).
 
 | View or feature | What it provides | Interpretation |
 |---|---|---|

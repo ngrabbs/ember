@@ -64,6 +64,9 @@ dataLinks:
     packetPreprocessorClassName: com.example.ember.EmberPacketPreprocessor
 """ + ember[ember.index("\nmdb:"):]
     (instance.parent / "yamcs.ember-lte.yaml").write_text(lte)
+    if transport == "usb":
+        from prepare_operational import prepare as consolidate
+        consolidate(SOURCE)
     print(f"Prepared Yamcs 5.13.0 at {REVISION}; EMBER transport: {transport}.")
     print("Run: docker compose up -d")
 

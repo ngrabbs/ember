@@ -9,6 +9,9 @@ import xml.etree.ElementTree as ET
 
 
 def prepare(root):
+    runtime = root / '.runtime/quickstart'
+    if (runtime / '.operational-consolidated').exists():
+        raise ValueError('Operational links are in ember; use ground/yamcs/prepare_operational.py')
     config = root / '.runtime/quickstart/src/main/yamcs/etc'
     source = config / 'yamcs.ember-lte.yaml'
     text = source.read_text()

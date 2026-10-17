@@ -1,5 +1,10 @@
 # Ground release identities
 
+Operational update (October 17, 2026): select `ember` / `realtime` for USB,
+EPS UART, LTE, UHF and payload. [Shared deployment and history access](../yamcs/OPERATIONAL.md).
+Older isolated-instance setup/proof instructions below are historical; use
+operational preparation for the running Pi.
+
 Current baselines:
 
 | Component | Version | Verification |

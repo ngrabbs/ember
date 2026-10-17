@@ -1,0 +1,8 @@
+# Apply last on the Pi. Only the real EMBER instance is started by its runtime.
+services:
+  yamcs:
+    depends_on: !reset {}
+  simulator:
+    profiles: ["simulator-reference"]
+  ember-simulator:
+    profiles: ["simulator-reference"]

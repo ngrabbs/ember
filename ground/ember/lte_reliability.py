@@ -120,7 +120,7 @@ def run(args):
             record['radio_exit'] = radio.wait(timeout=180)
             record['capture_exit'] = capture.wait(timeout=180)
             received = remote_json(GROUND, f'/home/ngrabbs/work/ember-lte/logs/{label}-received.json')
-            archive = json.load(urlopen(API+'archive/ember-lte/packets?name=/ember/POWER_STATUS&limit=100', timeout=10))
+            archive = json.load(urlopen(API+'archive/ember/packets?name=/ember/POWER_STATUS&limit=100', timeout=10))
             record.update(compare(host, received, archive))
             record['radio_children'] = radio_exit_status((directory/'radio.log').read_text())
             record['delivery_success'] = record['success']

@@ -1,0 +1,203 @@
+{
+  "tested_local_date": "2026-10-17",
+  "timezone": "America/Chicago",
+  "source_base": "af3ebc161a73551c57896f4f710f65c8c34967d3",
+  "operational_instances": [
+    {
+      "name": "ember",
+      "state": "RUNNING"
+    }
+  ],
+  "links_after_service_restart": [
+    {
+      "name": "usb-out",
+      "status": "OK",
+      "dataInCount": "0",
+      "dataOutCount": "0",
+      "detailedStatus": "OK, sending to host.docker.internal:10026"
+    },
+    {
+      "name": "usb-in",
+      "status": "OK",
+      "dataInCount": "0",
+      "dataOutCount": "0",
+      "detailedStatus": "OK, receiving on 10016"
+    },
+    {
+      "name": "eps-uart-in",
+      "status": "OK",
+      "dataInCount": "197",
+      "dataOutCount": "0",
+      "detailedStatus": "OK, receiving on 10017"
+    },
+    {
+      "name": "payload-ihu-bench-out",
+      "status": "OK",
+      "dataInCount": "0",
+      "dataOutCount": "1",
+      "detailedStatus": "OK, sending to 192.168.1.252:10028"
+    },
+    {
+      "name": "eps-lte-in",
+      "status": "OK",
+      "dataInCount": "0",
+      "dataOutCount": "0",
+      "detailedStatus": "OK, receiving on 10018"
+    },
+    {
+      "name": "eps-uhf-in",
+      "status": "OK",
+      "dataInCount": "0",
+      "dataOutCount": "0",
+      "detailedStatus": "OK, receiving on 10019"
+    },
+    {
+      "name": "payload-ihu-bench-in",
+      "status": "OK",
+      "dataInCount": "3",
+      "dataOutCount": "0",
+      "detailedStatus": "OK, receiving on 10020"
+    }
+  ],
+  "loaded_dictionary": {
+    "parameters": 188,
+    "commands": 8
+  },
+  "unit_checks": {
+    "run": 62,
+    "passed": 61,
+    "skipped": 1,
+    "skip_reason": "Explicit virtual CAN interface unavailable"
+  },
+  "java_compile": "13 sources compiled successfully offline on Pi, Java 17",
+  "java_dedup_checks": [
+    "exact bytes",
+    "expiry",
+    "per-instance separation",
+    "bounded eviction"
+  ],
+  "isolated_integration": {
+    "tm_ports_verified": [
+      11016,
+      11017,
+      11018,
+      11019,
+      11020
+    ],
+    "duplicate_arrivals": 5,
+    "duplicate_archived": 1,
+    "bad_crc_archived": false,
+    "commands": [
+      {
+        "name": "PING",
+        "udp_port": 11026,
+        "completed": true,
+        "cross_route_delivery": false
+      },
+      {
+        "name": "PAYLOAD_STATUS_QUERY",
+        "udp_port": 11028,
+        "completed": true,
+        "cross_route_delivery": false
+      }
+    ],
+    "disabled_payload_route_does_not_fall_back": true,
+    "history": "1792250421357-isolated-unification-check-1792250385"
+  },
+  "backup_restore_verification": {
+    "ember": {
+      "archive_witness_preserved": true,
+      "hardware_links": 7
+    },
+    "ember-lte": {
+      "archive_witness_preserved": true,
+      "hardware_links": 0
+    },
+    "ember-uhf": {
+      "archive_witness_preserved": true,
+      "hardware_links": 0
+    },
+    "ember-payload": {
+      "archive_witness_preserved": true,
+      "hardware_links": 0
+    },
+    "myproject": {
+      "archive_witness_preserved": true,
+      "hardware_links": 0
+    }
+  },
+  "private_backup_directory": "ember-ground:/home/ngrabbs/work/deploy-backups/unified-20261017",
+  "backup_sha256": {
+    "runtime-before.tgz": "c8d3e537c35e8a768dc141aada26bff71a7120ccfcb2f42a8c79ebb242f64333",
+    "yamcs-data-before.tgz": "7771b8c256650cb01e54504d1ad50b27583d0c3d2ffc1be6be4e010ecd4f5fd7"
+  },
+  "live_payload_after_restart": {
+    "command": "PAYLOAD_STATUS_QUERY",
+    "id": "1792251275524-operational-consolidation-check-1792251238",
+    "outcome": "COMPLETED",
+    "link_count_delta": {
+      "usb-out": {
+        "in_delta": 0,
+        "out_delta": 0
+      },
+      "usb-in": {
+        "in_delta": 0,
+        "out_delta": 0
+      },
+      "eps-uart-in": {
+        "in_delta": 0,
+        "out_delta": 0
+      },
+      "payload-ihu-bench-out": {
+        "in_delta": 0,
+        "out_delta": 1
+      },
+      "eps-lte-in": {
+        "in_delta": 0,
+        "out_delta": 0
+      },
+      "eps-uhf-in": {
+        "in_delta": 0,
+        "out_delta": 0
+      },
+      "payload-ihu-bench-in": {
+        "in_delta": 3,
+        "out_delta": 0
+      }
+    }
+  },
+  "other_live_commands": [
+    {
+      "command": "PAYLOAD_IDENT",
+      "args": {},
+      "id": "1792251076078-operational-live-check-1792251038",
+      "outcome": "COMPLETED"
+    },
+    {
+      "command": "PAYLOAD_HEARTBEAT_QUERY",
+      "args": {},
+      "id": "1792251076324-operational-live-check-1792251039",
+      "outcome": "COMPLETED"
+    },
+    {
+      "command": "PAYLOAD_PING",
+      "args": {
+        "bytes": 32
+      },
+      "id": "1792251076579-operational-live-check-1792251039",
+      "outcome": "COMPLETED"
+    }
+  ],
+  "recovery_observations": {
+    "initial_live_command_outcome": "UNKNOWN",
+    "initial_id": "1792250894230-operational-consolidation-check-1792250857",
+    "m75q_hub": "No USB hub enumerated; PCI USB controller 0000:03:00.4 rebind restored hub and IHU. No persistent kernel setting changed.",
+    "payload_pi_can": "Boot probe had failed and can0 was absent. Restarting existing ember-payload-can then ember-payload restored normal 500000-bit CAN. No firmware changed."
+  },
+  "deployed_build_fingerprint": "0105397972f77a9d7b00017f401ff3f32bfcc3a89c87025178ec354d503951d6",
+  "build_audit_survives_service_restart": true,
+  "startup_service_restarted": "ember-ground-starter",
+  "historical_data_policy": "Original separate archives retained; default startup only ember. Optional historical instances have no hardware links. No packets re-injected or retimestamped.",
+  "eps_uart_at_final_check": "Wrapper packets arrive, but readout_present=0/readout_valid=0; this is not a fresh charger-measurement proof.",
+  "rf_validation": "No UHF or LTE RF session performed; all five TM inputs tested with synthetic packets only in a separate loopback test instance."
+}

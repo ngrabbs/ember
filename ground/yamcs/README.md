@@ -1,5 +1,10 @@
 # Yamcs ground lab
 
+Operational update (October 17, 2026): select `ember` / `realtime` for USB,
+EPS UART, LTE, UHF and payload. [Shared deployment and history access](OPERATIONAL.md).
+Older isolated-instance setup/proof instructions below are historical; use
+operational preparation for the running Pi.
+
 For day-to-day commanding, responses, displays and replay, start with the
 [Yamcs operator guide](../../docs/user/yamcs.md).
 
@@ -43,7 +48,7 @@ UDP10018 is configured there, without a TC data link. The USB Compose override
 publishes this port on loopback. `ground/ember/lte_receiver.py` accepts native
 POWER_STATUS packets at EPC UDP51000 from Walter172.16.0.2:51001, verifies the
 wire/provenance, and forwards the original bytes. The
-[LTE EPS display](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember-lte__realtime)
+[LTE EPS display](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember__realtime)
 remains empty until actual radio packets arrive; existing `ember` USB/Pi wrappers
 cannot populate it. Receiver capture and byte-matched Yamcs archive checks are
 required before claiming full LTE delivery.

@@ -14,11 +14,13 @@ or live service changed during this documentation review.
 | Use the newer IHU CAN bench | [CAN Feather USB console](ihu-can-console.md) | USB text console; `STATUS role=IHU_MCU fw=can-bench-v2` |
 | Monitor or command through Yamcs | [Yamcs operation and available features](yamcs.md) | Instance and processor selected in the web header |
 | Power up the demo ground Pi | [Pi readiness and hotspot](../../ground/pi/README.md) | Ethernet first; `EMBER-Ground` fallback Wi-Fi |
-| Send an EPS observation over LTE | [Step-by-step LTE walkthrough](lte-eps-walkthrough.md) | IHU → CAN → Walter → ground Pi → `ember-lte` |
+| Send an EPS observation over LTE | [Step-by-step LTE walkthrough](lte-eps-walkthrough.md) | IHU → CAN → Walter → ground Pi → `ember` |
 
 The dedicated spare Pico used for Yamcs command tests is a third application,
 [usb_bench](../../firmware/usb_bench/README.md). Its USB stream carries binary
 packets; opening it as an interactive text console conflicts with the bridge.
+
+All operational paths now use `ember` / `realtime`. See [deployment and history](../../ground/yamcs/OPERATIONAL.md).
 
 ## Choose a first task
 
@@ -29,12 +31,12 @@ packets; opening it as an interactive text console conflicts with the bridge.
 - **Check Yamcs commanding:** choose `ember` / `realtime`, verify that its command
   endpoint is the simulator or spare USB Pico, send `PING`, then inspect that
   command's history for the correlated result.
-- **Watch native EPS over UHF:** choose `ember-uhf` / `realtime` and open EPS.
+- **Watch native EPS over UHF:** choose `ember` / `realtime` and open EPS.
   Use the [UHF service runbook](../../ground/uhf/SERVICES.md) for the optional
   bench; native cadence is armed separately and no RF command uplink is configured.
-- **Watch native EPS over LTE:** choose `ember-lte` / `realtime` and open EPS.
+- **Watch native EPS over LTE:** choose `ember` / `realtime` and open EPS.
   Follow the [LTE runbook](../../ground/lte/BRINGUP.md) when preparing a bounded
-  bench session. Commanding is not configured on this instance.
+  bench session. The LTE link is receive-only; USB and payload commands have separate routes.
 
 ## Meaning of status
 

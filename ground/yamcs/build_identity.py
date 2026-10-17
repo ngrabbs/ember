@@ -77,7 +77,7 @@ def page(manifest, manifest_name="ground-build.json"):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--url',default='http://127.0.0.1:8090')
-    p.add_argument('--instance',default='ember-uhf')
+    p.add_argument('--instance',default='ember')
     p.add_argument('--release',help='Explicit version for a new approved baseline')
     p.add_argument('--output',type=Path)
     p.add_argument('--check',type=Path,help='Compare with a previously approved manifest')

@@ -312,3 +312,21 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
 [Subsequent conducted proof](../../ground/uhf/results/2026-10-03/conducted-proof/result.json)
 records gain-only forwarding scale16,250ms TX priming, explicit RX/TX error
 monitoring, simultaneous tones/telemetry and excluded limiter/diagnostic failures.
+
+## Unified operations — October 17, 2026
+
+- [x] Consolidate USB, EPS UART, LTE, UHF and payload into `ember` / `realtime`,
+  with one full MDB and shared dashboards. Preserve existing receiver ports.
+- [x] Route USB bench and payload commands through distinct, explicit streams;
+  verify no fallback/broadcast, response-domain isolation and shared duplicates
+  in an isolated runtime.
+- [x] Back up the stopped server's persistent data; verify original history
+  against a restored copy with no historical hardware links.
+- [x] Deploy the unified runtime, remove simulator auto-start, and update
+  current operator links. [Guide](../../ground/yamcs/OPERATIONAL.md).
+- [ ] Repeat a physical UHF/LTE session against `ember`; runtime routing and
+  archive tests do not requalify the radio paths.
+- [x] Verify live payload status, identity, heartbeat and 32-byte ping through
+  the shared instance; no USB command-route transmission.
+- [ ] Investigate payload Pi CAN boot probe exhaustion after a power cycle;
+  restarting the existing CAN initialization service recovered it on October 17.

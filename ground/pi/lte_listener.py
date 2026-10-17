@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Persistent, validated native EPS UDP -> Yamcs; this never starts a radio."""
+"""Persistent, validated native IHU telemetry UDP -> Yamcs; this never starts a radio."""
 import argparse
 from collections import OrderedDict
 from datetime import datetime, timezone
@@ -62,7 +62,7 @@ def run(args):
             received += 1
             logger.info(json.dumps(dict(received_utc=datetime.now(timezone.utc).isoformat(),
                                        peer=peer, hex=packet.hex(), decoded=decoded)))
-            print(f'Forwarded POWER_STATUS sequence={decoded["sequence"]} '
+            print(f'Forwarded {decoded["name"]} sequence={decoded["sequence"]} '
                   f'received={received} rejected={rejected} duplicates={duplicates}', flush=True)
     handler.close()
     print(f'Stopped received={received} rejected={rejected} duplicates={duplicates}', flush=True)

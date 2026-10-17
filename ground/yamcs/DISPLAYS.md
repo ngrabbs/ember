@@ -1,9 +1,14 @@
 # EMBER operator displays
 
+Operational update (October 17, 2026): select `ember` / `realtime` for USB,
+EPS UART, LTE, UHF and payload. [Shared deployment and history access](OPERATIONAL.md).
+Older isolated-instance setup/proof instructions below are historical; use
+operational preparation for the running Pi.
+
 [Open the Pi overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
 
 Yamcs calls these Displays. EMBER selects its own `ember_displays` bucket at
-instance level; the `myproject` reference keeps the default `displays` bucket.
+instance level; historical upstream data retains its own bucket.
 They use native Yamcs OPI/parameter-table formats, rather than a separate web
 application or a desktop-only profile. Laptop browser access is sufficient.
 
@@ -25,12 +30,15 @@ application or a desktop-only profile. Laptop browser access is sufficient.
 - Buttons open these tables, the EPS dashboard and native command console/history.
   Navigation buttons do not issue commands.
 
+- **Telemetry.opi / LTE.opi:** shared heartbeat, system status and EPS values from all arrival paths.
+- **Payload.opi / Devices.opi:** payload status and per-device observations in the same instance.
+
 ## Install and update
 
 On the Pi or m75q, from `ground/yamcs`:
 
 ```sh
-python3 prepare.py
+python3 prepare_operational.py --runtime /path/to/active/quickstart
 # Required once after introducing the instance displayBucket setting:
 docker compose restart yamcs
 # Once the server is ready:

@@ -56,30 +56,17 @@ radio, demodulate/decode the waveform, validate the original EMBER packet and
 hand those bytes to Yamcs. LTE's OAI/EPC chain performs a different role and is
 not required for the UHF path. Only one application may own LibreSDR at a time.
 
-## Isolated Yamcs input
+## Shared Yamcs input
 
-`prepare_yamcs.py` clones the existing prepared telemetry-only LTE instance
-configuration into `ember-uhf`, using `eps-uhf-in` UDP10019, the shared EMBER MDB,
-preprocessor and display bucket. It preserves existing instance files and archives.
-It refuses to overwrite a differing UHF config and saves the old instance list.
-No uplink/TC data link is configured for the first telemetry milestone.
+The operational receiver now feeds `ember` / `realtime` through `eps-uhf-in`
+on UDP 10019. Use [operational preparation](../yamcs/OPERATIONAL.md), keeping
+`compose.uhf.yaml` in the Compose overlays. Do not run the legacy isolated
+`prepare_yamcs.py` against a consolidated station; it refuses that operation.
 
-From the repository root on the Pi:
-
-```sh
-python3 ground/uhf/prepare_yamcs.py
-```
-
-Append `compose.uhf.yaml` to the existing `COMPOSE_FILE` value in
-`ground/yamcs/.env` (retain its USB override). From `ground/yamcs`, recreate only
-the Yamcs service with `docker compose up -d --no-deps yamcs`. This briefly
-restarts the server; it preserves the data volume and other services.
-Do not remove data volumes. The normal `ground/yamcs/prepare.py` can be followed
-by this additive preparation step whenever refreshing the lab.
-
-[UHF EPS display](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember-uhf__realtime)
-uses the existing display and dictionary, with UHF-only archive/processor state.
-A blank/stale display is expected until actual decoded RF packets arrive.
+Open [EPS](http://192.168.1.251:8090/telemetry/displays/files/EPS.opi?c=ember__realtime)
+or [Telemetry](http://192.168.1.251:8090/telemetry/displays/files/Telemetry.opi?c=ember__realtime).
+The historical UHF proof/replay and release fingerprints below describe the
+previous separate archive, which is retained for history mode.
 
 ## Acceptance and remaining work
 
@@ -748,13 +735,10 @@ bench tools; it is not a spacecraft scheduler or operational startup service.
 
 ### UHF dashboard freshness
 
-`prepare_yamcs.py` creates an instance-specific `mdb/ember-uhf.xml` from the
-shared EMBER MDB. POWER_STATUS gets a 30-second display allowance; Yamcs's
-default expiration tolerance of 1.9 makes parameter expiry 57 seconds after
-acquisition. This accommodates the transceiver's ten-second telemetry cycles.
-LTE/USB rates, packet fields, conversion validity and dashboards are unchanged.
-Re-run preparation after regenerating the shared MDB, then restart Yamcs to reload its cached configuration. For an already
-built runtime, copy the new instance YAML and MDB into `target/yamcs` too. Repeated preparation is safe.
+Operational preparation uses one shared `mdb/ember.xml` and a 30-second
+POWER_STATUS allowance (57-second Yamcs expiry with default tolerance 1.9).
+This policy now applies to all arrival paths. Do not regenerate an isolated
+UHF MDB on the consolidated station.
 
 This is a display freshness allowance, not a change to transmission cadence or
 measurement age. The finite BPSK capture still forwards after decoding; silence

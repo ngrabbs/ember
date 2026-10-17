@@ -118,7 +118,7 @@ between runs; renew COMMS `a` and explicitly start another IHU run as needed.
 COMMS `x` stops its service; IHU `uhf stop` stops future telemetry production.
 Receiver Ctrl-C saves results and closes reception. No receiver command starts TX.
 
-Open the existing EPS or health dashboards with `c=ember-uhf__realtime`, not
+Open the existing EPS or health dashboards with `c=ember__realtime`, not
 `ember__realtime`. Each `BPSK_RX_PACKET` line names a validated packet forwarded
 immediately to local Yamcs UDP10019. Four-second overlapping windows advance
 once per second; this introduces a few seconds of decoding latency, not a
@@ -156,7 +156,7 @@ cause. `Comms-Firmware.opi` shows the received release and full source commit.
 
 ### Team demo checklist
 
-Use the UHF Yamcs instance (`c=ember-uhf__realtime`):
+Use the UHF Yamcs instance (`c=ember__realtime`):
 
 - `EPS.opi`: live readout/conversion status and power measurements. Current
   calibration still depends on confirming the fitted sense resistors.
