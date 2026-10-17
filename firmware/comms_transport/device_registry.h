@@ -8,6 +8,8 @@
 #define DR_STALE_MS 30000u
 #define DR_COMMS_NODE 2
 #define DR_COMMS_INDEX 2
+#define DR_LTE_NODE 3
+#define DR_LTE_INDEX 3
 #define DR_COUNT 5
 #define DR_EPS_I2C_INDEX 0
 #define DR_CAN 1
@@ -16,12 +18,13 @@ static const struct dr_definition {
     const char *name;
     uint8_t interface,node,address;
     bool future;
+    uint16_t request_id,reply_id;
 } dr_devices[DR_COUNT]={
-    {"EPS",DR_I2C,0,0x68,false},
-    {"EPS_NEXT",DR_CAN,1,0,true},
-    {"COMMS",DR_CAN,DR_COMMS_NODE,0,false},
-    {"LTE",DR_CAN,3,0,false},
-    {"PAYLOAD",DR_CAN,4,0,true}
+    {"EPS",DR_I2C,0,0x68,false,0,0},
+    {"EPS_NEXT",DR_CAN,1,0,true,0,0},
+    {"COMMS",DR_CAN,DR_COMMS_NODE,0,false,CF_IHU_ID,CF_COMMS_ID},
+    {"LTE",DR_CAN,DR_LTE_NODE,0,false,CF_LTE_REQUEST_ID,CF_LTE_REPLY_ID},
+    {"PAYLOAD",DR_CAN,4,0,true,0,0}
 };
 enum {DR_NOT_SEEN,DR_ONLINE,DR_STALE,DR_FAULT};
 static const char *const dr_states[]={"NOT_SEEN","ONLINE","STALE","FAULT"};

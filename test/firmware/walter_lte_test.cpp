@@ -32,6 +32,11 @@ int main(void) {
     off();
     setup();assert(state==OFF && test_reset==LOW);
     auto p=request(UL_HELLO);receive(p);assert(returned().type==UL_HELLO_ACK);
+    modem.output.clear();p=request(UL_FIRMWARE_INFO);receive(p);
+    auto identity=returned();assert(identity.type==UL_FIRMWARE_INFO_ACK && fi_valid(identity.payload,identity.size));
+    assert(identity.payload[1]==3 && ul_u32(identity.payload+24)==boot);
+    assert(state==OFF && test_reset==LOW && modem.output.empty());
+    p.size=1;receive(p);assert(returned().type==UL_ERROR && state==OFF);
     p=request(UL_RF_WINDOW);p.size=4;ul_p32(p.payload,120);receive(p);
     assert(returned().type==UL_RF_WINDOW_ACK && state==BOOT_WAIT && test_reset==HIGH);
     uint32_t initial=deadline;receive(p);assert(returned().payload[0]==UL_ERR_BUSY && deadline==initial);

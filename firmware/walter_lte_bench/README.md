@@ -80,3 +80,16 @@ env PLATFORMIO_CORE_DIR=/media/ngrabbs/BACKUP-A/ember-walter-bridge/pio \
 
 Upload with `-t upload --upload-port` and Walter's verified serial-by-id path
 when its USB cable is connected. Do not target a Feather serial device.
+
+## Versioned identity —0.3.0 migration candidate
+
+`version` and `status` print this Walter application's release, source SHA,
+dirty flag and boot ID. The Sequans modem's own vendor firmware is separate.
+Set `EMBER_GIT_REVISION` and `EMBER_GIT_DIRTY` in the build environment; the
+PlatformIO pre-build script rejects missing identity. Version is read from
+VERSION. `UL_FIRMWARE_INFO` is read-only and leaves an OFF modem in reset.
+The LTE Feather can relay the identity to IHU; see the
+[CAN migration contract](../../system/interfaces/device_registry.md).
+
+This retains the shared native telemetry allowlist from pending LTE PR #20,
+including SYSTEM_STATUS, so migration does not remove that deployed capability.

@@ -179,7 +179,37 @@ def generate(destination):
     label('A stale value is historical evidence, not confirmation of the currently powered image.',28,600)
     ET.indent(display)
     ET.ElementTree(display).write(destination/'Comms-Firmware.opi',encoding='utf-8',xml_declaration=True)
-    groups={'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
+    # Separate observed LTE components; header boot belongs to the reporting IHU.
+    comms_xml=ET.tostring(display,encoding='unicode')
+    for prefix,title,filename in [('LTE_CAN_FIRMWARE','LTE CAN Feather','LTE-CAN-Firmware.opi'),('LTE_MODEM_FIRMWARE','Walter LTE modem MCU','LTE-Modem-Firmware.opi')]:
+        text=comms_xml.replace('COMMS_FIRMWARE',prefix).replace('COMMS firmware identity',title+' firmware identity')
+        text=text.replace('Reported by the running COMMS MCU over RF; last received identity.','Observed by IHU using read-only CAN/UART queries; cached identity.')
+        text=text.replace('COMMS boot ID','Reported device boot ID').replace(prefix+'_source_boot_id',prefix+'_reported_boot_id')
+        text=text.replace('Identity is sent once per enabled RF session after its first admitted request.','Query the device again after a reset or reflash; this is an observation, not a live poll.')
+        text=text.replace('A stale value is historical evidence, not confirmation of the currently powered image.','See LTE-Firmware.par for reported uptime and observation age.')
+        (destination/filename).write_text(text)
+    for child in list(display):
+        if child.tag=='widget':display.remove(child)
+    prop(display,'name','Device discovery')
+    label('Device discovery — IHU observations',28,28,1050,48,26,WHITE,True)
+    scripted('Waiting for registry snapshot','DEVICE_STATUS_payload_version','device-freshness.js',28,90,1060,40,16)
+    label('Device / interface',28,145,280);label('State at snapshot',330,145,330)
+    label('Last seen age (ms)',700,145,220);label('Timeouts',940,145,160)
+    for i,(prefix,title) in enumerate([('eps','EPS / I2C1'),('eps_next','EPS_NEXT / CAN A (planned)'),('comms','COMMS / CAN A'),('lte','LTE / CAN A'),('payload','PAYLOAD / CAN A (planned)')]):
+        y=195+i*78
+        label(title,28,y,300,40,15,WHITE)
+        value('DEVICE_STATUS_'+prefix+'_state',330,y,330,40,21)
+        e=label('—',700,y,220,40,18,WHITE)
+        path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/device-age.js',checkConnect='true',sfe='false',seoe='false')
+        for suffix in ('seen','age_ms'):ET.SubElement(path,'pv',trig='true').text='/ember/DEVICE_STATUS_'+prefix+'_'+suffix
+        value('DEVICE_STATUS_'+prefix+'_timeouts',940,y,150,40,20)
+    scripted('No snapshot received','DEVICE_STATUS_payload_version','sample-time.js',28,600,1000)
+    label('NOT_SEEN = no verified response since IHU boot; planned devices may be absent.',28,642,1060,25,12)
+    label('STALE = IHU last saw the device >=30 seconds ago. An expired snapshot is not a new device failure.',28,677,1060,25,12)
+    label('See Devices.par for device boot IDs, scan pause flag and full snapshot fields.',28,712,1060,25,12)
+    ET.indent(display)
+    ET.ElementTree(display).write(destination/'Devices.opi',encoding='utf-8',xml_declaration=True)
+    groups={'Devices.par':['DEVICE_STATUS'], 'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'], 'LTE-Firmware.par':['LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE'], 'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
     for filename,names in groups.items():
         parameters=[]
         # Pin header provenance to each message rather than the last packet of any kind.

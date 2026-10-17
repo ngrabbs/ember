@@ -6,6 +6,9 @@
 #define CF_FRAMES ((UL_WIRE_MAX + CF_CHUNK - 1) / CF_CHUNK)
 #define CF_IHU_ID 0x710
 #define CF_COMMS_ID 0x711
+/* Dedicated LTE bridge route; legacy SDRB/transceiver IDs stay unchanged. */
+#define CF_LTE_REQUEST_ID 0x720
+#define CF_LTE_REPLY_ID 0x721
 #define CF_CHAIN 0x72
 #define CF_CHAIN_ACK 0x73
 #define CF_BUSY 5

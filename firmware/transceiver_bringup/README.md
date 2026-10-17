@@ -359,3 +359,10 @@ and non-ignored untracked files dirty; ignored build outputs do not count.
 Capture immediately before copying source, with no intervening edits. Committing
 or cleaning the checkout affects the next build, never an already flashed image.
 Console version queries are for idle use; any console byte cancels active RF.
+
+## 0.23.0 candidate: LTE identity observation forwarding
+
+Adds IHU-sourced LTE_CAN_FIRMWARE/LTE_MODEM_FIRMWARE to the explicit UHF native
+allowlist. CAN request/reply IDs and bounded RF behavior stay unchanged. The
+installed0.22.0 demo image requires updating before these new packet types can
+be forwarded. See the [CAN migration contract](../../system/interfaces/device_registry.md).
