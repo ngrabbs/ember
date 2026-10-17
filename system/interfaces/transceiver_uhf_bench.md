@@ -21,15 +21,25 @@ attempt (possibly partial);6 means cancelled without an attempt. No reply claims
 a ground decode, LTE modem acceptance, or durable storage. A lost reply yields
 UNKNOWN, never automatic retransmission.
 
-Explicit COMMS console byte `g` starts ten seconds of collection on CAN A,
-with HELLO support, then drains at most four packets and stops. IHU commands
-`uhf heartbeat`, `uhf system`, `uhf eps` submit the existing telemetry producers.
-Wait for QUEUED before the next request. Submit during collection only: CAN is
-in standby during each bounded RF burst. Result replies are sent between bursts.
-An arbitrary console byte cancels collection or interrupts a burst; an interrupted
-burst is FAILED and remaining queued packets are CANCELLED. Each burst retains
-the 1.5-second payload deadline and independent 2-second mute alarm. CAN errors
-or an undelivered admission reply prevent the batch from being transmitted.
+COMMS **0.32.0** accepts valid IHU UHF requests through healthy idle CAN at
+boot, without a COMMS USB console lease. IHU **0.13.0** requires the local
+`uhf_telem` permission and a fresh COMMS HELLO. `uhf heartbeat`, `uhf system`,
+`uhf eps` or a bounded `uhf run` submit existing telemetry producers. Permission
+alone starts no generator. Admission is acknowledged before RF begins; no
+admission reply means no drain, and the fault latches until reboot.
+
+An admitted request is drained immediately, including one COMMS firmware
+identity burst before the requested native telemetry. After terminal results,
+CAN A returns to normal and RF remains muted until another request. Each burst
+retains the 1.5-second payload deadline and independent 2-second mute alarm.
+CAN is quiesced during RF, so wait for a terminal result before another manual
+send. An arbitrary COMMS console byte can cancel/interrupt a diagnostic burst.
+CAN, RF/clock or idle clock-disable failures latch the board unavailable until
+reboot. There is no boot-time RF, timed permission expiry, automatic producer,
+or retransmission after uncertain RF. Ground reception is separate.
+
+The `a` (timed) and `g` (batch) COMMS console tests remain diagnostic options;
+the historical gate they opened is not required for on-demand transmission.
 
 Queue capacity4; completed-result history8. Repeating an identical request
 returns its queued or completed status and does not retransmit. Reusing a
@@ -50,7 +60,10 @@ bytes, cancellation/failure history, peer/origin/request/digest/length validatio
 and hardware batch/abort tests recorded in the lab log. RF completion does not
 qualify modulation quality, range, or the receive chain.
 
-## Timed operating mode (COMMS v20 / IHU v5)
+## Historical timed operating mode (COMMS v20 / IHU v5)
+
+The manual COMMS lease below is superseded by 0.32.0. IHU 0.13.0 also removes
+the legacy automatic telemetry and LTE queue controls described here.
 
 Inspired by rt-ihu's separation of boot, downlink state control, telemetry
 collection and radio execution. This is still EMBER bench firmware, with no
@@ -85,7 +98,9 @@ accepts1–180 seconds; retained IQ is decoded and optionally forwarded after th
 capture ends. This is not yet a continuously running ground decoder service.
 Local RF completion and independent Yamcs byte verification remain separate.
 
-## Boot CAN service and expected-device discovery (v21 / IHU v7)
+## Historical boot CAN service (v21 / IHU v7)
+
+The idle UHF_DISABLED behavior below is superseded by 0.32.0.
 
 CAN A now listens at boot and after bounded RF service ends. Idle discovery,
 HELLO and ECHO do not enable RF. Idle UHF requests receive REJECTED status7
