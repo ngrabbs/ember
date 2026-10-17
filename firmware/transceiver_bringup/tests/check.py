@@ -101,6 +101,7 @@ static void adc_init(void) {}
 static void adc_gpio_init(unsigned p) {assert(p==27);}
 static void adc_select_input(unsigned p) {assert(p==1);}
 static unsigned adc_read(void) {return 2048;}
+static void tight_loop_contents(void) {}
 static void stdio_init_all(void) {}
 static void sleep_ms(int ms) {assert(ms==1000||ms==10||ms==1||ms==2||ms==20||ms==200); if(ms==1000 || (ms==1 && main_running && ++idle_sleeps==1000)) longjmp(done,1);}
 '''
@@ -109,6 +110,9 @@ harness = r'''
 #include "main.c"
 #undef main
 int main(void) {
+ rx_count=rx_late=0;assert(rx_capture());assert(rx_count==4096);
+ for(unsigned i=0;i<rx_count;++i)assert(rx_samples[i]==2048);
+ console_abort=true;assert(!rx_capture()&&rx_count==0);console_abort=false;
  for (int fault=0; fault<=3; ++fault) {
   call=0; fail_at=fault;
   assert(disable_clocks()==(fault==0));

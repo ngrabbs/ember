@@ -366,3 +366,33 @@ Adds IHU-sourced LTE_CAN_FIRMWARE/LTE_MODEM_FIRMWARE to the explicit UHF native
 allowlist. CAN request/reply IDs and bounded RF behavior stay unchanged. The
 installed0.22.0 demo image requires updating before these new packet types can
 be forwarded. See the [CAN migration contract](../../system/interfaces/device_registry.md).
+
+## Receive characterization (0.25.0)
+
+`e` captures an ADC baseline with all Si5351 outputs disabled. `r` enables only
+CLK1 at nominal 145 MHz (PLLA 870 MHz /6, 4 mA) for the RX tripler's 435 MHz LO.
+Both are explicit, bounded 10-second tests; any console byte aborts. TX_ACTIVE
+and BPSK_DATA remain low. RX_ACTIVE is only the indicator, not the antenna switch;
+TX_ACTIVE low selects the RX antenna branch. CAN application service pauses during
+these bench windows and returns through the existing main-loop reopen path.
+
+After one second of settling, each test captures 4096 ADC1/GP27 samples at a
+nominal 8 kS/s using software pacing. After verified shutdown, `[rx_adc]` reports
+min/max/sum, elapsed microseconds, missed timing targets (>10 us), and 3 hexadecimal
+digits per sample. Timing misses must be checked before using spectral results;
+this is diagnostic acquisition, not a production demodulator. A failed or aborted
+window does not emit a valid capture. Shutdown independently attempts output-disable
+and power-down on CLK0/1/2, even after I2C failure. No receive packet is decoded or
+executed, and no TX window is opened by these commands.
+
+Host validation:
+
+```sh
+cc -std=c11 -Wall -Wextra -Werror -Wno-unused-function -I firmware/transceiver_bringup firmware/transceiver_bringup/tests/rx.c -o /tmp/ember-rx-test
+/tmp/ember-rx-test
+python3 firmware/transceiver_bringup/tests/check.py
+```
+
+The clock plan follows [Skyworks AN619 rev 0.8](https://www.skyworksinc.com/-/media/Skyworks/SL/documents/public/application-notes/AN619.pdf).
+Register readback does not establish actual LO drive, frequency, or RF silence.
+Use a low-level conducted source and document attenuation before injecting RF.

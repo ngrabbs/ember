@@ -30,6 +30,7 @@ static bool disable_clocks(void) {
 }
 
 #include "clock_test.h"
+#include "rx_test.h"
 #include "bpsk_packet.h"
 #include "bpsk_emit.h"
 #include "rf_bridge.h"
@@ -45,6 +46,40 @@ static void bpsk_test(unsigned drive) {
     printf("[bpsk] drive_mA=%u\n",2*(drive+1));
     bool ok=clock_window_drive(true,false,bpsk_emit,drive);
     printf("[bpsk] complete=%u frame_bytes=%u TX=0\n",ok,(unsigned)size);
+}
+
+/* Diagnostic acquisition only: software paced, timestamps expose scheduling jitter.
+ * Dump after verified clock shutdown, never while the LO is enabled. */
+static uint16_t rx_samples[4096];
+static unsigned rx_count, rx_late;
+static uint64_t rx_elapsed;
+static bool rx_capture(void) {
+    uint64_t start=time_us_64(), next=start;
+    for (rx_count=0; rx_count<4096; ++rx_count) {
+        if (getchar_timeout_us(0)>=0) return false;
+        while (time_us_64()<next) tight_loop_contents();
+        if (time_us_64()-next>10) ++rx_late;
+        rx_samples[rx_count]=adc_read();
+        next+=125; /* 8kS/s nominal; enough for the ~2.1kHz analog LPF. */
+    }
+    rx_elapsed=time_us_64()-start;
+    return true;
+}
+static void rx_test(bool lo) {
+    rx_count=rx_late=0; rx_elapsed=0;
+    printf("[rx_test] prepare lo=%u CLK1=145MHz tripler_target=435MHz max10s TX=0; any byte aborts\n",lo);
+    bool ok=rx_window(lo,rx_capture);
+    if (!ok) return; /* Do not label an incomplete/faulted capture valid. */
+    unsigned low=4095,high=0; uint32_t sum=0;
+    for(unsigned i=0;i<rx_count;++i) {
+        if(rx_samples[i]<low)low=rx_samples[i];
+        if(rx_samples[i]>high)high=rx_samples[i];
+        sum+=rx_samples[i];
+    }
+    printf("[rx_adc] n=%u interval_us=125 elapsed_us=%llu late_gt10us=%u min=%u max=%u sum=%lu hex=",
+           rx_count,(unsigned long long)rx_elapsed,rx_late,low,high,(unsigned long)sum);
+    for(unsigned i=0;i<rx_count;++i)printf("%03x",rx_samples[i]);
+    printf("\n");
 }
 
 /* Data-input measurement only: never enables a clock or RF path. */
@@ -367,6 +402,7 @@ int main(void) {
             printf("[firmware] version=%s git=%s dirty=%u boot=%lu\n",FW_VERSION,FW_GIT,FW_DIRTY,(unsigned long)responder_boot);
             clock_status();
         }
+        if (command == 'r' || command == 'e') rx_test(command == 'r');
         if (command == 'd') data_input_test();
         if (command == 'b') bpsk_test(0);
         if (command == 'B') bpsk_test(1);
@@ -410,7 +446,7 @@ int main(void) {
         afailed |= !aok; bfailed |= !bok;
         if (afailed) gpio_put(8, false);
         if (bfailed) gpio_put(9, false);
-        printf("[y24-safe-v24] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
+        printf("[y24-safe-v25] #%u TX=0 RX=0 CAN_A=listen CAN_B=standby "
                "Si5351_disable=%s ADC1_raw=%u\n", ++count,
                clocks_disabled ? "verified_0xFF" : "NOT_VERIFIED",
                (unsigned)adc_read());
