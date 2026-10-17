@@ -414,12 +414,13 @@ Host simulation covers a real IF at 1.0/1.391/1.7 kHz with the nominal analog LP
 quantization and noise, plus timing/capture-integrity failures and noise rejection.
 Hardware packet reception has not yet been demonstrated.
 
-### 0.27.0 captured onboard DBPSK diagnostic
+### 0.27.1 captured onboard DBPSK diagnostic
 
 `R` still acquires 32768 samples in the existing bounded RX window, then verifies
 clock shutdown and dumps the raw capture. It now also attempts a fixed-memory
 integer DBPSK decode after shutdown. Bad sample timing or ADC clipping rejects
-the capture. Decoding searches 400–2600 Hz in 25 Hz increments and eight timing
+the capture. Decoding tries the intended 1200 Hz IF first, then searches outward within
+400–2600 Hz in 25 Hz increments and eight timing
 hypotheses, stops at the first outer CRC32/native CRC16-valid telemetry frame,
 and has a three-second deadline checked between frequency candidates. Any
 console byte cancels decoding. CAN service resumes after this diagnostic.

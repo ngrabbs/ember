@@ -222,3 +222,20 @@ execution, sensitivity qualification, or a statistically meaningful reliability
 test. No fixtures were forwarded to Yamcs. Next: onboard demodulation and frame
 validation, followed by a bounded read-only command test. Frequency acquisition
 and tolerance remain open; these tests used a manually selected source offset.
+
+## Onboard decoder: initial timeout and search-order correction
+
+COMMS 0.27.0 (e4c0eba, clean) was installed after verified full-flash backup.
+The first live sequence 1911 capture was timing-valid with verified shutdown,
+but the ascending 400 Hz search exhausted its three-second decode budget
+(found=0, elapsed 3.011220 s). CAN A returned to normal. The exact saved capture
+subsequently decoded byte-for-byte on the host using the C decoder at 1200 Hz.
+This was a runtime acquisition-budget failure, not evidence of a failed RF path.
+
+0.27.1 prioritizes the deliberately selected 1200 Hz IF, then expands outward
+in 25 Hz steps, preserving the time limit and capture-only/no-dispatch behavior.
+Host tests pass three earlier hardware captures, twelve synthetic timing/frequency
+cases, bad outer/native CRCs, command rejection, silence, noise and clipping.
+The decoder also checks invalid size and cancellation; address/undefined-behavior
+sanitizers report no errors. Pico build uses warnings as errors. Actual hardware
+runtime of the corrected search is checked separately below.

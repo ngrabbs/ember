@@ -48,7 +48,12 @@ static bool rd_decode(const uint16_t *samples,size_t count,rd_result *out,rd_con
  uint32_t sum=0;
  for(size_t i=0;i<count;i++){if(!samples[i]||samples[i]>=4095)return false;sum+=samples[i];}
  int32_t mean=(int32_t)(sum/count);
- for(unsigned hz=400;hz<=2600;hz+=25){
+ /* Try the intended 1.2 kHz IF first, then expand in 25 Hz steps. */
+ for(unsigned candidate=0;candidate<=112;candidate++){
+  int offset=(int)((candidate+1)/2)*25;
+  int trial=1200+(candidate%2 ? -offset : offset);
+  if(trial<400||trial>2600)continue;
+  unsigned hz=(unsigned)trial;
   if(proceed&&!proceed())return false;
   /* Single diagnostic owner; keep workspace off the Pico stack. */
   static rd_lane lanes[8];memset(lanes,0,sizeof(lanes));uint32_t phase=0,step=(uint32_t)(((uint64_t)hz<<32)/8000);
