@@ -222,3 +222,16 @@ planned. STALE is assigned by IHU after30 seconds without evidence; FAULT is a
 local interface/read fault. Yamcs snapshot expiration (90-second expected
 interval under the existing processor policy) is separate from device state.
 RF-off means the display eventually expires and retains historical rows.
+
+Device downlink hardware validation (October17): IHU0.9.0 and COMMS0.24.0
+installed with verified flash and full prior-image backups; both reported clean
+source `f4a6a0a881d2be75463024e722dbe3880b54460e`. A60-second,10-second-period
+run produced six complete four-packet cycles plus COMMS identity. All25 packets
+matched transmitter, receiver and Yamcs archive bytes. All six registry snapshots
+showed EPS, COMMS and LTE ONLINE, with fresh LTE observations between cycles;
+EPS_NEXT/PAYLOAD remained NOT_SEEN. Receiver100-second session had no errors;
+final IHU CAN counters had zero failures/timeouts/errors and no pending work.
+RF stopped with TX=0 and Si5351 outputs verified disabled. Devices.opi was
+visually inspected with real telemetry. STALE/FAULT/never-seen/wrap semantics
+were host-tested; no physical device was disconnected to induce a live failure.
+Receiver2.2.0 and Yamcs assets1.2.0 match checked-in manifests.
