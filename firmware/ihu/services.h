@@ -20,14 +20,14 @@ typedef struct {
 #define ihu_can_poll_tx mcp_poll_tx
 #define ihu_can_register mcp_register
 static ihu_sensor_result host_sensor;
-static bool host_sensor_ready;
+static bool host_sensor_ready,host_sensor_defer;
 static inline bool ihu_sensor_submit(bool adc,bool enable){
     memset(&host_sensor,0,sizeof(host_sensor));host_sensor.enable=enable;
     host_sensor.ok=adc?eps_force_adc(enable,&host_sensor.before,&host_sensor.after):eps_read(&host_sensor.raw,&host_sensor.failed);
     host_sensor.sampled=to_ms_since_boot(get_absolute_time());host_sensor_ready=true;return true;
 }
 static inline bool ihu_sensor_receive(ihu_sensor_result *r){
-    if(!host_sensor_ready)return false;
+    if(!host_sensor_ready || host_sensor_defer)return false;
     *r=host_sensor;host_sensor_ready=false;return true;
 }
 static inline void ihu_runtime_status(void){}

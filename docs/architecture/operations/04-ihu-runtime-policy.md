@@ -1,6 +1,9 @@
 # IHU runtime modes and output policy
 
-Implementation: IHU CAN Feather **0.14.0**, serial bench bridge **0.4.0**.
+Source candidate: IHU CAN Feather **0.15.0**, serial bench bridge **0.4.0**.
+The IHU now uses [FreeRTOS service tasks](../../firmware/rtos_design.md) with
+one application owner for mode/protocol state. Hardware acceptance is pending;
+the older deployment records below do not qualify the new scheduler.
 This is the approved ground-test cleanup. Flight operations remain inactive
 stubs; the flight requirements in the other three tables remain a draft.
 This policy applies to the active application in `firmware/ihu`.

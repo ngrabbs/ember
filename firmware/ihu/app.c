@@ -146,9 +146,10 @@ static void uplink_receive(const cf_frame *frame,uint32_t now){
     ember_command(&uplink_engine,p.payload,p.size,now,uplink_emit,&p);
 }
 static void pump_tx(uint32_t now) {
-    uint32_t errors=can.tx_fail+can.tx_timeout;ihu_can_poll_tx(&can,now);
-    if(can.tx_fail+can.tx_timeout!=errors) {
-        record_fault(3,now);
+    static uint32_t observed_errors;ihu_can_poll_tx(&can,now);
+    uint32_t errors=can.tx_fail+can.tx_timeout;
+    if(errors!=observed_errors) {
+        observed_errors=errors;record_fault(3,now);
         output.active=false;LOG("CAN_TX outcome=UNKNOWN reason=FRAME_TX_FAILED\n");
         // Pending application request times out; a CAN hardware outcome is not an app result.
         return;
@@ -360,7 +361,7 @@ static void uhf_run_pump(uint32_t now) {
     if(uhf_run.state==UR_EXPIRED)LOG("UHF_RUN EXPIRED submitted=%" PRIu32 " cycles=%" PRIu32 "\n",uhf_run.submitted,uhf_run.cycles);
     if(stage<0)return;
     if(stage<2)health_telemetry(stage==1,2);else if(stage==2)(void)eps_telemetry(2);else device_telemetry();
-    if(pending.active && uhf_is_request(pending.packet.type))ur_submitted(&uhf_run);
+    if(pending.active && uhf_is_request(pending.packet.type) && stage!=2)ur_submitted(&uhf_run);
     else if(!sensor_job.active) {ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT producer_or_submission\n");}
 }
 static void devices_status(void) {
@@ -536,15 +537,15 @@ static void command_impl(const char *s) {
     if(!strncmp(s,"output ",7) || !strcmp(s,"outputs") || !strncmp(s,"mode",4) || !strcmp(s,"faults")){
         policy_command(s);return;
     }
-    if(sensor_job.active && strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"help") &&
+    if(sensor_job.active && strcmp(s,"rtos") && strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"help") &&
        strcmp(s,"devices") && strcmp(s,"uhf stop")) {LOG("REJECT reason=SENSOR_BUSY\n");return;}
     if(!ip_test(&policy) && strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"help") && strcmp(s,"rtos") && strcmp(s,"devices") && strcmp(s,"eps json")){
         LOG("REJECT reason=FLIGHT_ROUTINE_STUB\n");return;
     }
-    if(fire_uplink.active && strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"help")){
+    if(fire_uplink.active && strcmp(s,"rtos") && strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"help")){
         LOG("REJECT reason=RF_FIRE_CHECK_ACTIVE\n");return;
     }
-    if(uhf_run.state==UR_RUNNING && strcmp(s,"status") && strcmp(s,"devices") && strcmp(s,"uhf stop")) {
+    if(uhf_run.state==UR_RUNNING && strcmp(s,"rtos") && strcmp(s,"status") && strcmp(s,"devices") && strcmp(s,"uhf stop")) {
         LOG("REJECT reason=UHF_RUN_ACTIVE use_status_or_uhf_stop\n");return;
     }
     if(!strcmp(s,"version"))firmware_status();

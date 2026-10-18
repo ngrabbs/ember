@@ -20,11 +20,20 @@ extern void ihu_runtime_panic(unsigned reason);
 #define configUSE_COUNTING_SEMAPHORES 1
 #define configUSE_TASK_NOTIFICATIONS 1
 #define configTASK_NOTIFICATION_ARRAY_ENTRIES 1
-#define configUSE_TIMERS 0
+/* RP2040 SDK synchronization interop defers event-group ISR wakeups. */
+#define configUSE_TIMERS 1
+#define configTIMER_TASK_PRIORITY 4
+#define configTIMER_QUEUE_LENGTH 16
+#define configTIMER_TASK_STACK_DEPTH 256
+#define INCLUDE_xTimerPendFunctionCall 1
 #define configUSE_IDLE_HOOK 1
 #define configUSE_TICK_HOOK 0
 #define configCHECK_FOR_STACK_OVERFLOW 2
 #define configUSE_MALLOC_FAILED_HOOK 0
+/* snprintf/sscanf run in both the application and USB task. */
+#if defined(PICO_RP2040) && PICO_RP2040
+#define configUSE_NEWLIB_REENTRANT 1
+#endif
 #define configUSE_TRACE_FACILITY 1
 #define configUSE_STATS_FORMATTING_FUNCTIONS 0
 #define configGENERATE_RUN_TIME_STATS 0

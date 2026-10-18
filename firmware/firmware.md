@@ -2,7 +2,7 @@
 
 | Application | Source and build guide | Runtime |
 |---|---|---|
-| IHU | [IHU firmware](ihu/README.md) | Pico SDK, IHU CAN Feather; target/output `ihu` |
+| IHU | [IHU firmware](ihu/README.md) | FreeRTOS 11.2.0 + Pico SDK candidate, IHU CAN Feather; target/output `ihu` |
 | Walter MCU | [Walter MCU firmware](walter_mcu/README.md) | Pico SDK, LTE CAN Feather; target/output `walter_mcu` |
 | Transceiver | [Transceiver firmware](transceiver/README.md) | Pico SDK, original Pico UHF transceiver |
 | Walter | [Walter firmware](walter/README.md) | ESP32-S3, UART-controlled LTE-M modem |

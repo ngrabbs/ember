@@ -7,8 +7,8 @@ The LTE CAN Feather has its own [Walter MCU application](../walter_mcu/README.md
 project/target/output `walter_mcu`. Walter ESP32-S3 firmware remains in
 [`firmware/walter`](../walter/README.md); the original-Pico UHF application is
 [transceiver](../transceiver/README.md). Configure fresh build directories.
-Each application owns its source and VERSION file; the split retains version
-0.14.1 and does not flash hardware. Shared board/build configuration lives in
+Each application owns its source and VERSION file. The source split retained
+0.14.1; the IHU now has a 0.15.0 FreeRTOS candidate. Shared board/build configuration lives in
 [`shared/pico_can`](../shared/pico_can/README.md).
 
 ```sh
@@ -20,6 +20,48 @@ cmake --build build/ihu --target ihu -j4
 
 For the inactive FLIGHT stub build, use a separate build directory with
 `-DIHU_FLIGHT_CONFIGURATION=ON`. No LTE Feather target is generated here.
+
+## FreeRTOS candidate — 0.15.0
+
+The IHU now uses six statically allocated, preemptively scheduled FreeRTOS
+11.2.0 tasks on core 0: supervisor, CAN service, command/mode application actor,
+sensors, schedule and USB console. Core 1 is unused. Policy, peer/request
+correlation, discovery and telemetry state have one application owner;
+MCP25625/SPI1, EPS/I2C1 and USB I/O have independent workers. Slow EPS or USB
+work cannot hold the CAN hardware service in the old main loop.
+
+The kernel is fetched by CMake from upstream commit
+`0adc196d4bd52a2d91102b525b0aafc1e14a2386`, with a verified archive SHA256.
+The first configure requires network access; later builds can use the cached
+archive/source. No kernel copy is restored under `firmware/`.
+The RP2040 port requires the kernel timer service for SDK synchronization;
+application scheduling uses task notifications/deadlines. Assert and stack
+checks remain enabled. The supervisor checks task and idle progress every
+100 ms; stale progress triggers a recorded reset. It alone feeds the internal
+watchdog. External watchdog GPIO/JP1 behavior is not implemented here.
+
+`rtos` reports kernel/core/tick information, queue/drop/record counters,
+reset diagnostics and task stack high-water marks. Task memory and host tests
+are not hardware timing qualification. [Architecture and acceptance gates](../../docs/firmware/rtos_design.md).
+
+EPS JSON/ADC/telemetry now completes asynchronously through the sensor worker.
+A concurrent target/mode/other active command is refused with SENSOR_BUSY or
+BUSY. Read-only status and output OFF remain available. A delayed sample cannot
+revive telemetry after OFF, stop or expiry. OFF/stop bypasses normal ingress
+backlogs; older queued commands are rejected as CANCELLED_BY_STOP. Whole reply
+records and optional logs use bounded queues. Quiet boot, six flags, packet
+formats and solicited RF reply exceptions remain unchanged.
+
+Software tests and ARM builds are available; no IHU hardware has been flashed.
+Actual CAN latency, USB backpressure, watchdog/reset recovery, RF regression
+and endurance acceptance remain required before treating 0.15.0 as deployed.
+
+To include the real FreeRTOS POSIX scheduler integration test on a native host:
+
+```sh
+EMBER_FREERTOS_KERNEL_PATH=/path/to/FreeRTOS-Kernel-V11.2.0 \
+  python3 -m unittest discover -s tests/ground
+```
 
 ## transceiver firmware request — 0.14.0
 

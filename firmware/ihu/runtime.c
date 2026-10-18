@@ -27,7 +27,7 @@ static uint32_t can_drops,reply_drops,log_drops,record_overflows,can_high,comman
 static bool can_ready,sensor_ready,app_ready,schedule_due;
 static ihu_controls controls;
 static TaskHandle_t app_handle;
-static QueueHandle_t can_calls,can_replies,can_frames,sensor_calls,sensor_results,commands,replies,logs;
+static QueueHandle_t can_calls,can_replies,can_frames,sensor_calls,sensor_results,commands,replies,control_replies,logs;
 #define STATIC_QUEUE(name,count,type) \
     static StaticQueue_t name##_control; \
     static uint8_t name##_storage[(count)*sizeof(type)]; \
@@ -70,9 +70,10 @@ bool ihu_sensor_receive(ihu_sensor_result *r){return xQueueReceive(sensor_result
 /* Only the application actor builds fragmented printf records. USB and workers
  * may enqueue already complete records through the independent queues. */
 static usb_record building;
-static bool building_reply,discard_record;
+static bool building_reply,discard_record,urgent_reply;
 static void enqueue_record(const usb_record *r,bool reply){
-    if(xQueueSend(reply?replies:logs,r,0)!=pdPASS)increment(reply?&reply_drops:&log_drops);
+    QueueHandle_t destination=reply?(urgent_reply?control_replies:replies):logs;
+    if(xQueueSend(destination,r,0)!=pdPASS)increment(reply?&reply_drops:&log_drops);
 }
 void ihu_vprintf(bool reply,const char *fmt,va_list args){
     char part[IHU_RECORD_SIZE]={0};int length=vsnprintf(part,sizeof(part),fmt,args);
@@ -92,7 +93,7 @@ void ihu_vprintf(bool reply,const char *fmt,va_list args){
 }
 static void usb_error(const char *message){
     usb_record record={0};int n=snprintf(record.text,sizeof(record.text),"REJECT reason=%s\n",message);
-    if(n>0 && (size_t)n<sizeof(record.text)){record.size=(uint16_t)n;enqueue_record(&record,true);}
+    if(n>0 && (size_t)n<sizeof(record.text)){record.size=(uint16_t)n;enqueue_record(&record,false);}
 }
 static StaticTask_t task_control[IHU_TASKS];
 static TaskHandle_t handles[IHU_TASKS];
@@ -155,7 +156,7 @@ static void run_urgent(uint32_t *cancel_before){
     ihu_controls copy;taskENTER_CRITICAL();copy=controls;controls.pending=0;taskEXIT_CRITICAL();
     static const char *const lines[]={"output cli_debug off","output cli_telem off","output umb_debug off","output umb_telem off","output uhf_telem off","output lte_telem off","uhf stop"};
     for(unsigned i=0;i<7;i++)if(copy.pending&(1u<<i)){
-        ihu_app_command(lines[i]);if(copy.sequence[i]>*cancel_before)*cancel_before=copy.sequence[i];
+        urgent_reply=true;ihu_app_command(lines[i]);urgent_reply=false;if(copy.sequence[i]>*cancel_before)*cancel_before=copy.sequence[i];
     }
 }
 static void application_task(void *arg){
@@ -171,7 +172,9 @@ static void application_task(void *arg){
     for(;;){
         run_urgent(&cancel_before);
         ihu_command command;
-        if(xQueueReceive(commands,&command,0)==pdPASS){
+        /* Maximum normal response is the 17-record fault dump. Keep 32 slots
+         * free before starting a command, leaving room for correlated results. */
+        if(uxQueueSpacesAvailable(replies)>=32 && xQueueReceive(commands,&command,0)==pdPASS){
             if(command.sequence<cancel_before)usb_error("CANCELLED_BY_STOP");
             else ihu_app_command(command.line);
         }
@@ -190,7 +193,7 @@ static void schedule_task(void *arg){
 }
 static void submit_command(ihu_command *command){
     taskENTER_CRITICAL();bool numbered=ihu_number_command(&controls,command);taskEXIT_CRITICAL();
-    if(!numbered){usb_error("COMMAND_SEQUENCE_EXHAUSTED");return;}
+    if(!numbered){usb_error("COMMAND_SEQUENCE_EXHAUSTED");wake_app();return;}
     if(ihu_urgent_index(command->line)<0 && xQueueSend(commands,command,0)!=pdPASS)usb_error("COMMAND_QUEUE_FULL");
     unsigned used=uxQueueMessagesWaiting(commands);
     taskENTER_CRITICAL();if(used>command_high)command_high=used;taskEXIT_CRITICAL();wake_app();
@@ -208,7 +211,8 @@ static void usb_task(void *arg){
             } else if(!discard){if(ch && used+1<sizeof(command.line))command.line[used++]=(char)ch;else discard=true;}
         }
         if(!outgoing.size){
-            if(xQueueReceive(replies,&outgoing,0)!=pdPASS)(void)xQueueReceive(logs,&outgoing,0);
+            if(xQueueReceive(control_replies,&outgoing,0)!=pdPASS &&
+               xQueueReceive(replies,&outgoing,0)!=pdPASS)(void)xQueueReceive(logs,&outgoing,0);
             sent=0;
         }
         if(outgoing.size){
@@ -243,13 +247,14 @@ void ihu_runtime_start(void){
     STATIC_QUEUE(can_frames,IHU_CAN_RX_QUEUE,cf_frame);
     STATIC_QUEUE(sensor_calls,1,sensor_call);STATIC_QUEUE(sensor_results,1,ihu_sensor_result);
     STATIC_QUEUE(commands,IHU_COMMAND_QUEUE,ihu_command);
-    STATIC_QUEUE(replies,IHU_REPLY_QUEUE,usb_record);STATIC_QUEUE(logs,IHU_LOG_QUEUE,usb_record);
+    STATIC_QUEUE(replies,IHU_REPLY_QUEUE,usb_record);STATIC_QUEUE(control_replies,IHU_CONTROL_REPLY_QUEUE,usb_record);
+    STATIC_QUEUE(logs,IHU_LOG_QUEUE,usb_record);
     handles[IHU_SUPERVISOR]=xTaskCreateStatic(supervisor_task,"supervisor",512,NULL,5,supervisor_stack,&task_control[IHU_SUPERVISOR]);
     handles[IHU_CAN]=xTaskCreateStatic(can_task,"can_service",1024,NULL,4,can_stack,&task_control[IHU_CAN]);
     handles[IHU_APP]=xTaskCreateStatic(application_task,"command_mode",2048,NULL,3,app_stack,&task_control[IHU_APP]);
     handles[IHU_SENSOR]=xTaskCreateStatic(sensor_task,"sensors",512,NULL,2,sensor_stack,&task_control[IHU_SENSOR]);
     handles[IHU_SCHEDULE]=xTaskCreateStatic(schedule_task,"schedule",256,NULL,2,schedule_stack,&task_control[IHU_SCHEDULE]);
-    handles[IHU_USB]=xTaskCreateStatic(usb_task,"usb_console",1024,NULL,1,usb_stack,&task_control[IHU_USB]);
+    handles[IHU_USB]=xTaskCreateStatic(usb_task,"usb_console",1024,NULL,2,usb_stack,&task_control[IHU_USB]);
     app_handle=handles[IHU_APP];
     for(unsigned i=0;i<IHU_TASKS;i++)configASSERT(handles[i]);
     watchdog_enable(4000,true);
