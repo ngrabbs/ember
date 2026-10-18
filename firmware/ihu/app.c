@@ -508,7 +508,9 @@ static void sensor_complete(const ihu_sensor_result *r){
     else if(kind==SENSOR_ADC)LOG("EPS_ADC outcome=%s requested=%d config_before=%04x config_after=%04x\n",r->ok?"VERIFIED":"UNKNOWN",r->enable,r->before,r->after);
     else if(!r->ok){
         LOG("EPS_READ outcome=FAILED register=%02x reason=I2C_OR_PEC\n",r->failed);
-        if(from_run){ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT producer_or_submission\n");}
+        if(from_run && uhf_run.state==UR_RUNNING && sensor_job.run==run_generation){
+            ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT producer_or_submission\n");
+        }
     } else if(kind==SENSOR_JSON){
         LOG("{\"profile\":\"ltc4162-l-readout-v1\",\"uptime_ms\":%" PRIu32 ",\"registers\":{",r->sampled);
         bool first=true;

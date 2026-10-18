@@ -23,6 +23,10 @@ int main(void){
  uhf_run_pump(fake_now);assert(sensor_job.active && uhf_run.stage==2);
  command("uhf stop");host_sensor.ok=true;host_sensor_defer=false;ihu_app_step(false);
  assert(!pending.active && !output.active && uhf_run.state==UR_STOPPED);
+ host_sensor_defer=true;command("uhf run 60 10");uhf_run.stage=2;uhf_run.cycle=true;
+ uhf_run_pump(fake_now);assert(sensor_job.active);
+ command("uhf stop");host_sensor.ok=false;host_sensor_defer=false;ihu_app_step(false);
+ assert(uhf_run.state==UR_STOPPED && !pending.active); /* A late failure cannot resurrect a stopped run as FAULT. */
  host_sensor_defer=true;command("uhf run 1 5");uhf_run.stage=2;uhf_run.cycle=true;
  uhf_run_pump(fake_now);assert(sensor_job.active);
  fake_now+=1000;host_sensor.ok=true;host_sensor_defer=false;ihu_app_step(false);

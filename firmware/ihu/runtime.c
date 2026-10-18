@@ -104,7 +104,8 @@ void ihu_runtime_status(void){
     overflows=record_overflows;high_rx=can_high;high_command=command_high;taskEXIT_CRITICAL();
     ihu_printf(true,"RTOS kernel=%s cores=1 preemptive=1 tick_hz=%u can_rx_drops=%" PRIu32 " reply_drops=%" PRIu32 " log_drops=%" PRIu32 " record_overflows=%" PRIu32 " can_rx_high=%" PRIu32 " command_high=%" PRIu32 " reset_reason=%08" PRIx32 "\n",
         tskKERNEL_VERSION_NUMBER,(unsigned)configTICK_RATE_HZ,dropped_rx,dropped_reply,dropped_log,overflows,high_rx,high_command,watchdog_hw->scratch[0]);
-    for(unsigned i=0;i<IHU_TASKS;i++)ihu_printf(true,"RTOS_TASK id=%u stack_free_words=%u\n",i,(unsigned)uxTaskGetStackHighWaterMark(handles[i]));
+    static const char *const names[]={"supervisor","can_service","command_mode","sensors","schedule","usb_console"};
+    for(unsigned i=0;i<IHU_TASKS;i++)ihu_printf(true,"RTOS_TASK name=%s stack_free_words=%u\n",names[i],(unsigned)uxTaskGetStackHighWaterMark(handles[i]));
 }
 static void publish_can(mcp_state *state){
     can_snapshot next={.state=*state};
