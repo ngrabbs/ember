@@ -52,9 +52,14 @@ backlogs; older queued commands are rejected as CANCELLED_BY_STOP. Whole reply
 records and optional logs use bounded queues. Quiet boot, six flags, packet
 formats and solicited RF reply exceptions remain unchanged.
 
-Software tests and ARM builds are available; no IHU hardware has been flashed.
-Actual CAN latency, USB backpressure, watchdog/reset recovery, RF regression
-and endurance acceptance remain required before treating 0.15.0 as deployed.
+Flashed and readback-verified on IHU `DF641455DB822427` on 2026-10-17.
+Initial EPS, CAN, LTE diagnostics, local UHF completion, USB load/closed-console
+and intentional reboot-default checks passed. Left SAFE/GROUND_TEST, all outputs
+OFF, zero faults and zero drop counters after the intentional reboot, and the existing screen
+console restored. [Deployment evidence](../../system/ground_station/evidence/ihu-freertos-20261017/deployment.json).
+Maximum CAN latency/bursts, hardware watchdog fault recovery, independent ground
+RF command/reception and endurance acceptance remain pending. Payload checking
+was skipped because its Pi CAN service is failed and `can0` is absent.
 
 To include the real FreeRTOS POSIX scheduler integration test on a native host:
 

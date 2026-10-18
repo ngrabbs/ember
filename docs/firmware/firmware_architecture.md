@@ -12,4 +12,5 @@ AMSAT rt-ihu and records the 0.15.0 candidate's six static tasks, single
 application actor, bounded services and remaining hardware acceptance gates.
 `firmware/ihu/app.c` owns policy/protocol/telemetry state;
 `firmware/ihu/runtime.c` owns RTOS services. Other MCU applications retain their
-existing runtimes. The candidate has not yet been flashed.
+existing runtimes. The candidate is deployed on the bench with initial smoke checks passed; full
+hardware/RF acceptance remains pending.

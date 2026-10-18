@@ -3,8 +3,9 @@
 [Operator guides](README.md) · [Transmission matrix](#transmission-matrix) · [Mode/output matrix and entry gates](../architecture/operations/04-ihu-runtime-policy.md)
 
 This guide describes the IHU **0.15.0 FreeRTOS candidate**, transceiver **0.33.0**,
-and bench bridge **0.4.0**. The candidate has not been flashed; earlier deployment
-records below describe the previously tested hardware.
+and bench bridge **0.4.0**. The candidate is flashed on the bench with [initial checks recorded](../../system/ground_station/evidence/ihu-freertos-20261017/deployment.json);
+full hardware/RF acceptance remains pending. Older deployment records below
+describe their respective earlier hardware tests.
 The earlier IHU 0.13.0 [deployment record](../../system/ground_station/evidence/ihu-0.13.0-20261017/deployment.json)
 is retained separately. Earlier 0.12.0 RF validation is
 recorded in the [fire-check runbook](../../ground/yamcs/FIRE_CHECK.md).

@@ -6,8 +6,8 @@
 **IHU 0.15.0 candidate, 2026-10-17.** The source now uses pinned FreeRTOS
 11.2.0 with preemption on core 0, static queues/tasks and independent CAN,
 EPS and USB workers. Core 1 is unused. The target remains `ihu` and the image
-remains `ihu.uf2`. This candidate has software/build validation; it has not
-been flashed or qualified on the IHU hardware.
+remains `ihu.uf2`. This candidate is flashed on the bench and has passed initial smoke checks;
+full hardware/RF acceptance remains pending.
 
 The implementation deliberately uses **one application actor** for mutable
 command, policy, protocol correlation, discovery and telemetry state. The
@@ -266,7 +266,17 @@ and consumer updates as a separate compatibility decision.
   are recorded in the PR. Steps 1–3 are implemented; step 4 has software tests
   but needs hardware timing, and steps 5–6 still require hardware/RF acceptance.
 
-Before deployment, preserve/readback the previous IHU image, identify its USB
+The [2026-10-17 deployment](../../system/ground_station/evidence/ihu-freertos-20261017/deployment.json)
+passed full-backup/readback and flash verification, quiet defaults, EPS/CAN/LTE
+diagnostics, local UHF single/cycle completion and stop/OFF, eight seconds with
+the console closed, a 100-command USB burst with a paused reader, and intentional
+reboot defaults. No unexpected reset was observed. The burst intentionally
+counted 74 low-priority drops; a subsequent reboot left clean counters and zero
+faults. Independent ground receipt/flight RF commands, watchdog fault injection,
+maximum CAN bursts and endurance remain unqualified. Payload testing is blocked
+by its separate failed CAN service (`can0` absent), which was not changed.
+
+For subsequent deployments, preserve/readback the previous IHU image, identify its USB
 serial, stop competing bridge/console readers, then validate quiet defaults,
 `rtos`, EPS/ADC, CAN peers, UHF run/OFF, LTE, payload and both Yamcs paths.
 Measure USB slow/disconnected behavior and supported CAN bursts on the actual
