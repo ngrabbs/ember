@@ -5,7 +5,7 @@
 /* Observational reader, matching the existing IHU's SMBus/PEC protocol.
  * Explicit ADC override changes only force_telemetry_on, never charge policy.
  * Feather SDA/GPIO2 and SCL/GPIO3 use I2C1. */
-static void eps_bus_init(void) {
+static inline void eps_bus_init(void) {
     i2c_init(i2c1,100000);
     gpio_set_function(2,GPIO_FUNC_I2C);gpio_set_function(3,GPIO_FUNC_I2C);
     gpio_pull_up(2);gpio_pull_up(3);
