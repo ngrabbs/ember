@@ -9,17 +9,30 @@ project(ihu C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 option(IHU_FLIGHT_CONFIGURATION "Latch FLIGHT configuration (inactive routine stubs) at boot" OFF)
 include(../shared/pico_can/configure.cmake)
-add_executable(ihu main.c ../comms_transport/mcp25625.c)
+# FreeRTOS V11.2.0; exact archive hash makes exported builds reproducible.
+include(FetchContent)
+FetchContent_Declare(ember_freertos
+    URL https://codeload.github.com/FreeRTOS/FreeRTOS-Kernel/tar.gz/0adc196d4bd52a2d91102b525b0aafc1e14a2386
+    URL_HASH SHA256=6af5d78e39a5237b63faaafdc31672c87b27b68e713e2a57d3528aa3a4c1cee8)
+FetchContent_GetProperties(ember_freertos)
+if(NOT ember_freertos_POPULATED)
+    FetchContent_Populate(ember_freertos)
+endif()
+set(FREERTOS_KERNEL_PATH ${ember_freertos_SOURCE_DIR})
+set(FREERTOS_CONFIG_FILE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+list(APPEND CMAKE_MODULE_PATH ${PICO_SDK_PATH}/external)
+add_subdirectory(${FREERTOS_KERNEL_PATH}/portable/ThirdParty/GCC/RP2040 freertos)
+add_executable(ihu main.c runtime.c app.c ../comms_transport/mcp25625.c)
 target_include_directories(ihu PRIVATE
     ../comms_transport ${CMAKE_CURRENT_BINARY_DIR}/generated ${CMAKE_CURRENT_BINARY_DIR})
 target_compile_definitions(ihu PRIVATE IHU_FLIGHT_CONFIGURATION=$<BOOL:${IHU_FLIGHT_CONFIGURATION}>)
 target_sources(ihu PRIVATE ../shared/ember_protocol/protocol.c)
 target_compile_options(ihu PRIVATE -Wall -Wextra -Werror)
-target_link_libraries(ihu pico_stdlib pico_unique_id pico_rand hardware_spi hardware_i2c)
+target_link_libraries(ihu pico_stdlib pico_unique_id pico_rand hardware_spi hardware_i2c hardware_watchdog FreeRTOS-Kernel-Static)
 pico_enable_stdio_usb(ihu 1)
 pico_enable_stdio_uart(ihu 0)
 target_compile_definitions(ihu PRIVATE
-    PICO_STDIO_USB_STDOUT_TIMEOUT_US=20000
+    PICO_STDIO_USB_STDOUT_TIMEOUT_US=1000
     PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS=0
     PICO_STDIO_USB_ENABLE_RESET_VIA_BAUD_RATE=0)
 pico_set_program_name(ihu "ihu")

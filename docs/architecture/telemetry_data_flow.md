@@ -85,7 +85,7 @@ Paths below are relative to the repository root. The reviewed laptop checkout is
 | [ground/ember/dictionary.json](../../ground/ember/dictionary.json) | Implemented bench wire contract: schema, packet IDs, field order/types, enums, units, scales, and unavailable values |
 | [firmware/ihu/eps_readout.h](../../firmware/ihu/eps_readout.h) | Actual Feather IHU register reader with SMBus PEC checks |
 | [firmware/ihu/power_packet.h](../../firmware/ihu/power_packet.h) | Native IHU EPS conversion and packet construction |
-| [firmware/ihu/main.c](../../firmware/ihu/main.c) | IHU packet production and submission |
+| [firmware/ihu/app.c](../../firmware/ihu/app.c) | IHU packet production and submission |
 | [firmware/walter_mcu/main.c](../../firmware/walter_mcu/main.c) | LTE CAN Feather relay to Walter over UART |
 | [firmware/comms_transport/can_fragment.h](../../firmware/comms_transport/can_fragment.h) | CAN fragmentation and reassembly rules |
 | [firmware/comms_transport/uart_link.h](../../firmware/comms_transport/uart_link.h) | Framed request envelope used across the bench links |

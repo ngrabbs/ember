@@ -13,6 +13,7 @@ For operator use rather than firmware development, see the
 | Transceiver firmware | [transceiver firmware](../../firmware/transceiver/README.md) |
 | Spacecraft mode-manager behavior | [Operations draft](../architecture/operations/README.md) |
 | Shared command and telemetry contracts | [System references](../../system/README.md) |
+| IHU FreeRTOS task ownership and migration | [Migration plan and rt-ihu review](rtos_design.md) |
 | RTOS learning resources | [Research references](../research/firmware_references.md) |
 
 Implementation status belongs with the firmware. Operations and protocol drafts

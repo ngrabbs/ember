@@ -18,10 +18,14 @@ static void write_reg(uint8_t reg,uint8_t value) {write_regs(reg,&value,1);}
 static void modify(uint8_t reg,uint8_t mask,uint8_t value) {
     uint8_t cmd[4]={0x05,reg,mask,value};select();spi_write_blocking(spi1,cmd,4);release();
 }
-bool mcp_mode(mcp_state *s,uint8_t mode) {
+bool mcp_mode_begin(mcp_state *s,uint8_t mode) {
     if(s->pending || (mode!=0 && mode!=0x40 && mode!=0x80))return false;
     // One-shot: a missing bus ACK must not cause indefinite hardware retries.
     write_reg(0x0f,(uint8_t)(mode|0x08));
+    return true;
+}
+bool mcp_mode(mcp_state *s,uint8_t mode) {
+    if(!mcp_mode_begin(s,mode))return false;
     uint64_t until=time_us_64()+100000;
     while(time_us_64()<until) {
         if((mcp_register(0x0e)&0xe0)==mode)return true;

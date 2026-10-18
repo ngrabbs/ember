@@ -7,7 +7,7 @@ Wire offsets are generated into `wire.h` from
 
 The active IHU compiles this engine and uses it for the diagnostic native RF
 PING route. IHU's RF allowlist and admission gates remain in
-[`firmware/ihu/main.c`](../../ihu/main.c); extracting the generic engine does not
+[`firmware/ihu/app.c`](../../ihu/app.c); extracting the generic engine does not
 enable its other command handlers or periodic telemetry on a live interface.
 Payload fire-check handling remains separate.
 

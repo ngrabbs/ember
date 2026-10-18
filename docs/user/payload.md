@@ -856,7 +856,7 @@ prefer the systemd CAN unit over invoking it against a running responder.
 ## Source and recorded evidence
 
 - [Payload service and protocol](../../firmware/payload/README.md)
-- [IHU application](../../firmware/ihu/main.c) and [payload protocol validation](../../firmware/comms_transport/payload_protocol.h)
+- [IHU application](../../firmware/ihu/app.c) and [payload protocol validation](../../firmware/comms_transport/payload_protocol.h)
 - [Operational ground routes and serial ownership](../../ground/yamcs/OPERATIONAL.md)
 - [Fire-check RF procedure and limits](../../ground/yamcs/FIRE_CHECK.md)
 - [Recorded IHU fire/identity transcript](../../system/ground_station/evidence/fire-check-20261017/direct-ihu.log)
