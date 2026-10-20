@@ -6,9 +6,10 @@ as cumulative patches; EMBER does not vendor the OAI checkout.
 The earlier bench baseline has seven applied, in this order: Msg3 cleanup, Msg4 retry,
 single-transmission RAR release, rejection lifecycle, CCCH wait, uplink HARQ selection,
 and dedicated downlink retry MCS retention. The Pi now also has the new-bearer
-security candidate below, applied eighth. Reverse
-in the opposite order and rebuild to restore the baseline. No upstream commits,
-pushes, or PRs were made.
+security candidate below, applied eighth. The MPDCCH append-slot candidate is
+now applied ninth to the existing ground checkout at the user's request. Reverse
+in the opposite order and rebuild to restore the baseline. No upstream pushes or PRs were made. Local source commits and an annotated
+experimental tag now preserve the applied implementation (see version below).
 
 `oai-lte-m-msg3-cleanup.patch` queues the temporary UE for the existing release
 mechanism when OAI abandons an unsuccessful BL/CE Msg3. Previously that branch
@@ -231,3 +232,51 @@ still needs repeating. The three existing MAC/PHY helper tests do not exercise
 PDCP security. Full PHY regression and the separate ULSCH-pool failure remain
 open. Temporary diagnostics are separate from this candidate.
 See [security comparison](../results/2026-10-02-srb2-security.md).
+
+
+## Dedicated LTE-M control-PDU append slot — experimental version 0.1.0
+
+`oai-lte-m-mpdcch-append-slot.patch` is incremental against the captured ground
+overlay. At the user's request it is now applied to the existing checkout and
+`build-lte/lte-softmodem` rebuilt successfully. Previous source changes, cache,
+runtime libraries and the PHY assertion are retained. Source/binary rollback
+files were verified on ground and locally before completing the update.
+
+The patch refreshes the current slot immediately before each MPDCCH record.
+Previously the pointer was selected before the UE loop; two qualifying contexts
+could overwrite one record while counting two. The reduced fixture reproduces
+that defect; ten cases passed ASan/UBSan. This is not runtime proof of the live
+crash mechanism. The rebuilt candidate also passes the three existing MAC/PHY
+helper tests; those do not execute the complete multi-context scheduler.
+
+One bounded 512-byte5packet/s comparison delivered50/50, with29 packets inside
+ten seconds and21 during drain:11.8784kbps. Radio/core completed at planned
+timeouts. Only one completed RRC setup context was observed; this does not
+confirm prevention of the prior two-context crash. Preserve the original binary
+and prior overlay. See [comparison](../results/2026-10-20-direct-slot-walter-5pps.md).
+See [build and rollback record](../results/2026-10-20-mpdcch-slot-build.md) and
+[offline evidence and limits](../results/2026-10-20-mpdcch-slot-analysis.md).
+
+## Versioned ground implementation
+
+Experimental patch-set version **0.1.0**, annotated OAI tag
+`ember-lte-m-v0.1.0`, captures all nine patches on the pinned upstream base.
+This is an EMBER patch-set version, not an upstream OAI release or MCU version.
+
+- Earlier eight-patch baseline commit: `87e5409407ca54d3d1775b316c19be3357858ace`.
+- Separate MPDCCH fix commit: `f5080d1d2f8e04197af66c7cb536c8fa98767bd9`.
+- [Version manifest](ember-lte-m-v0.1.0.json): ordered patch hashes, source hashes,
+  Git tree and tested binary hash. All 17 changed files exactly match applying
+  the nine patches to the upstream base. Ground Git working tree is clean.
+
+Three separate 512-byte, 2 packet/s, 30-second runs delivered 180/180 in-window
+at 8.192 kbps each. The full build, three existing helpers and reduced ten-case
+sanitizer fixture passed. This supports an experimental version; the original
+two-context crash condition and long-duration reliability remain unqualified.
+See [final results and restoration](../results/2026-10-20-direct-pacing-closeout.md).
+
+The source commits/tag are retained in an off-host private Git bundle as well
+as on ground. No binaries, private logs or subscriber data are stored here.
+The installed binary and source bytes did not change during versioning.
+Historical precommit audits intentionally record the older HEAD/dirty status;
+use the manifest's source hashes and tree for this version. Nothing was pushed.

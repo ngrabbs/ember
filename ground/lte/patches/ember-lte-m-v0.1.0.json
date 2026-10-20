@@ -1,0 +1,85 @@
+{
+  "version": "0.1.0",
+  "status": "experimental bench candidate",
+  "upstream_commit": "29d5fa7d38bb1ee8935ef7ae30a396d53772ea4f",
+  "baseline_commit": "87e5409407ca54d3d1775b316c19be3357858ace",
+  "source_commit": "f5080d1d2f8e04197af66c7cb536c8fa98767bd9",
+  "tag": "ember-lte-m-v0.1.0",
+  "tree": "913532c5a3d1a0dd1371d82dbd4efeabc638fbb9",
+  "clean": true,
+  "patches": [
+    {
+      "file": "oai-lte-m-msg3-cleanup.patch",
+      "sha256": "dcf9efe0aa8f02da2db58e96177355a5af9890da0cc272c1536c3f276b3a490a"
+    },
+    {
+      "file": "oai-lte-m-msg4-retry.patch",
+      "sha256": "856576e53192970cdeb64a7f3c4787e8d0ff0f33cef789bc5cb0ce524ae7a8d2"
+    },
+    {
+      "file": "oai-lte-m-rar-release.patch",
+      "sha256": "c32bd399501d3e84fcc8185037e2cb0234921f9355c981c1f8a20808665bd815"
+    },
+    {
+      "file": "oai-lte-m-reject-lifecycle.patch",
+      "sha256": "515823b33c2770dd4c16fd279c2cf5462561a56992a66dfa493629a4ca497915"
+    },
+    {
+      "file": "oai-lte-m-ccch-wait.patch",
+      "sha256": "47d9e37505f9279e3e0f386b2f7678ad7a13344d621510e7248d04e22eae5616"
+    },
+    {
+      "file": "oai-lte-m-ul-harq.patch",
+      "sha256": "7f6dae1bf1941b78453729869c17b7f8b994a9f5626c40e1366765ea2828949c"
+    },
+    {
+      "file": "oai-lte-m-dl-retry-mcs.patch",
+      "sha256": "98a8ceab18ec93dddab1ba825a50dc8d2ba07fe143db1208ffa9b2f7ebfa10aa"
+    },
+    {
+      "file": "oai-new-bearer-security.patch",
+      "sha256": "206110f5a9dbb2e8cae57290593c9e3d655f837972348f0d437c1903d27339a7"
+    },
+    {
+      "file": "oai-lte-m-mpdcch-append-slot.patch",
+      "sha256": "275d58db827e528374f76f7d862568dfda127948044a7fdae183022c43b64712"
+    }
+  ],
+  "exact_nine_patch_reconstruction": true,
+  "source_sha256": {
+    "openair1/PHY/LTE_TRANSPORT/dci_tools.c": "c6da91686e06168e8fa2396b10fc577e0299ff0f6ba35520bd7c26614319ab4c",
+    "openair1/PHY/LTE_TRANSPORT/emtc_dlsch_context.h": "627d92338a4fcc0b5d13dff11a90da4f3d6fe474c0c95f1e80a2e16f697b41e9",
+    "openair1/PHY/LTE_TRANSPORT/tests/CMakeLists.txt": "35915e3a9d903d8bdb82579ad3fe7fc8da2ae664e0ad9923200b1c5875e0d02f",
+    "openair1/PHY/LTE_TRANSPORT/tests/test_emtc_dlsch_context.c": "0ba984c43c5abd0ba04c87726c553f48fefa909cb3f2e65ab0ceeac8c1f837f4",
+    "openair1/PHY/LTE_TRANSPORT/transport_eNB.h": "a65fa1f31d317a9aca570f76855d9a58e60b2a6cd8135c120ca663adc1c1f11f",
+    "openair1/SCHED/phy_procedures_lte_eNb.c": "83a1b47dd50993675e8458429766c88a1d61a9c5e176d8220c476d58b2581e41",
+    "openair2/LAYER2/MAC/eNB_scheduler_RA.c": "5781f13bb9b6ee3b3b3d287827c2bcdefc399762d7abb7cfcbb56015847fd50b",
+    "openair2/LAYER2/MAC/eNB_scheduler_dlsch.c": "92d530865a6173a4e06148cf3c6a0750739aaf04909fa2198e541127167d5832",
+    "openair2/LAYER2/MAC/eNB_scheduler_primitives.c": "43b7f30c07b168f1686a709df011353a58562d702fa3357a16039fce2b709634",
+    "openair2/LAYER2/MAC/eNB_scheduler_ulsch.c": "2bd047db324d409aabe99b5a035996e62344ef3112ad02b05140892b7cc975b5",
+    "openair2/LAYER2/MAC/emtc_msg4.h": "061b10bae558de869d7739d219c07e8c8277e9a3e14fbf27efcb70987eb90e68",
+    "openair2/LAYER2/MAC/emtc_ul_harq.h": "d231224965e1487a45ee0aa55a42171e8a5ac5a92b767cd3f01e382175c7729f",
+    "openair2/LAYER2/MAC/mac.h": "d123c9cf7d012ade951b651fb35fa9e297dc6385fadbe190fe9cdf0ff416c1c0",
+    "openair2/LAYER2/MAC/tests/CMakeLists.txt": "ed189624a3f76e2e43eb4b890c553f762e04cee3816401263159226ba3d028aa",
+    "openair2/LAYER2/MAC/tests/test_emtc_msg4.c": "48c22331ed1896c32e7253705513313d076d4df71618b339f0d16a5fd183cb2b",
+    "openair2/LAYER2/MAC/tests/test_emtc_ul_harq.c": "2822505e1d0b2a767621a390c45f59dd0109c3b919f3af020288618e0e53fb8c",
+    "openair2/RRC/LTE/rrc_eNB.c": "c145afa77df041669db358d96775a9a55010fa8c5a4b3a82e5ebbc509e157f23"
+  },
+  "binary_sha256": "5b19f79079d0e750b6ac9251982b85a79ab3a0eb1c7574ff3c309033d861871c",
+  "validation": {
+    "full_radio_build": "passed",
+    "existing_mac_phy_helpers_passed": 3,
+    "reduced_sanitizer_fixture_cases_passed": 10,
+    "paced_512_byte_runs": 3,
+    "seconds_each": 30,
+    "in_window_packets": 180,
+    "late_packets": 0,
+    "goodput_kbps_each": 8.192,
+    "original_two_context_crash_condition_retested": false
+  },
+  "limits": [
+    "Not maximum modem throughput or long-duration reliability qualification.",
+    "Reduced fixture reproduces pointer defect; runtime crash causality remains unconfirmed.",
+    "Installed binary was built before source commits; its recorded hash and all source bytes are unchanged."
+  ]
+}

@@ -1,0 +1,11 @@
+--- a/openair2/LAYER2/MAC/eNB_scheduler_dlsch.c
++++ b/openair2/LAYER2/MAC/eNB_scheduler_dlsch.c
+@@ -1693,6 +1693,8 @@
+       }
+ 
+       if (round_DL < 8) {
++        /* Append this UE's control PDU after any previously scheduled UE. */
++        dl_config_pdu = &dl_req->dl_config_pdu_list[dl_req->number_pdu];
+         /* Fill in MDPDCCH */
+         memset ((void *) dl_config_pdu, 0, sizeof (nfapi_dl_config_request_pdu_t));
+         dl_config_pdu->pdu_type = NFAPI_DL_CONFIG_MPDCCH_PDU_TYPE;
