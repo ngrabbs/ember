@@ -1,5 +1,9 @@
 # LTE-M bench and spacecraft channel TODO
 
+Current preparation: [simple data-rate test checklist](THROUGHPUT_TODO.md)
+(2026-10-19; split firmware, production IHU protected). Earlier milestones below
+retain their original dates and firmware context.
+
 Updated 2026-10-03. Bench success is the immediate goal. Spacecraft items are
 later validation gates, not prerequisites for getting practical LTE experience.
 
@@ -231,6 +235,20 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       [Results](results/2026-10-02-eps-diagnostics.md).
 - [ ] Add separately bounded live socket-state probes if cached evidence is insufficient.
 - [ ] Trace accepted-but-undelivered uplinks/bearer failures in OAI.
+      Startup scalar recording bench-checked in two sessions: each one exact
+      EPS/Yamcs delivery and35s registered; READY33.844/66.087s.
+      Early release did not recur. Keep that failure open.
+- [x] Bounded startup batch stopped on second session: first EPS/Yamcs1/1,
+      next registration timeout with no telemetry attempted or logged access.
+- [x] Independently check RF during no-access timeout: DL12.55dB ON/OFF
+      before admission;150s access-band recording has no above-threshold bins,
+      zero overruns/clipping. No telemetry attempted. Cause remains unconfirmed.
+- [x] Build temporary direct-Walter throughput image and host-test engine,
+      packet integrity, receiver and accounting; no production firmware changes.
+- [x] Direct benchmark and original-image restoration complete; three separate
+      30-second runs at8.192kbps delivered180/180, none late.
+- [ ] **Next LTE task (parked):** production telemetry endurance and interruption/
+      recovery checks; see the data-rate checklist. No further rate chasing.
 - [ ] Trace SRB2 dedicated downlink allocation/HARQ association and ULSCH context
       allocation/cleanup during reconnects; preserve assertions until explained.
 - [x] Add and bench-test optional CE/context metadata trace; verify MAC block
