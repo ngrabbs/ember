@@ -38,8 +38,10 @@ def decode_r(c, bias=10000):
     return bias * c / (SPAN - c)
 
 
-def trip_temperature(c, r25_scale=1, beta_scale=1, bias_scale=1):
-    target = decode_r(c, 10000 * bias_scale)
+def trip_temperature(c, r25_scale=1, beta_scale=1, bias_scale=1,
+                     adc_gain=1, adc_offset_ratio=0):
+    actual_ratio = (c / SPAN - adc_offset_ratio) / adc_gain
+    target = decode_r(actual_ratio * SPAN, 10000 * bias_scale)
     lo, hi = RT[0][0], RT[-1][0]
     for _ in range(70):
         t = (lo + hi) / 2
@@ -72,13 +74,18 @@ def main():
     drift = 65 * 25e-6
     bias_bounds = [(1 - .001) * (1 - drift), (1 + .001) * (1 + drift)]
     corners = list(itertools.product([.99, 1.01], [.99, 1.01], bias_bounds))
+    adc_corners = list(itertools.product([.99, 1.01], [-.001, .001]))
     proposed = []
     for t in [5, 10, 35, 37, 39, 40]:
         c = round(code(resistance(t)))
         ts = [trip_temperature(c, *v) for v in corners]
+        with_adc = [trip_temperature(c, *v, *a)
+                    for v in corners for a in adc_corners]
         proposed.append(dict(nominal_celsius=t, code=c,
                              sensitivity_trip_min_c=min(ts),
-                             sensitivity_trip_max_c=max(ts)))
+                             sensitivity_trip_max_c=max(ts),
+                             with_assumed_adc_min_c=min(with_adc),
+                             with_assumed_adc_max_c=max(with_adc)))
     default = []
     for c, _ in adi:
         ts = [trip_temperature(c, *v) for v in corners]
@@ -95,6 +102,10 @@ def main():
         nominal_table=rows, default_thresholds=default,
         provisional_5_to_40_celsius_profile=proposed,
         corners=len(corners),
+        combined_adc_corners=len(corners) * len(adc_corners),
+        adc_assumption="LTC4162 Rev A p5 ratio offset +/-0.001 and span +/-1%; "
+                       "these rows lack full-temperature dot. Applying them at "
+                       "other temperatures is sensitivity only, not a guarantee.",
         max_excitation_sensor_power_w=1.2**2/(4*10000),
         unqualified=["ADC gain/offset and excitation error", "R/T interpolation error",
                      "Guaranteed tolerance over temperature", "Mounting gradient and lag",

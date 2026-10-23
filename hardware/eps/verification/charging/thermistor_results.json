@@ -163,40 +163,54 @@
       "nominal_celsius": 5,
       "code": 15019,
       "sensitivity_trip_min_c": 4.491926399146763,
-      "sensitivity_trip_max_c": 5.492805932803236
+      "sensitivity_trip_max_c": 5.492805932803236,
+      "with_assumed_adc_min_c": 3.594765593622327,
+      "with_assumed_adc_max_c": 6.353453837005333
     },
     {
       "nominal_celsius": 10,
       "code": 14022,
       "sensitivity_trip_min_c": 9.52965684319119,
-      "sensitivity_trip_max_c": 10.451442033843392
+      "sensitivity_trip_max_c": 10.451442033843392,
+      "with_assumed_adc_min_c": 8.71274367926506,
+      "with_assumed_adc_max_c": 11.225291618187526
     },
     {
       "nominal_celsius": 35,
       "code": 8943,
       "sensitivity_trip_min_c": 34.542740799962274,
-      "sensitivity_trip_max_c": 35.46415423039551
+      "sensitivity_trip_max_c": 35.46415423039551,
+      "with_assumed_adc_min_c": 33.9535081616356,
+      "with_assumed_adc_max_c": 36.061696893560935
     },
     {
       "nominal_celsius": 37,
       "code": 8573,
       "sensitivity_trip_min_c": 36.515854996542174,
-      "sensitivity_trip_max_c": 37.490254100718545
+      "sensitivity_trip_max_c": 37.490254100718545,
+      "with_assumed_adc_min_c": 35.930956312417294,
+      "with_assumed_adc_max_c": 38.08392234290463
     },
     {
       "nominal_celsius": 39,
       "code": 8213,
       "sensitivity_trip_min_c": 38.48971306685743,
-      "sensitivity_trip_max_c": 39.517732458329164
+      "sensitivity_trip_max_c": 39.517732458329164,
+      "with_assumed_adc_min_c": 37.908026550571236,
+      "with_assumed_adc_max_c": 40.107450353494386
     },
     {
       "nominal_celsius": 40,
       "code": 8037,
       "sensitivity_trip_min_c": 39.47630329368073,
-      "sensitivity_trip_max_c": 40.5255148386083
+      "sensitivity_trip_max_c": 40.5255148386083,
+      "with_assumed_adc_min_c": 38.89581796024291,
+      "with_assumed_adc_max_c": 41.10894417412905
     }
   ],
   "corners": 8,
+  "combined_adc_corners": 32,
+  "adc_assumption": "LTC4162 Rev A p5 ratio offset +/-0.001 and span +/-1%; these rows lack full-temperature dot. Applying them at other temperatures is sensitivity only, not a guarantee.",
   "max_excitation_sensor_power_w": 3.6e-05,
   "unqualified": [
     "ADC gain/offset and excitation error",

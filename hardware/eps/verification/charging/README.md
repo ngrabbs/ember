@@ -18,6 +18,8 @@ Applying the original LTC4162 default end thresholds to this candidate gives nom
 
 Eight sensitivity corners combine sensor R25 ±1%, beta ±1%, bias initial ±0.1% and bias drift across −40 to +85 °C electronics screening. The proposed cold and hot endpoints then span about **4.49–5.49 °C** and **39.48–40.53 °C**. ADC error, table interpolation error, full R/T guarantees, sensor gradient/lag and mounting self-heating are outside this envelope. The BMS must provide independently configured protection before a host changes the charger profile; charger power-on defaults cannot depend on a successful STM32 boot for pack protection.
 
+A further 32-corner sensitivity adds the charger's published ratio offset ±0.001 and span ±1% from p.5. It gives cold/hot endpoint ranges **3.59–6.35 °C** and **38.90–41.11 °C**. Those ADC rows lack the full-temperature specification marker; applying their bounds across the electronics screening range is an assumption, not temperature qualification. This wider result still excludes the sensor-to-cell gradient and mounting lag.
+
 ## Reproduce and integrate
 
 Run `python3 hardware/eps/verification/charging/check_thermistor.py` from the repository root. It writes [results](thermistor_results.json), checks the independent ADI table anchors, divider monotonicity, room-temperature ratio and invalid-code rejection. It performs no hardware access or register writes.

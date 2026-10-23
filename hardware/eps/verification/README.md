@@ -1,5 +1,9 @@
 # EPS verification checkpoint
 
+- [Tracked controller rebuild](controller_rev_b/native/README.md), 2026-10-23: corrected stock STM32G0B1KET6N, two linked B sheets, 20 checked endpoint sets and 22 selected parts among 27 physical parts. ERC has 18 integration errors and 3 isolated-interface warnings; both actual pages and details were inspected. This supersedes the earlier scratch controller's current-status claims below.
+- [Charger thermistor analysis](charging/README.md): independently checked ADC divider equation, leaded sensor candidate and threshold/tolerance sensitivity. Native charger circuit and physical Rev A diagnosis remain open.
+- [Whole EPS completion ledger](../design/rev_b_completion.md): integrated schematic and authorized Rev B PCB stages, with hardware acceptance kept separate.
+
 - [Selected source and 5 V protection circuits](../design/rev_b_5v_recovery_protection_selection.md): complete development circuits, transient/SOA screening, rejected arrangements and remaining qualification limits. [Native evidence](protection/native/README.md) separately records 40 endpoint sets, 0 ERC errors / 1 external reset warning and actual rendered-sheet inspection; S11 presentation remains open.
 
 - [Panasonic D8/F recovery bulk footprints](panasonic_bulk_footprints.md): approved construction, exact land/polarity/courtyard query-back, independent saved-board export and actual renders. Construction checks pass; fabrication-text and assembly qualification remain open.
@@ -20,7 +24,7 @@ This directory records the Rev A audit and the isolated Rev B controller study. 
 - [SWD access checkpoint](controller_debug_draft.md): logical debugger interface, endpoint checks and diagnostic disagreement.
 - [Candidate library status](../libraries/README.md): active draft IDs and acceptance limits.
 
-## Current result
+## Historical scratch controller result
 
 The current CAN-interface netlist matches the intended endpoints on all 17 named nets. Earlier debug and support-only checkpoints covered 13 and 11 nets. Konnect reports zero floating wire endpoints and zero merged named nets. Manufacturer-pattern exports were checked for all 44 pads across the MCU, two CAN transceivers and oscillator.
 
