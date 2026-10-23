@@ -12,14 +12,14 @@ Completion requires one connected, reviewable design. Isolated studies establish
 | Charger and temperature | [BMS/temperature specification](rev_b_bms_and_temperature_spec.md) and damaged Rev A audit | Rebuild LTC4162 reference circuit with verified 2S straps, PowerPath FETs/shunts and three separate pack sensors; freeze configuration and sensor assembly |
 | Battery protection | BQ40Z50 functional reference | Select current family/order code, complete 2S circuit, FETs, precharge, secondary protection, retained bus isolation and commissioning manifest |
 | RBF and deployment cutoff | [Source-isolation study](rev_b_source_isolation_study.md) | Select mechanism/harness and passive source switch circuits; demonstrate bidirectional cutoff, open-harness default, inrush and depleted-pack recovery |
-| Controller and CAN A/B | [Tracked two-sheet controller](../verification/controller_rev_b/native/README.md), corrected stock STM32G0B1KET6N, 20 checked endpoint sets | Finish ADC/local buses/stack/debug connector, independent transceiver branch containment and remaining integration errors; recovery GPIO allocation is recorded |
+| Controller and CAN A/B | [Rev B integrated controller checkpoint](../verification/rev_b/integration/README.md), corrected stock STM32G0B1KET6N, 20 functional nets plus 16 unfinished pin sets; 48 reference/UUID crosswalk entries | Finish ADC/local buses/stack/debug connector, independent transceiver branch containment and remaining integration errors; recovery GPIO allocation is recorded. [CAN branch screening](../verification/controller_rev_b/branch_selection/README.md) does not yet establish B survival during an A supply short. |
 | Managed loads and stack | [Architecture authority](rev_b_plan.md), canonical H1/H2 pin map | EPS payload VBAT switch, permission expiry and default-off local loads; preserve IHU control ownership and shared essential rails |
 | PCB and mechanics | Nominal 96 x 90 mm, 16 mm top standoff | Full BOM courtyard fit, actual outline/holes, battery/holder and RBF clearances, stackup/rules, placement/routing and DRC |
 | Release review | Per-block netlists/ERC/renders | Full hierarchy checks, pin/package/BOM reconciliation, back-power/fault matrix, independent review and assembly outputs |
 
 ## Design sequence
 
-Finish the controller and charger circuit definitions while retaining the existing recovery studies. Next close battery protection and hardware source isolation, then integrate regulation, stack interfaces and managed battery distribution. Review the complete schematic before PCB synchronization. Layout must use the actual full BOM; the earlier area estimates omit much of the subsequently added recovery protection.
+The new [Rev B root](../rev_b/eps_rev_b.kicad_pro) now contains unique Controller and CAN sheets rebuilt through Konnect with explicit reference and endpoint crosswalks; it is not the complete EPS. Integrate the reviewed regulation blocks while finishing charger, battery protection and hardware source isolation, then add stack interfaces and managed battery distribution. Retain all historical studies. Review the complete schematic before PCB synchronization. Layout must use the actual full BOM; the earlier area estimates omit much of the subsequently added recovery protection.
 
 ## Hardware acceptance inputs
 
