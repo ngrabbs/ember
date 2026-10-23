@@ -49,7 +49,7 @@ Selected for the N LQFP32 variant, STM32G0B1KET6N, following the 2026-10-23 pino
 | 26 | PD0 | Reserve with reset-state restrictions | GPIO |
 | 27 | PD1 | CAN B standby | GPIO |
 | 28 | PD2 | Hardware interlock status | Input |
-| 29 | PD3 | Pack BTP status | Input |
+| 29 | PD3 | Reserved; no direct BMS BTP connection | Unassigned |
 | 30 | PB6 | Charger clock | I2C1 AF6 |
 | 31 | PB7 | Charger data | I2C1 AF6 |
 | 32 | PB8 | Optional EPS stack alert | Open drain |
@@ -58,7 +58,7 @@ There is no duplicate physical pin assignment. PD0 remains reserved because of i
 
 The pack's two protection NTCs connect to the pack manager, and the charger NTC connects to LTC4162, so they consume no STM32 ADC pins. Read battery cell voltages through the pack manager. The STM32 battery divider observes only the interlocked side of the battery feed to avoid crossing the retained-protection boundary. Calibrate rail measurements using a verified reference; measuring the MCU's own supply against that same supply alone is insufficient.
 
-Use separate charger and pack-manager buses so an electrical fault on one does not directly hold the other's lines low. This separation still shares MCU and power. The pack-manager bus and BTP output require power-off isolation. BTP is a battery-trip-point indication, not a universal fault interrupt; obtain protection faults through SMBus polling. The optional stack alert's new MCU-driven semantics require a canonical interface update before routing.
+Use separate charger and pack-manager buses so an electrical fault on one does not directly hold the other's lines low. This separation still shares MCU and power. The pack-manager bus requires power-off and ground-reference isolation. Omit the optional BTP connection and tie the unused BQ40Z50 BTP_INT pin to its own VSS as specified by TI. BTP guarantees only 1.8 V high at 10 µA for VBAT >5.5 V; it cannot directly drive the planned 3.3 V STM32 input with guaranteed margins. BTP is also a battery-trip-point indication, not a universal fault interrupt. Obtain protection faults through SMBus polling. The optional stack alert's new MCU-driven semantics require a canonical interface update before routing.
 
 ## Clock and reset conditions
 
