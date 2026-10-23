@@ -1,0 +1,779 @@
+{
+  "date": "2026-10-23",
+  "status": "DEVELOPMENT: no bench/switching-model/thermal qualification",
+  "assumptions": {
+    "load_A": 2,
+    "low_converter_input_V": 4.5,
+    "protected_input_ceiling_V": 35,
+    "efficiency_sensitivity": [
+      0.85,
+      0.9
+    ],
+    "C_effective_F": [
+      0.00022,
+      0.00045
+    ],
+    "ESR_sensitivity_ohm": [
+      0.002,
+      0.05
+    ],
+    "frequency_360k_is_sensitivity_not_guaranteed_corner": true
+  },
+  "feedback_V": {
+    "nominal": 4.992,
+    "minimum_including_100nA_leakage": 4.931416180659342,
+    "maximum_including_100nA_leakage": 5.052750667507507
+  },
+  "uvlo": {
+    "rising_min_V": 3.97787065006,
+    "rising_max_V": 4.188454608454609,
+    "nominal_rising_V": 4.08301775147929,
+    "current_hysteresis_component_V": [
+      0.17230752000000002,
+      0.21973951999999997
+    ],
+    "falling_threshold_not_guaranteed": "Internal hysteresis voltage has only a typical value; characterize brownout/restart."
+  },
+  "output_current_limit_A": [
+    2.3762376237623766,
+    2.626262626262626
+  ],
+  "shunt_loss_W_at_2A": 0.08,
+  "switching_frequency_Hz_nominal": 400000.0,
+  "inductance": {
+    "inner_loop_minimum_H_at_360k": 3.3333333333333333e-06,
+    "selected_nominal_H": 1e-05,
+    "effective_sensitivity_min_H": 5.6e-06
+  },
+  "estimated_input_A_at_4p5V": {
+    "0.85": 2.6352941176470592,
+    "0.9": 2.488888888888889
+  },
+  "total_loss_W_scenarios": {
+    "0.85": 1.8588235294117652,
+    "0.9": 1.2000000000000006
+  },
+  "output_bank_nominal_F": 0.000388,
+  "bulk_minimum_F_from_initial_tolerance_only": 0.00024000000000000003,
+  "startup_capacitor_current_A_at_min_2p5ms": 0.7759999999999999,
+  "load_step_droop_V_at_220uF_25us_10mOhm": 0.2349090909090909,
+  "ripple_cases": [
+    {
+      "vin_V": 4.5,
+      "L_H": 5.6e-06,
+      "f_Hz": 360000.0,
+      "ripple_A_pp": 0.239158163265306,
+      "average_A": 2.6352941176470592,
+      "peak_A": 2.754873199279712
+    },
+    {
+      "vin_V": 4.5,
+      "L_H": 5.6e-06,
+      "f_Hz": 400000.0,
+      "ripple_A_pp": 0.21524234693877545,
+      "average_A": 2.6352941176470592,
+      "peak_A": 2.742915291116447
+    },
+    {
+      "vin_V": 4.5,
+      "L_H": 1e-05,
+      "f_Hz": 360000.0,
+      "ripple_A_pp": 0.13392857142857137,
+      "average_A": 2.6352941176470592,
+      "peak_A": 2.702258403361345
+    },
+    {
+      "vin_V": 4.5,
+      "L_H": 1e-05,
+      "f_Hz": 400000.0,
+      "ripple_A_pp": 0.12053571428571423,
+      "average_A": 2.6352941176470592,
+      "peak_A": 2.6955619747899164
+    },
+    {
+      "vin_V": 6,
+      "L_H": 5.6e-06,
+      "f_Hz": 360000.0,
+      "ripple_A_pp": 0.4000000000000001,
+      "average_A": 2,
+      "peak_A": 2.2
+    },
+    {
+      "vin_V": 6,
+      "L_H": 5.6e-06,
+      "f_Hz": 400000.0,
+      "ripple_A_pp": 0.36000000000000004,
+      "average_A": 2,
+      "peak_A": 2.18
+    },
+    {
+      "vin_V": 6,
+      "L_H": 1e-05,
+      "f_Hz": 360000.0,
+      "ripple_A_pp": 0.22399999999999998,
+      "average_A": 2,
+      "peak_A": 2.112
+    },
+    {
+      "vin_V": 6,
+      "L_H": 1e-05,
+      "f_Hz": 400000.0,
+      "ripple_A_pp": 0.20159999999999997,
+      "average_A": 2,
+      "peak_A": 2.1008
+    },
+    {
+      "vin_V": 8.4,
+      "L_H": 5.6e-06,
+      "f_Hz": 360000.0,
+      "ripple_A_pp": 1.0,
+      "average_A": 2,
+      "peak_A": 2.5
+    },
+    {
+      "vin_V": 8.4,
+      "L_H": 5.6e-06,
+      "f_Hz": 400000.0,
+      "ripple_A_pp": 0.9,
+      "average_A": 2,
+      "peak_A": 2.45
+    },
+    {
+      "vin_V": 8.4,
+      "L_H": 1e-05,
+      "f_Hz": 360000.0,
+      "ripple_A_pp": 0.5599999999999999,
+      "average_A": 2,
+      "peak_A": 2.28
+    },
+    {
+      "vin_V": 8.4,
+      "L_H": 1e-05,
+      "f_Hz": 400000.0,
+      "ripple_A_pp": 0.504,
+      "average_A": 2,
+      "peak_A": 2.252
+    },
+    {
+      "vin_V": 35,
+      "L_H": 5.6e-06,
+      "f_Hz": 360000.0,
+      "ripple_A_pp": 2.14,
+      "average_A": 2,
+      "peak_A": 3.0700000000000003
+    },
+    {
+      "vin_V": 35,
+      "L_H": 5.6e-06,
+      "f_Hz": 400000.0,
+      "ripple_A_pp": 1.9260000000000002,
+      "average_A": 2,
+      "peak_A": 2.963
+    },
+    {
+      "vin_V": 35,
+      "L_H": 1e-05,
+      "f_Hz": 360000.0,
+      "ripple_A_pp": 1.1984,
+      "average_A": 2,
+      "peak_A": 2.5991999999999997
+    },
+    {
+      "vin_V": 35,
+      "L_H": 1e-05,
+      "f_Hz": 400000.0,
+      "ripple_A_pp": 1.0785599999999997,
+      "average_A": 2,
+      "peak_A": 2.5392799999999998
+    }
+  ],
+  "loop_model": {
+    "scope": "TI averaged buck/boost approximation; no valid transition/PFM prediction",
+    "Rc_ohm": 3740,
+    "Cc_F": 7.5e-08,
+    "Cp_F": 3e-10,
+    "corners": [
+      {
+        "vin_V": 4.5,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2076.4575495513927,
+        "estimated_phase_margin_deg": 77.67059409306718
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2076.4575495513927,
+        "estimated_phase_margin_deg": 77.07890061481389
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2092.300635446093,
+        "estimated_phase_margin_deg": 85.64017847218626
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2092.300635446093,
+        "estimated_phase_margin_deg": 85.04397237681073
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1104.9371289447606,
+        "estimated_phase_margin_deg": 66.11258099557072
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1104.9371289447606,
+        "estimated_phase_margin_deg": 65.79767796025573
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1113.3676474718054,
+        "estimated_phase_margin_deg": 74.84295321229114
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1113.3676474718054,
+        "estimated_phase_margin_deg": 74.52564779989854
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1983.8867505415255,
+        "estimated_phase_margin_deg": 87.70625489029327
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1983.8867505415255,
+        "estimated_phase_margin_deg": 85.43803198642955
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1999.023533954689,
+        "estimated_phase_margin_deg": 95.2359247456083
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2014.2758089462068,
+        "estimated_phase_margin_deg": 92.96986165280214
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1063.7324730178573,
+        "estimated_phase_margin_deg": 75.55597810797768
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1063.7324730178573,
+        "estimated_phase_margin_deg": 74.33709527616887
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1071.8486056797772,
+        "estimated_phase_margin_deg": 83.88972782810278
+      },
+      {
+        "vin_V": 4.5,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1080.0266633191293,
+        "estimated_phase_margin_deg": 82.77877281504648
+      },
+      {
+        "vin_V": 6,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2309.603754667693,
+        "estimated_phase_margin_deg": 79.21180398798478
+      },
+      {
+        "vin_V": 6,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2309.603754667693,
+        "estimated_phase_margin_deg": 79.21180398798478
+      },
+      {
+        "vin_V": 6,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2327.225714084021,
+        "estimated_phase_margin_deg": 88.0499697204248
+      },
+      {
+        "vin_V": 6,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2327.225714084021,
+        "estimated_phase_margin_deg": 88.0499697204248
+      },
+      {
+        "vin_V": 6,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1210.4585635837648,
+        "estimated_phase_margin_deg": 68.12830662131711
+      },
+      {
+        "vin_V": 6,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1210.4585635837648,
+        "estimated_phase_margin_deg": 68.12830662131711
+      },
+      {
+        "vin_V": 6,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1219.694196163384,
+        "estimated_phase_margin_deg": 77.65746956007747
+      },
+      {
+        "vin_V": 6,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1219.694196163384,
+        "estimated_phase_margin_deg": 77.65746956007747
+      },
+      {
+        "vin_V": 6,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2223.475389943944,
+        "estimated_phase_margin_deg": 89.62103742037624
+      },
+      {
+        "vin_V": 6,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2223.475389943944,
+        "estimated_phase_margin_deg": 89.62103742037624
+      },
+      {
+        "vin_V": 6,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2257.534452774992,
+        "estimated_phase_margin_deg": 98.12130967219593
+      },
+      {
+        "vin_V": 6,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2257.534452774992,
+        "estimated_phase_margin_deg": 98.12130967219593
+      },
+      {
+        "vin_V": 6,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1174.2100881789324,
+        "estimated_phase_margin_deg": 77.56179808619945
+      },
+      {
+        "vin_V": 6,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1174.2100881789324,
+        "estimated_phase_margin_deg": 77.56179808619945
+      },
+      {
+        "vin_V": 6,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1192.1965679713376,
+        "estimated_phase_margin_deg": 86.88497175929996
+      },
+      {
+        "vin_V": 6,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1192.1965679713376,
+        "estimated_phase_margin_deg": 86.88497175929996
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2309.603754667693,
+        "estimated_phase_margin_deg": 79.21180398798478
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2309.603754667693,
+        "estimated_phase_margin_deg": 79.21180398798478
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2327.225714084021,
+        "estimated_phase_margin_deg": 88.0499697204248
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2327.225714084021,
+        "estimated_phase_margin_deg": 88.0499697204248
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1210.4585635837648,
+        "estimated_phase_margin_deg": 68.12830662131711
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1210.4585635837648,
+        "estimated_phase_margin_deg": 68.12830662131711
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1219.694196163384,
+        "estimated_phase_margin_deg": 77.65746956007747
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1219.694196163384,
+        "estimated_phase_margin_deg": 77.65746956007747
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2223.475389943944,
+        "estimated_phase_margin_deg": 89.62103742037624
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2223.475389943944,
+        "estimated_phase_margin_deg": 89.62103742037624
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2257.534452774992,
+        "estimated_phase_margin_deg": 98.12130967219593
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2257.534452774992,
+        "estimated_phase_margin_deg": 98.12130967219593
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1174.2100881789324,
+        "estimated_phase_margin_deg": 77.56179808619945
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1174.2100881789324,
+        "estimated_phase_margin_deg": 77.56179808619945
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1192.1965679713376,
+        "estimated_phase_margin_deg": 86.88497175929996
+      },
+      {
+        "vin_V": 8.4,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1192.1965679713376,
+        "estimated_phase_margin_deg": 86.88497175929996
+      },
+      {
+        "vin_V": 35,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2309.603754667693,
+        "estimated_phase_margin_deg": 79.21180398798478
+      },
+      {
+        "vin_V": 35,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2309.603754667693,
+        "estimated_phase_margin_deg": 79.21180398798478
+      },
+      {
+        "vin_V": 35,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2327.225714084021,
+        "estimated_phase_margin_deg": 88.0499697204248
+      },
+      {
+        "vin_V": 35,
+        "load_A": 0.5,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2327.225714084021,
+        "estimated_phase_margin_deg": 88.0499697204248
+      },
+      {
+        "vin_V": 35,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1210.4585635837648,
+        "estimated_phase_margin_deg": 68.12830662131711
+      },
+      {
+        "vin_V": 35,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1210.4585635837648,
+        "estimated_phase_margin_deg": 68.12830662131711
+      },
+      {
+        "vin_V": 35,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1219.694196163384,
+        "estimated_phase_margin_deg": 77.65746956007747
+      },
+      {
+        "vin_V": 35,
+        "load_A": 0.5,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1219.694196163384,
+        "estimated_phase_margin_deg": 77.65746956007747
+      },
+      {
+        "vin_V": 35,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2223.475389943944,
+        "estimated_phase_margin_deg": 89.62103742037624
+      },
+      {
+        "vin_V": 35,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2223.475389943944,
+        "estimated_phase_margin_deg": 89.62103742037624
+      },
+      {
+        "vin_V": 35,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 2257.534452774992,
+        "estimated_phase_margin_deg": 98.12130967219593
+      },
+      {
+        "vin_V": 35,
+        "load_A": 2,
+        "C_F": 0.00022,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 2257.534452774992,
+        "estimated_phase_margin_deg": 98.12130967219593
+      },
+      {
+        "vin_V": 35,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1174.2100881789324,
+        "estimated_phase_margin_deg": 77.56179808619945
+      },
+      {
+        "vin_V": 35,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.002,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1174.2100881789324,
+        "estimated_phase_margin_deg": 77.56179808619945
+      },
+      {
+        "vin_V": 35,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 5.6e-06,
+        "crossover_Hz": 1192.1965679713376,
+        "estimated_phase_margin_deg": 86.88497175929996
+      },
+      {
+        "vin_V": 35,
+        "load_A": 2,
+        "C_F": 0.00045,
+        "ESR_ohm": 0.05,
+        "L_H": 1.2e-05,
+        "crossover_Hz": 1192.1965679713376,
+        "estimated_phase_margin_deg": 86.88497175929996
+      }
+    ],
+    "minimum_estimated_phase_margin_deg": 65.79767796025573,
+    "crossover_range_Hz": [
+      1063.7324730178573,
+      2327.225714084021
+    ]
+  }
+}

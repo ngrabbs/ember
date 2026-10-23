@@ -2,6 +2,7 @@
 
 This directory records the Rev A audit and the isolated Rev B controller study. It is a design checkpoint, not a qualified schematic or fabrication release. The fabricated Rev A KiCad files are unchanged by this PR.
 
+- [5 V recovery design](../design/rev_b_5v_recovery_design.md): integrated TPS552872 alternative, editable B-sheet study, analytical compensation and 16 verified functional nets. Electrical draft passes ERC; qualification, final passive BOM and field presentation remain open.
 - [Essential buck stage draft](essential_buck_stage_draft.md): TI-derived six-pin package, hardware enable and passive circuit, six verified net endpoint sets, one classified ERC finding, and 5 V bias/startup constraints.
 - [Power-stage sizing and fit](../design/rev_b_power_stage_sizing_and_fit.md): reproducible load/ripple/sense calculations, package readbacks, 16 mm top standoff and expanded conversion reservations.
 - [Regulator and OV candidates](../design/rev_b_regulator_and_ov_candidates.md): 3.3 V buck / 5 V buck-boost preference, operator recovery requirement and cutoff restart constraint.

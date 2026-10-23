@@ -20,6 +20,8 @@ The [regulator and OV candidate study](rev_b_regulator_and_ov_candidates.md) car
 
 The [power-stage sizing and fit checkpoint](rev_b_power_stage_sizing_and_fit.md) records illustrative rail-current cases, passive/FET constraints and larger converter reservations. It incorporates the operator’s 16 mm top standoff; usable height and complete stage ratings remain unverified.
 
+The [2026-10-23 5 V recovery design](rev_b_5v_recovery_design.md) evaluates TPS552872RYQR as a simpler integrated alternative. Its native development circuit passes electrical checks, conditional on the protected source envelope; LM5177 remains a fallback. Final BOM, startup/load-release, thermal and presentation acceptance remain open.
+
 ## Agreed requirements
 
 | Subject | Working requirement |

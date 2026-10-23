@@ -19,3 +19,7 @@ See the [verification index](../verification/README.md) for manufacturer referen
 ## Power-stage study
 
 `Ember_EPS_Power.kicad_sym` and `Ember_EPS_Power.pretty` add the active `LMR51635XDDCR_DRAFT_v2` symbol and `TI_DDC0006A_SOT23_6_DRAFT` footprint. Six physical leads/pads are checked against TI’s top-view pin map and example lands through exports and disposable renders. Version 1 is superseded. Default symbol Footprint/Description and assembly settings remain incomplete; explicit scratch instance fields are present. See the [essential buck draft](../verification/essential_buck_stage_draft.md). These libraries are not registered into Rev A.
+
+## Integrated recovery study
+
+`Ember_EPS_Recovery:TPS552872RYQR_REVIEW` and `TI_RYQ0021A_DRAFT` are project-owned review candidates. The user approved TI-derived construction and a bright-green review callout on 2026-10-23; this did not approve production use. Query-back and disposable renders cover 21 electrical numbers; pad 9 is a three-object composite (23 pad objects total). The editable [development project](../studies/recovery_5v/recovery_5v.kicad_pro) has portable project-local table references. See [design/acceptance limits](../design/rev_b_5v_recovery_design.md).
