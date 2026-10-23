@@ -1,0 +1,182 @@
+{
+  "board": {
+    "design_settings": {}
+  },
+  "meta": {
+    "filename": "recovery_protection.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {
+    "classes": [
+      {
+        "clearance": 0.2,
+        "name": "POWER",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "ANALOG_CONTROL",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      }
+    ],
+    "meta": {
+      "version": 5
+    },
+    "netclass_patterns": [
+      {
+        "netclass": "POWER",
+        "pattern": "+3V3"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "+5V"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "/Recovery rail fault containment/REC5_COMMON"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery rail fault containment/REC5_DG"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery rail fault containment/REC5_FAULT"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery rail fault containment/REC5_FB"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery rail fault containment/REC5_GH"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery rail fault containment/REC5_HGATE"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery rail fault containment/REC5_RESET"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "/Recovery rail fault containment/REC5_SENSE"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery rail fault containment/REC5_UV"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "/SRC_COMMON"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/SRC_DG"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/SRC_FAULT"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/SRC_FB"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/SRC_GH"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/SRC_HGATE"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/SRC_OV"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "/SRC_SENSE"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/SRC_UV"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "5V0_RECOVERY_REG"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "GND"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "Net-(C12-Pad2)"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "Net-(C112-Pad2)"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "Net-(D1-A)"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "Net-(Q3-C)"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "Net-(Q107-B)"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "Net-(Q108-C)"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "Net-(U1-TMR)"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "Net-(U2-TMR)"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "REC5_BIAS"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "REC5_PIN"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "SOLAR_PERMITTED"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "SRC_BIAS"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "VIN_CHG"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/SRC_SNUB"
+      }
+    ]
+  },
+  "schematic": {
+    "legacy_lib_dir": "",
+    "legacy_lib_list": []
+  }
+}

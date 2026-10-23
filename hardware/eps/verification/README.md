@@ -1,6 +1,6 @@
 # EPS verification checkpoint
 
-- [Source and 5 V fault containment](../design/rev_b_5v_recovery_fault_containment.md): independent barriers, static precision-monitor feasibility, clamp/timer/restart decisions and executable fault-energy sensitivities. Native implementation and dynamic acceptance remain open.
+- [Selected source and 5 V protection circuits](../design/rev_b_5v_recovery_protection_selection.md): complete development circuits, transient/SOA screening, rejected arrangements and remaining qualification limits. [Native evidence](protection/native/README.md) separately records 40 endpoint sets, 0 ERC errors / 1 external reset warning and actual rendered-sheet inspection; S11 presentation remains open.
 
 - [Panasonic D8/F recovery bulk footprints](panasonic_bulk_footprints.md): approved construction, exact land/polarity/courtyard query-back, independent saved-board export and actual renders. Construction checks pass; fabrication-text and assembly qualification remain open.
 

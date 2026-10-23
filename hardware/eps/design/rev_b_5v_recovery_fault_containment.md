@@ -1,6 +1,6 @@
 # 5 V recovery source protection and fault containment
 
-2026-10-23. Engineering decision record and calculation checkpoint; **protection is not implemented or qualified**. Complements the [converter](rev_b_5v_recovery_design.md), [closure record](rev_b_5v_recovery_closure.md) and [source envelope](rev_b_source_voltage_and_fault_budget.md). Existing native circuitry and external interface names are unchanged.
+2026-10-23. Historical architecture/calculation checkpoint, superseded for selected components by the [complete development protection circuits](rev_b_5v_recovery_protection_selection.md). The new isolated native study and transient results do not establish qualification or integration. Complements the [converter](rev_b_5v_recovery_design.md), [closure record](rev_b_5v_recovery_closure.md) and [source envelope](rev_b_source_voltage_and_fault_budget.md). The candidate comparisons below record this earlier decision stage.
 
 ## Architecture to carry forward
 

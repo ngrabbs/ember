@@ -1,0 +1,21 @@
+{
+  "status": "BLOCKED_API",
+  "requirement": "S03: persist ERC four_way_junction severity as Error in native project settings",
+  "finding": "No exposed Konnect tool accepts ERC rule severities. run_erc severity filters reported findings; set_design_rules only controls board minimum dimensions; save_project_config writes Konnect preferences, not native ERC settings. No native file workaround used.",
+  "schemas_inspected": [
+    {
+      "name": "mcp__konnect__run_erc",
+      "description": "Run the Electrical Rules Check (ERC) on the schematic via kicad-cli and return a list of violations filtered by severity.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__konnect__run_erc(args: {\n  // Optional path to write this tool's filtered violation list as JSON (not KiCad's own ERC report)\n  output?: string;\n  // Path to .kicad_sch file\n  schematic: string;\n  // Minimum severity to report: 'error', 'warning', 'info'\n  severity?: string;\n}): Promise<CallToolResult>; };\n```"
+    },
+    {
+      "name": "mcp__konnect__save_project_config",
+      "description": "Save a project-specific rule or override. Same dot-notation as save_user_config but writes to the project's .konnect/project.json.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__konnect__save_project_config(args: {\n  // Dot-notation config key\n  key_path: string;\n  // Project directory (optional, uses configured default)\n  project_dir?: string;\n  value: unknown;\n}): Promise<CallToolResult>; };\n```"
+    },
+    {
+      "name": "mcp__konnect__set_design_rules",
+      "description": "Set board-level design rules (clearance, trace width, via size) in the sibling KiCAD project file.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__konnect__set_design_rules(args: {\n  // Path to .kicad_pcb file\n  board: string;\n  // Minimum clearance in mm\n  min_clearance?: number;\n  // Minimum hole-to-hole clearance in mm\n  min_hole_to_hole?: number;\n  // Minimum trace width in mm\n  min_trace_width?: number;\n  // Minimum via drill diameter in mm\n  min_via_drill?: number;\n  // Minimum via pad diameter in mm\n  min_via_size?: number;\n}): Promise<CallToolResult>; };\n```"
+    }
+  ],
+  "observed_ignored_check": "four_way_junction remains ignored in fresh erc-cli.json",
+  "separate_geometry_evidence": "geometry-check.json passes; this does not satisfy native severity persistence"
+}
