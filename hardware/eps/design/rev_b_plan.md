@@ -24,6 +24,8 @@ The [2026-10-23 5 V recovery design](rev_b_5v_recovery_design.md) evaluates TPS5
 
 The [5 V recovery closure/handoff](rev_b_5v_recovery_closure.md) records the subsequent 6.8 µH correction, selected passive MPNs, expanded tolerance checks and IHU startup requirements. The operator confirms COMMS TX defaults off with no other COMMS power controls, and selects −40 to +85 °C for electronics component screening only; actual electronics/battery operating temperatures remain open.
 
+The [completion ledger](rev_b_completion.md) tracks the remaining integrated design and the separately authorized Rev B PCB stage. The [MCU pinout correction](../verification/stm32_gp_candidate_verification.md) supersedes the earlier GP identity: the selected part is STM32G0B1KET6N.
+
 ## Agreed requirements
 
 | Subject | Working requirement |
@@ -35,7 +37,7 @@ The [5 V recovery closure/handoff](rev_b_5v_recovery_closure.md) records the sub
 | Power isolation | RBF insertion shuts down powered spacecraft functions, including charger and EPS MCU. Deployment switches also enforce hardware shutdown while stowed. |
 | RBF access | Exit through a spacecraft side; the side and location may be chosen to suit the EPS, structure and dispenser. Design the mounting and access arrangement rather than relying on an existing opening. |
 | Authority | EPS owns autonomous protection and load shedding; IHU requests operating states. IHU requests cannot override hardware interlocks or protection. |
-| Controller | STM32G0B1KE is the preferred MCU, pending package pin allocation. |
+| Controller | STM32G0B1KET6N selected on 2026-10-23 to match the intended N-variant allocation; earlier GP mapping claims are withdrawn. |
 | Communications | Separate CAN A and B. A is primary; B must provide recovery access after A fails. |
 | Rev A | Inspect damaged thermistor area later. Do not treat the current reworked circuit as a reference implementation. |
 

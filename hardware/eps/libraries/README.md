@@ -4,9 +4,11 @@ These symbols and manufacturer-derived land patterns were created through Konnec
 
 | Device | Active symbol in `Ember_EPS_Candidates` | Draft footprint |
 |---|---|---|
-| STM32G0B1KET6 GP LQFP32 | `STM32G0B1KET6_GP_DRAFT_v2` | `ST_LQFP32_7x7mm_P0.8mm_DRAFT` |
+| Historical mislabeled N map; do not use as GP | `STM32G0B1KET6_GP_DRAFT_v2` (identity correction pending) | `ST_LQFP32_7x7mm_P0.8mm_DRAFT` |
 | TCAN3413DR | `TCAN3413D_DRAFT_v3` | `TI_D0008A_SOIC8_3.9x4.9mm_P1.27mm_DRAFT` |
 | ECS-3225MV-160-BN-TR | `ECS_3225MV_DRAFT_v2` | `ECS_3225MV_3.2x2.5mm_DRAFT` |
+
+The 2026-10-23 [pinout correction](../verification/stm32_gp_candidate_verification.md) withdraws the earlier GP identity and selects STM32G0B1KET6N. Fresh native mapping and symbol identity are required before integration.
 
 Earlier versions remain as superseded study trials. CAN v2 was an unsuccessful orientation trial; use v3 for continued validation. Placed scratch instances have explicit footprint assignments, but library defaults for Footprint and Description still need completion through Konnect before library acceptance.
 

@@ -16,7 +16,7 @@ Draft dated 2026-10-03. This is the implementation handoff for the planned singl
 | Pack manager | 1 | BQ40Z50 family, R2 circuit/configuration reference | Final orderable MPN and delivered/programmed firmware revision remain open. Do not infer the order code from the manual title. |
 | BMS charge/discharge FETs | At least 2 | High-side N-channel parts compatible with selected BMS | Select gate-drive compatibility, hot resistance, current and transient capability from complete reference circuit. Parallel devices may change quantity. |
 | BMS precharge | 1 circuit allowance | Reference-compatible FET/resistor network | Select only after recovery behavior and energy limits are defined. |
-| BMS current shunt | 1 | Compare 5 mΩ and 10 mΩ Kelvin-sensed options | Rating, package and value await current/fault calculations. |
+| BMS current shunt | 1 | 2 mΩ development target within TI 1–3 mΩ reference range | Terminal-inclusive TCR ≤50 ppm/K; exact part, Kelvin lands and fault/pulse coordination open. |
 | BMS cell input filters | 1 set | Exact selected 2S reference implementation | Select resistor/capacitor values with balancing, connection transients and accuracy. |
 | Secondary protection | 1 circuit allowance | Independent protection and fuse response as required | Acceptance requirement and exact implementation open; not assumed provided by the primary IC. |
 | Pack-side harness fuse | 1 | Close to cells, upstream of main cable | Select current/time characteristics and coordinate wire, connector and PCB protection. |

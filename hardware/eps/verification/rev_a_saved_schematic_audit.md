@@ -1,5 +1,7 @@
 # EPS saved schematic and Rev A fabrication comparison
 
+> **MCU erratum, 2026-10-23:** the GP symbol rejection and proposed GP pin-map authority in this historical audit were incorrect. ST DS13560 Rev 6 Figure 3 assigns PB2/PC6/PA15/PB3/PB4/PB5 to GP pins 17/20/26/27/28/29; PB15/VDDIO2/PD0/PD1/PD2/PD3 belong to the N variant. The operator selects STM32G0B1KET6N for continued design. See the [corrected candidate record](stm32_gp_candidate_verification.md). This correction does not change the separate Rev A connectivity findings.
+
 Audit dated 2026-10-03. The current saved EPS schematic is not an accepted electrical baseline for Rev B. A read-only KiCad netlist export exposes substantial connectivity gaps and differences from the Rev A fabrication BOM. These findings describe the saved design, not the hand-reworked physical board. Do not infer that the fabricated board has every exported gap.
 
 **Verdict: INCOMPLETE.** Exported connectivity and schematic images were inspected, but formal Konnect ERC/short checks and candidate library pin-map acceptance could not run. The requested toolsets reported successful loading, while their callable tools remained absent from this session. No KiCad source or library was changed.
