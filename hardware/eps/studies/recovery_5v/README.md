@@ -4,7 +4,7 @@ This isolated KiCad 10 project evaluates TPS552872RYQR for EPS Rev B. Read the [
 
 - Open `recovery_5v.kicad_pro` for the one-sheet ANSI B schematic. Library tables resolve project-owned parts through portable `${KIPRJMOD}` paths.
 - `recovery_5v.kicad_pcb` contains **only the disposable U1 package comparison**. It does not represent circuit placement, connectivity, routing, or an EPS board layout.
-- `development_bom.csv` includes reference parts and explicitly unfinished MPNs/footprints. It is not an ordering or assembly BOM.
+- `development_bom.csv` now contains all 28 exact development MPNs and required metadata, verified in a fresh CLI export. Some footprints and application ratings remain unfinished; it is not an ordering or assembly BOM.
 - `physical_pin_map.csv`, `package-readback.xml`, and `package.png` document the provisional TI RYQ0021A land pattern. Pad 9 uses three constituent lands; stencil and thermal acceptance remain open.
 - `erc.json` is the direct KiCad CLI report. The saved schematic passes ERC with zero errors and zero warnings. [Endpoint and net-class evidence](../../verification/evidence/2026-10-23_recovery_5v_verified.json) and [fresh wire geometry](../../verification/evidence/2026-10-23_recovery_5v_geometry.json) are separate checks.
 
@@ -18,4 +18,6 @@ Regenerate the analytical evidence from the repository root:
 python3 hardware/eps/verification/recovery_5v_analysis.py
 ```
 
-The averaged model is an engineering estimate; it excludes switching dynamics, transition/PFM behavior, and startup. No bench or thermal qualification has run. Heavy-load release, protected source voltage, exact passive selections, and independent rail fault containment remain open.
+The averaged model is an engineering estimate; it excludes switching dynamics, transition/PFM behavior, and startup. No bench or thermal qualification has run. Heavy-load release, protected source voltage, application acceptance of selected passives, and independent rail fault containment remain open.
+
+The [closure/handoff record](../../design/rev_b_5v_recovery_closure.md) incorporates the operator's temperature-screening and COMMS startup information. L1 is now 6.8 µH to keep its initial high-tolerance value below TI's recommended effective-inductance ceiling; C17 is now a 1206 C0G part. The model includes TCR, residual CDC current, compensation tolerances and a cold hybrid-ESR sensitivity. Its estimated margins do not qualify the physical capacitor bank.

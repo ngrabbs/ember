@@ -22,6 +22,8 @@ The [power-stage sizing and fit checkpoint](rev_b_power_stage_sizing_and_fit.md)
 
 The [2026-10-23 5 V recovery design](rev_b_5v_recovery_design.md) evaluates TPS552872RYQR as a simpler integrated alternative. Its native development circuit passes electrical checks, conditional on the protected source envelope; LM5177 remains a fallback. Final BOM, startup/load-release, thermal and presentation acceptance remain open.
 
+The [5 V recovery closure/handoff](rev_b_5v_recovery_closure.md) records the subsequent 6.8 µH correction, selected passive MPNs, expanded tolerance checks and IHU startup requirements. The operator confirms COMMS TX defaults off with no other COMMS power controls, and selects −40 to +85 °C for electronics component screening only; actual electronics/battery operating temperatures remain open.
+
 ## Agreed requirements
 
 | Subject | Working requirement |
