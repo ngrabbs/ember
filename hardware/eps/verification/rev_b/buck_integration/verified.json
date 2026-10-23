@@ -1,0 +1,44 @@
+{
+  "status": "COMBINED_GRAPH_METADATA_PASS; ESSENTIAL_POWER_ACCEPTANCE_OPEN",
+  "commit_basis": "d8d5580",
+  "physical_parts": 43,
+  "new_buck_parts": 16,
+  "mapped_buck_nets": 6,
+  "complete_root_nets": 40,
+  "functional_nets": 24,
+  "old_controller_endpoint_sets_preserved": 36,
+  "changed_controller_nets_only_added_buck_nodes": [
+    "+3V3",
+    "GND"
+  ],
+  "crosswalk_entries": 72,
+  "new_buck_crosswalk_entries": 24,
+  "erc_counts": {
+    "error": 16,
+    "warning": 3
+  },
+  "erc_types": {
+    "pin_not_connected": 16,
+    "isolated_pin_label": 3
+  },
+  "buck_geometry": {
+    "HV_on_grid_wires": 51,
+    "fourway": 0,
+    "pins_at_branches": 0
+  },
+  "historical_files_unchanged": 18,
+  "previous_evidence_files_unchanged": 20,
+  "netclass_members": 24,
+  "source_fixture_flags": [
+    "#FLG0400 external SYS_PWR_PERMITTED",
+    "#FLG0401 external GND"
+  ],
+  "actual_buck_output_flag": "#FLG0402 after L400",
+  "open": [
+    "external source/interlock/charger/BMS not drawn",
+    "weak-source UVLO/chatter",
+    "autonomous3V3outputOVcontainment absent",
+    "actual MCU/IHU/CAN dynamic load/thermal/effective-C/loop qualification",
+    "S03severityAPI/S08existingcustomreview/S11display/S04pagination"
+  ]
+}

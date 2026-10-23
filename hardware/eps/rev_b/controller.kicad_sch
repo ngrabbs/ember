@@ -2558,11 +2558,6 @@
     (effects (font (size 2 2)) (justify left bottom))
     (uuid "2610173c-b7dc-4e86-9da5-0e8ec267b529")
   )
-  (text "Essential +3V3 is not yet sourced here; hardware interlocks, charger, BMS and protection pending."
-    (at 25.4 31.75 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "2ed0d26a-e3bc-49a2-b8c1-6482cf948d9b")
-  )
   (text "U100: STM32G0B1KET6N, N suffix. Pin 20 is VDDIO2, tied to VDD.\nPA11/PA12 allocation retained; USB/LSE unused. Verify UCPD reset configuration."
     (at 180.34 62.23 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -2597,6 +2592,11 @@
     (at 25.4 224.79 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "4121b165-048e-4506-a598-8aa1b1bb04f7")
+  )
+  (text "Essential +3V3 is supplied by attached buck; external source-permission fixture. BMS/charger/protection pending."
+    (at 25.4 31.75 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "28d7944f-68c1-459b-938e-d4e31877af40")
   )
 	(symbol
 		(lib_id "Ember_EPS_Candidates:ECS_3225MV_DRAFT_v2")

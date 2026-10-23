@@ -7,56 +7,85 @@
 	(lib_symbols
 	)
 	(sheet
-    (at 30.48 60.96)
-    (size 152.4 71.12)
-    (fields_autoplaced yes)
-    (stroke (width 0.1524) (type solid))
-    (fill (color 0 0 0 0.0))
-    (uuid "3887cba2-4b11-469e-838c-d35f1fb4fc5a")
-    (property "Sheetname" "Controller"
-      (at 30.48 60.325 0)
-      (effects (font (size 1.27 1.27)) (justify left bottom))
-    )
-    (property "Sheetfile" "controller.kicad_sch"
-      (at 30.48 132.715 0)
-      (effects (font (size 1.27 1.27)) (justify left top))
-    )
-    (instances
-      (project "eps_rev_b"
-        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "2"))
-      )
-    )
-  )
+		(at 30.48 60.96)
+		(size 100.33 45.72)
+		(fields_autoplaced)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0)
+		)
+		(uuid "3887cba2-4b11-469e-838c-d35f1fb4fc5a")
+		(property "Sheetname" "Controller"
+			(at 30.48 60.325 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "controller.kicad_sch"
+			(at 30.48 132.715 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113"
+					(page "2")
+				)
+			)
+		)
+	)
 	(sheet
-    (at 213.36 60.96)
-    (size 152.4 71.12)
-    (fields_autoplaced yes)
-    (stroke (width 0.1524) (type solid))
-    (fill (color 0 0 0 0.0))
-    (uuid "fe5345f2-e583-4a64-a085-08644425dbe8")
-    (property "Sheetname" "CAN interfaces"
-      (at 213.36 60.325 0)
-      (effects (font (size 1.27 1.27)) (justify left bottom))
-    )
-    (property "Sheetfile" "can_interfaces.kicad_sch"
-      (at 213.36 132.715 0)
-      (effects (font (size 1.27 1.27)) (justify left top))
-    )
-    (instances
-      (project "eps_rev_b"
-        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "3"))
-      )
-    )
-  )
+		(at 167.64 60.96)
+		(size 100.33 45.72)
+		(fields_autoplaced)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0)
+		)
+		(uuid "fe5345f2-e583-4a64-a085-08644425dbe8")
+		(property "Sheetname" "CAN interfaces"
+			(at 167.64 60.325 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "can_interfaces.kicad_sch"
+			(at 167.64 132.715 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113"
+					(page "3")
+				)
+			)
+		)
+	)
   (text "EPS Rev B — integrated development schematic"
     (at 30.48 30.48 0)
     (effects (font (size 2.54 2.54) (bold yes)) (justify left bottom))
     (uuid "18a562f8-410d-46f1-8f5e-c579ce6a58ce")
-  )
-  (text "Initial checkpoint: controller + CAN only. Remaining power, BMS, charger and protection sheets pending."
-    (at 30.48 45.72 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "1f1f295c-2cb7-4fb3-b285-641a10e93ca8")
   )
   (text "Reference ranges: 100 controller, 200 BMS, 300 charger, 400 essential 3V3, 500 recovery 5V, 600 protection."
     (at 30.48 149.86 0)
@@ -77,5 +106,31 @@
     (at 30.48 195.58 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "62e809d0-3715-4341-b529-4413b236f3aa")
+  )
+	(sheet
+    (at 304.8 60.96)
+    (size 100.33 45.72)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "f65fe20e-e663-42b7-8f35-60abec560633")
+    (property "Sheetname" "Essential 3V3"
+      (at 304.8 60.325 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "essential_3v3.kicad_sch"
+      (at 304.8 107.31500000000001 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "4"))
+      )
+    )
+  )
+  (text "Checkpoint: controller, CAN and essential 3V3. Source/interlock, BMS, charger, recovery 5V and protection pending."
+    (at 30.48 45.72 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "76c5b3d6-c589-47be-867c-41339e00dd2b")
   )
 )
