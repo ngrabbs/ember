@@ -1,0 +1,39 @@
+* EXPERIMENT ONLY: independent bias, VOUT sensing common-source node
+* Not a selected design or qualified manufacturer application
+.lib "${LTSPICE_LIBRARY}/cmp/standard.mos"
+.lib "${LTSPICE_LIBRARY}/sub/LTC4367.sub"
+Vsource drive 0 PWL(0 0 1m 0 1.001m 4.5 .8 4.5)
+Rsource drive input .05
+Lwire input a 1u
+Cinput a 0 1u Rser=.05
+M1 a gate cs cs IRLR2908
+M2 b gate cs cs IRLR2908
+Dor1 a biasraw D100
+Dor2 b biasraw D100
+Spermission biasraw permission command 0 SWC
+Rpermission permission 0 1meg
+Dhold permission bias D100
+Cbias bias 0 100n Rser=1
+Ruvtop permission uv 100k
+Ruvbottom uv 0 100k
+Xcontroller 0 0 uv bias gate cs fault permission LTC4367
+Rfault fault 0 1meg
+Ccommon cs 0 0.8u Rser=1
+Rgs gate cs 1meg
+Cgate gate 0 100n Rser=10
+Cload b 0 142.7u Rser=.02
+Rload b 0 10
+Vcommand command 0 PWL(0 0 50m 0 50.1m 1 500m 1 500.1m 0)
+.model D100 D(Is=1n N=1 Rs=2 Cjo=2p BV=100 Ibv=10u)
+.model SWC SW(Ron=1 Roff=1e12 Vt=.5 Vh=-.05)
+.options plotwinsize=0
+.temp 27
+.tran 0 .8 0 10u
+.save V(a) V(b) V(cs) V(gate) V(bias) V(permission) V(uv) I(Vsource) Id(M1) Id(M2)
+.meas tran output_before_permission MAX V(b) FROM=0 TO=49m
+.meas tran output_on FIND V(b) AT=450m
+.meas tran output_off FIND V(b) AT=700m
+.meas tran peak_vgs MAX V(gate,cs)
+.meas tran min_vgs MIN V(gate,cs)
+.meas tran peak_current MAX -I(Vsource)
+.end

@@ -15,3 +15,5 @@ For reproduction, download the [manufacturer ZIP](https://www.vishay.com/docs/77
 Next acceptance depends on the actual charger/PowerPath input bank and BMS thresholds/delays, not only the downstream converter output capacitance. The integrated converters already total 102.6 µF nominal on their shared input; the complete upstream network is unfinished. Do not freeze the interlock capacitor/inrush or FET SOA budget until those paths are reconciled.
 
 Sources: [SUD50P08-25L datasheet](https://www.vishay.com/docs/73443/sud50p08.pdf), [Si7455DP datasheet](https://www.vishay.com/docs/73430/si7455dp.pdf), [manufacturer SPICE guide](https://www.vishay.com/docs/73498/73498.pdf). These component references do not establish flight qualification.
+
+Follow-up: [isolated model diagnosis and controller screening](../controller_screening/README.md) completed three isolated P-channel diagnostics and 25 N-channel controller experiments. The isolated successes do not change the four failed gate-circuit runs recorded here. No RBF circuit is accepted.

@@ -1,0 +1,28 @@
+LTspice 26.0.2 for MacOS
+Circuit: ${RUN_DIRECTORY}/reverse_open.cir
+Start Time: Fri Oct 23 16:39:27 2026
+Options:plotwinsize=0
+solver = Normal
+Maximum thread count: 10
+tnom = 27
+temp = 27
+method = trap
+Direct Newton iteration failed to find operating point.
+Starting Gmin stepping
+Gmin stepping failed to find operating point. Use".option gminsteps=0" to skip all Gmin stepping.
+Starting source stepping with srcstepmethod=0
+Source stepping succeeded in finding the operating point.
+
+Total elapsed time: 1.281 seconds.
+
+Files loaded:
+${RUN_DIRECTORY}/reverse_open.cir
+${LTSPICE_LIBRARY}/cmp/standard.mos
+${LTSPICE_LIBRARY}/sub/LTC4367.sub
+
+output_before_permission: MAX(V(a) )=0.000178715010406 FROM 0 TO 0.049
+output_on: V(a) =-2.96326232429e-07 at 0.45
+output_off: V(a) =-1.66992463272e-07 at 0.7
+peak_vgs: MAX(V(gate,cs))=0.883789800107 FROM 0 TO 0.8
+min_vgs: MIN(V(gate,cs))=-0.449729725718 FROM 0 TO 0.8
+peak_current: MAX(-I(Vsource))=7.42551898956 FROM 0 TO 0.8
