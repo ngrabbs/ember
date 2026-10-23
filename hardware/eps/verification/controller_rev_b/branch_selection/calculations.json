@@ -1,0 +1,197 @@
+{
+  "status": "TPS2553DBVR-1_DEVELOPMENT_CANDIDATE; NO_NATIVE_BRANCH_BUILD; QUALIFICATION_OPEN",
+  "exact_MPN": "TPS2553DBVR-1",
+  "assumptions": {
+    "TCAN_CCanormal_max_A": 0.06,
+    "TCAN_VIOnormal_RXfloating_max_A": 0.0003,
+    "TCAN_fault_CCAN_at_both_bus_25V_max_A": 0.13,
+    "TXD_STB_pullup_each_ohm": 10000,
+    "added_dynamic_current_allocation_A": 0.02,
+    "normal_RDS_on_hot_max_ohm": 0.135,
+    "branch_series_ohm": 1.0,
+    "series_tolerance": 0.01,
+    "series_TCR_per_K": 0.0001,
+    "RILIM_nom_kohm": 210,
+    "RILIM_initial_tol": 0.001,
+    "RILIM_TCR_per_K": 2.5e-05,
+    "temperature_span_from25_K": 65,
+    "branch_C_nom_F": 1.2e-06,
+    "short_response_2us_is_typ_at5V_not_guaranteed_at3V3": true,
+    "limit_latch_delay_s": [
+      0.005,
+      0.01
+    ]
+  },
+  "RILIM_equation_bounds_A": [
+    0.10999823109954882,
+    0.15119482195063777
+  ],
+  "published210k_table_A": [
+    0.11,
+    0.15
+  ],
+  "normal_steady_current_A": 0.06096487843137255,
+  "normal_drop_max_V": 0.07020105751372549,
+  "branch_static_normal_min_V": 3.1625980800443028,
+  "fault_latch_energy_max_J": 0.005026308802509594,
+  "limit_headroom_for80mA_valid_A": 0.029998231099548814,
+  "charge_1p2u_at110mA_minus61mA_s": 8.135830758365455e-05,
+  "fault_transient_sensitivities": [
+    {
+      "valid_branch_A": 0.06096487843137255,
+      "short_response_s": 2e-06,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.1625980800443028,
+      "estimated_shared_droop_V": 0.10234199996631342,
+      "B_branch_after_sensitivity_V": 3.0602560800779894,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    },
+    {
+      "valid_branch_A": 0.06096487843137255,
+      "short_response_s": 3e-06,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.1625980800443028,
+      "estimated_shared_droop_V": 0.13691699995493284,
+      "B_branch_after_sensitivity_V": 3.02568108008937,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    },
+    {
+      "valid_branch_A": 0.06096487843137255,
+      "short_response_s": 5e-06,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.1625980800443028,
+      "estimated_shared_droop_V": 0.20606699993217167,
+      "B_branch_after_sensitivity_V": 2.956531080112131,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    },
+    {
+      "valid_branch_A": 0.06096487843137255,
+      "short_response_s": 1e-05,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.1625980800443028,
+      "estimated_shared_droop_V": 0.37894199987526866,
+      "B_branch_after_sensitivity_V": 2.783656080169034,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    },
+    {
+      "valid_branch_A": 0.08,
+      "short_response_s": 2e-06,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.140679137558028,
+      "estimated_shared_droop_V": 0.10175508371794742,
+      "B_branch_after_sensitivity_V": 3.0389240538400806,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    },
+    {
+      "valid_branch_A": 0.08,
+      "short_response_s": 3e-06,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.140679137558028,
+      "estimated_shared_droop_V": 0.13613180119022697,
+      "B_branch_after_sensitivity_V": 3.0045473363678012,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    },
+    {
+      "valid_branch_A": 0.08,
+      "short_response_s": 5e-06,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.140679137558028,
+      "estimated_shared_droop_V": 0.20488523613478604,
+      "B_branch_after_sensitivity_V": 2.935793901423242,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    },
+    {
+      "valid_branch_A": 0.08,
+      "short_response_s": 1e-05,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.140679137558028,
+      "estimated_shared_droop_V": 0.37676882349618374,
+      "B_branch_after_sensitivity_V": 2.763910314061844,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    },
+    {
+      "valid_branch_A": 0.09,
+      "short_response_s": 2e-06,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.129164137558028,
+      "estimated_shared_droop_V": 0.10144675038461409,
+      "B_branch_after_sensitivity_V": 3.0277173871734138,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    },
+    {
+      "valid_branch_A": 0.09,
+      "short_response_s": 3e-06,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.129164137558028,
+      "estimated_shared_droop_V": 0.135719301190227,
+      "B_branch_after_sensitivity_V": 2.993444836367801,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    },
+    {
+      "valid_branch_A": 0.09,
+      "short_response_s": 5e-06,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.129164137558028,
+      "estimated_shared_droop_V": 0.20426440280145272,
+      "B_branch_after_sensitivity_V": 2.924899734756575,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    },
+    {
+      "valid_branch_A": 0.09,
+      "short_response_s": 1e-05,
+      "short_current_upper_sensitivity_A": 3.3801648773388355,
+      "shared_cap_F": 9.6e-05,
+      "shared_ESR_ohm": 0.01,
+      "branch_static_low_V": 3.129164137558028,
+      "estimated_shared_droop_V": 0.3756271568295171,
+      "B_branch_after_sensitivity_V": 2.753536980728511,
+      "meaning": "no regulator help, no wiring L, switched short R>=0.9835ohm; response at3.3V is unguaranteed"
+    }
+  ],
+  "logic_sensitivities": {
+    "series_TXD_STB_RXD_ohm": 1000,
+    "ground_short_each_GPIO_current_max_A": 0.003324392156862745,
+    "resistor_ground_short_power_max_W": 0.011051583212610534,
+    "TCAN_TXD_internal_low_current_bound_A": 0.0002,
+    "TXD_low_with_MCU_Vol0p4_V": 0.8476720142602495,
+    "TCAN_TXD_VIL_at_branch3V0_V": 0.8999999999999999,
+    "RXD_VOH_at_branch3V0_V": 2.4000000000000004,
+    "MCU_VIH_sensitivity_V": 2.3270745098039214,
+    "MCU_low_voltage_0p4_is_an_allocation_to_confirm": true,
+    "TXD_STB_RXD_Ioff_abs_A": 1e-06,
+    "Ioff_conditions": "VCC=VIO=0, pin3.6V; TCAN supplyoff leakage does not establish arbitrary breakdown isolation",
+    "input_cap_allocation_F": 5e-11,
+    "1k_50pF_70percent_delay_s": 6.019864021629681e-08
+  },
+  "required_closures": [
+    "3.3V maximum short response and peak/inrush pulse (2us only typical at5V)",
+    "actual MCU/IHU/CAN load and controller/regulator response with96u qualified floor",
+    "dynamic normal traffic capacitive current and VCC minimum",
+    "series resistor pulse qualification/temperature",
+    "poweroff injection and arbitrary failed bus-to-logic paths",
+    "per-channel latch-reset GPIO/interface ownership and recovery timing",
+    "exact custom symbol construction approval,physical pin/pad review"
+  ]
+}
