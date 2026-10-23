@@ -1,5 +1,7 @@
 # EPS verification checkpoint
 
+- [Source and 5 V fault containment](../design/rev_b_5v_recovery_fault_containment.md): independent barriers, static precision-monitor feasibility, clamp/timer/restart decisions and executable fault-energy sensitivities. Native implementation and dynamic acceptance remain open.
+
 - [Panasonic D8/F recovery bulk footprints](panasonic_bulk_footprints.md): approved construction, exact land/polarity/courtyard query-back, independent saved-board export and actual renders. Construction checks pass; fabrication-text and assembly qualification remain open.
 
 This directory records the Rev A audit and the isolated Rev B controller study. It is a design checkpoint, not a qualified schematic or fabrication release. The fabricated Rev A KiCad files are unchanged by this PR.

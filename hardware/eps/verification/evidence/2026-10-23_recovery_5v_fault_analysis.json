@@ -1,0 +1,118 @@
+{
+  "date": "2026-10-23",
+  "status": "FEASIBILITY ONLY; no accepted source/fault envelope, native protection circuit or bench result",
+  "resistor_initial_plus_screening_TCR_fraction": 0.002625,
+  "source_monitor": {
+    "part": "TPS3760E012DYYRQ1",
+    "divider_ohm": [
+      412000,
+      10000
+    ],
+    "trip_interval_V": [
+      33.2104470603603,
+      34.31413852974684
+    ],
+    "reconnect_interval_V": [
+      32.535440820479984,
+      33.63896377126582
+    ],
+    "reconnect_margin_above_typical_cold_Voc_V": 0.3714408204799824,
+    "remaining_static_margin_to_35V_V": 0.6858614702531582,
+    "sense_delay_max_at_20_percent_overdrive_s": 1.7e-05,
+    "delay_is_NOT_a_bound_at_small_overdrive": true,
+    "not_latching_variant": true
+  },
+  "lt4363_table_condition_sensitivities": {
+    "not_guaranteed_over_application_supply_range": true,
+    "source_divider_ohm": [
+      25300,
+      1000
+    ],
+    "source_clamp_interval_V": [
+      32.68416985346746,
+      34.38849337076545
+    ],
+    "source_nominal_clamp_V": 33.5325,
+    "rail_divider_ohm": [
+      3120,
+      1000
+    ],
+    "rail_clamp_interval_V": [
+      5.126466796158834,
+      5.380478233865146
+    ],
+    "rail_nominal_clamp_V": 5.253,
+    "rail_nuisance_clamp_margin_V": 0.051713796158833425,
+    "rail_transient_margin_to_provisional_5p5V_V": 0.11952176613485399
+  },
+  "ideal_pass_through_sensitivity": {
+    "VIN_V": 35,
+    "initial_V": 5.074753,
+    "L_H": 3.808e-06,
+    "C_F": 0.00016,
+    "threshold_V": 5.380478233865146,
+    "threshold_crossing_s": 3.5313491960336684e-06,
+    "cases": [
+      {
+        "delay_after_crossing_s": 1e-06,
+        "ideal_uninterrupted_voltage_V": 5.577588439107494,
+        "ideal_uninterrupted_inductor_current_A": 35.41002680036899
+      },
+      {
+        "delay_after_crossing_s": 5e-06,
+        "ideal_uninterrupted_voltage_V": 6.844448671472236,
+        "ideal_uninterrupted_inductor_current_A": 65.71690540008213
+      },
+      {
+        "delay_after_crossing_s": 1.7e-05,
+        "ideal_uninterrupted_voltage_V": 14.843539003767287,
+        "ideal_uninterrupted_inductor_current_A": 143.3743246880799
+      }
+    ],
+    "warning": "Ideal lossless LC; no protection response, resistance, saturation or parasitics. Not a fault bound."
+  },
+  "stored_energy_J": {
+    "converter_input_68u_at_35V": 0.04165,
+    "converter_input_30u_nominal_ceramic_at_35V": 0.018375,
+    "output_500u_at_35V_if_uncontained": 0.30625
+  },
+  "linear_pass_FET_stress_allocations_NOT_ratings": [
+    {
+      "source_V": 35,
+      "clamp_V": 5.25,
+      "current_A": 2,
+      "duration_s": 0.001,
+      "power_W": 59.5,
+      "energy_J": 0.059500000000000004
+    },
+    {
+      "source_V": 35,
+      "clamp_V": 5.25,
+      "current_A": 2,
+      "duration_s": 0.005,
+      "power_W": 59.5,
+      "energy_J": 0.2975
+    },
+    {
+      "source_V": 35,
+      "clamp_V": 5.25,
+      "current_A": 3,
+      "duration_s": 0.001,
+      "power_W": 89.25,
+      "energy_J": 0.08925
+    },
+    {
+      "source_V": 35,
+      "clamp_V": 5.25,
+      "current_A": 3,
+      "duration_s": 0.005,
+      "power_W": 89.25,
+      "energy_J": 0.44625000000000004
+    }
+  ],
+  "exit_checks": {
+    "static_source_window_above_typical_only": true,
+    "rail_table_sensitivity_separates_regulator_and_5p5V": true,
+    "fault_containment_qualified": false
+  }
+}

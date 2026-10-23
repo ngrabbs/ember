@@ -223,3 +223,7 @@ Keep charger-enable testing separate from protection acceptance. A working charg
 - Resolve board layer count, component-side clearance against the holder, and harness connection/retention details.
 
 This file owns the Rev B planning checklist. Link to it from broader TODOs rather than duplicating the work list. Existing canonical pin assignments and Rev A documentation remain unchanged until the corresponding implementation decision is made.
+
+## Source and 5 V fault-containment follow-up — 2026-10-23
+
+The [protection decision record](rev_b_5v_recovery_fault_containment.md) carries forward independent source and shared-5 V hardware barriers, autonomous solar restart and latched rail-fault containment with independent reset access. A precision monitor passes the static cold-reconnect window; dynamic protection and complete circuits remain open. The executable study quantifies clamp tolerance, converter pass-through sensitivity and linear pass-FET stress without treating those sensitivities as qualified limits. No native protection circuit or PCB layout has been added.
