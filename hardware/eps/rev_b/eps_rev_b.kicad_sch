@@ -92,21 +92,6 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "3e2c790c-a980-426c-adad-16e089366427")
   )
-  (text "External interface names preserved. Logical connectors are placeholders; no production connector acceptance."
-    (at 30.48 165.1 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f34108a7-6764-4d58-aca8-9fdb4d516830")
-  )
-  (text "Incomplete ERC remains visible. No PCB synchronization or fabrication acceptance."
-    (at 30.48 180.34 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "8296d7dd-d4ab-4164-a67a-b36884794d36")
-  )
-  (text "S03 severity API unavailable; S11 required field display unsupported; reused custom symbol S08 review pending."
-    (at 30.48 195.58 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "62e809d0-3715-4341-b529-4413b236f3aa")
-  )
 	(sheet
     (at 304.8 60.96)
     (size 100.33 45.72)
@@ -149,9 +134,66 @@
       )
     )
   )
-  (text "Checkpoint: controller, CAN, essential 3V3 and recovery converter. Source/interlock, BMS, charger and protection pending."
+	(sheet
+    (at 30.48 157.48)
+    (size 100.33 33.02)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "0abe3ad6-2c84-4061-b95b-3f3b9c4a4da7")
+    (property "Sheetname" "Solar source protection"
+      (at 30.48 156.845 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "source_protection.kicad_sch"
+      (at 30.48 191.135 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "6"))
+      )
+    )
+  )
+	(sheet
+    (at 167.64 157.48)
+    (size 100.33 33.02)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "9deb67d0-68a4-4419-931c-74033ea85dd8")
+    (property "Sheetname" "Recovery rail protection"
+      (at 167.64 156.845 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "rail_protection.kicad_sch"
+      (at 167.64 191.135 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "7"))
+      )
+    )
+  )
+  (text "Checkpoint: controller, both converters, solar and rail protection. Physical RBF, charger PowerPath and BMS remain absent."
     (at 30.48 45.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "04611caa-b4b7-4099-924f-214f61025172")
+    (uuid "922e3ec9-c357-4333-930e-ac081ded6d36")
+  )
+  (text "SOLAR_PERMITTED -> source barrier -> VIN_CHG for FUTURE charger. VIN_CHG is NOT joined to SYS_PWR_PERMITTED."
+    (at 30.48 205.74 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "18a55e77-eea4-4f77-94f3-a3beef9d9c52")
+  )
+  (text "SYS_PWR_PERMITTED remains an independent external permitted-source fixture. REG -> rail barrier -> protected+5V."
+    (at 30.48 215.9 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "8aa1d13a-54d7-453b-bb30-4ea29210d2f8")
+  )
+  (text "Incomplete ERC / low-VCC accuracy / hot SOA / shared startup /3V3 OV remain open. S03/S08/S11/S04 API limits; no PCB sync."
+    (at 30.48 226.06 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "dca06827-12e2-468b-9293-6466a7e1ce24")
   )
 )

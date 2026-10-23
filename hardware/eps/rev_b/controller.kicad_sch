@@ -2397,6 +2397,76 @@
 		)
 		(uuid "c1fa420a-978b-43a0-be34-51d43deb8bc3")
 	)
+	(text "CONTROLLER — integrated development checkpoint"
+		(at 25.4 24.13 0)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left bottom)
+		)
+		(uuid "2610173c-b7dc-4e86-9da5-0e8ec267b529")
+	)
+	(text "U100: STM32G0B1KET6N, N suffix. Pin 20 is VDDIO2, tied to VDD.\nPA11/PA12 allocation retained; USB/LSE unused. Verify UCPD reset configuration."
+		(at 180.34 62.23 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4cf4a037-7508-4b8e-a4ad-2c18d7e50be9")
+	)
+	(text "J100: logical SWD access; physical connector unselected.\n1 VTref sense only, 2 SWDIO, 3 SWCLK, 4 NRST, 5 GND.\nNo injected probe power. Power-off/backfeed review open."
+		(at 254 142.24 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3ec985fc-d520-4c84-ad9e-71dcf12951ac")
+	)
+	(text "16 MHz HSE bypass; no passive crystal.\nPlace C110/C111 locally at Y100 in layout; source-series option open."
+		(at 25.4 160.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "123f91f8-6bdc-4b80-b91d-4f1b7aa6b1ce")
+	)
+	(text "OPEN: ADC conditioning, local charger I2C, isolated pack SMBus,\nUART, interlock status and payload request. Required pins remain unconnected.\nNo EPS drive on IHU-owned COMMS_EN / PAYLOAD_EN or stack alert."
+		(at 25.4 198.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "74b1397b-2bfc-4e55-9ac8-a936fbe62bb4")
+	)
+	(text "PD3 reserved. Do not connect BMS BTP directly to 3V3 logic.\nUnused BTP is tied to BMS VSS in the proposed BMS circuit; poll pack status."
+		(at 25.4 210.82 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "88e5ec46-9db9-4814-919a-015a5cecdfa1")
+	)
+	(text "S11 OPEN: metadata is saved; required visible field styling unsupported.\nS08: reused TCAN/ECS custom symbols remain under original construction review."
+		(at 25.4 224.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4121b165-048e-4506-a598-8aa1b1bb04f7")
+	)
 	(label "EPS_NRST"
 		(at 111.76 66.04 0)
 		(effects
@@ -2456,36 +2526,6 @@
 			(justify left bottom)
 		)
 		(uuid "c4d259bd-35ee-412e-91fa-9c1161a82c3a")
-	)
-	(label "REC5_RESET"
-		(at 223.52 100.33 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "11f0b09a-8d4e-4c62-b6ab-107663f96373")
-	)
-	(label "REC5_FAULT"
-		(at 223.52 102.87 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "dc013930-4e14-45df-aa96-0a118ef7ac88")
-	)
-	(label "SRC_FAULT"
-		(at 119.38 105.41 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "79155fb2-feaa-49e7-8e1d-bf9a77900857")
 	)
 	(global_label "EPS_CAN_A_STB"
 		(shape input)
@@ -2553,50 +2593,48 @@
 		)
 		(uuid "346b5855-6050-4a1e-9776-80d38506a9bd")
 	)
-  (text "CONTROLLER — integrated development checkpoint"
-    (at 25.4 24.13 0)
-    (effects (font (size 2 2)) (justify left bottom))
-    (uuid "2610173c-b7dc-4e86-9da5-0e8ec267b529")
-  )
-  (text "U100: STM32G0B1KET6N, N suffix. Pin 20 is VDDIO2, tied to VDD.\nPA11/PA12 allocation retained; USB/LSE unused. Verify UCPD reset configuration."
-    (at 180.34 62.23 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "4cf4a037-7508-4b8e-a4ad-2c18d7e50be9")
-  )
-  (text "PROTECTION INTERFACES — NOT YET LINKED\nPA6 REC5_RESET -> existing 47k Q107 base path in protection study.\nPA7 REC5_FAULT; PC15 SRC_FAULT: active-low, 47k essential pullups there.\nReset: 2 ms pulse, >=10 s cooldown and rail qualification.\nReset is not permission to bypass protection."
-    (at 254 86.36 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "49a341bc-dbe3-4e2e-a6e3-665e2bc7a6bb")
-  )
-  (text "J100: logical SWD access; physical connector unselected.\n1 VTref sense only, 2 SWDIO, 3 SWCLK, 4 NRST, 5 GND.\nNo injected probe power. Power-off/backfeed review open."
-    (at 254 142.24 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "3ec985fc-d520-4c84-ad9e-71dcf12951ac")
-  )
-  (text "16 MHz HSE bypass; no passive crystal.\nPlace C110/C111 locally at Y100 in layout; source-series option open."
-    (at 25.4 160.02 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "123f91f8-6bdc-4b80-b91d-4f1b7aa6b1ce")
-  )
-  (text "OPEN: ADC conditioning, local charger I2C, isolated pack SMBus,\nUART, interlock status and payload request. Required pins remain unconnected.\nNo EPS drive on IHU-owned COMMS_EN / PAYLOAD_EN or stack alert."
-    (at 25.4 198.12 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "74b1397b-2bfc-4e55-9ac8-a936fbe62bb4")
-  )
-  (text "PD3 reserved. Do not connect BMS BTP directly to 3V3 logic.\nUnused BTP is tied to BMS VSS in the proposed BMS circuit; poll pack status."
-    (at 25.4 210.82 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "88e5ec46-9db9-4814-919a-015a5cecdfa1")
-  )
-  (text "S11 OPEN: metadata is saved; required visible field styling unsupported.\nS08: reused TCAN/ECS custom symbols remain under original construction review."
-    (at 25.4 224.79 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "4121b165-048e-4506-a598-8aa1b1bb04f7")
-  )
-  (text "Essential +3V3 is supplied by attached buck; external source-permission fixture. BMS/charger/protection pending."
+	(global_label "REC5_RESET"
+		(shape output)
+		(at 223.52 100.33 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "00cc620e-fcbf-4ac8-8f34-5797664066cc")
+	)
+	(global_label "REC5_FAULT"
+		(shape input)
+		(at 223.52 102.87 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5f62eb21-55c1-41df-9124-1ec7ade483f4")
+	)
+	(global_label "SRC_FAULT"
+		(shape input)
+		(at 119.38 105.41 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c84c30ca-789e-4f47-bbde-c48abeae20a4")
+	)
+  (text "Essential+3V3 comes from buck; converters use external SYS fixture. Solar VIN_CHG ends at future charger; BMS pending."
     (at 25.4 31.75 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "28d7944f-68c1-459b-938e-d4e31877af40")
+    (uuid "70a1dab9-33d4-4685-9273-f5480baf4a73")
+  )
+  (text "PROTECTION INTERFACES — LINKED GLOBALS\nPA6 REC5_RESET ->47k R623 ->Q609; existing100k base pull-down.\nPA7 REC5_FAULT; PC15 SRC_FAULT:active-low, single47k pullups on protector sheets.\nReset2ms; >=10s cooldown plus real rail qualification and settling.\nReset never bypasses hardware protection."
+    (at 254 86.36 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "47bc76e3-6857-4021-83af-1c4dd7f088b2")
   )
 	(symbol
 		(lib_id "Ember_EPS_Candidates:ECS_3225MV_DRAFT_v2")

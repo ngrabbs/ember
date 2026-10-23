@@ -2764,25 +2764,25 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "a5435535-b460-4cca-b60b-ff5b27f67df2")
   )
-  (text "OUTPUT BOUNDARY:5V0_RECOVERY_RAW bank remains BEFORE R503 shunt.\nR503.2 / R504.1 / U500.13 use5V0_RECOVERY_REG, upstream of future barrier.\nNo shared+5V connection bypasses that absent protection stage.\nFB remains upstream of the future disconnect; PG pullup uses essential+3V3."
-    (at 40.64 184.15 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "e8363920-4072-4fe6-affe-23eadb0efb60")
-  )
   (text "50V BANK:8x10uF ceramic +5x68uF hybrid =420uF nominal, plus100nF.\n618.4uF endurance+tolerance sensitivity;650uF development allocation.\nCold/bias/ESR/aging bounds, combined startup and coupled loop remain open.\nHeavy loads require local staged slew/qualification; no receiving-board circuit is implied."
     (at 40.64 209.55 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "dec1f29a-136f-4eed-b0ce-51cffadc529f")
   )
-  (text "UNPROTECTED DEVELOPMENT OUTPUT: source isolation and separate5V/3V3 OV containment are not integrated.\nS03 native severity and S11 field presentation APIs remain unavailable. No PCB synchronization."
-    (at 40.64 238.76 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "90119b2b-313a-471a-9033-865ab137a2e7")
-  )
   (text "U500 CUSTOM — REVIEW REQUIRED\nTPS552872RYQR:TI SLVSHG1 / RYQ0021A.\nGreen callout is approved alternative; symbol body color unsupported."
     (at 40.64 224.79 0)
     (effects (font (size 1.27 1.27) (color 0 255 0 1)) (justify left bottom))
     (uuid "ff88231b-a6c8-4795-8dbb-c811ba5779fe")
+  )
+  (text "OUTPUT BOUNDARY:5V0_RECOVERY_RAW bank stays BEFORE R503 shunt.\nR503.2/R504.1/U500.13 use5V0_RECOVERY_REG into attached rail barrier.\nProtected shared+5V exists only downstream of that barrier.\nFB remains upstream of disconnect; PG pullup uses essential+3V3."
+    (at 40.64 184.15 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "f1575ab1-43b4-4923-8b47-45e16823e54f")
+  )
+  (text "DEVELOPMENT: attached5V barrier does not qualify the complete supply or autonomous3V3 OV containment.\nSYS remains an external permitted fixture; physical RBF/charger/BMS absent. No PCB synchronization."
+    (at 40.64 238.76 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "1614ba70-44fb-4bf5-9000-3d5a26066bf0")
   )
 	(symbol
 		(lib_id "Ember_EPS_Recovery:TPS552872RYQR_REVIEW")
