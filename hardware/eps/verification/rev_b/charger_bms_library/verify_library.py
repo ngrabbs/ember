@@ -146,20 +146,31 @@ for name in ('sym-lib-table','fp-lib-table'):
     assert a and all(b[n]==v for n,v in a.items())
     assert len(b)==len(a)+1
     assert b['Ember_Charger_BMS_Review'].startswith('${KIPRJMOD}/libraries/')
-tracked_changes=subprocess.check_output(['git','diff','--name-only','6be2bc7','--','hardware/eps'],cwd=ROOT,text=True).splitlines()
 protected=lambda p: Path(p).suffix in ('.kicad_sch','.kicad_pcb','.kicad_pro','.kicad_sym','.kicad_mod') or Path(p).name in ('sym-lib-table','fp-lib-table')
-assert sorted(p for p in tracked_changes if protected(p))==['hardware/eps/rev_b/fp-lib-table','hardware/eps/rev_b/sym-lib-table']
+# Include the approved additions once staged/committed. The old name-only
+# assertion saw only the two modified tables while the new files were untracked,
+# then incorrectly rejected the same library checkpoint after it was committed.
+# Keep exact path/status coverage and source hashes; do not allow arbitrary new
+# protected files or changes to the existing integrated design.
+sources=json.loads((HERE/'candidate_source_sha256.json').read_text())
+existing_tables={'hardware/eps/rev_b/fp-lib-table','hardware/eps/rev_b/sym-lib-table'}
+assert len(sources)==10 and existing_tables <= sources.keys()
+assert all(protected(file) for file in sources)
+expected_changes={file: 'M' if file in existing_tables else 'A' for file in sources}
+status_lines=subprocess.check_output(['git','diff','--no-renames','--name-status','6be2bc7','--','hardware/eps'],cwd=ROOT,text=True).splitlines()
+native_changes={file: status for status,file in (line.split('\t') for line in status_lines) if protected(file)}
+assert native_changes==expected_changes, (native_changes,expected_changes)
+for file,digest in sources.items(): assert sha(ROOT/file)==digest,file
 erc=json.loads((HERE/'integrated_erc.json').read_text())
 assert len(erc)==16 and all(e['rule']=='pin_not_connected' and e['severity']=='error' for e in erc)
 dc=json.loads((HERE/'disposable_erc.json').read_text())
 assert len(dc)==94
 assert Counter(e['rule'] for e in dc)=={'pin_not_connected':58,'pin_not_driven':23,'power_pin_not_driven':13}
-sources=json.loads((HERE/'candidate_source_sha256.json').read_text())
-for file,digest in sources.items(): assert sha(ROOT/file)==digest,file
 result={'status':'PARTIAL — LIBRARY AND SCHEMATIC INSTANCE PASS; BOARD INSTANCE ACCEPTANCE BLOCKED',
         'basis':'6be2bc7','physical_rows':len(rows),'LTC_counts':{'perimeter':28,'EP':1,'symbol':29,'electrical_pads':29,'duplicates':0,'mechanical_only':0},
         'BQ_counts':{'perimeter':32,'EP':1,'symbol':33,'electrical_pads':33,'duplicates':0,'mechanical_only':0,'internally_NC':[7,14,29]},
         'integrated_native_source_files_unchanged':unchanged,'integrated_parts':160,'integrated_nets':91,'integrated_ERC_errors':16,'integrated_ERC_warnings':0,
+        'approved_native_file_changes':dict(sorted(native_changes.items())),
         'disposable_ERC':dict(Counter(e['rule'] for e in dc)),
         'library_copper_fab_renders_inspected':True,'disposable_symbols_full_and_details_inspected':True,
         'disposable_board_instances_created':False,'disposable_board_render_inspected':False,

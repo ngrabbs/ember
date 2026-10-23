@@ -32,8 +32,35 @@ These are **library renders**, not disposable placed-board renders. The blank sc
 
 ## Blocked gate and remaining work
 
+**Revalidated 2026-10-23, 22:14 UTC:** the configured IPC connection still
+serves only COMMS and reports the requested scratch board as not open. Desktop
+inventory now explicitly reports that the Mac is locked and automatic unlock
+failed. This prevents safe inspection/switching of the editor; the user must
+unlock the Mac. Save existing KiCad work, close PCB editors and open
+`disposable/charger_bms_check.kicad_pcb` first, then verify its exact absolute
+path through Konnect before placing anything. No locked-desktop bypass or
+unrelated save/discard was attempted. The existing schematic mutation owner is
+idle with mutation held.
+
 Konnect's active startup transport is `ipc:///tmp/kicad/api.sock`, serving the unrelated live comms `transceiver.kicad_pcb`. `place_component` refused the scratch path because that board was not open; during the manager modal it also returned `NNG recv failed: Timed out` and explicitly stated the board was not modified. The scratch PCB was successfully opened in a separate standalone editor, which owns `/tmp/kicad/api-22683.sock`; no exposed tool can select/reconnect to that endpoint. The manager modal was canceled and the configured socket became responsive again, still serving only comms. Agent and root attempts to inspect the original app's saved/dirty state then failed with computer-use server error **-10005: timeoutReached**. No unrelated save/discard, socket/config edit, process termination or custom-backend bypass was attempted.
 
 Resume only with a supported transport/editor binding and verified exact scratch document. Place both footprints through Konnect, query every instance pad, save through Konnect, export and actually inspect the placed-board render. Until then physical board-instance acceptance remains **BLOCKED**, and the candidates stay out of real circuits. Nominal copper/paste/mask does not qualify stencil segmentation, assembly tolerances, thermal vias, application circuitry, sourcing, fit or thermal behavior. Review markers remain.
 
 `changed_files.txt` lists this boundary's exact deliverable files; `candidate_source_sha256.json` ties querybacks to native sources and `evidence_sha256.json` records deliverable evidence hashes. Generated scratch PRL/lock/history files and routine ignored CLI logs are excluded.
+
+## Committed-checkpoint verifier correction
+
+The documented verifier was rerun against the committed tree and failed its
+native-file change assertion: that assertion expected only the two modified
+library tables, omitting the eight approved additions once they became tracked.
+The correction requires the exact ten source-manifest paths and their Git
+statuses: two modified tables and eight added library/fixture sources. Every
+source must still match its reviewed hash, and the eight existing integrated
+schematic/project files must remain unchanged. Stage approved additions before
+using this check on a new checkpoint; untracked files are not delivery evidence.
+
+The corrected verifier passes all 62 physical rows, saved schematic-instance
+checks and current native-source hashes. The integrated protection verifier was
+also rerun successfully. The result remains **PARTIAL**, with both disposable
+board-instance flags false. No ERC or rendered-board pass was manufactured, and
+no KiCad source, project setting or library changed in this correction.
