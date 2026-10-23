@@ -1,5 +1,12 @@
 # Recovery protection circuit selection
 
+## 2026-10-23 bank correction and new coupled checks
+
+The upstream converter bank is now **five EEHZA1H680P 68 µF / 50 V hybrids plus eight CGA5L1X7R1H106K160AC 10 µF / 50 V ceramics**. It replaces the previous 35 V / 25 V bank; C16 remains 100 nF / 50 V. Nominal capacitance is 420 µF, initial high tolerance is 496 µF, and the endurance-plus-tolerance sensitivity is 618.4 µF plus C16. Use a **650 µF upstream development allocation**, with staged charging of the downstream bank; the earlier 500 µF arithmetic is historical. Cold/bias/endurance bounds remain subject to manufacturer data and measurements.
+
+The [current bank analysis and acceptance gaps](../verification/protection/bank/README.md) and [34-part native BOM/render evidence](../verification/protection/bank/native/README.md) supersede the earlier bank-specific BOM and screenshots. Existing endpoint names and the PCB are unchanged. Numerical checks do **not** close protection acceptance: a newly tested low-reference, no-load-release case latches the current 220 pF rail protector off. Timer/discharge candidates are analysis-only until their startup, short/reset, tolerance and MOSFET acceptance checks are complete.
+
+
 2026-10-23. Complete **development circuits** selected and built as an isolated
 study. This advances the [architecture checkpoint](rev_b_5v_recovery_fault_containment.md);
 it does not qualify MOSFET survival, integrate the circuits into Rev B, or release
@@ -170,18 +177,11 @@ accepted. Do not label a typical-model simulation “MOSFET qualified.”
    operation, handover, reset repetition and cold/hot measurements. Actual
    pack protection, RBF permission wiring, 3.3 V containment, branch fuses and
    a protector's own short failure remain separate system work.
-   The finite-reservoir bridge also drives the **upstream converter output node
-   to about 38.23 V**, exceeding its currently selected 35 V bulk-capacitor
-   rating. The downstream barrier does not contain that local component
-   overstress. Rerate or separately clamp that bank and recheck fit/dynamics
-   during integration; the present converter circuit is not accepted for
-   this fault. A concrete option using already approved F lands is five
-   EEHZA1H680P (68 µF / 50 V) plus eight CGA5L1X7R1H106K160AC
-   (10 µF / 50 V), retaining the modeled minimum bank and a 496 µF
-   tolerance-only maximum. This changes area, leakage and impedance and is
-   **not yet installed or dynamically accepted**. The current 25 V ceramics
-   also require rerating. Stiff-source fixtures can produce still higher
-   upstream peaks.
+   The previously observed upstream bank overstress prompted the installed
+   50 V bank correction documented at the top of this record. New fixtures
+   include the actual converter shunt and individual capacitor branches;
+   their numerical results supersede the old bank-specific peaks. Effective
+   capacitance, pulse ratings and arbitrary stiff-source faults remain open.
 6. Complete native schematic presentation, final component sourcing, physical
    fit and integration. S11 visible Arial/orientation-aware fields remain
    limited by the exposed Konnect API; metadata does not count as compliance.

@@ -5,6 +5,8 @@ and [complete hardware contract](native_build_contract.md). **Development
 screening passes its stated numerical checks; MOSFET survival and system
 fault containment are not qualified.**
 
+The [50 V bank follow-up](bank/README.md) records the installed converter-bank correction and a newly failing low-reference no-load-release case. The original 46-case screen below does not cover this acceptance gap.
+
 ## Saved evidence
 
 - [All 46 cases and numerical results](evidence/results.md),
