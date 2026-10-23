@@ -1,0 +1,176 @@
+{
+  "caveat": "Analytical sensitivities only; component temperature/bias and source/load acceptance open",
+  "shunt": {
+    "MPN": "CRF1206-FZ-R033ELF",
+    "nominal_ohm": 0.033,
+    "assumed_min_ohm": 0.032563822500000006,
+    "assumed_max_ohm": 0.0334383225,
+    "nominal_fullscale_A": 0.9696969696969697,
+    "charge_min_A": 0.9345564509104786,
+    "charge_max_A": 1.005717310982149,
+    "peak_limit_typical_A": 1.3636363636363635,
+    "cold_TCR_guarantee": false,
+    "servo_full_voltage_range_guarantee": false,
+    "input_servo_full_temperature_guarantee": false
+  },
+  "frequency_with_RT_variation_sensitivity_MHz": [
+    1.3963323585188059,
+    1.604208440317117
+  ],
+  "inductor_rule_at_nominal_RT_min_uH": 7.500000000000001,
+  "inductor_rule_with_RT_variation_sensitivity_uH": 7.519699687499998,
+  "inductor_cases": [
+    {
+      "nominal_uH": 4.7,
+      "additional_drop": 0,
+      "effective_uH": 3.7600000000000002,
+      "meets_rule": false,
+      "ideal_ripple_pp_A": 1.215951438829787,
+      "estimated_peak_A": 1.6136930303970423
+    },
+    {
+      "nominal_uH": 4.7,
+      "additional_drop": 0.1,
+      "effective_uH": 3.3840000000000003,
+      "meets_rule": false,
+      "ideal_ripple_pp_A": 1.3510571542553187,
+      "estimated_peak_A": 1.6812458881098082
+    },
+    {
+      "nominal_uH": 4.7,
+      "additional_drop": 0.3,
+      "effective_uH": 2.632,
+      "meets_rule": false,
+      "ideal_ripple_pp_A": 1.7370734840425528,
+      "estimated_peak_A": 1.8742540530034253
+    },
+    {
+      "nominal_uH": 6.8,
+      "additional_drop": 0,
+      "effective_uH": 5.44,
+      "meets_rule": false,
+      "ideal_ripple_pp_A": 0.8404370238970587,
+      "estimated_peak_A": 1.4259358229306782
+    },
+    {
+      "nominal_uH": 6.8,
+      "additional_drop": 0.1,
+      "effective_uH": 4.896000000000001,
+      "meets_rule": false,
+      "ideal_ripple_pp_A": 0.9338189154411761,
+      "estimated_peak_A": 1.472626768702737
+    },
+    {
+      "nominal_uH": 6.8,
+      "additional_drop": 0.3,
+      "effective_uH": 3.808,
+      "meets_rule": false,
+      "ideal_ripple_pp_A": 1.200624319852941,
+      "estimated_peak_A": 1.6060294709086194
+    },
+    {
+      "nominal_uH": 10,
+      "additional_drop": 0,
+      "effective_uH": 8.0,
+      "meets_rule": true,
+      "ideal_ripple_pp_A": 0.5714971762499998,
+      "estimated_peak_A": 1.2914658991071488
+    },
+    {
+      "nominal_uH": 10,
+      "additional_drop": 0.1,
+      "effective_uH": 7.2,
+      "meets_rule": false,
+      "ideal_ripple_pp_A": 0.6349968624999999,
+      "estimated_peak_A": 1.3232157422321489
+    },
+    {
+      "nominal_uH": 10,
+      "additional_drop": 0.3,
+      "effective_uH": 5.6,
+      "meets_rule": false,
+      "ideal_ripple_pp_A": 0.8164245375,
+      "estimated_peak_A": 1.413929579732149
+    },
+    {
+      "nominal_uH": 15,
+      "additional_drop": 0,
+      "effective_uH": 12.0,
+      "meets_rule": true,
+      "ideal_ripple_pp_A": 0.3809981174999999,
+      "estimated_peak_A": 1.1962163697321488
+    },
+    {
+      "nominal_uH": 15,
+      "additional_drop": 0.1,
+      "effective_uH": 10.8,
+      "meets_rule": true,
+      "ideal_ripple_pp_A": 0.4233312416666665,
+      "estimated_peak_A": 1.217382931815482
+    },
+    {
+      "nominal_uH": 15,
+      "additional_drop": 0.3,
+      "effective_uH": 8.399999999999999,
+      "meets_rule": true,
+      "ideal_ripple_pp_A": 0.544283025,
+      "estimated_peak_A": 1.2778588234821489
+    }
+  ],
+  "candidate_15uH_max_additional_drop_at_minus20percent": 0.37335835937500017,
+  "mosfet_one_device": [
+    {
+      "current_A": 1,
+      "drop_25C_V": 0.0156,
+      "power_25C_W": 0.0156,
+      "power_2x_hot_sensitivity_W": 0.0312
+    },
+    {
+      "current_A": 2,
+      "drop_25C_V": 0.0312,
+      "power_25C_W": 0.0624,
+      "power_2x_hot_sensitivity_W": 0.1248
+    },
+    {
+      "current_A": 4,
+      "drop_25C_V": 0.0624,
+      "power_25C_W": 0.2496,
+      "power_2x_hot_sensitivity_W": 0.4992
+    },
+    {
+      "current_A": 6,
+      "drop_25C_V": 0.09359999999999999,
+      "power_25C_W": 0.5616,
+      "power_2x_hot_sensitivity_W": 1.1232
+    }
+  ],
+  "damping_branch": [
+    {
+      "frequency_Hz": 1000,
+      "branch_magnitude_ohm": 2.7158407407945164,
+      "branch_phase_deg": -22.997007671790534
+    },
+    {
+      "frequency_Hz": 3000,
+      "branch_magnitude_ohm": 2.5248936375696944,
+      "branch_phase_deg": -8.052258962141385
+    },
+    {
+      "frequency_Hz": 10000,
+      "branch_magnitude_ohm": 2.502250568846692,
+      "branch_phase_deg": -2.4302499325426346
+    }
+  ],
+  "ideal_150uF_damper_35V_hotplug": {
+    "stored_J": 0.091875,
+    "initial_resistor_W": 490.0,
+    "RC_s": 0.00037499999999999995
+  },
+  "SYS_nominal_capacitance_uF": {
+    "existing_converters": 102.6,
+    "proposed_charger_VOUT": 40,
+    "proposed_VOUTA": 0.1,
+    "total": 142.7
+  },
+  "charge_default_2S_4p2V_plus1p5percent_V": 8.526
+}
