@@ -1,5 +1,10 @@
 # IHU firmware
 
+For the standalone original-Pico release-switch teaching image, see the
+[IHU Pico demo](../ihu_demo/README.md) and its
+[installation walkthrough](../../docs/user/ihu-pico-demo.md). It builds a separate
+`ihu_demo.uf2` with simulated peers and accelerated waits.
+
 Active IHU CAN Feather application, formerly `firmware/can_feather_bench`.
 The earlier FreeRTOS prototype was removed and remains available in Git history.
 This directory builds only the IHU: CMake project/target `ihu`, output `ihu.uf2`.
