@@ -55,7 +55,7 @@ The internal output overvoltage feature is not a 5.5 V spacecraft-rail protector
 
 ## Native design and verification
 
-The new project is an isolated, editable **ANSI B development study**, with one functional schematic sheet. Its PCB contains only the disposable U1 package comparison authorized for library verification; it is not synchronized to the circuit, placed, routed or ready for fabrication. Rev A and existing controller sources were not modified. Project library tables use portable `${KIPRJMOD}` paths.
+The new project is an isolated, editable **ANSI B development study**, with one functional schematic sheet. Its PCB contains only disposable U1, C13 and C7 package comparisons authorized for library verification; it is not synchronized to the circuit, placed, routed or ready for fabrication. Rev A and existing controller sources were not modified. Project library tables use portable `${KIPRJMOD}` paths.
 
 **Electrical evidence:** all 16 functional net endpoint sets match the intended circuit; the three intentional NC pins are separately checked. Direct KiCad 10 ERC: **0 errors, 0 warnings**. Konnect reports no floating wire endpoints, unconnected required pins, merged nets or orphan items. Fresh queried wire geometry contains no connected four-way endpoints or collinear overlapping segments. Exact POWER/ANALOG_CONTROL assignments are checked against the saved schematic net names. Their inherited widths/clearances are not accepted routing or current-carrying constraints. The available API did not set the four-way ERC severity; geometry was checked explicitly.
 
@@ -70,7 +70,7 @@ The CLI report records ignored checks for single global labels, four-way junctio
 | Gate | Required evidence |
 |---|---|
 | Source boundary | Accepted cold-array envelope and autonomous cutoff; local VIN stays within operating limit during fault/handover/ringing. Keep the 768 mm² reservation until actual placement proves otherwise |
-| Exact assembly BOM | Exact development MPNs selected; finish bulk land-pattern verification and all package maps, capacitor bias/temperature/aging and inductor hot fault margin. Hybrid bulk references are bench choices, not flight-qualified selections |
+| Exact assembly BOM | All 28 development MPNs/footprint IDs populated; approved Panasonic land construction verified in [package evidence](../verification/panasonic_bulk_footprints.md). Finish assembly/stencil review, remaining package maps, capacitor bias/temperature/aging and inductor hot fault margin. Hybrid bulk references are bench choices, not flight-qualified selections |
 | Startup and load release | Start at 4.5 V input with output discharged, recovery load and separately delayed 2 A load. Record PG, VCC, both SW nodes, inductor current and output. Characterize current-limited-source recovery and UVLO rising/falling behavior |
 | Regulation and stability | Sweep 4.5–35 V with intermediate 5 V transition region, 0/0.5/2 A loads, load steps, prebias, PFM behavior and source handover. Measure loop gain/phase on the real LC bank |
 | Fault containment | Short/open feedback, output short/hiccup, externally driven output, local input overshoot, RBF insertion and removed-source backfeed. Define protection rather than assuming converter shutdown provides it |

@@ -22,4 +22,6 @@ See the [verification index](../verification/README.md) for manufacturer referen
 
 ## Integrated recovery study
 
+The recovery library includes approved Panasonic `Panasonic_CP_D8_6.3x7.7mm_REVIEW` and `Panasonic_CP_F_8x10.2mm_REVIEW` land-pattern constructions for C13–C15 and C7. Both use positive pad 1 at left in component view, exact manufacturer recommended lands and maximum-body courtyards. Query-back and disposable saved-board exports/renders agree. Fabrication text, solder/stencil and mechanical/environmental qualification remain open; see [construction evidence](../verification/panasonic_bulk_footprints.md).
+
 `Ember_EPS_Recovery:TPS552872RYQR_REVIEW` and `TI_RYQ0021A_DRAFT` are project-owned review candidates. The user approved TI-derived construction and a bright-green review callout on 2026-10-23; this did not approve production use. Query-back and disposable renders cover 21 electrical numbers; pad 9 is a three-object composite (23 pad objects total). The editable [development project](../studies/recovery_5v/recovery_5v.kicad_pro) has portable project-local table references. See [design/acceptance limits](../design/rev_b_5v_recovery_design.md).

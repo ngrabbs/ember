@@ -1,5 +1,7 @@
 # EPS verification checkpoint
 
+- [Panasonic D8/F recovery bulk footprints](panasonic_bulk_footprints.md): approved construction, exact land/polarity/courtyard query-back, independent saved-board export and actual renders. Construction checks pass; fabrication-text and assembly qualification remain open.
+
 This directory records the Rev A audit and the isolated Rev B controller study. It is a design checkpoint, not a qualified schematic or fabrication release. The fabricated Rev A KiCad files are unchanged by this PR.
 
 - [5 V recovery design](../design/rev_b_5v_recovery_design.md): integrated TPS552872 alternative, editable B-sheet study, analytical compensation and 16 verified functional nets. Electrical draft passes ERC; qualification, final passive BOM and field presentation remain open.

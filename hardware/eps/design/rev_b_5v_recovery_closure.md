@@ -62,12 +62,12 @@ The [Coilcraft XAL7070-682MEC](https://www.coilcraft.com/en-us/products/power/hi
 
 [EEHZK1V101XP](https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZK1V101XP) is **6.3 mm diameter × 7.7 mm nominal height**, not 5.8 mm tall. [EEHZA1H680P](https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P) is 8 mm × 10.2 mm nominal. The 16 mm standoff leaves nominal height room, but assembly tolerance, vent requirements, the opposing PCB and vacuum/material suitability still need review. A generic same-diameter footprint is not automatically Panasonic's recommended pattern.
 
-## Exit evidence still required
+## Closure status and remaining exit evidence
 
 | Work item | Completion evidence |
 |---|---|
-| Native component identity | Fresh CLI BOM/netlist contains every selected MPN and required field; no silent batch-field omissions |
-| Package construction | Approved Panasonic land patterns, polarity, maximum-body courtyard and actual query-back/render checks; full IC stencil review remains separate |
+| Native component identity | Complete for the development baseline: fresh CLI BOM/netlist contains all 28 MPNs, explicit footprint IDs and required fields |
+| Package construction | Approved Panasonic D8/F lands, polarity and maximum-body courtyard checked through query-back, saved-board export and actual renders; see [evidence](../verification/panasonic_bulk_footprints.md). Fabrication text, assembly/stencil acceptance and remaining package maps are still open |
 | Receiving boards | COMMS direct-load/current/capacitance measurements; IHU local switch and supervisor circuit with no boot dependency |
 | Source and rail faults | Complete autonomous source OV and independent 5 V containment circuits; worst-case trip/reset, delay, SOA, peak voltage and recovery |
 | Dynamic qualification | 4.5 V cold start, 5 V transition region, high VIN, source handover, prebias, branch admission and shorts; actual multibranch loop gain and cold transient measurements |
