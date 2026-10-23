@@ -81,6 +81,10 @@ power and a 375 µs RC time constant. Therefore no small generic resistor or
 bulk-capacitor substitution is accepted here. Select pulse-rated parts and
 evaluate the complete source/filter/charger model before implementing this
 branch. Existing low-ESR source bulk is not proof of that damping impedance.
+The subsequent [damper checkpoint](../input_damping/README.md) proposes a
+2.7 Ω power resistor and 204 µF hybrid bank, checks capacitor-short loading
+and shows why the combined source/system bank still needs input-loop review.
+The 150 µF example is not the current startup allocation.
 
 ## Remaining release gates
 
