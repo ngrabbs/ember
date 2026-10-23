@@ -2,6 +2,13 @@
 
 2026-10-23. Proposed project-owned candidates are **LTC4162IUFD-LADM#TRPBF** and **BQ40Z50RSMR-R2**. Registry searches returned no matching symbols. Existing generic QFN lands differ from the manufacturer patterns: the LTC candidate has longer lands and shifted row centers, while available 4 mm QFN32 examples use a substantially larger exposed pad than TI's 1.4 mm square. Construct exact review candidates rather than treating those as accepted package substitutions.
 
+**Construction authorized 2026-10-23:** the user explicitly answered “Approve
+charger and BMS construction” for these two exact parts under this document,
+including exposed pads, full pin/pad checks, disposable render verification and
+the bright-green enclosure/callout alternative to unsupported symbol-body color.
+This authorizes construction; the resulting parts retain their custom review
+markers and must pass the acceptance checks below before circuit integration.
+
 ## Construction and review rules
 
 Use registered project-local libraries and portable paths. Each IC has one readable rectangular symbol, grouped by function with power above, grounds below and distinct physical pins retained even when functions repeat. Use a 1.27 mm electrical grid, show every pin number/name, exact manufacturer part number, footprint and datasheet metadata. Do not reorder physical numbering or merge repeated supply/switch pins. No new global-library edits are permitted.
