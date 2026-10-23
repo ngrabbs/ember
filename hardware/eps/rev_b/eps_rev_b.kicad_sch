@@ -128,9 +128,30 @@
       )
     )
   )
-  (text "Checkpoint: controller, CAN and essential 3V3. Source/interlock, BMS, charger, recovery 5V and protection pending."
+	(sheet
+    (at 304.8 119.38)
+    (size 100.33 20.32)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "db3cadf5-bca6-4a2a-9514-e7323a7f1145")
+    (property "Sheetname" "Recovery 5V converter"
+      (at 304.8 118.74499999999999 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "recovery_5v.kicad_sch"
+      (at 304.8 140.33499999999998 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "5"))
+      )
+    )
+  )
+  (text "Checkpoint: controller, CAN, essential 3V3 and recovery converter. Source/interlock, BMS, charger and protection pending."
     (at 30.48 45.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "76c5b3d6-c589-47be-867c-41339e00dd2b")
+    (uuid "04611caa-b4b7-4099-924f-214f61025172")
   )
 )

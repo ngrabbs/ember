@@ -6,7 +6,7 @@ Completion requires one connected, reviewable design. Isolated studies establish
 
 | Block | Current authority and evidence | Remaining design work |
 |---|---|---|
-| 5 V regulation | [Recovery study](rev_b_5v_recovery_closure.md), TPS552872, current 50 V bank | Integrate source and output protection, actual startup/load model, cold capacitor bounds and thermal placement |
+| 5 V regulation | [Integrated recovery checkpoint](../verification/rev_b/recovery_integration/README.md), TPS552872 and current 50 V bank; complete root has 77 parts and 56 checked nets | Integrate source and output protection, actual startup/load model, cold capacitor bounds and thermal placement. Internal 5V0_RECOVERY_REG remains upstream of the future barrier; no shared +5V bypass exists. |
 | Solar/source and 5 V containment | [Latch and survival checkpoint](rev_b_5v_latch_and_mosfet_survival.md), 83-part two-sheet protection study | Resolve 5 V LTC4364 accuracy coverage and conditional hot linear SOA; integrate with charger/source boundaries |
 | Essential 3.3 V | [Integrated buck checkpoint](../verification/rev_b/buck_integration/README.md), LMR51635XDDCR; complete controller/buck union has 43 parts and 40 checked nets | Close UVLO/weak-source behavior and output fault containment; qualify effective capacitance, actual current steps, startup and thermal performance. External permitted-source flags are development fixture boundaries, not implemented RBF/charger hardware. The 2 A steady-load screening does not establish a 2 A fast-step rating. |
 | Charger and temperature | [BMS/temperature specification](rev_b_bms_and_temperature_spec.md) and damaged Rev A audit | Rebuild LTC4162 reference circuit with verified 2S straps, PowerPath FETs/shunts and three separate pack sensors; freeze configuration and sensor assembly |
@@ -19,7 +19,7 @@ Completion requires one connected, reviewable design. Isolated studies establish
 
 ## Design sequence
 
-The new [Rev B root](../rev_b/eps_rev_b.kicad_pro) now contains unique Controller, CAN and Essential 3V3 sheets rebuilt through Konnect with explicit reference and endpoint crosswalks; it is not the complete EPS. Integrate the reviewed 5 V regulation and protection blocks while finishing charger, battery protection and hardware source isolation, then add stack interfaces and managed battery distribution. Retain all historical studies. Review the complete schematic before PCB synchronization. Layout must use the actual full BOM; the earlier area estimates omit much of the subsequently added recovery protection.
+The new [Rev B root](../rev_b/eps_rev_b.kicad_pro) now contains unique Controller, CAN, Essential 3V3 and Recovery 5V converter sheets rebuilt through Konnect with explicit reference and endpoint crosswalks; it is not the complete EPS. Integrate the reviewed protection blocks while finishing charger, battery protection and hardware source isolation, then add stack interfaces and managed battery distribution. The two converter inputs already total 102.6 µF nominal before upstream circuitry; reconcile source inrush and simultaneous startup rather than carrying over an isolated-study capacitance budget unchanged. Retain all historical studies. Review the complete schematic before PCB synchronization. Layout must use the actual full BOM; the earlier area estimates omit much of the subsequently added recovery protection.
 
 ## Hardware acceptance inputs
 

@@ -71,6 +71,14 @@
         "track_width": 0.25,
         "via_diameter": 0.8,
         "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "ANALOG_CONTROL",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
       }
     ],
     "meta": {
@@ -172,6 +180,58 @@
       {
         "netclass": "ANALOG",
         "pattern": "/Essential 3V3/BUCK33_FB"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "5V0_RECOVERY_REG"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "5V0_RECOVERY_RAW"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "5V2_RECOVERY_BIAS"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "/Recovery 5V converter/REC5_SW1"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "/Recovery 5V converter/REC5_SW2"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "/Recovery 5V converter/REC5_BOOT1"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "/Recovery 5V converter/REC5_BOOT2"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery 5V converter/REC5_FB"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery 5V converter/REC5_COMP"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery 5V converter/REC5_COMP_ZERO"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery 5V converter/REC5_EN"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery 5V converter/REC5_FSW"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Recovery 5V converter/REC5_PG"
       }
     ]
   },
