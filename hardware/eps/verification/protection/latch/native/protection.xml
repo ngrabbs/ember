@@ -1,0 +1,3494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/studies/recovery_protection/recovery_protection.kicad_sch</source>
+    <date>2026-10-23T12:14:48</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>recovery_rail_final.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="2" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>recovery_protection.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C101">
+      <value>100u</value>
+      <footprint>Ember_EPS_Recovery:Panasonic_CP_D8_6.3x7.7mm_REVIEW</footprint>
+      <description>Polarized capacitor</description>
+      <fields>
+        <field name="Dielectric">Hybrid</field>
+        <field name="MFG P/N">EEHZK1V101XP</field>
+        <field name="PackageSize">Panasonic_CP_D8_6.3x7.7mm_REVIEW</field>
+        <field name="Review">Approved construction; qualification open</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">35 V</field>
+        <field name="Footprint">Ember_EPS_Recovery:Panasonic_CP_D8_6.3x7.7mm_REVIEW</field>
+        <field name="Datasheet"/>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Dielectric" value="Hybrid"/>
+      <property name="MFG P/N" value="EEHZK1V101XP"/>
+      <property name="PackageSize" value="Panasonic_CP_D8_6.3x7.7mm_REVIEW"/>
+      <property name="Review" value="Approved construction; qualification open"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="35 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>b255d76e-a573-49fa-aa13-772f9e90e22a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C102">
+      <value>100u</value>
+      <footprint>Ember_EPS_Recovery:Panasonic_CP_D8_6.3x7.7mm_REVIEW</footprint>
+      <description>Polarized capacitor</description>
+      <fields>
+        <field name="Dielectric">Hybrid</field>
+        <field name="MFG P/N">EEHZK1V101XP</field>
+        <field name="PackageSize">Panasonic_CP_D8_6.3x7.7mm_REVIEW</field>
+        <field name="Review">Approved construction; qualification open</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">35 V</field>
+        <field name="Footprint">Ember_EPS_Recovery:Panasonic_CP_D8_6.3x7.7mm_REVIEW</field>
+        <field name="Datasheet"/>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Dielectric" value="Hybrid"/>
+      <property name="MFG P/N" value="EEHZK1V101XP"/>
+      <property name="PackageSize" value="Panasonic_CP_D8_6.3x7.7mm_REVIEW"/>
+      <property name="Review" value="Approved construction; qualification open"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="35 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>a8de1308-7876-41d3-8a58-2786739d2d2a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C103">
+      <value>22u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA6P3X7R1E226M250AB</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA6P3X7R1E226M250AB"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>6850c0a5-716d-4017-96c2-d607bb0b673b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C104">
+      <value>22u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA6P3X7R1E226M250AB</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA6P3X7R1E226M250AB"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>e0d3edca-b0dc-4dfc-abc7-bf09c766ab8b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C105">
+      <value>22u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA6P3X7R1E226M250AB</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA6P3X7R1E226M250AB"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>db83d450-e09e-4619-8192-b2fa7ccff7b3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C106">
+      <value>22u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA6P3X7R1E226M250AB</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA6P3X7R1E226M250AB"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>b7b6665a-b62d-4f64-805d-af54ea606c82</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C107">
+      <value>22u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA6P3X7R1E226M250AB</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA6P3X7R1E226M250AB"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>d4bf3340-8899-4af1-b432-bcf8a422615c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C108">
+      <value>22u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA6P3X7R1E226M250AB</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA6P3X7R1E226M250AB"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>ad8583b8-4959-4961-91e7-2fe9d0a43056</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C109">
+      <value>22u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA6P3X7R1E226M250AB</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA6P3X7R1E226M250AB"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>59e7dd29-c152-4131-a88f-318755ebfb32</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C110">
+      <value>22u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA6P3X7R1E226M250AB</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA6P3X7R1E226M250AB"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>4d0a541d-744d-4d9f-869e-5b309202c961</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C112">
+      <value>10n</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">C0G</field>
+        <field name="MFG P/N">C1210C103J1GACTU</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">5%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="C0G"/>
+      <property name="MFG P/N" value="C1210C103J1GACTU"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="5%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>6a0509f4-d3be-4318-acda-f9f53960f99a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C113">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>08b0aca2-e0d2-4af0-a29c-8e431562630a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C114">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>40519ba4-3c7a-4767-a207-5f33df4edc41</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C115">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>eb13feea-7595-47c1-82bf-90db889cef99</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C116">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>fb2f628f-5cfe-4a50-b43c-89109371d366</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C117">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM188R72A104KA35D</field>
+        <field name="PackageSize">0603</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM188R72A104KA35D"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>a2ce188a-9daa-4a52-b80b-cebbdac819fc</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C119">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">C0G</field>
+        <field name="MFG P/N">C1210C104J1GACTU</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">5%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="C0G"/>
+      <property name="MFG P/N" value="C1210C104J1GACTU"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="5%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>b3b4490e-20bf-4b86-8fb2-0840d47fbae4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D102">
+      <value>1N4148W-7-F</value>
+      <footprint>Diode_SMD:D_SOD-123</footprint>
+      <datasheet>https://www.vishay.com/docs/85748/1n4148w.pdf</datasheet>
+      <description>75V 0.15A Fast Switching Diode, SOD-123</description>
+      <fields>
+        <field name="MFG P/N">1N4148W-7-F</field>
+        <field name="Footprint">Diode_SMD:D_SOD-123</field>
+        <field name="Datasheet">https://www.vishay.com/docs/85748/1n4148w.pdf</field>
+        <field name="Description">75V 0.15A Fast Switching Diode, SOD-123</field>
+      </fields>
+      <libsource lib="Diode" part="1N4148W" description="75V 0.15A Fast Switching Diode, SOD-123"/>
+      <property name="MFG P/N" value="1N4148W-7-F"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="D*SOD?123*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>b0443985-6f98-4889-b137-472ca01ea974</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D103">
+      <value>SMBJ8.5A</value>
+      <footprint>Diode_SMD:D_SMB</footprint>
+      <description>Zener diode</description>
+      <fields>
+        <field name="MFG P/N">SMBJ8.5A</field>
+        <field name="Manufacturer">Littelfuse</field>
+        <field name="Qualification">Development; hot leakage/dynamic clamp open</field>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description">Zener diode</field>
+      </fields>
+      <libsource lib="Device" part="D_Zener" description="Zener diode"/>
+      <property name="MFG P/N" value="SMBJ8.5A"/>
+      <property name="Manufacturer" value="Littelfuse"/>
+      <property name="Qualification" value="Development; hot leakage/dynamic clamp open"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>1a845132-eb8e-43c8-8f59-1241f554868f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D104">
+      <value>SMBJ8.5A</value>
+      <footprint>Diode_SMD:D_SMB</footprint>
+      <description>Zener diode</description>
+      <fields>
+        <field name="MFG P/N">SMBJ8.5A</field>
+        <field name="Manufacturer">Littelfuse</field>
+        <field name="Qualification">Development; hot leakage/dynamic clamp open</field>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description">Zener diode</field>
+      </fields>
+      <libsource lib="Device" part="D_Zener" description="Zener diode"/>
+      <property name="MFG P/N" value="SMBJ8.5A"/>
+      <property name="Manufacturer" value="Littelfuse"/>
+      <property name="Qualification" value="Development; hot leakage/dynamic clamp open"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>153b195d-9595-4bba-b649-69beeab35690</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D105">
+      <value>SMBJ36A</value>
+      <footprint>Diode_SMD:D_SMB</footprint>
+      <description>Zener diode</description>
+      <fields>
+        <field name="MFG P/N">SMBJ36A</field>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description">Zener diode</field>
+      </fields>
+      <libsource lib="Device" part="D_Zener" description="Zener diode"/>
+      <property name="MFG P/N" value="SMBJ36A"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>51e99e76-3ebb-4a49-af6a-cfd8652c45be</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="L1">
+      <value>4.7u</value>
+      <footprint>Inductor_SMD:L_Coilcraft_XAL1510-472</footprint>
+      <datasheet>https://www.coilcraft.com/getmedia/cd1cef27-13f0-4568-8894-f7311475209b/xal1510.pdf</datasheet>
+      <description>Inductor</description>
+      <fields>
+        <field name="MFG P/N">XAL1510-472MED</field>
+        <field name="Qualification">Effective L &gt;=2.5uH at modeled fault current; hot magnetic/thermal qualification and larger-area fit open</field>
+        <field name="Rated current">21 A Irms, 20 C rise (25 C ref)</field>
+        <field name="DCR">3.4 mOhm typ / 3.8 mOhm max</field>
+        <field name="Irms 40C rise">29 A at 25 C reference</field>
+        <field name="Isat">39 A typ, 30% L drop at 25 C</field>
+        <field name="Source">Coilcraft XAL1510-472 manufacturer specifications, electrical values at 25 C; reference currents, not absolute maxima</field>
+        <field name="Height">10.0 mm; below 16 mm standoff, actual assembly fit open</field>
+        <field name="PackageSize">15.4 x 16.4 x 10.0 mm</field>
+        <field name="Footprint">Inductor_SMD:L_Coilcraft_XAL1510-472</field>
+        <field name="Datasheet">https://www.coilcraft.com/getmedia/cd1cef27-13f0-4568-8894-f7311475209b/xal1510.pdf</field>
+        <field name="Description">Inductor</field>
+      </fields>
+      <libsource lib="Device" part="L" description="Inductor"/>
+      <property name="MFG P/N" value="XAL1510-472MED"/>
+      <property name="Qualification" value="Effective L &gt;=2.5uH at modeled fault current; hot magnetic/thermal qualification and larger-area fit open"/>
+      <property name="Rated current" value="21 A Irms, 20 C rise (25 C ref)"/>
+      <property name="DCR" value="3.4 mOhm typ / 3.8 mOhm max"/>
+      <property name="Irms 40C rise" value="29 A at 25 C reference"/>
+      <property name="Isat" value="39 A typ, 30% L drop at 25 C"/>
+      <property name="Source" value="Coilcraft XAL1510-472 manufacturer specifications, electrical values at 25 C; reference currents, not absolute maxima"/>
+      <property name="Height" value="10.0 mm; below 16 mm standoff, actual assembly fit open"/>
+      <property name="PackageSize" value="15.4 x 16.4 x 10.0 mm"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="inductor choke coil reactor magnetic"/>
+      <property name="ki_fp_filters" value="Choke_* *Coil* Inductor_* L_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>44aab1e7-c70b-457a-a4ab-140172f667af</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q101">
+      <value>IRLR2908</value>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
+      <description>N-MOSFET transistor, gate/drain/source</description>
+      <fields>
+        <field name="MFG P/N">IRLR2908TRPBF</field>
+        <field name="Pin map">1 G / 2 D+tab / 3 S</field>
+        <field name="Qualification">Linear SOA/current sharing open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet"/>
+        <field name="Description">N-MOSFET transistor, gate/drain/source</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="Q_NMOS_GDS" description="N-MOSFET transistor, gate/drain/source"/>
+      <property name="MFG P/N" value="IRLR2908TRPBF"/>
+      <property name="Pin map" value="1 G / 2 D+tab / 3 S"/>
+      <property name="Qualification" value="Linear SOA/current sharing open"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="transistor NMOS N-MOS N-MOSFET"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>1f8a0fe9-d94a-48a4-8a27-d89cad786893</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q102">
+      <value>IRLR2908</value>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
+      <description>N-MOSFET transistor, gate/drain/source</description>
+      <fields>
+        <field name="MFG P/N">IRLR2908TRPBF</field>
+        <field name="Pin map">1 G / 2 D+tab / 3 S</field>
+        <field name="Qualification">Linear SOA/current sharing open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet"/>
+        <field name="Description">N-MOSFET transistor, gate/drain/source</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="Q_NMOS_GDS" description="N-MOSFET transistor, gate/drain/source"/>
+      <property name="MFG P/N" value="IRLR2908TRPBF"/>
+      <property name="Pin map" value="1 G / 2 D+tab / 3 S"/>
+      <property name="Qualification" value="Linear SOA/current sharing open"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="transistor NMOS N-MOS N-MOSFET"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>9aaedfb5-b9e1-469c-ba51-3a10f1606387</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q103">
+      <value>IRLR2908</value>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
+      <description>N-MOSFET transistor, gate/drain/source</description>
+      <fields>
+        <field name="MFG P/N">IRLR2908TRPBF</field>
+        <field name="Pin map">1 G / 2 D+tab / 3 S</field>
+        <field name="Qualification">Linear SOA/current sharing open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet"/>
+        <field name="Description">N-MOSFET transistor, gate/drain/source</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="Q_NMOS_GDS" description="N-MOSFET transistor, gate/drain/source"/>
+      <property name="MFG P/N" value="IRLR2908TRPBF"/>
+      <property name="Pin map" value="1 G / 2 D+tab / 3 S"/>
+      <property name="Qualification" value="Linear SOA/current sharing open"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="transistor NMOS N-MOS N-MOSFET"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>cedca129-9a39-4e90-9e48-b95f6e89ce1f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q104">
+      <value>IRLR2908</value>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
+      <description>N-MOSFET transistor, gate/drain/source</description>
+      <fields>
+        <field name="MFG P/N">IRLR2908TRPBF</field>
+        <field name="Pin map">1 G / 2 D+tab / 3 S</field>
+        <field name="Qualification">Linear SOA/current sharing open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet"/>
+        <field name="Description">N-MOSFET transistor, gate/drain/source</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="Q_NMOS_GDS" description="N-MOSFET transistor, gate/drain/source"/>
+      <property name="MFG P/N" value="IRLR2908TRPBF"/>
+      <property name="Pin map" value="1 G / 2 D+tab / 3 S"/>
+      <property name="Qualification" value="Linear SOA/current sharing open"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="transistor NMOS N-MOS N-MOSFET"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>f0a07cc9-0a4e-494c-b663-ddb5caa487c5</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q105">
+      <value>IRLR2908</value>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
+      <description>N-MOSFET transistor, gate/drain/source</description>
+      <fields>
+        <field name="MFG P/N">IRLR2908TRPBF</field>
+        <field name="Pin map">1 G / 2 D+tab / 3 S</field>
+        <field name="Qualification">Linear SOA/current sharing open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet"/>
+        <field name="Description">N-MOSFET transistor, gate/drain/source</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="Q_NMOS_GDS" description="N-MOSFET transistor, gate/drain/source"/>
+      <property name="MFG P/N" value="IRLR2908TRPBF"/>
+      <property name="Pin map" value="1 G / 2 D+tab / 3 S"/>
+      <property name="Qualification" value="Linear SOA/current sharing open"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="transistor NMOS N-MOS N-MOSFET"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>cccca41b-2abe-47dd-8728-8b1837d85933</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q106">
+      <value>IRLR2908</value>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
+      <description>N-MOSFET transistor, gate/drain/source</description>
+      <fields>
+        <field name="MFG P/N">IRLR2908TRPBF</field>
+        <field name="Pin map">1 G / 2 D+tab / 3 S</field>
+        <field name="Qualification">Linear SOA/current sharing open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet"/>
+        <field name="Description">N-MOSFET transistor, gate/drain/source</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="Q_NMOS_GDS" description="N-MOSFET transistor, gate/drain/source"/>
+      <property name="MFG P/N" value="IRLR2908TRPBF"/>
+      <property name="Pin map" value="1 G / 2 D+tab / 3 S"/>
+      <property name="Qualification" value="Linear SOA/current sharing open"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="transistor NMOS N-MOS N-MOSFET"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>dec55421-c634-4da9-b30f-982e0121786b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q107">
+      <value>MMBT3904LT1G</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf</datasheet>
+      <description>0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23</description>
+      <fields>
+        <field name="MFG P/N">MMBT3904LT1G</field>
+        <field name="Pin map">1 B / 2 E / 3 C</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf</field>
+        <field name="Description">0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23</field>
+      </fields>
+      <libsource lib="Transistor_BJT" part="MMBT3904" description="0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"/>
+      <property name="MFG P/N" value="MMBT3904LT1G"/>
+      <property name="Pin map" value="1 B / 2 E / 3 C"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="NPN Transistor"/>
+      <property name="ki_fp_filters" value="SOT?23*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>614394e5-32c3-45bf-84c1-8e59607019b1</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="3"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q108">
+      <value>MMBT3906LT1G</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.onsemi.com/pdf/datasheet/pzt3906-d.pdf</datasheet>
+      <description>-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23</description>
+      <fields>
+        <field name="MFG P/N">MMBT3906LT1G</field>
+        <field name="Pin map">1 B / 2 E / 3 C</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://www.onsemi.com/pdf/datasheet/pzt3906-d.pdf</field>
+        <field name="Description">-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23</field>
+      </fields>
+      <libsource lib="Transistor_BJT" part="MMBT3906" description="-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23"/>
+      <property name="MFG P/N" value="MMBT3906LT1G"/>
+      <property name="Pin map" value="1 B / 2 E / 3 C"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="PNP Transistor"/>
+      <property name="ki_fp_filters" value="SOT?23*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>72fc7c62-cd23-4069-b23c-7da86b11ca6d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="3"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R101">
+      <value>20m</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">CRF1206-FZ-R020ELF</field>
+        <field name="PackageSize">1206</field>
+        <field name="Power">1 W P70</field>
+        <field name="Qualification">Pulse/cold qualification open</field>
+        <field name="Tolerance">1%</field>
+        <field name="Rating source">Bourns CRF datasheet p1; CRF1206 0.002-0.050 ohm 1W at70C</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="CRF1206-FZ-R020ELF"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Power" value="1 W P70"/>
+      <property name="Qualification" value="Pulse/cold qualification open"/>
+      <property name="Tolerance" value="1%"/>
+      <property name="Rating source" value="Bourns CRF datasheet p1; CRF1206 0.002-0.050 ohm 1W at70C"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>49b5ceb0-e0ba-4f62-be1d-6860ce42c865</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R102">
+      <value>100</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">CRCW1206100RFKEAHP</field>
+        <field name="PackageSize">1206</field>
+        <field name="Power">0.75 W P70</field>
+        <field name="Procurement">Code constructed; confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">1%</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="CRCW1206100RFKEAHP"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Power" value="0.75 W P70"/>
+      <property name="Procurement" value="Code constructed; confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="1%"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>73c8b454-f05d-4cb4-87b4-b00623cf285b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R103">
+      <value>20k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060320K0BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060320K0BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>56140d95-8246-42ca-8cbe-c1dcfaee5e72</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R104">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060310K0BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060310K0BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>3f94563b-8b2e-45ff-98e7-95705fc87697</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R107">
+      <value>3.57k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW06033K57BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW06033K57BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>16497164-1142-4f65-869d-61a675ed40b5</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R108">
+      <value>1.11k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW06031K11BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW06031K11BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>c74ba632-d161-43ae-9d08-f702c529800c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R109">
+      <value>47k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060347K0BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060347K0BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>caa5c8a5-d459-43e1-9c19-32e8054cd410</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R110">
+      <value>4.7k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW06034K70BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW06034K70BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>0cacff50-b1ce-4474-a059-ed505d6dcfdd</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R111">
+      <value>100</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">CRCW1206100RFKEAHP</field>
+        <field name="PackageSize">1206</field>
+        <field name="Power">0.75 W P70</field>
+        <field name="Procurement">Code constructed; confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">1%</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="CRCW1206100RFKEAHP"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Power" value="0.75 W P70"/>
+      <property name="Procurement" value="Code constructed; confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="1%"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>55bedb05-1690-4e76-b3ad-a5a36983e7c4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R112">
+      <value>2.2k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW06032K20BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW06032K20BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>1699b2e5-9a37-4fef-ba43-aa4623e784a6</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R113">
+      <value>47k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060347K0BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060347K0BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>067b331b-b40a-4bc7-923e-be1776eab75c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R114">
+      <value>100k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW0603100KBEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW0603100KBEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>6b585351-12d5-4fcb-a788-bd391094524d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R115">
+      <value>330</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/20043/crcwhpe3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">CRCW1206330RFKEAHP</field>
+        <field name="PackageSize">1206</field>
+        <field name="Power">0.75 W P70</field>
+        <field name="Qualification">Ordering code verified; procurement and assembled thermal acceptance open</field>
+        <field name="TCR">100 ppm/K</field>
+        <field name="Tolerance">1%</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/20043/crcwhpe3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="CRCW1206330RFKEAHP"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Power" value="0.75 W P70"/>
+      <property name="Qualification" value="Ordering code verified; procurement and assembled thermal acceptance open"/>
+      <property name="TCR" value="100 ppm/K"/>
+      <property name="Tolerance" value="1%"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>d03be6cb-6d50-408e-8ec6-d0e180ff0fa0</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U2">
+      <value>LTC4364HDE-1</value>
+      <footprint>Package_DFN_QFN:DFN-14-1EP_3x4mm_P0.5mm_EP1.7x3.3mm</footprint>
+      <datasheet>https://www.analog.com/media/en/technical-documentation/data-sheets/436412f.pdf</datasheet>
+      <description>Surge stopper with ideal diode, UV and OV protection -40V to +80V, -40°C to +125°C, DFN-14</description>
+      <fields>
+        <field name="MFG P/N">LTC4364HDE-1#PBF</field>
+        <field name="Pin map">DE top/component view; EP15 GND</field>
+        <field name="Qualification">Development; low-VCC clamp accuracy open</field>
+        <field name="Footprint">Package_DFN_QFN:DFN-14-1EP_3x4mm_P0.5mm_EP1.7x3.3mm</field>
+        <field name="Datasheet">https://www.analog.com/media/en/technical-documentation/data-sheets/436412f.pdf</field>
+        <field name="Description">Surge stopper with ideal diode, UV and OV protection -40V to +80V, -40°C to +125°C, DFN-14</field>
+      </fields>
+      <libsource lib="Power_Management" part="LTC4364HDE" description="Surge stopper with ideal diode, UV and OV protection -40V to +80V, -40°C to +125°C, DFN-14"/>
+      <property name="MFG P/N" value="LTC4364HDE-1#PBF"/>
+      <property name="Pin map" value="DE top/component view; EP15 GND"/>
+      <property name="Qualification" value="Development; low-VCC clamp accuracy open"/>
+      <property name="Sheetname" value="Recovery rail fault containment"/>
+      <property name="Sheetfile" value="recovery_rail_final.kicad_sch"/>
+      <property name="ki_keywords" value="surge overvoltage undervoltage reverse-polarity protection diode ORing MOSFET driver"/>
+      <property name="ki_fp_filters" value="DFN*3x4mm*P0.5mm*"/>
+      <sheetpath names="/Recovery rail fault containment/" tstamps="/3addf3f3-8945-44d9-aa36-00164d1efa41/"/>
+      <tstamps>65d4d35d-0777-4fdd-884e-6cb4423d2175</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="5"/>
+            <pin num="13"/>
+            <pin num="4"/>
+            <pin num="3"/>
+            <pin num="10"/>
+            <pin num="15"/>
+            <pin num="2"/>
+            <pin num="1"/>
+            <pin num="14"/>
+            <pin num="12"/>
+            <pin num="11"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C1">
+      <value>68u</value>
+      <footprint>Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</footprint>
+      <description>Polarized capacitor</description>
+      <fields>
+        <field name="Dielectric">Hybrid</field>
+        <field name="MFG P/N">EEHZA1H680P</field>
+        <field name="PackageSize">Panasonic_CP_F_8x10.2mm_REVIEW</field>
+        <field name="Review">Approved construction; qualification open</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</field>
+        <field name="Datasheet"/>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Dielectric" value="Hybrid"/>
+      <property name="MFG P/N" value="EEHZA1H680P"/>
+      <property name="PackageSize" value="Panasonic_CP_F_8x10.2mm_REVIEW"/>
+      <property name="Review" value="Approved construction; qualification open"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>291394ea-46ca-438a-892d-b5a2040c88c5</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C2">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3f5150b7-d77d-4d22-90e7-5b013a11b2de</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C3">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5cb2713e-cef9-41e9-9e3d-59f127ae5022</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C4">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8723daef-ef65-483a-b0a5-716a62f5d6a0</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C5">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2e30b20a-ade4-4400-a822-a0cc899dfa27</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C6">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>080c1b6a-8bcd-4bda-a9b1-f05fb87cf1c4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C7">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9d23ca75-99bb-4bc3-a217-46aaec4904d5</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C8">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5b42ba49-6ac4-43f2-9772-3802e07db85f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C9">
+      <value>10n</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">C0G</field>
+        <field name="MFG P/N">C1210C103J1GACTU</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">5%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="C0G"/>
+      <property name="MFG P/N" value="C1210C103J1GACTU"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="5%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>20973b28-56c8-4c96-a6a9-c0beb7c88146</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C10">
+      <value>10n</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">C0G</field>
+        <field name="MFG P/N">C1210C103J1GACTU</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">5%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="C0G"/>
+      <property name="MFG P/N" value="C1210C103J1GACTU"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="5%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>64fbf72d-c369-4e0c-b98d-b67a68b32733</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C11">
+      <value>1n</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">C0G</field>
+        <field name="MFG P/N">C1210C102J1GACTU</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">5%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="C0G"/>
+      <property name="MFG P/N" value="C1210C102J1GACTU"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="5%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c4ac53cc-3c21-4599-8c6c-c7b4e32cf7ca</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C12">
+      <value>1n</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">C0G</field>
+        <field name="MFG P/N">C1210C102J1GACTU</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">5%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="C0G"/>
+      <property name="MFG P/N" value="C1210C102J1GACTU"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="5%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>af8f4c89-6087-489d-bcab-1abb14583768</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C13">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9e4fdf0b-7389-4d0e-81b7-36756555f103</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C14">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b6fb2bcc-92b3-4de1-9f1b-37f3b827fc34</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C15">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9977c5aa-83a7-4835-bca1-01a650735ea8</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C16">
+      <value>2.2u</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="PackageSize">1210</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8e351ed7-7c8f-4839-87b9-6b3e051763cb</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D1">
+      <value>1N4148W-7-F</value>
+      <footprint>Diode_SMD:D_SOD-123</footprint>
+      <datasheet>https://www.vishay.com/docs/85748/1n4148w.pdf</datasheet>
+      <description>75V 0.15A Fast Switching Diode, SOD-123</description>
+      <fields>
+        <field name="MFG P/N">1N4148W-7-F</field>
+        <field name="Footprint">Diode_SMD:D_SOD-123</field>
+        <field name="Datasheet">https://www.vishay.com/docs/85748/1n4148w.pdf</field>
+        <field name="Description">75V 0.15A Fast Switching Diode, SOD-123</field>
+      </fields>
+      <libsource lib="Diode" part="1N4148W" description="75V 0.15A Fast Switching Diode, SOD-123"/>
+      <property name="MFG P/N" value="1N4148W-7-F"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="D*SOD?123*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>24d21f60-2b2d-4cc8-aeee-f308f06f1147</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D2">
+      <value>1N4148W-7-F</value>
+      <footprint>Diode_SMD:D_SOD-123</footprint>
+      <datasheet>https://www.vishay.com/docs/85748/1n4148w.pdf</datasheet>
+      <description>75V 0.15A Fast Switching Diode, SOD-123</description>
+      <fields>
+        <field name="MFG P/N">1N4148W-7-F</field>
+        <field name="Footprint">Diode_SMD:D_SOD-123</field>
+        <field name="Datasheet">https://www.vishay.com/docs/85748/1n4148w.pdf</field>
+        <field name="Description">75V 0.15A Fast Switching Diode, SOD-123</field>
+      </fields>
+      <libsource lib="Diode" part="1N4148W" description="75V 0.15A Fast Switching Diode, SOD-123"/>
+      <property name="MFG P/N" value="1N4148W-7-F"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="D*SOD?123*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>01ca145d-4935-4ccd-8915-fa74bd17f4cf</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D3">
+      <value>SMBJ8.5A</value>
+      <footprint>Diode_SMD:D_SMB</footprint>
+      <description>Zener diode</description>
+      <fields>
+        <field name="MFG P/N">SMBJ8.5A</field>
+        <field name="Manufacturer">Littelfuse</field>
+        <field name="Qualification">Development; hot leakage/dynamic clamp open</field>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description">Zener diode</field>
+      </fields>
+      <libsource lib="Device" part="D_Zener" description="Zener diode"/>
+      <property name="MFG P/N" value="SMBJ8.5A"/>
+      <property name="Manufacturer" value="Littelfuse"/>
+      <property name="Qualification" value="Development; hot leakage/dynamic clamp open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5586062e-76ff-4ad8-b07f-34a558cd1df3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D4">
+      <value>SMBJ8.5A</value>
+      <footprint>Diode_SMD:D_SMB</footprint>
+      <description>Zener diode</description>
+      <fields>
+        <field name="MFG P/N">SMBJ8.5A</field>
+        <field name="Manufacturer">Littelfuse</field>
+        <field name="Qualification">Development; hot leakage/dynamic clamp open</field>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description">Zener diode</field>
+      </fields>
+      <libsource lib="Device" part="D_Zener" description="Zener diode"/>
+      <property name="MFG P/N" value="SMBJ8.5A"/>
+      <property name="Manufacturer" value="Littelfuse"/>
+      <property name="Qualification" value="Development; hot leakage/dynamic clamp open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ba68b26e-613e-4a76-ad6d-b2f97caa9bcd</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D5">
+      <value>SMBJ60A</value>
+      <footprint>Diode_SMD:D_SMB</footprint>
+      <description>Zener diode</description>
+      <fields>
+        <field name="MFG P/N">SMBJ60A</field>
+        <field name="Manufacturer">Littelfuse</field>
+        <field name="Qualification">Bounded RC/PV fixture backup only; full-current clamp 96.8 V does not qualify 80 V MOSFETs</field>
+        <field name="Footprint">Diode_SMD:D_SMB</field>
+        <field name="Datasheet"/>
+        <field name="Description">Zener diode</field>
+      </fields>
+      <libsource lib="Device" part="D_Zener" description="Zener diode"/>
+      <property name="MFG P/N" value="SMBJ60A"/>
+      <property name="Manufacturer" value="Littelfuse"/>
+      <property name="Qualification" value="Bounded RC/PV fixture backup only; full-current clamp 96.8 V does not qualify 80 V MOSFETs"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>da0b435c-a772-49d7-bc03-af2b3d297d1e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="L2">
+      <value>4.7u</value>
+      <footprint>Inductor_SMD:L_Coilcraft_XAL1010-XXX</footprint>
+      <datasheet>https://www.coilcraft.com/getmedia/dd74e670-e705-456a-9a69-585fe02eaf3c/xal1010.pdf</datasheet>
+      <description>Inductor</description>
+      <fields>
+        <field name="Current">17.5 A RMS / 20 C rise reference</field>
+        <field name="MFG P/N">XAL1010-472MED</field>
+        <field name="PackageSize">10.5x11.8x10mm max</field>
+        <field name="Qualification">Require &gt;=2.5uH through bounded fault; hot qualification open</field>
+        <field name="Saturation Current">25.4 A typical / 30% drop at 25 C</field>
+        <field name="Tolerance">20%</field>
+        <field name="Footprint">Inductor_SMD:L_Coilcraft_XAL1010-XXX</field>
+        <field name="Datasheet">https://www.coilcraft.com/getmedia/dd74e670-e705-456a-9a69-585fe02eaf3c/xal1010.pdf</field>
+        <field name="Description">Inductor</field>
+      </fields>
+      <libsource lib="Device" part="L" description="Inductor"/>
+      <property name="Current" value="17.5 A RMS / 20 C rise reference"/>
+      <property name="MFG P/N" value="XAL1010-472MED"/>
+      <property name="PackageSize" value="10.5x11.8x10mm max"/>
+      <property name="Qualification" value="Require &gt;=2.5uH through bounded fault; hot qualification open"/>
+      <property name="Saturation Current" value="25.4 A typical / 30% drop at 25 C"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="inductor choke coil reactor magnetic"/>
+      <property name="ki_fp_filters" value="Choke_* *Coil* Inductor_* L_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7c87cea7-b1c4-4e15-8f9d-18d8615707f1</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q1">
+      <value>IRLR2908</value>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
+      <description>N-MOSFET transistor, gate/drain/source</description>
+      <fields>
+        <field name="MFG P/N">IRLR2908TRPBF</field>
+        <field name="Pin map">1 G / 2 D including tab / 3 S</field>
+        <field name="Qualification">Development only; SOA open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet"/>
+        <field name="Description">N-MOSFET transistor, gate/drain/source</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="Q_NMOS_GDS" description="N-MOSFET transistor, gate/drain/source"/>
+      <property name="MFG P/N" value="IRLR2908TRPBF"/>
+      <property name="Pin map" value="1 G / 2 D including tab / 3 S"/>
+      <property name="Qualification" value="Development only; SOA open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="transistor NMOS N-MOS N-MOSFET"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>aef7241a-d12b-44ad-865c-679d75af252b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q2">
+      <value>IRLR2908</value>
+      <footprint>Package_TO_SOT_SMD:TO-252-2</footprint>
+      <description>N-MOSFET transistor, gate/drain/source</description>
+      <fields>
+        <field name="MFG P/N">IRLR2908TRPBF</field>
+        <field name="Pin map">1 G / 2 D including tab / 3 S</field>
+        <field name="Qualification">Development only; SOA open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TO-252-2</field>
+        <field name="Datasheet"/>
+        <field name="Description">N-MOSFET transistor, gate/drain/source</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="Q_NMOS_GDS" description="N-MOSFET transistor, gate/drain/source"/>
+      <property name="MFG P/N" value="IRLR2908TRPBF"/>
+      <property name="Pin map" value="1 G / 2 D including tab / 3 S"/>
+      <property name="Qualification" value="Development only; SOA open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="transistor NMOS N-MOS N-MOSFET"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>282320b9-0a75-4301-922b-059a88c8828c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Q3">
+      <value>MMBT3906LT1G</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.onsemi.com/pdf/datasheet/pzt3906-d.pdf</datasheet>
+      <description>-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23</description>
+      <fields>
+        <field name="MFG P/N">MMBT3906LT1G</field>
+        <field name="Pin map">1 B / 2 E / 3 C</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://www.onsemi.com/pdf/datasheet/pzt3906-d.pdf</field>
+        <field name="Description">-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23</field>
+      </fields>
+      <libsource lib="Transistor_BJT" part="MMBT3906" description="-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23"/>
+      <property name="MFG P/N" value="MMBT3906LT1G"/>
+      <property name="Pin map" value="1 B / 2 E / 3 C"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="PNP Transistor"/>
+      <property name="ki_fp_filters" value="SOT?23*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>38e7f6d3-9fcd-4c16-b45e-9a0db7ee590c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="3"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R1">
+      <value>20m</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">CRF1206-FZ-R020ELF</field>
+        <field name="PackageSize">1206</field>
+        <field name="Power">1 W P70</field>
+        <field name="Qualification">Pulse/cold qualification open</field>
+        <field name="Tolerance">1%</field>
+        <field name="Rating source">Bourns CRF datasheet p1; CRF1206 0.002-0.050 ohm 1W at70C</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="CRF1206-FZ-R020ELF"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Power" value="1 W P70"/>
+      <property name="Qualification" value="Pulse/cold qualification open"/>
+      <property name="Tolerance" value="1%"/>
+      <property name="Rating source" value="Bourns CRF datasheet p1; CRF1206 0.002-0.050 ohm 1W at70C"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2338a77f-776b-4b1a-be4e-d1ef012f514b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R2">
+      <value>100</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">CRCW1206100RFKEAHP</field>
+        <field name="PackageSize">1206</field>
+        <field name="Power">0.75 W P70</field>
+        <field name="Procurement">Code constructed; confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">1%</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="CRCW1206100RFKEAHP"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Power" value="0.75 W P70"/>
+      <property name="Procurement" value="Code constructed; confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="1%"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a08e2149-de0f-45c8-b3ba-91dbbfec4743</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R3">
+      <value>50k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060350K0BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060350K0BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>39df2745-00a1-4ed1-8e8d-dda1f6ac88f8</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R4">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060310K0BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060310K0BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>010a4a66-259f-4a8f-8245-5b260d797c92</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R5">
+      <value>27.8k</value>
+      <footprint>Resistor_SMD:R_1210_3225Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW121027K8BEEA</field>
+        <field name="PackageSize">1210</field>
+        <field name="Power">0.33 W P70 general mode</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement and assembled thermal acceptance open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Film Temperature">125 C maximum in general mode</field>
+        <field name="Footprint">Resistor_SMD:R_1210_3225Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW121027K8BEEA"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Power" value="0.33 W P70 general mode"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement and assembled thermal acceptance open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Film Temperature" value="125 C maximum in general mode"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8888748d-caf5-4d2d-b0f5-85747ccb9021</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R6">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW06031K00BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW06031K00BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b1251f76-1874-4726-a234-391ef18eabc2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R7">
+      <value>25.8k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060325K8BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060325K8BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2125cbaa-befb-4bcd-bb01-f5838deeeddb</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R8">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW06031K00BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW06031K00BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>71ae756f-7175-4762-ad64-7755a4e89f9a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R9">
+      <value>47k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060347K0BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060347K0BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d62faa6b-bbbd-48c7-8a5d-6a4fe84c486d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R10">
+      <value>4.7k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW06034K70BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW06034K70BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f1481400-183d-4995-b932-f3fd4eacc80f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R11">
+      <value>100</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">CRCW1206100RFKEAHP</field>
+        <field name="PackageSize">1206</field>
+        <field name="Power">0.75 W P70</field>
+        <field name="Procurement">Code constructed; confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">1%</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="CRCW1206100RFKEAHP"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Power" value="0.75 W P70"/>
+      <property name="Procurement" value="Code constructed; confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="1%"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a35e21ef-b956-4bb9-8276-57ff0a6e9e78</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R12">
+      <value>2.2k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW06032K20BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W P70</field>
+        <field name="Procurement">Manufacturer ordering code verified; procurement confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Source">Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW06032K20BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W P70"/>
+      <property name="Procurement" value="Manufacturer ordering code verified; procurement confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Source" value="Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d27163d4-8baa-40d1-a3a5-09b582c83ea4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R13">
+      <value>1.0</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">CRCW12061R00FKEAHP</field>
+        <field name="PackageSize">1206</field>
+        <field name="Power">0.75 W P70</field>
+        <field name="Procurement">Code constructed; confirmation open</field>
+        <field name="Qualification">Snubber pulse/repetition open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">1%</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="CRCW12061R00FKEAHP"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Power" value="0.75 W P70"/>
+      <property name="Procurement" value="Code constructed; confirmation open"/>
+      <property name="Qualification" value="Snubber pulse/repetition open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="1%"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5cf8b371-4fe9-4aae-8af8-b59719c7e42e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U1">
+      <value>LTC4364HDE-2</value>
+      <footprint>Package_DFN_QFN:DFN-14-1EP_3x4mm_P0.5mm_EP1.7x3.3mm</footprint>
+      <datasheet>https://www.analog.com/media/en/technical-documentation/data-sheets/436412f.pdf</datasheet>
+      <description>Surge stopper with ideal diode, UV and OV protection -40V to +80V, -40°C to +125°C, DFN-14</description>
+      <fields>
+        <field name="MFG P/N">LTC4364HDE-2#PBF</field>
+        <field name="Pin map">DE top/component view; EP15 GND</field>
+        <field name="Qualification">Development; low-VCC clamp accuracy open</field>
+        <field name="Footprint">Package_DFN_QFN:DFN-14-1EP_3x4mm_P0.5mm_EP1.7x3.3mm</field>
+        <field name="Datasheet">https://www.analog.com/media/en/technical-documentation/data-sheets/436412f.pdf</field>
+        <field name="Description">Surge stopper with ideal diode, UV and OV protection -40V to +80V, -40°C to +125°C, DFN-14</field>
+      </fields>
+      <libsource lib="Power_Management" part="LTC4364HDE" description="Surge stopper with ideal diode, UV and OV protection -40V to +80V, -40°C to +125°C, DFN-14"/>
+      <property name="MFG P/N" value="LTC4364HDE-2#PBF"/>
+      <property name="Pin map" value="DE top/component view; EP15 GND"/>
+      <property name="Qualification" value="Development; low-VCC clamp accuracy open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="recovery_protection.kicad_sch"/>
+      <property name="ki_keywords" value="surge overvoltage undervoltage reverse-polarity protection diode ORing MOSFET driver"/>
+      <property name="ki_fp_filters" value="DFN*3x4mm*P0.5mm*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>72631f03-299a-4b3b-951e-9279c113881d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="5"/>
+            <pin num="13"/>
+            <pin num="4"/>
+            <pin num="3"/>
+            <pin num="10"/>
+            <pin num="15"/>
+            <pin num="2"/>
+            <pin num="1"/>
+            <pin num="14"/>
+            <pin num="12"/>
+            <pin num="11"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C_Polarized">
+      <description>Polarized capacitor</description>
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C_Polarized</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="D_Zener">
+      <description>Zener diode</description>
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D_Zener</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Zener diode</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="L">
+      <description>Inductor</description>
+      <footprints>
+        <fp>Choke_*</fp>
+        <fp>*Coil*</fp>
+        <fp>Inductor_*</fp>
+        <fp>L_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">L</field>
+        <field name="Value">L</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Inductor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Diode" part="1N4148W">
+      <description>75V 0.15A Fast Switching Diode, SOD-123</description>
+      <docs>https://www.vishay.com/docs/85748/1n4148w.pdf</docs>
+      <footprints>
+        <fp>D*SOD?123*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">1N4148W</field>
+        <field name="Footprint">Diode_SMD:D_SOD-123</field>
+        <field name="Datasheet">https://www.vishay.com/docs/85748/1n4148w.pdf</field>
+        <field name="Description">75V 0.15A Fast Switching Diode, SOD-123</field>
+        <field name="Sim.Device">D</field>
+        <field name="Sim.Pins">1=K 2=A</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Power_Management" part="LTC4364HDE">
+      <description>Surge stopper with ideal diode, UV and OV protection -40V to +80V, -40°C to +125°C, DFN-14</description>
+      <docs>https://www.analog.com/media/en/technical-documentation/data-sheets/436412f.pdf</docs>
+      <footprints>
+        <fp>DFN*3x4mm*P0.5mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LTC4364HDE</field>
+        <field name="Footprint">Package_DFN_QFN:DFN-14-1EP_3x4mm_P0.5mm_EP1.7x3.3mm</field>
+        <field name="Datasheet">https://www.analog.com/media/en/technical-documentation/data-sheets/436412f.pdf</field>
+        <field name="Description">Surge stopper with ideal diode, UV and OV protection -40V to +80V, -40°C to +125°C, DFN-14</field>
+      </fields>
+      <pins>
+        <pin num="1" name="OUT" type="input"/>
+        <pin num="2" name="SENSE" type="input"/>
+        <pin num="3" name="DGATE" type="output"/>
+        <pin num="4" name="SOURCE" type="input"/>
+        <pin num="5" name="GATE" type="output"/>
+        <pin num="6" name="VCC" type="power_in"/>
+        <pin num="7" name="~{SHDN}" type="input"/>
+        <pin num="8" name="UV" type="input"/>
+        <pin num="9" name="OV" type="input"/>
+        <pin num="10" name="GND" type="power_in"/>
+        <pin num="11" name="~{FLT}" type="open_collector"/>
+        <pin num="12" name="ENOUT" type="open_collector"/>
+        <pin num="13" name="TMR" type="input"/>
+        <pin num="14" name="FB" type="input"/>
+        <pin num="15" name="GND" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Transistor_BJT" part="MMBT3904">
+      <description>0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23</description>
+      <docs>https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf</docs>
+      <footprints>
+        <fp>SOT?23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">MMBT3904</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf</field>
+        <field name="Description">0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23</field>
+        <field name="Sim.Device">NPN</field>
+        <field name="Sim.Pins">1=B 2=E 3=C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="B" type="input"/>
+        <pin num="2" name="E" type="passive"/>
+        <pin num="3" name="C" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Transistor_BJT" part="MMBT3906">
+      <description>-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23</description>
+      <docs>https://www.onsemi.com/pdf/datasheet/pzt3906-d.pdf</docs>
+      <footprints>
+        <fp>SOT?23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">MMBT3906</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://www.onsemi.com/pdf/datasheet/pzt3906-d.pdf</field>
+        <field name="Description">-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23</field>
+        <field name="Sim.Device">PNP</field>
+        <field name="Sim.Pins">1=B 2=E 3=C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="B" type="input"/>
+        <pin num="2" name="E" type="passive"/>
+        <pin num="3" name="C" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Transistor_FET" part="Q_NMOS_GDS">
+      <description>N-MOSFET transistor, gate/drain/source</description>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">Q_NMOS_GDS</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">N-MOSFET transistor, gate/drain/source</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="D" type="passive"/>
+        <pin num="3" name="S" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Device">
+      <uri>${KICAD10_SYMBOL_DIR}/Device.kicad_sym</uri>
+    </library>
+    <library logical="Diode">
+      <uri>${KICAD10_SYMBOL_DIR}/Diode.kicad_sym</uri>
+    </library>
+    <library logical="Power_Management">
+      <uri>${KICAD10_SYMBOL_DIR}/Power_Management.kicad_sym</uri>
+    </library>
+    <library logical="Transistor_BJT">
+      <uri>${KICAD10_SYMBOL_DIR}/Transistor_BJT.kicad_sym</uri>
+    </library>
+    <library logical="Transistor_FET">
+      <uri>${KICAD10_SYMBOL_DIR}/Transistor_FET.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+3V3" class="Default">
+      <node ref="R109" pin="1" pintype="passive"/>
+      <node ref="R9" pin="1" pintype="passive"/>
+    </net>
+    <net code="2" name="+5V" class="Default">
+      <node ref="C101" pin="1" pintype="passive"/>
+      <node ref="C102" pin="1" pintype="passive"/>
+      <node ref="C103" pin="1" pintype="passive"/>
+      <node ref="C104" pin="1" pintype="passive"/>
+      <node ref="C105" pin="1" pintype="passive"/>
+      <node ref="C106" pin="1" pintype="passive"/>
+      <node ref="C107" pin="1" pintype="passive"/>
+      <node ref="C108" pin="1" pintype="passive"/>
+      <node ref="C109" pin="1" pintype="passive"/>
+      <node ref="C110" pin="1" pintype="passive"/>
+      <node ref="R101" pin="2" pintype="passive"/>
+      <node ref="R107" pin="1" pintype="passive"/>
+      <node ref="R115" pin="1" pintype="passive"/>
+      <node ref="U2" pin="1" pinfunction="OUT_1" pintype="input"/>
+    </net>
+    <net code="3" name="/Recovery rail fault containment/REC5_COMMON" class="Default">
+      <node ref="D103" pin="2" pinfunction="A_2" pintype="passive"/>
+      <node ref="D104" pin="2" pinfunction="A_2" pintype="passive"/>
+      <node ref="Q101" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="Q102" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="Q103" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="Q104" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="Q105" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="Q106" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="R111" pin="2" pintype="passive"/>
+      <node ref="U2" pin="4" pinfunction="SOURCE_4" pintype="input"/>
+    </net>
+    <net code="4" name="/Recovery rail fault containment/REC5_DG" class="Default">
+      <node ref="D104" pin="1" pinfunction="K_1" pintype="passive"/>
+      <node ref="Q104" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="Q105" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="Q106" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="U2" pin="3" pinfunction="DGATE_3" pintype="output"/>
+    </net>
+    <net code="5" name="/Recovery rail fault containment/REC5_FAULT" class="Default">
+      <node ref="R109" pin="2" pintype="passive"/>
+      <node ref="U2" pin="11" pinfunction="~{FLT}_11" pintype="open_collector"/>
+    </net>
+    <net code="6" name="/Recovery rail fault containment/REC5_FB" class="Default">
+      <node ref="R107" pin="2" pintype="passive"/>
+      <node ref="R108" pin="1" pintype="passive"/>
+      <node ref="U2" pin="14" pinfunction="FB_14" pintype="input"/>
+    </net>
+    <net code="7" name="/Recovery rail fault containment/REC5_GH" class="Default">
+      <node ref="C112" pin="1" pintype="passive"/>
+      <node ref="D102" pin="1" pinfunction="K_1" pintype="passive"/>
+      <node ref="D103" pin="1" pinfunction="K_1" pintype="passive"/>
+      <node ref="Q101" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="Q102" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="Q103" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="Q108" pin="2" pinfunction="E_2" pintype="passive"/>
+      <node ref="R110" pin="2" pintype="passive"/>
+    </net>
+    <net code="8" name="/Recovery rail fault containment/REC5_HGATE" class="Default">
+      <node ref="D102" pin="2" pinfunction="A_2" pintype="passive"/>
+      <node ref="Q108" pin="1" pinfunction="B_1" pintype="input"/>
+      <node ref="R110" pin="1" pintype="passive"/>
+      <node ref="U2" pin="5" pinfunction="GATE_5" pintype="output"/>
+    </net>
+    <net code="9" name="/Recovery rail fault containment/REC5_RESET" class="Default">
+      <node ref="R113" pin="1" pintype="passive"/>
+    </net>
+    <net code="10" name="/Recovery rail fault containment/REC5_SENSE" class="Default">
+      <node ref="Q104" pin="2" pinfunction="D_2" pintype="passive"/>
+      <node ref="Q105" pin="2" pinfunction="D_2" pintype="passive"/>
+      <node ref="Q106" pin="2" pinfunction="D_2" pintype="passive"/>
+      <node ref="R101" pin="1" pintype="passive"/>
+      <node ref="U2" pin="2" pinfunction="SENSE_2" pintype="input"/>
+    </net>
+    <net code="11" name="/Recovery rail fault containment/REC5_UV" class="Default">
+      <node ref="Q107" pin="3" pinfunction="C_3" pintype="passive"/>
+      <node ref="R103" pin="2" pintype="passive"/>
+      <node ref="R104" pin="1" pintype="passive"/>
+      <node ref="U2" pin="8" pinfunction="UV_8" pintype="input"/>
+    </net>
+    <net code="12" name="/SRC_COMMON" class="POWER,Default">
+      <node ref="D3" pin="2" pinfunction="A_2" pintype="passive"/>
+      <node ref="D4" pin="2" pinfunction="A_2" pintype="passive"/>
+      <node ref="Q1" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="Q2" pin="3" pinfunction="S_3" pintype="passive"/>
+      <node ref="R11" pin="2" pintype="passive"/>
+      <node ref="U1" pin="4" pinfunction="SOURCE_4" pintype="input"/>
+    </net>
+    <net code="13" name="/SRC_DG" class="ANALOG_CONTROL,Default">
+      <node ref="D4" pin="1" pinfunction="K_1" pintype="passive"/>
+      <node ref="Q2" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="U1" pin="3" pinfunction="DGATE_3" pintype="output"/>
+    </net>
+    <net code="14" name="/SRC_FAULT" class="ANALOG_CONTROL,Default">
+      <node ref="R9" pin="2" pintype="passive"/>
+      <node ref="U1" pin="11" pinfunction="~{FLT}_11" pintype="open_collector"/>
+    </net>
+    <net code="15" name="/SRC_FB" class="ANALOG_CONTROL,Default">
+      <node ref="R7" pin="2" pintype="passive"/>
+      <node ref="R8" pin="1" pintype="passive"/>
+      <node ref="U1" pin="14" pinfunction="FB_14" pintype="input"/>
+    </net>
+    <net code="16" name="/SRC_GH" class="ANALOG_CONTROL,Default">
+      <node ref="C12" pin="1" pintype="passive"/>
+      <node ref="D2" pin="1" pinfunction="K_1" pintype="passive"/>
+      <node ref="D3" pin="1" pinfunction="K_1" pintype="passive"/>
+      <node ref="Q1" pin="1" pinfunction="G_1" pintype="input"/>
+      <node ref="Q3" pin="2" pinfunction="E_2" pintype="passive"/>
+      <node ref="R10" pin="2" pintype="passive"/>
+    </net>
+    <net code="17" name="/SRC_HGATE" class="ANALOG_CONTROL,Default">
+      <node ref="D2" pin="2" pinfunction="A_2" pintype="passive"/>
+      <node ref="Q3" pin="1" pinfunction="B_1" pintype="input"/>
+      <node ref="R10" pin="1" pintype="passive"/>
+      <node ref="U1" pin="5" pinfunction="GATE_5" pintype="output"/>
+    </net>
+    <net code="18" name="/SRC_OV" class="ANALOG_CONTROL,Default">
+      <node ref="C11" pin="1" pintype="passive"/>
+      <node ref="R5" pin="2" pintype="passive"/>
+      <node ref="R6" pin="1" pintype="passive"/>
+      <node ref="U1" pin="9" pinfunction="OV_9" pintype="input"/>
+    </net>
+    <net code="19" name="/SRC_SENSE" class="POWER,Default">
+      <node ref="Q2" pin="2" pinfunction="D_2" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+      <node ref="U1" pin="2" pinfunction="SENSE_2" pintype="input"/>
+    </net>
+    <net code="20" name="/SRC_SNUB" class="ANALOG_CONTROL,Default">
+      <node ref="C13" pin="1" pintype="passive"/>
+      <node ref="C14" pin="1" pintype="passive"/>
+      <node ref="C15" pin="1" pintype="passive"/>
+      <node ref="C16" pin="1" pintype="passive"/>
+      <node ref="R13" pin="2" pintype="passive"/>
+    </net>
+    <net code="21" name="/SRC_UV" class="ANALOG_CONTROL,Default">
+      <node ref="C10" pin="1" pintype="passive"/>
+      <node ref="R3" pin="2" pintype="passive"/>
+      <node ref="R4" pin="1" pintype="passive"/>
+      <node ref="U1" pin="8" pinfunction="UV_8" pintype="input"/>
+    </net>
+    <net code="22" name="5V0_RECOVERY_REG" class="Default">
+      <node ref="L1" pin="1" pinfunction="1_1" pintype="passive"/>
+    </net>
+    <net code="23" name="GND" class="Default">
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="C10" pin="2" pintype="passive"/>
+      <node ref="C101" pin="2" pintype="passive"/>
+      <node ref="C102" pin="2" pintype="passive"/>
+      <node ref="C103" pin="2" pintype="passive"/>
+      <node ref="C104" pin="2" pintype="passive"/>
+      <node ref="C105" pin="2" pintype="passive"/>
+      <node ref="C106" pin="2" pintype="passive"/>
+      <node ref="C107" pin="2" pintype="passive"/>
+      <node ref="C108" pin="2" pintype="passive"/>
+      <node ref="C109" pin="2" pintype="passive"/>
+      <node ref="C11" pin="2" pintype="passive"/>
+      <node ref="C110" pin="2" pintype="passive"/>
+      <node ref="C113" pin="2" pintype="passive"/>
+      <node ref="C114" pin="2" pintype="passive"/>
+      <node ref="C115" pin="2" pintype="passive"/>
+      <node ref="C116" pin="2" pintype="passive"/>
+      <node ref="C117" pin="2" pintype="passive"/>
+      <node ref="C119" pin="2" pintype="passive"/>
+      <node ref="C13" pin="2" pintype="passive"/>
+      <node ref="C14" pin="2" pintype="passive"/>
+      <node ref="C15" pin="2" pintype="passive"/>
+      <node ref="C16" pin="2" pintype="passive"/>
+      <node ref="C2" pin="2" pintype="passive"/>
+      <node ref="C3" pin="2" pintype="passive"/>
+      <node ref="C4" pin="2" pintype="passive"/>
+      <node ref="C5" pin="2" pintype="passive"/>
+      <node ref="C6" pin="2" pintype="passive"/>
+      <node ref="C7" pin="2" pintype="passive"/>
+      <node ref="C8" pin="2" pintype="passive"/>
+      <node ref="C9" pin="2" pintype="passive"/>
+      <node ref="D105" pin="2" pinfunction="A_2" pintype="passive"/>
+      <node ref="D5" pin="2" pinfunction="A_2" pintype="passive"/>
+      <node ref="Q107" pin="2" pinfunction="E_2" pintype="passive"/>
+      <node ref="R104" pin="2" pintype="passive"/>
+      <node ref="R108" pin="2" pintype="passive"/>
+      <node ref="R112" pin="2" pintype="passive"/>
+      <node ref="R114" pin="2" pintype="passive"/>
+      <node ref="R115" pin="2" pintype="passive"/>
+      <node ref="R12" pin="2" pintype="passive"/>
+      <node ref="R4" pin="2" pintype="passive"/>
+      <node ref="R6" pin="2" pintype="passive"/>
+      <node ref="R8" pin="2" pintype="passive"/>
+      <node ref="U1" pin="10" pinfunction="GND_10" pintype="power_in"/>
+      <node ref="U1" pin="15" pinfunction="GND_15" pintype="power_in"/>
+      <node ref="U2" pin="10" pinfunction="GND_10" pintype="power_in"/>
+      <node ref="U2" pin="15" pinfunction="GND_15" pintype="power_in"/>
+      <node ref="U2" pin="9" pinfunction="OV_9" pintype="input"/>
+    </net>
+    <net code="24" name="Net-(C12-Pad2)" class="ANALOG_CONTROL,Default">
+      <node ref="C12" pin="2" pintype="passive"/>
+      <node ref="R12" pin="1" pintype="passive"/>
+    </net>
+    <net code="25" name="Net-(C112-Pad2)" class="Default">
+      <node ref="C112" pin="2" pintype="passive"/>
+      <node ref="R112" pin="1" pintype="passive"/>
+    </net>
+    <net code="26" name="Net-(D1-A)" class="ANALOG_CONTROL,Default">
+      <node ref="D1" pin="2" pinfunction="A_2" pintype="passive"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+    </net>
+    <net code="27" name="Net-(Q3-C)" class="ANALOG_CONTROL,Default">
+      <node ref="Q3" pin="3" pinfunction="C_3" pintype="passive"/>
+      <node ref="R11" pin="1" pintype="passive"/>
+    </net>
+    <net code="28" name="Net-(Q107-B)" class="Default">
+      <node ref="Q107" pin="1" pinfunction="B_1" pintype="input"/>
+      <node ref="R113" pin="2" pintype="passive"/>
+      <node ref="R114" pin="1" pintype="passive"/>
+    </net>
+    <net code="29" name="Net-(Q108-C)" class="Default">
+      <node ref="Q108" pin="3" pinfunction="C_3" pintype="passive"/>
+      <node ref="R111" pin="1" pintype="passive"/>
+    </net>
+    <net code="30" name="Net-(U1-TMR)" class="ANALOG_CONTROL,Default">
+      <node ref="C9" pin="1" pintype="passive"/>
+      <node ref="U1" pin="13" pinfunction="TMR_13" pintype="input"/>
+    </net>
+    <net code="31" name="Net-(U2-TMR)" class="Default">
+      <node ref="C119" pin="1" pintype="passive"/>
+      <node ref="U2" pin="13" pinfunction="TMR_13" pintype="input"/>
+    </net>
+    <net code="32" name="REC5_BIAS" class="Default">
+      <node ref="C117" pin="1" pintype="passive"/>
+      <node ref="R102" pin="2" pintype="passive"/>
+      <node ref="R103" pin="1" pintype="passive"/>
+      <node ref="U2" pin="6" pinfunction="VCC_6" pintype="power_in"/>
+    </net>
+    <net code="33" name="REC5_PIN" class="Default">
+      <node ref="C113" pin="1" pintype="passive"/>
+      <node ref="C114" pin="1" pintype="passive"/>
+      <node ref="C115" pin="1" pintype="passive"/>
+      <node ref="C116" pin="1" pintype="passive"/>
+      <node ref="D105" pin="1" pinfunction="K_1" pintype="passive"/>
+      <node ref="L1" pin="2" pinfunction="2_2" pintype="passive"/>
+      <node ref="Q101" pin="2" pinfunction="D_2" pintype="passive"/>
+      <node ref="Q102" pin="2" pinfunction="D_2" pintype="passive"/>
+      <node ref="Q103" pin="2" pinfunction="D_2" pintype="passive"/>
+      <node ref="R102" pin="1" pintype="passive"/>
+    </net>
+    <net code="34" name="SOLAR_PERMITTED" class="POWER,Default">
+      <node ref="L2" pin="1" pinfunction="1_1" pintype="passive"/>
+    </net>
+    <net code="35" name="SRC_BIAS" class="POWER,Default">
+      <node ref="C5" pin="1" pintype="passive"/>
+      <node ref="C6" pin="1" pintype="passive"/>
+      <node ref="C7" pin="1" pintype="passive"/>
+      <node ref="C8" pin="1" pintype="passive"/>
+      <node ref="D1" pin="1" pinfunction="K_1" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+      <node ref="U1" pin="6" pinfunction="VCC_6" pintype="power_in"/>
+    </net>
+    <net code="36" name="SRC_FILTERED" class="POWER,Default">
+      <node ref="D5" pin="1" pinfunction="K_1" pintype="passive"/>
+      <node ref="L2" pin="2" pinfunction="2_2" pintype="passive"/>
+      <node ref="Q1" pin="2" pinfunction="D_2" pintype="passive"/>
+      <node ref="R13" pin="1" pintype="passive"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+      <node ref="R5" pin="1" pintype="passive"/>
+    </net>
+    <net code="37" name="VIN_CHG" class="POWER,Default">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="C4" pin="1" pintype="passive"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+      <node ref="R7" pin="1" pintype="passive"/>
+      <node ref="U1" pin="1" pinfunction="OUT_1" pintype="input"/>
+    </net>
+    <net code="38" name="unconnected-(U1-ENOUT-Pad12)" class="Default">
+      <node ref="U1" pin="12" pinfunction="ENOUT_12" pintype="open_collector+no_connect"/>
+    </net>
+    <net code="39" name="unconnected-(U1-~{SHDN}-Pad7)" class="Default">
+      <node ref="U1" pin="7" pinfunction="~{SHDN}_7" pintype="input+no_connect"/>
+    </net>
+    <net code="40" name="unconnected-(U2-ENOUT-Pad12)" class="Default">
+      <node ref="U2" pin="12" pinfunction="ENOUT_12" pintype="open_collector+no_connect"/>
+    </net>
+    <net code="41" name="unconnected-(U2-~{SHDN}-Pad7)" class="Default">
+      <node ref="U2" pin="7" pinfunction="~{SHDN}_7" pintype="input+no_connect"/>
+    </net>
+  </nets>
+</export>

@@ -5,7 +5,7 @@ and [complete hardware contract](native_build_contract.md). **Development
 screening passes its stated numerical checks; MOSFET survival and system
 fault containment are not qualified.**
 
-The [50 V bank follow-up](bank/README.md) records the installed converter-bank correction and a newly failing low-reference no-load-release case. The original 46-case screen below does not cover this acceptance gap.
+The [50 V bank follow-up](bank/README.md) records the installed converter bank and the original nuisance-latch discovery. The subsequent [latch/source-short and MOSFET follow-up](latch/README.md) is the current protection circuit/evidence; it supersedes the old timer/divider values and native BOM below. Historical screens do not establish acceptance of the revised circuit.
 
 ## Saved evidence
 

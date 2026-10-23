@@ -1,5 +1,7 @@
 # 50 V converter bank and coupled-protection follow-up
 
+**Current protection circuit:** the subsequent [latch and source-short follow-up](../latch/README.md) installs the correction and supersedes this record's analysis-only candidate status. The converter-bank correction remains current.
+
 2026-10-23. Development checkpoint; not a fabrication release. The previous protection study exposed overvoltage of the converter's own output capacitors. That bank is now corrected in the native converter schematic. This record supersedes earlier bank-specific calculations, BOMs and images; the independent protection study itself remains unchanged.
 
 ## Installed bank

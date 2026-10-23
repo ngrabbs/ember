@@ -2743,6 +2743,11 @@
 		(diameter 0)
 		(uuid "868ff565-66de-4923-b949-084588426ed7")
 	)
+	(junction
+		(at 396.24 80.01)
+		(diameter 0)
+		(uuid "84be19f7-b980-4fcb-b7e3-3a52ee22ab7f")
+	)
 	(no_connect
 		(at 137.16 139.7)
 		(uuid "46bcf3a6-729a-4dc4-95e2-bccf226896c3")
@@ -3696,15 +3701,19 @@
 		)
 		(uuid "e8008a68-d4f4-4a80-a868-ec785f45c33e")
 	)
-	(text "RECOVERY RAIL: analog 5.25 V clamp, timed latch-off"
-		(at 25.4 22.86 0)
-		(effects
-			(font
-				(size 2 2)
-			)
-			(justify left bottom)
+	(wire
+		(pts
+			(xy 396.24 80.01)
+			(xy 396.24 85.09)
 		)
-		(uuid "feeddb4f-2f86-4a36-9ceb-7ec2aeabdbf4")
+		(uuid "5dbf0059-2a5f-48c4-a775-ecad399a19b9")
+	)
+	(wire
+		(pts
+			(xy 396.24 92.71)
+			(xy 396.24 100.33)
+		)
+		(uuid "1bfc4a80-4c14-4494-9611-6af9f700e437")
 	)
 	(text "DEVELOPMENT ONLY — component and fault qualification open"
 		(at 25.4 31.75 0)
@@ -4006,6 +4015,16 @@
 		)
 		(uuid "c705dab1-1764-4671-b652-4b6ede1877c0")
 	)
+  (text "RECOVERY RAIL: analog 5.27 V clamp, timed latch-off"
+    (at 25.4 22.86 0)
+    (effects (font (size 2 2)) (justify left bottom))
+    (uuid "42b8f6b8-0e43-4b9e-a264-b3ca8245140a")
+  )
+  (text "Latch correction: 330 ohm discharge; 100 nF timer; 10 nF gate slew.\nHeavy loads: >=5 ms admission ramp AND >=20 ms settling; qualify rails locally.\nUV reset respects cooldown: allow >=10 s before heavy loads. Hot SOA remains open."
+    (at 25.4 246.38 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "2793de0d-a17d-4947-9a8a-07875d6666b3")
+  )
 	(symbol
 		(lib_id "Power_Management:LTC4364HDE")
 		(at 152.4 139.7 0)
@@ -4355,7 +4374,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "220p"
+		(property "Value" "100n"
 			(at 132.715 175.26 0)
 			(effects
 				(font
@@ -4400,7 +4419,7 @@
 				)
 			)
 		)
-		(property "MFG P/N" "C1210C221J1GACTU"
+		(property "MFG P/N" "C1210C104J1GACTU"
 			(at 132.08 172.72 0)
 			(hide yes)
 			(effects
@@ -4611,15 +4630,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
-					(reference "R103")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 45.72 165.1 0)
 			(hide yes)
@@ -4628,7 +4638,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "R103")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R")
 		(at 45.72 190.5 0)
@@ -4734,15 +4753,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
-					(reference "R104")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 45.72 190.5 0)
 			(hide yes)
@@ -4751,7 +4761,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "R104")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:VCC")
 		(at 45.72 153.67 0)
@@ -4951,7 +4970,7 @@
 				)
 			)
 		)
-		(property "Value" "3.20k"
+		(property "Value" "3.57k"
 			(at 200.66 124.46 90)
 			(effects
 				(font
@@ -4986,7 +5005,7 @@
 				)
 			)
 		)
-		(property "MFG P/N" "TNPW06033K20BEEA"
+		(property "MFG P/N" "TNPW06033K57BEEA"
 			(at 200.66 124.46 0)
 			(hide yes)
 			(effects
@@ -5040,15 +5059,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
-					(reference "R107")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 200.66 124.46 0)
 			(hide yes)
@@ -5057,7 +5067,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "R107")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R")
 		(at 200.66 154.94 0)
@@ -5074,7 +5093,7 @@
 				)
 			)
 		)
-		(property "Value" "1k"
+		(property "Value" "1.11k"
 			(at 200.66 154.94 90)
 			(effects
 				(font
@@ -5109,7 +5128,7 @@
 				)
 			)
 		)
-		(property "MFG P/N" "TNPW06031K00BEEA"
+		(property "MFG P/N" "TNPW06031K11BEEA"
 			(at 200.66 154.94 0)
 			(hide yes)
 			(effects
@@ -5163,15 +5182,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
-					(reference "R108")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 200.66 154.94 0)
 			(hide yes)
@@ -5180,7 +5190,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "R108")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:VCC")
 		(at 200.66 113.03 0)
@@ -5408,15 +5427,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
-					(reference "R109")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 238.76 135.89 0)
 			(hide yes)
@@ -5425,7 +5435,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "R109")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:VCC")
 		(at 238.76 124.46 0)
@@ -5592,15 +5611,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
-					(reference "R110")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 285.75 140.97 0)
 			(hide yes)
@@ -5609,7 +5619,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "R110")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Diode:1N4148W")
 		(at 285.75 118.11 180)
@@ -6064,7 +6083,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "68n"
+		(property "Value" "10n"
 			(at 356.235 175.26 0)
 			(effects
 				(font
@@ -6109,7 +6128,7 @@
 				)
 			)
 		)
-		(property "MFG P/N" "C1210C683J1GACTU"
+		(property "MFG P/N" "C1210C103J1GACTU"
 			(at 355.6 172.72 0)
 			(hide yes)
 			(effects
@@ -6259,15 +6278,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
-					(reference "R112")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 355.6 193.04 0)
 			(hide yes)
@@ -6276,7 +6286,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "R112")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:GND")
 		(at 355.6 204.47 0)
@@ -6950,15 +6969,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
-					(reference "L1")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "DCR" "3.4 mOhm typ / 3.8 mOhm max"
 			(at 50.8 48.26 0)
 			(hide yes)
@@ -7012,7 +7022,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "L1")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:VCC")
 		(at 25.4 38.1 0)
@@ -7292,15 +7311,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
-					(reference "R101")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Rating source" "Bourns CRF datasheet p1; CRF1206 0.002-0.050 ohm 1W at70C"
 			(at 220.98 48.26 0)
 			(hide yes)
@@ -7309,7 +7319,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "R101")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:VCC")
 		(at 401.32 38.1 0)
@@ -10582,15 +10601,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
-					(reference "R113")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 63.5 218.44 0)
 			(hide yes)
@@ -10599,7 +10609,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "R113")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R")
 		(at 111.76 218.44 0)
@@ -10705,15 +10724,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
-					(reference "R114")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 111.76 218.44 0)
 			(hide yes)
@@ -10722,7 +10732,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "R114")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:GND")
 		(at 111.76 229.87 0)
@@ -10962,6 +10981,181 @@
 			(project "recovery_protection"
 				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
 					(reference "#FLG273")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 396.24 88.9 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d03be6cb-6d50-408e-8ec6-d0e180ff0fa0")
+		(property "Reference" "R115"
+			(at 398.272 88.9 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "330"
+			(at 396.24 88.9 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
+			(at 396.24 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.vishay.com/docs/20043/crcwhpe3.pdf"
+			(at 396.24 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 396.24 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "CRCW1206330RFKEAHP"
+			(at 396.24 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "1206"
+			(at 396.24 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Power" "0.75 W P70"
+			(at 396.24 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Ordering code verified; procurement and assembled thermal acceptance open"
+			(at 396.24 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "TCR" "100 ppm/K"
+			(at 396.24 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" "1%"
+			(at 396.24 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "R115")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 396.24 100.33 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "68367afa-603c-42fc-85b7-448261896ade")
+		(property "Reference" "#PWR001"
+			(at 396.24 106.68 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 396.24 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 396.24 100.33 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 396.24 100.33 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 396.24 100.33 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41"
+					(reference "#PWR001")
 					(unit 1)
 				)
 			)

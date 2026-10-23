@@ -1,0 +1,176 @@
+[
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "src10_60",
+    "fault": 60,
+    "threshold": 1
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "src10_40",
+    "fault": 40,
+    "threshold": 1
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "src10_mid",
+    "fault": 35.5,
+    "threshold": -1
+  },
+  {
+    "stage": "source",
+    "timer_nF": 6.32,
+    "temperature": -40,
+    "extra_gate_charge": true,
+    "name": "src10_cold_start",
+    "mode": "startup",
+    "bulk": 8.84e-05,
+    "ceramic": 3.3e-05,
+    "threshold": -1
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "src10_input_loss",
+    "mode": "input_short",
+    "fault": 0
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "src10_persistent60",
+    "fault": 60,
+    "stop": 1.2,
+    "threshold": 1
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "src10_package_output_short",
+    "fault": 60,
+    "threshold": 1,
+    "mode": "short",
+    "package_parasitics": true
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "src10_hard_input_short",
+    "fault": 32.164,
+    "threshold": 1,
+    "mode": "input_short",
+    "package_parasitics": true,
+    "hard_input_short": true,
+    "expected_failed_checks": [
+      "output_below_35V",
+      "VGS_within_16V"
+    ],
+    "stop": 0.16
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "guard_src10_60",
+    "fault": 60,
+    "threshold": 1,
+    "source_guard_L": 2.5e-06
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "guard_src10_40",
+    "fault": 40,
+    "threshold": 1,
+    "source_guard_L": 2.5e-06
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "guard_src10_mid",
+    "fault": 35.5,
+    "threshold": -1,
+    "source_guard_L": 2.5e-06
+  },
+  {
+    "stage": "source",
+    "timer_nF": 6.32,
+    "temperature": -40,
+    "extra_gate_charge": true,
+    "name": "guard_src10_cold_start",
+    "mode": "startup",
+    "bulk": 8.84e-05,
+    "ceramic": 3.3e-05,
+    "threshold": -1,
+    "source_guard_L": 2.5e-06
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "guard_src10_input_loss",
+    "mode": "input_short",
+    "fault": 0,
+    "source_guard_L": 2.5e-06
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "guard_src10_persistent60",
+    "fault": 60,
+    "stop": 1.2,
+    "threshold": 1,
+    "source_guard_L": 2.5e-06
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "guard_src10_package_output_short",
+    "fault": 60,
+    "threshold": 1,
+    "mode": "short",
+    "package_parasitics": true,
+    "source_guard_L": 2.5e-06
+  },
+  {
+    "stage": "source",
+    "timer_nF": 17.533333333333335,
+    "temperature": 85,
+    "extra_gate_charge": true,
+    "name": "guard_src10_hard_input_short",
+    "fault": 32.164,
+    "threshold": 1,
+    "mode": "input_short",
+    "package_parasitics": true,
+    "hard_input_short": true,
+    "source_guard_L": 2.5e-06,
+    "stop": 0.16
+  }
+]

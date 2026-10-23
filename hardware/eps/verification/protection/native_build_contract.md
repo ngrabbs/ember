@@ -1,5 +1,7 @@
 # Native protection study build contract
 
+**Historical initial-build contract.** The [current latch/source-short correction](../../design/rev_b_5v_latch_and_mosfet_survival.md) supersedes original C9/C112/C119 and rail-divider values, and adds R115/L2. Use its native endpoint verifier and BOM as current authority; this file retains the original build history.
+
 Target repository/worktree: `/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review`.
 Policy: `/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/conventions/kicad_schematic_policy.md`.
 

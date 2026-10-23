@@ -1,5 +1,7 @@
 # Native protection development study
 
+**Historical 81-part export.** Use the [current 83-part latch/source-short evidence](../latch/native/README.md) for the revised circuit, BOM and actual renders.
+
 2026-10-23. Isolated editable circuit study, not a fabrication release or a qualified protection system. All native writes used Konnect 0.11.1; verification used KiCad 10.0.0. No existing converter, controller, library or PCB was changed.
 
 Open `hardware/eps/studies/recovery_protection/recovery_protection.kicad_pro`. The root source sheet links `recovery_rail_final.kicad_sch`; both use ANSI B landscape. Portable project footprint registration reuses the approved Panasonic D8/F review candidates. No new symbol or footprint was authored.

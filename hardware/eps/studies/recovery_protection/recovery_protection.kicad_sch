@@ -2169,11 +2169,184 @@
 			)
 			(embedded_fonts no)
 		)
-	)
-	(junction
-		(at 50.8 60.96)
-		(diameter 0)
-		(uuid "9561d581-4f59-4c57-afdf-f48b743197f1")
+		(symbol "Device:L"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "L"
+				(at -1.27 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "L"
+				(at 1.905 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Inductor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "inductor choke coil reactor magnetic"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Choke_* *Coil* Inductor_* L_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "L_0_1"
+				(arc
+					(start 0 2.54)
+					(mid 0.6323 1.905)
+					(end 0 1.27)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 1.27)
+					(mid 0.6323 0.635)
+					(end 0 0)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 0)
+					(mid 0.6323 -0.635)
+					(end 0 -1.27)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start 0 -1.27)
+					(mid 0.6323 -1.905)
+					(end 0 -2.54)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "L_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(junction
 		(at 281.94 60.96)
@@ -2241,11 +2414,6 @@
 		(uuid "91f28589-d601-4429-a4cc-88672933404e")
 	)
 	(junction
-		(at 85.09 60.96)
-		(diameter 0)
-		(uuid "9e59e1f9-70dd-48ce-a2f0-1417b12c2d44")
-	)
-	(junction
 		(at 213.36 240.03)
 		(diameter 0)
 		(uuid "81a3d7e8-f29e-4349-bb22-5e476a006d11")
@@ -2260,6 +2428,26 @@
 		(diameter 0)
 		(uuid "07a53204-4bb4-4c63-a214-2b493cbb36bb")
 	)
+	(junction
+		(at 50.8 60.96)
+		(diameter 0)
+		(uuid "f5028224-2954-4897-b727-893f995cda86")
+	)
+	(junction
+		(at 85.09 60.96)
+		(diameter 0)
+		(uuid "b83bbd8b-34d0-4136-8316-7638abc6e54c")
+	)
+	(junction
+		(at 96.52 60.96)
+		(diameter 0)
+		(uuid "d9f1eba7-11a4-4257-b767-dff408098c86")
+	)
+	(junction
+		(at 110.49 60.96)
+		(diameter 0)
+		(uuid "c9cd0d22-0dc6-4270-852d-293be9054c06")
+	)
 	(no_connect
 		(at 137.16 139.7)
 		(uuid "cbe7cf37-04ce-4672-a208-bef12c18ddee")
@@ -2267,13 +2455,6 @@
 	(no_connect
 		(at 167.64 144.78)
 		(uuid "43af4671-e78b-4459-9b04-6fefdacf05cd")
-	)
-	(wire
-		(pts
-			(xy 38.1 60.96)
-			(xy 121.92 60.96)
-		)
-		(uuid "1e1f9aa8-cbd5-4531-aeef-5637575e718b")
 	)
 	(wire
 		(pts
@@ -2996,6 +3177,34 @@
 		)
 		(uuid "4f5dc0df-f689-40c0-b5fb-87b5c4eb6671")
 	)
+	(wire
+		(pts
+			(xy 38.1 60.96)
+			(xy 62.23 60.96)
+		)
+		(uuid "b4b4498a-3a70-434e-9c96-d9b152f60de9")
+	)
+	(wire
+		(pts
+			(xy 69.85 60.96)
+			(xy 121.92 60.96)
+		)
+		(uuid "cb09c0aa-3a7f-4a5a-acd3-e3e3342c8f39")
+	)
+	(wire
+		(pts
+			(xy 96.52 50.8)
+			(xy 96.52 60.96)
+		)
+		(uuid "50d9e3c4-67fa-4db9-ad18-f8ec3d4218b6")
+	)
+	(wire
+		(pts
+			(xy 110.49 53.34)
+			(xy 110.49 60.96)
+		)
+		(uuid "8228da75-4fff-412d-8745-46cd63f3cc55")
+	)
 	(text "SOURCE: analog 33.5 V clamp, timed cutoff, automatic retry"
 		(at 25.4 22.86 0)
 		(effects
@@ -3075,6 +3284,46 @@
 			(justify left bottom)
 		)
 		(uuid "70d9f803-e0df-44f1-a510-5946a7fa91e3")
+	)
+	(text "RC damping requires >=2uF effective through 60 V."
+		(at 38.1 246.38 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "8858e45a-05ff-49a8-b2e5-dc667aa4df43")
+	)
+	(text "TVS backup is not a blanket 80 V device guarantee."
+		(at 38.1 252.73 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "dc3e6131-b431-4c23-a33b-58eb5454904e")
+	)
+	(text "Snubber pulse/repetition and hot TVS leakage remain open."
+		(at 38.1 259.08 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "93a1c367-67be-4819-a27e-1dfe5b04e9a2")
+	)
+	(text "L2 limits source-short slew; require >=2.5 uH through fault current.\nC9 = 10 nF reduces linear fault energy. Bias, OV and snubber follow L2.\nDevelopment screening only; hot SOA / source / magnetic qualification open."
+		(at 241.3 38.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "16665464-a930-49e7-aa25-2bb60950e980")
 	)
 	(label "SRC_COMMON"
 		(at 148.59 60.96 0)
@@ -3344,21 +3593,6 @@
 			)
 		)
 	)
-  (text "RC damping requires >=2uF effective through 60 V."
-    (at 38.1 246.38 0)
-    (effects (font (size 1 1)) (justify left bottom))
-    (uuid "8858e45a-05ff-49a8-b2e5-dc667aa4df43")
-  )
-  (text "TVS backup is not a blanket 80 V device guarantee."
-    (at 38.1 252.73 0)
-    (effects (font (size 1 1)) (justify left bottom))
-    (uuid "dc3e6131-b431-4c23-a33b-58eb5454904e")
-  )
-  (text "Snubber pulse/repetition and hot TVS leakage remain open."
-    (at 38.1 259.08 0)
-    (effects (font (size 1 1)) (justify left bottom))
-    (uuid "93a1c367-67be-4819-a27e-1dfe5b04e9a2")
-  )
 	(symbol
 		(lib_id "Power_Management:LTC4364HDE")
 		(at 152.4 139.7 0)
@@ -3721,15 +3955,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "R1")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Rating source" "Bourns CRF datasheet p1; CRF1206 0.002-0.050 ohm 1W at70C"
 			(at 220.98 60.96 0)
 			(hide yes)
@@ -3738,7 +3963,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "R1")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:VCC")
 		(at 38.1 50.8 0)
@@ -4803,7 +5037,7 @@
 				)
 			)
 		)
-		(property "Value" "SOLAR_PERMITTED"
+		(property "Value" "SRC_FILTERED"
 			(at 27.94 90.424 0)
 			(effects
 				(font
@@ -5841,7 +6075,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "10n"
 			(at 132.715 175.26 0)
 			(effects
 				(font
@@ -5886,7 +6120,7 @@
 				)
 			)
 		)
-		(property "MFG P/N" "C1210C104J1GACTU"
+		(property "MFG P/N" "C1210C103J1GACTU"
 			(at 132.08 172.72 0)
 			(hide yes)
 			(effects
@@ -6097,15 +6331,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "R3")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 45.72 165.1 0)
 			(hide yes)
@@ -6114,7 +6339,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "R3")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R")
 		(at 45.72 190.5 0)
@@ -6220,15 +6454,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "R4")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 45.72 190.5 0)
 			(hide yes)
@@ -6237,7 +6462,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "R4")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:VCC")
 		(at 45.72 153.67 0)
@@ -6552,7 +6786,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_1210_3225Metric"
 			(at 91.44 165.1 0)
 			(hide yes)
 			(effects
@@ -6579,7 +6813,7 @@
 				)
 			)
 		)
-		(property "MFG P/N" "TNPW060327K8BEEA"
+		(property "MFG P/N" "TNPW121027K8BEEA"
 			(at 91.44 165.1 0)
 			(hide yes)
 			(effects
@@ -6588,7 +6822,7 @@
 				)
 			)
 		)
-		(property "PackageSize" "0603"
+		(property "PackageSize" "1210"
 			(at 91.44 165.1 0)
 			(hide yes)
 			(effects
@@ -6597,7 +6831,7 @@
 				)
 			)
 		)
-		(property "Power" "0.11 W P70"
+		(property "Power" "0.33 W P70 general mode"
 			(at 91.44 165.1 0)
 			(hide yes)
 			(effects
@@ -6606,7 +6840,7 @@
 				)
 			)
 		)
-		(property "Procurement" "Manufacturer ordering code verified; procurement confirmation open"
+		(property "Procurement" "Manufacturer ordering code verified; procurement and assembled thermal acceptance open"
 			(at 91.44 165.1 0)
 			(hide yes)
 			(effects
@@ -6633,6 +6867,15 @@
 				)
 			)
 		)
+		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
+			(at 91.44 165.1 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(instances
 			(project "recovery_protection"
 				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
@@ -6642,7 +6885,7 @@
 			)
 		)
 	
-		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
+		(property "Film Temperature" "125 C maximum in general mode"
 			(at 91.44 165.1 0)
 			(hide yes)
 			(effects
@@ -6756,15 +6999,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "R6")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 91.44 190.5 0)
 			(hide yes)
@@ -6773,7 +7007,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "R6")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:VCC")
 		(at 91.44 153.67 0)
@@ -6791,7 +7034,7 @@
 				)
 			)
 		)
-		(property "Value" "SOLAR_PERMITTED"
+		(property "Value" "SRC_FILTERED"
 			(at 91.44 150.114 0)
 			(effects
 				(font
@@ -7169,15 +7412,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "R7")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 200.66 124.46 0)
 			(hide yes)
@@ -7186,7 +7420,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "R7")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:R")
 		(at 200.66 154.94 0)
@@ -7292,15 +7535,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "R8")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 200.66 154.94 0)
 			(hide yes)
@@ -7309,7 +7543,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "R8")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:VCC")
 		(at 200.66 113.03 0)
@@ -7537,15 +7780,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "R9")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 238.76 135.89 0)
 			(hide yes)
@@ -7554,7 +7788,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "R9")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:VCC")
 		(at 238.76 124.46 0)
@@ -7721,15 +7964,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "R10")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 285.75 140.97 0)
 			(hide yes)
@@ -7738,7 +7972,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "R10")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Diode:1N4148W")
 		(at 285.75 118.11 180)
@@ -8388,15 +8631,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "R12")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Source" "Vishay 28758 Rev10-Apr-2026 pp3-4; B=0.1%, E=25ppm/K, EA packaging"
 			(at 355.6 193.04 0)
 			(hide yes)
@@ -8405,7 +8639,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "R12")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:GND")
 		(at 355.6 204.47 0)
@@ -8937,7 +9180,7 @@
 				)
 			)
 		)
-		(property "Value" "SOLAR_PERMITTED"
+		(property "Value" "SRC_FILTERED"
 			(at 165.1 228.854 0)
 			(effects
 				(font
@@ -9032,15 +9275,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "R13")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "MFG P/N" "CRCW12061R00FKEAHP"
 			(at 177.8 240.03 0)
 			(hide yes)
@@ -9103,7 +9337,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "R13")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "Device:C")
 		(at 213.36 247.65 0)
@@ -9157,15 +9400,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "C13")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Dielectric" "X7R"
 			(at 213.36 247.65 0)
 			(hide yes)
@@ -9210,7 +9444,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "C13")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:GND")
 		(at 213.36 259.08 0)
@@ -9325,15 +9568,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "C14")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Dielectric" "X7R"
 			(at 236.22 247.65 0)
 			(hide yes)
@@ -9378,7 +9612,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "C14")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:GND")
 		(at 236.22 259.08 0)
@@ -9493,15 +9736,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "C15")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Dielectric" "X7R"
 			(at 259.08 247.65 0)
 			(hide yes)
@@ -9546,7 +9780,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "C15")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:GND")
 		(at 259.08 259.08 0)
@@ -9661,15 +9904,6 @@
 				)
 			)
 		)
-		(instances
-			(project "recovery_protection"
-				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
-					(reference "C16")
-					(unit 1)
-				)
-			)
-		)
-	
 		(property "Dielectric" "X7R"
 			(at 281.94 247.65 0)
 			(hide yes)
@@ -9714,7 +9948,16 @@
 					(size 1.27 1.27)
 				)
 			)
-		))
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "C16")
+					(unit 1)
+				)
+			)
+		)
+	)
 	(symbol
 		(lib_id "power:GND")
 		(at 281.94 259.08 0)
@@ -9771,6 +10014,242 @@
 			(project "recovery_protection"
 				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
 					(reference "#PWR196")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:L")
+		(at 66.04 60.96 90)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7c87cea7-b1c4-4e15-8f9d-18d8615707f1")
+		(property "Reference" "L2"
+			(at 66.04 62.23 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4.7u"
+			(at 66.04 59.055 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Inductor_SMD:L_Coilcraft_XAL1010-XXX"
+			(at 66.04 60.96 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.coilcraft.com/getmedia/dd74e670-e705-456a-9a69-585fe02eaf3c/xal1010.pdf"
+			(at 66.04 60.96 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Inductor"
+			(at 66.04 60.96 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Current" "17.5 A RMS / 20 C rise reference"
+			(at 66.04 60.96 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "XAL1010-472MED"
+			(at 66.04 60.96 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "10.5x11.8x10mm max"
+			(at 66.04 60.96 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Require >=2.5uH through bounded fault; hot qualification open"
+			(at 66.04 60.96 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Saturation Current" "25.4 A typical / 30% drop at 25 C"
+			(at 66.04 60.96 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" "20%"
+			(at 66.04 60.96 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "L2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VCC")
+		(at 96.52 50.8 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c1b21bb4-8e9b-4aca-8c03-94950443e5c9")
+		(property "Reference" "#PWR500"
+			(at 96.52 54.61 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SRC_FILTERED"
+			(at 96.52 47.244 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 96.52 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 96.52 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VCC\""
+			(at 96.52 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "#PWR500")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 110.49 53.34 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2778c3cb-0c72-4a9a-bc8c-224769631ffd")
+		(property "Reference" "#FLG501"
+			(at 110.49 51.435 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 110.49 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 110.49 53.34 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 110.49 53.34 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 110.49 53.34 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "recovery_protection"
+				(path "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75"
+					(reference "#FLG501")
 					(unit 1)
 				)
 			)
