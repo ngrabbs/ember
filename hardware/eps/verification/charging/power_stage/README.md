@@ -48,6 +48,11 @@ excursion gives 0.9346–1.0057 A at full scale. This is a sensitivity: the Bour
 TCR test is +25 to +125°C, and the charger accuracy table has stated electrical
 test conditions. In particular, input-servo ±0.2 mV has no full-temperature dot;
 do not describe the 33 mΩ input resistor as a guaranteed 1 A source ceiling.
+More fundamentally, the input-current loop reduces charging to prioritize
+system loads; it does not act as a series current breaker for those loads.
+Even perfect shunt accuracy would not establish that ceiling. The source
+protection study's 1 A fixture bound must come from independently bounded
+source capability, not from this charger setting.
 The 45 mV peak threshold is typical only. Neither it nor a 1 A charging setting
 limits total battery discharge or protects a failed-short switching device.
 [Bourns CRF specification](https://www.bourns.com/docs/product-datasheets/crf.pdf).

@@ -38,6 +38,7 @@ out = dict(
                cold_TCR_guarantee=False,
                servo_full_voltage_range_guarantee=False,
                input_servo_full_temperature_guarantee=False),
+    input_loop_is_system_current_breaker=False,
     frequency_with_RT_variation_sensitivity_MHz=[f_min, f_max],
     inductor_rule_at_nominal_RT_min_uH=.3*35/1.4,
     inductor_rule_with_RT_variation_sensitivity_uH=l_rule, inductor_cases=cases,
