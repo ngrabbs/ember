@@ -1,0 +1,55 @@
+{
+  "status": "PARTIAL \u2014 LIBRARY AND SCHEMATIC INSTANCE PASS; BOARD INSTANCE ACCEPTANCE BLOCKED",
+  "basis": "6be2bc7",
+  "physical_rows": 62,
+  "LTC_counts": {
+    "perimeter": 28,
+    "EP": 1,
+    "symbol": 29,
+    "electrical_pads": 29,
+    "duplicates": 0,
+    "mechanical_only": 0
+  },
+  "BQ_counts": {
+    "perimeter": 32,
+    "EP": 1,
+    "symbol": 33,
+    "electrical_pads": 33,
+    "duplicates": 0,
+    "mechanical_only": 0,
+    "internally_NC": [
+      7,
+      14,
+      29
+    ]
+  },
+  "integrated_native_source_files_unchanged": [
+    "hardware/eps/rev_b/essential_3v3.kicad_sch",
+    "hardware/eps/rev_b/source_protection.kicad_sch",
+    "hardware/eps/rev_b/controller.kicad_sch",
+    "hardware/eps/rev_b/eps_rev_b.kicad_pro",
+    "hardware/eps/rev_b/can_interfaces.kicad_sch",
+    "hardware/eps/rev_b/recovery_5v.kicad_sch",
+    "hardware/eps/rev_b/rail_protection.kicad_sch",
+    "hardware/eps/rev_b/eps_rev_b.kicad_sch"
+  ],
+  "integrated_parts": 160,
+  "integrated_nets": 91,
+  "integrated_ERC_errors": 16,
+  "integrated_ERC_warnings": 0,
+  "disposable_ERC": {
+    "pin_not_connected": 58,
+    "power_pin_not_driven": 13,
+    "pin_not_driven": 23
+  },
+  "library_copper_fab_renders_inspected": true,
+  "disposable_symbols_full_and_details_inspected": true,
+  "disposable_board_instances_created": false,
+  "disposable_board_render_inspected": false,
+  "open": [
+    "Board instance placement/queryback/render blocked by fixed live IPC transport; no bypass attempted",
+    "CUSTOM review markers retained; no real circuit placement authorized by this checkpoint",
+    "Nominal copper only: stencil segmentation/thermal vias/assembly tolerances/3D/application qualification open",
+    "S11 library custom field/default instance copying/display limitations require explicit placement field readback/callouts"
+  ]
+}
