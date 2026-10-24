@@ -13,7 +13,7 @@ verified after library acceptance.
 | Charge and input shunts, separate parts | CRF1206-FZ-R033ELF, 33 mΩ, 1%, 50 ppm/K, 1 W P70 | About 0.970 A nominal full scale; Kelvin traces at each termination. Cell/source acceptance remains open. |
 | RT | TNPW060363K4BEEA, 63.4 kΩ, 0.1%, 25 ppm/K, 0603 | Datasheet frequency test point: 1.4–1.6 MHz. Procurement and actual field metadata still require readback. |
 | Charger inductor | XAL6060-153MEC, 15 µH, 20% | Prefer over the earlier 10 µH candidate for tolerance/bias margin; require at least 7.52 µH through actual peak current and temperature for this screen. No native substitution yet. |
-| INFET and BATFET | CSD18543Q3A, one per function | Electrical candidate: 60 V, maximum 15.6 mΩ at 4.5 V gate drive/25°C. Physical land acceptance remains open. |
+| INFET and BATFET | CSD18543Q3A, one per function | Electrical candidate: 60 V, maximum 15.6 mΩ at 4.5 V gate drive/25°C. Physical land acceptance remains open; [manufacturer footprint construction proposal](../../../design/rev_b_charger_powerpath_footprint_rules.md) awaits approval. |
 | VOUT hot-loop bank | Four CGA5L1X7R1H106K160AC, 10 µF/50 V/X7R/10%/1206 each | 40 µF nominal; final effective capacitance, ripple and loop response require verification. Place directly at VOUT/PGND. |
 | BATSENS+ bank | Two of the same 10 µF/50 V parts | Require at least 10 µF total effective, not merely 20 µF nameplate. All battery sensing stays after hardware isolation. |
 | INTVCC bypass | One of the same 10 µF/50 V parts | Require at least 4.7 µF effective at the actual internal-regulator voltage. |
