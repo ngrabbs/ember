@@ -87,6 +87,14 @@
         "track_width": 0.25,
         "via_diameter": 0.8,
         "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "UART",
+        "priority": -1,
+        "track_width": 0.2,
+        "via_diameter": 0.6,
+        "via_drill": 0.3
       }
     ],
     "meta": {
@@ -564,6 +572,30 @@
       {
         "netclass": "I2C",
         "pattern": "/2S pack protection/BMS_SMBD"
+      },
+      {
+        "netclass": "UART",
+        "pattern": "EPS_UART_TX"
+      },
+      {
+        "netclass": "UART",
+        "pattern": "EPS_UART_RX"
+      },
+      {
+        "netclass": "UART",
+        "pattern": "/UART debug/UART_TX_BUF"
+      },
+      {
+        "netclass": "UART",
+        "pattern": "/UART debug/UART_TX_CONN"
+      },
+      {
+        "netclass": "UART",
+        "pattern": "/UART debug/UART_RX_CONN"
+      },
+      {
+        "netclass": "UART",
+        "pattern": "/UART debug/UART_RX_BUF"
       }
     ]
   },

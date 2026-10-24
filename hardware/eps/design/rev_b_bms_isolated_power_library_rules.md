@@ -1,6 +1,6 @@
 # BMS isolated-power library construction rules
 
-2026-10-24. **Proposal; user approval required before authoring.** This covers a project-owned ADuM5028-3BRIZ symbol and a project-owned derivative of an existing stock footprint, retaining its eight copper/paste/mask lands and increasing the courtyard for the maximum package body. It does not approve electrical closure, manufacturing or flight use.
+2026-10-24. **Construction rules and the green review enclosure approved by the operator on 2026-10-24, conditional on remaining electrical checks passing.** This covers a project-owned ADuM5028-3BRIZ symbol and a project-owned derivative of an existing stock footprint, retaining its eight copper/paste/mask lands and increasing the courtyard for the maximum package body. It does not approve electrical closure, manufacturing or flight use.
 
 ## Purpose and scope
 
@@ -45,7 +45,7 @@ This is a **generic stock land**, not a manufacturer-recommended exact pad layou
 
 ## Exact derivative construction
 
-Proposed footprint identifier: `Ember_Charger_BMS_Review:ADI_RI-8-1_SOIC8_StockLand_MaxBodyCourt_REVIEW`. Create through Konnect in the existing registered project footprint library. Retain all eight stock pad numbers, centers, sizes, roundrect ratios and F.Cu/F.Mask/F.Paste layers exactly as queried. Retain the stock nominal body/F.Fab and F.SilkS/pin-1 graphics. No exposed pad, drill, copper pad, paste aperture or electrical-number change is permitted. The derivative is based on the queried stock lands, with maximum-body courtyard accommodation; it is **not an exact manufacturer-recommended land pattern**.
+Approved construction identifier: `Ember_Charger_BMS_Review:ADI_RI-8-1_SOIC8_StockLand_MaxBodyCourt_REVIEW`. Create through Konnect in the existing registered project footprint library. Retain all eight stock pad numbers, centers, sizes, roundrect ratios and F.Cu/F.Mask/F.Paste layers exactly as queried. Retain the stock nominal body/F.Fab and F.SilkS/pin-1 graphics. No exposed pad, drill, copper pad, paste aperture or electrical-number change is permitted. The derivative is based on the queried stock lands, with maximum-body courtyard accommodation; it is **not an exact manufacturer-recommended land pattern**.
 
 Replace only F.CrtYd with a closed, unfilled stepped polygon, 0.05 mm stroke, using these component-view/Y-down millimeter vertices in sequence:
 

@@ -1,0 +1,65 @@
+{
+  "status": "CONDITIONAL_STATIC_INTERFACE_SCREEN_ONLY",
+  "resistor_fractional_error": 0.002625,
+  "supply_V": [
+    3.2328,
+    3.32439
+  ],
+  "selected_buffer": "Nexperia 74LVC2G34GW,125",
+  "bleed_ohm": [
+    67821.5,
+    68178.5
+  ],
+  "bias_ohm": [
+    99737.5,
+    100262.50000000001
+  ],
+  "RX_series_ohm": [
+    46.876625,
+    47.123375
+  ],
+  "TX_series_ohm": [
+    329.13375,
+    330.86625000000004
+  ],
+  "output_high_static_load_A": {
+    "MCU_RX": 5.401675722300451e-05,
+    "connector_TX": 5.9016757223004506e-05
+  },
+  "100uA_output_characterization_applies": true,
+  "conditional_off_output_voltage_budget_V": 0.136357,
+  "conditional_UART_two_terminal_off_rail_budget_V": 0.272714,
+  "off_current_condition": "Ioff is specified at VCC=0 V only. Applying it at a calculated nonzero rail voltage is a screening assumption; undefined-supply and transient behavior require separate verification.",
+  "static_margins_V": {
+    "MCU_TX_high_to_buffer": 0.8328000000000002,
+    "MCU_TX_low_to_buffer": 0.4,
+    "adapter_RX_high_to_buffer": 0.39881949679590045,
+    "adapter_RX_low_to_buffer": 0.4001408104440913,
+    "buffer_high_to_MCU_RX": 0.8057270000000001,
+    "buffer_low_to_MCU_RX": 0.8698400000000001,
+    "buffer_high_to_adapter": 1.1294913375000002,
+    "buffer_low_to_adapter": 0.6966913375
+  },
+  "connector_TX_high_low_V": [
+    3.1294913375,
+    0.10330866250000001
+  ],
+  "bias_worst_low_MCU_TX_load_A": 3.433139491164306e-05,
+  "static_supply_allocation_A": 0.0012,
+  "allocation_basis": "Two 500uA intermediate-input additional-current allowances, 4uA ICC, all three 68k bleeds, one 100k pull-up and 2uA input leakage; rounded upward. Not switching current.",
+  "maximum_buffer_input_slew_ns_per_V": 10,
+  "development_baud": 115200,
+  "adapter_output_requirements_V": {
+    "VOH_min": 2.4,
+    "VOL_max": 0.4
+  },
+  "adapter_static_input_load_upper_A": 1e-05,
+  "connector_load_capacitance_budget_F": 5e-11,
+  "open_gates": [
+    "actual buffer-input slew and UART sampling/clock budget",
+    "brownout and stored-charge transients",
+    "connector ESD/abuse and mechanical clearance",
+    "combined external-interface back-power audit",
+    "hardware temperature and flight qualification"
+  ]
+}
