@@ -32,3 +32,7 @@ Checkpoint verifiers enforce their recorded commit and protected-source scope. O
 Physical Rev A thermistor continuity and fitted values remain unknown. Final design ratings also need measured COMMS/IHU/payload idle, peak and inrush currents, solar source/harness limits, accepted cell specification and pack temperatures, and current holder/upper-board geometry. Development assumptions can support analysis and layout exploration; they do not establish these inputs.
 
 The release remains open until source cutoff/back-power, charging and sensor faults, autonomous pack protection, A-to-B bus recovery, controlled startup, transient response, thermal behavior and mechanical clearance meet recorded limits. Flight acceptance additionally depends on the selected dispenser/launch requirements and environmental qualification.
+
+## Isolated BMS supply selection follow-up, 2026-10-24
+
+The [isolated-supply screen](../verification/bms/isolated_supply_screen/README.md) records why ADuM5028's conditional electrical gate remains open despite its construction approval. A UCC33020RAQR 5.5 V intermediate plus stock TLV76733DRVR candidate has a reproducible conditional DC/load screen; startup, reverse current, effective capacitance and complete temperature/load coverage remain open. The [separate UCC custom-construction proposal](rev_b_bms_ucc33020_library_rules.md) is awaiting user agreement under S08. No new native library or real circuit was authored during this selection review; the current root graph/ERC and the BMS measurement error remain unchanged.
