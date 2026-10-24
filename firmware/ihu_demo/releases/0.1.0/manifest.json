@@ -1,0 +1,32 @@
+{
+  "status": "BUILD_AND_HOST_TESTS_PASS_HARDWARE_TEST_PENDING",
+  "version": "0.1.0",
+  "role": "IHU_DEMO",
+  "board": "original Raspberry Pi Pico/Pico H (RP2040)",
+  "source_commit": "0ef4637d04fcde414c456777acd0cd58697cb903",
+  "source_dirty": false,
+  "source_branch": "feature/ihu-pico-demo",
+  "base": "feature/ihu-freertos at 77fe53e",
+  "sdk": "2.1.1",
+  "arm_gcc": "14.2.1",
+  "freertos": "11.2.0",
+  "pins": {
+    "switch_a": "GP14 / header 19",
+    "switch_b": "GP15 / header 20",
+    "ground": "GND / header 18"
+  },
+  "checks": {
+    "native_clang_asan_ubsan": "PASS",
+    "native_linux_gcc_asan_ubsan": "PASS",
+    "arm_release_warnings_as_errors": "PASS",
+    "uf2_rp2040_family_and_2mb_bounds": "PASS",
+    "wrong_board_rejected": "PASS",
+    "physical_usb_gpio_and_repeat_demo": "NOT_RUN"
+  },
+  "files": {
+    "ihu_demo.uf2": "d4a4f0fe3ed9528ca3da1b245551daabd91cd7ca1b4175f9ee6ebb7aba16ba5b"
+  },
+  "uf2_blocks": 312,
+  "hardware_flashed": false,
+  "distribution": "Hardware-test candidate for PR #43; physical acceptance pending"
+}
