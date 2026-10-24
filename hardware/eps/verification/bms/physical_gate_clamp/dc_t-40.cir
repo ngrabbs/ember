@@ -1,0 +1,8 @@
+* Nominal BZT52C15 static diagnostic; no guaranteed temperature envelope
+.include "${CLAMP_MODEL}"
+Vtest test 0 0
+Xz 0 test DI_BZT52C15
+.temp -40
+.dc Vtest 0 20 .002
+.save V(test) I(Vtest)
+.end
