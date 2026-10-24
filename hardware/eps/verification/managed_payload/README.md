@@ -80,6 +80,12 @@ not TTL parts or custom graphics. Search/table absence and full pin counts are
 reported distinctly. Query results do not substitute for disposable physical
 part acceptance or rendered real-sheet inspection.
 
+The [37-passive manifest](passive_selection/README.md) selects all23 resistor
+and14 capacitor MPNs, corrects R1424 to0805 and R1412 to1210, and checks the
+configured60% derated resistor-power target. The two TDK filter capacitors now
+have an approved [project footprint with disposable verification](tdk_filter_package/README.md);
+full native S11 field presentation and assembly qualification remain open.
+
 ## Remaining boundary
 
 Exact parts/lands, helper loading, clamp cold/dynamic response, integrated

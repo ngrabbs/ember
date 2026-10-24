@@ -88,9 +88,14 @@ courtyard acceptance remain open; Q1401 needs a full4.0×3.5mm reservation.
 | C1401 | IN1/2 local bypass to GND,100nF/100V X7R0603, GRM188R72A104KA35D |
 | C1402/C1403 | VBAT to GND, same2.2µF and100nF parts as input |
 | C1404 | dVdT9 to GND,100nF/50V C0G1206, GRM31C5C1H104JA01L |
-| C1405 | SHDN12 to GND,1nF C0G; exact MPN still to verify |
-| C1406 | OVP7 to GND,1nF C0G development filter; exact MPN/tolerance still to verify |
+| C1405 | SHDN12 to GND,1nF/50V/5% C0G0603, TDK CGA3E2C0G1H102J080AA |
+| C1406 | OVP7 to GND, same TDK1nF part and approved project footprint as C1405 |
 
+The [37-passive sourcing manifest](../verification/managed_payload/passive_selection/README.md)
+selects all23 resistor and14 capacitor MPNs. R1424 uses0805 for1MΩ; the
+precision0603 range stops at332kΩ. C1405/C1406 use the approved, separately
+[verified TDK footprint](../verification/managed_payload/tdk_filter_package/README.md),
+with project review/assembly and native S11 field-display limitations retained.
 Resistor electrical screen assumes0.1% initial plus25ppm/°C over65K,
 independent corners. Select and verify exact MPNs, package/power/voltage/TCR
 and S11 fields before placement. Nominal values alone do not release parts.
@@ -105,8 +110,10 @@ The C/E ordering choice provides the extended temperature grade; the screen
 uses its full−40..125°C reference window. Use stock
 `Reference_Voltage:LM4040DBZ-2.5`/SOT23 and `Device:D_Small`/
 `Diode_SMD:D_SOD-123F` after exact package checks. This requires no newly
-authored symbol or changed pin map. R1412 requires at least0.25W1206 under the
-specified derating calculation. Bias is after RBF and independent of+3V3;
+authored symbol or changed pin map. R1412 requires at least0.25W under the
+specified derating calculation; select TNPW121010K0BEEA,0.330W P70 General,
+1210 to meet the configured60% power limit at85°C under a full35V screen.
+The earlier1206 option misses that conservative utilization target. Bias is after RBF and independent of+3V3;
 nominal8.4V source cost is4.956mW. Draw these local connections with wires,
 not detached label-only parts. If a power port is used, its fixed-rail Value
 is `2V5_PAYLOAD_CLAMP`. Do not join it to an essential supply.
