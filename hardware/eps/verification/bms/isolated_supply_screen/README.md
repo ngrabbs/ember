@@ -8,7 +8,7 @@ The ADuM5028-3BRIZ construction approval is recorded and remains valid under its
 
 Actual ADI pages 6 and 17 were inspected by the root reviewer; the design owner also inspected startup pp18–19. Download SHA-256: ca6f1be8b4051f0434793cdd0b198b8695b8af7eabc4a14798d0f3ccc4e4c7b3. The PDF is Rev E, August 2026.
 
-## Candidate topology
+## Historical candidate topology — superseded for preferred selection
 
 Permitted essential +3V3 → UCC33020RAQR → **5.5 V isolated intermediate** → TLV76733DRVR → `3V3_BMS_ISO`. Use UCC SEL tied to secondary GNDS for 5.5 V. Only ISO1540 side 2 and its two existing pullups move to the isolated supply; raw return remains GND_BMS_RAW. Side 1 remains on permitted +3V3. No ground-domain bypass, new raw-cell always-on regulator, or signal-interface rename is proposed.
 
@@ -32,3 +32,7 @@ The all-low ISO1540 side-2 IC maximum (6.7 mA), two pullups pessimistically pull
 Manufacturer source images and library readbacks are in [candidate evidence](../ucc33020_candidate/README.md). Root independently inspected UCC pp6–7 and TLV p6; these confirm table-column interpretation. Neither this static script nor a source-image review is a circuit simulation or bench result.
 
 A possible autonomous default-on EN/FLT pullup is 20 kΩ, 0.1%, 25 ppm/K: at the existing static primary minimum 3.2328 V and 10 µA maximum EN current, the screened high is 3.0323 V, above the 2.1 V rising-threshold maximum. This satisfies the datasheet fault-reporting resistor condition without consuming a reserved MCU pin. It remains a topology candidate; fault observability/testpoint and exact selected part must be recorded with the circuit. The 5.5 V-output no-load primary maximum is **18 mA**, rather than the 15 mA limit for 5 V mode.
+
+## Selection follow-up
+
+The [LT3014 review](../lt3014_screen/README.md) is now the preferred post-regulator candidate because its documented reverse-output protection addresses the TLV-specific discharge concern. It allows returning UCC to 5.0 V mode with more dropout headroom. Retain this earlier calculation as a comparison; do not use its 5.5 V strap, TLV part or bleeder as the current proposed implementation. Neither candidate is integrated yet.
