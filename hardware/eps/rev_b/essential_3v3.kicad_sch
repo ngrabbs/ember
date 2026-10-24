@@ -1752,6 +1752,16 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "c10a09e6-2880-4397-b63c-8b7fc833248f")
   )
+  (text "2026-10-24: EXTERNAL-SYS FIXTURE NOTE IS OBSOLETE: SYS now comes through real charger PowerPath."
+    (at 25.4 55.88 0)
+    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
+    (uuid "745e5ded-f973-4403-9725-57ecc5a42d0e")
+  )
+  (text "#FLG0400 models that passive output. GND fixture remains; actual BMS/RBF and startup/source bounds remain open."
+    (at 25.4 62.23 0)
+    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
+    (uuid "64f8eea9-2c7b-45cb-994c-770d8f4842b5")
+  )
 	(symbol
 		(lib_id "Ember_EPS_Power:LMR51635XDDCR_DRAFT_v2")
 		(at 137.16 91.44 0)
@@ -4108,7 +4118,16 @@
 				)
 			)
 		)
-	)
+	
+		(property "SourceDisposition" "Actual passive charger PowerPath output; supersedes earlier external SYS fixture"
+			(at 40.64 80.01 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		))
 	(symbol
 		(lib_id "power:GND")
 		(at 50.8 120.65 0)

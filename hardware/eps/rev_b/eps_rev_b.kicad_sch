@@ -196,4 +196,57 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "dca06827-12e2-468b-9293-6466a7e1ce24")
   )
+	(sheet
+		(at 167.64 115.57)
+		(size 101.6 35.56)
+		(fields_autoplaced)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0)
+		)
+		(uuid "d51809f7-0479-4c00-95c7-52f01e4ad9dd")
+		(property "Sheetname" "Charger PowerPath"
+			(at 167.64 114.935 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "charger.kicad_sch"
+			(at 167.64 151.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113"
+					(page "8")
+				)
+			)
+		)
+	)
+  (text "2026-10-24: PRE-CHARGER ABSENCE / EXTERNAL-SYS NOTES ABOVE AND BELOW ARE OBSOLETE."
+    (at 30.48 50.8 0)
+    (effects (font (size 1.4 1.4) (bold yes)) (justify left bottom))
+    (uuid "11a61ff0-7ff4-4c20-861e-95b7d95f9406")
+  )
+  (text "Actual charger PowerPath now joins VIN_CHG and BATT_PERMITTED to SYS. Physical BMS/RBF hardware remains absent."
+    (at 30.48 55.88 0)
+    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
+    (uuid "eea15196-b5fe-4769-b937-67d9306935f5")
+  )
+  (text "CURRENT: VIN_CHG -> Q300 -> R300 -> SYS; BATT_PERMITTED fixture -> Q301 -> SYS. No direct source bypass."
+    (at 30.48 233.68 0)
+    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
+    (uuid "fd763455-24be-446f-9c92-d46c95d62b0a")
+  )
 )

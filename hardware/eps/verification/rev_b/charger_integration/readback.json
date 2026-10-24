@@ -1,0 +1,6725 @@
+{
+  "symbols": {
+    "lib_id": "Ember_Charger_BMS_Review:LTC4162IUFD-LADM_TRPBF",
+    "library": "Ember_Charger_BMS_Review",
+    "name": "LTC4162IUFD-LADM_TRPBF",
+    "pin_count": 29,
+    "pins": [
+      {
+        "name": "BOOST",
+        "number": "1",
+        "type": "power_in",
+        "x": 5.08,
+        "y": 35.56
+      },
+      {
+        "name": "INTVCC",
+        "number": "2",
+        "type": "power_out",
+        "x": 10.16,
+        "y": 35.56
+      },
+      {
+        "name": "VOUTA",
+        "number": "3",
+        "type": "power_in",
+        "x": -15.24,
+        "y": 35.56
+      },
+      {
+        "name": "CLN",
+        "number": "4",
+        "type": "input",
+        "x": -30.48,
+        "y": 20.32
+      },
+      {
+        "name": "CLP",
+        "number": "5",
+        "type": "input",
+        "x": -30.48,
+        "y": 22.86
+      },
+      {
+        "name": "INFET",
+        "number": "6",
+        "type": "output",
+        "x": 30.48,
+        "y": 22.86
+      },
+      {
+        "name": "VIN",
+        "number": "7",
+        "type": "power_in",
+        "x": -20.32,
+        "y": 35.56
+      },
+      {
+        "name": "VCC2P5",
+        "number": "8",
+        "type": "power_out",
+        "x": 15.24,
+        "y": 35.56
+      },
+      {
+        "name": "NTCBIAS",
+        "number": "9",
+        "type": "output",
+        "x": 30.48,
+        "y": 12.7
+      },
+      {
+        "name": "NTC",
+        "number": "10",
+        "type": "input",
+        "x": -30.48,
+        "y": 10.16
+      },
+      {
+        "name": "RT",
+        "number": "11",
+        "type": "input",
+        "x": -30.48,
+        "y": 7.62
+      },
+      {
+        "name": "SMBALERT",
+        "number": "12",
+        "type": "open_collector",
+        "x": 30.48,
+        "y": 10.16
+      },
+      {
+        "name": "SCL",
+        "number": "13",
+        "type": "input",
+        "x": -30.48,
+        "y": -2.54
+      },
+      {
+        "name": "SDA",
+        "number": "14",
+        "type": "bidirectional",
+        "x": 30.48,
+        "y": 7.62
+      },
+      {
+        "name": "DVCC",
+        "number": "15",
+        "type": "power_in",
+        "x": 20.32,
+        "y": 35.56
+      },
+      {
+        "name": "SYNC",
+        "number": "16",
+        "type": "input",
+        "x": -30.48,
+        "y": 5.08
+      },
+      {
+        "name": "CELLS0",
+        "number": "17",
+        "type": "input",
+        "x": -30.48,
+        "y": 2.54
+      },
+      {
+        "name": "CELLS1",
+        "number": "18",
+        "type": "input",
+        "x": -30.48,
+        "y": 0
+      },
+      {
+        "name": "BATSENS+",
+        "number": "19",
+        "type": "input",
+        "x": -30.48,
+        "y": 17.78
+      },
+      {
+        "name": "CSN",
+        "number": "20",
+        "type": "input",
+        "x": -30.48,
+        "y": 12.7
+      },
+      {
+        "name": "CSP",
+        "number": "21",
+        "type": "input",
+        "x": -30.48,
+        "y": 15.24
+      },
+      {
+        "name": "BATFET",
+        "number": "22",
+        "type": "output",
+        "x": 30.48,
+        "y": 20.32
+      },
+      {
+        "name": "PGND",
+        "number": "23",
+        "type": "power_in",
+        "x": -17.78,
+        "y": -35.56
+      },
+      {
+        "name": "PGND",
+        "number": "24",
+        "type": "power_in",
+        "x": -15.24,
+        "y": -35.56
+      },
+      {
+        "name": "SW",
+        "number": "25",
+        "type": "power_out",
+        "x": 30.48,
+        "y": 17.78
+      },
+      {
+        "name": "SW",
+        "number": "26",
+        "type": "power_out",
+        "x": 30.48,
+        "y": 15.24
+      },
+      {
+        "name": "VOUT",
+        "number": "27",
+        "type": "power_in",
+        "x": -10.16,
+        "y": 35.56
+      },
+      {
+        "name": "VOUT",
+        "number": "28",
+        "type": "power_in",
+        "x": -5.08,
+        "y": 35.56
+      },
+      {
+        "name": "AGND",
+        "number": "29",
+        "type": "power_in",
+        "x": 17.78,
+        "y": -35.56
+      }
+    ],
+    "properties": {
+      "Datasheet": "https://www.analog.com/media/en/technical-documentation/data-sheets/LTC4162-L.pdf",
+      "Description": "",
+      "Footprint": "Ember_Charger_BMS_Review:ADI_UFD-28-1EP_4x5mm_P0.5mm_Manufacturer",
+      "Reference": "U",
+      "Value": "LTC4162IUFD-LADM#TRPBF"
+    }
+  },
+  "fet_symbol": {
+    "lib_id": "Transistor_FET:CSD18543Q3A",
+    "library": "Transistor_FET",
+    "name": "CSD18543Q3A",
+    "pin_count": 5,
+    "pins": [
+      {
+        "name": "S",
+        "number": "1",
+        "type": "passive",
+        "x": 2.54,
+        "y": -5.08
+      },
+      {
+        "name": "S",
+        "number": "2",
+        "type": "passive",
+        "x": 2.54,
+        "y": -5.08
+      },
+      {
+        "name": "S",
+        "number": "3",
+        "type": "passive",
+        "x": 2.54,
+        "y": -5.08
+      },
+      {
+        "name": "G",
+        "number": "4",
+        "type": "input",
+        "x": -5.08,
+        "y": 0
+      },
+      {
+        "name": "D",
+        "number": "5",
+        "type": "passive",
+        "x": 2.54,
+        "y": 5.08
+      }
+    ],
+    "properties": {
+      "Datasheet": "https://www.ti.com/lit/ds/symlink/csd18543q3a.pdf",
+      "Description": "35A Id, 60V Vds, NexFET N-Channel Power MOSFET, 8.1mOhm Ron, Qg Typ 11.1nC, VSON-8 3.3x3.3mm",
+      "Footprint": "Package_SON:VSON-8_3.3x3.3mm_P0.65mm_NexFET",
+      "Reference": "Q",
+      "Value": "CSD18543Q3A",
+      "ki_fp_filters": "VSON*3.3x3.3mm*P0.65mm*NexFET*",
+      "ki_keywords": "NexFET Power MOSFET N-MOS"
+    }
+  },
+  "charger_pins": {
+    "components": [
+      {
+        "component_x": 190.5,
+        "component_y": 139.7,
+        "pins": [
+          {
+            "length_mm": 5.08,
+            "name": "BOOST",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 195.58,
+            "y": 104.13999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "INTVCC",
+            "number": "2",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 200.66,
+            "y": 104.13999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VOUTA",
+            "number": "3",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 175.26,
+            "y": 104.13999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CLN",
+            "number": "4",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 160.02,
+            "y": 119.38
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CLP",
+            "number": "5",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 160.02,
+            "y": 116.83999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "INFET",
+            "number": "6",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 220.98,
+            "y": 116.83999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VIN",
+            "number": "7",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 170.18,
+            "y": 104.13999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VCC2P5",
+            "number": "8",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 205.74,
+            "y": 104.13999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "NTCBIAS",
+            "number": "9",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 220.98,
+            "y": 126.99999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "NTC",
+            "number": "10",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 160.02,
+            "y": 129.54
+          },
+          {
+            "length_mm": 5.08,
+            "name": "RT",
+            "number": "11",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 160.02,
+            "y": 132.07999999999998
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SMBALERT",
+            "number": "12",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 220.98,
+            "y": 129.54
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SCL",
+            "number": "13",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 160.02,
+            "y": 142.23999999999998
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SDA",
+            "number": "14",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 220.98,
+            "y": 132.07999999999998
+          },
+          {
+            "length_mm": 5.08,
+            "name": "DVCC",
+            "number": "15",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 210.82,
+            "y": 104.13999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SYNC",
+            "number": "16",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 160.02,
+            "y": 134.61999999999998
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CELLS0",
+            "number": "17",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 160.02,
+            "y": 137.16
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CELLS1",
+            "number": "18",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 160.02,
+            "y": 139.7
+          },
+          {
+            "length_mm": 5.08,
+            "name": "BATSENS+",
+            "number": "19",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 160.02,
+            "y": 121.91999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CSN",
+            "number": "20",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 160.02,
+            "y": 126.99999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CSP",
+            "number": "21",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 160.02,
+            "y": 124.46
+          },
+          {
+            "length_mm": 5.08,
+            "name": "BATFET",
+            "number": "22",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 220.98,
+            "y": 119.38
+          },
+          {
+            "length_mm": 5.08,
+            "name": "PGND",
+            "number": "23",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 172.72,
+            "y": 175.26
+          },
+          {
+            "length_mm": 5.08,
+            "name": "PGND",
+            "number": "24",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 175.26,
+            "y": 175.26
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SW",
+            "number": "25",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 220.98,
+            "y": 121.91999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SW",
+            "number": "26",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 220.98,
+            "y": 124.46
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VOUT",
+            "number": "27",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 180.34,
+            "y": 104.13999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VOUT",
+            "number": "28",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 185.42,
+            "y": 104.13999999999999
+          },
+          {
+            "length_mm": 5.08,
+            "name": "AGND",
+            "number": "29",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 208.28,
+            "y": 175.26
+          }
+        ],
+        "reference": "U300",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 5.08,
+                "name": "BOOST",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 195.58,
+                "y": 104.13999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "INTVCC",
+                "number": "2",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 200.66,
+                "y": 104.13999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VOUTA",
+                "number": "3",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 175.26,
+                "y": 104.13999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CLN",
+                "number": "4",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 160.02,
+                "y": 119.38
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CLP",
+                "number": "5",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 160.02,
+                "y": 116.83999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "INFET",
+                "number": "6",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 220.98,
+                "y": 116.83999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VIN",
+                "number": "7",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 170.18,
+                "y": 104.13999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VCC2P5",
+                "number": "8",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 205.74,
+                "y": 104.13999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "NTCBIAS",
+                "number": "9",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 220.98,
+                "y": 126.99999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "NTC",
+                "number": "10",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 160.02,
+                "y": 129.54
+              },
+              {
+                "length_mm": 5.08,
+                "name": "RT",
+                "number": "11",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 160.02,
+                "y": 132.07999999999998
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SMBALERT",
+                "number": "12",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 220.98,
+                "y": 129.54
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SCL",
+                "number": "13",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 160.02,
+                "y": 142.23999999999998
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SDA",
+                "number": "14",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 220.98,
+                "y": 132.07999999999998
+              },
+              {
+                "length_mm": 5.08,
+                "name": "DVCC",
+                "number": "15",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 210.82,
+                "y": 104.13999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SYNC",
+                "number": "16",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 160.02,
+                "y": 134.61999999999998
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CELLS0",
+                "number": "17",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 160.02,
+                "y": 137.16
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CELLS1",
+                "number": "18",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 160.02,
+                "y": 139.7
+              },
+              {
+                "length_mm": 5.08,
+                "name": "BATSENS+",
+                "number": "19",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 160.02,
+                "y": 121.91999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CSN",
+                "number": "20",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 160.02,
+                "y": 126.99999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CSP",
+                "number": "21",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 160.02,
+                "y": 124.46
+              },
+              {
+                "length_mm": 5.08,
+                "name": "BATFET",
+                "number": "22",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 220.98,
+                "y": 119.38
+              },
+              {
+                "length_mm": 5.08,
+                "name": "PGND",
+                "number": "23",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 172.72,
+                "y": 175.26
+              },
+              {
+                "length_mm": 5.08,
+                "name": "PGND",
+                "number": "24",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 175.26,
+                "y": 175.26
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SW",
+                "number": "25",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 220.98,
+                "y": 121.91999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SW",
+                "number": "26",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 220.98,
+                "y": 124.46
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VOUT",
+                "number": "27",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 180.34,
+                "y": 104.13999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VOUT",
+                "number": "28",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 185.42,
+                "y": 104.13999999999999
+              },
+              {
+                "length_mm": 5.08,
+                "name": "AGND",
+                "number": "29",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 208.28,
+                "y": 175.26
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 190.5,
+            "y": 139.7
+          }
+        ],
+        "x": 190.5,
+        "y": 139.7
+      },
+      {
+        "component_x": 91.44,
+        "component_y": 50.8,
+        "pins": [
+          {
+            "length_mm": 2.54,
+            "name": "S",
+            "number": "1",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 86.36,
+            "y": 53.339999999999996
+          },
+          {
+            "length_mm": 2.54,
+            "name": "S",
+            "number": "2",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 86.36,
+            "y": 53.339999999999996
+          },
+          {
+            "length_mm": 2.54,
+            "name": "S",
+            "number": "3",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 86.36,
+            "y": 53.339999999999996
+          },
+          {
+            "length_mm": 5.08,
+            "name": "G",
+            "number": "4",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 91.44,
+            "y": 45.72
+          },
+          {
+            "length_mm": 2.54,
+            "name": "D",
+            "number": "5",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 96.52,
+            "y": 53.339999999999996
+          }
+        ],
+        "reference": "Q300",
+        "rotation": 270,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.54,
+                "name": "S",
+                "number": "1",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 86.36,
+                "y": 53.339999999999996
+              },
+              {
+                "length_mm": 2.54,
+                "name": "S",
+                "number": "2",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 86.36,
+                "y": 53.339999999999996
+              },
+              {
+                "length_mm": 2.54,
+                "name": "S",
+                "number": "3",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 86.36,
+                "y": 53.339999999999996
+              },
+              {
+                "length_mm": 5.08,
+                "name": "G",
+                "number": "4",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 91.44,
+                "y": 45.72
+              },
+              {
+                "length_mm": 2.54,
+                "name": "D",
+                "number": "5",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 96.52,
+                "y": 53.339999999999996
+              }
+            ],
+            "rotation": 270,
+            "unit": 1,
+            "x": 91.44,
+            "y": 50.8
+          }
+        ],
+        "x": 91.44,
+        "y": 50.8
+      },
+      {
+        "component_x": 264.16,
+        "component_y": 91.44,
+        "pins": [
+          {
+            "length_mm": 2.54,
+            "name": "S",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 266.70000000000005,
+            "y": 96.52
+          },
+          {
+            "length_mm": 2.54,
+            "name": "S",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 266.70000000000005,
+            "y": 96.52
+          },
+          {
+            "length_mm": 2.54,
+            "name": "S",
+            "number": "3",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 266.70000000000005,
+            "y": 96.52
+          },
+          {
+            "length_mm": 5.08,
+            "name": "G",
+            "number": "4",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 259.08000000000004,
+            "y": 91.44
+          },
+          {
+            "length_mm": 2.54,
+            "name": "D",
+            "number": "5",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 266.70000000000005,
+            "y": 86.36
+          }
+        ],
+        "reference": "Q301",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.54,
+                "name": "S",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 266.70000000000005,
+                "y": 96.52
+              },
+              {
+                "length_mm": 2.54,
+                "name": "S",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 266.70000000000005,
+                "y": 96.52
+              },
+              {
+                "length_mm": 2.54,
+                "name": "S",
+                "number": "3",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 266.70000000000005,
+                "y": 96.52
+              },
+              {
+                "length_mm": 5.08,
+                "name": "G",
+                "number": "4",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 259.08000000000004,
+                "y": 91.44
+              },
+              {
+                "length_mm": 2.54,
+                "name": "D",
+                "number": "5",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 266.70000000000005,
+                "y": 86.36
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 264.16,
+            "y": 91.44
+          }
+        ],
+        "x": 264.16,
+        "y": 91.44
+      },
+      {
+        "component_x": 135.89,
+        "component_y": 53.34,
+        "pins": [
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.07999999999998,
+            "y": 53.34
+          },
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 139.7,
+            "y": 53.34
+          }
+        ],
+        "reference": "R300",
+        "rotation": 90,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.07999999999998,
+                "y": 53.34
+              },
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 139.7,
+                "y": 53.34
+              }
+            ],
+            "rotation": 90,
+            "unit": 1,
+            "x": 135.89,
+            "y": 53.34
+          }
+        ],
+        "x": 135.89,
+        "y": 53.34
+      },
+      {
+        "component_x": 335.28,
+        "component_y": 116.84,
+        "pins": [
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 331.46999999999997,
+            "y": 116.84
+          },
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 339.09,
+            "y": 116.84
+          }
+        ],
+        "reference": "R301",
+        "rotation": 90,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 331.46999999999997,
+                "y": 116.84
+              },
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 339.09,
+                "y": 116.84
+              }
+            ],
+            "rotation": 90,
+            "unit": 1,
+            "x": 335.28,
+            "y": 116.84
+          }
+        ],
+        "x": 335.28,
+        "y": 116.84
+      },
+      {
+        "component_x": 137.16,
+        "component_y": 149.86,
+        "pins": [
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 137.16,
+            "y": 146.05
+          },
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 137.16,
+            "y": 153.67000000000002
+          }
+        ],
+        "reference": "R302",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 137.16,
+                "y": 146.05
+              },
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 137.16,
+                "y": 153.67000000000002
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 137.16,
+            "y": 149.86
+          }
+        ],
+        "x": 137.16,
+        "y": 149.86
+      },
+      {
+        "component_x": 292.1,
+        "component_y": 162.56,
+        "pins": [
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 288.29,
+            "y": 162.56
+          },
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 295.91,
+            "y": 162.56
+          }
+        ],
+        "reference": "R303",
+        "rotation": 90,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 288.29,
+                "y": 162.56
+              },
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 295.91,
+                "y": 162.56
+              }
+            ],
+            "rotation": 90,
+            "unit": 1,
+            "x": 292.1,
+            "y": 162.56
+          }
+        ],
+        "x": 292.1,
+        "y": 162.56
+      },
+      {
+        "component_x": 302.26,
+        "component_y": 116.84,
+        "pins": [
+          {
+            "length_mm": 1.27,
+            "name": "1",
+            "number": "1",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 298.45,
+            "y": 116.84
+          },
+          {
+            "length_mm": 1.27,
+            "name": "2",
+            "number": "2",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 306.07,
+            "y": 116.84
+          }
+        ],
+        "reference": "L300",
+        "rotation": 90,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 1.27,
+                "name": "1",
+                "number": "1",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 298.45,
+                "y": 116.84
+              },
+              {
+                "length_mm": 1.27,
+                "name": "2",
+                "number": "2",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 306.07,
+                "y": 116.84
+              }
+            ],
+            "rotation": 90,
+            "unit": 1,
+            "x": 302.26,
+            "y": 116.84
+          }
+        ],
+        "x": 302.26,
+        "y": 116.84
+      },
+      {
+        "component_x": 292.1,
+        "component_y": 68.58,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 292.1,
+            "y": 64.77
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 292.1,
+            "y": 72.39
+          }
+        ],
+        "reference": "C300",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 292.1,
+                "y": 64.77
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 292.1,
+                "y": 72.39
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 292.1,
+            "y": 68.58
+          }
+        ],
+        "x": 292.1,
+        "y": 68.58
+      },
+      {
+        "component_x": 312.42,
+        "component_y": 68.58,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 312.42,
+            "y": 64.77
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 312.42,
+            "y": 72.39
+          }
+        ],
+        "reference": "C301",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 312.42,
+                "y": 64.77
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 312.42,
+                "y": 72.39
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 312.42,
+            "y": 68.58
+          }
+        ],
+        "x": 312.42,
+        "y": 68.58
+      },
+      {
+        "component_x": 332.74,
+        "component_y": 68.58,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 332.74,
+            "y": 64.77
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 332.74,
+            "y": 72.39
+          }
+        ],
+        "reference": "C302",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 332.74,
+                "y": 64.77
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 332.74,
+                "y": 72.39
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 332.74,
+            "y": 68.58
+          }
+        ],
+        "x": 332.74,
+        "y": 68.58
+      },
+      {
+        "component_x": 353.06,
+        "component_y": 68.58,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 353.06,
+            "y": 64.77
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 353.06,
+            "y": 72.39
+          }
+        ],
+        "reference": "C303",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 353.06,
+                "y": 64.77
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 353.06,
+                "y": 72.39
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 353.06,
+            "y": 68.58
+          }
+        ],
+        "x": 353.06,
+        "y": 68.58
+      },
+      {
+        "component_x": 353.06,
+        "component_y": 139.7,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 353.06,
+            "y": 135.89
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 353.06,
+            "y": 143.51
+          }
+        ],
+        "reference": "C304",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 353.06,
+                "y": 135.89
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 353.06,
+                "y": 143.51
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 353.06,
+            "y": 139.7
+          }
+        ],
+        "x": 353.06,
+        "y": 139.7
+      },
+      {
+        "component_x": 378.46,
+        "component_y": 139.7,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 378.46,
+            "y": 135.89
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 378.46,
+            "y": 143.51
+          }
+        ],
+        "reference": "C305",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 378.46,
+                "y": 135.89
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 378.46,
+                "y": 143.51
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 378.46,
+            "y": 139.7
+          }
+        ],
+        "x": 378.46,
+        "y": 139.7
+      },
+      {
+        "component_x": 228.6,
+        "component_y": 203.2,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 228.6,
+            "y": 199.39
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 228.6,
+            "y": 207.01
+          }
+        ],
+        "reference": "C306",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 228.6,
+                "y": 199.39
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 228.6,
+                "y": 207.01
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 228.6,
+            "y": 203.2
+          }
+        ],
+        "x": 228.6,
+        "y": 203.2
+      },
+      {
+        "component_x": 256.54,
+        "component_y": 203.2,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 256.54,
+            "y": 199.39
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 256.54,
+            "y": 207.01
+          }
+        ],
+        "reference": "C307",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 256.54,
+                "y": 199.39
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 256.54,
+                "y": 207.01
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 256.54,
+            "y": 203.2
+          }
+        ],
+        "x": 256.54,
+        "y": 203.2
+      },
+      {
+        "component_x": 55.88,
+        "component_y": 68.58,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 55.88,
+            "y": 64.77
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 55.88,
+            "y": 72.39
+          }
+        ],
+        "reference": "C308",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 55.88,
+                "y": 64.77
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 55.88,
+                "y": 72.39
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 55.88,
+            "y": 68.58
+          }
+        ],
+        "x": 55.88,
+        "y": 68.58
+      },
+      {
+        "component_x": 373.38,
+        "component_y": 68.58,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 373.38,
+            "y": 64.77
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 373.38,
+            "y": 72.39
+          }
+        ],
+        "reference": "C309",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 373.38,
+                "y": 64.77
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 373.38,
+                "y": 72.39
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 373.38,
+            "y": 68.58
+          }
+        ],
+        "x": 373.38,
+        "y": 68.58
+      },
+      {
+        "component_x": 243.84,
+        "component_y": 68.58,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 243.84,
+            "y": 64.77
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 243.84,
+            "y": 72.39
+          }
+        ],
+        "reference": "C310",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 243.84,
+                "y": 64.77
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 243.84,
+                "y": 72.39
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 243.84,
+            "y": 68.58
+          }
+        ],
+        "x": 243.84,
+        "y": 68.58
+      },
+      {
+        "component_x": 241.3,
+        "component_y": 109.22,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 237.49,
+            "y": 109.22
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 245.11,
+            "y": 109.22
+          }
+        ],
+        "reference": "C311",
+        "rotation": 90,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 237.49,
+                "y": 109.22
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 245.11,
+                "y": 109.22
+              }
+            ],
+            "rotation": 90,
+            "unit": 1,
+            "x": 241.3,
+            "y": 109.22
+          }
+        ],
+        "x": 241.3,
+        "y": 109.22
+      },
+      {
+        "component_x": 35.56,
+        "component_y": 45.72,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 35.56,
+            "y": 45.72
+          }
+        ],
+        "reference": "#PWR0300",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 35.56,
+                "y": 45.72
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 35.56,
+            "y": 45.72
+          }
+        ],
+        "x": 35.56,
+        "y": 45.72
+      },
+      {
+        "component_x": 396.24,
+        "component_y": 45.72,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 396.24,
+            "y": 45.72
+          }
+        ],
+        "reference": "#PWR0301",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 396.24,
+                "y": 45.72
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 396.24,
+            "y": 45.72
+          }
+        ],
+        "x": 396.24,
+        "y": 45.72
+      },
+      {
+        "component_x": 396.24,
+        "component_y": 121.92,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 396.24,
+            "y": 121.92
+          }
+        ],
+        "reference": "#PWR0302",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 396.24,
+                "y": 121.92
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 396.24,
+            "y": 121.92
+          }
+        ],
+        "x": 396.24,
+        "y": 121.92
+      },
+      {
+        "component_x": 55.88,
+        "component_y": 81.28,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 55.88,
+            "y": 81.28
+          }
+        ],
+        "reference": "#PWR0303",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 55.88,
+                "y": 81.28
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 55.88,
+            "y": 81.28
+          }
+        ],
+        "x": 55.88,
+        "y": 81.28
+      },
+      {
+        "component_x": 389.89,
+        "component_y": 85.09,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 389.89,
+            "y": 85.09
+          }
+        ],
+        "reference": "#PWR0304",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 389.89,
+                "y": 85.09
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 389.89,
+            "y": 85.09
+          }
+        ],
+        "x": 389.89,
+        "y": 85.09
+      },
+      {
+        "component_x": 391.16,
+        "component_y": 158.75,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 391.16,
+            "y": 158.75
+          }
+        ],
+        "reference": "#PWR0305",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 391.16,
+                "y": 158.75
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 391.16,
+            "y": 158.75
+          }
+        ],
+        "x": 391.16,
+        "y": 158.75
+      },
+      {
+        "component_x": 137.16,
+        "component_y": 162.56,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 137.16,
+            "y": 162.56
+          }
+        ],
+        "reference": "#PWR0306",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 137.16,
+                "y": 162.56
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 137.16,
+            "y": 162.56
+          }
+        ],
+        "x": 137.16,
+        "y": 162.56
+      },
+      {
+        "component_x": 152.4,
+        "component_y": 170.18,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 152.4,
+            "y": 170.18
+          }
+        ],
+        "reference": "#PWR0307",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 152.4,
+                "y": 170.18
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 152.4,
+            "y": 170.18
+          }
+        ],
+        "x": 152.4,
+        "y": 170.18
+      },
+      {
+        "component_x": 181.61,
+        "component_y": 187.96,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 181.61,
+            "y": 187.96
+          }
+        ],
+        "reference": "#PWR0308",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 181.61,
+                "y": 187.96
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 181.61,
+            "y": 187.96
+          }
+        ],
+        "x": 181.61,
+        "y": 187.96
+      },
+      {
+        "component_x": 208.28,
+        "component_y": 187.96,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 208.28,
+            "y": 187.96
+          }
+        ],
+        "reference": "#PWR0309",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 208.28,
+                "y": 187.96
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 208.28,
+            "y": 187.96
+          }
+        ],
+        "x": 208.28,
+        "y": 187.96
+      },
+      {
+        "component_x": 200.66,
+        "component_y": 76.2,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 200.66,
+            "y": 76.2
+          }
+        ],
+        "reference": "#PWR0310",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 200.66,
+                "y": 76.2
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 200.66,
+            "y": 76.2
+          }
+        ],
+        "x": 200.66,
+        "y": 76.2
+      },
+      {
+        "component_x": 205.74,
+        "component_y": 87.63,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 205.74,
+            "y": 87.63
+          }
+        ],
+        "reference": "#PWR0311",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 205.74,
+                "y": 87.63
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 205.74,
+            "y": 87.63
+          }
+        ],
+        "x": 205.74,
+        "y": 87.63
+      },
+      {
+        "component_x": 210.82,
+        "component_y": 66.04,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 210.82,
+            "y": 66.04
+          }
+        ],
+        "reference": "#PWR0312",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 210.82,
+                "y": 66.04
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 210.82,
+            "y": 66.04
+          }
+        ],
+        "x": 210.82,
+        "y": 66.04
+      },
+      {
+        "component_x": 228.6,
+        "component_y": 193.04,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 228.6,
+            "y": 193.04
+          }
+        ],
+        "reference": "#PWR0313",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 228.6,
+                "y": 193.04
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 228.6,
+            "y": 193.04
+          }
+        ],
+        "x": 228.6,
+        "y": 193.04
+      },
+      {
+        "component_x": 256.54,
+        "component_y": 193.04,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 256.54,
+            "y": 193.04
+          }
+        ],
+        "reference": "#PWR0314",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 256.54,
+                "y": 193.04
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 256.54,
+            "y": 193.04
+          }
+        ],
+        "x": 256.54,
+        "y": 193.04
+      },
+      {
+        "component_x": 243.84,
+        "component_y": 58.42,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 243.84,
+            "y": 58.42
+          }
+        ],
+        "reference": "#PWR0315",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 243.84,
+                "y": 58.42
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 243.84,
+            "y": 58.42
+          }
+        ],
+        "x": 243.84,
+        "y": 58.42
+      },
+      {
+        "component_x": 228.6,
+        "component_y": 214.63,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 228.6,
+            "y": 214.63
+          }
+        ],
+        "reference": "#PWR0316",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 228.6,
+                "y": 214.63
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 228.6,
+            "y": 214.63
+          }
+        ],
+        "x": 228.6,
+        "y": 214.63
+      },
+      {
+        "component_x": 256.54,
+        "component_y": 214.63,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 256.54,
+            "y": 214.63
+          }
+        ],
+        "reference": "#PWR0317",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 256.54,
+                "y": 214.63
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 256.54,
+            "y": 214.63
+          }
+        ],
+        "x": 256.54,
+        "y": 214.63
+      },
+      {
+        "component_x": 243.84,
+        "component_y": 80.01,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 243.84,
+            "y": 80.01
+          }
+        ],
+        "reference": "#PWR0318",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 243.84,
+                "y": 80.01
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 243.84,
+            "y": 80.01
+          }
+        ],
+        "x": 243.84,
+        "y": 80.01
+      },
+      {
+        "component_x": 132.08,
+        "component_y": 109.22,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 132.08,
+            "y": 109.22
+          }
+        ],
+        "reference": "#PWR0319",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 132.08,
+                "y": 109.22
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 132.08,
+            "y": 109.22
+          }
+        ],
+        "x": 132.08,
+        "y": 109.22
+      },
+      {
+        "component_x": 100.33,
+        "component_y": 134.62,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 100.33,
+            "y": 134.62
+          }
+        ],
+        "reference": "#PWR0320",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 100.33,
+                "y": 134.62
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 100.33,
+            "y": 134.62
+          }
+        ],
+        "x": 100.33,
+        "y": 134.62
+      },
+      {
+        "component_x": 116.84,
+        "component_y": 146.05,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 116.84,
+            "y": 146.05
+          }
+        ],
+        "reference": "#PWR0321",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 116.84,
+                "y": 146.05
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 116.84,
+            "y": 146.05
+          }
+        ],
+        "x": 116.84,
+        "y": 146.05
+      },
+      {
+        "component_x": 275.59,
+        "component_y": 152.4,
+        "pins": [
+          {
+            "length_mm": 2.54,
+            "name": "1",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 275.59,
+            "y": 152.4
+          }
+        ],
+        "reference": "TP300",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.54,
+                "name": "1",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 275.59,
+                "y": 152.4
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 275.59,
+            "y": 152.4
+          }
+        ],
+        "x": 275.59,
+        "y": 152.4
+      },
+      {
+        "component_x": 316.23,
+        "component_y": 152.4,
+        "pins": [
+          {
+            "length_mm": 2.54,
+            "name": "1",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 316.23,
+            "y": 152.4
+          }
+        ],
+        "reference": "TP301",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.54,
+                "name": "1",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 316.23,
+                "y": 152.4
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 316.23,
+            "y": 152.4
+          }
+        ],
+        "x": 316.23,
+        "y": 152.4
+      },
+      {
+        "component_x": 375.92,
+        "component_y": 185.42,
+        "pins": [
+          {
+            "length_mm": 2.54,
+            "name": "1",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 375.92,
+            "y": 185.42
+          }
+        ],
+        "reference": "TP302",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.54,
+                "name": "1",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 375.92,
+                "y": 185.42
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 375.92,
+            "y": 185.42
+          }
+        ],
+        "x": 375.92,
+        "y": 185.42
+      },
+      {
+        "component_x": 350.52,
+        "component_y": 167.64,
+        "pins": [
+          {
+            "length_mm": 3.81,
+            "name": "Pin_1",
+            "number": "1",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 345.44,
+            "y": 167.64
+          },
+          {
+            "length_mm": 3.81,
+            "name": "Pin_2",
+            "number": "2",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 345.44,
+            "y": 170.17999999999998
+          }
+        ],
+        "reference": "J300",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 3.81,
+                "name": "Pin_1",
+                "number": "1",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 345.44,
+                "y": 167.64
+              },
+              {
+                "length_mm": 3.81,
+                "name": "Pin_2",
+                "number": "2",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 345.44,
+                "y": 170.17999999999998
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 350.52,
+            "y": 167.64
+          }
+        ],
+        "x": 350.52,
+        "y": 167.64
+      },
+      {
+        "component_x": 335.28,
+        "component_y": 191.77,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 335.28,
+            "y": 191.77
+          }
+        ],
+        "reference": "#PWR0322",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 335.28,
+                "y": 191.77
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 335.28,
+            "y": 191.77
+          }
+        ],
+        "x": 335.28,
+        "y": 191.77
+      },
+      {
+        "component_x": 405.13,
+        "component_y": 124.46,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 405.13,
+            "y": 124.46
+          }
+        ],
+        "reference": "#FLG0300",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 405.13,
+                "y": 124.46
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 405.13,
+            "y": 124.46
+          }
+        ],
+        "x": 405.13,
+        "y": 124.46
+      },
+      {
+        "component_x": 217.17,
+        "component_y": 82.55,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 217.17,
+            "y": 82.55
+          }
+        ],
+        "reference": "#FLG0301",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 217.17,
+                "y": 82.55
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 217.17,
+            "y": 82.55
+          }
+        ],
+        "x": 217.17,
+        "y": 82.55
+      }
+    ]
+  },
+  "controller_pins": {
+    "components": [
+      {
+        "component_x": 73.66,
+        "component_y": 99.06,
+        "pins": [
+          {
+            "length_mm": 2.54,
+            "name": "EN",
+            "number": "1",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 63.5,
+            "y": 99.06
+          },
+          {
+            "length_mm": 2.54,
+            "name": "OUT",
+            "number": "3",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 83.82,
+            "y": 99.06
+          },
+          {
+            "length_mm": 2.54,
+            "name": "VDD",
+            "number": "4",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 73.66,
+            "y": 90.17
+          },
+          {
+            "length_mm": 2.54,
+            "name": "GND",
+            "number": "2",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 63.5,
+            "y": 104.14
+          }
+        ],
+        "reference": "Y100",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.54,
+                "name": "EN",
+                "number": "1",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 63.5,
+                "y": 99.06
+              },
+              {
+                "length_mm": 2.54,
+                "name": "OUT",
+                "number": "3",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 83.82,
+                "y": 99.06
+              },
+              {
+                "length_mm": 2.54,
+                "name": "VDD",
+                "number": "4",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 73.66,
+                "y": 90.17
+              },
+              {
+                "length_mm": 2.54,
+                "name": "GND",
+                "number": "2",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 63.5,
+                "y": 104.14
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 73.66,
+            "y": 99.06
+          }
+        ],
+        "x": 73.66,
+        "y": 99.06
+      },
+      {
+        "component_x": 80.01,
+        "component_y": 50.8,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 80.01,
+            "y": 46.989999999999995
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 80.01,
+            "y": 54.61
+          }
+        ],
+        "reference": "C100",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 80.01,
+                "y": 46.989999999999995
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 80.01,
+                "y": 54.61
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 80.01,
+            "y": 50.8
+          }
+        ],
+        "x": 80.01,
+        "y": 50.8
+      },
+      {
+        "component_x": 100.33,
+        "component_y": 50.8,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 100.33,
+            "y": 46.989999999999995
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 100.33,
+            "y": 54.61
+          }
+        ],
+        "reference": "C101",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 100.33,
+                "y": 46.989999999999995
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 100.33,
+                "y": 54.61
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 100.33,
+            "y": 50.8
+          }
+        ],
+        "x": 100.33,
+        "y": 50.8
+      },
+      {
+        "component_x": 120.65,
+        "component_y": 50.8,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 120.65,
+            "y": 46.989999999999995
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 120.65,
+            "y": 54.61
+          }
+        ],
+        "reference": "C102",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 120.65,
+                "y": 46.989999999999995
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 120.65,
+                "y": 54.61
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 120.65,
+            "y": 50.8
+          }
+        ],
+        "x": 120.65,
+        "y": 50.8
+      },
+      {
+        "component_x": 140.97,
+        "component_y": 50.8,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 140.97,
+            "y": 46.989999999999995
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 140.97,
+            "y": 54.61
+          }
+        ],
+        "reference": "C103",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 140.97,
+                "y": 46.989999999999995
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 140.97,
+                "y": 54.61
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 140.97,
+            "y": 50.8
+          }
+        ],
+        "x": 140.97,
+        "y": 50.8
+      },
+      {
+        "component_x": 40.64,
+        "component_y": 130.81,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 40.64,
+            "y": 127
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 40.64,
+            "y": 134.62
+          }
+        ],
+        "reference": "C110",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 40.64,
+                "y": 127
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 40.64,
+                "y": 134.62
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 40.64,
+            "y": 130.81
+          }
+        ],
+        "x": 40.64,
+        "y": 130.81
+      },
+      {
+        "component_x": 62.23,
+        "component_y": 130.81,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 62.23,
+            "y": 127
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 62.23,
+            "y": 134.62
+          }
+        ],
+        "reference": "C111",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 62.23,
+                "y": 127
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 62.23,
+                "y": 134.62
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 62.23,
+            "y": 130.81
+          }
+        ],
+        "x": 62.23,
+        "y": 130.81
+      },
+      {
+        "component_x": 106.68,
+        "component_y": 74.93,
+        "pins": [
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 106.68,
+            "y": 71.12
+          },
+          {
+            "length_mm": 2.794,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 106.68,
+            "y": 78.74000000000001
+          }
+        ],
+        "reference": "C112",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 106.68,
+                "y": 71.12
+              },
+              {
+                "length_mm": 2.794,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 106.68,
+                "y": 78.74000000000001
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 106.68,
+            "y": 74.93
+          }
+        ],
+        "x": 106.68,
+        "y": 74.93
+      },
+      {
+        "component_x": 45.72,
+        "component_y": 85.09,
+        "pins": [
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 45.72,
+            "y": 81.28
+          },
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 45.72,
+            "y": 88.9
+          }
+        ],
+        "reference": "R105",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 45.72,
+                "y": 81.28
+              },
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 45.72,
+                "y": 88.9
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 45.72,
+            "y": 85.09
+          }
+        ],
+        "x": 45.72,
+        "y": 85.09
+      },
+      {
+        "component_x": 238.76,
+        "component_y": 157.48,
+        "pins": [
+          {
+            "length_mm": 3.81,
+            "name": "Pin_1",
+            "number": "1",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 233.67999999999998,
+            "y": 152.39999999999998
+          },
+          {
+            "length_mm": 3.81,
+            "name": "Pin_2",
+            "number": "2",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 233.67999999999998,
+            "y": 154.94
+          },
+          {
+            "length_mm": 3.81,
+            "name": "Pin_3",
+            "number": "3",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 233.67999999999998,
+            "y": 157.48
+          },
+          {
+            "length_mm": 3.81,
+            "name": "Pin_4",
+            "number": "4",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 233.67999999999998,
+            "y": 160.01999999999998
+          },
+          {
+            "length_mm": 3.81,
+            "name": "Pin_5",
+            "number": "5",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 233.67999999999998,
+            "y": 162.56
+          }
+        ],
+        "reference": "J100",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 3.81,
+                "name": "Pin_1",
+                "number": "1",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 233.67999999999998,
+                "y": 152.39999999999998
+              },
+              {
+                "length_mm": 3.81,
+                "name": "Pin_2",
+                "number": "2",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 233.67999999999998,
+                "y": 154.94
+              },
+              {
+                "length_mm": 3.81,
+                "name": "Pin_3",
+                "number": "3",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 233.67999999999998,
+                "y": 157.48
+              },
+              {
+                "length_mm": 3.81,
+                "name": "Pin_4",
+                "number": "4",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 233.67999999999998,
+                "y": 160.01999999999998
+              },
+              {
+                "length_mm": 3.81,
+                "name": "Pin_5",
+                "number": "5",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 233.67999999999998,
+                "y": 162.56
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 238.76,
+            "y": 157.48
+          }
+        ],
+        "x": 238.76,
+        "y": 157.48
+      },
+      {
+        "component_x": 160.02,
+        "component_y": 105.41,
+        "pins": [
+          {
+            "length_mm": 2.54,
+            "name": "PB9",
+            "number": "1",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 123.19
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PC14",
+            "number": "2",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 102.86999999999999
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PC15",
+            "number": "3",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 105.41
+          },
+          {
+            "length_mm": 2.54,
+            "name": "VDD",
+            "number": "4",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 160.02,
+            "y": 77.47
+          },
+          {
+            "length_mm": 2.54,
+            "name": "VSS",
+            "number": "5",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 160.02,
+            "y": 133.35
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PF2",
+            "number": "6",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 85.09
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA0",
+            "number": "7",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 85.09
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA1",
+            "number": "8",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 87.63
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA2",
+            "number": "9",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 90.17
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA3",
+            "number": "10",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 92.71
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA4",
+            "number": "11",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 95.25
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA5",
+            "number": "12",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 97.78999999999999
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA6",
+            "number": "13",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 100.33
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA7",
+            "number": "14",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 102.86999999999999
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PB0",
+            "number": "15",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 110.49
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PB1",
+            "number": "16",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 113.03
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PB15",
+            "number": "17",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 125.72999999999999
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA8",
+            "number": "18",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 105.41
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA9/UCPD1_DBCC1",
+            "number": "19",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 110.49
+          },
+          {
+            "length_mm": 2.54,
+            "name": "VDD",
+            "number": "20",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 162.56,
+            "y": 77.47
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA10/UCPD1_DBCC2",
+            "number": "21",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 115.57
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA9/PA11",
+            "number": "22",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 107.95
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA10/PA12",
+            "number": "23",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 113.03
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA13",
+            "number": "24",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 118.11
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PA14",
+            "number": "25",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 187.96,
+            "y": 120.64999999999999
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PD0",
+            "number": "26",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 90.17
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PD1",
+            "number": "27",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 92.71
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PD2",
+            "number": "28",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 95.25
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PD3",
+            "number": "29",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 97.78999999999999
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PB6",
+            "number": "30",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 115.57
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PB7",
+            "number": "31",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 118.11
+          },
+          {
+            "length_mm": 2.54,
+            "name": "PB8",
+            "number": "32",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 132.08,
+            "y": 120.64999999999999
+          }
+        ],
+        "reference": "U100",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 2.54,
+                "name": "PB9",
+                "number": "1",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 123.19
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PC14",
+                "number": "2",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 102.86999999999999
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PC15",
+                "number": "3",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 105.41
+              },
+              {
+                "length_mm": 2.54,
+                "name": "VDD",
+                "number": "4",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 160.02,
+                "y": 77.47
+              },
+              {
+                "length_mm": 2.54,
+                "name": "VSS",
+                "number": "5",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 160.02,
+                "y": 133.35
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PF2",
+                "number": "6",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 85.09
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA0",
+                "number": "7",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 85.09
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA1",
+                "number": "8",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 87.63
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA2",
+                "number": "9",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 90.17
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA3",
+                "number": "10",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 92.71
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA4",
+                "number": "11",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 95.25
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA5",
+                "number": "12",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 97.78999999999999
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA6",
+                "number": "13",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 100.33
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA7",
+                "number": "14",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 102.86999999999999
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PB0",
+                "number": "15",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 110.49
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PB1",
+                "number": "16",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 113.03
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PB15",
+                "number": "17",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 125.72999999999999
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA8",
+                "number": "18",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 105.41
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA9/UCPD1_DBCC1",
+                "number": "19",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 110.49
+              },
+              {
+                "length_mm": 2.54,
+                "name": "VDD",
+                "number": "20",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 162.56,
+                "y": 77.47
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA10/UCPD1_DBCC2",
+                "number": "21",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 115.57
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA9/PA11",
+                "number": "22",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 107.95
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA10/PA12",
+                "number": "23",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 113.03
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA13",
+                "number": "24",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 118.11
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PA14",
+                "number": "25",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 187.96,
+                "y": 120.64999999999999
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PD0",
+                "number": "26",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 90.17
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PD1",
+                "number": "27",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 92.71
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PD2",
+                "number": "28",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 95.25
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PD3",
+                "number": "29",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 97.78999999999999
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PB6",
+                "number": "30",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 115.57
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PB7",
+                "number": "31",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 118.11
+              },
+              {
+                "length_mm": 2.54,
+                "name": "PB8",
+                "number": "32",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 132.08,
+                "y": 120.64999999999999
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 160.02,
+            "y": 105.41
+          }
+        ],
+        "x": 160.02,
+        "y": 105.41
+      },
+      {
+        "component_x": 147.32,
+        "component_y": 67.31,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 147.32,
+            "y": 67.31
+          }
+        ],
+        "reference": "#PWR0100",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 147.32,
+                "y": 67.31
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 147.32,
+            "y": 67.31
+          }
+        ],
+        "x": 147.32,
+        "y": 67.31
+      },
+      {
+        "component_x": 170.18,
+        "component_y": 34.29,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 170.18,
+            "y": 34.29
+          }
+        ],
+        "reference": "#PWR0101",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 170.18,
+                "y": 34.29
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 170.18,
+            "y": 34.29
+          }
+        ],
+        "x": 170.18,
+        "y": 34.29
+      },
+      {
+        "component_x": 160.02,
+        "component_y": 140.97,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 160.02,
+            "y": 140.97
+          }
+        ],
+        "reference": "#PWR0102",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 160.02,
+                "y": 140.97
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 160.02,
+            "y": 140.97
+          }
+        ],
+        "x": 160.02,
+        "y": 140.97
+      },
+      {
+        "component_x": 106.68,
+        "component_y": 85.09,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 106.68,
+            "y": 85.09
+          }
+        ],
+        "reference": "#PWR0103",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 106.68,
+                "y": 85.09
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 106.68,
+            "y": 85.09
+          }
+        ],
+        "x": 106.68,
+        "y": 85.09
+      },
+      {
+        "component_x": 45.72,
+        "component_y": 74.93,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 45.72,
+            "y": 74.93
+          }
+        ],
+        "reference": "#PWR0104",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 45.72,
+                "y": 74.93
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 45.72,
+            "y": 74.93
+          }
+        ],
+        "x": 45.72,
+        "y": 74.93
+      },
+      {
+        "component_x": 73.66,
+        "component_y": 82.55,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 73.66,
+            "y": 82.55
+          }
+        ],
+        "reference": "#PWR0105",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 73.66,
+                "y": 82.55
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 73.66,
+            "y": 82.55
+          }
+        ],
+        "x": 73.66,
+        "y": 82.55
+      },
+      {
+        "component_x": 58.42,
+        "component_y": 110.49,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 58.42,
+            "y": 110.49
+          }
+        ],
+        "reference": "#PWR0106",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 58.42,
+                "y": 110.49
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 58.42,
+            "y": 110.49
+          }
+        ],
+        "x": 58.42,
+        "y": 110.49
+      },
+      {
+        "component_x": 25.4,
+        "component_y": 114.3,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 25.4,
+            "y": 114.3
+          }
+        ],
+        "reference": "#PWR0107",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 25.4,
+                "y": 114.3
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 25.4,
+            "y": 114.3
+          }
+        ],
+        "x": 25.4,
+        "y": 114.3
+      },
+      {
+        "component_x": 76.2,
+        "component_y": 147.32,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 76.2,
+            "y": 147.32
+          }
+        ],
+        "reference": "#PWR0108",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 76.2,
+                "y": 147.32
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 76.2,
+            "y": 147.32
+          }
+        ],
+        "x": 76.2,
+        "y": 147.32
+      },
+      {
+        "component_x": 228.6,
+        "component_y": 146.05,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 228.6,
+            "y": 146.05
+          }
+        ],
+        "reference": "#PWR0109",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 228.6,
+                "y": 146.05
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 228.6,
+            "y": 146.05
+          }
+        ],
+        "x": 228.6,
+        "y": 146.05
+      },
+      {
+        "component_x": 223.52,
+        "component_y": 168.91,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 223.52,
+            "y": 168.91
+          }
+        ],
+        "reference": "#PWR0110",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 223.52,
+                "y": 168.91
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 223.52,
+            "y": 168.91
+          }
+        ],
+        "x": 223.52,
+        "y": 168.91
+      },
+      {
+        "component_x": 58.42,
+        "component_y": 182.88,
+        "pins": [
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 58.42,
+            "y": 179.07
+          },
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 58.42,
+            "y": 186.69
+          }
+        ],
+        "reference": "R108",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 58.42,
+                "y": 179.07
+              },
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 58.42,
+                "y": 186.69
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 58.42,
+            "y": 182.88
+          }
+        ],
+        "x": 58.42,
+        "y": 182.88
+      },
+      {
+        "component_x": 83.82,
+        "component_y": 182.88,
+        "pins": [
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 83.82,
+            "y": 179.07
+          },
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 83.82,
+            "y": 186.69
+          }
+        ],
+        "reference": "R109",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 83.82,
+                "y": 179.07
+              },
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 83.82,
+                "y": 186.69
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 83.82,
+            "y": 182.88
+          }
+        ],
+        "x": 83.82,
+        "y": 182.88
+      },
+      {
+        "component_x": 109.22,
+        "component_y": 182.88,
+        "pins": [
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 109.22,
+            "y": 179.07
+          },
+          {
+            "length_mm": 1.27,
+            "name": "",
+            "number": "2",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 109.22,
+            "y": 186.69
+          }
+        ],
+        "reference": "R110",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 109.22,
+                "y": 179.07
+              },
+              {
+                "length_mm": 1.27,
+                "name": "",
+                "number": "2",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 109.22,
+                "y": 186.69
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 109.22,
+            "y": 182.88
+          }
+        ],
+        "x": 109.22,
+        "y": 182.88
+      },
+      {
+        "component_x": 58.42,
+        "component_y": 172.72,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 58.42,
+            "y": 172.72
+          }
+        ],
+        "reference": "#PWR001",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 58.42,
+                "y": 172.72
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 58.42,
+            "y": 172.72
+          }
+        ],
+        "x": 58.42,
+        "y": 172.72
+      },
+      {
+        "component_x": 83.82,
+        "component_y": 172.72,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 83.82,
+            "y": 172.72
+          }
+        ],
+        "reference": "#PWR002",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 83.82,
+                "y": 172.72
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 83.82,
+            "y": 172.72
+          }
+        ],
+        "x": 83.82,
+        "y": 172.72
+      },
+      {
+        "component_x": 109.22,
+        "component_y": 172.72,
+        "pins": [
+          {
+            "length_mm": 0,
+            "name": "",
+            "number": "1",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 109.22,
+            "y": 172.72
+          }
+        ],
+        "reference": "#PWR003",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 0,
+                "name": "",
+                "number": "1",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 109.22,
+                "y": 172.72
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 109.22,
+            "y": 172.72
+          }
+        ],
+        "x": 109.22,
+        "y": 172.72
+      }
+    ]
+  },
+  "hierarchy": {
+    "children": [
+      {
+        "children": [],
+        "file": "controller.kicad_sch",
+        "height": 45.72,
+        "name": "Controller",
+        "page": "2",
+        "pins": [],
+        "uuid": "3887cba2-4b11-469e-838c-d35f1fb4fc5a",
+        "width": 100.33,
+        "x": 30.48,
+        "y": 60.96
+      },
+      {
+        "children": [],
+        "file": "can_interfaces.kicad_sch",
+        "height": 45.72,
+        "name": "CAN interfaces",
+        "page": "3",
+        "pins": [],
+        "uuid": "fe5345f2-e583-4a64-a085-08644425dbe8",
+        "width": 100.33,
+        "x": 167.64,
+        "y": 60.96
+      },
+      {
+        "children": [],
+        "file": "essential_3v3.kicad_sch",
+        "height": 45.72,
+        "name": "Essential 3V3",
+        "page": "4",
+        "pins": [],
+        "uuid": "f65fe20e-e663-42b7-8f35-60abec560633",
+        "width": 100.33,
+        "x": 304.8,
+        "y": 60.96
+      },
+      {
+        "children": [],
+        "file": "recovery_5v.kicad_sch",
+        "height": 20.32,
+        "name": "Recovery 5V converter",
+        "page": "5",
+        "pins": [],
+        "uuid": "db3cadf5-bca6-4a2a-9514-e7323a7f1145",
+        "width": 100.33,
+        "x": 304.8,
+        "y": 119.38
+      },
+      {
+        "children": [],
+        "file": "source_protection.kicad_sch",
+        "height": 33.02,
+        "name": "Solar source protection",
+        "page": "6",
+        "pins": [],
+        "uuid": "0abe3ad6-2c84-4061-b95b-3f3b9c4a4da7",
+        "width": 100.33,
+        "x": 30.48,
+        "y": 157.48
+      },
+      {
+        "children": [],
+        "file": "rail_protection.kicad_sch",
+        "height": 33.02,
+        "name": "Recovery rail protection",
+        "page": "7",
+        "pins": [],
+        "uuid": "9deb67d0-68a4-4419-931c-74033ea85dd8",
+        "width": 100.33,
+        "x": 167.64,
+        "y": 157.48
+      },
+      {
+        "children": [],
+        "file": "charger.kicad_sch",
+        "height": 35.56,
+        "name": "Charger PowerPath",
+        "page": "8",
+        "pins": [],
+        "uuid": "d51809f7-0479-4c00-95c7-52f01e4ad9dd",
+        "width": 101.6,
+        "x": 167.64,
+        "y": 115.57
+      }
+    ],
+    "file": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/eps_rev_b.kicad_sch"
+  },
+  "classes": {
+    "count": 10,
+    "file": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/eps_rev_b.kicad_pro",
+    "netclasses": [
+      {
+        "clearance": 0.2,
+        "inherits": [],
+        "is_default": false,
+        "matched_nets": [],
+        "name": "POWER",
+        "patterns": [
+          "+3V3",
+          "GND",
+          "SYS_PWR_PERMITTED",
+          "5V0_RECOVERY_REG",
+          "5V0_RECOVERY_RAW",
+          "5V2_RECOVERY_BIAS",
+          "/Recovery 5V converter/REC5_SW1",
+          "/Recovery 5V converter/REC5_SW2",
+          "/Recovery 5V converter/REC5_BOOT1",
+          "/Recovery 5V converter/REC5_BOOT2",
+          "+5V",
+          "/Recovery rail protection/REC5_COMMON",
+          "/Recovery rail protection/REC5_SENSE",
+          "/Solar source protection/SRC_COMMON",
+          "/Solar source protection/SRC_SENSE",
+          "REC5_BIAS",
+          "REC5_PIN",
+          "SOLAR_PERMITTED",
+          "SRC_BIAS",
+          "VIN_CHG",
+          "SRC_FILTERED",
+          "BATT_PERMITTED",
+          "5V0_CHG_INTVCC",
+          "2V5_CHG_LOGIC",
+          "/Charger PowerPath/CHG_CLP",
+          "/Charger PowerPath/CHG_CSP"
+        ],
+        "priority": -1,
+        "trace_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "inherits": [],
+        "is_default": false,
+        "matched_nets": [],
+        "name": "CAN_BUS",
+        "patterns": [
+          "/CAN interfaces/CAN_H",
+          "/CAN interfaces/CAN_L",
+          "/CAN interfaces/CAN_B_H",
+          "/CAN interfaces/CAN_B_L"
+        ],
+        "priority": -1,
+        "trace_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "inherits": [],
+        "is_default": false,
+        "matched_nets": [],
+        "name": "CAN_LOGIC",
+        "patterns": [
+          "EPS_CAN_A_RX",
+          "EPS_CAN_A_TX",
+          "EPS_CAN_A_STB",
+          "EPS_CAN_B_RX",
+          "EPS_CAN_B_TX",
+          "EPS_CAN_B_STB"
+        ],
+        "priority": -1,
+        "trace_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "inherits": [],
+        "is_default": false,
+        "matched_nets": [],
+        "name": "CLOCK",
+        "patterns": [
+          "/Controller/EPS_HSE_16M",
+          "/Controller/EPS_OSC_EN"
+        ],
+        "priority": -1,
+        "trace_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "inherits": [],
+        "is_default": false,
+        "matched_nets": [],
+        "name": "DEBUG",
+        "patterns": [
+          "/Controller/EPS_SWDIO",
+          "/Controller/EPS_SWCLK",
+          "/Controller/EPS_NRST"
+        ],
+        "priority": -1,
+        "trace_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "inherits": [],
+        "is_default": false,
+        "matched_nets": [],
+        "name": "CONTROL",
+        "patterns": [
+          "/Controller/REC5_RESET",
+          "/Controller/REC5_FAULT",
+          "/Controller/SRC_FAULT",
+          "REC5_FAULT",
+          "REC5_RESET",
+          "SRC_FAULT",
+          "EPS_CHG_ALERT_N"
+        ],
+        "priority": -1,
+        "trace_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "inherits": [],
+        "is_default": false,
+        "matched_nets": [],
+        "name": "SWITCHING",
+        "patterns": [
+          "/Essential 3V3/BUCK33_SW",
+          "/Essential 3V3/BUCK33_CB",
+          "/Charger PowerPath/CHG_SW",
+          "/Charger PowerPath/CHG_BOOST"
+        ],
+        "priority": -1,
+        "trace_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "inherits": [],
+        "is_default": false,
+        "matched_nets": [],
+        "name": "ANALOG",
+        "patterns": [
+          "/Essential 3V3/BUCK33_FB",
+          "/Charger PowerPath/THM_CHG_NTC"
+        ],
+        "priority": -1,
+        "trace_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "inherits": [],
+        "is_default": false,
+        "matched_nets": [],
+        "name": "ANALOG_CONTROL",
+        "patterns": [
+          "/Recovery 5V converter/REC5_FB",
+          "/Recovery 5V converter/REC5_COMP",
+          "/Recovery 5V converter/REC5_COMP_ZERO",
+          "/Recovery 5V converter/REC5_EN",
+          "/Recovery 5V converter/REC5_FSW",
+          "/Recovery 5V converter/REC5_PG",
+          "/Recovery rail protection/REC5_DG",
+          "/Recovery rail protection/REC5_FB",
+          "/Recovery rail protection/REC5_GH",
+          "/Recovery rail protection/REC5_HGATE",
+          "/Recovery rail protection/REC5_UV",
+          "/Solar source protection/SRC_DG",
+          "/Solar source protection/SRC_FB",
+          "/Solar source protection/SRC_GH",
+          "/Solar source protection/SRC_HGATE",
+          "/Solar source protection/SRC_OV",
+          "/Solar source protection/SRC_UV",
+          "Net-(C611-Pad2)",
+          "Net-(C626-Pad2)",
+          "Net-(D600-A)",
+          "Net-(Q602-C)",
+          "Net-(Q609-B)",
+          "Net-(Q610-C)",
+          "Net-(U600-TMR)",
+          "Net-(U601-TMR)",
+          "/Solar source protection/SRC_SNUB",
+          "/Charger PowerPath/CHG_INFET_GATE",
+          "/Charger PowerPath/CHG_BATFET_GATE",
+          "/Charger PowerPath/CHG_NTCBIAS",
+          "/Charger PowerPath/CHG_RT"
+        ],
+        "priority": -1,
+        "trace_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "inherits": [],
+        "is_default": false,
+        "matched_nets": [],
+        "name": "I2C",
+        "patterns": [
+          "EPS_CHG_SCL",
+          "EPS_CHG_SDA"
+        ],
+        "priority": -1,
+        "trace_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      }
+    ],
+    "nets_on_board": 0,
+    "nets_source": "board file as last saved; unsaved edits in a running KiCad are not visible",
+    "note": "A net can match several classes; KiCad then takes each property from the highest-priority class that sets it and falls back to Default. Lower priority numbers rank higher.",
+    "orphan_patterns": []
+  },
+  "packages": {
+    "Ember_Charger_BMS_Review:ADI_UFD-28-1EP_4x5mm_P0.5mm_Manufacturer": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "CUSTOM REVIEW: LTC4162IUFD-LADM#TRPBF; ADI UFD 05-08-1712 Rev C nominal lands. EP29 AGND. Assembly/stencil/thermal review open.",
+      "has_3d_model": false,
+      "has_courtyard": true,
+      "name": "ADI_UFD-28-1EP_4x5mm_P0.5mm_Manufacturer",
+      "pad_count": 29,
+      "pads": [
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.9,
+          "y": -1.75
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.9,
+          "y": -1.25
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "3",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.9,
+          "y": -0.75
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "4",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.9,
+          "y": -0.25
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "5",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.9,
+          "y": 0.25
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "6",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.9,
+          "y": 0.75
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "7",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.9,
+          "y": 1.25
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "8",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.9,
+          "y": 1.75
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "9",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": -1.25,
+          "y": 2.4
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "10",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": -0.75,
+          "y": 2.4
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "11",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": -0.25,
+          "y": 2.4
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "12",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": 0.25,
+          "y": 2.4
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "13",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": 0.75,
+          "y": 2.4
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "14",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": 1.25,
+          "y": 2.4
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "15",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.9,
+          "y": 1.75
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "16",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.9,
+          "y": 1.25
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "17",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.9,
+          "y": 0.75
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "18",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.9,
+          "y": 0.25
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "19",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.9,
+          "y": -0.25
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "20",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.9,
+          "y": -0.75
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "21",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.9,
+          "y": -1.25
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "22",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.9,
+          "y": -1.75
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "23",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": 1.25,
+          "y": -2.4
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "24",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": 0.75,
+          "y": -2.4
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "25",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": 0.25,
+          "y": -2.4
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "26",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": -0.25,
+          "y": -2.4
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "27",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": -0.75,
+          "y": -2.4
+        },
+        {
+          "drill": [],
+          "height": 0.7,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "28",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.25,
+          "x": -1.25,
+          "y": -2.4
+        },
+        {
+          "drill": [],
+          "height": 3.65,
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "number": "29",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 2.65,
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "path": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/libraries/Ember_Charger_BMS_Review.pretty/ADI_UFD-28-1EP_4x5mm_P0.5mm_Manufacturer.kicad_mod"
+    },
+    "Ember_Charger_BMS_Review:TI_CSD18543Q3A_Q3A_Manufacturer": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "CUSTOM FOOTPRINT \u2014 REVIEW REQUIRED. CSD18543Q3A TI SLPS633 pp8-10. 9 copper objects, five drain aliases5; 12 blank paste apertures;9 blank expanded mask apertures. Rounded rectangle drain decomposition: concave fillet fidelity/stencil/application qualification open.",
+      "has_3d_model": false,
+      "has_courtyard": true,
+      "name": "TI_CSD18543Q3A_Q3A_Manufacturer",
+      "pad_count": 30,
+      "pads": [
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": -1.55,
+          "y": -0.975
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": -1.55,
+          "y": -0.32499999999999996
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "3",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": -1.55,
+          "y": 0.32500000000000007
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "4",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": -1.55,
+          "y": 0.9750000000000002
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "5",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.735,
+          "x": 1.4825,
+          "y": 0.975
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "5",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.735,
+          "x": 1.4825,
+          "y": 0.32499999999999996
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "5",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.735,
+          "x": 1.4825,
+          "y": -0.32500000000000007
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "5",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.735,
+          "x": 1.4825,
+          "y": -0.9750000000000002
+        },
+        {
+          "drill": [],
+          "height": 2.45,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "5",
+          "rotation": 0,
+          "roundrect_rratio": 0.028169014084507046,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.775,
+          "x": 0.3275,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": -1.55,
+          "y": -0.975
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": -1.55,
+          "y": -0.325
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": -1.55,
+          "y": 0.325
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": -1.55,
+          "y": 0.975
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": 1.55,
+          "y": -0.975
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": 1.55,
+          "y": -0.325
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": 1.55,
+          "y": 0.325
+        },
+        {
+          "drill": [],
+          "height": 0.3,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.16666666666666669,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.6,
+          "x": 1.55,
+          "y": 0.975
+        },
+        {
+          "drill": [],
+          "height": 1.125,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.07092198581560284,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.705,
+          "x": -0.2075,
+          "y": -0.6625
+        },
+        {
+          "drill": [],
+          "height": 1.125,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.07092198581560284,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.705,
+          "x": -0.2075,
+          "y": 0.6625
+        },
+        {
+          "drill": [],
+          "height": 1.125,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.07092198581560284,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.705,
+          "x": 0.6975,
+          "y": -0.6625
+        },
+        {
+          "drill": [],
+          "height": 1.125,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.07092198581560284,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.705,
+          "x": 0.6975,
+          "y": 0.6625
+        },
+        {
+          "drill": [],
+          "height": 0.4,
+          "layers": [
+            "F.Mask"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.55,
+          "y": -0.975
+        },
+        {
+          "drill": [],
+          "height": 0.4,
+          "layers": [
+            "F.Mask"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.55,
+          "y": -0.32499999999999996
+        },
+        {
+          "drill": [],
+          "height": 0.4,
+          "layers": [
+            "F.Mask"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.55,
+          "y": 0.32500000000000007
+        },
+        {
+          "drill": [],
+          "height": 0.4,
+          "layers": [
+            "F.Mask"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.55,
+          "y": 0.9750000000000002
+        },
+        {
+          "drill": [],
+          "height": 0.4,
+          "layers": [
+            "F.Mask"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.835,
+          "x": 1.4825,
+          "y": 0.975
+        },
+        {
+          "drill": [],
+          "height": 0.4,
+          "layers": [
+            "F.Mask"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.835,
+          "x": 1.4825,
+          "y": 0.32499999999999996
+        },
+        {
+          "drill": [],
+          "height": 0.4,
+          "layers": [
+            "F.Mask"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.835,
+          "x": 1.4825,
+          "y": -0.32500000000000007
+        },
+        {
+          "drill": [],
+          "height": 0.4,
+          "layers": [
+            "F.Mask"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.835,
+          "x": 1.4825,
+          "y": -0.9750000000000002
+        },
+        {
+          "drill": [],
+          "height": 2.5500000000000003,
+          "layers": [
+            "F.Mask"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.05333333333333334,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.875,
+          "x": 0.3275,
+          "y": 0
+        }
+      ],
+      "path": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/libraries/Ember_Charger_BMS_Review.pretty/TI_CSD18543Q3A_Q3A_Manufacturer.kicad_mod"
+    },
+    "Inductor_SMD:L_Coilcraft_XAL6060-XXX": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "Inductor, Coilcraft, XAL6060-XXX, 6.56x6.76x6.1mm, (https://www.coilcraft.com/getmedia/ea51f14b-7f32-4dc6-8dfe-d4b70549040f/xal60xx.pdf)",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "L_Coilcraft_XAL6060-XXX",
+      "pad_count": 2,
+      "pads": [
+        {
+          "drill": [],
+          "height": 5.5,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.174825,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.43,
+          "x": -2.02,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 5.5,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.174825,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.43,
+          "x": 2.02,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Inductor_SMD.pretty/L_Coilcraft_XAL6060-XXX.kicad_mod"
+    },
+    "Capacitor_SMD:C_0603_1608Metric": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "C_0603_1608Metric",
+      "pad_count": 2,
+      "pads": [
+        {
+          "drill": [],
+          "height": 0.95,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.9,
+          "x": -0.775,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 0.95,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.9,
+          "x": 0.775,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Capacitor_SMD.pretty/C_0603_1608Metric.kicad_mod"
+    },
+    "Capacitor_SMD:C_0805_2012Metric": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing)",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "C_0805_2012Metric",
+      "pad_count": 2,
+      "pads": [
+        {
+          "drill": [],
+          "height": 1.45,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1,
+          "x": -0.95,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 1.45,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1,
+          "x": 0.95,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Capacitor_SMD.pretty/C_0805_2012Metric.kicad_mod"
+    },
+    "Capacitor_SMD:C_1206_3216Metric": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "C_1206_3216Metric",
+      "pad_count": 2,
+      "pads": [
+        {
+          "drill": [],
+          "height": 1.8,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.217391,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.15,
+          "x": -1.475,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 1.8,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.217391,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.15,
+          "x": 1.475,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Capacitor_SMD.pretty/C_1206_3216Metric.kicad_mod"
+    },
+    "Resistor_SMD:R_0603_1608Metric": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "R_0603_1608Metric",
+      "pad_count": 2,
+      "pads": [
+        {
+          "drill": [],
+          "height": 0.95,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.8,
+          "x": -0.825,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 0.95,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.8,
+          "x": 0.825,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Resistor_SMD.pretty/R_0603_1608Metric.kicad_mod"
+    },
+    "Resistor_SMD:R_1206_3216Metric": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "Resistor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "R_1206_3216Metric",
+      "pad_count": 2,
+      "pads": [
+        {
+          "drill": [],
+          "height": 1.75,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.222222,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.125,
+          "x": -1.4625,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 1.75,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.222222,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.125,
+          "x": 1.4625,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Resistor_SMD.pretty/R_1206_3216Metric.kicad_mod"
+    },
+    "TestPoint:TestPoint_Pad_D1.0mm": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "SMD pad as test Point, diameter 1.0mm",
+      "has_3d_model": false,
+      "has_courtyard": true,
+      "name": "TestPoint_Pad_D1.0mm",
+      "pad_count": 1,
+      "pads": [
+        {
+          "drill": [],
+          "height": 1,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "circle",
+          "type": "smd",
+          "width": 1,
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/TestPoint.pretty/TestPoint_Pad_D1.0mm.kicad_mod"
+    }
+  }
+}

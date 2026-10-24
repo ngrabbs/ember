@@ -1998,6 +1998,21 @@
 		(diameter 0)
 		(uuid "171ad981-48bc-4819-811c-8ce361021774")
 	)
+	(junction
+		(at 127 115.57)
+		(diameter 0)
+		(uuid "81b8f671-eaa7-40f6-8951-677308ae9912")
+	)
+	(junction
+		(at 124.46 118.11)
+		(diameter 0)
+		(uuid "3536f3f2-f398-4447-a9b7-61b696acc043")
+	)
+	(junction
+		(at 231.14 105.41)
+		(diameter 0)
+		(uuid "ebdc48a6-5deb-4cd7-9155-508e935dd359")
+	)
 	(wire
 		(pts
 			(xy 80.01 46.99)
@@ -2397,6 +2412,111 @@
 		)
 		(uuid "c1fa420a-978b-43a0-be34-51d43deb8bc3")
 	)
+	(wire
+		(pts
+			(xy 132.08 115.57)
+			(xy 116.84 115.57)
+		)
+		(uuid "ede8c298-1afe-468a-adf4-194a8feaa6e0")
+	)
+	(wire
+		(pts
+			(xy 132.08 118.11)
+			(xy 116.84 118.11)
+		)
+		(uuid "9a64d39a-d52a-4606-9e30-64a3e9111780")
+	)
+	(wire
+		(pts
+			(xy 187.96 105.41)
+			(xy 236.22 105.41)
+		)
+		(uuid "4c15e093-e2e4-41c9-987b-75b19832fd91")
+	)
+	(wire
+		(pts
+			(xy 58.42 179.07)
+			(xy 58.42 172.72)
+		)
+		(uuid "fedf8dd5-817f-45e9-b0cb-1ca249566b30")
+	)
+	(wire
+		(pts
+			(xy 83.82 179.07)
+			(xy 83.82 172.72)
+		)
+		(uuid "bab8c057-de53-4875-ac44-dcf33d7607cd")
+	)
+	(wire
+		(pts
+			(xy 109.22 179.07)
+			(xy 109.22 172.72)
+		)
+		(uuid "23fb30df-5172-456a-865a-ad59319283e4")
+	)
+	(wire
+		(pts
+			(xy 58.42 187.96)
+			(xy 58.42 186.69)
+		)
+		(uuid "732af049-8c63-4f05-a34a-ad2c4db58c05")
+	)
+	(wire
+		(pts
+			(xy 83.82 190.5)
+			(xy 83.82 186.69)
+		)
+		(uuid "a3b8a8e3-17e8-4a2a-8423-63cc7cfcfabb")
+	)
+	(wire
+		(pts
+			(xy 109.22 193.04)
+			(xy 109.22 186.69)
+		)
+		(uuid "58fb4b02-4705-4af3-afda-e1f629f8aac5")
+	)
+	(wire
+		(pts
+			(xy 127 115.57)
+			(xy 127 187.96)
+		)
+		(uuid "8305abc4-7c52-40cf-be3b-1440a381cd39")
+	)
+	(wire
+		(pts
+			(xy 127 187.96)
+			(xy 58.42 187.96)
+		)
+		(uuid "295a6fec-5364-4dda-b981-ae26419443d0")
+	)
+	(wire
+		(pts
+			(xy 124.46 118.11)
+			(xy 124.46 190.5)
+		)
+		(uuid "eae994ec-358b-4630-9f59-14158ffd8c4f")
+	)
+	(wire
+		(pts
+			(xy 124.46 190.5)
+			(xy 83.82 190.5)
+		)
+		(uuid "04d0a6e6-c3bc-4369-8cf5-afce3e9e219d")
+	)
+	(wire
+		(pts
+			(xy 231.14 105.41)
+			(xy 231.14 193.04)
+		)
+		(uuid "5d6fd396-04d4-45c3-9c48-2abbe86673ee")
+	)
+	(wire
+		(pts
+			(xy 231.14 193.04)
+			(xy 109.22 193.04)
+		)
+		(uuid "093e3ae4-f9cc-40a0-a3e3-ade1ddc7cdb2")
+	)
 	(text "CONTROLLER — integrated development checkpoint"
 		(at 25.4 24.13 0)
 		(effects
@@ -2466,6 +2586,81 @@
 			(justify left bottom)
 		)
 		(uuid "4121b165-048e-4506-a598-8aa1b1bb04f7")
+	)
+	(text "Essential+3V3 comes from buck; converters use external SYS fixture. Solar VIN_CHG ends at future charger; BMS pending."
+		(at 25.4 31.75 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "70a1dab9-33d4-4685-9273-f5480baf4a73")
+	)
+	(text "PROTECTION INTERFACES — LINKED GLOBALS\nPA6 REC5_RESET ->47k R623 ->Q609; existing100k base pull-down.\nPA7 REC5_FAULT; PC15 SRC_FAULT:active-low, single47k pullups on protector sheets.\nReset2ms; >=10s cooldown plus real rail qualification and settling.\nReset never bypasses hardware protection."
+		(at 254 86.36 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "47bc76e3-6857-4021-83af-1c4dd7f088b2")
+	)
+	(text "2026-10-24: OLD SOURCE / CHARGER-I2C NOTES ARE OBSOLETE."
+		(at 254 111.76 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "47904e7d-2947-46fc-9c7b-52ac494048e7")
+	)
+	(text "SYS is actual charger PowerPath output; BMS/RBF are still absent."
+		(at 254 116.84 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "0ebc1b0e-280d-45ab-be10-91ec1842adff")
+	)
+	(text "PB6/PB7/PA8 -> charger SCL/SDA/alert; R108/R109/R110 =4.7k."
+		(at 254 121.92 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "81916483-0e81-47a3-b700-e23cb3c02ad3")
+	)
+	(text "100 kbit/s development bus; measured timing/C and full-temp acceptance open."
+		(at 254 127 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "d07a0fbd-fe8a-4c66-b14e-97798c1ec0b4")
+	)
+	(text "ADC/UART/isolated SMBus/interlock/payload/3V3 containment remain open."
+		(at 254 132.08 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "d14655e2-05d6-47aa-92de-437aaa3c7362")
 	)
 	(label "EPS_NRST"
 		(at 111.76 66.04 0)
@@ -2626,16 +2821,39 @@
 		)
 		(uuid "c84c30ca-789e-4f47-bbde-c48abeae20a4")
 	)
-  (text "Essential+3V3 comes from buck; converters use external SYS fixture. Solar VIN_CHG ends at future charger; BMS pending."
-    (at 25.4 31.75 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "70a1dab9-33d4-4685-9273-f5480baf4a73")
-  )
-  (text "PROTECTION INTERFACES — LINKED GLOBALS\nPA6 REC5_RESET ->47k R623 ->Q609; existing100k base pull-down.\nPA7 REC5_FAULT; PC15 SRC_FAULT:active-low, single47k pullups on protector sheets.\nReset2ms; >=10s cooldown plus real rail qualification and settling.\nReset never bypasses hardware protection."
-    (at 254 86.36 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "47bc76e3-6857-4021-83af-1c4dd7f088b2")
-  )
+	(global_label "EPS_CHG_SCL"
+		(shape input)
+		(at 116.84 115.57 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "d78af4ad-a9d9-4743-8e57-5997df478d47")
+	)
+	(global_label "EPS_CHG_SDA"
+		(shape input)
+		(at 116.84 118.11 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e4d361c8-31a4-473e-b601-5e2552609b57")
+	)
+	(global_label "EPS_CHG_ALERT_N"
+		(shape input)
+		(at 236.22 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a8f615b2-4651-4797-b812-6fdc468ee2ac")
+	)
 	(symbol
 		(lib_id "Ember_EPS_Candidates:ECS_3225MV_DRAFT_v2")
 		(at 73.66 99.06 0)
@@ -4770,6 +4988,531 @@
 			(project "eps_rev_b"
 				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a"
 					(reference "#PWR0110")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 58.42 182.88 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9f83d964-b5bb-49bc-ad4b-888beb34efff")
+		(property "Reference" "R108"
+			(at 60.452 182.88 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4.7k"
+			(at 58.42 182.88 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 58.42 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.vishay.com/docs/28758/tnpw_e3.pdf"
+			(at 58.42 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 58.42 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "TNPW06034K70BEEA"
+			(at 58.42 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Vishay"
+			(at 58.42 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" "0.1%"
+			(at 58.42 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Power" "0.110 W general P70"
+			(at 58.42 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "0603"
+			(at 58.42 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "TemperatureCoefficient" "25 ppm/K"
+			(at 58.42 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a"
+					(reference "R108")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 83.82 182.88 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "aa69f80c-62be-4650-bf5d-50c12616184f")
+		(property "Reference" "R109"
+			(at 85.852 182.88 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4.7k"
+			(at 83.82 182.88 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 83.82 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.vishay.com/docs/28758/tnpw_e3.pdf"
+			(at 83.82 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 83.82 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "TNPW06034K70BEEA"
+			(at 83.82 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Vishay"
+			(at 83.82 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" "0.1%"
+			(at 83.82 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Power" "0.110 W general P70"
+			(at 83.82 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "0603"
+			(at 83.82 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "TemperatureCoefficient" "25 ppm/K"
+			(at 83.82 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a"
+					(reference "R109")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 109.22 182.88 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6f2c5373-433f-4800-8884-4a6cd8365854")
+		(property "Reference" "R110"
+			(at 111.252 182.88 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4.7k"
+			(at 109.22 182.88 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 109.22 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.vishay.com/docs/28758/tnpw_e3.pdf"
+			(at 109.22 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 109.22 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "TNPW06034K70BEEA"
+			(at 109.22 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Vishay"
+			(at 109.22 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" "0.1%"
+			(at 109.22 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Power" "0.110 W general P70"
+			(at 109.22 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "0603"
+			(at 109.22 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "TemperatureCoefficient" "25 ppm/K"
+			(at 109.22 182.88 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a"
+					(reference "R110")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 58.42 172.72 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f91c9aa6-5f7a-427a-af4d-97b3f37343b3")
+		(property "Reference" "#PWR001"
+			(at 58.42 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 58.42 169.164 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 58.42 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 58.42 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 58.42 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a"
+					(reference "#PWR001")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 83.82 172.72 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e256ee4c-f6f9-43b3-812e-3762ebcdfb0d")
+		(property "Reference" "#PWR002"
+			(at 83.82 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 83.82 169.164 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 83.82 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 83.82 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 83.82 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a"
+					(reference "#PWR002")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 109.22 172.72 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "65f7f67b-8faa-4b84-b3ca-4f5b85a326bd")
+		(property "Reference" "#PWR003"
+			(at 109.22 176.53 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 109.22 169.164 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 109.22 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 109.22 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 109.22 172.72 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a"
+					(reference "#PWR003")
 					(unit 1)
 				)
 			)

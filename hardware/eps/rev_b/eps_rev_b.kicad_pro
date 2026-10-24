@@ -79,6 +79,14 @@
         "track_width": 0.25,
         "via_diameter": 0.8,
         "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "I2C",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
       }
     ],
     "meta": {
@@ -368,6 +376,66 @@
       {
         "netclass": "ANALOG_CONTROL",
         "pattern": "/Solar source protection/SRC_SNUB"
+      },
+      {
+        "netclass": "I2C",
+        "pattern": "EPS_CHG_SCL"
+      },
+      {
+        "netclass": "I2C",
+        "pattern": "EPS_CHG_SDA"
+      },
+      {
+        "netclass": "CONTROL",
+        "pattern": "EPS_CHG_ALERT_N"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "BATT_PERMITTED"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "5V0_CHG_INTVCC"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "2V5_CHG_LOGIC"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "/Charger PowerPath/CHG_CLP"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "/Charger PowerPath/CHG_CSP"
+      },
+      {
+        "netclass": "SWITCHING",
+        "pattern": "/Charger PowerPath/CHG_SW"
+      },
+      {
+        "netclass": "SWITCHING",
+        "pattern": "/Charger PowerPath/CHG_BOOST"
+      },
+      {
+        "netclass": "ANALOG",
+        "pattern": "/Charger PowerPath/THM_CHG_NTC"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Charger PowerPath/CHG_INFET_GATE"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Charger PowerPath/CHG_BATFET_GATE"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Charger PowerPath/CHG_NTCBIAS"
+      },
+      {
+        "netclass": "ANALOG_CONTROL",
+        "pattern": "/Charger PowerPath/CHG_RT"
       }
     ]
   },

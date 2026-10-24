@@ -1,6 +1,6 @@
 # Charger power-stage sizing checkpoint
 
-2026-10-23. Run `python3 calculate.py` to reproduce `results.json`. This is a
+Analysis dated 2026-10-23; package and BOOST identity status updated 2026-10-24. Run `python3 calculate.py` to reproduce `results.json`. This is a
 development circuit allocation for the approved LTC4162IUFD-LADM#TRPBF library
 candidate, not a complete charger or authorization to bypass protection. No CAD
 mutation is made here. The exact reference circuit must still be integrated and
@@ -13,13 +13,13 @@ verified after library acceptance.
 | Charge and input shunts, separate parts | CRF1206-FZ-R033ELF, 33 mΩ, 1%, 50 ppm/K, 1 W P70 | About 0.970 A nominal full scale; Kelvin traces at each termination. Cell/source acceptance remains open. |
 | RT | TNPW060363K4BEEA, 63.4 kΩ, 0.1%, 25 ppm/K, 0603 | Datasheet frequency test point: 1.4–1.6 MHz. Procurement and actual field metadata still require readback. |
 | Charger inductor | XAL6060-153MEC, 15 µH, 20% | Prefer over the earlier 10 µH candidate for tolerance/bias margin; require at least 7.52 µH through actual peak current and temperature for this screen. No native substitution yet. |
-| INFET and BATFET | CSD18543Q3A, one per function | Electrical candidate: 60 V, maximum 15.6 mΩ at 4.5 V gate drive/25°C. Physical land acceptance remains open; [manufacturer footprint construction proposal](../../../design/rev_b_charger_powerpath_footprint_rules.md) awaits approval. |
+| INFET and BATFET | CSD18543Q3A, one per function | Electrical candidate: 60 V, maximum 15.6 mΩ at 4.5 V gate drive/25°C. [Physical mapping now passes](../powerpath_package/README.md) for development under the approved rectangle decomposition; manufacturing corner, reference placement, thermal and assembly acceptance remain open. |
 | VOUT hot-loop bank | Four CGA5L1X7R1H106K160AC, 10 µF/50 V/X7R/10%/1206 each | 40 µF nominal; final effective capacitance, ripple and loop response require verification. Place directly at VOUT/PGND. |
 | BATSENS+ bank | Two of the same 10 µF/50 V parts | Require at least 10 µF total effective, not merely 20 µF nameplate. All battery sensing stays after hardware isolation. |
 | INTVCC bypass | One of the same 10 µF/50 V parts | Require at least 4.7 µF effective at the actual internal-regulator voltage. |
 | VCC2P5 bypass | GRM21BR71A475KE51L, 4.7 µF/10 V/X7R/10%/0805 | Require at least 1 µF effective; the 1 µF nameplate alternative has insufficient tolerance margin to claim that minimum. |
 | VIN, VOUTA and DVCC bypass | GRM188R72A104KA35D, 100 nF/100 V/X7R/10%/0603 each | Existing project candidate; voltage rating does not establish effective capacitance. |
-| BOOST | 22 nF ceramic, at least 6.3 V | GRM188R72A223KAC4D is a candidate; package suffix/current supplier specification still need verification. Do not use the obsolete GRM188R71H223KA01D merely because its old datasheet exists. |
+| BOOST | 22 nF ceramic, at least 6.3 V | GRM188R72A223KAC4D: Murata reference sheet dated June 17, 2026 verifies 22 nF/100 V/X7R/10%/0603 and D reel suffix; see [support-part evidence](../support_parts/README.md). Effective capacitance and application qualification remain open. Do not use the obsolete GRM188R71H223KA01D merely because its old datasheet exists. |
 
 The [LTC4162-L Rev A](https://www.analog.com/media/en/technical-documentation/data-sheets/LTC4162-L.pdf),
 printed pp.5, 10–11 and 30–33, provides the servo, bypass, inductor and PowerPath
