@@ -1,0 +1,29 @@
+COMMAND version
+FIRMWARE role=IHU_MCU version=0.15.0 git=701e96c00c8a9a207d29a746eee74c7108a2a1b3 dirty=0 boot=2683155817
+COMMAND mode
+MODE configuration=GROUND_TEST mode=SAFE simulated=0 flight_routines=STUB reason=GROUND_TEST_DEFAULT
+COMMAND outputs
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+COMMAND eps json
+{"profile":"ltc4162-l-readout-v1","uptime_ms":21280,"registers":{"config_bits":0,"charger_config_bits":1,"charger_state":2048,"charge_status":0,"limit_alerts":0,"charger_state_alerts":0,"charge_status_alerts":0,"system_status":103,"vbat":5,"vin":4628,"vout":4277,"ibat":65531,"iin":1526,"die_temp":13400,"thermistor_voltage":506,"bsr":0,"jeita_region":7,"chem_cells":8418,"telemetry_status":1}}
+COMMAND hello transceiver
+SUBMITTED request=1 type=1 bytes=0
+RESULT request=1 outcome=CAN_HELLO_CONFIRMED peer=1905197610 bytes=0 hex=
+COMMAND version
+FIRMWARE role=IHU_MCU version=0.15.0 git=701e96c00c8a9a207d29a746eee74c7108a2a1b3 dirty=0 boot=2683155817
+COMMAND status
+FIRMWARE role=IHU_MCU version=0.15.0 git=701e96c00c8a9a207d29a746eee74c7108a2a1b3 dirty=0 boot=2683155817
+MODE configuration=GROUND_TEST mode=SAFE simulated=0 flight_routines=STUB reason=GROUND_TEST_DEFAULT
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+CAN_TARGET name=COMMS request=710 reply=711
+STATUS role=IHU_MCU fw=0.15.0 id=DF641455DB822427 boot=2683155817 peer=1905197610 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=17 tx_fail=0 tx_timeout=0 rx=12 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=1 unknown=0 busy_drops=0 pending=0 uptime_ms=29653 uhf_pending=0 uhf_mode=0 cycles=0 submitted=0
+COMMAND rtos
+RTOS kernel=V11.2.0 cores=1 preemptive=1 tick_hz=1000 can_rx_drops=0 reply_drops=0 log_drops=0 record_overflows=0 can_rx_high=1 command_high=1 reset_reason=00000000
+RTOS_TASK name=supervisor stack_free_words=466
+RTOS_TASK name=can_service stack_free_words=930
+RTOS_TASK name=command_mode stack_free_words=1227
+RTOS_TASK name=sensors stack_free_words=412
+RTOS_TASK name=schedule stack_free_words=207
+RTOS_TASK name=usb_console stack_free_words=349
+COMMAND faults
+FAULTS total=0 retained=0 persistent=0

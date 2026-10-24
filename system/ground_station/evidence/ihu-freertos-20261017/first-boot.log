@@ -1,0 +1,13 @@
+FIRMWARE role=IHU_MCU version=0.15.0 git=701e96c00c8a9a207d29a746eee74c7108a2a1b3 dirty=0 boot=4290586843
+RTOS kernel=V11.2.0 cores=1 preemptive=1 tick_hz=1000 can_rx_drops=0 reply_drops=0 log_drops=0 record_overflows=0 can_rx_high=1 command_high=1 reset_reason=00000000
+RTOS_TASK name=supervisor stack_free_words=466
+RTOS_TASK name=can_service stack_free_words=930
+RTOS_TASK name=command_mode stack_free_words=1529
+RTOS_TASK name=sensors stack_free_words=412
+RTOS_TASK name=schedule stack_free_words=221
+RTOS_TASK name=usb_console stack_free_words=403
+FIRMWARE role=IHU_MCU version=0.15.0 git=701e96c00c8a9a207d29a746eee74c7108a2a1b3 dirty=0 boot=4290586843
+MODE configuration=GROUND_TEST mode=SAFE simulated=0 flight_routines=STUB reason=GROUND_TEST_DEFAULT
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+CAN_TARGET name=COMMS request=710 reply=711
+STATUS role=IHU_MCU fw=0.15.0 id=DF641455DB822427 boot=4290586843 peer=0 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=4 tx_fail=0 tx_timeout=0 rx=2 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=0 unknown=0 busy_drops=0 pending=0 uptime_ms=13426 uhf_pending=0 uhf_mode=0 cycles=0 submitted=0

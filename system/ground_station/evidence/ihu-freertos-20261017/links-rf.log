@@ -1,0 +1,70 @@
+COMMAND hello lte
+SUBMITTED request=3 type=1 bytes=0
+RESULT request=3 outcome=CAN_HELLO_CONFIRMED peer=1508175689 bytes=0 hex=
+COMMAND lte firmware
+SUBMITTED request=4 type=24 bytes=0
+FIRMWARE_REPLY peer=1508175689 version=0.8.0 dirty=0
+DEVICE_FIRMWARE component=LTE_CAN version=0.8.0 dirty=0 boot=1508175689 git=9fcb0209f1bb192369fce34d863a3862f8040de6
+RESULT request=4 outcome=FIRMWARE_IDENTITY peer=1508175689 bytes=32 hex=000800009fcb0209f1bb192369fce34d863a3862f8040de659e4ef4900563770
+COMMAND lte modem firmware
+SUBMITTED request=5 type=124 bytes=0
+FIRMWARE_REPLY peer=1508175689 version=0.3.0 dirty=0
+DEVICE_FIRMWARE component=WALTER version=0.3.0 dirty=0 boot=485142379 git=9fcb0209f1bb192369fce34d863a3862f8040de6
+RESULT request=5 outcome=FIRMWARE_IDENTITY peer=1508175689 bytes=32 hex=000300009fcb0209f1bb192369fce34d863a3862f8040de61ceaaf6b00563884
+COMMAND lte status
+SUBMITTED request=6 type=120 bytes=0
+LTE_STATUS state=0 step=0 error=0 registered=0 window_ms=0 modem_accepted=0 rejected=0
+RESULT request=6 outcome=LTE_STATUS peer=1508175689 bytes=16 hex=00000000000000000000000000000000
+COMMAND hello transceiver
+SUBMITTED request=7 type=1 bytes=0
+RESULT request=7 outcome=CAN_HELLO_CONFIRMED peer=1905197610 bytes=0 hex=
+COMMAND output uhf_telem on
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=1 lte_telem=0
+COMMAND uhf heartbeat
+SUBMITTED request=8 type=128 bytes=38
+UHF request=8 outcome=QUEUED status=0 bytes=38 digest=9cb89e09 ground_ack=0 outstanding=1
+UHF request=8 outcome=RF_TX_COMPLETE status=0 bytes=38 digest=9cb89e09 ground_ack=0 outstanding=0
+COMMAND output cli_debug on
+OUTPUTS cli_debug=1 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=1 lte_telem=0
+COMMAND uhf run 20 5
+UHF_RUN START duration_s=20 period_s=5 boot_resume=0
+CLI_DEBUG SUBMITTED request=9 type=128 bytes=38
+CLI_DEBUG UHF request=9 outcome=QUEUED status=0 bytes=38 digest=a39a2bbd ground_ack=0 outstanding=1
+CLI_DEBUG UHF request=9 outcome=RF_TX_COMPLETE status=0 bytes=38 digest=a39a2bbd ground_ack=0 outstanding=0
+CLI_DEBUG SUBMITTED request=10 type=128 bytes=46
+CLI_DEBUG UHF request=10 outcome=QUEUED status=0 bytes=46 digest=3c0b9005 ground_ack=0 outstanding=1
+CLI_DEBUG UHF request=10 outcome=RF_TX_COMPLETE status=0 bytes=46 digest=3c0b9005 ground_ack=0 outstanding=0
+CLI_DEBUG SUBMITTED request=11 type=128 bytes=128
+CLI_DEBUG UHF request=11 outcome=QUEUED status=0 bytes=128 digest=8e80ce37 ground_ack=0 outstanding=1
+CLI_DEBUG UHF request=11 outcome=RF_TX_COMPLETE status=0 bytes=128 digest=8e80ce37 ground_ack=0 outstanding=0
+CLI_DEBUG SUBMITTED request=12 type=128 bytes=104
+CLI_DEBUG UHF request=12 outcome=QUEUED status=0 bytes=104 digest=1eb4aa3a ground_ack=0 outstanding=1
+CLI_DEBUG UHF request=12 outcome=RF_TX_COMPLETE status=0 bytes=104 digest=1eb4aa3a ground_ack=0 outstanding=0
+COMMAND uhf stop
+UHF_RUN STOPPED outstanding=0 accepted_packets_may_finish=1
+COMMAND output uhf_telem off
+OUTPUTS cli_debug=1 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+COMMAND output cli_debug off
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+COMMAND status
+FIRMWARE role=IHU_MCU version=0.15.0 git=701e96c00c8a9a207d29a746eee74c7108a2a1b3 dirty=0 boot=4290586843
+MODE configuration=GROUND_TEST mode=SAFE simulated=0 flight_routines=STUB reason=GROUND_TEST_DEFAULT
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+CAN_TARGET name=COMMS request=710 reply=711
+STATUS role=IHU_MCU fw=0.15.0 id=DF641455DB822427 boot=4290586843 peer=1905197610 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=228 tx_fail=0 tx_timeout=0 rx=180 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=17 unknown=0 busy_drops=0 pending=0 uptime_ms=159481 uhf_pending=0 uhf_mode=3 cycles=1 submitted=4
+COMMAND status
+FIRMWARE role=IHU_MCU version=0.15.0 git=701e96c00c8a9a207d29a746eee74c7108a2a1b3 dirty=0 boot=4290586843
+MODE configuration=GROUND_TEST mode=SAFE simulated=0 flight_routines=STUB reason=GROUND_TEST_DEFAULT
+OUTPUTS cli_debug=0 cli_telem=0 umb_debug=0 umb_telem=0 uhf_telem=0 lte_telem=0
+CAN_TARGET name=COMMS request=710 reply=711
+STATUS role=IHU_MCU fw=0.15.0 id=DF641455DB822427 boot=4290586843 peer=1905197610 can_ready=1 mode=00 cnf=00,f0,86 bitrate=500000 tec=0 rec=0 eflg=00 tx_ok=231 tx_fail=0 tx_timeout=0 rx=182 rx_bad=0 rx_overflow=0 fragments_bad=0 fragments_timeout=0 matched=17 unknown=0 busy_drops=0 pending=0 uptime_ms=165736 uhf_pending=0 uhf_mode=3 cycles=1 submitted=4
+COMMAND rtos
+RTOS kernel=V11.2.0 cores=1 preemptive=1 tick_hz=1000 can_rx_drops=0 reply_drops=0 log_drops=0 record_overflows=0 can_rx_high=1 command_high=1 reset_reason=00000000
+RTOS_TASK name=supervisor stack_free_words=466
+RTOS_TASK name=can_service stack_free_words=930
+RTOS_TASK name=command_mode stack_free_words=1231
+RTOS_TASK name=sensors stack_free_words=410
+RTOS_TASK name=schedule stack_free_words=207
+RTOS_TASK name=usb_console stack_free_words=227
+COMMAND faults
+FAULTS total=0 retained=0 persistent=0

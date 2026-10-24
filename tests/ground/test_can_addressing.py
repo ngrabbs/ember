@@ -180,11 +180,11 @@ class AddressingTests(unittest.TestCase):
    generate(p/'wire.h')
    source=p/'test.c'
    for role,app in ((0,'walter_mcu'),(1,'ihu')):
-    source.write_text('#include <assert.h>\n#define main embedded_main\n#include "'+str(ROOT/'firmware'/app/'main.c')+'"\n#undef main\n'+DRIVER)
+    source.write_text('#include <assert.h>\n#define main embedded_main\n#include "'+str(ROOT/'firmware'/app/('app.c' if role else 'main.c'))+'"\n#undef main\n'+DRIVER)
     binary=p/f'role{role}'
     sources=[str(source)]
     if role:sources.append(str(ROOT/'firmware/shared/ember_protocol/protocol.c'))
-    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror',f'-DTEST_IHU={role}','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),*sources,'-o',str(binary)],check=True)
+    subprocess.run(['cc','-std=c11','-Wall','-Wextra','-Werror','-DIHU_HOST_TEST',f'-DTEST_IHU={role}','-I'+str(p),'-I'+str(ROOT/'firmware/comms_transport'),*sources,'-o',str(binary)],check=True)
     output=subprocess.check_output([str(binary)],text=True)
     if role:
      wire=next(line.split()[1] for line in output.splitlines() if line.startswith('IDENTITY_PACKET '))

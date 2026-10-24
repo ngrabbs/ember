@@ -2,7 +2,10 @@
 
 [Operator guides](README.md) · [Transmission matrix](#transmission-matrix) · [Mode/output matrix and entry gates](../architecture/operations/04-ihu-runtime-policy.md)
 
-This guide describes IHU **0.14.0**, transceiver **0.33.0**, and bench bridge **0.4.0**.
+This guide describes the IHU **0.15.0 FreeRTOS candidate**, transceiver **0.33.0**,
+and bench bridge **0.4.0**. The candidate is flashed on the bench with [initial checks recorded](../../system/ground_station/evidence/ihu-freertos-20261017/deployment.json);
+full hardware/RF acceptance remains pending. Older deployment records below
+describe their respective earlier hardware tests.
 The earlier IHU 0.13.0 [deployment record](../../system/ground_station/evidence/ihu-0.13.0-20261017/deployment.json)
 is retained separately. Earlier 0.12.0 RF validation is
 recorded in the [fire-check runbook](../../ground/yamcs/FIRE_CHECK.md).
@@ -57,6 +60,7 @@ is not supported. Every boot and accepted mode change clears all six.
 | Command | Effect |
 |---|---|
 | `version` / `status` | Build identity; status also includes actual configuration/mode, effective switches, CAN state and transport counters |
+| `rtos` | Read kernel, tick/core, queue/drop/reset diagnostics and task stack high-water marks; solicited output only |
 | `mode` | Read configuration, mode, simulated-state flag, stub status and entry reason |
 | `mode safe` | Enter SAFE when transport is idle, clear switches and stop UHF producer |
 | `mode startup` / `mode commissioning` / `mode nominal` | GROUND_TEST simulation only; clear switches, no automatic deployment or mission routine; FLIGHT rejects these exits |
@@ -88,6 +92,14 @@ work. EPS validity and discovery presence are distinct forms of evidence.
 | `payload fire-check` | Request a fire result; payload 0.2.0 returns NO_FIRE/STATIC_STUB |
 | `lte firmware` / `lte modem firmware` / `lte status` / `lte diagnostics` | Query selected LTE route; no RF window is started by these queries |
 | `lte N` | Explicit Walter RF window,0 stops, maximum120 seconds; does not itself send telemetry |
+
+EPS operations complete in a separate task. While one is active, conflicting
+commands return SENSOR_BUSY; status and OFF/stop remain available. OFF/stop
+bypasses a full normal command queue and cancels older queued commands with
+CANCELLED_BY_STOP. A later ON cannot revive an EPS sample begun before OFF.
+Malformed/overloaded input and diagnostic output are bounded; use `rtos` to
+inspect drop counters rather than assuming an arbitrarily large console burst
+was accepted. Host loss or slow USB must not stop CAN/EPS service.
 
 Wait for a correlated terminal RESULT before issuing another application
 command. Quiet output does not hide a solicited asynchronous result. A timeout
@@ -245,7 +257,7 @@ does not mean the IHU is in FLIGHT configuration. See the
 [mode/configuration matrix](../architecture/operations/04-ihu-runtime-policy.md).
 RF completion is local radio evidence; confirm ground reception separately.
 
-Implementation references: [IHU producers and dispatch](../../firmware/ihu/main.c),
+Implementation references: [IHU producers and dispatch](../../firmware/ihu/app.c),
 [run scheduler](../../firmware/ihu/uhf_run.h),
 [transceiver announcement and RF drain](../../firmware/transceiver/rf_service.h),
 [RF solicited replies](../../firmware/transceiver/uplink_service.h), and

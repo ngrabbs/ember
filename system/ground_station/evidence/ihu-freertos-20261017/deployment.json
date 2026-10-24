@@ -1,0 +1,76 @@
+{
+  "date_local": "2026-10-17",
+  "timezone": "America/Chicago",
+  "observed_at_utc": "2026-10-18T01:18:30.884891+00:00",
+  "host": "m75q / 192.168.1.252",
+  "device": "DF641455DB822427",
+  "version": "0.15.0",
+  "source_git": "701e96c00c8a9a207d29a746eee74c7108a2a1b3",
+  "dirty": false,
+  "uf2_sha256": "19d39430cde90366b1e03c6f800c99a02c067d807720646574e24b8579ae7b83",
+  "image": "/home/ngrabbs/work/ember-ihu-freertos-20261017/build-ihu/ihu.uf2",
+  "flashed_and_readback_verified": true,
+  "previous": {
+    "version": "0.14.0",
+    "source_git": "80eac2c9b1b836e916cfa1ce9cb901a3a63ce7cb",
+    "boot": 4162902004,
+    "full_flash_backup": "/home/ngrabbs/work/ember-ihu-freertos-20261017/deployment/ihu-before.uf2",
+    "backup_sha256": "3a267a4050d33bcda3ebc0769873862073a7c5e0c37224ab6e279a4e5707fac4",
+    "readback_verified": true,
+    "access": "root-owned, mode 0600"
+  },
+  "boots": {
+    "first_candidate": 4290586843,
+    "after_intentional_reboot": 2683155817,
+    "unexpected_reset_observed": false
+  },
+  "passed": [
+    "Quiet SAFE/GROUND_TEST defaults, all six outputs off",
+    "19-register PEC-checked EPS JSON",
+    "Transceiver CAN HELLO and exact 32-byte echo",
+    "Human and structured health streams, then OFF",
+    "Console closed / DTR released for 8 seconds, same boot",
+    "LTE Feather identity, Walter identity and LTE status without opening an RF window",
+    "One UHF heartbeat and one four-stage run cycle report local RF completion",
+    "Explicit run stop and UHF OFF; no further submissions after 6 seconds",
+    "USB load: 100 status commands, 1 second paused reader, no malformed records",
+    "Intentional USB reboot: outputs/faults/counters reset, fresh HELLO and EPS read"
+  ],
+  "usb_load": {
+    "diagnostic_or_rejection_drops": 74,
+    "can_rx_drops": 0,
+    "reply_drops": 0,
+    "record_overflows": 0,
+    "expected_overload": "Normal ingress saturated; low-priority messages bounded and counted. Counters cleared by the subsequent intentional reboot."
+  },
+  "final": {
+    "boot": 2683155817,
+    "configuration": "GROUND_TEST",
+    "mode": "SAFE",
+    "outputs": "all six off",
+    "faults": 0,
+    "can_errors": 0,
+    "rtos_drops": 0,
+    "peer": 1905197610,
+    "screen": "1760398.pts-4.m75q, attached, window 0 IHU",
+    "ember-bench-bridge": "inactive, as initially found",
+    "ember-fire-arm": "active, unchanged"
+  },
+  "not_verified": [
+    "Independent RF reception / Yamcs decode and archive",
+    "Ground-to-IHU actual flight RF command/reply regression",
+    "LTE UDP ground delivery",
+    "Hardware watchdog fault-injection recovery",
+    "Maximum CAN burst/latency limits and endurance soak",
+    "Payload services: Pi CAN service failed, payload service inactive, can0 absent"
+  ],
+  "payload_observation": {
+    "host": "192.168.1.253",
+    "ember-payload-can": "failed",
+    "ember-payload": "inactive",
+    "can0": "absent",
+    "changed": false
+  },
+  "rollback": "Close the IHU serial owner; use sudo picotool-usb load -v -x -f --ser DF641455DB822427 with the recorded full-flash backup. Restoration has not been exercised.",
+  "other_devices_flashed": false
+}
