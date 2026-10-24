@@ -5,6 +5,8 @@ Pico/Pico H. Builds `ihu_demo.uf2`; the operational CAN Feather target remains
 `firmware/ihu` / `ihu.uf2`. This target is intentionally separate so a teaching
 image cannot silently replace the CAN/EPS application profile.
 
+[Download the 0.1.0 UF2 hardware-test candidate](releases/0.1.0/README.md).
+
 [Step-by-step install, wiring, console walkthrough and hardware acceptance](../../docs/user/ihu-pico-demo.md).
 
 Uses the same pinned FreeRTOS 11.2.0 kernel and shared mode/output vocabulary as

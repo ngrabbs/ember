@@ -3,7 +3,9 @@
 This guide is for the IHU lead using the **original Raspberry Pi Pico or Pico H
 (RP2040, non-wireless)**. The supplied file will be **`ihu_demo.uf2`**, demo version
 **0.1.0**. You do not need the source code, a compiler, Python, or flight hardware.
-The release package must include the hardware acceptance record before handoff.
+Download the [0.1.0 hardware-test candidate](../../firmware/ihu_demo/releases/0.1.0/README.md)
+from this PR to flash and test it. Physical acceptance is pending; complete the
+checklist below before treating the package as a tested demo release.
 
 This is a standalone teaching image using FreeRTOS and the IHU's mode names and
 console conventions. It models the deployment sequence; it does not connect to
