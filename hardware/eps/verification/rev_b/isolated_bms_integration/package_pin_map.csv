@@ -1,0 +1,24 @@
+reference,pin,name,electrical_type,net,footprint
+U900,1,IN,power_in,+3V3,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U900,2,GND,power_in,GND,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U900,3,EN,input,/Isolated BMS supply/BMS_PRI_EN,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U900,4,~{FAULT},open_collector,/Isolated BMS supply/BMS_PRI_FAULT_N,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U900,5,ILIM,output,/Isolated BMS supply/BMS_PRI_ILIM,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U900,6,OUT,power_out,3V3_BMS_PRI_SW,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U901,1,EN/FLT,bidirectional,/Isolated BMS supply/BMS_MODULE_EN_FLT,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U901,2,VINP,power_in,3V3_BMS_PRI,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U901,3,GNDP,power_in,GND,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U901,4,GNDP,power_in,GND,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U901,5,GNDP,power_in,GND,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U901,6,GNDP,power_in,GND,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U901,7,SEL,input,5V0_BMS_ISO,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U901,8,VCC,power_out,5V0_BMS_ISO,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U901,9,GNDS,power_in,GND_BMS_RAW,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U901,10,GNDS,power_in,GND_BMS_RAW,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U901,11,GNDS,power_in,GND_BMS_RAW,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U901,12,GNDS,power_in,GND_BMS_RAW,Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW
+U902,1,VIN,power_in,5V0_BMS_ISO,Package_TO_SOT_SMD:TSOT-23-5_HandSoldering
+U902,2,GND,power_in,GND_BMS_RAW,Package_TO_SOT_SMD:TSOT-23-5_HandSoldering
+U902,3,~{SHDN},input,5V0_BMS_ISO,Package_TO_SOT_SMD:TSOT-23-5_HandSoldering
+U902,4,ADJ,input,/Isolated BMS supply/BMS_ISO_ADJ,Package_TO_SOT_SMD:TSOT-23-5_HandSoldering
+U902,5,VOUT,power_out,3V3_BMS_ISO,Package_TO_SOT_SMD:TSOT-23-5_HandSoldering

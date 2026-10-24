@@ -1,0 +1,29 @@
+{
+  "status": "CONDITIONAL_ASSEMBLY_STATIC_SCREEN; inherits LDO bias/temp and capacitor assumptions",
+  "isolated_3V3_envelope_V": [
+    3.1637578606158825,
+    3.4007782166542015
+  ],
+  "added_output_bleed_max_A": 0.000725474203113855,
+  "output_static_with_bleed_A": 0.009300394672148507,
+  "output_allocation_A": 0.012,
+  "output_allocation_reserve_A": 0.0026996053278514932,
+  "isolated_5V_bleed_max_A": 0.0011092948777775703,
+  "intermediate_allocation_with_bleed_A": 0.01410929487777757,
+  "intermediate_max_power_W": 0.07336833336444337,
+  "primary_bleed_max_A": 0.0008546537224316395,
+  "side2_pullup_min_at0p4V_A": 0.0007068005103566938,
+  "BMS_max_sink_at0p4V_A": 0.0007714553823412616,
+  "BMS_to_ISO2_low_margin_V": 0.5491273581847647,
+  "ISO2_to_BMS_low_margin_V": 0.4,
+  "side2_high_min_with11uA_and700k_pulldown_V": 3.1034094367481306,
+  "BMS_high_margin_to1p3V_V": 1.8034094367481306,
+  "ISO2_high_margin_to0p5Vcc_independent_corners_V": 1.4030203284210299,
+  "side2_200pF_30_70_rise_ns": 662.6288467500001,
+  "scope": [
+    "Same ISO1540/BQ limits as historical bus_screening/calculate.py; no new signal interface",
+    "Side2 voltage now referenced to raw domain; do not reapply shared-positive shunt offset",
+    "All-low IC6.7mA and LDO GND1mA allocations retain their original test-point qualifications",
+    "Side1 is unchanged; dynamic loading, ramp, power-off and all-path leakage remain open"
+  ]
+}

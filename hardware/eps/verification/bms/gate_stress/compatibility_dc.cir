@@ -1,0 +1,8 @@
+* Exact TI CSD18543Q3A model compatibility and DC screening
+.include ${FET_MODEL}
+Vd drain 0 0.1
+Vg gate 0 10
+Xdut drain gate 0 csd18543q3a
+.dc Vg 0 12 0.02
+.save V(gate) I(Vd)
+.end

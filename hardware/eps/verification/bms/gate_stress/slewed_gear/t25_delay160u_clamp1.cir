@@ -1,0 +1,36 @@
+* Coupled channel diagnostic, imposed drive; NOT pack-protection acceptance
+.include "${FET_MODEL}"
+Vcell cell 0 8.526
+Rcell cell cable 80m
+Lcell cable raw 1u
+Vch chgcmd 0 20.526
+* Held BAT reservoir / stiff charge pump is an imposed stress fixture.
+Voff off 0 PWL(0 1 0.00116 1 0.00126 0)
+Bds dsgcmd 0 V=V(port)+0.4+V(off)*(20.126-V(port))
+Rcg chgcmd gc 5.1k
+Rdg dsgcmd gd 5.1k
+Rgs1 gc raw 10meg
+Rgs2 gd port 10meg
+Xchg common gc raw csd18543q3a
+Vids common dsgdrain 0
+Xdsg dsgdrain gd port csd18543q3a
+Rload port 0 4.263
+Vfault command 0 PWL(0 0 1m 0 1.000001m 5)
+Sfault port fault command 0 SHORT
+Rfault fault 0 10m
+.model SHORT SW(Ron=1m Roff=1e12 Vt=2.5)
+* Equivalent capacitances of the two native 100 nF series pairs.
+Cpair raw port 50n Rser=100m
+Cport port 0 50n Rser=100m
+
+* Hypothetical piecewise clamp, NOT a BZT52C15 model or guaranteed bounds.
+Bzc gc raw I=max((V(gc,raw)-16.38)/30,0)-max((-V(gc,raw)-0.9)/2,0)
+Bzd gd port I=max((V(gd,port)-16.38)/30,0)-max((-V(gd,port)-0.9)/2,0)
+Czc gc raw 100p
+Czd gd port 100p
+
+.temp 25
+.options plotwinsize=0 method=gear
+.tran 0 3m 0 100n
+.save V(raw) V(common) V(dsgdrain) V(port) V(gc) V(gd) I(Vids) I(Lcell) I(Rcg) I(Rdg)
+.end

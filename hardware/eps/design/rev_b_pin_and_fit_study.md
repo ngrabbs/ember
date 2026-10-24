@@ -1,9 +1,9 @@
 # EPS Rev B pin allocation and circuit fit study
 
-> 2026-10-04 library acceptance finding: the installed `MCU_ST_STM32G0:STM32G0B1KETx` symbol does not match the selected GP MCU at physical pins 17, 20 and 26–29. A disposable KiCad render confirms the conflict. Keep the manufacturer-derived allocation below; do not place that installed symbol in Rev B. See the [package reconciliation evidence](../verification/rev_a_saved_schematic_audit.md). Corrected project-owned symbol and full pad-map acceptance remain required.
+> **2026-10-23 correction:** the allocation below is the **N variant**, not GP. The operator selects **STM32G0B1KET6N**. Earlier rejection of the standard GP map was incorrect; the custom symbol named GP was itself mislabeled. See the [pinout correction](../verification/stm32_gp_candidate_verification.md). Correct symbol identity and fresh package/connectivity verification are required before integration.
 
 
-Draft dated 2026-10-03. The preferred STM32G0B1KET package can accommodate the proposed EPS interfaces. The added circuits appear compatible with a single PCB after layout changes, but this is an area budget, not verified footprint placement or holder clearance. Use BQ40Z50 as the protection reference for the next circuit-design pass; retain BQ28Z610 as the smaller alternative.
+Draft dated 2026-10-03. The preferred STM32G0B1KET6N package can accommodate the proposed EPS interfaces. The added circuits appear compatible with a single PCB after layout changes, but this is an area budget, not verified footprint placement or holder clearance. Use BQ40Z50 as the protection reference for the next circuit-design pass; retain BQ28Z610 as the smaller alternative.
 
 [Architecture plan](rev_b_plan.md) · [EPS documentation](../README.md)
 
@@ -17,13 +17,13 @@ The historical `datasheet/board.png` shows underside cells and holders; it does 
 
 ## MCU allocation
 
-Proposed for the general-purpose LQFP32 variant, not the alternate N pinout. Physical pins and alternate functions were checked against [ST DS13560 Rev 6](https://www.st.com/resource/en/datasheet/stm32g0b1ke.pdf), Figure 3 and Tables 12–16. The assignment is board-local and does not authorize changes to stack signals. Full orderable suffix, temperature grade, errata review, and CubeMX confirmation remain open.
+Selected for the N LQFP32 variant, STM32G0B1KET6N, following the 2026-10-23 pinout correction. Physical pins must be reverified against [ST DS13560 Rev 6](https://www.st.com/resource/en/datasheet/stm32g0b1ke.pdf), Figure 3 and Tables 12–16. The assignment is board-local and does not authorize changes to stack signals. The operator selects the N suffix and temperature grade 6. Errata, alternate-function and configuration-tool confirmation remain open.
 
 | Pin | Port | Proposed assignment | Mode |
 |---|---|---|---|
 | 1 | PB9 | CAN A standby | GPIO |
 | 2 | PC14 | External clock | HSE bypass |
-| 3 | PC15 | Reserve input | GPIO |
+| 3 | PC15 | Source protector fault, `SRC_FAULT` active-low | Input |
 | 4 | VDD/VDDA | Essential 3.3 V | Supply |
 | 5 | VSS/VSSA | Ground | Supply |
 | 6 | PF2-NRST | Reset and SWD | Reset |
@@ -33,8 +33,8 @@ Proposed for the general-purpose LQFP32 variant, not the alternate N pinout. Phy
 | 10 | PA3 | Debug RX | USART2 AF1 |
 | 11 | PA4 | 3.3 V voltage | ADC4 |
 | 12 | PA5 | Interlocked battery voltage | ADC5 |
-| 13 | PA6 | Managed 3.3 V enable | GPIO |
-| 14 | PA7 | Managed 5 V enable | GPIO |
+| 13 | PA6 | `REC5_RESET`, default low | GPIO |
+| 14 | PA7 | Recovery rail fault, `REC5_FAULT` active-low | Input |
 | 15 | PB0 | CAN B RX | FDCAN2 AF3 |
 | 16 | PB1 | CAN B TX | FDCAN2 AF3 |
 | 17 | PB15 | Payload power request | GPIO |
@@ -46,19 +46,21 @@ Proposed for the general-purpose LQFP32 variant, not the alternate N pinout. Phy
 | 23 | PA12 | CAN A TX | FDCAN1 AF3 |
 | 24 | PA13 | SWD data | SWD |
 | 25 | PA14 | SWD clock and BOOT0 | SWD |
-| 26 | PD0 | Reserve with reset-state restrictions | GPIO |
+| 26 | PD0 | `EPS_BMS_PRI_FAULT_N`; diagnostic after UCPD startup strobe | Input |
 | 27 | PD1 | CAN B standby | GPIO |
 | 28 | PD2 | Hardware interlock status | Input |
-| 29 | PD3 | Pack BTP status | Input |
+| 29 | PD3 | `EPS_BMS_PRI_EN`; release enables, LOW disables | Open drain |
 | 30 | PB6 | Charger clock | I2C1 AF6 |
 | 31 | PB7 | Charger data | I2C1 AF6 |
 | 32 | PB8 | Optional EPS stack alert | Open drain |
 
-There is no duplicate physical pin assignment. PD0 and PC15 remain reserved, with PC15 intended for a low-demand input. CAN A standby uses PB9 to avoid PD0's UCPD-related reset behavior. Four rail measurements, three load requests, two standby controls, both serial buses, both CAN channels, and debugging fit without a GPIO expander. Additional per-load current/fault inputs may consume reserves or require a larger package.
+There is no duplicate physical pin assignment. The 2026-10-24 isolated-supply development circuit uses the two former reserves: PD0 for a diagnostic fault input and PD3 for open-drain branch enable/reset. Their UCPD reset restrictions remain; disable dead-battery behavior early, preload PD3 HIGH before selecting output mode and mask PD0 until configured. Pulled-high PD3 affects the future PD2 interlock input's reset pull-down; hardware interlock authority remains independent. See the [complete integration contract](rev_b_bms_isolated_supply_integration.md). No direct BMS BTP connection is added.
+
+The 2026-10-23 update replaces the unimplemented managed shared-rail enable reservations with recovery reset and fault sensing; PC15 carries the low-demand source fault input. Local nonessential load permissions travel over CAN under the architecture authority. Four rail measurements, payload feed control, two standby controls, both serial buses, both CAN channels and debugging fit without a GPIO expander. Additional per-load current/fault inputs may require a larger package. `REC5_RESET` issues the hardware UV reset pulse; it does not bypass the protector cooldown. Firmware must wait at least the development 10 s cooldown and qualify the rail before controlled load admission. See the [current protection checkpoint](rev_b_5v_latch_and_mosfet_survival.md).
 
 The pack's two protection NTCs connect to the pack manager, and the charger NTC connects to LTC4162, so they consume no STM32 ADC pins. Read battery cell voltages through the pack manager. The STM32 battery divider observes only the interlocked side of the battery feed to avoid crossing the retained-protection boundary. Calibrate rail measurements using a verified reference; measuring the MCU's own supply against that same supply alone is insufficient.
 
-Use separate charger and pack-manager buses so an electrical fault on one does not directly hold the other's lines low. This separation still shares MCU and power. The pack-manager bus and BTP output require power-off isolation. BTP is a battery-trip-point indication, not a universal fault interrupt; obtain protection faults through SMBus polling. The optional stack alert's new MCU-driven semantics require a canonical interface update before routing.
+Use separate charger and pack-manager buses so an electrical fault on one does not directly hold the other's lines low. This separation still shares MCU and power. The pack-manager bus requires power-off and ground-reference isolation. Omit the optional BTP connection and tie the unused BQ40Z50 BTP_INT pin to its own VSS as specified by TI. BTP guarantees only 1.8 V high at 10 µA for VBAT >5.5 V; it cannot directly drive the planned 3.3 V STM32 input with guaranteed margins. BTP is also a battery-trip-point indication, not a universal fault interrupt. Obtain protection faults through SMBus polling. The optional stack alert's new MCU-driven semantics require a canonical interface update before routing.
 
 ## Clock and reset conditions
 

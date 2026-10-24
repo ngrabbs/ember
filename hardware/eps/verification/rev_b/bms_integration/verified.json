@@ -1,0 +1,213 @@
+{
+  "status": "DEVELOPMENT ENDPOINT/METADATA/PACKAGE MAP PASS; PACK PROTECTION/GAUGING QUALIFICATION OPEN",
+  "basis": "b9d0724b1f56e508d3fbec67cd0b472d1073022f",
+  "physical_parts": 233,
+  "nets": 133,
+  "functional_nets": 115,
+  "unique_physical_ref_pin_endpoints": 648,
+  "new_physical_parts": 46,
+  "prior_physical_UUIDs_retained": 187,
+  "prior_symbol_objects_retained": 359,
+  "approved_metadata_exceptions": [
+    "R601",
+    "R610",
+    "R612",
+    "R614",
+    "R621"
+  ],
+  "BQ_physical_pins_checked": 33,
+  "added_or_expanded_whole_net_sets": 34,
+  "all_symbol_instances": 451,
+  "ERC_errors": 14,
+  "ERC_warnings": 0,
+  "intentional_ERC_pairs": [
+    [
+      "U300 Pin 25",
+      "U300 Pin 26"
+    ],
+    [
+      "#FLG0202 Pin 1",
+      "U200 Pin 25"
+    ],
+    [
+      "U200 Pin 15",
+      "U200 Pin 25"
+    ]
+  ],
+  "frozen_committed_charger_files": 61,
+  "geometry": {
+    "bms_protection": {
+      "wire_segments": 182,
+      "joined_fourways": 0,
+      "unconnected_crossings": [
+        [
+          172.72,
+          63.5
+        ],
+        [
+          172.72,
+          73.66
+        ],
+        [
+          173.99,
+          154.94
+        ],
+        [
+          231.14,
+          226.06
+        ],
+        [
+          231.14,
+          228.6
+        ],
+        [
+          250.19,
+          226.06
+        ],
+        [
+          254,
+          99.06
+        ],
+        [
+          254,
+          129.54
+        ],
+        [
+          254,
+          132.08
+        ],
+        [
+          269.24,
+          87.63
+        ],
+        [
+          302.26,
+          36.83
+        ],
+        [
+          307.34,
+          87.63
+        ],
+        [
+          335.28,
+          87.63
+        ],
+        [
+          350.52,
+          129.54
+        ]
+      ],
+      "all_queried_pin_anchors_checked": 177,
+      "pin_branch_anchors": 0
+    },
+    "controller": {
+      "wire_segments": 82,
+      "joined_fourways": 0,
+      "unconnected_crossings": [
+        [
+          83.82,
+          187.96
+        ],
+        [
+          109.22,
+          187.96
+        ],
+        [
+          109.22,
+          190.5
+        ],
+        [
+          124.46,
+          123.19
+        ],
+        [
+          124.46,
+          187.96
+        ],
+        [
+          127,
+          118.11
+        ],
+        [
+          127,
+          123.19
+        ],
+        [
+          219.71,
+          100.33
+        ],
+        [
+          219.71,
+          102.87
+        ],
+        [
+          219.71,
+          105.41
+        ],
+        [
+          222.25,
+          91.44
+        ],
+        [
+          222.25,
+          100.33
+        ],
+        [
+          222.25,
+          102.87
+        ],
+        [
+          222.25,
+          105.41
+        ],
+        [
+          222.25,
+          110.49
+        ],
+        [
+          226.06,
+          110.49
+        ],
+        [
+          226.06,
+          115.57
+        ],
+        [
+          226.06,
+          154.94
+        ],
+        [
+          226.06,
+          157.48
+        ],
+        [
+          226.06,
+          160.02
+        ],
+        [
+          226.06,
+          162.56
+        ],
+        [
+          233.68,
+          88.9
+        ]
+      ],
+      "all_queried_pin_anchors_checked": 83,
+      "pin_branch_anchors": 0
+    }
+  },
+  "orphan_patterns": [
+    "/Controller/REC5_FAULT",
+    "/Controller/REC5_RESET",
+    "/Controller/SRC_FAULT"
+  ],
+  "PCB_scope": "Only independent five-part disposable; real integrated board unchanged",
+  "open_gates": [
+    "DSG short gate-source overvoltage / coupled cutoff SOA",
+    "shared-positive ISO bus current-measurement error / isolated power",
+    "physical RBF and charger-to-pack35V fault containment",
+    "commissioning/configuration/thresholds/NTC/harness/thermal/pack acceptance",
+    "S03 native severity / S11 visible-field API limits"
+  ]
+}

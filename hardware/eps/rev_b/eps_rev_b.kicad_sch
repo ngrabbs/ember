@@ -1,0 +1,300 @@
+(kicad_sch
+	(version 20250610)
+	(generator "konnect")
+	(generator_version "10.0")
+	(uuid "8eba9f22-6f11-42d7-8e4a-b8de8905b113")
+	(paper "B")
+	(lib_symbols
+	)
+	(sheet
+		(at 30.48 60.96)
+		(size 100.33 45.72)
+		(fields_autoplaced)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0)
+		)
+		(uuid "3887cba2-4b11-469e-838c-d35f1fb4fc5a")
+		(property "Sheetname" "Controller"
+			(at 30.48 60.325 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "controller.kicad_sch"
+			(at 30.48 132.715 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 167.64 60.96)
+		(size 100.33 45.72)
+		(fields_autoplaced)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0)
+		)
+		(uuid "fe5345f2-e583-4a64-a085-08644425dbe8")
+		(property "Sheetname" "CAN interfaces"
+			(at 167.64 60.325 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "can_interfaces.kicad_sch"
+			(at 167.64 132.715 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113"
+					(page "3")
+				)
+			)
+		)
+	)
+  (text "EPS Rev B — integrated development schematic"
+    (at 30.48 30.48 0)
+    (effects (font (size 2.54 2.54) (bold yes)) (justify left bottom))
+    (uuid "18a562f8-410d-46f1-8f5e-c579ce6a58ce")
+  )
+  (text "Reference ranges: 100 controller, 200 BMS, 300 charger, 400 essential 3V3, 500 recovery 5V, 600 protection."
+    (at 30.48 149.86 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "3e2c790c-a980-426c-adad-16e089366427")
+  )
+	(sheet
+    (at 304.8 60.96)
+    (size 100.33 45.72)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "f65fe20e-e663-42b7-8f35-60abec560633")
+    (property "Sheetname" "Essential 3V3"
+      (at 304.8 60.325 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "essential_3v3.kicad_sch"
+      (at 304.8 107.31500000000001 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "4"))
+      )
+    )
+  )
+	(sheet
+    (at 304.8 119.38)
+    (size 100.33 20.32)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "db3cadf5-bca6-4a2a-9514-e7323a7f1145")
+    (property "Sheetname" "Recovery 5V converter"
+      (at 304.8 118.74499999999999 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "recovery_5v.kicad_sch"
+      (at 304.8 140.33499999999998 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "5"))
+      )
+    )
+  )
+	(sheet
+    (at 30.48 157.48)
+    (size 100.33 33.02)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "0abe3ad6-2c84-4061-b95b-3f3b9c4a4da7")
+    (property "Sheetname" "Solar source protection"
+      (at 30.48 156.845 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "source_protection.kicad_sch"
+      (at 30.48 191.135 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "6"))
+      )
+    )
+  )
+	(sheet
+    (at 167.64 157.48)
+    (size 100.33 33.02)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "9deb67d0-68a4-4419-931c-74033ea85dd8")
+    (property "Sheetname" "Recovery rail protection"
+      (at 167.64 156.845 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "rail_protection.kicad_sch"
+      (at 167.64 191.135 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "7"))
+      )
+    )
+  )
+  (text "Incomplete ERC / low-VCC accuracy / hot SOA / shared startup /3V3 OV remain open. S03/S08/S11/S04 API limits; no PCB sync."
+    (at 30.48 226.06 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "dca06827-12e2-468b-9293-6466a7e1ce24")
+  )
+	(sheet
+		(at 167.64 115.57)
+		(size 101.6 35.56)
+		(fields_autoplaced)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0)
+		)
+		(uuid "d51809f7-0479-4c00-95c7-52f01e4ad9dd")
+		(property "Sheetname" "Charger PowerPath"
+			(at 167.64 114.935 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "charger.kicad_sch"
+			(at 167.64 151.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
+    (at 304.8 157.48)
+    (size 100.33 33.02)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "33ef91c0-2808-4a15-b04b-664982cd7b4f")
+    (property "Sheetname" "2S pack protection"
+      (at 304.8 156.845 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "bms_protection.kicad_sch"
+      (at 304.8 191.135 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "9"))
+      )
+    )
+  )
+	(sheet
+    (at 30.48 110.49)
+    (size 100.33 15.24)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "b466084e-e483-491e-828f-45ed9c1bb4ba")
+    (property "Sheetname" "UART debug"
+      (at 30.48 109.85499999999999 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "uart_debug.kicad_sch"
+      (at 30.48 126.365 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "10"))
+      )
+    )
+  )
+	(sheet
+    (at 304.8 200.66)
+    (size 100.33 20.32)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "7334cee9-304b-4a21-b06b-61a8642fa2e4")
+    (property "Sheetname" "Isolated BMS supply"
+      (at 304.8 200.025 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "bms_isolated_power.kicad_sch"
+      (at 304.8 221.61499999999998 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "11"))
+      )
+    )
+  )
+  (text "PROTECTED_PACK remains before missing RBF; BATT_PERMITTED is distinct.\nIsolated BMS supply is a development candidate; startup, shared-rail faults and gauging qualification remain OPEN."
+    (at 30.48 242.57 0)
+    (effects (font (size 1.2 1.2)) (justify left top))
+    (uuid "80494a3a-661d-457e-bcce-ef0a56d5b51d")
+  )
+  (text "900 block: isolated BMS supply development candidate.\nNo shared-rail fault, power-cycle or gauging qualification."
+    (at 304.8 226.06 0)
+    (effects (font (size 1.05 1.05)) (justify left top))
+    (uuid "39023665-51fb-46d9-b08b-9bc3098dc866")
+  )
+  (text "CURRENT DEVELOPMENT: controller, converters, source/output protection, charger PowerPath, 2S BMS and isolated BMS supply linked.\nVIN_CHG → Q300 → R300 → SYS_PWR_PERMITTED; BATT_PERMITTED → Q301 → SYS. No direct source bypass.\nPROTECTED_PACK remains separate from BATT_PERMITTED across missing RBF. Electrical / physical / commissioning gates remain open."
+    (at 30.48 40.64 0)
+    (effects (font (size 1.2 1.2)) (justify left top))
+    (uuid "b0558093-f850-433c-a5b5-f5b6f9e66a11")
+  )
+)

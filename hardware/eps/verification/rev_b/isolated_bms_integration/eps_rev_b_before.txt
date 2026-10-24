@@ -1,0 +1,304 @@
+(kicad_sch
+	(version 20250610)
+	(generator "konnect")
+	(generator_version "10.0")
+	(uuid "8eba9f22-6f11-42d7-8e4a-b8de8905b113")
+	(paper "B")
+	(lib_symbols
+	)
+	(sheet
+		(at 30.48 60.96)
+		(size 100.33 45.72)
+		(fields_autoplaced)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0)
+		)
+		(uuid "3887cba2-4b11-469e-838c-d35f1fb4fc5a")
+		(property "Sheetname" "Controller"
+			(at 30.48 60.325 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "controller.kicad_sch"
+			(at 30.48 132.715 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 167.64 60.96)
+		(size 100.33 45.72)
+		(fields_autoplaced)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0)
+		)
+		(uuid "fe5345f2-e583-4a64-a085-08644425dbe8")
+		(property "Sheetname" "CAN interfaces"
+			(at 167.64 60.325 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "can_interfaces.kicad_sch"
+			(at 167.64 132.715 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113"
+					(page "3")
+				)
+			)
+		)
+	)
+  (text "EPS Rev B — integrated development schematic"
+    (at 30.48 30.48 0)
+    (effects (font (size 2.54 2.54) (bold yes)) (justify left bottom))
+    (uuid "18a562f8-410d-46f1-8f5e-c579ce6a58ce")
+  )
+  (text "Reference ranges: 100 controller, 200 BMS, 300 charger, 400 essential 3V3, 500 recovery 5V, 600 protection."
+    (at 30.48 149.86 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "3e2c790c-a980-426c-adad-16e089366427")
+  )
+	(sheet
+    (at 304.8 60.96)
+    (size 100.33 45.72)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "f65fe20e-e663-42b7-8f35-60abec560633")
+    (property "Sheetname" "Essential 3V3"
+      (at 304.8 60.325 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "essential_3v3.kicad_sch"
+      (at 304.8 107.31500000000001 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "4"))
+      )
+    )
+  )
+	(sheet
+    (at 304.8 119.38)
+    (size 100.33 20.32)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "db3cadf5-bca6-4a2a-9514-e7323a7f1145")
+    (property "Sheetname" "Recovery 5V converter"
+      (at 304.8 118.74499999999999 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "recovery_5v.kicad_sch"
+      (at 304.8 140.33499999999998 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "5"))
+      )
+    )
+  )
+	(sheet
+    (at 30.48 157.48)
+    (size 100.33 33.02)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "0abe3ad6-2c84-4061-b95b-3f3b9c4a4da7")
+    (property "Sheetname" "Solar source protection"
+      (at 30.48 156.845 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "source_protection.kicad_sch"
+      (at 30.48 191.135 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "6"))
+      )
+    )
+  )
+	(sheet
+    (at 167.64 157.48)
+    (size 100.33 33.02)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "9deb67d0-68a4-4419-931c-74033ea85dd8")
+    (property "Sheetname" "Recovery rail protection"
+      (at 167.64 156.845 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "rail_protection.kicad_sch"
+      (at 167.64 191.135 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "7"))
+      )
+    )
+  )
+  (text "Checkpoint: controller, both converters, solar and rail protection. Physical RBF, charger PowerPath and BMS remain absent."
+    (at 30.48 45.72 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "922e3ec9-c357-4333-930e-ac081ded6d36")
+  )
+  (text "SOLAR_PERMITTED -> source barrier -> VIN_CHG for FUTURE charger. VIN_CHG is NOT joined to SYS_PWR_PERMITTED."
+    (at 30.48 205.74 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "18a55e77-eea4-4f77-94f3-a3beef9d9c52")
+  )
+  (text "SYS_PWR_PERMITTED remains an independent external permitted-source fixture. REG -> rail barrier -> protected+5V."
+    (at 30.48 215.9 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "8aa1d13a-54d7-453b-bb30-4ea29210d2f8")
+  )
+  (text "Incomplete ERC / low-VCC accuracy / hot SOA / shared startup /3V3 OV remain open. S03/S08/S11/S04 API limits; no PCB sync."
+    (at 30.48 226.06 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "dca06827-12e2-468b-9293-6466a7e1ce24")
+  )
+	(sheet
+		(at 167.64 115.57)
+		(size 101.6 35.56)
+		(fields_autoplaced)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0)
+		)
+		(uuid "d51809f7-0479-4c00-95c7-52f01e4ad9dd")
+		(property "Sheetname" "Charger PowerPath"
+			(at 167.64 114.935 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "charger.kicad_sch"
+			(at 167.64 151.765 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "eps_rev_b"
+				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113"
+					(page "8")
+				)
+			)
+		)
+	)
+  (text "2026-10-24: PRE-CHARGER ABSENCE / EXTERNAL-SYS NOTES ABOVE AND BELOW ARE OBSOLETE."
+    (at 30.48 50.8 0)
+    (effects (font (size 1.4 1.4) (bold yes)) (justify left bottom))
+    (uuid "11a61ff0-7ff4-4c20-861e-95b7d95f9406")
+  )
+  (text "Actual charger PowerPath now joins VIN_CHG and BATT_PERMITTED to SYS. Physical BMS/RBF hardware remains absent."
+    (at 30.48 55.88 0)
+    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
+    (uuid "eea15196-b5fe-4769-b937-67d9306935f5")
+  )
+  (text "CURRENT: VIN_CHG -> Q300 -> R300 -> SYS; BATT_PERMITTED fixture -> Q301 -> SYS. No direct source bypass."
+    (at 30.48 233.68 0)
+    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
+    (uuid "fd763455-24be-446f-9c92-d46c95d62b0a")
+  )
+	(sheet
+    (at 304.8 157.48)
+    (size 100.33 33.02)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "33ef91c0-2808-4a15-b04b-664982cd7b4f")
+    (property "Sheetname" "2S pack protection"
+      (at 304.8 156.845 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "bms_protection.kicad_sch"
+      (at 304.8 191.135 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "9"))
+      )
+    )
+  )
+  (text "2026-10-24: BMS pre-RBF block is now linked; ALL earlier BMS-absence statements are obsolete."
+    (at 30.48 39.37 0)
+    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
+    (uuid "e9a56759-0f66-4bd6-95e8-71bd78c30c9c")
+  )
+  (text "PROTECTED_PACK ends BEFORE missing RBF. BATT_PERMITTED remains a distinct external interlocked-source fixture.\nRaw/system returns join only through BMS shunt; shared-positive SMBus supply leaves current-measurement closure open."
+    (at 30.48 242.57 0)
+    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
+    (uuid "73c90467-36ee-4121-8e61-3cdb02df2329")
+  )
+	(sheet
+    (at 30.48 110.49)
+    (size 100.33 15.24)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "b466084e-e483-491e-828f-45ed9c1bb4ba")
+    (property "Sheetname" "UART debug"
+      (at 30.48 109.85499999999999 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "uart_debug.kicad_sch"
+      (at 30.48 126.365 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "10"))
+      )
+    )
+  )
+)

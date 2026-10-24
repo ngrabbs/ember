@@ -1,0 +1,2140 @@
+{
+  "scope": "Electrical extraction and elevated Foster thermal sensitivity. Neither equal sharing nor thermal qualification is assumed. No avalanche-energy credit.",
+  "generator_SHA256": "7a17907d95d86b1a12dbac06970fe8759f7463c6b341efbb4d46e44a848b9a74",
+  "thermal_anchor_K_per_W": {
+    "1e-06": 0.02854068921007089,
+    "1e-05": 0.10962193587986072,
+    "0.0001": 0.3144427538096071,
+    "0.001": 0.7568412416228323,
+    "0.01": 1.2466447508882164,
+    "0.1": 1.2999999999909728,
+    "1": 1.3
+  },
+  "selected_topology_screens": {
+    "selected_electrical": true,
+    "assumed_100C_case_below_150C_thermal_target": true
+  },
+  "results": [
+    {
+      "name": "accepted_high_trip_slow_-40",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_high_trip_slow_-40",
+        "temperature": -40,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rise": 0.01,
+        "barrier_l": 5.64e-06,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 34.59882354736328,
+      "reverse_VDS_abs_V": 0.5584927797317505,
+      "pass_VGS_min_V": -0.2927698493003845,
+      "pass_VGS_max_V": 7.683931827545166,
+      "reverse_VGS_min_V": -0.04920622706413269,
+      "reverse_VGS_max_V": 10.282306671142578,
+      "pass_bank_peak_A": 3.3024134635925293,
+      "reverse_bank_peak_A": 3.303001642227173,
+      "pass_fault_energy_J": 0.08001678717258624,
+      "reverse_fault_energy_J": 5.1918600526617623e-05,
+      "all_pass_power_one_device_temperature_rise_K": 25.069692254066467,
+      "all_reverse_power_one_device_temperature_rise_K": 0.03773285879287869,
+      "raw_SHA256": "8e70341a533a7fa8b40c853d814881557de36d3bd390859be6649d91b81e911b",
+      "deck_SHA256": "86f151275ae6df75907c18c5136791383308ba2a8399afa1388692a20f8e4fb8",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 110.06969225406647,
+        "100": 125.06969225406647,
+        "125": 150.06969225406647
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.03773285879288,
+        "100": 100.03773285879288,
+        "125": 125.03773285879288
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0006590738052532907,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_high_trip_slow_85",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_high_trip_slow_85",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rise": 0.01,
+        "barrier_l": 5.64e-06,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 34.99323654174805,
+      "reverse_VDS_abs_V": 0.2507458031177521,
+      "pass_VGS_min_V": -0.07828108221292496,
+      "pass_VGS_max_V": 7.6294121742248535,
+      "reverse_VGS_min_V": -0.014504529535770416,
+      "reverse_VGS_max_V": 9.810640335083008,
+      "pass_bank_peak_A": 3.2233524322509766,
+      "reverse_bank_peak_A": 3.223781108856201,
+      "pass_fault_energy_J": 0.07968938195964122,
+      "reverse_fault_energy_J": 9.949484428028846e-05,
+      "all_pass_power_one_device_temperature_rise_K": 25.000842034816742,
+      "all_reverse_power_one_device_temperature_rise_K": 0.1054977891035378,
+      "raw_SHA256": "73d7910bbfcfe00a07278b263eff3fa532f162df81d3a95acf3ad448e68efb59",
+      "deck_SHA256": "33af0436173e518007830be9db95bcb6e57cf19d627e6db73bcbde781bba9334",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 110.00084203481674,
+        "100": 125.00084203481674,
+        "125": 150.00084203481674
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.10549778910354,
+        "100": 100.10549778910354,
+        "125": 125.10549778910354
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.00064274989098205,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_release_min_-40",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": -1,
+        "detect_extra_delay": 1e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_release_min_-40",
+        "temperature": -40,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 63200.0,
+        "mode": "load_release",
+        "bulk": 0.000112,
+        "ceramic": 4.8e-05,
+        "barrier_l": 2.5e-06,
+        "post_bulk_esr": 0.0005,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.5,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 4.586080074310303,
+      "reverse_VDS_abs_V": 0.6284979581832886,
+      "pass_VGS_min_V": -0.35976600646972656,
+      "pass_VGS_max_V": 9.096847534179688,
+      "reverse_VGS_min_V": -0.05148357152938843,
+      "reverse_VGS_max_V": 2.823702812194824,
+      "pass_bank_peak_A": 2.483898639678955,
+      "reverse_bank_peak_A": 2.4838919639587402,
+      "pass_fault_energy_J": 1.2312939357565806e-05,
+      "reverse_fault_energy_J": 0.0001300700754093145,
+      "all_pass_power_one_device_temperature_rise_K": 2.1513337790966034,
+      "all_reverse_power_one_device_temperature_rise_K": 0.23836621083319187,
+      "raw_SHA256": "ce8475ce63ff37031836abaf711621cd0169dba22668b832095ea07ee614c2e8",
+      "deck_SHA256": "ea8e214d26f73d74ea6f65d1402c9190556299021d4badc752d8327dbd0791d0",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 87.1513337790966,
+        "100": 102.1513337790966,
+        "125": 127.1513337790966
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.23836621083319,
+        "100": 100.23836621083319,
+        "125": 125.23836621083319
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_release_max_-40",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": -1,
+        "detect_extra_delay": 1e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_release_max_-40",
+        "temperature": -40,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 63200.0,
+        "mode": "load_release",
+        "bulk": 0.000312,
+        "ceramic": 0.0003112,
+        "barrier_l": 2.5e-06,
+        "post_bulk_esr": 0.0005,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.5,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 4.586077690124512,
+      "reverse_VDS_abs_V": 0.6324217915534973,
+      "pass_VGS_min_V": -0.1137920618057251,
+      "pass_VGS_max_V": 9.069772720336914,
+      "reverse_VGS_min_V": -0.0514836311340332,
+      "reverse_VGS_max_V": 2.835376739501953,
+      "pass_bank_peak_A": 2.239858865737915,
+      "reverse_bank_peak_A": 2.2398645877838135,
+      "pass_fault_energy_J": 1.3598189920496882e-06,
+      "reverse_fault_energy_J": 0.000129986187821529,
+      "all_pass_power_one_device_temperature_rise_K": 3.8471486419439316,
+      "all_reverse_power_one_device_temperature_rise_K": 0.3836861699819565,
+      "raw_SHA256": "dde524ba4493dcf2fab0727cfb11b61582b7e790e20aa69c6583f9ee5a7c6cf2",
+      "deck_SHA256": "d636613f18a3d8b6705ee6710dc146688435fed67a9a91c0e02811adfbc54db6",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 88.84714864194393,
+        "100": 103.84714864194393,
+        "125": 128.84714864194393
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.38368616998196,
+        "100": 100.38368616998196,
+        "125": 125.38368616998196
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_release_min_85",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": -1,
+        "detect_extra_delay": 1e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_release_min_85",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 63200.0,
+        "mode": "load_release",
+        "bulk": 0.000112,
+        "ceramic": 4.8e-05,
+        "barrier_l": 5.64e-06,
+        "post_bulk_esr": 0.0005,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.5,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 4.961691856384277,
+      "reverse_VDS_abs_V": 0.4626416265964508,
+      "pass_VGS_min_V": -0.0239606574177742,
+      "pass_VGS_max_V": 9.127752304077148,
+      "reverse_VGS_min_V": -0.01428617537021637,
+      "reverse_VGS_max_V": 2.7445292472839355,
+      "pass_bank_peak_A": 2.662388801574707,
+      "reverse_bank_peak_A": 2.662436008453369,
+      "pass_fault_energy_J": 6.987030876400476e-06,
+      "reverse_fault_energy_J": 0.00024313528223475725,
+      "all_pass_power_one_device_temperature_rise_K": 2.0346595719456673,
+      "all_reverse_power_one_device_temperature_rise_K": 0.2617714209482074,
+      "raw_SHA256": "dd77b74638ebfd69322cb6f684a82abeeda84ea71bc8d754c6a3aebcc054912e",
+      "deck_SHA256": "ff7265dd2d67ea053b8843ebb7029c15e0d212203e4d9393ff9c29a9c3953f36",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 87.03465957194567,
+        "100": 102.03465957194567,
+        "125": 127.03465957194567
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.26177142094821,
+        "100": 100.26177142094821,
+        "125": 125.26177142094821
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_release_max_85",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": -1,
+        "detect_extra_delay": 1e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_release_max_85",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 63200.0,
+        "mode": "load_release",
+        "bulk": 0.000312,
+        "ceramic": 0.0003112,
+        "barrier_l": 5.64e-06,
+        "post_bulk_esr": 0.0005,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.5,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 4.961687088012695,
+      "reverse_VDS_abs_V": 0.4815531075000763,
+      "pass_VGS_min_V": -0.40126609802246094,
+      "pass_VGS_max_V": 9.08017349243164,
+      "reverse_VGS_min_V": -0.014286160469055176,
+      "reverse_VGS_max_V": 2.7433485984802246,
+      "pass_bank_peak_A": 2.3944311141967773,
+      "reverse_bank_peak_A": 2.3944356441497803,
+      "pass_fault_energy_J": 3.442923592578802e-06,
+      "reverse_fault_energy_J": 0.00024680489898298093,
+      "all_pass_power_one_device_temperature_rise_K": 3.7093884497880936,
+      "all_reverse_power_one_device_temperature_rise_K": 0.4683388415724039,
+      "raw_SHA256": "c0de1ea49092a29edb5cf390c3f2880f47e3b24e40a2f5c12f9544c6c6e45d24",
+      "deck_SHA256": "25528c2107dc8db9e789c376825b3ae637a98ae4b4ca996faa6aec01e50d4f37",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 88.7093884497881,
+        "100": 103.7093884497881,
+        "125": 128.7093884497881
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.4683388415724,
+        "100": 100.4683388415724,
+        "125": 125.4683388415724
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_release_repeat_hot",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": -1,
+        "detect_extra_delay": 1e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_release_repeat_hot",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 63200.0,
+        "mode": "load_release",
+        "bulk": 0.000312,
+        "ceramic": 0.0003112,
+        "barrier_l": 5.64e-06,
+        "repeat_release": true,
+        "post_bulk_esr": 0.0005,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.15,
+        "gate_nF": 10,
+        "expected_failed_checks": [
+          "repeated_abrupt_load_stays_above_4p75V"
+        ],
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 4.961687088012695,
+      "reverse_VDS_abs_V": 0.5052599906921387,
+      "pass_VGS_min_V": -0.40126609802246094,
+      "pass_VGS_max_V": 9.08017349243164,
+      "reverse_VGS_min_V": -0.014286160469055176,
+      "reverse_VGS_max_V": 2.7433485984802246,
+      "pass_bank_peak_A": 2.5774362087249756,
+      "reverse_bank_peak_A": 2.5774405002593994,
+      "pass_fault_energy_J": 0.003127667097916283,
+      "reverse_fault_energy_J": 0.027513201343657062,
+      "all_pass_power_one_device_temperature_rise_K": 3.7093884497880936,
+      "all_reverse_power_one_device_temperature_rise_K": 1.0521124433726072,
+      "raw_SHA256": "62c613e61b2510f5370c62b133e4b98d588241655ca513cbe8b0b718556e036e",
+      "deck_SHA256": "c3e271ff7247e1f46e88d61c4bb419e367a8e19bbfd140d91011d8be7655281d",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 88.7093884497881,
+        "100": 103.7093884497881,
+        "125": 128.7093884497881
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 86.05211244337261,
+        "100": 101.05211244337261,
+        "125": 126.05211244337261
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_start_min_cold",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": -1,
+        "detect_extra_delay": 1e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_start_min_cold",
+        "temperature": -40,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 63200.0,
+        "mode": "startup",
+        "bulk": 0.000112,
+        "ceramic": 4.8e-05,
+        "normal": 4.919254,
+        "finite_energy": 0.00033,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 4.425606727600098,
+      "reverse_VDS_abs_V": 0.6442397832870483,
+      "pass_VGS_min_V": -0.1085725724697113,
+      "pass_VGS_max_V": 8.825227737426758,
+      "reverse_VGS_min_V": -0.04959762096405029,
+      "reverse_VGS_max_V": 2.8173575401306152,
+      "pass_bank_peak_A": 2.268824577331543,
+      "reverse_bank_peak_A": 2.2687997817993164,
+      "pass_fault_energy_J": 0.0005449745338410138,
+      "reverse_fault_energy_J": 0.0012306978926062582,
+      "all_pass_power_one_device_temperature_rise_K": 2.0307415798306465,
+      "all_reverse_power_one_device_temperature_rise_K": 0.24269680306315422,
+      "raw_SHA256": "35ed76c226dcb2de46ad389fb1c6939e13d4b845a76bbe8d7ce74d72a09f18aa",
+      "deck_SHA256": "89a879d86e47c6b0515b6f52b9bef2fa4b42661aae81b219e1903a960aab6062",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 87.03074157983065,
+        "100": 102.03074157983065,
+        "125": 127.03074157983065
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.24269680306315,
+        "100": 100.24269680306315,
+        "125": 125.24269680306315
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_start_max_cold",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": -1,
+        "detect_extra_delay": 1e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_start_max_cold",
+        "temperature": -40,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 63200.0,
+        "mode": "startup",
+        "bulk": 0.000312,
+        "ceramic": 0.0003112,
+        "normal": 4.919254,
+        "finite_energy": 0.00033,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 4.4256062507629395,
+      "reverse_VDS_abs_V": 0.6472873091697693,
+      "pass_VGS_min_V": -0.10857254266738892,
+      "pass_VGS_max_V": 8.7930326461792,
+      "reverse_VGS_min_V": -0.04959762096405029,
+      "reverse_VGS_max_V": 2.8173575401306152,
+      "pass_bank_peak_A": 2.1375348567962646,
+      "reverse_bank_peak_A": 2.1375370025634766,
+      "pass_fault_energy_J": 0.0005449745338410136,
+      "reverse_fault_energy_J": 0.0012306978926062582,
+      "all_pass_power_one_device_temperature_rise_K": 3.610736906528473,
+      "all_reverse_power_one_device_temperature_rise_K": 0.3960449583828449,
+      "raw_SHA256": "91bdd48c2902a55a260816a458c5b15d114ffbf9525aed4259535169465f6a3e",
+      "deck_SHA256": "5528881f23857abfcc9382c3a6a943bcda53ff7178d3b8a3f8422a0ce1d1f179",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 88.61073690652847,
+        "100": 103.61073690652847,
+        "125": 128.61073690652847
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.39604495838284,
+        "100": 100.39604495838284,
+        "125": 125.39604495838284
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_start_max_hot",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": -1,
+        "detect_extra_delay": 1e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_start_max_hot",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 63200.0,
+        "mode": "startup",
+        "bulk": 0.000312,
+        "ceramic": 0.0003112,
+        "finite_energy": 0.00033,
+        "shunt_ohm": 0.020265,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 4.94911003112793,
+      "reverse_VDS_abs_V": 0.4804266095161438,
+      "pass_VGS_min_V": -0.019803158938884735,
+      "pass_VGS_max_V": 9.067422866821289,
+      "reverse_VGS_min_V": -0.011574320495128632,
+      "reverse_VGS_max_V": 2.74214506149292,
+      "pass_bank_peak_A": 2.057497978210449,
+      "reverse_bank_peak_A": 2.0575056076049805,
+      "pass_fault_energy_J": 0.0006016372018388649,
+      "reverse_fault_energy_J": 0.001798905788216739,
+      "all_pass_power_one_device_temperature_rise_K": 3.6549419537186623,
+      "all_reverse_power_one_device_temperature_rise_K": 0.4507299680262804,
+      "raw_SHA256": "da15bbe64357fa82dd931c1061cf97b73060ab76f300bef51efa0777a1a34879",
+      "deck_SHA256": "4f75208bdce4c2f754f95e36efd553c365c05550953f5f35b9461b2d954ba29f",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 88.65494195371866,
+        "100": 103.65494195371866,
+        "125": 128.65494195371866
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.45072996802628,
+        "100": 100.45072996802628,
+        "125": 125.45072996802628
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_bridge_hot",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_bridge_hot",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 51.98100280761719,
+      "reverse_VDS_abs_V": 0.2456340789794922,
+      "pass_VGS_min_V": -0.07827329635620117,
+      "pass_VGS_max_V": 7.62241792678833,
+      "reverse_VGS_min_V": -0.01449604332447052,
+      "reverse_VGS_max_V": 9.810630798339844,
+      "pass_bank_peak_A": 14.791691780090332,
+      "reverse_bank_peak_A": 14.791658401489258,
+      "pass_fault_energy_J": 0.09061741007620132,
+      "reverse_fault_energy_J": 4.486178620618401e-05,
+      "all_pass_power_one_device_temperature_rise_K": 40.66926157474518,
+      "all_reverse_power_one_device_temperature_rise_K": 0.1728450506925583,
+      "raw_SHA256": "97ecdf2faa5e26f08f93f360c1fc01bffea0fd60da6c53302b600bbf25135b95",
+      "deck_SHA256": "225b3ae14f3472285fe4340b52e6cea4bbfcb841f3a8e96598234cd029b8c8e3",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 125.66926157474518,
+        "100": 140.66926157474518,
+        "125": 165.66926157474518
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.17284505069256,
+        "100": 100.17284505069256,
+        "125": 125.17284505069256
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0019777970359354524,
+        "120": 7.463557020331857e-07,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_bridge_cold",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_bridge_cold",
+        "temperature": -40,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 52.09779357910156,
+      "reverse_VDS_abs_V": 0.5436652898788452,
+      "pass_VGS_min_V": -0.2927339971065521,
+      "pass_VGS_max_V": 7.676908016204834,
+      "reverse_VGS_min_V": -0.04920276999473572,
+      "reverse_VGS_max_V": 10.282302856445312,
+      "pass_bank_peak_A": 15.532896995544434,
+      "reverse_bank_peak_A": 15.534309387207031,
+      "pass_fault_energy_J": 0.0905150500521265,
+      "reverse_fault_energy_J": 2.177637418202922e-05,
+      "all_pass_power_one_device_temperature_rise_K": 40.66923642158508,
+      "all_reverse_power_one_device_temperature_rise_K": 0.06559734791517258,
+      "raw_SHA256": "d62d403193bfe2017e0afa7ba2884b0989eefac38aed690c278dc714959e7094",
+      "deck_SHA256": "886493b09abd0aa8efc01a72009d3fe312f5a6a4f78f2a001658298ff21e14e0",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 125.66923642158508,
+        "100": 140.66923642158508,
+        "125": 165.66923642158508
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.06559734791517,
+        "100": 100.06559734791517,
+        "125": 125.06559734791517
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0019745589008961784,
+        "120": 1.1573513962748194e-06,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_bridge_finite",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_bridge_finite",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "finite_energy": 0.00033,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 47.78868103027344,
+      "reverse_VDS_abs_V": 0.24873590469360352,
+      "pass_VGS_min_V": -0.0782971978187561,
+      "pass_VGS_max_V": 7.6246538162231445,
+      "reverse_VGS_min_V": -0.014493085443973541,
+      "reverse_VGS_max_V": 9.811563491821289,
+      "pass_bank_peak_A": 14.992218017578125,
+      "reverse_bank_peak_A": 14.992231369018555,
+      "pass_fault_energy_J": 0.08751045733863587,
+      "reverse_fault_energy_J": 5.61310967668014e-05,
+      "all_pass_power_one_device_temperature_rise_K": 30.423908174037933,
+      "all_reverse_power_one_device_temperature_rise_K": 0.17420438677072525,
+      "raw_SHA256": "22848695a3bfd719b2e8473b16f445b7605ca382b3f0f95ec47bd48bb9bb9dce",
+      "deck_SHA256": "925e98357ab54ec7d0c443bd00d41ef7ff1c639dae9059ffffc88197c0b8132b",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 115.42390817403793,
+        "100": 130.42390817403793,
+        "125": 155.42390817403793
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.17420438677073,
+        "100": 100.17420438677073,
+        "125": 125.17420438677073
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.002692967619718989,
+        "120": 1.0585463582069021e-07,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_bridge_bypass",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_bridge_bypass",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "bypass_shunt": true,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 52.78773498535156,
+      "reverse_VDS_abs_V": 0.24553453922271729,
+      "pass_VGS_min_V": -0.07829712331295013,
+      "pass_VGS_max_V": 7.622626304626465,
+      "reverse_VGS_min_V": -0.01449565589427948,
+      "reverse_VGS_max_V": 9.810636520385742,
+      "pass_bank_peak_A": 14.487808227539062,
+      "reverse_bank_peak_A": 14.488234519958496,
+      "pass_fault_energy_J": 0.09252621190103956,
+      "reverse_fault_energy_J": 4.4845808640781216e-05,
+      "all_pass_power_one_device_temperature_rise_K": 40.89064335823059,
+      "all_reverse_power_one_device_temperature_rise_K": 0.1691165193915367,
+      "raw_SHA256": "acb93eceb81e6022dacc64a5e2e4f8361bf6b87440e521631a6218d4da702e18",
+      "deck_SHA256": "9c95c592c0c1350b21432f52e5f0bc448bb05595eaf6782d1c009dfaf53a3b99",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 125.89064335823059,
+        "100": 140.8906433582306,
+        "125": 165.8906433582306
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.16911651939154,
+        "100": 100.16911651939154,
+        "125": 125.16911651939154
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0020297204127619484,
+        "120": 1.3200173590716124e-06,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_short_hot",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_short_hot",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "mode": "short",
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 11.551414489746094,
+      "reverse_VDS_abs_V": 0.6042780876159668,
+      "pass_VGS_min_V": -0.07827329635620117,
+      "pass_VGS_max_V": 7.656680107116699,
+      "reverse_VGS_min_V": -0.01449604332447052,
+      "reverse_VGS_max_V": 9.810630798339844,
+      "pass_bank_peak_A": 60.851341247558594,
+      "reverse_bank_peak_A": 60.8516845703125,
+      "pass_fault_energy_J": 0.06127353192932501,
+      "reverse_fault_energy_J": 0.00013852699641279115,
+      "all_pass_power_one_device_temperature_rise_K": 8.00255273282528,
+      "all_reverse_power_one_device_temperature_rise_K": 0.1868186816573143,
+      "raw_SHA256": "6b2df3c6fe8970f5bf9a14e4b4c4fc79431a52a709f7170c42292ba3208bcd70",
+      "deck_SHA256": "a066c69abb91e5a9243e97da25e880f3963250ef77eaa1d2351294326022bdcd",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 93.00255273282528,
+        "100": 108.00255273282528,
+        "125": 133.00255273282528
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.18681868165731,
+        "100": 100.18681868165731,
+        "125": 125.18681868165731
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_reset_hot",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_reset_hot",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "mode": "reset",
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.65,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 52.054161071777344,
+      "reverse_VDS_abs_V": 14.852099418640137,
+      "pass_VGS_min_V": -0.11329221725463867,
+      "pass_VGS_max_V": 9.102767944335938,
+      "reverse_VGS_min_V": -0.014507539570331573,
+      "reverse_VGS_max_V": 9.855201721191406,
+      "pass_bank_peak_A": 14.902261734008789,
+      "reverse_bank_peak_A": 14.902667999267578,
+      "pass_fault_energy_J": 0.13707483359894493,
+      "reverse_fault_energy_J": 0.10107771653228455,
+      "all_pass_power_one_device_temperature_rise_K": 40.922545075416565,
+      "all_reverse_power_one_device_temperature_rise_K": 0.17302780970931053,
+      "raw_SHA256": "a8819d4832cbad92aab10428725605bb5de15ddfb8f8e4f1236ad3087fc95733",
+      "deck_SHA256": "e27264ca2cb84bfc7dba3378a6a34feb1ba75912f2486a2683db165578f5a0a5",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 125.92254507541656,
+        "100": 140.92254507541656,
+        "125": 165.92254507541656
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.17302780970931,
+        "100": 100.17302780970931,
+        "125": 125.17302780970931
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0020398311269813896,
+        "120": 8.286493806963779e-07,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_input_short_hot",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_input_short_hot",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "mode": "input_short",
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 5.074745178222656,
+      "reverse_VDS_abs_V": 8.453393936157227,
+      "pass_VGS_min_V": -0.07827329635620117,
+      "pass_VGS_max_V": 7.834358215332031,
+      "reverse_VGS_min_V": -0.5473374724388123,
+      "reverse_VGS_max_V": 9.810630798339844,
+      "pass_bank_peak_A": 4.036776542663574,
+      "reverse_bank_peak_A": 4.037731170654297,
+      "pass_fault_energy_J": 1.410918308345949e-07,
+      "reverse_fault_energy_J": 7.707731536882613e-07,
+      "all_pass_power_one_device_temperature_rise_K": 2.5465801507234573,
+      "all_reverse_power_one_device_temperature_rise_K": 0.09954069997183979,
+      "raw_SHA256": "d211a941d12b75a3c24d4906ef0216738a15df7eb32f039d450c4b3a3e05467f",
+      "deck_SHA256": "cc6994790388ad926dbc528b22a7aa79f86230d55fecb13bd971c3e1f6823cfc",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 87.54658015072346,
+        "100": 102.54658015072346,
+        "125": 127.54658015072346
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.09954069997184,
+        "100": 100.09954069997184,
+        "125": 125.09954069997184
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_slow_ov_hot",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_slow_ov_hot",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "rise": 0.001,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 36.23665237426758,
+      "reverse_VDS_abs_V": 0.2390916496515274,
+      "pass_VGS_min_V": -0.07827329635620117,
+      "pass_VGS_max_V": 7.622065544128418,
+      "reverse_VGS_min_V": -0.01449604332447052,
+      "reverse_VGS_max_V": 9.810630798339844,
+      "pass_bank_peak_A": 3.6901838779449463,
+      "reverse_bank_peak_A": 3.6900634765625,
+      "pass_fault_energy_J": 0.08844537307064763,
+      "reverse_fault_energy_J": 4.8216537418224885e-05,
+      "all_pass_power_one_device_temperature_rise_K": 40.41956341266632,
+      "all_reverse_power_one_device_temperature_rise_K": 0.10083468910306692,
+      "raw_SHA256": "99864b39864b9fc10df7d92138f57549e1f0aa1ddc9958cd42ad025a1fb9ec1a",
+      "deck_SHA256": "addee37d2c23ab8b25612e69b303ab9a05378f82f2ae997ee27b87df487924dc",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 125.41956341266632,
+        "100": 140.41956341266632,
+        "125": 165.41956341266632
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.10083468910307,
+        "100": 100.10083468910307,
+        "125": 125.10083468910307
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0019971537300047804,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_one_fet_bridge",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_one_fet_bridge",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "all_current_one_fet": true,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 50.89289474487305,
+      "reverse_VDS_abs_V": 0.25915682315826416,
+      "pass_VGS_min_V": -0.0868762657046318,
+      "pass_VGS_max_V": 7.990923881530762,
+      "reverse_VGS_min_V": -0.010908760130405426,
+      "reverse_VGS_max_V": 10.243863105773926,
+      "pass_bank_peak_A": 11.266881942749023,
+      "reverse_bank_peak_A": 11.267301559448242,
+      "pass_fault_energy_J": 0.0913056159700756,
+      "reverse_fault_energy_J": 6.408064965396976e-05,
+      "all_pass_power_one_device_temperature_rise_K": 40.763426780700684,
+      "all_reverse_power_one_device_temperature_rise_K": 0.14268619380891323,
+      "raw_SHA256": "1312784a8e87bb01a5aefa3043d2d2ec5f00624952f1938693ef5e21bdd701e7",
+      "deck_SHA256": "042adede0a93348da23907bb068fc98418dee84ba208b41ece5a0bfa71da5e80",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 125.76342678070068,
+        "100": 140.76342678070068,
+        "125": 165.76342678070068
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.14268619380891,
+        "100": 100.14268619380891,
+        "125": 125.14268619380891
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0019954639426810056,
+        "120": 5.759920288644915e-07,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_one_fet_short",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": 1,
+        "detect_extra_delay": 2e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_one_fet_short",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 166666.6666666667,
+        "slow_gate_corner": true,
+        "all_current_one_fet": true,
+        "mode": "short",
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.105,
+        "gate_nF": 10,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110
+      },
+      "pass_VDS_abs_V": 10.898311614990234,
+      "reverse_VDS_abs_V": 0.6705820560455322,
+      "pass_VGS_min_V": -0.0868762657046318,
+      "pass_VGS_max_V": 8.029685974121094,
+      "reverse_VGS_min_V": -0.010908760130405426,
+      "reverse_VGS_max_V": 10.243863105773926,
+      "pass_bank_peak_A": 50.91196823120117,
+      "reverse_bank_peak_A": 50.912445068359375,
+      "pass_fault_energy_J": 0.06116463023101931,
+      "reverse_fault_energy_J": 0.0002784574895269496,
+      "all_pass_power_one_device_temperature_rise_K": 7.984393075108528,
+      "all_reverse_power_one_device_temperature_rise_K": 0.18194441869854927,
+      "raw_SHA256": "669de7afdb3a274c9cd7e1b5e8d2a1d3d62773c09bae056796476dd0d5461ab7",
+      "deck_SHA256": "e975150a304812f452e9691840179b556d7a2541b68e0b140b5c95b474084eca",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 92.98439307510853,
+        "100": 107.98439307510853,
+        "125": 132.98439307510853
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.18194441869855,
+        "100": 100.18194441869855,
+        "125": 125.18194441869855
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 1.8802425513775312e-07,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_ramped_repeat_-40",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": -1,
+        "detect_extra_delay": 1e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_ramped_repeat_-40",
+        "temperature": -40,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 63200.0,
+        "mode": "load_release",
+        "bulk": 0.000312,
+        "ceramic": 0.0003112,
+        "barrier_l": 5.64e-06,
+        "repeat_release": true,
+        "post_bulk_esr": 0.0005,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.25,
+        "gate_nF": 10,
+        "ramped_release": true,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110,
+        "minimum_settle_ms": 20
+      },
+      "pass_VDS_abs_V": 4.590727806091309,
+      "reverse_VDS_abs_V": 0.6321387887001038,
+      "pass_VGS_min_V": -0.42789173126220703,
+      "pass_VGS_max_V": 9.08594799041748,
+      "reverse_VGS_min_V": -0.05149683356285095,
+      "reverse_VGS_max_V": 2.836456298828125,
+      "pass_bank_peak_A": 2.4757323265075684,
+      "reverse_bank_peak_A": 2.475735664367676,
+      "pass_fault_energy_J": 0.0015259877399385214,
+      "reverse_fault_energy_J": 0.003539094763871641,
+      "all_pass_power_one_device_temperature_rise_K": 3.8485172241926193,
+      "all_reverse_power_one_device_temperature_rise_K": 0.3836478926241398,
+      "raw_SHA256": "b32c154a540eba9632fb1e31d9c452748ba09fb9ccd56df11cd1862d9f412cbc",
+      "deck_SHA256": "8dade097380f310ec9a0042a1706f2612c63a40ae0d51a6e47384a61f30d10fd",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 88.84851722419262,
+        "100": 103.84851722419262,
+        "125": 128.84851722419262
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.38364789262414,
+        "100": 100.38364789262414,
+        "125": 125.38364789262414
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "accepted_ramped_repeat_85",
+      "conditions": {
+        "pre_bulk": 0.00016,
+        "pre_ceramic": 8e-06,
+        "pre_bulk_esr": 0.08,
+        "pre_ceramic_esr": 0.00025,
+        "threshold": -1,
+        "detect_extra_delay": 1e-06,
+        "feed_l": 1e-08,
+        "feed_r": 0.01,
+        "name": "accepted_ramped_repeat_85",
+        "temperature": 85,
+        "bleeder_ohm": 333.3,
+        "timer_pF": 63200.0,
+        "mode": "load_release",
+        "bulk": 0.000312,
+        "ceramic": 0.0003112,
+        "barrier_l": 5.64e-06,
+        "repeat_release": true,
+        "post_bulk_esr": 0.0005,
+        "regulator_bandwidth_Hz": 1000,
+        "stop": 0.25,
+        "gate_nF": 10,
+        "ramped_release": true,
+        "rail_fb_top": 3570,
+        "rail_fb_bottom": 1110,
+        "minimum_settle_ms": 20
+      },
+      "pass_VDS_abs_V": 4.961687088012695,
+      "reverse_VDS_abs_V": 0.4815531075000763,
+      "pass_VGS_min_V": -0.40126609802246094,
+      "pass_VGS_max_V": 9.08017349243164,
+      "reverse_VGS_min_V": -0.014286160469055176,
+      "reverse_VGS_max_V": 2.7433485984802246,
+      "pass_bank_peak_A": 2.3944311141967773,
+      "reverse_bank_peak_A": 2.3944356441497803,
+      "pass_fault_energy_J": 0.0016925441316657758,
+      "reverse_fault_energy_J": 0.005477415476508879,
+      "all_pass_power_one_device_temperature_rise_K": 3.7093884497880936,
+      "all_reverse_power_one_device_temperature_rise_K": 0.4683388415724039,
+      "raw_SHA256": "fbfa19539bec488de4fa043655f3551a5efda7557910e392883400c12ec07e43",
+      "deck_SHA256": "b3d0f8d314c893f74f6828aa94e15eb09c8913def32415baf2daa974f75e7999",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 88.7093884497881,
+        "100": 103.7093884497881,
+        "125": 128.7093884497881
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.4683388415724,
+        "100": 100.4683388415724,
+        "125": 125.4683388415724
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "src10_60",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "src10_60",
+        "fault": 60,
+        "threshold": 1
+      },
+      "pass_VDS_abs_V": 59.99727249145508,
+      "reverse_VDS_abs_V": 0.46158599853515625,
+      "pass_VGS_min_V": -0.0001758784055709839,
+      "pass_VGS_max_V": 10.27872085571289,
+      "reverse_VGS_min_V": -0.005374088883399963,
+      "reverse_VGS_max_V": 3.047351837158203,
+      "pass_bank_peak_A": 1.2140774726867676,
+      "reverse_bank_peak_A": 1.2140628099441528,
+      "pass_fault_energy_J": 0.03919660979956119,
+      "reverse_fault_energy_J": 0.00012076638030552366,
+      "all_pass_power_one_device_temperature_rise_K": 16.208316266536713,
+      "all_reverse_power_one_device_temperature_rise_K": 0.15682131238281727,
+      "raw_SHA256": "c5bf37d08bdaa790f7ff67ea1a64ef1f4971e064281c29c9c477c37620f00ffd",
+      "deck_SHA256": "4a875b297ac1d856cc16aa61984caed0db2e58a794e0cca20d0881f082496cb6",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 101.20831626653671,
+        "100": 116.20831626653671,
+        "125": 141.2083162665367
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.15682131238282,
+        "100": 100.15682131238282,
+        "125": 125.15682131238282
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0003858067569203344,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "src10_40",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "src10_40",
+        "fault": 40,
+        "threshold": 1
+      },
+      "pass_VDS_abs_V": 39.99737548828125,
+      "reverse_VDS_abs_V": 0.46158599853515625,
+      "pass_VGS_min_V": -0.0001758784055709839,
+      "pass_VGS_max_V": 10.27872085571289,
+      "reverse_VGS_min_V": -0.005374088883399963,
+      "reverse_VGS_max_V": 3.0859146118164062,
+      "pass_bank_peak_A": 1.2155522108078003,
+      "reverse_bank_peak_A": 1.215537428855896,
+      "pass_fault_energy_J": 0.019570952180655684,
+      "reverse_fault_energy_J": 0.00018317685073008166,
+      "all_pass_power_one_device_temperature_rise_K": 14.368782937526703,
+      "all_reverse_power_one_device_temperature_rise_K": 0.15682131238281727,
+      "raw_SHA256": "4bcf688a09e6d26fbdd3dfa30a9feb7519fe86a65b59e82571e24b5732d02ae8",
+      "deck_SHA256": "e5712ac61eb7ec09d8c82d35bea0a0139e8d082d9d8c1ff230d47d4ac8f2e36c",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 99.3687829375267,
+        "100": 114.3687829375267,
+        "125": 139.3687829375267
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.15682131238282,
+        "100": 100.15682131238282,
+        "125": 125.15682131238282
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "src10_mid",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "src10_mid",
+        "fault": 35.5,
+        "threshold": -1
+      },
+      "pass_VDS_abs_V": 35.49736785888672,
+      "reverse_VDS_abs_V": 0.4615533947944641,
+      "pass_VGS_min_V": -0.0002474188804626465,
+      "pass_VGS_max_V": 10.278717041015625,
+      "reverse_VGS_min_V": -0.005368724465370178,
+      "reverse_VGS_max_V": 3.2515640258789062,
+      "pass_bank_peak_A": 1.2117037773132324,
+      "reverse_bank_peak_A": 1.2116891145706177,
+      "pass_fault_energy_J": 0.04720112071674247,
+      "reverse_fault_energy_J": 0.0006309113526562894,
+      "all_pass_power_one_device_temperature_rise_K": 15.82349306344986,
+      "all_reverse_power_one_device_temperature_rise_K": 0.17555916216224432,
+      "raw_SHA256": "181fe7e3fa2153d3f5bc850178968cc7e8b01f0dbfe21a5e871ecb9631381ebf",
+      "deck_SHA256": "c2b73c1dba6df9f93d2bd24e50dd873420d8f7ed18291e555d112fd8c79d68f3",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 100.82349306344986,
+        "100": 115.82349306344986,
+        "125": 140.82349306344986
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.17555916216224,
+        "100": 100.17555916216224,
+        "125": 125.17555916216224
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0003589826211097824,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "src10_cold_start",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 6.32,
+        "temperature": -40,
+        "extra_gate_charge": true,
+        "name": "src10_cold_start",
+        "mode": "startup",
+        "bulk": 8.84e-05,
+        "ceramic": 3.3e-05,
+        "threshold": -1
+      },
+      "pass_VDS_abs_V": 31.96207046508789,
+      "reverse_VDS_abs_V": 0.5463452935218811,
+      "pass_VGS_min_V": -0.003249526023864746,
+      "pass_VGS_max_V": 10.321765899658203,
+      "reverse_VGS_min_V": -7.343292236328125e-05,
+      "reverse_VGS_max_V": 10.26568603515625,
+      "pass_bank_peak_A": 1.173625111579895,
+      "reverse_bank_peak_A": 1.1736444234848022,
+      "pass_fault_energy_J": 0.0034679906443706244,
+      "reverse_fault_energy_J": 0.003471488542853716,
+      "all_pass_power_one_device_temperature_rise_K": 13.241329669952393,
+      "all_reverse_power_one_device_temperature_rise_K": 0.0664589493535459,
+      "raw_SHA256": "78aed766d26416d4c923daac6e2e31e1b3ed9eaefbec4f74659b62249d99edcc",
+      "deck_SHA256": "51b3e69acceff356cf69aba5c22b48fdc0415b36eff11126540215d3f74b00e8",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 98.24132966995239,
+        "100": 113.24132966995239,
+        "125": 138.2413296699524
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.06645894935355,
+        "100": 100.06645894935355,
+        "125": 125.06645894935355
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "src10_input_loss",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "src10_input_loss",
+        "mode": "input_short",
+        "fault": 0
+      },
+      "pass_VDS_abs_V": 31.98446273803711,
+      "reverse_VDS_abs_V": 0.46155422925949097,
+      "pass_VGS_min_V": -0.0010497162584215403,
+      "pass_VGS_max_V": 10.289531707763672,
+      "reverse_VGS_min_V": -0.005368709564208984,
+      "reverse_VGS_max_V": 10.250385284423828,
+      "pass_bank_peak_A": 0.9212715029716492,
+      "reverse_bank_peak_A": 0.9212832450866699,
+      "pass_fault_energy_J": 6.573586816854014e-08,
+      "reverse_fault_energy_J": 2.6467308351012392e-06,
+      "all_pass_power_one_device_temperature_rise_K": 14.36874908208847,
+      "all_reverse_power_one_device_temperature_rise_K": 0.1567840212956071,
+      "raw_SHA256": "fd0a0cda737f283c4531dd83a0f17f4031d9f93ce366dd25e0dcd616c5650bb1",
+      "deck_SHA256": "fcf0053d107ef0f4dcb076908af95f294f6d9f8d09eb3ef544b10d726c061137",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 99.36874908208847,
+        "100": 114.36874908208847,
+        "125": 139.36874908208847
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.1567840212956,
+        "100": 100.1567840212956,
+        "125": 125.1567840212956
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "src10_persistent60",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "src10_persistent60",
+        "fault": 60,
+        "stop": 1.2,
+        "threshold": 1
+      },
+      "pass_VDS_abs_V": 59.997276306152344,
+      "reverse_VDS_abs_V": 0.46158599853515625,
+      "pass_VGS_min_V": -0.0001758784055709839,
+      "pass_VGS_max_V": 10.27872085571289,
+      "reverse_VGS_min_V": -0.005374088883399963,
+      "reverse_VGS_max_V": 3.047351837158203,
+      "pass_bank_peak_A": 1.2140774726867676,
+      "reverse_bank_peak_A": 1.2140628099441528,
+      "pass_fault_energy_J": 0.039197546071083174,
+      "reverse_fault_energy_J": 0.00012076638443708933,
+      "all_pass_power_one_device_temperature_rise_K": 16.208316266536713,
+      "all_reverse_power_one_device_temperature_rise_K": 0.15682131238281727,
+      "raw_SHA256": "a3f831b3c20e6e2799f3c0b3c42ffeeddc7c0f89a3736b4710806931ede394c1",
+      "deck_SHA256": "7705f44e2d19720587f7e5f424c8c89c6eabef076b846960edfb7f4bcabb3808",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 101.20831626653671,
+        "100": 116.20831626653671,
+        "125": 141.2083162665367
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.15682131238282,
+        "100": 100.15682131238282,
+        "125": 125.15682131238282
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0003858067569203344,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "src10_package_output_short",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "src10_package_output_short",
+        "fault": 60,
+        "threshold": 1,
+        "mode": "short",
+        "package_parasitics": true
+      },
+      "pass_VDS_abs_V": 32.16236114501953,
+      "reverse_VDS_abs_V": 5.024237632751465,
+      "pass_VGS_min_V": -0.0001761019229888916,
+      "pass_VGS_max_V": 10.278331756591797,
+      "reverse_VGS_min_V": -0.005371764302253723,
+      "reverse_VGS_max_V": 10.850339889526367,
+      "pass_bank_peak_A": 41.122711181640625,
+      "reverse_bank_peak_A": 41.130126953125,
+      "pass_fault_energy_J": 0.07779588092054963,
+      "reverse_fault_energy_J": 0.015614565852745116,
+      "all_pass_power_one_device_temperature_rise_K": 14.365304350852966,
+      "all_reverse_power_one_device_temperature_rise_K": 1.2887607906013727,
+      "raw_SHA256": "6e513040847192413375347f1f16458461d56315cb0f6247b25bc12df70baf38",
+      "deck_SHA256": "1a49d4d0334c4ef51e507dcb56d9b6ad7caf8792fbbfeda005a30524fa60298c",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 99.36530435085297,
+        "100": 114.36530435085297,
+        "125": 139.36530435085297
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 86.28876079060137,
+        "100": 101.28876079060137,
+        "125": 126.28876079060137
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0011117331724191104,
+        "120": 4.502999049332823e-07,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "src10_hard_input_short",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "src10_hard_input_short",
+        "fault": 32.164,
+        "threshold": 1,
+        "mode": "input_short",
+        "package_parasitics": true,
+        "hard_input_short": true,
+        "expected_failed_checks": [
+          "output_below_35V",
+          "VGS_within_16V"
+        ],
+        "stop": 0.16
+      },
+      "pass_VDS_abs_V": 31.984460830688477,
+      "reverse_VDS_abs_V": 46.216556549072266,
+      "pass_VGS_min_V": -0.0001761019229888916,
+      "pass_VGS_max_V": 19.533708572387695,
+      "reverse_VGS_min_V": -6.090547561645508,
+      "reverse_VGS_max_V": 10.250383377075195,
+      "pass_bank_peak_A": 47.689727783203125,
+      "reverse_bank_peak_A": 47.68046569824219,
+      "pass_fault_energy_J": 1.539908911125897e-05,
+      "reverse_fault_energy_J": 0.0008145701275737914,
+      "all_pass_power_one_device_temperature_rise_K": 14.365304350852966,
+      "all_reverse_power_one_device_temperature_rise_K": 24.78807382285595,
+      "raw_SHA256": "5008ef31e590e43f27cad78354e240869e5beaa1c39931918ecdee22095ff115",
+      "deck_SHA256": "48ed5ff224e7a5bd66df8bc3ba74ba023680b070e36f6d6f1685b9fb14bf634c",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 99.36530435085297,
+        "100": 114.36530435085297,
+        "125": 139.36530435085297
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 109.78807382285595,
+        "100": 124.78807382285595,
+        "125": 149.78807382285595
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": false,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 3.501991628213075e-07,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "guard_src10_60",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "guard_src10_60",
+        "fault": 60,
+        "threshold": 1,
+        "source_guard_L": 2.5e-06
+      },
+      "pass_VDS_abs_V": 59.99723434448242,
+      "reverse_VDS_abs_V": 0.46155446767807007,
+      "pass_VGS_min_V": -0.0001357048749923706,
+      "pass_VGS_max_V": 10.280399322509766,
+      "reverse_VGS_min_V": -0.005374208092689514,
+      "reverse_VGS_max_V": 3.0476036071777344,
+      "pass_bank_peak_A": 1.2523747682571411,
+      "reverse_bank_peak_A": 1.2523616552352905,
+      "pass_fault_energy_J": 0.03918792893348818,
+      "reverse_fault_energy_J": 0.0001209044901212201,
+      "all_pass_power_one_device_temperature_rise_K": 16.202044546604156,
+      "all_reverse_power_one_device_temperature_rise_K": 0.15679314453154802,
+      "raw_SHA256": "69755cb776f02f2a83fd7987651fc5c94eb52f1a09bf9d3bd83809cc35ec062f",
+      "deck_SHA256": "bacc410738d9ed7a01a9cc24275166c9bd0aec9fd7b0decaa7bf5b274e9c413d",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 101.20204454660416,
+        "100": 116.20204454660416,
+        "125": 141.20204454660416
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.15679314453155,
+        "100": 100.15679314453155,
+        "125": 125.15679314453155
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.00038529868399621303,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "guard_src10_40",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "guard_src10_40",
+        "fault": 40,
+        "threshold": 1,
+        "source_guard_L": 2.5e-06
+      },
+      "pass_VDS_abs_V": 39.99734878540039,
+      "reverse_VDS_abs_V": 0.46155446767807007,
+      "pass_VGS_min_V": -0.0001357048749923706,
+      "pass_VGS_max_V": 10.280399322509766,
+      "reverse_VGS_min_V": -0.005374208092689514,
+      "reverse_VGS_max_V": 3.0860633850097656,
+      "pass_bank_peak_A": 1.2562649250030518,
+      "reverse_bank_peak_A": 1.256251335144043,
+      "pass_fault_energy_J": 0.019565044765915744,
+      "reverse_fault_energy_J": 0.00018336046813544437,
+      "all_pass_power_one_device_temperature_rise_K": 14.363310754299164,
+      "all_reverse_power_one_device_temperature_rise_K": 0.15679314453154802,
+      "raw_SHA256": "90b3cfc4acde78ca48e645200e6e538a91bb360e319a56db2a8556a1d4893e03",
+      "deck_SHA256": "c417da238a88b7fc128c53a82cee4a92a858db1b04ca13b3ab9a6cb88a0aa7ce",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 99.36331075429916,
+        "100": 114.36331075429916,
+        "125": 139.36331075429916
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.15679314453155,
+        "100": 100.15679314453155,
+        "125": 125.15679314453155
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "guard_src10_mid",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "guard_src10_mid",
+        "fault": 35.5,
+        "threshold": -1,
+        "source_guard_L": 2.5e-06
+      },
+      "pass_VDS_abs_V": 35.497344970703125,
+      "reverse_VDS_abs_V": 0.46152639389038086,
+      "pass_VGS_min_V": -0.0002053976058959961,
+      "pass_VGS_max_V": 10.280441284179688,
+      "reverse_VGS_min_V": -0.00536876916885376,
+      "reverse_VGS_max_V": 3.251605987548828,
+      "pass_bank_peak_A": 1.253297209739685,
+      "reverse_bank_peak_A": 1.253282070159912,
+      "pass_fault_energy_J": 0.047215144503363046,
+      "reverse_fault_energy_J": 0.0006315076340883512,
+      "all_pass_power_one_device_temperature_rise_K": 15.813977003097534,
+      "all_reverse_power_one_device_temperature_rise_K": 0.1755083156749606,
+      "raw_SHA256": "1d15b9142694ac7fe9f0a865b47235a3a1d44ca6081f639dfb0182eb28ece790",
+      "deck_SHA256": "a60a41ea187351af49b48517a86c44d5517f522825cd1bf15c9da8dbb93a5dec",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 100.81397700309753,
+        "100": 115.81397700309753,
+        "125": 140.81397700309753
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.17550831567496,
+        "100": 100.17550831567496,
+        "125": 125.17550831567496
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.00036003428559583384,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "guard_src10_cold_start",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 6.32,
+        "temperature": -40,
+        "extra_gate_charge": true,
+        "name": "guard_src10_cold_start",
+        "mode": "startup",
+        "bulk": 8.84e-05,
+        "ceramic": 3.3e-05,
+        "threshold": -1,
+        "source_guard_L": 2.5e-06
+      },
+      "pass_VDS_abs_V": 31.961715698242188,
+      "reverse_VDS_abs_V": 0.5463428497314453,
+      "pass_VGS_min_V": -0.003247499465942383,
+      "pass_VGS_max_V": 10.322551727294922,
+      "reverse_VGS_min_V": -7.325410842895508e-05,
+      "reverse_VGS_max_V": 10.26568603515625,
+      "pass_bank_peak_A": 1.1735912561416626,
+      "reverse_bank_peak_A": 1.1736106872558594,
+      "pass_fault_energy_J": 0.003469672389233812,
+      "reverse_fault_energy_J": 0.0034714873135099173,
+      "all_pass_power_one_device_temperature_rise_K": 13.23193746805191,
+      "all_reverse_power_one_device_temperature_rise_K": 0.06640951102599502,
+      "raw_SHA256": "3c59ddd50a3dcf24ca74be44afaa0f9212d675e88d3d528e0f9a911eebdf9505",
+      "deck_SHA256": "c434cec90dd0367aa3233d53eee2ebc99c798e2c16c42db1b28f0dffabe19a4b",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 98.23193746805191,
+        "100": 113.23193746805191,
+        "125": 138.2319374680519
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.066409511026,
+        "100": 100.066409511026,
+        "125": 125.066409511026
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "guard_src10_input_loss",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "guard_src10_input_loss",
+        "mode": "input_short",
+        "fault": 0,
+        "source_guard_L": 2.5e-06
+      },
+      "pass_VDS_abs_V": 32.0074348449707,
+      "reverse_VDS_abs_V": 0.46152621507644653,
+      "pass_VGS_min_V": -0.0010497303446754813,
+      "pass_VGS_max_V": 10.290096282958984,
+      "reverse_VGS_min_V": -0.005368739366531372,
+      "reverse_VGS_max_V": 10.250385284423828,
+      "pass_bank_peak_A": 0.9212918877601624,
+      "reverse_bank_peak_A": 0.9213036894798279,
+      "pass_fault_energy_J": 8.345876651513158e-08,
+      "reverse_fault_energy_J": 2.7036240227969953e-06,
+      "all_pass_power_one_device_temperature_rise_K": 14.363275408744812,
+      "all_reverse_power_one_device_temperature_rise_K": 0.15676126815378666,
+      "raw_SHA256": "24325efd1b1817c359d0ad3105f7fa823519b90aecba687b0faff190cf0b6dfd",
+      "deck_SHA256": "529126b144191065f77feb4347d5602bbcdcc7b78425b1173545f40df594a509",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 99.36327540874481,
+        "100": 114.36327540874481,
+        "125": 139.3632754087448
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.15676126815379,
+        "100": 100.15676126815379,
+        "125": 125.15676126815379
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "guard_src10_persistent60",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "guard_src10_persistent60",
+        "fault": 60,
+        "stop": 1.2,
+        "threshold": 1,
+        "source_guard_L": 2.5e-06
+      },
+      "pass_VDS_abs_V": 59.99723815917969,
+      "reverse_VDS_abs_V": 0.46155446767807007,
+      "pass_VGS_min_V": -0.0001357048749923706,
+      "pass_VGS_max_V": 10.280399322509766,
+      "reverse_VGS_min_V": -0.005374208092689514,
+      "reverse_VGS_max_V": 3.0476036071777344,
+      "pass_bank_peak_A": 1.2523747682571411,
+      "reverse_bank_peak_A": 1.2523616552352905,
+      "pass_fault_energy_J": 0.03918886520506313,
+      "reverse_fault_energy_J": 0.0001209044942527692,
+      "all_pass_power_one_device_temperature_rise_K": 16.202044546604156,
+      "all_reverse_power_one_device_temperature_rise_K": 0.15679314453154802,
+      "raw_SHA256": "b4d82f74101c6a5a5822898add8434da86742264f6cb42c5dd2ffe0dd9e0d2b8",
+      "deck_SHA256": "8e03a37a229564479b4228d762b07cce594c3744f116d8f6cc69ef6e01afdb24",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 101.20204454660416,
+        "100": 116.20204454660416,
+        "125": 141.20204454660416
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.15679314453155,
+        "100": 100.15679314453155,
+        "125": 125.15679314453155
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.00038529868399621303,
+        "120": 0.0,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "guard_src10_package_output_short",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "guard_src10_package_output_short",
+        "fault": 60,
+        "threshold": 1,
+        "mode": "short",
+        "package_parasitics": true,
+        "source_guard_L": 2.5e-06
+      },
+      "pass_VDS_abs_V": 32.62663650512695,
+      "reverse_VDS_abs_V": 0.6743831634521484,
+      "pass_VGS_min_V": -0.00013603270053863525,
+      "pass_VGS_max_V": 10.280181884765625,
+      "reverse_VGS_min_V": -0.005371496081352234,
+      "reverse_VGS_max_V": 10.850038528442383,
+      "pass_bank_peak_A": 28.653736114501953,
+      "reverse_bank_peak_A": 28.66576385498047,
+      "pass_fault_energy_J": 0.07790523594555286,
+      "reverse_fault_energy_J": 0.015259727443901912,
+      "all_pass_power_one_device_temperature_rise_K": 14.359837412834167,
+      "all_reverse_power_one_device_temperature_rise_K": 0.8115206900984049,
+      "raw_SHA256": "bce697e4a0ed3b1be843aaaaa229bed7ebac4d44daf7ce4973e02a22d18ab82c",
+      "deck_SHA256": "ca55da28920f03bb14106ca40ae59505f61cea914aacc75b995b80d38b6ae20e",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 99.35983741283417,
+        "100": 114.35983741283417,
+        "125": 139.35983741283417
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.8115206900984,
+        "100": 100.8115206900984,
+        "125": 125.8115206900984
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0011166752772029664,
+        "120": 3.4865729445221483e-07,
+        "600": 0.0
+      }
+    },
+    {
+      "name": "guard_src10_hard_input_short",
+      "conditions": {
+        "stage": "source",
+        "timer_nF": 17.533333333333335,
+        "temperature": 85,
+        "extra_gate_charge": true,
+        "name": "guard_src10_hard_input_short",
+        "fault": 32.164,
+        "threshold": 1,
+        "mode": "input_short",
+        "package_parasitics": true,
+        "hard_input_short": true,
+        "source_guard_L": 2.5e-06,
+        "stop": 0.16
+      },
+      "pass_VDS_abs_V": 32.00813293457031,
+      "reverse_VDS_abs_V": 40.534278869628906,
+      "pass_VGS_min_V": -0.00013603270053863525,
+      "pass_VGS_max_V": 10.466265678405762,
+      "reverse_VGS_min_V": -0.005371496081352234,
+      "reverse_VGS_max_V": 10.250383377075195,
+      "pass_bank_peak_A": 5.495550155639648,
+      "reverse_bank_peak_A": 5.496682167053223,
+      "pass_fault_energy_J": 1.6060019186540345e-07,
+      "reverse_fault_energy_J": 3.8583684719915265e-06,
+      "all_pass_power_one_device_temperature_rise_K": 14.359836220741272,
+      "all_reverse_power_one_device_temperature_rise_K": 0.15627966448664665,
+      "raw_SHA256": "a874bceb16869626a556ec3afc93d447bcb90382efef65f6b551ae6bb41d1689",
+      "deck_SHA256": "216c7a7fc49e00fa3a87525d2bcb1076bb4d250a6d2cadc88832c410c0d2073f",
+      "all_pass_power_one_device_Tj_C": {
+        "85": 99.35983622074127,
+        "100": 114.35983622074127,
+        "125": 139.35983622074127
+      },
+      "all_reverse_power_one_device_Tj_C": {
+        "85": 85.15627966448665,
+        "100": 100.15627966448665,
+        "125": 125.15627966448665
+      },
+      "electrical_screens": {
+        "drains_below_80V": true,
+        "gates_within_16V": true,
+        "bank_current_below_one_150A_pulse_rating": true
+      },
+      "SOA_status": "OPEN: waveform-to-single-pulse graph comparison, hot linear-mode acceptance and local thermal instability require manufacturer/bench evidence; thermal sensitivity alone is insufficient",
+      "linear_power_exposure_s": {
+        "24": 0.0,
+        "120": 0.0,
+        "600": 0.0
+      }
+    }
+  ]
+}

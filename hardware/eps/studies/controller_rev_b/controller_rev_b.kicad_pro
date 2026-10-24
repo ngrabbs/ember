@@ -1,0 +1,150 @@
+{
+  "board": {
+    "design_settings": {}
+  },
+  "meta": {
+    "filename": "controller_rev_b.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {
+    "classes": [
+      {
+        "clearance": 0.2,
+        "name": "POWER",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "CAN_BUS",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "CAN_LOGIC",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "CLOCK",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "DEBUG",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "CONTROL",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      }
+    ],
+    "meta": {
+      "version": 5
+    },
+    "netclass_patterns": [
+      {
+        "netclass": "POWER",
+        "pattern": "+3V3"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "GND"
+      },
+      {
+        "netclass": "CAN_BUS",
+        "pattern": "/CAN A and B interfaces/CAN_H"
+      },
+      {
+        "netclass": "CAN_BUS",
+        "pattern": "/CAN A and B interfaces/CAN_L"
+      },
+      {
+        "netclass": "CAN_BUS",
+        "pattern": "/CAN A and B interfaces/CAN_B_H"
+      },
+      {
+        "netclass": "CAN_BUS",
+        "pattern": "/CAN A and B interfaces/CAN_B_L"
+      },
+      {
+        "netclass": "CAN_LOGIC",
+        "pattern": "EPS_CAN_A_RX"
+      },
+      {
+        "netclass": "CAN_LOGIC",
+        "pattern": "EPS_CAN_A_TX"
+      },
+      {
+        "netclass": "CAN_LOGIC",
+        "pattern": "EPS_CAN_A_STB"
+      },
+      {
+        "netclass": "CAN_LOGIC",
+        "pattern": "EPS_CAN_B_RX"
+      },
+      {
+        "netclass": "CAN_LOGIC",
+        "pattern": "EPS_CAN_B_TX"
+      },
+      {
+        "netclass": "CAN_LOGIC",
+        "pattern": "EPS_CAN_B_STB"
+      },
+      {
+        "netclass": "CLOCK",
+        "pattern": "/EPS_HSE_16M"
+      },
+      {
+        "netclass": "CLOCK",
+        "pattern": "/EPS_OSC_EN"
+      },
+      {
+        "netclass": "DEBUG",
+        "pattern": "/EPS_SWDIO"
+      },
+      {
+        "netclass": "DEBUG",
+        "pattern": "/EPS_SWCLK"
+      },
+      {
+        "netclass": "DEBUG",
+        "pattern": "/EPS_NRST"
+      },
+      {
+        "netclass": "CONTROL",
+        "pattern": "/REC5_RESET"
+      },
+      {
+        "netclass": "CONTROL",
+        "pattern": "/REC5_FAULT"
+      },
+      {
+        "netclass": "CONTROL",
+        "pattern": "/SRC_FAULT"
+      }
+    ]
+  },
+  "schematic": {
+    "legacy_lib_dir": "",
+    "legacy_lib_list": []
+  }
+}

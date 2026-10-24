@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/verification/controller_rev_b/tps2553_package/fixture/tps2553_check.kicad_sch</source>
+    <date>2026-10-24T10:23:02</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>tps2553_check.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="U1">
+      <value>TPS2553DBVR-1</value>
+      <footprint>Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/tps2553-1.pdf</datasheet>
+      <description>Active-high enable, latch-off adjustable current-limited power switch</description>
+      <fields>
+        <field name="MFG P/N">TPS2553DBVR-1</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">DBV0006A / SOT-23-6</field>
+        <field name="Review">CUSTOM — REVIEW REQUIRED; construction authorized, package/electrical review pending</field>
+        <field name="Footprint">Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tps2553-1.pdf</field>
+        <field name="Description">Active-high enable, latch-off adjustable current-limited power switch</field>
+      </fields>
+      <libsource lib="Ember_Charger_BMS_Review" part="TPS2553DBVR_1_REVIEW" description=""/>
+      <property name="MFG P/N" value="TPS2553DBVR-1"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="DBV0006A / SOT-23-6"/>
+      <property name="Review" value="CUSTOM — REVIEW REQUIRED; construction authorized, package/electrical review pending"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="tps2553_check.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e282b067-f6a9-45e3-bff8-cd35688d8681</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="3"/>
+            <pin num="2"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Ember_Charger_BMS_Review" part="TPS2553DBVR_1_REVIEW">
+      <docs>https://www.ti.com/lit/ds/symlink/tps2553-1.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TPS2553DBVR-1</field>
+        <field name="Footprint">Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tps2553-1.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="IN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="EN" type="input"/>
+        <pin num="4" name="~{FAULT}" type="open_collector"/>
+        <pin num="5" name="ILIM" type="output"/>
+        <pin num="6" name="OUT" type="power_out"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Ember_Charger_BMS_Review">
+      <uri>${KIPRJMOD}/../../../../rev_b/libraries/Ember_Charger_BMS_Review.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="unconnected-(U1-EN-Pad3)" class="Default">
+      <node ref="U1" pin="3" pinfunction="EN_3" pintype="input"/>
+    </net>
+    <net code="2" name="unconnected-(U1-GND-Pad2)" class="Default">
+      <node ref="U1" pin="2" pinfunction="GND_2" pintype="power_in"/>
+    </net>
+    <net code="3" name="unconnected-(U1-ILIM-Pad5)" class="Default">
+      <node ref="U1" pin="5" pinfunction="ILIM_5" pintype="output"/>
+    </net>
+    <net code="4" name="unconnected-(U1-IN-Pad1)" class="Default">
+      <node ref="U1" pin="1" pinfunction="IN_1" pintype="power_in"/>
+    </net>
+    <net code="5" name="unconnected-(U1-OUT-Pad6)" class="Default">
+      <node ref="U1" pin="6" pinfunction="OUT_6" pintype="power_out"/>
+    </net>
+    <net code="6" name="unconnected-(U1-~{FAULT}-Pad4)" class="Default">
+      <node ref="U1" pin="4" pinfunction="~{FAULT}_4" pintype="open_collector"/>
+    </net>
+  </nets>
+</export>

@@ -1,0 +1,5529 @@
+{
+  "basis": "6be2bc7",
+  "rules": "hardware/eps/design/rev_b_charger_bms_library_rules.md",
+  "library_registry": [
+    {
+      "nickname": "4xxx",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/4xxx.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "4xxx_IEEE",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/4xxx_IEEE.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "74xGxx",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/74xGxx.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "74xx",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/74xx.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "74xx_IEEE",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/74xx_IEEE.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Amplifier_Audio",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Amplifier_Audio.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Amplifier_Buffer",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Amplifier_Buffer.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Amplifier_Current",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Amplifier_Current.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Amplifier_Difference",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Amplifier_Difference.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Amplifier_Operational",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Amplifier_Operational.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Amplifier_Instrumentation",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Amplifier_Instrumentation.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Amplifier_Video",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Amplifier_Video.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Analog",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Analog.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Analog_ADC",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Analog_ADC.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Analog_DAC",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Analog_DAC.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Analog_Switch",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Analog_Switch.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Audio",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Audio.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Auxiliary_Items",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Auxiliary_Items.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Battery_Management",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Battery_Management.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Buffer",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Buffer.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Comparator",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Comparator.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Connector",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Connector.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Connector_Audio",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Connector_Audio.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Connector_Generic",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Connector_Generic.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Connector_Generic_MountingPin",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Connector_Generic_MountingPin.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Connector_Generic_Shielded",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Connector_Generic_Shielded.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Converter_ACDC",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Converter_ACDC.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Converter_DCDC",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Converter_DCDC.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "CPLD_Altera",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/CPLD_Altera.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "CPLD_Microchip",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/CPLD_Microchip.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "CPLD_Renesas",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/CPLD_Renesas.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "CPLD_Xilinx",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/CPLD_Xilinx.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "CPU",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/CPU.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "CPU_NXP_6800",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/CPU_NXP_6800.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "CPU_NXP_68000",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/CPU_NXP_68000.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "CPU_NXP_IMX",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/CPU_NXP_IMX.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "CPU_PowerPC",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/CPU_PowerPC.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Device",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Device.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Diode",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Diode.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Diode_Bridge",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Diode_Bridge.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Diode_Laser",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Diode_Laser.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Display_Character",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Display_Character.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Display_Graphic",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Display_Graphic.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Driver",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Driver.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Driver_Display",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Driver_Display.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Driver_FET",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Driver_FET.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Driver_LED",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Driver_LED.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Driver_Motor",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Driver_Motor.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "DSP_AnalogDevices",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/DSP_AnalogDevices.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "DSP_Freescale",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/DSP_Freescale.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "DSP_Microchip_DSPIC33",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/DSP_Microchip_DSPIC33.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "DSP_Motorola",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/DSP_Motorola.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "DSP_Texas",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/DSP_Texas.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Fiber_Optic",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Fiber_Optic.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Filter",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Filter.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_Altera_MAX10",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_Altera_MAX10.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_CologneChip_GateMate",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_CologneChip_GateMate.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_Efinix_Trion",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_Efinix_Trion.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_Lattice",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_Lattice.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_Microsemi",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_Microsemi.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_Xilinx",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_Xilinx.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_Xilinx_Artix7",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_Xilinx_Artix7.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_Xilinx_Kintex7",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_Xilinx_Kintex7.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_Xilinx_Spartan6",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_Xilinx_Spartan6.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_Xilinx_Virtex5",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_Xilinx_Virtex5.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_Xilinx_Virtex6",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_Xilinx_Virtex6.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "FPGA_Xilinx_Virtex7",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/FPGA_Xilinx_Virtex7.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "GPU",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/GPU.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Graphic",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Graphic.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface_CAN_LIN",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface_CAN_LIN.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface_CurrentLoop",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface_CurrentLoop.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface_Ethernet",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface_Ethernet.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface_Expansion",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface_Expansion.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface_HDMI",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface_HDMI.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface_HID",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface_HID.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface_LineDriver",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface_LineDriver.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface_Optical",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface_Optical.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface_Telecom",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface_Telecom.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface_UART",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface_UART.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Interface_USB",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Interface_USB.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Isolator",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Isolator.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Isolator_Analog",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Isolator_Analog.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Jumper",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Jumper.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "LED",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/LED.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Logic_LevelTranslator",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Logic_LevelTranslator.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Logic_Programmable",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Logic_Programmable.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_AnalogDevices",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_AnalogDevices.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Cypress",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Cypress.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Dialog",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Dialog.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Espressif",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Espressif.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Intel",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Intel.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_8051",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_8051.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_ATmega",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_ATmega.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_ATtiny",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_ATtiny.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_AVR",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_AVR.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_AVR_Dx",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_AVR_Dx.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_PIC10",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_PIC10.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_PIC12",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_PIC12.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_PIC16",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_PIC16.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_PIC18",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_PIC18.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_PIC24",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_PIC24.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_PIC32",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_PIC32.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_SAMA",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_SAMA.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_SAMD",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_SAMD.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_SAME",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_SAME.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_SAML",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_SAML.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Microchip_SAMV",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Microchip_SAMV.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Module",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Module.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Nordic",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Nordic.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_NXP_ColdFire",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_NXP_ColdFire.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_NXP_HC11",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_NXP_HC11.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_NXP_HC12",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_NXP_HC12.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_NXP_HCS12",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_NXP_HCS12.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_NXP_Kinetis",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_NXP_Kinetis.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_NXP_LPC",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_NXP_LPC.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_NXP_MAC7100",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_NXP_MAC7100.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_NXP_MCore",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_NXP_MCore.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_NXP_NTAG",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_NXP_NTAG.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_NXP_S08",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_NXP_S08.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Parallax",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Parallax.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Puya",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Puya.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_RaspberryPi",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_RaspberryPi.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Renesas_Synergy_S1",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Renesas_Synergy_S1.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_SiFive",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_SiFive.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_SiliconLabs",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_SiliconLabs.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_STC",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_STC.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM8",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM8.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32C0",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32C0.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32F0",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32F0.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32F1",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32F1.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32F2",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32F2.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32F3",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32F3.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32F4",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32F4.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32F7",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32F7.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32G0",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32G0.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32G4",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32G4.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32H5",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32H5.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32H7",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32H7.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32L0",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32L0.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32L1",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32L1.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32L4",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32L4.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32L5",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32L5.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32MP1",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32MP1.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32U5",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32U5.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32WB",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32WB.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32U0",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32U0.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_ST_STM32WL",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_ST_STM32WL.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Texas",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Texas.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Texas_MSP430",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Texas_MSP430.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Texas_SimpleLink",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Texas_SimpleLink.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_Trident",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_Trident.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "MCU_WCH_RiscV",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/MCU_WCH_RiscV.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Mechanical",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Mechanical.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Memory_EEPROM",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Memory_EEPROM.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Memory_EPROM",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Memory_EPROM.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Memory_Flash",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Memory_Flash.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Memory_NVRAM",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Memory_NVRAM.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Memory_RAM",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Memory_RAM.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Memory_ROM",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Memory_ROM.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Memory_UniqueID",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Memory_UniqueID.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Motor",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Motor.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Oscillator",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Oscillator.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Potentiometer_Digital",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Potentiometer_Digital.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "power",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/power.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Power_Management",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Power_Management.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Power_Protection",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Power_Protection.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Power_Supervisor",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Power_Supervisor.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Reference_Current",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Reference_Current.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Reference_Voltage",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Reference_Voltage.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Regulator_Controller",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Regulator_Controller.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Regulator_Current",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Regulator_Current.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Regulator_Linear",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Regulator_Linear.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Regulator_SwitchedCapacitor",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Regulator_SwitchedCapacitor.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Regulator_Switching",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Regulator_Switching.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Relay",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Relay.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Relay_SolidState",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Relay_SolidState.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_Bluetooth",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_Bluetooth.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_AM_FM",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_AM_FM.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_Amplifier",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_Amplifier.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_Filter",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_Filter.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_GPS",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_GPS.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_GSM",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_GSM.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_Mixer",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_Mixer.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_Module",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_Module.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_NFC",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_NFC.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_RFID",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_RFID.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_Switch",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_Switch.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_WiFi",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_WiFi.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "RF_ZigBee",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_ZigBee.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Security",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Security.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Audio",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Audio.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Current",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Current.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Distance",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Distance.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Energy",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Energy.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Gas",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Gas.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Humidity",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Humidity.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Magnetic",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Magnetic.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Motion",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Motion.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Optical",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Optical.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Pressure",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Pressure.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Proximity",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Proximity.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Temperature",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Temperature.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Touch",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Touch.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Sensor_Voltage",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Voltage.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Simulation_SPICE",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Simulation_SPICE.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Switch",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Switch.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Timer",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Timer.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Timer_PLL",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Timer_PLL.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Timer_RTC",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Timer_RTC.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Transformer",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Transformer.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Transistor_Array",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Transistor_Array.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Transistor_BJT",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Transistor_BJT.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Transistor_FET",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Transistor_FET.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Transistor_FET_Other",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Transistor_FET_Other.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Transistor_IGBT",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Transistor_IGBT.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Transistor_Power_Module",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Transistor_Power_Module.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Triac_Thyristor",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Triac_Thyristor.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Valve",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Valve.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Video",
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Video.kicad_sym",
+      "scope": "global"
+    },
+    {
+      "nickname": "Ember_EPS_Candidates",
+      "path": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/../libraries/Ember_EPS_Candidates.kicad_sym",
+      "scope": "project"
+    },
+    {
+      "nickname": "Ember_EPS_Power",
+      "path": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/../libraries/Ember_EPS_Power.kicad_sym",
+      "scope": "project"
+    },
+    {
+      "nickname": "Ember_EPS_Recovery",
+      "path": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/../libraries/Ember_EPS_Recovery.kicad_sym",
+      "scope": "project"
+    }
+  ],
+  "search_LTC": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"count\":0,\"query\":\"ltc4162\",\"results\":[]}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "search_BQ": {
+    "status": "fulfilled",
+    "value": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"count\":0,\"query\":\"bq40z50\",\"results\":[]}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  "parts": {
+    "L": {
+      "reference": "U1",
+      "name": "LTC4162IUFD-LADM_TRPBF",
+      "expected_pins": [
+        {
+          "name": "BOOST",
+          "type": "power_in",
+          "number": "1",
+          "length": 5.08,
+          "x": 5.08,
+          "y": 35.56,
+          "angle": 270
+        },
+        {
+          "name": "INTVCC",
+          "type": "power_out",
+          "number": "2",
+          "length": 5.08,
+          "x": 10.16,
+          "y": 35.56,
+          "angle": 270
+        },
+        {
+          "name": "VOUTA",
+          "type": "power_in",
+          "number": "3",
+          "length": 5.08,
+          "x": -15.24,
+          "y": 35.56,
+          "angle": 270
+        },
+        {
+          "name": "CLN",
+          "type": "input",
+          "number": "4",
+          "length": 5.08,
+          "x": -30.48,
+          "y": 20.32,
+          "angle": 0
+        },
+        {
+          "name": "CLP",
+          "type": "input",
+          "number": "5",
+          "length": 5.08,
+          "x": -30.48,
+          "y": 22.86,
+          "angle": 0
+        },
+        {
+          "name": "INFET",
+          "type": "output",
+          "number": "6",
+          "length": 5.08,
+          "x": 30.48,
+          "y": 22.86,
+          "angle": 180
+        },
+        {
+          "name": "VIN",
+          "type": "power_in",
+          "number": "7",
+          "length": 5.08,
+          "x": -20.32,
+          "y": 35.56,
+          "angle": 270
+        },
+        {
+          "name": "VCC2P5",
+          "type": "power_out",
+          "number": "8",
+          "length": 5.08,
+          "x": 15.24,
+          "y": 35.56,
+          "angle": 270
+        },
+        {
+          "name": "NTCBIAS",
+          "type": "output",
+          "number": "9",
+          "length": 5.08,
+          "x": 30.48,
+          "y": 12.7,
+          "angle": 180
+        },
+        {
+          "name": "NTC",
+          "type": "input",
+          "number": "10",
+          "length": 5.08,
+          "x": -30.48,
+          "y": 10.16,
+          "angle": 0
+        },
+        {
+          "name": "RT",
+          "type": "input",
+          "number": "11",
+          "length": 5.08,
+          "x": -30.48,
+          "y": 7.62,
+          "angle": 0
+        },
+        {
+          "name": "SMBALERT",
+          "type": "open_collector",
+          "number": "12",
+          "length": 5.08,
+          "x": 30.48,
+          "y": 10.16,
+          "angle": 180
+        },
+        {
+          "name": "SCL",
+          "type": "input",
+          "number": "13",
+          "length": 5.08,
+          "x": -30.48,
+          "y": -2.54,
+          "angle": 0
+        },
+        {
+          "name": "SDA",
+          "type": "bidirectional",
+          "number": "14",
+          "length": 5.08,
+          "x": 30.48,
+          "y": 7.62,
+          "angle": 180
+        },
+        {
+          "name": "DVCC",
+          "type": "power_in",
+          "number": "15",
+          "length": 5.08,
+          "x": 20.32,
+          "y": 35.56,
+          "angle": 270
+        },
+        {
+          "name": "SYNC",
+          "type": "input",
+          "number": "16",
+          "length": 5.08,
+          "x": -30.48,
+          "y": 5.08,
+          "angle": 0
+        },
+        {
+          "name": "CELLS0",
+          "type": "input",
+          "number": "17",
+          "length": 5.08,
+          "x": -30.48,
+          "y": 2.54,
+          "angle": 0
+        },
+        {
+          "name": "CELLS1",
+          "type": "input",
+          "number": "18",
+          "length": 5.08,
+          "x": -30.48,
+          "y": 0,
+          "angle": 0
+        },
+        {
+          "name": "BATSENS+",
+          "type": "input",
+          "number": "19",
+          "length": 5.08,
+          "x": -30.48,
+          "y": 17.78,
+          "angle": 0
+        },
+        {
+          "name": "CSN",
+          "type": "input",
+          "number": "20",
+          "length": 5.08,
+          "x": -30.48,
+          "y": 12.7,
+          "angle": 0
+        },
+        {
+          "name": "CSP",
+          "type": "input",
+          "number": "21",
+          "length": 5.08,
+          "x": -30.48,
+          "y": 15.24,
+          "angle": 0
+        },
+        {
+          "name": "BATFET",
+          "type": "output",
+          "number": "22",
+          "length": 5.08,
+          "x": 30.48,
+          "y": 20.32,
+          "angle": 180
+        },
+        {
+          "name": "PGND",
+          "type": "power_in",
+          "number": "23",
+          "length": 5.08,
+          "x": -17.78,
+          "y": -35.56,
+          "angle": 90
+        },
+        {
+          "name": "PGND",
+          "type": "power_in",
+          "number": "24",
+          "length": 5.08,
+          "x": -15.24,
+          "y": -35.56,
+          "angle": 90
+        },
+        {
+          "name": "SW",
+          "type": "power_out",
+          "number": "25",
+          "length": 5.08,
+          "x": 30.48,
+          "y": 17.78,
+          "angle": 180
+        },
+        {
+          "name": "SW",
+          "type": "power_out",
+          "number": "26",
+          "length": 5.08,
+          "x": 30.48,
+          "y": 15.24,
+          "angle": 180
+        },
+        {
+          "name": "VOUT",
+          "type": "power_in",
+          "number": "27",
+          "length": 5.08,
+          "x": -10.16,
+          "y": 35.56,
+          "angle": 270
+        },
+        {
+          "name": "VOUT",
+          "type": "power_in",
+          "number": "28",
+          "length": 5.08,
+          "x": -5.08,
+          "y": 35.56,
+          "angle": 270
+        },
+        {
+          "name": "AGND",
+          "type": "power_in",
+          "number": "29",
+          "length": 5.08,
+          "x": 17.78,
+          "y": -35.56,
+          "angle": 90
+        }
+      ],
+      "expected_pads": [
+        {
+          "number": "1",
+          "x": -1.9,
+          "y": -1.75,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "2",
+          "x": -1.9,
+          "y": -1.25,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "3",
+          "x": -1.9,
+          "y": -0.75,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "4",
+          "x": -1.9,
+          "y": -0.25,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "5",
+          "x": -1.9,
+          "y": 0.25,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "6",
+          "x": -1.9,
+          "y": 0.75,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "7",
+          "x": -1.9,
+          "y": 1.25,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "8",
+          "x": -1.9,
+          "y": 1.75,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "9",
+          "x": -1.25,
+          "y": 2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "10",
+          "x": -0.75,
+          "y": 2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "11",
+          "x": -0.25,
+          "y": 2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "12",
+          "x": 0.25,
+          "y": 2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "13",
+          "x": 0.75,
+          "y": 2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "14",
+          "x": 1.25,
+          "y": 2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "15",
+          "x": 1.9,
+          "y": 1.75,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "16",
+          "x": 1.9,
+          "y": 1.25,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "17",
+          "x": 1.9,
+          "y": 0.75,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "18",
+          "x": 1.9,
+          "y": 0.25,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "19",
+          "x": 1.9,
+          "y": -0.25,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "20",
+          "x": 1.9,
+          "y": -0.75,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "21",
+          "x": 1.9,
+          "y": -1.25,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "22",
+          "x": 1.9,
+          "y": -1.75,
+          "width": 0.7,
+          "height": 0.25,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "23",
+          "x": 1.25,
+          "y": -2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "24",
+          "x": 0.75,
+          "y": -2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "25",
+          "x": 0.25,
+          "y": -2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "26",
+          "x": -0.25,
+          "y": -2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "27",
+          "x": -0.75,
+          "y": -2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "28",
+          "x": -1.25,
+          "y": -2.4,
+          "width": 0.25,
+          "height": 0.7,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        },
+        {
+          "number": "29",
+          "x": 0,
+          "y": 0,
+          "width": 2.65,
+          "height": 3.65,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        }
+      ],
+      "symbol": {
+        "lib_id": "Ember_Charger_BMS_Review:LTC4162IUFD-LADM_TRPBF",
+        "library": "Ember_Charger_BMS_Review",
+        "name": "LTC4162IUFD-LADM_TRPBF",
+        "pin_count": 29,
+        "pins": [
+          {
+            "name": "BOOST",
+            "number": "1",
+            "type": "power_in",
+            "x": 5.08,
+            "y": 35.56
+          },
+          {
+            "name": "INTVCC",
+            "number": "2",
+            "type": "power_out",
+            "x": 10.16,
+            "y": 35.56
+          },
+          {
+            "name": "VOUTA",
+            "number": "3",
+            "type": "power_in",
+            "x": -15.24,
+            "y": 35.56
+          },
+          {
+            "name": "CLN",
+            "number": "4",
+            "type": "input",
+            "x": -30.48,
+            "y": 20.32
+          },
+          {
+            "name": "CLP",
+            "number": "5",
+            "type": "input",
+            "x": -30.48,
+            "y": 22.86
+          },
+          {
+            "name": "INFET",
+            "number": "6",
+            "type": "output",
+            "x": 30.48,
+            "y": 22.86
+          },
+          {
+            "name": "VIN",
+            "number": "7",
+            "type": "power_in",
+            "x": -20.32,
+            "y": 35.56
+          },
+          {
+            "name": "VCC2P5",
+            "number": "8",
+            "type": "power_out",
+            "x": 15.24,
+            "y": 35.56
+          },
+          {
+            "name": "NTCBIAS",
+            "number": "9",
+            "type": "output",
+            "x": 30.48,
+            "y": 12.7
+          },
+          {
+            "name": "NTC",
+            "number": "10",
+            "type": "input",
+            "x": -30.48,
+            "y": 10.16
+          },
+          {
+            "name": "RT",
+            "number": "11",
+            "type": "input",
+            "x": -30.48,
+            "y": 7.62
+          },
+          {
+            "name": "SMBALERT",
+            "number": "12",
+            "type": "open_collector",
+            "x": 30.48,
+            "y": 10.16
+          },
+          {
+            "name": "SCL",
+            "number": "13",
+            "type": "input",
+            "x": -30.48,
+            "y": -2.54
+          },
+          {
+            "name": "SDA",
+            "number": "14",
+            "type": "bidirectional",
+            "x": 30.48,
+            "y": 7.62
+          },
+          {
+            "name": "DVCC",
+            "number": "15",
+            "type": "power_in",
+            "x": 20.32,
+            "y": 35.56
+          },
+          {
+            "name": "SYNC",
+            "number": "16",
+            "type": "input",
+            "x": -30.48,
+            "y": 5.08
+          },
+          {
+            "name": "CELLS0",
+            "number": "17",
+            "type": "input",
+            "x": -30.48,
+            "y": 2.54
+          },
+          {
+            "name": "CELLS1",
+            "number": "18",
+            "type": "input",
+            "x": -30.48,
+            "y": 0
+          },
+          {
+            "name": "BATSENS+",
+            "number": "19",
+            "type": "input",
+            "x": -30.48,
+            "y": 17.78
+          },
+          {
+            "name": "CSN",
+            "number": "20",
+            "type": "input",
+            "x": -30.48,
+            "y": 12.7
+          },
+          {
+            "name": "CSP",
+            "number": "21",
+            "type": "input",
+            "x": -30.48,
+            "y": 15.24
+          },
+          {
+            "name": "BATFET",
+            "number": "22",
+            "type": "output",
+            "x": 30.48,
+            "y": 20.32
+          },
+          {
+            "name": "PGND",
+            "number": "23",
+            "type": "power_in",
+            "x": -17.78,
+            "y": -35.56
+          },
+          {
+            "name": "PGND",
+            "number": "24",
+            "type": "power_in",
+            "x": -15.24,
+            "y": -35.56
+          },
+          {
+            "name": "SW",
+            "number": "25",
+            "type": "power_out",
+            "x": 30.48,
+            "y": 17.78
+          },
+          {
+            "name": "SW",
+            "number": "26",
+            "type": "power_out",
+            "x": 30.48,
+            "y": 15.24
+          },
+          {
+            "name": "VOUT",
+            "number": "27",
+            "type": "power_in",
+            "x": -10.16,
+            "y": 35.56
+          },
+          {
+            "name": "VOUT",
+            "number": "28",
+            "type": "power_in",
+            "x": -5.08,
+            "y": 35.56
+          },
+          {
+            "name": "AGND",
+            "number": "29",
+            "type": "power_in",
+            "x": 17.78,
+            "y": -35.56
+          }
+        ],
+        "properties": {
+          "Datasheet": "https://www.analog.com/media/en/technical-documentation/data-sheets/LTC4162-L.pdf",
+          "Description": "",
+          "Footprint": "Ember_Charger_BMS_Review:ADI_UFD-28-1EP_4x5mm_P0.5mm_Manufacturer",
+          "Reference": "U",
+          "Value": "LTC4162IUFD-LADM#TRPBF"
+        }
+      },
+      "footprint": {
+        "coordinate_system": "footprint_local_mm_y_down",
+        "description": "CUSTOM REVIEW: LTC4162IUFD-LADM#TRPBF; ADI UFD 05-08-1712 Rev C nominal lands. EP29 AGND. Assembly/stencil/thermal review open.",
+        "graphic_count": 4,
+        "graphics": [
+          {
+            "end": {
+              "x": 2.5,
+              "y": 3
+            },
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.CrtYd",
+            "start": {
+              "x": -2.5,
+              "y": -3
+            },
+            "stroke_width_mm": 0.05,
+            "type": "rect"
+          },
+          {
+            "end": {
+              "x": 2.4,
+              "y": 2.9
+            },
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -2.4,
+              "y": -2.9
+            },
+            "stroke_width_mm": 0.12,
+            "type": "rect"
+          },
+          {
+            "center": {
+              "x": -2.25,
+              "y": -2.7
+            },
+            "fill": "solid",
+            "item_id": null,
+            "layer": "F.SilkS",
+            "radius_mm": 0.10000000000000009,
+            "stroke_width_mm": 0.05,
+            "type": "circle"
+          },
+          {
+            "closed": true,
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.Fab",
+            "point_count": 5,
+            "points": [
+              {
+                "x": -2.05,
+                "y": -1.55
+              },
+              {
+                "x": -1.05,
+                "y": -2.55
+              },
+              {
+                "x": 2.05,
+                "y": -2.55
+              },
+              {
+                "x": 2.05,
+                "y": 2.55
+              },
+              {
+                "x": -2.05,
+                "y": 2.55
+              }
+            ],
+            "stroke_width_mm": 0.1,
+            "type": "poly"
+          }
+        ],
+        "has_3d_model": false,
+        "has_courtyard": true,
+        "name": "ADI_UFD-28-1EP_4x5mm_P0.5mm_Manufacturer",
+        "pad_count": 29,
+        "pads": [
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "1",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": -1.9,
+            "y": -1.75
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "2",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": -1.9,
+            "y": -1.25
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "3",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": -1.9,
+            "y": -0.75
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "4",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": -1.9,
+            "y": -0.25
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "5",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": -1.9,
+            "y": 0.25
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "6",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": -1.9,
+            "y": 0.75
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "7",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": -1.9,
+            "y": 1.25
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "8",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": -1.9,
+            "y": 1.75
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "9",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": -1.25,
+            "y": 2.4
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "10",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": -0.75,
+            "y": 2.4
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "11",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": -0.25,
+            "y": 2.4
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "12",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": 0.25,
+            "y": 2.4
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "13",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": 0.75,
+            "y": 2.4
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "14",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": 1.25,
+            "y": 2.4
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "15",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": 1.9,
+            "y": 1.75
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "16",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": 1.9,
+            "y": 1.25
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "17",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": 1.9,
+            "y": 0.75
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "18",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": 1.9,
+            "y": 0.25
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "19",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": 1.9,
+            "y": -0.25
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "20",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": 1.9,
+            "y": -0.75
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "21",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": 1.9,
+            "y": -1.25
+          },
+          {
+            "drill": [],
+            "height": 0.25,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "22",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.7,
+            "x": 1.9,
+            "y": -1.75
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "23",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": 1.25,
+            "y": -2.4
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "24",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": 0.75,
+            "y": -2.4
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "25",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": 0.25,
+            "y": -2.4
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "26",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": -0.25,
+            "y": -2.4
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "27",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": -0.75,
+            "y": -2.4
+          },
+          {
+            "drill": [],
+            "height": 0.7,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "28",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 0.25,
+            "x": -1.25,
+            "y": -2.4
+          },
+          {
+            "drill": [],
+            "height": 3.65,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "29",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 2.65,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "path": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/libraries/Ember_Charger_BMS_Review.pretty/ADI_UFD-28-1EP_4x5mm_P0.5mm_Manufacturer.kicad_mod"
+      },
+      "instance": {
+        "footprint": "Ember_Charger_BMS_Review:ADI_UFD-28-1EP_4x5mm_P0.5mm_Manufacturer",
+        "lib_id": "Ember_Charger_BMS_Review:LTC4162IUFD-LADM_TRPBF",
+        "mirror_x": false,
+        "mirror_y": false,
+        "reference": "U1",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "mirror_x": false,
+            "mirror_y": false,
+            "rotation": 0,
+            "unit": 1,
+            "uuid": "3447ec1c-93a8-4e12-b23a-c1361b7c200b",
+            "x": 111.76,
+            "y": 116.84
+          }
+        ],
+        "uuid": "3447ec1c-93a8-4e12-b23a-c1361b7c200b",
+        "value": "LTC4162IUFD-LADM#TRPBF",
+        "x": 111.76,
+        "y": 116.84
+      },
+      "pins": {
+        "component_x": 111.76,
+        "component_y": 116.84,
+        "pins": [
+          {
+            "length_mm": 5.08,
+            "name": "BOOST",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 116.84,
+            "y": 81.28
+          },
+          {
+            "length_mm": 5.08,
+            "name": "INTVCC",
+            "number": "2",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 121.92,
+            "y": 81.28
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VOUTA",
+            "number": "3",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 96.52000000000001,
+            "y": 81.28
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CLN",
+            "number": "4",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 81.28,
+            "y": 96.52000000000001
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CLP",
+            "number": "5",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 81.28,
+            "y": 93.98
+          },
+          {
+            "length_mm": 5.08,
+            "name": "INFET",
+            "number": "6",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 142.24,
+            "y": 93.98
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VIN",
+            "number": "7",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 91.44,
+            "y": 81.28
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VCC2P5",
+            "number": "8",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 127,
+            "y": 81.28
+          },
+          {
+            "length_mm": 5.08,
+            "name": "NTCBIAS",
+            "number": "9",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 142.24,
+            "y": 104.14
+          },
+          {
+            "length_mm": 5.08,
+            "name": "NTC",
+            "number": "10",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 81.28,
+            "y": 106.68
+          },
+          {
+            "length_mm": 5.08,
+            "name": "RT",
+            "number": "11",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 81.28,
+            "y": 109.22
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SMBALERT",
+            "number": "12",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 142.24,
+            "y": 106.68
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SCL",
+            "number": "13",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 81.28,
+            "y": 119.38000000000001
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SDA",
+            "number": "14",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 142.24,
+            "y": 109.22
+          },
+          {
+            "length_mm": 5.08,
+            "name": "DVCC",
+            "number": "15",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 132.08,
+            "y": 81.28
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SYNC",
+            "number": "16",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 81.28,
+            "y": 111.76
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CELLS0",
+            "number": "17",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 81.28,
+            "y": 114.3
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CELLS1",
+            "number": "18",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 81.28,
+            "y": 116.84
+          },
+          {
+            "length_mm": 5.08,
+            "name": "BATSENS+",
+            "number": "19",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 81.28,
+            "y": 99.06
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CSN",
+            "number": "20",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 81.28,
+            "y": 104.14
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CSP",
+            "number": "21",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 81.28,
+            "y": 101.60000000000001
+          },
+          {
+            "length_mm": 5.08,
+            "name": "BATFET",
+            "number": "22",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 142.24,
+            "y": 96.52000000000001
+          },
+          {
+            "length_mm": 5.08,
+            "name": "PGND",
+            "number": "23",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 93.98,
+            "y": 152.4
+          },
+          {
+            "length_mm": 5.08,
+            "name": "PGND",
+            "number": "24",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 96.52000000000001,
+            "y": 152.4
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SW",
+            "number": "25",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 142.24,
+            "y": 99.06
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SW",
+            "number": "26",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 142.24,
+            "y": 101.60000000000001
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VOUT",
+            "number": "27",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 101.60000000000001,
+            "y": 81.28
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VOUT",
+            "number": "28",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 106.68,
+            "y": 81.28
+          },
+          {
+            "length_mm": 5.08,
+            "name": "AGND",
+            "number": "29",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 129.54000000000002,
+            "y": 152.4
+          }
+        ],
+        "reference": "U1",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 5.08,
+                "name": "BOOST",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 116.84,
+                "y": 81.28
+              },
+              {
+                "length_mm": 5.08,
+                "name": "INTVCC",
+                "number": "2",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 121.92,
+                "y": 81.28
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VOUTA",
+                "number": "3",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 96.52000000000001,
+                "y": 81.28
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CLN",
+                "number": "4",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 81.28,
+                "y": 96.52000000000001
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CLP",
+                "number": "5",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 81.28,
+                "y": 93.98
+              },
+              {
+                "length_mm": 5.08,
+                "name": "INFET",
+                "number": "6",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 142.24,
+                "y": 93.98
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VIN",
+                "number": "7",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 91.44,
+                "y": 81.28
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VCC2P5",
+                "number": "8",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 127,
+                "y": 81.28
+              },
+              {
+                "length_mm": 5.08,
+                "name": "NTCBIAS",
+                "number": "9",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 142.24,
+                "y": 104.14
+              },
+              {
+                "length_mm": 5.08,
+                "name": "NTC",
+                "number": "10",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 81.28,
+                "y": 106.68
+              },
+              {
+                "length_mm": 5.08,
+                "name": "RT",
+                "number": "11",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 81.28,
+                "y": 109.22
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SMBALERT",
+                "number": "12",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 142.24,
+                "y": 106.68
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SCL",
+                "number": "13",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 81.28,
+                "y": 119.38000000000001
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SDA",
+                "number": "14",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 142.24,
+                "y": 109.22
+              },
+              {
+                "length_mm": 5.08,
+                "name": "DVCC",
+                "number": "15",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 132.08,
+                "y": 81.28
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SYNC",
+                "number": "16",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 81.28,
+                "y": 111.76
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CELLS0",
+                "number": "17",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 81.28,
+                "y": 114.3
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CELLS1",
+                "number": "18",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 81.28,
+                "y": 116.84
+              },
+              {
+                "length_mm": 5.08,
+                "name": "BATSENS+",
+                "number": "19",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 81.28,
+                "y": 99.06
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CSN",
+                "number": "20",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 81.28,
+                "y": 104.14
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CSP",
+                "number": "21",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 81.28,
+                "y": 101.60000000000001
+              },
+              {
+                "length_mm": 5.08,
+                "name": "BATFET",
+                "number": "22",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 142.24,
+                "y": 96.52000000000001
+              },
+              {
+                "length_mm": 5.08,
+                "name": "PGND",
+                "number": "23",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 93.98,
+                "y": 152.4
+              },
+              {
+                "length_mm": 5.08,
+                "name": "PGND",
+                "number": "24",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 96.52000000000001,
+                "y": 152.4
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SW",
+                "number": "25",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 142.24,
+                "y": 99.06
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SW",
+                "number": "26",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 142.24,
+                "y": 101.60000000000001
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VOUT",
+                "number": "27",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 101.60000000000001,
+                "y": 81.28
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VOUT",
+                "number": "28",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 106.68,
+                "y": 81.28
+              },
+              {
+                "length_mm": 5.08,
+                "name": "AGND",
+                "number": "29",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 129.54000000000002,
+                "y": 152.4
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 111.76,
+            "y": 116.84
+          }
+        ],
+        "x": 111.76,
+        "y": 116.84
+      }
+    },
+    "B": {
+      "reference": "U2",
+      "name": "BQ40Z50RSMR-R2",
+      "expected_pins": [
+        {
+          "name": "PBI",
+          "type": "power_in",
+          "number": "1",
+          "length": 5.08,
+          "x": 15.24,
+          "y": 35.56,
+          "angle": 270
+        },
+        {
+          "name": "VC4",
+          "type": "input",
+          "number": "2",
+          "length": 5.08,
+          "x": -25.4,
+          "y": 22.86,
+          "angle": 0
+        },
+        {
+          "name": "VC3",
+          "type": "input",
+          "number": "3",
+          "length": 5.08,
+          "x": -25.4,
+          "y": 20.32,
+          "angle": 0
+        },
+        {
+          "name": "VC2",
+          "type": "input",
+          "number": "4",
+          "length": 5.08,
+          "x": -25.4,
+          "y": 17.78,
+          "angle": 0
+        },
+        {
+          "name": "VC1",
+          "type": "input",
+          "number": "5",
+          "length": 5.08,
+          "x": -25.4,
+          "y": 15.24,
+          "angle": 0
+        },
+        {
+          "name": "SRN",
+          "type": "input",
+          "number": "6",
+          "length": 5.08,
+          "x": -25.4,
+          "y": 10.16,
+          "angle": 0
+        },
+        {
+          "name": "NC",
+          "type": "passive",
+          "number": "7",
+          "length": 5.08,
+          "x": -25.4,
+          "y": -15.24,
+          "angle": 0
+        },
+        {
+          "name": "SRP",
+          "type": "input",
+          "number": "8",
+          "length": 5.08,
+          "x": -25.4,
+          "y": 12.7,
+          "angle": 0
+        },
+        {
+          "name": "VSS",
+          "type": "power_in",
+          "number": "9",
+          "length": 5.08,
+          "x": -17.78,
+          "y": -35.56,
+          "angle": 90
+        },
+        {
+          "name": "TS1",
+          "type": "input",
+          "number": "10",
+          "length": 5.08,
+          "x": -25.4,
+          "y": 7.62,
+          "angle": 0
+        },
+        {
+          "name": "TS2",
+          "type": "input",
+          "number": "11",
+          "length": 5.08,
+          "x": -25.4,
+          "y": 5.08,
+          "angle": 0
+        },
+        {
+          "name": "TS3",
+          "type": "input",
+          "number": "12",
+          "length": 5.08,
+          "x": -25.4,
+          "y": 2.54,
+          "angle": 0
+        },
+        {
+          "name": "TS4",
+          "type": "input",
+          "number": "13",
+          "length": 5.08,
+          "x": -25.4,
+          "y": 0,
+          "angle": 0
+        },
+        {
+          "name": "NC",
+          "type": "passive",
+          "number": "14",
+          "length": 5.08,
+          "x": -25.4,
+          "y": -17.78,
+          "angle": 0
+        },
+        {
+          "name": "BTP_INT",
+          "type": "output",
+          "number": "15",
+          "length": 5.08,
+          "x": 25.4,
+          "y": 12.7,
+          "angle": 180
+        },
+        {
+          "name": "PRES/SHUTDN",
+          "type": "input",
+          "number": "16",
+          "length": 5.08,
+          "x": -25.4,
+          "y": -10.16,
+          "angle": 0
+        },
+        {
+          "name": "DISP",
+          "type": "input",
+          "number": "17",
+          "length": 5.08,
+          "x": -25.4,
+          "y": -12.7,
+          "angle": 0
+        },
+        {
+          "name": "SMBD",
+          "type": "bidirectional",
+          "number": "18",
+          "length": 5.08,
+          "x": 25.4,
+          "y": 10.16,
+          "angle": 180
+        },
+        {
+          "name": "SMBC",
+          "type": "bidirectional",
+          "number": "19",
+          "length": 5.08,
+          "x": 25.4,
+          "y": 7.62,
+          "angle": 180
+        },
+        {
+          "name": "LEDCNTLA",
+          "type": "bidirectional",
+          "number": "20",
+          "length": 5.08,
+          "x": 25.4,
+          "y": 5.08,
+          "angle": 180
+        },
+        {
+          "name": "LEDCNTLB",
+          "type": "bidirectional",
+          "number": "21",
+          "length": 5.08,
+          "x": 25.4,
+          "y": 2.54,
+          "angle": 180
+        },
+        {
+          "name": "LEDCNTLC",
+          "type": "bidirectional",
+          "number": "22",
+          "length": 5.08,
+          "x": 25.4,
+          "y": 0,
+          "angle": 180
+        },
+        {
+          "name": "PTC",
+          "type": "input",
+          "number": "23",
+          "length": 5.08,
+          "x": -25.4,
+          "y": -5.08,
+          "angle": 0
+        },
+        {
+          "name": "PTCEN",
+          "type": "input",
+          "number": "24",
+          "length": 5.08,
+          "x": -25.4,
+          "y": -7.62,
+          "angle": 0
+        },
+        {
+          "name": "FUSE",
+          "type": "output",
+          "number": "25",
+          "length": 5.08,
+          "x": 25.4,
+          "y": 15.24,
+          "angle": 180
+        },
+        {
+          "name": "VCC",
+          "type": "power_in",
+          "number": "26",
+          "length": 5.08,
+          "x": -10.16,
+          "y": 35.56,
+          "angle": 270
+        },
+        {
+          "name": "PACK",
+          "type": "input",
+          "number": "27",
+          "length": 5.08,
+          "x": -25.4,
+          "y": -2.54,
+          "angle": 0
+        },
+        {
+          "name": "DSG",
+          "type": "output",
+          "number": "28",
+          "length": 5.08,
+          "x": 25.4,
+          "y": 20.32,
+          "angle": 180
+        },
+        {
+          "name": "NC",
+          "type": "passive",
+          "number": "29",
+          "length": 5.08,
+          "x": -25.4,
+          "y": -20.32,
+          "angle": 0
+        },
+        {
+          "name": "PCHG",
+          "type": "output",
+          "number": "30",
+          "length": 5.08,
+          "x": 25.4,
+          "y": 17.78,
+          "angle": 180
+        },
+        {
+          "name": "CHG",
+          "type": "output",
+          "number": "31",
+          "length": 5.08,
+          "x": 25.4,
+          "y": 22.86,
+          "angle": 180
+        },
+        {
+          "name": "BAT",
+          "type": "power_in",
+          "number": "32",
+          "length": 5.08,
+          "x": -15.24,
+          "y": 35.56,
+          "angle": 270
+        },
+        {
+          "name": "VSS_EP",
+          "type": "power_in",
+          "number": "33",
+          "length": 5.08,
+          "x": 17.78,
+          "y": -35.56,
+          "angle": 90
+        }
+      ],
+      "expected_pads": [
+        {
+          "number": "1",
+          "x": -1.9,
+          "y": -1.4,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "2",
+          "x": -1.9,
+          "y": -0.9999999999999999,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "3",
+          "x": -1.9,
+          "y": -0.5999999999999999,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "4",
+          "x": -1.9,
+          "y": -0.19999999999999973,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "5",
+          "x": -1.9,
+          "y": 0.20000000000000018,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "6",
+          "x": -1.9,
+          "y": 0.6000000000000001,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "7",
+          "x": -1.9,
+          "y": 1.0000000000000004,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "8",
+          "x": -1.9,
+          "y": 1.4000000000000004,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "9",
+          "x": -1.4,
+          "y": 1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "10",
+          "x": -0.9999999999999999,
+          "y": 1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "11",
+          "x": -0.5999999999999999,
+          "y": 1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "12",
+          "x": -0.19999999999999973,
+          "y": 1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "13",
+          "x": 0.20000000000000018,
+          "y": 1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "14",
+          "x": 0.6000000000000001,
+          "y": 1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "15",
+          "x": 1.0000000000000004,
+          "y": 1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "16",
+          "x": 1.4000000000000004,
+          "y": 1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "17",
+          "x": 1.9,
+          "y": 1.4,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "18",
+          "x": 1.9,
+          "y": 0.9999999999999999,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "19",
+          "x": 1.9,
+          "y": 0.5999999999999999,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "20",
+          "x": 1.9,
+          "y": 0.19999999999999973,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "21",
+          "x": 1.9,
+          "y": -0.20000000000000018,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "22",
+          "x": 1.9,
+          "y": -0.6000000000000001,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "23",
+          "x": 1.9,
+          "y": -1.0000000000000004,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "24",
+          "x": 1.9,
+          "y": -1.4000000000000004,
+          "width": 0.6,
+          "height": 0.2,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "25",
+          "x": 1.4,
+          "y": -1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "26",
+          "x": 0.9999999999999999,
+          "y": -1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "27",
+          "x": 0.5999999999999999,
+          "y": -1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "28",
+          "x": 0.19999999999999973,
+          "y": -1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "29",
+          "x": -0.20000000000000018,
+          "y": -1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "30",
+          "x": -0.6000000000000001,
+          "y": -1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "31",
+          "x": -1.0000000000000004,
+          "y": -1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "32",
+          "x": -1.4000000000000004,
+          "y": -1.9,
+          "width": 0.2,
+          "height": 0.6,
+          "type": "smd",
+          "shape": "roundrect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ],
+          "roundrect_rratio": 0.25
+        },
+        {
+          "number": "33",
+          "x": 0,
+          "y": 0,
+          "width": 1.4,
+          "height": 1.4,
+          "type": "smd",
+          "shape": "rect",
+          "layers": [
+            "F.Cu",
+            "F.Paste",
+            "F.Mask"
+          ]
+        }
+      ],
+      "symbol": {
+        "lib_id": "Ember_Charger_BMS_Review:BQ40Z50RSMR-R2",
+        "library": "Ember_Charger_BMS_Review",
+        "name": "BQ40Z50RSMR-R2",
+        "pin_count": 33,
+        "pins": [
+          {
+            "name": "PBI",
+            "number": "1",
+            "type": "power_in",
+            "x": 15.24,
+            "y": 35.56
+          },
+          {
+            "name": "VC4",
+            "number": "2",
+            "type": "input",
+            "x": -25.4,
+            "y": 22.86
+          },
+          {
+            "name": "VC3",
+            "number": "3",
+            "type": "input",
+            "x": -25.4,
+            "y": 20.32
+          },
+          {
+            "name": "VC2",
+            "number": "4",
+            "type": "input",
+            "x": -25.4,
+            "y": 17.78
+          },
+          {
+            "name": "VC1",
+            "number": "5",
+            "type": "input",
+            "x": -25.4,
+            "y": 15.24
+          },
+          {
+            "name": "SRN",
+            "number": "6",
+            "type": "input",
+            "x": -25.4,
+            "y": 10.16
+          },
+          {
+            "name": "NC",
+            "number": "7",
+            "type": "passive",
+            "x": -25.4,
+            "y": -15.24
+          },
+          {
+            "name": "SRP",
+            "number": "8",
+            "type": "input",
+            "x": -25.4,
+            "y": 12.7
+          },
+          {
+            "name": "VSS",
+            "number": "9",
+            "type": "power_in",
+            "x": -17.78,
+            "y": -35.56
+          },
+          {
+            "name": "TS1",
+            "number": "10",
+            "type": "input",
+            "x": -25.4,
+            "y": 7.62
+          },
+          {
+            "name": "TS2",
+            "number": "11",
+            "type": "input",
+            "x": -25.4,
+            "y": 5.08
+          },
+          {
+            "name": "TS3",
+            "number": "12",
+            "type": "input",
+            "x": -25.4,
+            "y": 2.54
+          },
+          {
+            "name": "TS4",
+            "number": "13",
+            "type": "input",
+            "x": -25.4,
+            "y": 0
+          },
+          {
+            "name": "NC",
+            "number": "14",
+            "type": "passive",
+            "x": -25.4,
+            "y": -17.78
+          },
+          {
+            "name": "BTP_INT",
+            "number": "15",
+            "type": "output",
+            "x": 25.4,
+            "y": 12.7
+          },
+          {
+            "name": "PRES/SHUTDN",
+            "number": "16",
+            "type": "input",
+            "x": -25.4,
+            "y": -10.16
+          },
+          {
+            "name": "DISP",
+            "number": "17",
+            "type": "input",
+            "x": -25.4,
+            "y": -12.7
+          },
+          {
+            "name": "SMBD",
+            "number": "18",
+            "type": "bidirectional",
+            "x": 25.4,
+            "y": 10.16
+          },
+          {
+            "name": "SMBC",
+            "number": "19",
+            "type": "bidirectional",
+            "x": 25.4,
+            "y": 7.62
+          },
+          {
+            "name": "LEDCNTLA",
+            "number": "20",
+            "type": "bidirectional",
+            "x": 25.4,
+            "y": 5.08
+          },
+          {
+            "name": "LEDCNTLB",
+            "number": "21",
+            "type": "bidirectional",
+            "x": 25.4,
+            "y": 2.54
+          },
+          {
+            "name": "LEDCNTLC",
+            "number": "22",
+            "type": "bidirectional",
+            "x": 25.4,
+            "y": 0
+          },
+          {
+            "name": "PTC",
+            "number": "23",
+            "type": "input",
+            "x": -25.4,
+            "y": -5.08
+          },
+          {
+            "name": "PTCEN",
+            "number": "24",
+            "type": "input",
+            "x": -25.4,
+            "y": -7.62
+          },
+          {
+            "name": "FUSE",
+            "number": "25",
+            "type": "output",
+            "x": 25.4,
+            "y": 15.24
+          },
+          {
+            "name": "VCC",
+            "number": "26",
+            "type": "power_in",
+            "x": -10.16,
+            "y": 35.56
+          },
+          {
+            "name": "PACK",
+            "number": "27",
+            "type": "input",
+            "x": -25.4,
+            "y": -2.54
+          },
+          {
+            "name": "DSG",
+            "number": "28",
+            "type": "output",
+            "x": 25.4,
+            "y": 20.32
+          },
+          {
+            "name": "NC",
+            "number": "29",
+            "type": "passive",
+            "x": -25.4,
+            "y": -20.32
+          },
+          {
+            "name": "PCHG",
+            "number": "30",
+            "type": "output",
+            "x": 25.4,
+            "y": 17.78
+          },
+          {
+            "name": "CHG",
+            "number": "31",
+            "type": "output",
+            "x": 25.4,
+            "y": 22.86
+          },
+          {
+            "name": "BAT",
+            "number": "32",
+            "type": "power_in",
+            "x": -15.24,
+            "y": 35.56
+          },
+          {
+            "name": "VSS_EP",
+            "number": "33",
+            "type": "power_in",
+            "x": 17.78,
+            "y": -35.56
+          }
+        ],
+        "properties": {
+          "Datasheet": "https://www.ti.com/lit/ds/symlink/bq40z50-r2.pdf",
+          "Description": "",
+          "Footprint": "Ember_Charger_BMS_Review:TI_RSM0032A-32-1EP_4x4mm_P0.4mm_Manufacturer",
+          "Reference": "U",
+          "Value": "BQ40Z50RSMR-R2"
+        }
+      },
+      "footprint": {
+        "coordinate_system": "footprint_local_mm_y_down",
+        "description": "CUSTOM REVIEW: BQ40Z50RSMR-R2; TI RSM0032A 4219107/A nominal lands. EP33 VSS. Assembly/stencil/thermal review open.",
+        "graphic_count": 4,
+        "graphics": [
+          {
+            "end": {
+              "x": 2.45,
+              "y": 2.45
+            },
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.CrtYd",
+            "start": {
+              "x": -2.45,
+              "y": -2.45
+            },
+            "stroke_width_mm": 0.05,
+            "type": "rect"
+          },
+          {
+            "end": {
+              "x": 2.35,
+              "y": 2.35
+            },
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -2.35,
+              "y": -2.35
+            },
+            "stroke_width_mm": 0.12,
+            "type": "rect"
+          },
+          {
+            "center": {
+              "x": -2.15,
+              "y": -2.15
+            },
+            "fill": "solid",
+            "item_id": null,
+            "layer": "F.SilkS",
+            "radius_mm": 0.10000000000000009,
+            "stroke_width_mm": 0.05,
+            "type": "circle"
+          },
+          {
+            "closed": true,
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.Fab",
+            "point_count": 5,
+            "points": [
+              {
+                "x": -2.05,
+                "y": -1.05
+              },
+              {
+                "x": -1.05,
+                "y": -2.05
+              },
+              {
+                "x": 2.05,
+                "y": -2.05
+              },
+              {
+                "x": 2.05,
+                "y": 2.05
+              },
+              {
+                "x": -2.05,
+                "y": 2.05
+              }
+            ],
+            "stroke_width_mm": 0.1,
+            "type": "poly"
+          }
+        ],
+        "has_3d_model": false,
+        "has_courtyard": true,
+        "name": "TI_RSM0032A-32-1EP_4x4mm_P0.4mm_Manufacturer",
+        "pad_count": 33,
+        "pads": [
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "1",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": -1.9,
+            "y": -1.4
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "2",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": -1.9,
+            "y": -1
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "3",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": -1.9,
+            "y": -0.5999999999999999
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "4",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": -1.9,
+            "y": -0.19999999999999973
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "5",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": -1.9,
+            "y": 0.20000000000000015
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "6",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": -1.9,
+            "y": 0.6000000000000001
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "7",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": -1.9,
+            "y": 1.0000000000000004
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "8",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": -1.9,
+            "y": 1.4000000000000004
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "9",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": -1.4,
+            "y": 1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "10",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": -1,
+            "y": 1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "11",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": -0.5999999999999999,
+            "y": 1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "12",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": -0.19999999999999973,
+            "y": 1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "13",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": 0.20000000000000015,
+            "y": 1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "14",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": 0.6000000000000001,
+            "y": 1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "15",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": 1.0000000000000004,
+            "y": 1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "16",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": 1.4000000000000004,
+            "y": 1.9
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "17",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": 1.9,
+            "y": 1.4
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "18",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": 1.9,
+            "y": 1
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "19",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": 1.9,
+            "y": 0.5999999999999999
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "20",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": 1.9,
+            "y": 0.19999999999999973
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "21",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": 1.9,
+            "y": -0.20000000000000015
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "22",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": 1.9,
+            "y": -0.6000000000000001
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "23",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": 1.9,
+            "y": -1.0000000000000004
+          },
+          {
+            "drill": [],
+            "height": 0.2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "24",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.6,
+            "x": 1.9,
+            "y": -1.4000000000000004
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "25",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": 1.4,
+            "y": -1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "26",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": 1,
+            "y": -1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "27",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": 0.5999999999999999,
+            "y": -1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "28",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": 0.19999999999999973,
+            "y": -1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "29",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": -0.20000000000000015,
+            "y": -1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "30",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": -0.6000000000000001,
+            "y": -1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "31",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": -1.0000000000000004,
+            "y": -1.9
+          },
+          {
+            "drill": [],
+            "height": 0.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "32",
+            "rotation": 0,
+            "roundrect_rratio": 0.25,
+            "shape": "roundrect",
+            "type": "smd",
+            "width": 0.2,
+            "x": -1.4000000000000004,
+            "y": -1.9
+          },
+          {
+            "drill": [],
+            "height": 1.4,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "33",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 1.4,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "path": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/libraries/Ember_Charger_BMS_Review.pretty/TI_RSM0032A-32-1EP_4x4mm_P0.4mm_Manufacturer.kicad_mod"
+      },
+      "instance": {
+        "footprint": "Ember_Charger_BMS_Review:TI_RSM0032A-32-1EP_4x4mm_P0.4mm_Manufacturer",
+        "lib_id": "Ember_Charger_BMS_Review:BQ40Z50RSMR-R2",
+        "mirror_x": false,
+        "mirror_y": false,
+        "reference": "U2",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "mirror_x": false,
+            "mirror_y": false,
+            "rotation": 0,
+            "unit": 1,
+            "uuid": "54295c3e-e603-43f9-81cf-fb7828d6a4d2",
+            "x": 269.24,
+            "y": 116.84
+          }
+        ],
+        "uuid": "54295c3e-e603-43f9-81cf-fb7828d6a4d2",
+        "value": "BQ40Z50RSMR-R2",
+        "x": 269.24,
+        "y": 116.84
+      },
+      "pins": {
+        "component_x": 269.24,
+        "component_y": 116.84,
+        "pins": [
+          {
+            "length_mm": 5.08,
+            "name": "PBI",
+            "number": "1",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 284.48,
+            "y": 81.28
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VC4",
+            "number": "2",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 93.98
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VC3",
+            "number": "3",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 96.52000000000001
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VC2",
+            "number": "4",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 99.06
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VC1",
+            "number": "5",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 101.60000000000001
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SRN",
+            "number": "6",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 106.68
+          },
+          {
+            "length_mm": 5.08,
+            "name": "NC",
+            "number": "7",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 132.08
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SRP",
+            "number": "8",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 104.14
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VSS",
+            "number": "9",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 251.46,
+            "y": 152.4
+          },
+          {
+            "length_mm": 5.08,
+            "name": "TS1",
+            "number": "10",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 109.22
+          },
+          {
+            "length_mm": 5.08,
+            "name": "TS2",
+            "number": "11",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 111.76
+          },
+          {
+            "length_mm": 5.08,
+            "name": "TS3",
+            "number": "12",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 114.3
+          },
+          {
+            "length_mm": 5.08,
+            "name": "TS4",
+            "number": "13",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 116.84
+          },
+          {
+            "length_mm": 5.08,
+            "name": "NC",
+            "number": "14",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 134.62
+          },
+          {
+            "length_mm": 5.08,
+            "name": "BTP_INT",
+            "number": "15",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 294.64,
+            "y": 104.14
+          },
+          {
+            "length_mm": 5.08,
+            "name": "PRES/SHUTDN",
+            "number": "16",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 127
+          },
+          {
+            "length_mm": 5.08,
+            "name": "DISP",
+            "number": "17",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 129.54
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SMBD",
+            "number": "18",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 294.64,
+            "y": 106.68
+          },
+          {
+            "length_mm": 5.08,
+            "name": "SMBC",
+            "number": "19",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 294.64,
+            "y": 109.22
+          },
+          {
+            "length_mm": 5.08,
+            "name": "LEDCNTLA",
+            "number": "20",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 294.64,
+            "y": 111.76
+          },
+          {
+            "length_mm": 5.08,
+            "name": "LEDCNTLB",
+            "number": "21",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 294.64,
+            "y": 114.3
+          },
+          {
+            "length_mm": 5.08,
+            "name": "LEDCNTLC",
+            "number": "22",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 294.64,
+            "y": 116.84
+          },
+          {
+            "length_mm": 5.08,
+            "name": "PTC",
+            "number": "23",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 121.92
+          },
+          {
+            "length_mm": 5.08,
+            "name": "PTCEN",
+            "number": "24",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 124.46000000000001
+          },
+          {
+            "length_mm": 5.08,
+            "name": "FUSE",
+            "number": "25",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 294.64,
+            "y": 101.60000000000001
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VCC",
+            "number": "26",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 259.08,
+            "y": 81.28
+          },
+          {
+            "length_mm": 5.08,
+            "name": "PACK",
+            "number": "27",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 119.38000000000001
+          },
+          {
+            "length_mm": 5.08,
+            "name": "DSG",
+            "number": "28",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 294.64,
+            "y": 96.52000000000001
+          },
+          {
+            "length_mm": 5.08,
+            "name": "NC",
+            "number": "29",
+            "orientation_degrees": 180,
+            "unit": 1,
+            "x": 243.84,
+            "y": 137.16
+          },
+          {
+            "length_mm": 5.08,
+            "name": "PCHG",
+            "number": "30",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 294.64,
+            "y": 99.06
+          },
+          {
+            "length_mm": 5.08,
+            "name": "CHG",
+            "number": "31",
+            "orientation_degrees": 0,
+            "unit": 1,
+            "x": 294.64,
+            "y": 93.98
+          },
+          {
+            "length_mm": 5.08,
+            "name": "BAT",
+            "number": "32",
+            "orientation_degrees": 90,
+            "unit": 1,
+            "x": 254,
+            "y": 81.28
+          },
+          {
+            "length_mm": 5.08,
+            "name": "VSS_EP",
+            "number": "33",
+            "orientation_degrees": 270,
+            "unit": 1,
+            "x": 287.02,
+            "y": 152.4
+          }
+        ],
+        "reference": "U2",
+        "rotation": 0,
+        "unit_count": 1,
+        "units": [
+          {
+            "pins": [
+              {
+                "length_mm": 5.08,
+                "name": "PBI",
+                "number": "1",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 284.48,
+                "y": 81.28
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VC4",
+                "number": "2",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 93.98
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VC3",
+                "number": "3",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 96.52000000000001
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VC2",
+                "number": "4",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 99.06
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VC1",
+                "number": "5",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 101.60000000000001
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SRN",
+                "number": "6",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 106.68
+              },
+              {
+                "length_mm": 5.08,
+                "name": "NC",
+                "number": "7",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 132.08
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SRP",
+                "number": "8",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 104.14
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VSS",
+                "number": "9",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 251.46,
+                "y": 152.4
+              },
+              {
+                "length_mm": 5.08,
+                "name": "TS1",
+                "number": "10",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 109.22
+              },
+              {
+                "length_mm": 5.08,
+                "name": "TS2",
+                "number": "11",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 111.76
+              },
+              {
+                "length_mm": 5.08,
+                "name": "TS3",
+                "number": "12",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 114.3
+              },
+              {
+                "length_mm": 5.08,
+                "name": "TS4",
+                "number": "13",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 116.84
+              },
+              {
+                "length_mm": 5.08,
+                "name": "NC",
+                "number": "14",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 134.62
+              },
+              {
+                "length_mm": 5.08,
+                "name": "BTP_INT",
+                "number": "15",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 294.64,
+                "y": 104.14
+              },
+              {
+                "length_mm": 5.08,
+                "name": "PRES/SHUTDN",
+                "number": "16",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 127
+              },
+              {
+                "length_mm": 5.08,
+                "name": "DISP",
+                "number": "17",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 129.54
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SMBD",
+                "number": "18",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 294.64,
+                "y": 106.68
+              },
+              {
+                "length_mm": 5.08,
+                "name": "SMBC",
+                "number": "19",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 294.64,
+                "y": 109.22
+              },
+              {
+                "length_mm": 5.08,
+                "name": "LEDCNTLA",
+                "number": "20",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 294.64,
+                "y": 111.76
+              },
+              {
+                "length_mm": 5.08,
+                "name": "LEDCNTLB",
+                "number": "21",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 294.64,
+                "y": 114.3
+              },
+              {
+                "length_mm": 5.08,
+                "name": "LEDCNTLC",
+                "number": "22",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 294.64,
+                "y": 116.84
+              },
+              {
+                "length_mm": 5.08,
+                "name": "PTC",
+                "number": "23",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 121.92
+              },
+              {
+                "length_mm": 5.08,
+                "name": "PTCEN",
+                "number": "24",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 124.46000000000001
+              },
+              {
+                "length_mm": 5.08,
+                "name": "FUSE",
+                "number": "25",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 294.64,
+                "y": 101.60000000000001
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VCC",
+                "number": "26",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 259.08,
+                "y": 81.28
+              },
+              {
+                "length_mm": 5.08,
+                "name": "PACK",
+                "number": "27",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 119.38000000000001
+              },
+              {
+                "length_mm": 5.08,
+                "name": "DSG",
+                "number": "28",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 294.64,
+                "y": 96.52000000000001
+              },
+              {
+                "length_mm": 5.08,
+                "name": "NC",
+                "number": "29",
+                "orientation_degrees": 180,
+                "unit": 1,
+                "x": 243.84,
+                "y": 137.16
+              },
+              {
+                "length_mm": 5.08,
+                "name": "PCHG",
+                "number": "30",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 294.64,
+                "y": 99.06
+              },
+              {
+                "length_mm": 5.08,
+                "name": "CHG",
+                "number": "31",
+                "orientation_degrees": 0,
+                "unit": 1,
+                "x": 294.64,
+                "y": 93.98
+              },
+              {
+                "length_mm": 5.08,
+                "name": "BAT",
+                "number": "32",
+                "orientation_degrees": 90,
+                "unit": 1,
+                "x": 254,
+                "y": 81.28
+              },
+              {
+                "length_mm": 5.08,
+                "name": "VSS_EP",
+                "number": "33",
+                "orientation_degrees": 270,
+                "unit": 1,
+                "x": 287.02,
+                "y": 152.4
+              }
+            ],
+            "rotation": 0,
+            "unit": 1,
+            "x": 269.24,
+            "y": 116.84
+          }
+        ],
+        "x": 269.24,
+        "y": 116.84
+      }
+    }
+  }
+}

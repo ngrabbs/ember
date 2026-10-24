@@ -8,7 +8,7 @@ The [provisional BOM and schematic checklist](rev_b_bom_and_schematic_checklist.
 
 The [pin allocation and circuit fit study](rev_b_pin_and_fit_study.md) establishes a provisional LQFP32 allocation and circuit-area budget. It recommends BQ40Z50 as the protection reference and four layers for evaluation; physical fit and final component selection remain open.
 
-Its controller circuit definition selects two essential-3.3-V TCAN3413DR transceiver candidates and a 16 MHz ECS oscillator candidate, with initial 500 kbit/s timing. CAN A standby now uses PB9; PD0 is reserved to avoid using its UCPD-related reset behavior for that control. Package maps, clock/reset checks and bench acceptance remain required.
+Its controller circuit definition selects two essential-3.3-V TCAN3413DR transceiver candidates and a 16 MHz ECS oscillator candidate, with initial 500 kbit/s timing. CAN A standby uses PB9. The 2026-10-24 [isolated BMS supply integration](rev_b_bms_isolated_supply_integration.md) uses former reserves PD0/PD3 for diagnostic fault and open-drain enable/reset, with explicit UCPD startup handling. The supply derives from permitted essential 3V3 so telemetry does not depend on recovery 5V. Package review, startup/source/fault checks and bench acceptance remain separate.
 
 The [source-isolation study](rev_b_source_isolation_study.md) recommends evaluating separate back-to-back P-channel pairs with direct hardware interlock control. It includes preliminary loss calculations and identifies depleted-pack recovery, inrush and cold solar voltage as unresolved acceptance gates.
 
@@ -19,6 +19,12 @@ The [BMS and temperature specification](rev_b_bms_and_temperature_spec.md) defin
 The [regulator and OV candidate study](rev_b_regulator_and_ov_candidates.md) carries forward LMR51635XDDCR for 3.3 V and LM5177DCPR for 5 V evaluation. The operator selected regulated 5 V for COMMS recovery down to the provisional 5 V pack floor, so the 5 V stage is buck-boost. Complete stages, fit and cutoff trip/reset windows remain unaccepted.
 
 The [power-stage sizing and fit checkpoint](rev_b_power_stage_sizing_and_fit.md) records illustrative rail-current cases, passive/FET constraints and larger converter reservations. It incorporates the operator’s 16 mm top standoff; usable height and complete stage ratings remain unverified.
+
+The [2026-10-23 5 V recovery design](rev_b_5v_recovery_design.md) evaluates TPS552872RYQR as a simpler integrated alternative. Its native development circuit passes electrical checks, conditional on the protected source envelope; LM5177 remains a fallback. Final BOM, startup/load-release, thermal and presentation acceptance remain open.
+
+The [5 V recovery closure/handoff](rev_b_5v_recovery_closure.md) records the subsequent 6.8 µH correction, selected passive MPNs, expanded tolerance checks and IHU startup requirements. The operator confirms COMMS TX defaults off with no other COMMS power controls, and selects −40 to +85 °C for electronics component screening only; actual electronics/battery operating temperatures remain open.
+
+The [completion ledger](rev_b_completion.md) tracks the remaining integrated design and the separately authorized Rev B PCB stage. The [MCU pinout correction](../verification/stm32_gp_candidate_verification.md) supersedes the earlier GP identity: the selected part is STM32G0B1KET6N.
 
 ## Agreed requirements
 
@@ -31,7 +37,7 @@ The [power-stage sizing and fit checkpoint](rev_b_power_stage_sizing_and_fit.md)
 | Power isolation | RBF insertion shuts down powered spacecraft functions, including charger and EPS MCU. Deployment switches also enforce hardware shutdown while stowed. |
 | RBF access | Exit through a spacecraft side; the side and location may be chosen to suit the EPS, structure and dispenser. Design the mounting and access arrangement rather than relying on an existing opening. |
 | Authority | EPS owns autonomous protection and load shedding; IHU requests operating states. IHU requests cannot override hardware interlocks or protection. |
-| Controller | STM32G0B1KE is the preferred MCU, pending package pin allocation. |
+| Controller | STM32G0B1KET6N selected on 2026-10-23 to match the intended N-variant allocation; earlier GP mapping claims are withdrawn. |
 | Communications | Separate CAN A and B. A is primary; B must provide recovery access after A fails. |
 | Rev A | Inspect damaged thermistor area later. Do not treat the current reworked circuit as a reference implementation. |
 
@@ -219,3 +225,7 @@ Keep charger-enable testing separate from protection acceptance. A working charg
 - Resolve board layer count, component-side clearance against the holder, and harness connection/retention details.
 
 This file owns the Rev B planning checklist. Link to it from broader TODOs rather than duplicating the work list. Existing canonical pin assignments and Rev A documentation remain unchanged until the corresponding implementation decision is made.
+
+## Source and 5 V fault-containment follow-up — 2026-10-23
+
+The [complete protection selection](rev_b_5v_recovery_protection_selection.md) advances the [earlier architecture record](rev_b_5v_recovery_fault_containment.md): separate LTC4364 source/recovery barriers, autonomous solar restart, latched rail containment, independent reset, gate discharge/clamps, source RC damping and rail fault-slew inductance. An isolated 81-part, two-sheet native study and executable transient screening now exist. Low-VCC accuracy, bounded source/consumer limits, package/parasitic and hot SOA acceptance, upstream fault-capacitor coordination, physical fit and integration remain open. No PCB layout or physical qualification is claimed.

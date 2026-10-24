@@ -1,0 +1,9 @@
+# Passive RBF model retry
+
+2026-10-24. Two additional common-source P-channel pair fixtures were attempted with the unmodified SUD50P08-25L manufacturer model. **Both timed out; no circuit acceptance or native implementation.** The earlier isolated-device successes do not establish this circuit.
+
+These fixtures simplify the prior transistor-assisted gate network to a passive gate/source resistor, 100 nF gate/source capacitor with 10 Ω ESR, an unselected generic 10 V gate clamp and an ideal permission contact to a resistor pulldown. The initial case uses 220 kΩ/10 kΩ; the faster battery-only sensitivity uses 22 kΩ/1 kΩ. The source is an 8.526 V battery fixture through 50 mΩ/1 µH, with 1 µF upstream and 142.7 µF downstream capacitance and a 10 Ω load. These are illustrative source/load conditions, not an integrated startup model or frozen BOM.
+
+The initial case collapsed solver time steps at approximately 264.557 ms, after permission removal at 200 ms; the faster case stalled at approximately 50.0046 ms during turn-on. Both lacked a completed log at the 45-second process bound. [Failure records](failed_runs.json) retain actual source/model/log hashes and the last logged solver positions. No output extrema, inrush, cutoff time or MOSFET SOA are accepted from the incomplete runs.
+
+[Portable decks](passive_battery.cir) require substituting `${PMOS_MODEL}` with the exact unmodified model from the [Vishay archive](https://www.vishay.com/docs/77820/sud50p08.zip). The selected archive member is `sud50p08-25L_PS.lib`, **not** the separate `_RC.lib` variant. Raw files, full repeated-warning logs and the manufacturer model remain outside Git. No renderer or KiCad source changed. RBF circuit selection remains open; these failures do not negate the separate completed LTC4367 controller experiments or qualify their remaining boundary issues.

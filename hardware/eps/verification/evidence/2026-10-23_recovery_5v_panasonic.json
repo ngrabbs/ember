@@ -1,0 +1,581 @@
+{
+  "date": "2026-10-23",
+  "authorization": "User approved Panasonic D8/F construction, positive pad 1, body clearances and query-back/render checks",
+  "view": "Front/component view; pad 1 positive at negative X; pad 2 negative at positive X",
+  "source": "Panasonic hybrid capacitor catalog 2014, printed p.13 Land/Pad Pattern; D8/F; current selected-package dimensions corroborated by ZK catalog 01-Sep-2025 and manufacturer product pages",
+  "footprints": [
+    {
+      "definition": {
+        "name": "Panasonic_CP_D8_6.3x7.7mm_REVIEW",
+        "refs": [
+          "C13",
+          "C14",
+          "C15"
+        ],
+        "width": 3.2,
+        "height": 1.6,
+        "gap": 1.8,
+        "body": 6.6,
+        "diam": 6.3,
+        "maxbody": 6.8,
+        "cx": 4.35,
+        "cy": 3.65,
+        "zmax": 8
+      },
+      "readback": {
+        "coordinate_system": "footprint_local_mm_y_down",
+        "description": "REVIEW candidate; Panasonic D8 manufacturer recommended lands; front/component view; pad 1 positive left, pad 2 negative right; maximum component height 8 mm; approval 2026-10-23; assembly/stencil not qualified",
+        "graphic_count": 11,
+        "graphics": [
+          {
+            "end": {
+              "x": 4.35,
+              "y": 3.65
+            },
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.CrtYd",
+            "start": {
+              "x": -4.35,
+              "y": -3.65
+            },
+            "stroke_width_mm": 0.05,
+            "type": "rect"
+          },
+          {
+            "end": {
+              "x": 3.55,
+              "y": -3.55
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -3.55,
+              "y": -3.55
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": 3.55,
+              "y": 3.55
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -3.55,
+              "y": 3.55
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": -3.55,
+              "y": -1.1
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -3.55,
+              "y": -3.55
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": -3.55,
+              "y": 3.55
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -3.55,
+              "y": 1.1
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": 3.55,
+              "y": -1.1
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": 3.55,
+              "y": -3.55
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": 3.55,
+              "y": 3.55
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": 3.55,
+              "y": 1.1
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": -3.75,
+              "y": 1.6
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -4.25,
+              "y": 1.6
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": -4,
+              "y": 1.85
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -4,
+              "y": 1.35
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "center": {
+              "x": 0,
+              "y": 0
+            },
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.Fab",
+            "radius_mm": 3.15,
+            "stroke_width_mm": 0.1,
+            "type": "circle"
+          },
+          {
+            "closed": true,
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.Fab",
+            "point_count": 6,
+            "points": [
+              {
+                "x": -3.3,
+                "y": -2.8
+              },
+              {
+                "x": -2.8,
+                "y": -3.3
+              },
+              {
+                "x": 3.3,
+                "y": -3.3
+              },
+              {
+                "x": 3.3,
+                "y": 3.3
+              },
+              {
+                "x": -2.8,
+                "y": 3.3
+              },
+              {
+                "x": -3.3,
+                "y": 2.8
+              }
+            ],
+            "stroke_width_mm": 0.1,
+            "type": "poly"
+          }
+        ],
+        "has_3d_model": false,
+        "has_courtyard": true,
+        "name": "Panasonic_CP_D8_6.3x7.7mm_REVIEW",
+        "pad_count": 2,
+        "pads": [
+          {
+            "drill": [],
+            "height": 1.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "1",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 3.2,
+            "x": -2.5,
+            "y": 0
+          },
+          {
+            "drill": [],
+            "height": 1.6,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "2",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 3.2,
+            "x": 2.5,
+            "y": 0
+          }
+        ],
+        "path": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/libraries/Ember_EPS_Recovery.pretty/Panasonic_CP_D8_6.3x7.7mm_REVIEW.kicad_mod"
+      },
+      "disposable": {
+        "pad_count": 2,
+        "pads": [
+          {
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "net": "",
+            "number": "1",
+            "x": 22.5,
+            "y": 10
+          },
+          {
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "net": "",
+            "number": "2",
+            "x": 27.5,
+            "y": 10
+          }
+        ],
+        "reference": "C13",
+        "source": "file"
+      },
+      "geometry_check": "Exact pad dimensions/centres/gap, 2 distinct numbers, no drill, front layers, maximum-body/pad courtyard >=0.25 mm verified"
+    },
+    {
+      "definition": {
+        "name": "Panasonic_CP_F_8x10.2mm_REVIEW",
+        "refs": [
+          "C7"
+        ],
+        "width": 4,
+        "height": 2,
+        "gap": 3.1,
+        "body": 8.3,
+        "diam": 8,
+        "maxbody": 8.5,
+        "cx": 5.8,
+        "cy": 4.5,
+        "zmax": 10.5
+      },
+      "readback": {
+        "coordinate_system": "footprint_local_mm_y_down",
+        "description": "REVIEW candidate; Panasonic F manufacturer recommended lands; front/component view; pad 1 positive left, pad 2 negative right; maximum component height 10.5 mm; approval 2026-10-23; assembly/stencil not qualified",
+        "graphic_count": 11,
+        "graphics": [
+          {
+            "end": {
+              "x": 5.8,
+              "y": 4.5
+            },
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.CrtYd",
+            "start": {
+              "x": -5.8,
+              "y": -4.5
+            },
+            "stroke_width_mm": 0.05,
+            "type": "rect"
+          },
+          {
+            "end": {
+              "x": 4.4,
+              "y": -4.4
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -4.4,
+              "y": -4.4
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": 4.4,
+              "y": 4.4
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -4.4,
+              "y": 4.4
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": -4.4,
+              "y": -1.3
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -4.4,
+              "y": -4.4
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": -4.4,
+              "y": 4.4
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -4.4,
+              "y": 1.3
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": 4.4,
+              "y": -1.3
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": 4.4,
+              "y": -4.4
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": 4.4,
+              "y": 4.4
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": 4.4,
+              "y": 1.3
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": -5.2,
+              "y": 1.8
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -5.7,
+              "y": 1.8
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "end": {
+              "x": -5.45,
+              "y": 2.05
+            },
+            "item_id": null,
+            "layer": "F.SilkS",
+            "start": {
+              "x": -5.45,
+              "y": 1.55
+            },
+            "stroke_width_mm": 0.12,
+            "type": "line"
+          },
+          {
+            "center": {
+              "x": 0,
+              "y": 0
+            },
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.Fab",
+            "radius_mm": 4,
+            "stroke_width_mm": 0.1,
+            "type": "circle"
+          },
+          {
+            "closed": true,
+            "fill": "none",
+            "item_id": null,
+            "layer": "F.Fab",
+            "point_count": 6,
+            "points": [
+              {
+                "x": -4.15,
+                "y": -3.65
+              },
+              {
+                "x": -3.65,
+                "y": -4.15
+              },
+              {
+                "x": 4.15,
+                "y": -4.15
+              },
+              {
+                "x": 4.15,
+                "y": 4.15
+              },
+              {
+                "x": -3.65,
+                "y": 4.15
+              },
+              {
+                "x": -4.15,
+                "y": 3.65
+              }
+            ],
+            "stroke_width_mm": 0.1,
+            "type": "poly"
+          }
+        ],
+        "has_3d_model": false,
+        "has_courtyard": true,
+        "name": "Panasonic_CP_F_8x10.2mm_REVIEW",
+        "pad_count": 2,
+        "pads": [
+          {
+            "drill": [],
+            "height": 2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "1",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 4,
+            "x": -3.55,
+            "y": 0
+          },
+          {
+            "drill": [],
+            "height": 2,
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "number": "2",
+            "rotation": 0,
+            "roundrect_rratio": null,
+            "shape": "rect",
+            "type": "smd",
+            "width": 4,
+            "x": 3.55,
+            "y": 0
+          }
+        ],
+        "path": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/libraries/Ember_EPS_Recovery.pretty/Panasonic_CP_F_8x10.2mm_REVIEW.kicad_mod"
+      },
+      "disposable": {
+        "pad_count": 2,
+        "pads": [
+          {
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "net": "",
+            "number": "1",
+            "x": 38.45,
+            "y": 10
+          },
+          {
+            "layers": [
+              "F.Cu",
+              "F.Paste",
+              "F.Mask"
+            ],
+            "net": "",
+            "number": "2",
+            "x": 45.55,
+            "y": 10
+          }
+        ],
+        "reference": "C7",
+        "source": "file"
+      },
+      "geometry_check": "Exact pad dimensions/centres/gap, 2 distinct numbers, no drill, front layers, maximum-body/pad courtyard >=0.25 mm verified"
+    }
+  ],
+  "visual_inspection": {
+    "copper_silk_courtyard": "Actual KiCad export inspected; both positive marks beside pad 1, silk clear of pads, courtyards contain maximum body/pad envelopes",
+    "fabrication": "Actual KiCad fabrication export inspected; numbered pads/body/chamfer visible, long default Value text overlaps across scratch parts and remains a presentation limitation",
+    "limitations": [
+      "No 3D model or assembled mechanical qualification",
+      "Footprint/library and scratch-board value-field effects unavailable through current exposed Konnect API; IPC edit attempt failed because no live KiCad API was reachable",
+      "No solder process/stencil qualification",
+      "Physical study PCB remains electrically unsynchronized and unrouted"
+    ]
+  },
+  "independent_saved_board_IPC2581": [
+    {
+      "package": "Panasonic_CP_D8_6.3x7.7mm_REVIEW_2",
+      "pins": "1=positive at negative X, 2=negative at positive X",
+      "pad_geometry_matches": true
+    },
+    {
+      "package": "Panasonic_CP_F_8x10.2mm_REVIEW_3",
+      "pins": "1=positive at negative X, 2=negative at positive X",
+      "pad_geometry_matches": true
+    }
+  ],
+  "source_files": [
+    {
+      "path": "panasonic-za.pdf",
+      "sha256": "78eb687b7d5d2c64fc81ecfada1e978f2cfdca38bfcd776f189268855213368c"
+    },
+    {
+      "path": "panasonic-zk.pdf",
+      "sha256": "3446295dcc92ffe919575111383fc11e94191ea3c9e9ab4a4344cd6cdcf7b5a1"
+    }
+  ],
+  "schematic_render_comparison": "Fresh native export RGB-pixel-identical to the previously inspected full page and details"
+}

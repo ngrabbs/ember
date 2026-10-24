@@ -1,0 +1,48 @@
+{
+  "status": "conditional_DC_screen_NOT_dynamic_or_fault_acceptance",
+  "UCC_setting_V": 5.0,
+  "SEL": "VCC",
+  "UCC_DC_V": [
+    4.8,
+    5.2
+  ],
+  "selected_LDO": "LT3014IS5#TRPBF",
+  "divider_top_bottom_ohm": [
+    16900,
+    10000
+  ],
+  "resistor_excursion_fraction": 0.002625,
+  "gain_range": [
+    2.681150729335494,
+    2.6988958516104775
+  ],
+  "output_envelope_V_including_25C_bias_sensitivity": [
+    3.1637578606158825,
+    3.4007782166542015
+  ],
+  "bias_10nA_output_effect_V": 0.00016944362500000002,
+  "minimum_output_margin_to_ISO1540_3V_V": 0.1637578606158825,
+  "maximum_output_margin_to_ISO1540_3p6_current_test_window_V": 0.19922178334579854,
+  "divider_min_current_A": 0.00011769106096496693,
+  "divider_max_current_A": 0.00012634162050382253,
+  "minimum_load_margin_to_100uA_test_condition_A": 1.7691060964966925e-05,
+  "ISO2_max_all_low_IC_current_A": 0.0067,
+  "two_pullup_zero_volt_sink_max_A": 0.0017485788485308302,
+  "output_static_current_screen_A": 0.008574920469034653,
+  "provisional_output_current_allocation_A": 0.012,
+  "allocation_minus_static_A": 0.0034250795309653474,
+  "GND_max_test_point_20mA_A_used_as_budget": 0.001,
+  "provisional_isolated_input_current_A": 0.013000000000000001,
+  "isolated_power_at_5p2V_W": 0.06760000000000001,
+  "LDO_loss_at_screened_corners_W": 0.029634905672609412,
+  "dropout20mA_fulltemperature_max_V": 0.57,
+  "input_margin_after_output_upper_and_20mA_dropout_V": 0.8292217833457983,
+  "BMS_to_ISO2_low_margin_V": 0.5491273581847647,
+  "unqualified": [
+    "10nA ADJ bias maximum is 25C only; full-temperature bound needed",
+    "1mA GND budget uses20mA test-point maximum; lower-current monotonic envelope assumed",
+    "complete UCC startup/prebias/input-current/temperature envelope",
+    "nominal LDO model includes fixed27C transistor parameters; not PVT proof",
+    "effective capacitors, coupling, thermal/EMC and powered/unpowered bus measurements"
+  ]
+}

@@ -1,0 +1,41 @@
+* RBF topology concept only; generic NPN/diodes are not selected parts
+.include vendor/sud50p08.lib
+.param VS=8.4 CLOAD=0.0001 BFIT=50
+Vsource src 0 PWL(0 0 1m 0 1.001m {VS})
+Rsource src input .05
+Lwire input din 1u
+Cinput din 0 1u Rser=.05
+Xpass din gate cs SUD50P08-25L
+Xreverse out gate cs SUD50P08-25L
+Rgs gate cs 22k
+Dclamp gate cs DZ
+Qpull gate base emit QN
+Remit emit 0 330
+Qlimit base emit 0 QN
+Rbase permit base 68k
+Rbe base 0 100k
+Scontact cs permit command 0 SWC
+Vcommand command 0 PWL(0 0 50m 0 50.001m 1 200m 1 200.001m 0)
+Cslow cs slow 24u
+Dslow slow gate DX
+Rslow slow gate 1meg
+Qcharge cs gate slow QN
+
+Cload out 0 {CLOAD} Rser=.05
+Rload out 0 1k
+Bload out 0 I=if(time>140m,2*V(out)/(abs(V(out))+.1),0)
+.model QN NPN(IS=1e-14 BF={BFIT} VAF=100 CJE=10p CJC=3p TF=.5n)
+.model DX D(IS=1e-9 RS=1 N=1.7 CJO=2p TT=5n)
+.model DZ D(BV=10 IBV=5m RS=10 CJO=100p)
+.model SWC SW(Ron=1 Roff=1e12 Vt=.5 Vh=.1)
+.temp 25
+.options plotwinsize=0 reltol=.001
+.save V(out) V(cs) V(gate) V(command) V(base) I(Lwire) I(Xpass:R1) I(Xreverse:R1) Ic(Qpull)
+.tran 0 300m 0 5u
+.meas tran off_hotplug_out MAX V(out) FROM=0 TO=49m
+.meas tran startup_current MAX I(Lwire) FROM=50m TO=139m
+.meas tran max_vgs MAX abs(V(gate,cs)) FROM=0 TO=300m
+.meas tran vout_before_off FIND V(out) AT=199m
+.meas tran vout_after_off FIND V(out) AT=230m
+.meas tran rbf_in_source_current MAX abs(I(Lwire)) FROM=230m TO=290m
+.end
