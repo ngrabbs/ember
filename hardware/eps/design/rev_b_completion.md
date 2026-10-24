@@ -112,3 +112,14 @@ The [ADC checkpoint](../verification/rev_b/adc_integration/README.md) adds27 par
 Whole-root electrical checks preserve all318 prior physical parts and verify15 added net sets and173 functional-net classes. ERC is6 errors/2 inherited warnings; PB15/PD2/PB8 remain genuinely unfinished. All14 pages and18 details were inspected by the design owner; root separately inspected the new sheet, channel/supply/controller details and manufacturer ADC connection figure. Nine sideways new resistor references were corrected using stock horizontal orientations, without UUID/metadata/net changes. S11 field-API and inherited root filename-anchor limitations remain explicit. No PCB synchronization occurred.
 
 The [source-guard sensitivity](../verification/essential_3v3/source_guard/README.md) reduces modeled input FET peak current to56.8 A, while imposing63.4 A on an unselected magnetic/return path and about20.13 mJ positive port energy on the FET. Controller IN also exceeds its36 V recommended operating ceiling in that model. This does not release the input limiter, magnetic, clamp or hot-SOA design. The remaining power/protection and mechanical work above is unchanged.
+
+## Root filename presentation repair, 2026-10-24
+
+The [root presentation checkpoint](../verification/rev_b/root_presentation/README.md)
+uses the verified local Konnect MCP field tool to repair the detached Controller
+and CAN filenames. Exact hierarchy and whole-root XML are preserved; all229
+other native files are unchanged. Fresh ERC remains6 errors/2 warnings across
+345 parts/14 sheets. Actual root-page and caption-detail inspection is separate
+from electrical evidence. Historical field-tool limitations above remain true
+for those checkpoints; this repair proves sheet-field positioning, without
+closing component S11 or other design/qualification gates.
