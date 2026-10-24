@@ -60,13 +60,20 @@ limitation rather than silently editing its type. This is a proposed real branch
 logical two-pin connector standing in for protection.
 
 Q1400 is CSD18543Q3A with its approved project manufacturer-pattern footprint.
-Q1401 **BSS138P,215** is a provisional helper using compatible stock BSS138
-G1/S2/D3 geometry and SOT23. Correct Value, Description, Datasheet and exact
-MPN fields; the stock50V/0.22A description is not its specification. The helper
-is **not electrically released**: its50pF maximum Ciss at the listed test point
-already consumes TPS DRV's entire50pF loading condition before routing, and
-does not bound capacitance over the complete gate trajectory. Resolve driver
-loading/drive or select a better exact helper before branch integration.
+Q1401 development selection is **Toshiba T2N7002AK,LM**, unchanged stock
+`Transistor_FET:T2N7002AK`, G1/S2/D3 and SOT23. Its60V/±20V ratings and
+17pF maximum Ciss at VDS10V/VGS0/25°C improve on the former BSS138P's50pF
+test-point maximum. With imposed10pF routing capacitance the screen is27pF;
+an imposed2× Ciss sensitivity gives44pF against TPS DRV's50pF listed load.
+Neither factor bounds the full trajectory/PVT. Vth maximum2.1V at25°C does
+not prove sink resistance/timing at minimum3V DRV over temperature. Keep
+drive/loading and reverse interruption conditional. Manufacturer delivery
+suffix/MOQ must be confirmed at purchase. The stock glyph simplifies the
+internal gate protection; annotate it explicitly. The
+[disposable fixture](../verification/managed_payload/helper_package/README.md)
+verifies both helper/reference pin-pad maps and saved metadata, with actual
+page/detail and board-layer inspection separate from ERC. Generic land and
+courtyard acceptance remain open; Q1401 needs a full4.0×3.5mm reservation.
 
 | Ref | Proposed connection/value |
 | --- | --- |
@@ -82,6 +89,7 @@ loading/drive or select a better exact helper before branch integration.
 | C1402/C1403 | VBAT to GND, same2.2µF and100nF parts as input |
 | C1404 | dVdT9 to GND,100nF/50V C0G1206, GRM31C5C1H104JA01L |
 | C1405 | SHDN12 to GND,1nF C0G; exact MPN still to verify |
+| C1406 | OVP7 to GND,1nF C0G development filter; exact MPN/tolerance still to verify |
 
 Resistor electrical screen assumes0.1% initial plus25ppm/°C over65K,
 independent corners. Select and verify exact MPNs, package/power/voltage/TCR
@@ -104,9 +112,17 @@ not detached label-only parts. If a power port is used, its fixed-rail Value
 is `2V5_PAYLOAD_CLAMP`. Do not join it to an essential supply.
 
 The clamp passes the stated DC-current/power arithmetic and a labelled1.2V
-cold-diode sensitivity; **cold VF, reference turn-on and transient pin
-overshoot remain open**. Do not claim35V survival from a static sum. Source35V
-itself is an imposed study ceiling, not an accepted flight source bound.
+cold-diode sensitivity. A [24-case nominal subcircuit study](../verification/managed_payload/clamp_transient/README.md)
+uses TI's unchanged unencrypted reference macro with imposed diode/parasitic
+envelopes. Adding C1406 lowers the maximum simulated OVP from3.90601V to
+3.74600V. Cold cases also show millivolt negative OVP excursions: only12/24
+meet the complete0..4V operating window, while24/24 meet the imposed absolute
+window. With1nF, simulated first threshold crossings after a1ns source edge
+are0.233..0.363µs warm and2.634..2.767µs cold; eFuse/output delay is absent.
+The macro's reference node peaks5.008V. These results support the filter as a
+development direction, not pin-rating/dynamic/PVT acceptance. **Cold VF,
+production reference startup, coupled cutoff and MOSFET survival remain open.**
+Source35V itself is an imposed study ceiling, not an accepted flight bound.
 
 The4.02k programming screen gives4.174–4.828A only from TI's listed
 VIN−VOUT=1V test window and resistor scaling; it does not guarantee the limit at
@@ -196,7 +212,7 @@ native MODE latch behavior and the firmware startup deadline must cover it.
 PB15 gets10kΩ pulldown and1kΩ series into local logic. READY reaches PB8 via
 1kΩ with1MΩ MCU-side pulldown. Reserve R1420–R1429 for these five resistors,
 RAW_OK pullup and four source-window resistors; C1410–C1416 for seven local
-100nF bypasses. Proposed power page24parts and control page24parts,48 total;
+100nF bypasses. Proposed power page25parts and control page24parts,49 total;
 refs must be queried unused before work. No fictitious manufacturer MPNs for
 test pads or new logical connectors are introduced.
 

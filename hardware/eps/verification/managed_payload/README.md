@@ -32,7 +32,7 @@ and ideal-state invariants; they do not turn open premises into specifications.
   clamp has valid screened bias/current/resistor-power margins without using
   +3V3 as its sink. It gives3.447V from the full reference window plus the
   diode's25°C1mA VF maximum, or3.747V with an imposed1.2V cold VF envelope.
-  **Cold VF and dynamic clamp/reference turn-on are not verified.**
+  The [24-case transient sensitivity](clamp_transient/README.md) supports a1nF OVP filter; exact cold VF and production reference startup remain unverified.
 - The retained-fault concept now arms from the full HEALTHY **level**, using
   an inverter and HC74 asynchronous set/clear. It does not depend on seeing a
   new PGOOD clock edge. Ideal cases show source-cycle, eFuse-fault and PGOOD-loss
@@ -40,9 +40,18 @@ and ideal-state invariants; they do not turn open premises into specifications.
   high. Never-healthy startup remains explicitly unarmed and needs native
   eFuse latch response plus a firmware deadline. PRE/CLR races and brownout
   need physical timing verification.
-- The provisional BSS138P helper's50pF maximum Ciss leaves no margin against
-  TPS DRV's50pF specified load condition before routing. Keep helper selection
-  open rather than claiming minimum DRV drive or fast reverse interruption.
+- Selected T2N7002AK,LM as the development helper:17pF maximum Ciss at the
+  specified25°C test point, plus imposed10pF routing, gives27pF. An imposed
+  doubling gives44pF against the driver's listed50pF load. These are conditional
+  margins, not a full-temperature gate trajectory bound. The
+  [stock package fixture](helper_package/README.md) verifies both helper and
+  reference pin-pad maps, with electrical/structural and rendered evidence
+  reported separately; assembly/courtyard acceptance remains open.
+- The24 completed LM4040 nominal macro cases give3.90601V maximum OVP without
+  extra filtering and3.74600V with1nF. All stay within the imposed absolute
+  window, but cold cases dip millivolts below0V;12/24 meet the full operating
+  window. This is a reference subcircuit with behavioral diode assumptions,
+  not TPS2663 cutoff, cold/PVT or MOSFET survival acceptance.
 
 ## Sources and library evidence
 
@@ -55,7 +64,7 @@ Primary references: [TI TPS2663 SLVSE94G](https://www.ti.com/lit/ds/symlink/tps2
 [TI1G14 SCES218AA](https://www.ti.com/lit/ds/symlink/sn74lvc1g14.pdf),
 [LM4040 SNOS633N](https://www.ti.com/lit/ds/symlink/lm4040-n.pdf),
 [BAS116H Rev3](https://assets.nexperia.com/documents/data-sheet/BAS116H.pdf),
-[BSS138P Rev1](https://assets.nexperia.com/documents/data-sheet/BSS138P.pdf).
+[Toshiba T2N7002AK 2026-04-14](https://toshiba.semicon-storage.com/info/docget.jsp?did=29712&prodName=T2N7002AK).
 The Murata C0G exact source is
 [GRM31C5C1H104JA01](https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM31C5C1H104JA01-01A.pdf).
 TPS3839 and approved CSD18543Q3A package sources are retained in the prior
@@ -64,7 +73,7 @@ that later download bytes remain identical; `sources.json` records locally
 available source hashes and actually inspected page identifiers.
 
 Fresh saved Konnect query results cover the stock TPS26630, HC74, functional
-quad/dual AND, OR, BSS helper and LM4040 maps and absent TPS3700. The quad AND
+quad/dual AND, OR, historical BSS helper and LM4040 maps and absent TPS3700. The quad AND
 geometry is named74LS08; no exact HCS08 symbol exists. Compatible pin/function
 reuse requires exact HCS MPN/description and a visible Schmitt-input annotation,
 not TTL parts or custom graphics. Search/table absence and full pin counts are
@@ -81,9 +90,9 @@ permission firmware and RBF/discharge are still open. The raw35V ceiling,
 envelopes are **imposed sensitivities**, not measured bounds. Do not silently
 promote them to accepted device requirements.
 
-Electrical calculations and ideal-state assertions were executed. Actual
-rendered-sheet inspection: **not applicable to a new circuit here; no sheet
-was authored**. Only the manufacturer TPS3700 pin/application and DDC
-outline/land/stencil page images were inspected this turn. No fresh EPS ERC,
-netlist, PCB synchronization, DRC, package construction or flight acceptance
-is claimed by this packet.
+Electrical calculations and ideal-state assertions were executed. The added
+nominal clamp simulations and two-part stock package fixture have their own
+scoped evidence above. Actual new functional circuit rendered-sheet inspection
+remains **not applicable: no real EPS sheet was authored**. The fixture's page,
+symbol details and five board layers were actually inspected. No fresh real-EPS
+ERC, netlist, PCB synchronization, DRC or flight acceptance is claimed.

@@ -184,11 +184,21 @@ results = {
     'unclamped_source_max_for_OVP4V_recommended_V': ov_source_limit,
     'OVP_35V_rating_pass': ov_worst_at35 <= 4,
     'proposed_sense_clamp': clamp,
+    'helper_DRV_capacitance_screen': {
+        'selected_MPN': 'T2N7002AK,LM',
+        'Ciss_test_point_max_pF': 17, 'imposed_routing_pF': 10,
+        'test_point_plus_routing_pF': 17+10,
+        'imposed_2x_Ciss_plus_routing_pF': 2*17+10,
+        'TPS_DRV_listed_load_pF': 50,
+        'full_trajectory_and_temperature_acceptance': False},
+    'proposed_OVP_filter_F': 1e-9,
+    'clamp_transient_evidence': 'clamp_transient/analysis.json; nominal subcircuit only',
     'total_R_limit_from_current_at_worst_allocated_power_ohm':
     (vin_floor-(18.075*1.2/.85)/imin)/imin,
     'ideal_state_traces': traces, 'ideal_state_transition_rows': 128,
     'remaining_gates': [
-        'Proposed LM4040/BAS116H clamp has a static screen; cold forward voltage, reference turn-on and transient overshoot remain open.',
+        'Clamp now has 24 nominal subcircuit cases plus static arithmetic; cold diode/reference/PVT and coupled cutoff/survival remain open.',
+        'T2N7002AK helper full-temperature drive/loading and assembly lands remain conditional.',
         'TPS3700 construction approval and exact package acceptance remain pending.',
         '100n C0G cold capacitance bound is open; 30ppm/65K is a sensitivity, not a manufacturer combined guarantee.',
         'The .13ohm feed budget and 1.8x hot external-FET resistance are imposed sensitivities, not verified harness/hot bounds.',
