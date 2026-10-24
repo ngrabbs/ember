@@ -34,3 +34,11 @@ Proceed only after current rail/load/source bounds and the proposed
 threshold/guard network have been modeled together. Retain the existing
 +3V3 interface name downstream; any newly separated converter-output net
 requires an explicit documented migration and full endpoint crosswalk.
+
+## 2026-10-24 quantified selection gate
+
+The [protection-window checkpoint](../verification/essential_3v3/containment_window/README.md) now adds504 direct-step and240 two-filter linear fault cases, independently checked against closed-form/matrix-exponential solutions and a half-step repeat. This is not a controller or native integration pass. It identifies an additional mandatory change: current C404–C411 are25V parts exposed upstream of a downstream barrier; the fault-rated raw bank and stable feedback path must be included in the final circuit.
+
+The unclamped58.8k/10k LTC4365 OV divider exceeds the5V sense-pin absolute maximum at the imposed35V source;60.4k/10k leaves only10.46mV from maximum trip to the3.6V working ceiling. Low-voltage gate drive, complete turn-off timing and sense-pin protection remain selection gates. Supplying an LTC4364 from permittedSYS alone does not cover its12V-minimum FB accuracy row during battery operation.
+
+The two-filter comparison shows why existing L400 must be modeled rather than treating its output as an arbitrary stiff step. It also exposes fault-current sensitivities far beyond L400's published typical saturation reference. Carry forward coordinated raw-bank voltage rating, actual source/magnetic bounds, a tight autonomous sense/drive path, downstream guard and a real turn-off energy clamp as one design task. Do not integrate an isolated voltage switch as if it closed all of these paths. Existing+3V3 consumers and interface names remain unchanged.
