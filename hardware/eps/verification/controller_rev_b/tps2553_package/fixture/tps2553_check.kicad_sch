@@ -1,0 +1,306 @@
+(kicad_sch
+	(version 20250610)
+	(generator "konnect")
+	(generator_version "10.0")
+	(uuid "ce386b9c-6708-4d0a-82a2-c29f47effac5")
+	(paper "B")
+	(lib_symbols
+		(symbol
+		  "Ember_Charger_BMS_Review:TPS2553DBVR_1_REVIEW"
+		  (pin_names
+		    (offset 1.016)
+		  )
+		  (exclude_from_sim no)
+		  (in_bom yes)
+		  (on_board yes)
+		  (in_pos_files yes)
+		  (duplicate_pin_numbers_are_jumpers no)
+		  (property "Reference" "U"
+		    (at 0 10.1600 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Value" "TPS2553DBVR-1"
+		    (at 0 -10.1600 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Footprint" "Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW"
+		    (at 0 0 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (hide yes)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps2553-1.pdf"
+		    (at 0 0 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (hide yes)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Description" ""
+		    (at 0 0 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (hide yes)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (symbol "TPS2553DBVR_1_REVIEW_0_1"
+		    (rectangle
+		      (start -12.7000 -7.6200)
+		      (end 12.7000 7.6200)
+		      (stroke
+		        (width 0.254)
+		        (type default)
+		      )
+		      (fill
+		        (type background)
+		      )
+		    )
+		    (pin power_in line
+		      (at -17.78 5.08 0)
+		      (length 5.08)
+		      (name "IN"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "1"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_in line
+		      (at -10.16 -12.7 90)
+		      (length 5.08)
+		      (name "GND"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "2"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -17.78 0 0)
+		      (length 5.08)
+		      (name "EN"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "3"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin open_collector line
+		      (at 17.78 0 180)
+		      (length 5.08)
+		      (name "~{FAULT}"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "4"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin output line
+		      (at 10.16 -12.7 90)
+		      (length 5.08)
+		      (name "ILIM"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "5"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_out line
+		      (at 17.78 5.08 180)
+		      (length 5.08)
+		      (name "OUT"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "6"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		  )
+		  (embedded_fonts no)
+		)
+	)
+  (text "CUSTOM — REVIEW REQUIRED\n[ Construction authorized: TPS2553DBVR-1 review candidate ]"
+    (at 104.14 60.96 0)
+    (effects (font (size 1.27 1.27) (bold yes) (color 0 255 0 1)) (justify left bottom))
+    (uuid "be3104d6-f49a-4e35-bd23-ba846ff7812f")
+  )
+  (text "Disposable physical-map fixture: no circuit selection or qualification.\nTPS2553DBVR-1 | TI SLVS841F | DBV0006A six leads, no exposed pad.\n1 IN / 2 GND / 3 EN / 4 FAULT_N / 5 ILIM / 6 OUT.\nUnwired pins are intentional; no fake NC or power flags.\n12 footprint objects: 6 numbered Cu/paste/base-mask + 6 blank mask apertures.\nPackage acceptance is separate from coupled startup/short/reverse-current analysis."
+    (at 104.14 139.7 0)
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid "57b1ae71-0523-454d-900d-b6b3779a4c49")
+  )
+  (text "Texas Instruments | DBV0006A\nActive-high / latch-off\nILIM is programming-current output"
+    (at 195.58 83.82 0)
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid "0b7ae614-de6e-481c-a905-c61c3498cc7a")
+  )
+	(symbol
+		(lib_id "Ember_Charger_BMS_Review:TPS2553DBVR_1_REVIEW")
+		(at 160.02 99.06 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e282b067-f6a9-45e3-bff8-cd35688d8681")
+		(property "Reference" "U1"
+			(at 160.02 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TPS2553DBVR-1"
+			(at 160.02 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW"
+			(at 160.02 99.06 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps2553-1.pdf"
+			(at 160.02 99.06 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Active-high enable, latch-off adjustable current-limited power switch"
+			(at 160.02 99.06 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "tps2553_check"
+				(path "/ce386b9c-6708-4d0a-82a2-c29f47effac5"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	
+		(property "MFG P/N" "TPS2553DBVR-1"
+			(at 160.02 99.06 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 160.02 99.06 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "DBV0006A / SOT-23-6"
+			(at 160.02 99.06 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Review" "CUSTOM — REVIEW REQUIRED; construction authorized, package/electrical review pending"
+			(at 160.02 99.06 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		))
+)
