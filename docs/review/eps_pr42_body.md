@@ -6,7 +6,7 @@ Full-root development checks preserve the318 preceding physical components and v
 
 Essential3V3 protection studies retain rejected and nonconvergent attempts. The downstream filter improves typical load-step behavior, but neither investigated input limiter is selected. Added source inductance reduces modeled pass-FET current while imposing about63 A on its magnetic and about20 mJ positive port energy on the FET. Physical magnetic/source bounds, controller voltage range, low-input drive, interruption/clamps and hot linear SOA remain open; favorable voltage traces do not establish survival.
 
-The mechanical contract preserves EMBER's5.08 mm H1/H2 spacing and the confirmed16 mm clear facing-board gap. Actual COMMS CAN pins still require a coordinated peer revision to the canonical stack map. Courtyard inventory is an area budget, not placement or fit acceptance; current holder geometry, mating tolerances and cable/harness clearance remain open.
+The mechanical contract preserves EMBER's5.08 mm H1/H2 spacing and the confirmed16 mm clear facing-board gap. Actual COMMS CAN pins still require a coordinated peer revision to the canonical stack map. Courtyard inventory is an area budget, not placement or fit acceptance; the confirmed May board STEP omits holder/cells, which are visible in the separate Onshape assembly. Quantified holder clearance, mating tolerances and cable/harness clearance remain open.
 
 Keep this PR draft. Remaining work includes RBF/deployment cutoff, essential3V3 fault/weak-source recovery, charger-to-pack OV, BMS gate/SOA and commissioning, CAN/SWD/ADC acceptance, physical stack interfaces, managed loads and the authorized four-layer PCB. This change does not constitute fabrication release or hardware/flight qualification.
 

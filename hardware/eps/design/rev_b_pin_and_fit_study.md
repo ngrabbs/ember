@@ -15,7 +15,7 @@ Read-only KiCAD CLI exports of the saved `eps.kicad_pcb` produced a front fabric
 
 The exported Edge.Cuts extrema span approximately 95.98 × 90.18 mm, consistent with the nominal 96 × 90 mm envelope. The SVG page is larger because it also includes drawing extents. These measurements are not a mechanical acceptance. Existing components occupy a central charger/buck region, six upper-edge connectors, left stack headers, and the upper-right XT30 region. Open surface exists to the right and below the conversion circuits, but copper, returns, harness access, and mechanical exclusions must be reworked.
 
-The historical `datasheet/board.png` shows underside cells and holders; it does not establish the current printed holder's geometry. There is no identified current holder CAD or quantified underside clearance in the inspected EPS files. Do not assume the underside can carry new components or treat the old render as the current assembly.
+The operator confirms the May STEP export as the intended export. The [geometry inspection](../verification/fit/holder_2026_10_24/README.md) finds that the local file contains the PCB/connectors but omits holder/cells; the assembled Onshape `EPS_with_battery` view shows those parts separately. Source selection is resolved, but quantified underside clearance and assembly tolerances remain open. Do not assume the underside can carry new components.
 
 ## MCU allocation
 
