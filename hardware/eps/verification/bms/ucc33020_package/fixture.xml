@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/verification/bms/ucc33020_package/fixture/ucc33020_check.kicad_sch</source>
+    <date>2026-10-24T09:36:43</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>ucc33020_check.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="U1">
+      <value>UCC33020RAQR</value>
+      <footprint>Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/ucc33020.pdf</datasheet>
+      <description>Isolated 3.0..5.5V to selectable 5.0/5.5V DC/DC; 12 logical leads</description>
+      <fields>
+        <field name="MFG P/N">UCC33020RAQR</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">RAQ0012C</field>
+        <field name="Review">CUSTOM — REVIEW REQUIRED; approved physical construction; no circuit qualification</field>
+        <field name="Footprint">Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/ucc33020.pdf</field>
+        <field name="Description">Isolated 3.0..5.5V to selectable 5.0/5.5V DC/DC; 12 logical leads</field>
+      </fields>
+      <libsource lib="Ember_Charger_BMS_Review" part="UCC33020RAQR_REVIEW" description=""/>
+      <property name="MFG P/N" value="UCC33020RAQR"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="RAQ0012C"/>
+      <property name="Review" value="CUSTOM — REVIEW REQUIRED; approved physical construction; no circuit qualification"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="ucc33020_check.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7018e667-7cc4-4497-84b6-238871375c15</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="12"/>
+            <pin num="11"/>
+            <pin num="10"/>
+            <pin num="9"/>
+            <pin num="8"/>
+            <pin num="7"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Ember_Charger_BMS_Review" part="UCC33020RAQR_REVIEW">
+      <docs>https://www.ti.com/lit/ds/symlink/ucc33020.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">UCC33020RAQR</field>
+        <field name="Footprint">Ember_Charger_BMS_Review:TI_RAQ0012C_VSON12_5x4mm_CombLand_REVIEW</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/ucc33020.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="EN/FLT" type="bidirectional"/>
+        <pin num="2" name="VINP" type="power_in"/>
+        <pin num="3" name="GNDP" type="power_in"/>
+        <pin num="4" name="GNDP" type="power_in"/>
+        <pin num="5" name="GNDP" type="power_in"/>
+        <pin num="6" name="GNDP" type="power_in"/>
+        <pin num="7" name="SEL" type="input"/>
+        <pin num="8" name="VCC" type="power_out"/>
+        <pin num="9" name="GNDS" type="power_in"/>
+        <pin num="10" name="GNDS" type="power_in"/>
+        <pin num="11" name="GNDS" type="power_in"/>
+        <pin num="12" name="GNDS" type="power_in"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Ember_Charger_BMS_Review">
+      <uri>${KIPRJMOD}/../../../../rev_b/libraries/Ember_Charger_BMS_Review.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="GND" class="Default">
+      <node ref="U1" pin="3" pinfunction="GNDP_3" pintype="power_in"/>
+      <node ref="U1" pin="4" pinfunction="GNDP_4" pintype="power_in"/>
+      <node ref="U1" pin="5" pinfunction="GNDP_5" pintype="power_in"/>
+      <node ref="U1" pin="6" pinfunction="GNDP_6" pintype="power_in"/>
+    </net>
+    <net code="2" name="GND_BMS_RAW" class="Default">
+      <node ref="U1" pin="10" pinfunction="GNDS_10" pintype="power_in"/>
+      <node ref="U1" pin="11" pinfunction="GNDS_11" pintype="power_in"/>
+      <node ref="U1" pin="12" pinfunction="GNDS_12" pintype="power_in"/>
+      <node ref="U1" pin="9" pinfunction="GNDS_9" pintype="power_in"/>
+    </net>
+    <net code="3" name="unconnected-(U1-EN/FLT-Pad1)" class="Default">
+      <node ref="U1" pin="1" pinfunction="EN/FLT_1" pintype="bidirectional"/>
+    </net>
+    <net code="4" name="unconnected-(U1-SEL-Pad7)" class="Default">
+      <node ref="U1" pin="7" pinfunction="SEL_7" pintype="input"/>
+    </net>
+    <net code="5" name="unconnected-(U1-VCC-Pad8)" class="Default">
+      <node ref="U1" pin="8" pinfunction="VCC_8" pintype="power_out"/>
+    </net>
+    <net code="6" name="unconnected-(U1-VINP-Pad2)" class="Default">
+      <node ref="U1" pin="2" pinfunction="VINP_2" pintype="power_in"/>
+    </net>
+  </nets>
+</export>

@@ -1,6 +1,6 @@
-# UCC33020 library construction proposal — NOT APPROVED
+# UCC33020 library construction rules — APPROVED
 
-2026-10-24. Read-only candidate planning; no custom symbol, footprint, disposable native project or real circuit has been authored. The ADuM5028 approval does **not** authorize this different part. Obtain explicit approval for these rules before construction, and complete the electrical selection before circuit integration.
+2026-10-24. User explicitly approved: **“Approve UCC33020 construction under those rules.”** This authorizes the exact symbol/footprint and disposable verification below, including the bright-green review enclosure alternative. Circuit integration still requires electrical checks. At approval, no UCC native library or circuit had been authored; the ADuM approval is separate.
 
 ## Sources and selected identity
 
@@ -29,7 +29,7 @@ Use existing portable project-owned `Ember_Charger_BMS_Review` library; proposed
 
 Every row uses the p4 **top view**, pin 1 upper left, counterclockwise numbering: 1–6 down the left, 7–12 up the right. The p34 underside drawing reverses vertical orientation; do not copy that drawing as a front footprint. No NC, mechanical contacts or central exposed pad exist. Section 10.1 explicitly says no thermal pad: ground contacts dissipate heat. A generic thermal-pad note in the appended land drawing does not authorize adding pad 13.
 
-Require `Reference`, `Value`, `Footprint`, `Datasheet`, `MFG P/N=UCC33020RAQR`, `Manufacturer=Texas Instruments`, `PackageSize=RAQ0012C`, description and review status. Use a visible **CUSTOM — REVIEW REQUIRED** bright-green enclosure/callout, retaining the known unsupported body-color limitation. This alternative needs approval with this proposal; the existing ADuM alternative is not blanket authorization. Keep the marker through development acceptance.
+Require `Reference`, `Value`, `Footprint`, `Datasheet`, `MFG P/N=UCC33020RAQR`, `Manufacturer=Texas Instruments`, `PackageSize=RAQ0012C`, description and review status. Use a visible **CUSTOM — REVIEW REQUIRED** bright-green enclosure/callout, retaining the known unsupported body-color limitation. This alternative is included in the explicit UCC approval recorded above; the separate ADuM approval is not used as blanket authorization. Keep the marker through development acceptance.
 
 ## Proposed footprint and explicit decomposition
 
