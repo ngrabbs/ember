@@ -6,12 +6,16 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import sys
 import xml.etree.ElementTree as ET
 from collections import Counter
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[4]
 DATA = json.loads((HERE / 'library_readback.json').read_text())
+subprocess.run([sys.executable,str(HERE/'inspect_saved_board.py')],check=True)
+BOARD = json.loads((HERE/'board_readback.json').read_text())
+SAVED = json.loads((HERE/'board_saved_geometry.json').read_text())
 sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
 near = lambda a, b: abs(float(a) - float(b)) < 1e-7
 
@@ -108,6 +112,52 @@ with (HERE/'physical_map.csv').open('w',newline='') as f:
     w.writerow(['MPN','package','datasheet_lead','function','symbol_pin/name/type','footprint_pad','X_mm','Y_mm','width_mm','height_mm','shape','layers/drill','view/direction','source','electrical_type_reconciliation'])
     w.writerows(rows)
 
+# Every placed pad is joined to its manufacturer row through BOTH live IPC
+# position/layer readback and saved size/shape/type geometry omitted by that API.
+assert BOARD['final_open']['requested_open'] is True
+assert BOARD['final_open']['open_boards']==[BOARD['board']]
+assert BOARD['after_save_list']['count']==2
+assert SAVED['board_sha256']==sha(HERE/'disposable/charger_bms_check.kicad_pcb')
+assert set(BOARD['instances'])==set(SAVED['instances'])=={'U1','U2'}
+assert all(v==0 for v in SAVED['other_board_items'].values())
+board_rows=[]
+for key,ref,x0,y0 in [('L','U1',20,20),('B','U2',35,20)]:
+    source=DATA['parts'][key]
+    live=BOARD['instances'][ref]
+    saved=SAVED['instances'][ref]
+    assert live['component']['footprint']==saved['library_id']==source['symbol']['properties']['Footprint']
+    assert saved['layer']==live['component']['layer']=='F.Cu'
+    assert saved['rotation']==live['component']['rotation']==0
+    assert saved['x']==live['component']['x']==x0 and saved['y']==live['component']['y']==y0
+    assert live['pads']==live['after_save_pads']
+    assert live['after_save_pads']['source']=='ipc'
+    assert len(live['after_save_pads']['pads'])==source['footprint']['pad_count']
+    assert len(saved['pads'])==source['footprint']['pad_count']
+    api={p['number']:p for p in live['after_save_pads']['pads']}
+    native={p['number']:p for p in saved['pads']}
+    library={p['number']:p for p in source['footprint']['pads']}
+    assert len(api)==len(native)==len(library)==source['footprint']['pad_count']
+    assert set(api)==set(native)==set(library)
+    for number,lp in library.items():
+        ap,np=api[number],native[number]
+        assert ap['net']==''
+        assert near(ap['x'],x0+lp['x']) and near(ap['y'],y0+lp['y'])
+        for field in ('x','y','width','height','rotation'): assert near(np[field],lp[field]),(ref,number,field)
+        for field in ('type','shape','drill','roundrect_rratio'): assert np[field]==lp[field],(ref,number,field)
+        assert set(ap['layers'])==set(np['layers'])==set(lp['layers'])=={'F.Cu','F.Paste','F.Mask'}
+        name=next(p['name'] for p in source['symbol']['pins'] if p['number']==number)
+        board_rows.append([source['symbol']['properties']['Value'],ref,number,name,ap['x'],ap['y'],np['x'],np['y'],np['width'],np['height'],np['shape'],np['type'],'/'.join(np['layers']),'none',saved['uuid'],'PASS'])
+with (HERE/'board_physical_map.csv').open('w',newline='') as f:
+    w=csv.writer(f,lineterminator='\n')
+    w.writerow(['MPN','reference','lead/pad','function','IPC_board_X_mm','IPC_board_Y_mm','saved_local_X_mm','saved_local_Y_mm','saved_width_mm','saved_height_mm','saved_shape','saved_type','saved_layers','drill','footprint_UUID','comparison'])
+    w.writerows(board_rows)
+assert len(board_rows)==62
+normalization=json.loads((HERE/'scratch_project_normalization.json').read_text())
+assert normalization['normalization_preexists_agent_resume'] is True
+assert normalization['old_meta']['version']==1 and normalization['current_meta']['version']==3
+assert normalization['removed_top_keys']==[]
+assert sha(HERE/'disposable/charger_bms_check.kicad_pro')==normalization['current_sha256']
+
 before=json.loads((HERE/'integrated_before.json').read_text())
 unchanged=[]
 for file, digest in before.items():
@@ -153,6 +203,11 @@ protected=lambda p: Path(p).suffix in ('.kicad_sch','.kicad_pcb','.kicad_pro','.
 # Keep exact path/status coverage and source hashes; do not allow arbitrary new
 # protected files or changes to the existing integrated design.
 sources=json.loads((HERE/'candidate_source_sha256.json').read_text())
+prior_sources=json.loads(subprocess.check_output(['git','show','47d72c9:hardware/eps/verification/rev_b/charger_bms_library/candidate_source_sha256.json'],cwd=ROOT,text=True))
+assert set(sources)==set(prior_sources)
+changed_source_hashes={f for f in sources if sources[f]!=prior_sources[f]}
+assert changed_source_hashes=={'hardware/eps/verification/rev_b/charger_bms_library/disposable/charger_bms_check.kicad_pcb','hardware/eps/verification/rev_b/charger_bms_library/disposable/charger_bms_check.kicad_pro'}
+assert normalization['previous_sha256']==prior_sources['hardware/eps/verification/rev_b/charger_bms_library/disposable/charger_bms_check.kicad_pro']
 existing_tables={'hardware/eps/rev_b/fp-lib-table','hardware/eps/rev_b/sym-lib-table'}
 assert len(sources)==10 and existing_tables <= sources.keys()
 assert all(protected(file) for file in sources)
@@ -166,16 +221,16 @@ assert len(erc)==16 and all(e['rule']=='pin_not_connected' and e['severity']=='e
 dc=json.loads((HERE/'disposable_erc.json').read_text())
 assert len(dc)==94
 assert Counter(e['rule'] for e in dc)=={'pin_not_connected':58,'pin_not_driven':23,'power_pin_not_driven':13}
-result={'status':'PARTIAL — LIBRARY AND SCHEMATIC INSTANCE PASS; BOARD INSTANCE ACCEPTANCE BLOCKED',
-        'basis':'6be2bc7','physical_rows':len(rows),'LTC_counts':{'perimeter':28,'EP':1,'symbol':29,'electrical_pads':29,'duplicates':0,'mechanical_only':0},
+result={'status':'PHYSICAL MAP ACCEPTED FOR DEVELOPMENT CIRCUIT USE; QUALIFICATION OPEN; CUSTOM REVIEW MARKERS RETAINED',
+        'basis':'6be2bc7','board_acceptance_basis':'47d72c9','physical_rows':len(rows),'placed_board_physical_rows':len(board_rows),'LTC_counts':{'perimeter':28,'EP':1,'symbol':29,'electrical_pads':29,'duplicates':0,'mechanical_only':0},
         'BQ_counts':{'perimeter':32,'EP':1,'symbol':33,'electrical_pads':33,'duplicates':0,'mechanical_only':0,'internally_NC':[7,14,29]},
         'integrated_native_source_files_unchanged':unchanged,'integrated_parts':160,'integrated_nets':91,'integrated_ERC_errors':16,'integrated_ERC_warnings':0,
         'approved_native_file_changes':dict(sorted(native_changes.items())),
         'disposable_ERC':dict(Counter(e['rule'] for e in dc)),
         'library_copper_fab_renders_inspected':True,'disposable_symbols_full_and_details_inspected':True,
-        'disposable_board_instances_created':False,'disposable_board_render_inspected':False,
-        'open':['Board instance placement/queryback/render blocked by fixed live IPC transport; no bypass attempted',
-                'CUSTOM review markers retained; no real circuit placement authorized by this checkpoint',
+        'disposable_board_instances_created':True,'disposable_board_render_inspected':True,
+        'scratch_project_normalization':'preexisting KiCad10 meta1→3 normalization reconciled by exact hash; no hand revert',
+        'open':['CUSTOM review markers retained; no real integrated circuit placement in this checkpoint',
                 'Nominal copper only: stencil segmentation/thermal vias/assembly tolerances/3D/application qualification open',
                 'S11 library custom field/default instance copying/display limitations require explicit placement field readback/callouts']}
 (HERE/'verified.json').write_text(json.dumps(result,indent=2)+'\n')

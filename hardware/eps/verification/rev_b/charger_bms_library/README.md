@@ -1,6 +1,6 @@
-# Charger/BMS library candidates — partial acceptance
+# Charger/BMS library physical-map acceptance
 
-2026-10-23, basis `6be2bc7`. Construction was explicitly authorized under `hardware/eps/design/rev_b_charger_bms_library_rules.md`. Both candidates remain **CUSTOM — REVIEW REQUIRED** and are **not accepted for real circuit placement**: the disposable placed-board acceptance gate is blocked.
+2026-10-24. Library construction basis `6be2bc7`; placed-board acceptance resumed from `47d72c9`. Construction was explicitly authorized under `hardware/eps/design/rev_b_charger_bms_library_rules.md`. **All 62 physical pin/pad mappings now pass library, disposable schematic-instance and saved placed-board checks.** The maps are eligible for development circuit use. **CUSTOM — REVIEW REQUIRED** markers remain; assembly/application/flight qualification is not granted and no real integrated IC placement was performed.
 
 ## Saved candidates and physical checks
 
@@ -18,7 +18,7 @@ BQ NC7/14/29 are passive internally unconnected leads because TI permits floatin
 
 Run `python3 hardware/eps/verification/rev_b/charger_bms_library/verify_library.py` from the repository root. It checks all saved pin/pad querybacks, instance coordinates, exported embedded pin types and exact MFG fields, counts, geometry, relative registration paths, source hashes and the unchanged integrated component/endpoint graph.
 
-All seven integrated schematic files and the native project settings are byte-identical to the checkpoint. The only changes to previously tracked KiCad sources are the two portable library-table registrations. Historical study sources are untouched. The freshly exported integrated root remains **160 parts / 91 nets**, with **16 existing unconnected MCU-pin ERC errors / zero warnings**.
+All seven integrated schematic files and the native project settings are byte-identical to the checkpoint. The only changes to previously tracked KiCad sources are the two portable library-table registrations. Historical study sources are untouched. Relative to resumed checkpoint `47d72c9`, only the scratch PCB and scratch project configuration changed among protected sources; library definitions, registrations and the disposable schematic remain unchanged. The freshly exported integrated root remains **160 parts / 91 nets**, with **16 existing unconnected MCU-pin ERC errors / zero warnings**.
 
 The disposable sheet intentionally has no wires, source flags or NC masking. Its XML contains **62 separate singleton nets**, one per lead; ERC reports 94 errors (58 `pin_not_connected`, 23 `pin_not_driven`, 13 `power_pin_not_driven`) and zero warnings. These are unwired inspection-fixture findings, not a circuit acceptance test. ERC violation counts are not substituted for the exact exported per-lead singleton check.
 
@@ -28,39 +28,23 @@ The disposable sheet intentionally has no wires, source flags or NC masking. Its
 
 Both **saved library footprints** were exported by KiCad CLI `fp export svg`, rasterized with `rsvg-convert`, and inspected at copper/silk/courtyard and numbered fab detail scales. Pin-1 keys and counterclockwise row numbering agree with the manufacturer figures; the UFD large EP29 and RSM small EP33 are clear. Fab sketch overlays cross some tiny pad-number strokes; the exact API pad-number/coordinate checks provide the full numeric record. Root independently inspected the final full schematic, both symbol details and both sets of library footprint details.
 
-These are **library renders**, not disposable placed-board renders. The blank scratch PCB is preserved, with zero placed footprints. Do not present the library exports as completing the instance gate.
+## Saved placed-board acceptance
 
-## Blocked gate and remaining work
+The transport blocker was resolved before this work resumed. `open_project` confirmed the configured `ipc:///tmp/kicad/api.sock` served exactly `disposable/charger_bms_check.kicad_pcb`, with no other board open. Konnect placed U1 at (20,20) mm and U2 at (35,20) mm, front side, zero rotation, then saved the board. Final live instance/pad queries confirmed the same saved placements. No COMMS, integrated EPS, library or unrelated source was changed.
 
-**Revalidated 2026-10-23, 22:14 UTC:** the configured IPC connection still
-serves only COMMS and reports the requested scratch board as not open. Desktop
-inventory now explicitly reports that the Mac is locked and automatic unlock
-failed. This prevents safe inspection/switching of the editor; the user must
-unlock the Mac. Save existing KiCad work, close PCB editors and open
-`disposable/charger_bms_check.kicad_pcb` first, then verify its exact absolute
-path through Konnect before placing anything. No locked-desktop bypass or
-unrelated save/discard was attempted. The existing schematic mutation owner is
-idle with mutation held.
+`board_readback.json` holds exact IPC identity, footprint and all-pad position/layer/net readbacks after saving. `board_physical_map.csv` joins every one of the 62 physical leads to its placed global coordinate, saved local coordinate, size, shape, SMD type and layer set. The API omits size/shape/type/drill fields; `inspect_saved_board.py` therefore reads those saved geometry fields without writing native files and records `board_saved_geometry.json`, tied to the exact PCB hash. Every value matches the manufacturer-derived library map: no duplicate/missing/mechanical/drilled pads, no unintended net assignments, no mirrored or rotated instances. The fixture has no traces, vias, zones, outline or board text; it is an inspection fixture, not a board design.
 
-Konnect's active startup transport is `ipc:///tmp/kicad/api.sock`, serving the unrelated live comms `transceiver.kicad_pcb`. `place_component` refused the scratch path because that board was not open; during the manager modal it also returned `NNG recv failed: Timed out` and explicitly stated the board was not modified. The scratch PCB was successfully opened in a separate standalone editor, which owns `/tmp/kicad/api-22683.sock`; no exposed tool can select/reconnect to that endpoint. The manager modal was canceled and the configured socket became responsive again, still serving only comms. Agent and root attempts to inspect the original app's saved/dirty state then failed with computer-use server error **-10005: timeoutReached**. No unrelated save/discard, socket/config edit, process termination or custom-backend bypass was attempted.
+Actual saved-board exports were opened and inspected separately from the library images: `board_copper.png` shows copper/silk/courtyard; `board_fab.png` shows numbered fab pad sketches. `board_U1_copper.png`, `board_U1_fab.png`, `board_U2_copper.png`, `board_U2_fab.png` provide detail crops. Pin-1 keys, counterclockwise front-view numbering, distinct perimeter rows and the large EP29/small EP33 agree with the source figures. The exporter overlaps parts of the tiny fab numbers with its pad/body sketch strokes; the complete numeric proof is the pad queryback and saved-geometry comparison. Konnect placement gives scratch Reference fields default anchors inside the footprint body, visible over copper in this inspection view. This is not accepted production silkscreen placement and no library field anchors were changed to hide it. Bright-green schematic review callouts remain unchanged.
 
-Resume only with a supported transport/editor binding and verified exact scratch document. Place both footprints through Konnect, query every instance pad, save through Konnect, export and actually inspect the placed-board render. Until then physical board-instance acceptance remains **BLOCKED**, and the candidates stay out of real circuits. Nominal copper/paste/mask does not qualify stencil segmentation, assembly tolerances, thermal vias, application circuitry, sourcing, fit or thermal behavior. Review markers remain.
+## Scratch project normalization and remaining qualification
+
+Opening the scratch project before the agent resumed normalized its minimal meta-version1 configuration to KiCad10 meta-version3 defaults. `scratch_project_normalization.json` records the original/current hashes, added keys and changed top-level sections. There were no removed top-level keys. The normalized hash remained unchanged through footprint placement/save; it was reconciled in the source manifest without a native-file hand revert. Integrated project settings remain byte-identical to the prior design checkpoint.
+
+The verifier preserves the exact **two modified library tables plus eight approved native additions** relative to `6be2bc7`; no broad native-file allowance was introduced. It further requires that only the scratch `.kicad_pcb` and normalized `.kicad_pro` hashes differ from the reviewed ten-file manifest at `47d72c9`. All eight existing integrated schematic/project hashes and the complete 160-part/91-net graph remain unchanged. Fresh ERC remains 16 unfinished MCU-pin errors/zero warnings; the isolated disposable sheet remains 94 expected unwired-fixture errors/zero warnings.
+
+The placed-board gate is complete. Nominal copper/paste/mask does not qualify stencil segmentation, assembly tolerances, thermal vias, application circuitry, sourcing, fit or thermal behavior. S11 field-display/API limits and production reference placement remain explicit. Physical-map acceptance does not close the charger, BMS, RBF, autonomous 3V3 overvoltage, CAN branch or other EPS design work. Review markers remain until user review acceptance.
 
 `changed_files.txt` lists this boundary's exact deliverable files; `candidate_source_sha256.json` ties querybacks to native sources and `evidence_sha256.json` records deliverable evidence hashes. Generated scratch PRL/lock/history files and routine ignored CLI logs are excluded.
 
-## Committed-checkpoint verifier correction
 
-The documented verifier was rerun against the committed tree and failed its
-native-file change assertion: that assertion expected only the two modified
-library tables, omitting the eight approved additions once they became tracked.
-The correction requires the exact ten source-manifest paths and their Git
-statuses: two modified tables and eight added library/fixture sources. Every
-source must still match its reviewed hash, and the eight existing integrated
-schematic/project files must remain unchanged. Stage approved additions before
-using this check on a new checkpoint; untracked files are not delivery evidence.
-
-The corrected verifier passes all 62 physical rows, saved schematic-instance
-checks and current native-source hashes. The integrated protection verifier was
-also rerun successfully. The result remains **PARTIAL**, with both disposable
-board-instance flags false. No ERC or rendered-board pass was manufactured, and
-no KiCad source, project setting or library changed in this correction.
+Root independently opened the final full placed-board copper/fab views and all four part details on 2026-10-24. Pin-1 keys, row direction and exposed-pad geometry agree with the numeric mapping; the documented reference/pad-number overlay limitations remain.
