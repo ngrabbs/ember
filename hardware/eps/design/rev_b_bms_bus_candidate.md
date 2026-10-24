@@ -54,3 +54,48 @@ The footprint's component-view/Y-down numbering is counterclockwise from the upp
 - [TI BQ40Z50-R2 SLUSCS4C](https://www.ti.com/lit/ds/symlink/bq40z50-r2.pdf), pin functions and §§7.11–7.12: SMBus levels, internal pulldowns and BTP limits.
 - [ST DS13560 Rev 6](https://www.st.com/resource/en/datasheet/stm32g0b1ke.pdf), Tables 55 and 57: conservative input-low threshold and GPIO output-low limit. PA9/PA10 remain the local pack-manager bus allocation.
 - [Native buck screening](../verification/essential_3v3/native/README.md) for the conditional static supply envelope and unresolved transient behavior.
+
+## 2026-10-24 update: ISO1540DR selected for development integration
+
+The ADuM1250 above is retained as the historical comparison. Use **ISO1540DR** for the next development schematic, conditional on the separate physical-map/disposable-render acceptance. TI's bidirectional clock channel supports target clock stretching; ISO1541 is not a substitute. The existing stock `Isolator:ISO1540` and `Package_SO:SOIC-8_3.9x4.9mm_P1.27mm` avoid a new custom part. Override the stock family datasheet link with the exact ISO1540 datasheet. This selection improves the MCU receive-low margin, at a higher current allocation and smaller side-1 capacitance budget.
+
+Preserve the boundary above: VCC1/VCC2 and all pull-ups receive the permitted essential +3V3 positive supply, GND1 is system GND and GND2 is `GND_BMS_RAW`. Both local 100 nF bypasses return to their own domain. There is no additional always-powered logic supply. The common positive supply means this assembly does not provide galvanically isolated power; side-2 supply and pull-up currents return through the shunt. This design choice must be included in gauging calibration, load budgets and all powered/unpowered tests.
+
+[TI SLLSEB6F Rev F](https://www.ti.com/lit/ds/symlink/iso1540.pdf), §§6.3, 6.9–6.12 and 8.2, is the electrical authority. The local primary PDF's actual pin-map, electrical-table, reference-application and land-pattern pages were viewed. The stock footprint is a generic alternative, not TI's exact example land: stock pads are 1.95 × 0.60 mm at X ±2.475 mm, whereas TI's example uses 1.55 × 0.60 mm at X ±2.7 mm. Both use 1.27 mm pitch. Record toe/heel coverage and saved-board inspection in the package acceptance before placement; do not describe the stock pattern as manufacturer-exact.
+
+The [reproducible static screen](../verification/bms/bus_screening/calculate.py) and [results](../verification/bms/bus_screening/calculated.json) retain the earlier rail/shunt/temperature assumptions. They are conditional design calculations, not measured or simulated transient qualification.
+
+| Check | ISO1540 result |
+|---|---|
+| Operation | Both sides 3.0–5.5 V; conditional side-2 range 3.22064–3.33655 V |
+| MCU low into side 1 | 0.4 V versus minimum falling threshold 0.480 V: 80 mV margin |
+| Side-1 low into MCU | 0.800 V versus 0.96984 V: 169.84 mV margin, versus 69.84 mV for the earlier candidate |
+| BMS low into side 2 | 0.4 V versus 0.96619 V: 566 mV margin |
+| Side-2 low into BMS | 0.4 V versus 0.8 V: 400 mV margin |
+| Pull-ups | Four 3.9 kΩ, 0.1%, 25 ppm/K; ISO1 minimum low-state load 0.622 mA, ISO2 minimum 0.721 mA, BMS maximum 0.755 mA |
+| Speed/loading | 100 kbit/s only; side 1 ≤40 pF and side 2 allocation ≤200 pF, including devices/routing/service fixture |
+| RC rise estimate | 133 ns / 663 ns for side 1 / side 2, versus 1 µs screening limit |
+| Static IC allocation at 3–3.6 V | Both lines low: 7.1 + 6.7 = 13.8 mA maximum; both high: 4.0 + 3.5 = 7.5 mA maximum, plus external pull-ups |
+
+The upper bound for four pull-ups to zero volts is another 3.431 mA. This deliberately exceeds the current at the specified finite low levels. The static all-low total is approximately 17.23 mA, about 57.3 mW from a 3.32439 V source; switching/load-capacitance current is additional. The calculation also checks high-state margins using ISO input leakage 10 µA, BMS input leakage 1 µA and its minimum 0.7 MΩ pulldown; a provisional MCU input budget of 1 µA must be reconciled with the selected pin modes and complete ST limits. ISO input capacitance is 7 pF **typical**, not a guaranteed maximum. Neither loading budget is established by that number alone.
+
+Define firmware startup as waiting at least 1 ms after both local supplies are valid at or above 3.0 V, then performing bus recovery and verifying BMS identity/configuration before accepting telemetry. This is a conservative proposed sequence, not a new datasheet guarantee: TI's UVLO recovery maximum is 151 µs under its stated test conditions. The UVLO maximum threshold of 2.9 V does not extend operation below 3.0 V. The buck's unqualified 2.987 V load-step estimate still falls outside the interface's operating range. Verify rail transients, unequal ramps, stuck-low recovery, SMBus timeouts, power-off leakage and service-adapter paths before closing this interface.
+
+The physical numbering is 1 VCC1, 2 SDA1, 3 SCL1, 4 GND1, 5 GND2, 6 SCL2, 7 SDA2, 8 VCC2. Package acceptance and native integration evidence belong to the new BMS integration checkpoint; the historical ADuM table above is not that acceptance.
+
+## Current-measurement gate found during integration
+
+**The shared-positive supply is provisional and does not meet the complete-current measurement intent by itself.** In a steady battery-powered fixture, take actual battery discharge current as positive. Let `Iraw_bus` be the sum of ISO side-2 supply current and any side-2 pull-up current returning directly to `GND_BMS_RAW`. With other unmeasured retained-domain loads treated separately, KCL gives approximately `Ishunt = Ibattery − Iraw_bus`. The signal barrier does not create a metallic ground short, but the shared positive supply permits this measurement error. “Current returns through the shunt” must not be read as “the shunt measures all battery current correctly.”
+
+Using the present static screen, side-2 IC current can be 6.7 mA in the published both-low condition; its two pull-ups add up to 1.716 mA under the deliberately conservative zero-volt upper bound. Thus the affected branch can shift measured current by roughly 8.42 mA in that fixture, before other leakage/reference loads. It is state-dependent. A single zero-current calibration cannot remove the active/idle difference, and near idle the apparent current can have the wrong sign. Do not accept fuel gauging or low-current charge/discharge decisions on this architecture without closing that error. Ampere-level fault settings need their own uncertainty review rather than inheriting a “negligible” assertion.
+
+A permitted-supply **isolated DC/DC** feeding only VCC2 and its two pull-ups would remove the common-positive power path: primary VIN/GND use the system domain, secondary VOUT/return use the raw BMS domain, and no additional raw-cell supply remains powered during RBF. Evaluate startup, both supplies' valid ranges, power-off leakage, EMI, source budget and actual package area together. It is functional separation across the current-sense reference, not a claim of spacecraft safety isolation: the two ground domains remain intentionally joined through the current shunt.
+
+Primary alternatives under review, with no native selection or new custom construction authorized by this note:
+
+- [ADI ADuM5020/ADuM5028 Rev E](https://www.analog.com/media/en/technical-documentation/data-sheets/adum5020-5028.pdf), retrieved 2026-10-24. A -3 converter supports 3.3 V input/output. ADuM5028 offers an 8-lead wide package; however, no-load input current can reach 15 mA, and output/loading/ripple limits must be checked at this small bus load. A registered `ADuM502` symbol search returned none. It would retain ISO1540's better receive-low margin but add power and footprint costs.
+- [ADI ADM3260 Rev G](https://www.analog.com/media/en/technical-documentation/data-sheets/ADM3260.pdf) integrates isolated I2C and isolated power in one 20-lead SSOP. A registered exact symbol search returned none. It could reduce part count, but its electrical limits must be screened independently; the earlier ADuM1250/ISO1540 calculations cannot be applied to it.
+
+The development ISO1540 circuit may be drawn to make the retained boundary reviewable, with this deficiency explicitly noted. Its static level check and package map are separate from this unresolved power/current-measurement gate. Resolve this gate before final BMS acceptance or PCB release.
+
+Follow-up screening rejects ADM3260 as a direct substitute with its normal power direction: its isolated output is side 1, whose specified low can be 0.85/0.90 V, exceeding the BMS 0.8 V input-low limit. Reversing the logical sides alone would put the power input on the raw reference and would not solve the shared-power problem. ADuM5028-3BRIZ feeding the existing ISO1540 side 2 remains the preferred isolated-power candidate to finish screening. Its supply/load/noise limits and source figures still require acceptance before library construction.

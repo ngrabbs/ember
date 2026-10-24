@@ -100,3 +100,7 @@ Maintain a versioned configuration manifest containing device/firmware identity,
 6. After simulator acceptance, calibrate real sensors against a reference thermometer and characterize mounting gradients and pack operating modes under a controlled test plan.
 
 Final evidence must show electrical fault response, retained configuration, autonomous operation and physical temperature coverage. This specification makes the next schematic pass concrete; it does not establish those results.
+
+## Commissioning record
+
+The [versioned draft manifest](rev_b_bms_commissioning_manifest.json) now enumerates fixed 2S/sensor intent, device identity/readback, calibration, numerical limits and autonomous fault-test gates. It deliberately contains unapproved null values and is not a programming image. Do not replace those gaps with device defaults. The [bus power review](rev_b_bms_bus_candidate.md) also identifies a state-dependent current-measurement error in the shared-positive ISO1540 development supply; resolve its power path before accepting gauging.

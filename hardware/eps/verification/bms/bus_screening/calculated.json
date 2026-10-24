@@ -1,0 +1,51 @@
+{
+  "assumptions": {
+    "temperature_excursion_K": 65,
+    "sensitivity_current_A": 6,
+    "side1_capacitance_budget_pF": 40,
+    "side2_capacitance_budget_pF": 200,
+    "MCU_input_leakage_budget_uA_provisional": 1
+  },
+  "pullup_ohm": [
+    3889.7625,
+    3910.2374999999997
+  ],
+  "shunt_max_ohm": 0.0020265,
+  "reference_offset_V": 0.012159,
+  "side2_supply_V": [
+    3.220641,
+    3.336549
+  ],
+  "low_margin_V": {
+    "MCU_to_ISO1": 0.07999999999999996,
+    "ISO1_to_MCU": 0.16984,
+    "BMS_to_ISO2": 0.5661923,
+    "ISO2_to_BMS": 0.4
+  },
+  "pullup_sink_A": {
+    "ISO1_min_at_0p8V": 0.000622161697339356,
+    "ISO2_min_at_0p4V": 0.0007213477442226976,
+    "BMS_max_at_0p4V": 0.0007549430074458275,
+    "maximum_zero_volt_sink_per_line": 0.0008577770493699809
+  },
+  "high_screen_V": {
+    "side1": 3.1897873875,
+    "side2": 3.159976588989445,
+    "MCU_margin_conservative_independent_corners": 0.8627143875000001,
+    "ISO1_margin": 2.4897873875,
+    "BMS_margin": 1.859976588989445,
+    "ISO2_margin_conservative_independent_corners": 1.491702088989445
+  },
+  "rise_30_to_70_ns": {
+    "40": 132.52576935,
+    "200": 662.62884675
+  },
+  "static_current_budget_A": {
+    "all_lines_low_ICs": 0.0138,
+    "all_lines_high_ICs": 0.0075,
+    "four_zero_volt_pullups_upper_bound": 0.0034311081974799235
+  },
+  "raw_bus_unmeasured_current_upper_A": 0.008415554098739963,
+  "measurement_gate": "Shared positive supply causes state-dependent shunt error; isolated power unresolved",
+  "qualification": "CONDITIONAL_STATIC_SCREEN_ONLY"
+}

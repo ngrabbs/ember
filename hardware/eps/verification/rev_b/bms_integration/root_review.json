@@ -1,0 +1,31 @@
+{
+  "status": "Independent development checkpoint review passed; electrical qualification remains open",
+  "fresh_CLI_graph_and_metadata_equal": true,
+  "fresh_CLI_ERC_equal_excluding_per_run_marker_UUIDs": true,
+  "physical_parts": 233,
+  "nets": 133,
+  "ERC_errors": 14,
+  "ERC_warnings": 0,
+  "evidence_hashes_verified": 73,
+  "prior_tracked_charger_files_frozen": 61,
+  "fresh_netlist_sha256": "a95b915a81b0f6a3eebff4711a83b89fc4e13233f5b21dd3d609a0218fea7b75",
+  "fresh_erc_sha256": "a86e65c7c55fe73d54f96a0badec58b031f6a47548f2215ebc351143a44d4975",
+  "root_actual_render_inspection": [
+    "eps_rev_b.png",
+    "controller.png",
+    "controller_bus.png",
+    "controller_bms_notes.png",
+    "recovery_5v.png",
+    "bms_protection.png",
+    "bms_top_note.png"
+  ],
+  "owner_actual_render_inspection": "All nine pages and listed details in visual_review.json; separate from electrical verification",
+  "limitations": [
+    "Eleven MCU connections unfinished",
+    "Three intentional power-output ERC conflicts retained",
+    "BMS bus supply causes state-dependent gauging error",
+    "Main FET gate stress under short remains open",
+    "RBF and charger-to-pack overvoltage containment incomplete",
+    "Not a completed EPS or qualified PCB"
+  ]
+}

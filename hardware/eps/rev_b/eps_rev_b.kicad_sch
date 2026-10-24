@@ -249,4 +249,35 @@
     (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
     (uuid "fd763455-24be-446f-9c92-d46c95d62b0a")
   )
+	(sheet
+    (at 304.8 157.48)
+    (size 100.33 33.02)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "33ef91c0-2808-4a15-b04b-664982cd7b4f")
+    (property "Sheetname" "2S pack protection"
+      (at 304.8 156.845 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "bms_protection.kicad_sch"
+      (at 304.8 191.135 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "9"))
+      )
+    )
+  )
+  (text "2026-10-24: BMS pre-RBF block is now linked; ALL earlier BMS-absence statements are obsolete."
+    (at 30.48 39.37 0)
+    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
+    (uuid "e9a56759-0f66-4bd6-95e8-71bd78c30c9c")
+  )
+  (text "PROTECTED_PACK ends BEFORE missing RBF. BATT_PERMITTED remains a distinct external interlocked-source fixture.\nRaw/system returns join only through BMS shunt; shared-positive SMBus supply leaves current-measurement closure open."
+    (at 30.48 242.57 0)
+    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
+    (uuid "73c90467-36ee-4121-8e61-3cdb02df2329")
+  )
 )
