@@ -43,5 +43,5 @@ report={'status':'IMPOSED_LINEAR_TWO_FILTER_MODEL_NOT_CIRCUIT_ACCEPTANCE','case_
 a.output.write_text(json.dumps(report,indent=2)+'\n')
 if a.output==H/'staged_results.json':
  with (H/'staged_sweep.csv').open('w',newline='') as fp:
-  w=csv.DictWriter(fp,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
+  w=csv.DictWriter(fp,fieldnames=list(rows[0]),lineterminator="\n");w.writeheader();w.writerows(rows)
 print('Completed',n,'two-filter fixtures;',sum(r['below_3p6_at_open_in_ideal_model'] for r in rows),'below working ceiling at opening; step',a.step_ns,'ns')
