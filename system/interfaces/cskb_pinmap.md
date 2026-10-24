@@ -231,3 +231,30 @@ which supersedes the earlier v0.1 payload routing descriptions:
 - Launch isolation must cover the raw stack feed to **both** AON and main paths
   and alternate feeds. The location/design of that physical flight inhibit is
   unresolved; this update makes no flight-readiness claim.
+
+## EPS Rev B development interpretation (2026-10-24)
+
+The operator-authorized [EPS Rev B architecture](../../hardware/eps/design/rev_b_plan.md)
+adds EPS as a node on **both existing buses**: H1.51/H1.52 remain
+`CAN_H`/`CAN_L`, and H2.49/H2.50 remain `CAN_B_H`/`CAN_B_L`.
+The earlier statement that EPS is not a CAN node describes v0.1 only.
+Rev B's STM32G0B1KET6N uses separate FDCAN controllers and TCAN3413DR
+transceivers; this introduces no new stack-pin assignment or net rename.
+The current schematic still uses logical stack-access connectors, so this
+record is an integration requirement rather than proof of physical H1/H2 wiring.
+
+The [CAN branch contract](../../hardware/eps/design/rev_b_can_branch_integration.md)
+adds separate development current-limited transceiver supplies and reuses
+each board-local standby GPIO for disable/latch reset. Both buses are enabled
+after initialization. A disabled transceiver has no CAN wake reception;
+the stack CAN electrical names and pin roles are unchanged. The branch
+FAULT diagnostics are bench test points, not stack signals. Shared MCU,
+clock, source and connector failures remain common causes; guaranteed
+ground recovery over B requires the complete EPS/IHU/COMMS implementation.
+
+This appendix does not alter the legacy H1.41/H1.43 I2C or H1.49 alert
+electrical contracts. Rev B stack-interface work must explicitly reconcile
+those connections and consumers before routing them. The protected,
+interlocked and managed interpretation of H2.45/H2.46 `VBAT` likewise
+requires its pending distribution circuit and consumer review; no direct
+raw-cell bypass is authorized by the retained pin names.

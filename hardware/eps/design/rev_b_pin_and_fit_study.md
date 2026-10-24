@@ -21,7 +21,7 @@ Selected for the N LQFP32 variant, STM32G0B1KET6N, following the 2026-10-23 pino
 
 | Pin | Port | Proposed assignment | Mode |
 |---|---|---|---|
-| 1 | PB9 | CAN A standby | GPIO |
+| 1 | PB9 | CAN A standby/branch reset: HIGH disables, LOW normal | GPIO |
 | 2 | PC14 | External clock | HSE bypass |
 | 3 | PC15 | Source protector fault, `SRC_FAULT` active-low | Input |
 | 4 | VDD/VDDA | Essential 3.3 V | Supply |
@@ -47,7 +47,7 @@ Selected for the N LQFP32 variant, STM32G0B1KET6N, following the 2026-10-23 pino
 | 24 | PA13 | SWD data | SWD |
 | 25 | PA14 | SWD clock and BOOT0 | SWD |
 | 26 | PD0 | `EPS_BMS_PRI_FAULT_N`; diagnostic after UCPD startup strobe | Input |
-| 27 | PD1 | CAN B standby | GPIO |
+| 27 | PD1 | CAN B standby/branch reset: HIGH disables, LOW normal | GPIO |
 | 28 | PD2 | Hardware interlock status | Input |
 | 29 | PD3 | `EPS_BMS_PRI_EN`; release enables, LOW disables | Open drain |
 | 30 | PB6 | Charger clock | I2C1 AF6 |
@@ -72,24 +72,24 @@ Keep PA11/PA12 in their default mapping and omit USB from this allocation. Prese
 
 ## Dual CAN circuit definition
 
-Select two TCAN3413DR SOIC-8 devices as the schematic candidates, one per bus. Their [TI datasheet](https://www.ti.com/lit/ds/symlink/tcan3413.pdf) specifies 3.3 V supply operation, separate VIO, standby, TXD dominant timeout and high-impedance bus/logic behavior when unpowered. SOIC is the assembly/debug preference; final sourcing and footprint acceptance remain open. Both VCC and VIO come from essential 3.3 V, so recovery does not require stack 5 V or a managed-load enable.
+Select two TCAN3413DR SOIC-8 devices as the schematic candidates, one per bus. Their [TI datasheet](https://www.ti.com/lit/ds/symlink/tcan3413.pdf) specifies 3.3 V supply operation, separate VIO, standby, TXD dominant timeout and high-impedance bus/logic behavior when unpowered. SOIC is the assembly/debug preference; final sourcing remains open. The later accepted package map and current development integration supersede this early candidate status. Both VCC and VIO derive from essential 3.3 V through separate TPS2553/1 Ω branches, so recovery does not require stack 5 V or a managed-load enable. See the [CAN branch integration contract](rev_b_can_branch_integration.md) for exact connections, reset ownership and remaining fault scope.
 
 | Transceiver pin | CAN A connection | CAN B connection |
 |---|---|---|
 | 1 TXD | PA12, FDCAN1 TX | PB1, FDCAN2 TX |
 | 2 GND | Essential-domain ground | Essential-domain ground |
-| 3 VCC | Essential 3.3 V | Essential 3.3 V |
+| 3 VCC | `3V3_CANA`, essential branch | `3V3_CANB`, essential branch |
 | 4 RXD | PA11, FDCAN1 RX | PB0, FDCAN2 RX |
-| 5 VIO | Essential 3.3 V | Essential 3.3 V |
+| 5 VIO | `3V3_CANA`, same branch as VCC | `3V3_CANB`, same branch as VCC |
 | 6 CANL | H1.52 `CAN_L` | H2.50 `CAN_B_L` |
 | 7 CANH | H1.51 `CAN_H` | H2.49 `CAN_B_H` |
 | 8 STB | PB9 | PD1 |
 
-This is a datasheet pin-to-net specification, not an accepted KiCad symbol/footprint mapping. Verify the exact SOIC package pad map before placement. TCAN3414 is not a drop-in equivalent for pin 5.
+This table records functional connections; the later [integrated controller checkpoint](../verification/rev_b/integration/README.md) carries the selected TCAN3413DR package-map evidence. Preserve that accepted SOIC map during branch integration. TCAN3414 is not a drop-in equivalent for pin 5.
 
-Propose external 10 kΩ pull-ups on STB and TXD for each channel, subject to leakage and GPIO checks. At reset, standby prevents transmission and TXD is recessive. Firmware first configures recessive TX, the clock, filters and receive queues, then enables each channel. TI distinguishes standby wake indication from normal frame reception; after initialization keep both channels in normal mode for the initial fallback implementation. A later low-power policy requires a tested wake/retry protocol.
+The 2026-10-24 development contract retains external 10 kΩ STB/TXD pullups on the essential MCU side of new 1 kΩ signal resistors, adds MCU-side RXD pullups and uses a separate Schmitt inverter per channel to command TPS EN. At reset, HIGH STB disables that channel's supply; LOW powers it for normal operation. This consumes no additional GPIOs. Firmware first configures recessive TX, the clock, filters and receive queues, then enables each channel and qualifies startup. Keep both channels in normal mode after initialization for the initial fallback implementation. A disabled channel has no CAN wake reception. An explicit recovery request can toggle only the failed channel HIGH then LOW; direct switch FAULT is available at bench test points, not MCU pins. EN cycling is not proof of full rail discharge or complete transceiver power cycling.
 
-Place local 100 nF bypass capacitors at both supply pins and suitable local bulk capacitance per channel. Evaluate the essential regulator under both channels' worst-case traffic and bus faults. A short on one transceiver's supply can still kill shared 3.3 V; bus redundancy alone does not isolate that fault. Determine whether separately current-limited supply branches are necessary after the fault/current budget, and include their area if selected.
+Place local 100 nF bypass capacitors at both supply pins and suitable local bulk capacitance per channel. Evaluate the essential regulator under both channels' worst-case traffic and bus faults. The current development circuit adds separate latch-off current-limited branches, but does not establish guaranteed healthy-channel survival. In particular the post-switch resistor misses a short directly at TPS OUT, and faults inside a switch or the shared MCU/source remain common causes. Preserve the [coupled comparison](../verification/controller_rev_b/coupled_branch_screen/README.md), conditional static/reset screens and later native graph evidence as separate claims. Include the added branches and inverter mechanical reservations in the complete area inventory.
 
 Provide separate, normally unpopulated termination options for A and B. Fit a 120 Ω termination only where EPS is an actual physical bus end; otherwise terminate at the two real ends. Select resistor power from sustained differential fault voltage. Reserve low-capacitance CAN protection and optional filtering footprints near the stack interface, then choose their population from transient and signal-integrity tests. No A/B bus wire, termination midpoint or protection path may unintentionally join the channels.
 

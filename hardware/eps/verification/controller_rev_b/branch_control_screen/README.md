@@ -1,0 +1,23 @@
+# CAN branch control static screen
+
+2026-10-24. [calculate.py](calculate.py) and [calculations.json](calculations.json) support the [development integration contract](../../../design/rev_b_can_branch_integration.md). They do not establish a complete supply/fault/logic timing qualification.
+
+The selected stock TI SN74LVC1G14DBVR inverter lets each existing standby GPIO disable and reset its own TPS2553 latch without consuming extra MCU pins. Both controls default HIGH; LOW requests powered normal operation. This is a board-local mode-semantic change, with no CAN wake reception while disabled. FAULT is available at test points, not on imaginary spare GPIOs.
+
+At the declared static supply/resistor/GPIO guards, EN reaches at least3.1006 V HIGH and at most0.1011 V LOW. TXD/STB low estimates are0.6006/0.4201 V. RXD high is at least2.3950 V against a2.3271 V MCU input guard, leaving approximately67.9 mV. That small receive margin remains an electrical/timing gate. Existing TXD/STB pullups stay on the essential MCU side of the new series resistors; no pullup feeds the disabled supply through an external resistor.
+
+The67.9 mV guard deliberately combines a3.0 V branch with maximum MCU supply. For the correlated static case, the branch and MCU share one source: at90 mA and the stated maximum TPS/series-resistor resistance, the RXD margin is approximately235.4 mV. This explains why the static design is plausible without adding another logic buffer. It does not replace the conservative branch-floor check or qualify ripple, capacitive traffic current, transients or edge timing.
+
+The TI Schmitt threshold table uses discrete3.0 V and4.5 V supply test points. This screen brackets them for development; it does not invent a continuous-supply guarantee. The GPIO drive/leakage values are declared powered/configured allocations from the earlier selected-MCU screen. Brownout, reset/UCPD sequencing, partial-power injection, actual I/O loading and500 kbit/s timing remain open. The test-point FAULT and CAN controller/heartbeat status have distinct meanings.
+
+[sources.json](sources.json) identifies the exact primary PDFs. Actual TI inverter p7, TPS switch p7 and TCAN startup p9 were rendered and inspected separately. The saved page images preserve table columns and test-condition footnotes; they are manufacturer-source inspection, not new EPS schematic renders. Fresh native verification belongs to the subsequent integration checkpoint. TI specifies EN cycling for latch clearing, but the proposed20 ms waits are planning values and do not prove complete rail discharge or full transceiver power cycling.
+
+Reproduce with `python3 hardware/eps/verification/controller_rev_b/branch_control_screen/calculate.py`. No third-party packages are required for this calculation. A passing conditional screen is not a hardware or PVT pass.
+
+## Independent reset model check
+
+Both `run_reset.py` cases completed60 ms with completed logs and hash-recorded raw files. They retain the previous post-switch1 Ω /90 mA load fixtures, add the contract's10 kΩ branch bleeders and1 kΩ EN series/100 kΩ EN pulldowns, and reset **only A** from35 to55 ms. B remains commanded on throughout. The inverter/GPIO behavior is imposed with a1 V decision, HIGH=shared−0.1 V, LOW=0.1 V and an additional1 kΩ driver resistance; this is a deliberate logic guard, **not** TI's inverter dynamic model or a Schmitt/PVT simulation.
+
+In both cases B stays at or above3.12109 V during A reset/recovery, B EN stays above3.05733 V and B FAULT remains high. A EN stays below0.09804 V during its reset and A returns to3.12137 V by59 ms. The initial A transceiver-rail / pre-resistor TPS-OUT faults give B minima3.06104 /3.03488 V respectively. [reset_results.json](reset_results.json) records exact values/hashes, with portable decks, normalized completion logs and extrema-preserving CSVs alongside it. The complete original raw/log files are external under `/tmp/ember-can-independent-reset-20261024`.
+
+This verifies independent commands in the nominal fixture without silently resetting B; it does not qualify actual CAN traffic, MCU/inverter dynamics, leakage, complete power cycling or all-condition fault survival. Run with the workspace Python/numpy runtime and the exact hash-checked adapted model in a fresh external output directory. The separate `verify_integrated_graph.py` checks the eventual fresh whole-root CLI exports against the intended physical parts, preserved275-part metadata,16 old-terminal migrations, two complete branch resistor topologies,72 added pin endpoints and unchanged ERC signature. That graph check is separate from simulation and actual rendered-sheet inspection.

@@ -1,0 +1,35 @@
+{
+  "status": "NOMINAL_TPS_WITH_IMPOSED_INVERTER_AND_GPIO_NOT_SYSTEM_QUALIFICATION",
+  "adapted_model_sha256": "354d0e0c2e67a8d750fb0c1174b98e369139719d69d4d0df027b6d7ce9ef22f9",
+  "inverter_model": "Behavioral inversion with 1V logic decision and source-.1V HIGH/.1V LOW; additional1k output resistance is a deliberate guard, not manufacturer dynamics.",
+  "cases": [
+    {
+      "name": "post_TCAN_90mA_independent_reset",
+      "status": "COMPLETED",
+      "final_time_s": 0.06,
+      "healthy_B_min_during_A_fault_V": 3.061038017272949,
+      "healthy_B_min_during_A_reset_recovery_V": 3.121093273162842,
+      "healthy_B_EN_min_during_A_reset_recovery_V": 3.0573294162750244,
+      "A_EN_max_while_reset_V": 0.09803921729326248,
+      "A_rail_59ms_V": 3.1213743686676025,
+      "B_FAULT_min_during_A_reset_recovery_V": 3.2184438705444336,
+      "raw_sha256": "03d066d64ea908a19ceeb7db48875f3c757d0688d215942c49add80b8c6fe8bb",
+      "log_sha256": "cb4460c9de44b5bb73de95ac978f1d14c66b6812785b719a73942598edea77ab",
+      "baseline_fixture_sha256": "88a0993349f9703751fd9242caf3480f7965f4d7a9aabe5cfbe79b4b13797687"
+    },
+    {
+      "name": "post_TPSOUT_90mA_independent_reset",
+      "status": "COMPLETED",
+      "final_time_s": 0.06,
+      "healthy_B_min_during_A_fault_V": 3.034884452819824,
+      "healthy_B_min_during_A_reset_recovery_V": 3.121093273162842,
+      "healthy_B_EN_min_during_A_reset_recovery_V": 3.0573294162750244,
+      "A_EN_max_while_reset_V": 0.09803921729326248,
+      "A_rail_59ms_V": 3.1213743686676025,
+      "B_FAULT_min_during_A_reset_recovery_V": 3.2184438705444336,
+      "raw_sha256": "12756d2c70fcd5028c10c56b99361982e2d0721115a424edd2b0d8b245dc3768",
+      "log_sha256": "b65da8794eb5ab9275f74e77a0db9a44e827d0b0821ad1c5c5ba002f84f96f3a",
+      "baseline_fixture_sha256": "ec8219eed91bd9c36d9a80d88e9ccd5283c00f8c988781e8f73bd383e4ac14f7"
+    }
+  ]
+}
