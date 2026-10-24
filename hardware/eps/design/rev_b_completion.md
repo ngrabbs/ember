@@ -1,6 +1,6 @@
 # EPS Rev B completion ledger
 
-2026-10-23. The operator authorizes completing the integrated EPS schematic and a new four-layer Rev B PCB using the existing outline as the starting geometry. Final stackup, clearances and usable height require mechanical review. Rev A remains a preserved fabrication/bring-up baseline.
+Updated 2026-10-24. The operator authorizes completing the integrated EPS schematic and a new four-layer Rev B PCB using the existing outline as the starting geometry. Final stackup, clearances and usable height require mechanical review. Rev A remains a preserved fabrication/bring-up baseline.
 
 Completion requires one connected, reviewable design. Isolated studies establish circuit evidence but do not constitute an integrated EPS. Hardware acceptance follows the design and has separate exit criteria.
 
@@ -18,6 +18,8 @@ Completion requires one connected, reviewable design. Isolated studies establish
 | Release review | Per-block netlists/ERC/renders | Full hierarchy checks, pin/package/BOM reconciliation, back-power/fault matrix, independent review and assembly outputs |
 
 ## Design sequence
+
+The CSD18543Q3A [PowerPath package checkpoint](../verification/charging/powerpath_package/README.md) now passes development physical mapping under the approved overlapping-rectangle construction: nine copper regions, five logical numbers, twelve paste apertures and nine separate mask openings. The stock source-pin stack and five drain aliases are preserved; library, live and saved-board geometry agree. Internal concave fillets, default reference placement and assembly/thermal qualification remain explicit review items. No real charger circuit or integrated-board placement was added by this checkpoint.
 
 The new [Rev B root](../rev_b/eps_rev_b.kicad_pro) now contains unique Controller, CAN, Essential 3V3, Recovery 5V converter, Solar source protection and Recovery rail protection sheets rebuilt through Konnect with explicit reference and endpoint crosswalks; it is not the complete EPS. The latest full graph contains 160 physical parts and 91 nets (68 functional). ERC retains 16 unfinished MCU pin errors and no warnings. All seven full pages and protection details were actually inspected separately from electrical verification. Finish charger, battery protection and hardware source isolation, then add stack interfaces and managed battery distribution. The two converter inputs already total 102.6 µF nominal before upstream circuitry; reconcile source inrush and simultaneous startup rather than carrying over an isolated-study capacitance budget unchanged. Retain all historical studies. Review the complete schematic before PCB synchronization. Layout must use the actual full BOM; even the current 160-part courtyard budget omits the unfinished blocks.
 

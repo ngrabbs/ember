@@ -1,7 +1,7 @@
-# CSD18543Q3A PowerPath footprint construction proposal
+# CSD18543Q3A PowerPath footprint construction rules
 
-2026-10-24. **Approval required before authoring.** Reuse the existing official
-`Transistor_FET:CSD18543Q3A` symbol. Propose one project-owned manufacturer-land
+2026-10-24. **Construction authorized:** the user explicitly answered “Approve footprint construction” for this document, including drain aliases, TI paste apertures and disposable verification. This authorizes construction/review, not final qualification. Reuse the existing official
+`Transistor_FET:CSD18543Q3A` symbol. Construct one project-owned manufacturer-land
 footprint in `Ember_Charger_BMS_Review.pretty`; no new symbol or global-library
 edit. Keep a visible `CUSTOM FOOTPRINT — REVIEW REQUIRED` instance field and
 pending-review metadata until accepted.
@@ -36,11 +36,18 @@ Use nine numbered front copper/mask objects, with 0.05 mm corner radius.
 Five objects intentionally repeat electrical number 5; there are five unique
 pad numbers and four intentional number repetitions. The right-hand finger
 rectangles extend 0.100 mm inside the central region, so their union remains
-continuous and matches TI's external drain outline. Their right edge is +1.850;
+continuous and preserves TI's external drain extents. Their right edge is +1.850;
 TI's exposed finger length is 0.635 mm from the central edge at +1.215. This
 rectangle decomposition is the explicit alternative to an unsupported custom
 polygon pad. Inspect the rendered union for gaps/notches before acceptance.
 No copper pad has automatic F.Paste; stencil apertures are separate objects.
+
+The approved decomposition preserves a 0.100 mm nominal overlap and at least
+0.050 mm full-height connection into each finger. It does not reproduce TI's
+internal concave R0.05 arcs: those differences are localized within 0.05 mm
+corner extents at the eight finger/central junction corners. Treat this as a
+documented construction deviation, not an exact TI outline or a new permission
+blocker. Manufacturing corner fidelity remains open.
 
 ## Paste, body and acceptance
 
@@ -50,6 +57,16 @@ Twelve unnumbered F.Paste-only pads implement TI p.10: eight perimeter apertures
 radius. The half-micron center rounding reconciles the printed 0.208/0.663 mm
 reference dimensions with the stated aperture edges and 0.905/1.325 mm spacing.
 Final stencil thickness/process and via-in-pad treatment are not qualified.
+
+TI p.9 requires solder-mask opening at least 0.05 mm beyond copper on all sides.
+The exposed authoring tools have no mask-margin setter. Implement nine extra
+**unnumbered F.Mask-only** roundrects at the nine copper centers, width/height
+increased by 0.10 mm and corner radius 0.10 mm. Their union with the numbered
+Cu/Mask objects provides the required minimum 0.05 mm expansion for the actual
+decomposed copper. This implementation was authorized as a routine realization
+of the manufacturer requirement. It creates **30 raw pad objects: nine copper,
+twelve blank paste and nine blank mask**, still only five electrical numbers.
+Do not collapse the repeated drain numbers or blank objects in verification.
 
 Fab uses the maximum 3.10 × 3.25 mm molded body, with a clear pin-1 key; separately
 account for the package's 3.50 mm maximum lead span. Courtyard extends at least
@@ -62,5 +79,5 @@ coordinates, layers, radius and no-drill state. Compare all nine physical rows
 and twelve apertures. Place disposable symbol/board instances through Konnect,
 query them, save and inspect actual schematic and placed-board renders before
 real use. Preserve the stock symbol's stacked source pins and exact MFG P/N;
-record all drain aliases explicitly. This approval would authorize construction
+record all drain aliases explicitly. The recorded approval authorizes construction
 and review, not electrical/thermal, assembly, sourcing or flight acceptance.
