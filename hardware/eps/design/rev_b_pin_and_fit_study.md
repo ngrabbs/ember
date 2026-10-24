@@ -7,6 +7,8 @@ Draft dated 2026-10-03. The preferred STM32G0B1KET6N package can accommodate the
 
 [Architecture plan](rev_b_plan.md) · [EPS documentation](../README.md)
 
+The2026-10-24 [rail-telemetry development integration](rev_b_adc_frontend_integration.md) now connects PA0/PA1/PA4/PA5 with switched/filter-conditioned rail measurements and a dedicated supply qualifier. Loaded divider ratios and coarse battery diagnostic resolution are recorded in the calculation packet; reference accuracy, brownout and ADC dynamics remain open. PB15/PD2/PB8 are still unfinished. This supersedes only the four ADC rows' earlier proposed-only state, not the remaining physical-fit or hardware gates.
+
 ## Inspection basis
 
 Read-only KiCAD CLI exports of the saved `eps.kicad_pcb` produced a front fabrication/courtyard plot, front copper plot, and all-footprint position CSV. The current position export contains 77 footprints. No CAD source was changed. These exports reflect the saved file, not any unsaved editor state or proof of the fabricated Rev A configuration.

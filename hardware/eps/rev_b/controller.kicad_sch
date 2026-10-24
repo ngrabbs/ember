@@ -2611,6 +2611,34 @@
 		)
 		(uuid "c72f718d-dcac-4c26-9a38-02a6a9074ff0")
 	)
+	(wire
+		(pts
+			(xy 187.96 85.09)
+			(xy 191.77 85.09)
+		)
+		(uuid "46a6bb6d-24e6-4684-836b-8e8ffa3267c1")
+	)
+	(wire
+		(pts
+			(xy 187.96 87.63)
+			(xy 191.77 87.63)
+		)
+		(uuid "b8a3d674-c3ff-4eda-b924-d39ef98e7c11")
+	)
+	(wire
+		(pts
+			(xy 187.96 95.25)
+			(xy 191.77 95.25)
+		)
+		(uuid "141deac1-64f4-4d65-8195-0e5203427296")
+	)
+	(wire
+		(pts
+			(xy 187.96 97.79)
+			(xy 191.77 97.79)
+		)
+		(uuid "c6a0412d-8f90-4852-a74d-8d87a9091c05")
+	)
 	(text "CONTROLLER — integrated development checkpoint"
 		(at 25.4 24.13 0)
 		(effects
@@ -2704,16 +2732,6 @@
 		)
 		(uuid "470056f1-9880-43a4-ab8c-f6cad70e00c9")
 	)
-	(text "BMS bus: ISO1540 side2 now uses 3V3_BMS_ISO.\nIsolated supply development candidate; startup/PVT open.\nPD3 reset releases the default-on supply control.\nPA2/PA3 USART2 AF1 use buffered no-power-pin UART.\nSeven other MCU pins remain genuinely unfinished."
-		(at 254 180.34 0)
-		(effects
-			(font
-				(size 1.05 1.05)
-			)
-			(justify left top)
-		)
-		(uuid "4aa06701-614f-462e-8ddc-d3a240e8fe64")
-	)
 	(text "Essential +3V3 comes from buck on actual charger PowerPath SYS.\n2S BMS / isolated telemetry supply / buffered UART linked; RBF and full electrical qualification remain open."
 		(at 25.4 31.75 0)
 		(effects
@@ -2734,15 +2752,15 @@
 		)
 		(uuid "01e17628-967f-43d3-ace4-5723bddc3b5e")
 	)
-	(text "OPEN: ADC conditioning, interlock status, payload request and stack alert.\nSeven required MCU pins remain genuinely unconnected.\nNo EPS drive on IHU-owned COMMS_EN / PAYLOAD_EN or stack alert."
-		(at 25.4 198.12 0)
+	(text "Physical SWD service on dedicated sheet: six-contact Tag-Connect.\nEPS_SWDIO / SWCLK / NRST pass through supply-qualified TMUX.\nNo probe target power; connect-under-reset is independent of firmware."
+		(at 254 142.24 0)
 		(effects
 			(font
-				(size 1.1 1.1)
+				(size 1 1)
 			)
-			(justify left top)
+			(justify left bottom)
 		)
-		(uuid "42ebef24-6b60-41a7-b637-ea041fdf8255")
+		(uuid "6cf2cf3c-f012-444b-bad0-fb2022cb1a98")
 	)
 	(label "EPS_OSC_EN"
 		(at 48.26 99.06 0)
@@ -2995,10 +3013,59 @@
 		)
 		(uuid "b9a0024c-9a7c-4f29-9090-fa2294b3f82c")
 	)
-  (text "Physical SWD service on dedicated sheet: six-contact Tag-Connect.\nEPS_SWDIO / SWCLK / NRST pass through supply-qualified TMUX.\nNo probe target power; connect-under-reset is independent of firmware."
-    (at 254 142.24 0)
-    (effects (font (size 1 1)) (justify left bottom))
-    (uuid "6cf2cf3c-f012-444b-bad0-fb2022cb1a98")
+	(global_label "ANA_EPS_SYS"
+		(shape input)
+		(at 191.77 85.09 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f08566e4-f9ef-4e78-97e8-53ea4a59286d")
+	)
+	(global_label "ANA_EPS_5V0"
+		(shape input)
+		(at 191.77 87.63 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "17448a0b-1e93-49bf-98c4-a5de5940b4c7")
+	)
+	(global_label "ANA_EPS_3V3"
+		(shape input)
+		(at 191.77 95.25 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c27abbc7-e40d-4577-bc97-3a7c1258f2ca")
+	)
+	(global_label "ANA_EPS_BATT"
+		(shape input)
+		(at 191.77 97.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "1c0f0c39-c2dc-4d51-8ef3-49b4ef2e20a8")
+	)
+  (text "BMS bus: ISO1540 side2 uses 3V3_BMS_ISO.\nIsolated supply development candidate; startup/PVT open.\nPD3 reset releases default-on supply control.\nPA2/PA3 USART2 AF1 use buffered no-power-pin UART.\nRail ADCs linked; three other MCU pins remain unfinished."
+    (at 254 180.34 0)
+    (effects (font (size 0.9 0.9)) (justify left bottom))
+    (uuid "ecfda981-408d-4efa-9ccc-719a9de0944b")
+  )
+  (text "Rail telemetry: PA0/PA1/PA4/PA5 connect to dedicated ADC sheet.\nOPEN: interlock status, payload request and optional stack alert.\nPD2 / PB15 / PB8 remain unconnected; no EPS drive on IHU-owned enables."
+    (at 25.4 198.12 0)
+    (effects (font (size 0.9 0.9)) (justify left bottom))
+    (uuid "052bade7-bb96-4e03-a7d6-02286f36926a")
   )
 	(symbol
 		(lib_id "Ember_EPS_Candidates:ECS_3225MV_DRAFT_v2")
