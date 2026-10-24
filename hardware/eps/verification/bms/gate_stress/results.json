@@ -1,0 +1,124 @@
+{
+  "status": "DIAGNOSTIC_ONLY_NOT_SOA_OR_CLAMP_ACCEPTANCE",
+  "cases": {
+    "t25_delay160u_clamp0": {
+      "status": "failed_or_timed_out",
+      "detail": "Solver did not reach requested 3 ms endpoint",
+      "final_time_s": 0.0011719515228591922,
+      "log_diagnostics": [
+        "Convergence Failure:  Time step too small; time = 0.00117195, timestep = 1.25e-18: cause unrecorded.",
+        "Simulation Failed: Iteration limit reached",
+        "Total elapsed time: 2.886 seconds."
+      ],
+      "raw_sha256": "4ea740948aef0344096650fcf9f58a6cc4e4e60002aa949520d6f408f8cc0ebe",
+      "original_log_sha256": "87abafe04e7038766f9bddc1b8f30ccfaec92bd2447c82458ae5157d922a01ea"
+    },
+    "t25_delay160u_clamp1": {
+      "status": "failed_or_timed_out",
+      "detail": "Solver did not reach requested 3 ms endpoint",
+      "final_time_s": 0.0011720311005933512,
+      "log_diagnostics": [
+        "Convergence Failure:  Time step too small; time = 0.00117203, timestep = 1.25e-18: cause unrecorded.",
+        "Simulation Failed: Iteration limit reached",
+        "Total elapsed time: 6.796 seconds."
+      ],
+      "raw_sha256": "2af0e5802795f6a6dc6c79de369ee2c3720a3d91e07914f71cb6561da2fda7bc",
+      "original_log_sha256": "12b98d1905701c36d7f244316ae9f2c9851d7fb65998a013fedbff8d9c7dd9d4"
+    },
+    "t25_delay500u_clamp0": {
+      "status": "failed_or_timed_out",
+      "detail": "Solver did not reach requested 3 ms endpoint",
+      "final_time_s": 0.0015119557932015814,
+      "log_diagnostics": [
+        "Convergence Failure:  Time step too small; time = 0.00151196, timestep = 1.25e-18: cause unrecorded.",
+        "Simulation Failed: Iteration limit reached",
+        "Total elapsed time: 2.979 seconds."
+      ],
+      "raw_sha256": "afc704aa973630a410f3d52684dfdeb55e89d937191448ae268ea8e08a9ccdee",
+      "original_log_sha256": "ac62c21fe9340c259eaab30352dd97d970ba9fbb96b564021336f188abc98340"
+    },
+    "t25_delay500u_clamp1": {
+      "status": "failed_or_timed_out",
+      "detail": "Solver did not reach requested 3 ms endpoint",
+      "final_time_s": 0.00151203273219625,
+      "log_diagnostics": [
+        "Convergence Failure:  Time step too small; time = 0.00151203, timestep = 1.25e-18: cause unrecorded.",
+        "Simulation Failed: Iteration limit reached",
+        "Total elapsed time: 6.881 seconds."
+      ],
+      "raw_sha256": "8e3b8d3d88b1ec6d903f5655a0774fa673f7346101e051ccc44139e06831ad60",
+      "original_log_sha256": "5b1e71f01b3dabf5e78cf1c0de729c0b4b8c1fb2b0b0244bae3ee373ccbaf4fa"
+    },
+    "t85_delay160u_clamp0": {
+      "status": "failed_or_timed_out",
+      "detail": "Solver did not reach requested 3 ms endpoint",
+      "final_time_s": 0.0011721314376992385,
+      "log_diagnostics": [
+        "Convergence Failure:  Time step too small; time = 0.00117213, timestep = 1.25e-18: cause unrecorded.",
+        "Simulation Failed: Iteration limit reached",
+        "Total elapsed time: 0.845 seconds."
+      ],
+      "raw_sha256": "709e7ee5997df06e47ced994315f3cd04cf82318d2f8ddafad654b3473dcb4e2",
+      "original_log_sha256": "0e1b63856b69a760a986179556a33490355e1a7b03ad7e61074c753b5f0cca9e"
+    },
+    "t85_delay160u_clamp1": {
+      "status": "completed",
+      "points": 94465,
+      "DSG_VGS_min_max_V": [
+        0.3475230634212494,
+        16.403108596801758
+      ],
+      "CHG_VGS_min_max_V": [
+        3.005565643310547,
+        16.39727020263672
+      ],
+      "DSG_VDS_min_max_V": [
+        -0.6819957494735718,
+        32.38981628417969
+      ],
+      "peak_discharge_A": 74.32977294921875,
+      "peak_DSG_power_W": 993.69482421875,
+      "post_fault_DSG_positive_energy_J": 0.014024239260772698,
+      "final_discharge_A": -5.673394480254501e-05,
+      "peak_abs_DSG_drive_A": 0.0031284168362617493,
+      "portable_deck_sha256": "4508a88d048fb9945b7dd0379eb455e4dfe9c7a8d783df7d3bee86f5ce049872",
+      "executed_deck_sha256": "6cd01b0a6179392b00d0a8a28012d3deb73ecd3b00f8c00acd119f361f1fe39e",
+      "raw_sha256": "7f90daecfed86489b7d98b34d1b4d3057ae05a727b7f5d14e2bc5213d695cca5",
+      "original_log_sha256": "3103d41a4d3644dfa195aeaa65e2895e84b246eebab7b33a96923b048559a3d3"
+    },
+    "t85_delay500u_clamp0": {
+      "status": "failed_or_timed_out",
+      "detail": "Solver did not reach requested 3 ms endpoint",
+      "raw_status": "Incomplete/truncated binary; not accepted",
+      "log_diagnostics": [],
+      "raw_sha256": "c23402f9438accfae3424ef36fffacefcb5c4240d3a08438f84885502366f613",
+      "original_log_sha256": "7822db913d59403081f084cec3fa00c3d575f2aee3847a536d1cf24b50225a06"
+    },
+    "t85_delay500u_clamp1": {
+      "status": "completed",
+      "points": 84576,
+      "DSG_VGS_min_max_V": [
+        0.3475937247276306,
+        16.403108596801758
+      ],
+      "CHG_VGS_min_max_V": [
+        3.0024001598358154,
+        16.39727020263672
+      ],
+      "DSG_VDS_min_max_V": [
+        -0.6822487711906433,
+        32.38589096069336
+      ],
+      "peak_discharge_A": 74.32977294921875,
+      "peak_DSG_power_W": 993.1104125976562,
+      "post_fault_DSG_positive_energy_J": 0.03767042961254056,
+      "final_discharge_A": 0.0006792237982153893,
+      "peak_abs_DSG_drive_A": 0.0031284168362617493,
+      "portable_deck_sha256": "fc1dba34a957d5f8103b5b2d1fb8ccc0d3597031c0149fae46702389fc64ca7a",
+      "executed_deck_sha256": "af73719b3ca31475d54d576845e44e699aec21b3db6fb25455f8f114459017d6",
+      "raw_sha256": "50eac66eeeab7fe769db875f4993b3651057da5f2bce55e0f19ad073d0e2a0df",
+      "original_log_sha256": "109472cbba3ec8ac22424c9be93c8791914f35d9f9922fea2c6b8782ccffecbf"
+    }
+  },
+  "profile": "abrupt"
+}
