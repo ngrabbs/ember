@@ -66,7 +66,7 @@ for ref,mpn in mpns.items():
 classes=json.loads(args.classes.read_text())
 functional={n for n in nets if not n.startswith('unconnected-')}
 assert len(functional)==158
-membership={n:[cl['name'] for cl in classes['netclasses'] if any(fnmatch.fnmatchcase(n,pattern) for pattern in cl.get('patterns',[]))] for n in functional}
+membership={n:[cl['name'] for cl in classes['netclasses'] if any(fnmatch.fnmatchcase(n,pattern) for pattern in cl.get('patterns',[]))] for n in sorted(functional)}
 assert all(len(m)==1 for m in membership.values()),{n:m for n,m in membership.items() if len(m)!=1}
 assert membership['3V3_SWD_VTREF']==['POWER']
 assert membership[pn[('U1201','2')]]==['CONTROL']
