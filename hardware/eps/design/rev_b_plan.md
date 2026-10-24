@@ -8,7 +8,7 @@ The [provisional BOM and schematic checklist](rev_b_bom_and_schematic_checklist.
 
 The [pin allocation and circuit fit study](rev_b_pin_and_fit_study.md) establishes a provisional LQFP32 allocation and circuit-area budget. It recommends BQ40Z50 as the protection reference and four layers for evaluation; physical fit and final component selection remain open.
 
-Its controller circuit definition selects two essential-3.3-V TCAN3413DR transceiver candidates and a 16 MHz ECS oscillator candidate, with initial 500 kbit/s timing. CAN A standby now uses PB9; PD0 is reserved to avoid using its UCPD-related reset behavior for that control. Package maps, clock/reset checks and bench acceptance remain required.
+Its controller circuit definition selects two essential-3.3-V TCAN3413DR transceiver candidates and a 16 MHz ECS oscillator candidate, with initial 500 kbit/s timing. CAN A standby uses PB9. The 2026-10-24 [isolated BMS supply integration](rev_b_bms_isolated_supply_integration.md) uses former reserves PD0/PD3 for diagnostic fault and open-drain enable/reset, with explicit UCPD startup handling. The supply derives from permitted essential 3V3 so telemetry does not depend on recovery 5V. Package review, startup/source/fault checks and bench acceptance remain separate.
 
 The [source-isolation study](rev_b_source_isolation_study.md) recommends evaluating separate back-to-back P-channel pairs with direct hardware interlock control. It includes preliminary loss calculations and identifies depleted-pack recovery, inrush and cold solar voltage as unresolved acceptance gates.
 

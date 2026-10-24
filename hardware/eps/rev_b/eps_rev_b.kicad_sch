@@ -176,21 +176,6 @@
       )
     )
   )
-  (text "Checkpoint: controller, both converters, solar and rail protection. Physical RBF, charger PowerPath and BMS remain absent."
-    (at 30.48 45.72 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "922e3ec9-c357-4333-930e-ac081ded6d36")
-  )
-  (text "SOLAR_PERMITTED -> source barrier -> VIN_CHG for FUTURE charger. VIN_CHG is NOT joined to SYS_PWR_PERMITTED."
-    (at 30.48 205.74 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "18a55e77-eea4-4f77-94f3-a3beef9d9c52")
-  )
-  (text "SYS_PWR_PERMITTED remains an independent external permitted-source fixture. REG -> rail barrier -> protected+5V."
-    (at 30.48 215.9 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "8aa1d13a-54d7-453b-bb30-4ea29210d2f8")
-  )
   (text "Incomplete ERC / low-VCC accuracy / hot SOA / shared startup /3V3 OV remain open. S03/S08/S11/S04 API limits; no PCB sync."
     (at 30.48 226.06 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -234,21 +219,6 @@
 			)
 		)
 	)
-  (text "2026-10-24: PRE-CHARGER ABSENCE / EXTERNAL-SYS NOTES ABOVE AND BELOW ARE OBSOLETE."
-    (at 30.48 50.8 0)
-    (effects (font (size 1.4 1.4) (bold yes)) (justify left bottom))
-    (uuid "11a61ff0-7ff4-4c20-861e-95b7d95f9406")
-  )
-  (text "Actual charger PowerPath now joins VIN_CHG and BATT_PERMITTED to SYS. Physical BMS/RBF hardware remains absent."
-    (at 30.48 55.88 0)
-    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
-    (uuid "eea15196-b5fe-4769-b937-67d9306935f5")
-  )
-  (text "CURRENT: VIN_CHG -> Q300 -> R300 -> SYS; BATT_PERMITTED fixture -> Q301 -> SYS. No direct source bypass."
-    (at 30.48 233.68 0)
-    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
-    (uuid "fd763455-24be-446f-9c92-d46c95d62b0a")
-  )
 	(sheet
     (at 304.8 157.48)
     (size 100.33 33.02)
@@ -270,16 +240,6 @@
       )
     )
   )
-  (text "2026-10-24: BMS pre-RBF block is now linked; ALL earlier BMS-absence statements are obsolete."
-    (at 30.48 39.37 0)
-    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
-    (uuid "e9a56759-0f66-4bd6-95e8-71bd78c30c9c")
-  )
-  (text "PROTECTED_PACK ends BEFORE missing RBF. BATT_PERMITTED remains a distinct external interlocked-source fixture.\nRaw/system returns join only through BMS shunt; shared-positive SMBus supply leaves current-measurement closure open."
-    (at 30.48 242.57 0)
-    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
-    (uuid "73c90467-36ee-4121-8e61-3cdb02df2329")
-  )
 	(sheet
     (at 30.48 110.49)
     (size 100.33 15.24)
@@ -300,5 +260,41 @@
         (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "10"))
       )
     )
+  )
+	(sheet
+    (at 304.8 200.66)
+    (size 100.33 20.32)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "7334cee9-304b-4a21-b06b-61a8642fa2e4")
+    (property "Sheetname" "Isolated BMS supply"
+      (at 304.8 200.025 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "bms_isolated_power.kicad_sch"
+      (at 304.8 221.61499999999998 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "11"))
+      )
+    )
+  )
+  (text "PROTECTED_PACK remains before missing RBF; BATT_PERMITTED is distinct.\nIsolated BMS supply is a development candidate; startup, shared-rail faults and gauging qualification remain OPEN."
+    (at 30.48 242.57 0)
+    (effects (font (size 1.2 1.2)) (justify left top))
+    (uuid "80494a3a-661d-457e-bcce-ef0a56d5b51d")
+  )
+  (text "900 block: isolated BMS supply development candidate.\nNo shared-rail fault, power-cycle or gauging qualification."
+    (at 304.8 226.06 0)
+    (effects (font (size 1.05 1.05)) (justify left top))
+    (uuid "39023665-51fb-46d9-b08b-9bc3098dc866")
+  )
+  (text "CURRENT DEVELOPMENT: controller, converters, source/output protection, charger PowerPath, 2S BMS and isolated BMS supply linked.\nVIN_CHG → Q300 → R300 → SYS_PWR_PERMITTED; BATT_PERMITTED → Q301 → SYS. No direct source bypass.\nPROTECTED_PACK remains separate from BATT_PERMITTED across missing RBF. Electrical / physical / commissioning gates remain open."
+    (at 30.48 40.64 0)
+    (effects (font (size 1.2 1.2)) (justify left top))
+    (uuid "b0558093-f850-433c-a5b5-f5b6f9e66a11")
   )
 )

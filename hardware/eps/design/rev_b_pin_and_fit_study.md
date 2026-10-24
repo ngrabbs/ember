@@ -46,15 +46,17 @@ Selected for the N LQFP32 variant, STM32G0B1KET6N, following the 2026-10-23 pino
 | 23 | PA12 | CAN A TX | FDCAN1 AF3 |
 | 24 | PA13 | SWD data | SWD |
 | 25 | PA14 | SWD clock and BOOT0 | SWD |
-| 26 | PD0 | Reserve with reset-state restrictions | GPIO |
+| 26 | PD0 | `EPS_BMS_PRI_FAULT_N`; diagnostic after UCPD startup strobe | Input |
 | 27 | PD1 | CAN B standby | GPIO |
 | 28 | PD2 | Hardware interlock status | Input |
-| 29 | PD3 | Reserved; no direct BMS BTP connection | Unassigned |
+| 29 | PD3 | `EPS_BMS_PRI_EN`; release enables, LOW disables | Open drain |
 | 30 | PB6 | Charger clock | I2C1 AF6 |
 | 31 | PB7 | Charger data | I2C1 AF6 |
 | 32 | PB8 | Optional EPS stack alert | Open drain |
 
-There is no duplicate physical pin assignment. PD0 remains reserved because of its UCPD-related reset behavior. The 2026-10-23 update replaces the unimplemented managed shared-rail enable reservations with recovery reset and fault sensing; PC15 carries the low-demand source fault input. Local nonessential load permissions travel over CAN under the architecture authority. Four rail measurements, payload feed control, two standby controls, both serial buses, both CAN channels and debugging fit without a GPIO expander. Additional per-load current/fault inputs may require a larger package. `REC5_RESET` issues the hardware UV reset pulse; it does not bypass the protector cooldown. Firmware must wait at least the development 10 s cooldown and qualify the rail before controlled load admission. See the [current protection checkpoint](rev_b_5v_latch_and_mosfet_survival.md).
+There is no duplicate physical pin assignment. The 2026-10-24 isolated-supply development circuit uses the two former reserves: PD0 for a diagnostic fault input and PD3 for open-drain branch enable/reset. Their UCPD reset restrictions remain; disable dead-battery behavior early, preload PD3 HIGH before selecting output mode and mask PD0 until configured. Pulled-high PD3 affects the future PD2 interlock input's reset pull-down; hardware interlock authority remains independent. See the [complete integration contract](rev_b_bms_isolated_supply_integration.md). No direct BMS BTP connection is added.
+
+The 2026-10-23 update replaces the unimplemented managed shared-rail enable reservations with recovery reset and fault sensing; PC15 carries the low-demand source fault input. Local nonessential load permissions travel over CAN under the architecture authority. Four rail measurements, payload feed control, two standby controls, both serial buses, both CAN channels and debugging fit without a GPIO expander. Additional per-load current/fault inputs may require a larger package. `REC5_RESET` issues the hardware UV reset pulse; it does not bypass the protector cooldown. Firmware must wait at least the development 10 s cooldown and qualify the rail before controlled load admission. See the [current protection checkpoint](rev_b_5v_latch_and_mosfet_survival.md).
 
 The pack's two protection NTCs connect to the pack manager, and the charger NTC connects to LTC4162, so they consume no STM32 ADC pins. Read battery cell voltages through the pack manager. The STM32 battery divider observes only the interlocked side of the battery feed to avoid crossing the retained-protection boundary. Calibrate rail measurements using a verified reference; measuring the MCU's own supply against that same supply alone is insufficient.
 

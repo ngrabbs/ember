@@ -5067,27 +5067,6 @@
 		)
 		(uuid "641fd55a-b77e-4983-8fe7-344aad0ac635")
 	)
-	(text "BUS SUPPLY PROVISIONAL\nShared+3V3 positive;\ndistinct ground returns.\nRaw bus current bypasses\nshunt measurement: up to\n8.42mA state-dependent.\nGauging NOT accepted.\nIsolated power unresolved.\nNo whole-board galvanic\npower-isolation claim."
-		(at 365.76 111.76 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(bold yes)
-			)
-			(justify left bottom)
-		)
-		(uuid "56ae15e9-18a4-4b6e-9579-6faa7f8a19ac")
-	)
-	(text "100kbit/s: side1<=40pF, side2<=200pF.\nBoth sides >=3V +1ms before polling.\nReserve13.8mA IC +3.431mA pullups.\nStatic margins only; no rail-step proof.\nOffset can reverse idle-current sign."
-		(at 340.36 144.78 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "adc32f60-89d4-436d-a541-3cea83eaa702")
-	)
 	(text "Q203: low-Vth ground-gate development choice.\nReverse hotplug / cold gate / hot SOA remain open."
 		(at 273.05 111.76 0)
 		(effects
@@ -5422,6 +5401,16 @@
 		)
 		(uuid "d01bde6a-11d3-4622-851f-f081247b4884")
 	)
+  (text "ISOLATED BUS POWER CANDIDATE\n3V3_BMS_ISO now supplies\nISO1540 side2 and pullups.\nRAW/system returns remain\nseparate across the shunt.\nPrior shared-positive supply\nhas been removed. Gauging,\nstartup, calibration and\nfault/PVT acceptance OPEN."
+    (at 365.76 111.76 0)
+    (effects (font (size 1.1 1.1)) (justify left top))
+    (uuid "6fa87208-f163-475e-8979-8257707fe199")
+  )
+  (text "100kbit/s: side1 <=40pF, side2 <=200pF.\nBoth sides >=3V +1ms before polling.\nReserve 13.8mA IC +3.431mA pullups.\nStatic margins only; no rail-step proof.\nIsolated supply is a development candidate."
+    (at 340.36 144.78 0)
+    (effects (font (size 1 1)) (justify left top))
+    (uuid "34addeb4-8586-4f44-9e3f-aeb194f2a542")
+  )
 	(symbol
 		(lib_id "Ember_Charger_BMS_Review:BQ40Z50RSMR-R2")
 		(at 203.2 152.4 0)
@@ -11489,7 +11478,7 @@
 				)
 			)
 		)
-		(property "Value" "+3V3"
+		(property "Value" "3V3_BMS_ISO"
 			(at 345.44 166.624 0)
 			(effects
 				(font
@@ -11794,7 +11783,7 @@
 				)
 			)
 		)
-		(property "Value" "+3V3"
+		(property "Value" "3V3_BMS_ISO"
 			(at 396.24 176.784 0)
 			(effects
 				(font
@@ -11855,7 +11844,7 @@
 				)
 			)
 		)
-		(property "Value" "+3V3"
+		(property "Value" "3V3_BMS_ISO"
 			(at 375.92 176.784 0)
 			(effects
 				(font

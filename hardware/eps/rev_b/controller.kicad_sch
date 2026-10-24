@@ -2158,13 +2158,6 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 78.74)
-			(xy 106.68 85.09)
-		)
-		(uuid "b5824258-3467-4f71-8f0f-c1aea17d8298")
-	)
-	(wire
-		(pts
 			(xy 45.72 81.28)
 			(xy 45.72 74.93)
 		)
@@ -2611,6 +2604,41 @@
 		)
 		(uuid "e2c29256-464a-4024-8ae4-ab5f8c0f4775")
 	)
+	(wire
+		(pts
+			(xy 132.08 90.17)
+			(xy 115.57 90.17)
+		)
+		(uuid "70cf74fa-8fdb-4591-ba69-a689485718be")
+	)
+	(wire
+		(pts
+			(xy 106.68 78.74)
+			(xy 106.68 82.55)
+		)
+		(uuid "b50f064f-d903-4baa-8b23-da06b15c753c")
+	)
+	(wire
+		(pts
+			(xy 132.08 97.79)
+			(xy 123.19 97.79)
+		)
+		(uuid "d466ba5b-36b9-4849-9b64-71f3d51a4e4a")
+	)
+	(wire
+		(pts
+			(xy 123.19 97.79)
+			(xy 123.19 62.23)
+		)
+		(uuid "67b6e52d-2777-4a48-849a-9e5e1fd4a719")
+	)
+	(wire
+		(pts
+			(xy 123.19 62.23)
+			(xy 35.56 62.23)
+		)
+		(uuid "d58ee285-677c-4949-bf8b-18e7ea17f183")
+	)
 	(text "CONTROLLER — integrated development checkpoint"
 		(at 25.4 24.13 0)
 		(effects
@@ -2651,26 +2679,6 @@
 		)
 		(uuid "123f91f8-6bdc-4b80-b91d-4f1b7aa6b1ce")
 	)
-	(text "OPEN: ADC conditioning, local charger I2C, isolated pack SMBus,\nUART, interlock status and payload request. Required pins remain unconnected.\nNo EPS drive on IHU-owned COMMS_EN / PAYLOAD_EN or stack alert."
-		(at 25.4 198.12 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "74b1397b-2bfc-4e55-9ac8-a936fbe62bb4")
-	)
-	(text "PD3 reserved. Do not connect BMS BTP directly to 3V3 logic.\nUnused BTP is tied to BMS VSS in the proposed BMS circuit; poll pack status."
-		(at 25.4 210.82 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "88e5ec46-9db9-4814-919a-015a5cecdfa1")
-	)
 	(text "S11 OPEN: metadata is saved; required visible field styling unsupported.\nS08: reused TCAN/ECS custom symbols remain under original construction review."
 		(at 25.4 224.79 0)
 		(effects
@@ -2681,16 +2689,6 @@
 		)
 		(uuid "4121b165-048e-4506-a598-8aa1b1bb04f7")
 	)
-	(text "Essential+3V3 comes from buck; converters use external SYS fixture. Solar VIN_CHG ends at future charger; BMS pending."
-		(at 25.4 31.75 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "70a1dab9-33d4-4685-9273-f5480baf4a73")
-	)
 	(text "PROTECTION INTERFACES — LINKED GLOBALS\nPA6 REC5_RESET ->47k R623 ->Q609; existing100k base pull-down.\nPA7 REC5_FAULT; PC15 SRC_FAULT:active-low, single47k pullups on protector sheets.\nReset2ms; >=10s cooldown plus real rail qualification and settling.\nReset never bypasses hardware protection."
 		(at 254 86.36 0)
 		(effects
@@ -2700,28 +2698,6 @@
 			(justify left bottom)
 		)
 		(uuid "47bc76e3-6857-4021-83af-1c4dd7f088b2")
-	)
-	(text "2026-10-24: OLD SOURCE / CHARGER-I2C NOTES ARE OBSOLETE."
-		(at 254 111.76 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(bold yes)
-			)
-			(justify left bottom)
-		)
-		(uuid "47904e7d-2947-46fc-9c7b-52ac494048e7")
-	)
-	(text "SYS is actual charger PowerPath output; BMS/RBF are still absent."
-		(at 254 116.84 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(bold yes)
-			)
-			(justify left bottom)
-		)
-		(uuid "0ebc1b0e-280d-45ab-be10-91ec1842adff")
 	)
 	(text "PB6/PB7/PA8 -> charger SCL/SDA/alert; R108/R109/R110 =4.7k."
 		(at 254 121.92 0)
@@ -2745,39 +2721,6 @@
 		)
 		(uuid "d07a0fbd-fe8a-4c66-b14e-97798c1ec0b4")
 	)
-	(text "ADC/UART/isolated SMBus/interlock/payload/3V3 containment remain open."
-		(at 254 132.08 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(bold yes)
-			)
-			(justify left bottom)
-		)
-		(uuid "d14655e2-05d6-47aa-92de-437aaa3c7362")
-	)
-	(text "2026-10-24: BMS block linked; earlier BMS-absence notes are obsolete. RBF and current-measurement closure remain open."
-		(at 25.4 38.1 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(bold yes)
-			)
-			(justify left bottom)
-		)
-		(uuid "91615bcf-b8b4-4226-a785-9a561da248ac")
-	)
-	(text "ISO1540 common positive supply leaves state-dependent gauging error.\nPD3 remains reserved; no BTP direct3V3 GPIO. 11 unfinished pins remain.\nBus power-off / transient / isolated-power and pack qualification OPEN."
-		(at 254 154.94 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(bold yes)
-			)
-			(justify left bottom)
-		)
-		(uuid "ac24b45b-30f6-49e0-b2bd-ba91c8812f6a")
-	)
 	(text "PA9(.19)/PA10(.21) -> BMS SCL/SDA; R111/R112=3.9k."
 		(at 254 162.56 0)
 		(effects
@@ -2788,6 +2731,56 @@
 			(justify left bottom)
 		)
 		(uuid "52ca7bae-aa3a-40a2-9bf7-1feb44b380c5")
+	)
+	(text "PD3.29 = EPS_BMS_PRI_EN, open drain; release enables.\nPD0.26 = EPS_BMS_PRI_FAULT_N diagnostic input.\nDisable UCPD dead-battery behavior before GPIO use.\nBTP_INT remains tied to raw VSS; no direct BTP GPIO."
+		(at 25.4 210.82 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left top)
+		)
+		(uuid "470056f1-9880-43a4-ab8c-f6cad70e00c9")
+	)
+	(text "BMS bus: ISO1540 side2 now uses 3V3_BMS_ISO.\nIsolated supply development candidate; startup/PVT open.\nPD3 reset releases the default-on supply control.\nPA2/PA3 USART2 AF1 use buffered no-power-pin UART.\nSeven other MCU pins remain genuinely unfinished."
+		(at 254 180.34 0)
+		(effects
+			(font
+				(size 1.05 1.05)
+			)
+			(justify left top)
+		)
+		(uuid "4aa06701-614f-462e-8ddc-d3a240e8fe64")
+	)
+	(text "Essential +3V3 comes from buck on actual charger PowerPath SYS.\n2S BMS / isolated telemetry supply / buffered UART linked; RBF and full electrical qualification remain open."
+		(at 25.4 31.75 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left top)
+		)
+		(uuid "0246205e-35df-40ac-b16f-cb1acca28e76")
+	)
+	(text "CHARGER: PowerPath SYS supplied by VIN_CHG or BATT_PERMITTED.\nBMS PROTECTED_PACK stays separate across the missing RBF."
+		(at 254 111.76 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left top)
+		)
+		(uuid "01e17628-967f-43d3-ace4-5723bddc3b5e")
+	)
+	(text "OPEN: ADC conditioning, interlock status, payload request and stack alert.\nSeven required MCU pins remain genuinely unconnected.\nNo EPS drive on IHU-owned COMMS_EN / PAYLOAD_EN or stack alert."
+		(at 25.4 198.12 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left top)
+		)
+		(uuid "42ebef24-6b60-41a7-b637-ea041fdf8255")
 	)
 	(label "EPS_NRST"
 		(at 111.76 66.04 0)
@@ -2808,16 +2801,6 @@
 			(justify left bottom)
 		)
 		(uuid "eae92852-5802-4fe9-a688-1b739c6e7212")
-	)
-	(label "EPS_HSE_16M"
-		(at 86.36 99.06 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "38fe20f4-5340-4242-9328-b620a182f096")
 	)
 	(label "EPS_SWDIO"
 		(at 192.405 118.11 0)
@@ -2848,6 +2831,16 @@
 			(justify left bottom)
 		)
 		(uuid "c4d259bd-35ee-412e-91fa-9c1161a82c3a")
+	)
+	(label "EPS_HSE_16M"
+		(at 86.36 99.06 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "93eaea97-c4b6-4557-a040-a01b474e362d")
 	)
 	(global_label "EPS_CAN_A_STB"
 		(shape input)
@@ -3025,11 +3018,28 @@
 		)
 		(uuid "f93354e3-d27b-4daf-96b6-71e2c9794f44")
 	)
-  (text "2026-10-24: PA2(.9)/PA3(.10) UART now buffered on UART debug sheet.\n9 MCU pins remain unfinished; prior UART-absence / 11-pin counts are obsolete.\nNo supply pin on J800; absent adapter holds RX BREAK low."
-    (at 254 170.18 0)
-    (effects (font (size 1.27 1.27) (bold yes)) (justify left top))
-    (uuid "cea8fb55-1fa0-440e-954c-75871f7426ff")
-  )
+	(global_label "EPS_BMS_PRI_FAULT_N"
+		(shape input)
+		(at 115.57 90.17 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b37ab246-35da-42e0-a4a2-1f11a45e11ba")
+	)
+	(global_label "EPS_BMS_PRI_EN"
+		(shape output)
+		(at 35.56 62.23 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e73da197-cd17-4e9c-b764-7854e81ef977")
+	)
 	(symbol
 		(lib_id "Ember_EPS_Candidates:ECS_3225MV_DRAFT_v2")
 		(at 73.66 99.06 0)
@@ -4683,14 +4693,14 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 106.68 85.09 0)
+		(at 106.68 82.55 0)
 		(unit 1)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "18810075-0693-4298-96f6-09f1df595b36")
 		(property "Reference" "#PWR0103"
-			(at 106.68 91.44 0)
+			(at 106.68 88.9 0)
 			(hide yes)
 			(effects
 				(font
@@ -4699,7 +4709,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 106.68 88.9 0)
+			(at 106.68 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4707,7 +4717,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 106.68 85.09 0)
+			(at 106.68 82.55 0)
 			(hide yes)
 			(effects
 				(font
@@ -4716,7 +4726,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 106.68 85.09 0)
+			(at 106.68 82.55 0)
 			(hide yes)
 			(effects
 				(font
@@ -4725,7 +4735,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 106.68 85.09 0)
+			(at 106.68 82.55 0)
 			(hide yes)
 			(effects
 				(font
