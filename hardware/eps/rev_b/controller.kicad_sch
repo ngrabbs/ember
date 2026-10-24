@@ -2347,27 +2347,6 @@
 	)
 	(wire
 		(pts
-			(xy 233.68 152.4)
-			(xy 228.6 152.4)
-		)
-		(uuid "c8b21b07-6d94-4702-b3bd-2028bf38a92c")
-	)
-	(wire
-		(pts
-			(xy 228.6 152.4)
-			(xy 228.6 146.05)
-		)
-		(uuid "533449d2-b2d9-42b6-9b09-c8b67aca8e5d")
-	)
-	(wire
-		(pts
-			(xy 233.68 160.02)
-			(xy 218.44 160.02)
-		)
-		(uuid "5bf0e922-5d11-4eae-8c39-beea079a68c6")
-	)
-	(wire
-		(pts
 			(xy 187.96 100.33)
 			(xy 223.52 100.33)
 		)
@@ -2400,20 +2379,6 @@
 			(xy 25.4 114.3)
 		)
 		(uuid "af6c9bea-bf07-41ab-9b85-18b5d54cb468")
-	)
-	(wire
-		(pts
-			(xy 233.68 162.56)
-			(xy 223.52 162.56)
-		)
-		(uuid "403f7bc2-22aa-46d9-a2ad-169c24693bd7")
-	)
-	(wire
-		(pts
-			(xy 223.52 162.56)
-			(xy 223.52 168.91)
-		)
-		(uuid "c1fa420a-978b-43a0-be34-51d43deb8bc3")
 	)
 	(wire
 		(pts
@@ -2639,6 +2604,13 @@
 		)
 		(uuid "d58ee285-677c-4949-bf8b-18e7ea17f183")
 	)
+	(wire
+		(pts
+			(xy 91.44 66.04)
+			(xy 106.68 66.04)
+		)
+		(uuid "c72f718d-dcac-4c26-9a38-02a6a9074ff0")
+	)
 	(text "CONTROLLER — integrated development checkpoint"
 		(at 25.4 24.13 0)
 		(effects
@@ -2658,16 +2630,6 @@
 			(justify left bottom)
 		)
 		(uuid "4cf4a037-7508-4b8e-a4ad-2c18d7e50be9")
-	)
-	(text "J100: logical SWD access; physical connector unselected.\n1 VTref sense only, 2 SWDIO, 3 SWCLK, 4 NRST, 5 GND.\nNo injected probe power. Power-off/backfeed review open."
-		(at 254 142.24 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "3ec985fc-d520-4c84-ad9e-71dcf12951ac")
 	)
 	(text "16 MHz HSE bypass; no passive crystal.\nPlace C110/C111 locally at Y100 in layout; source-series option open."
 		(at 25.4 160.02 0)
@@ -2782,16 +2744,6 @@
 		)
 		(uuid "42ebef24-6b60-41a7-b637-ea041fdf8255")
 	)
-	(label "EPS_NRST"
-		(at 111.76 66.04 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "fa45bdea-ca03-4bb6-8589-052c94e68fdb")
-	)
 	(label "EPS_OSC_EN"
 		(at 48.26 99.06 0)
 		(effects
@@ -2801,36 +2753,6 @@
 			(justify left bottom)
 		)
 		(uuid "eae92852-5802-4fe9-a688-1b739c6e7212")
-	)
-	(label "EPS_SWDIO"
-		(at 192.405 118.11 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a8c90b8e-2ef9-4ad3-94e0-b185e566dafc")
-	)
-	(label "EPS_SWCLK"
-		(at 192.405 120.65 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "72c4fb30-e0aa-40f4-beed-0379fdd4e8c4")
-	)
-	(label "EPS_NRST"
-		(at 218.44 160.02 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c4d259bd-35ee-412e-91fa-9c1161a82c3a")
 	)
 	(label "EPS_HSE_16M"
 		(at 86.36 99.06 0)
@@ -3040,6 +2962,44 @@
 		)
 		(uuid "e73da197-cd17-4e9c-b764-7854e81ef977")
 	)
+	(global_label "EPS_NRST"
+		(shape bidirectional)
+		(at 91.44 66.04 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "75e4821d-77f2-4fb8-a7cf-0b9758813698")
+	)
+	(global_label "EPS_SWDIO"
+		(shape bidirectional)
+		(at 233.68 154.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "986cd99b-1ee1-4b44-b8fb-5535bc1f9104")
+	)
+	(global_label "EPS_SWCLK"
+		(shape bidirectional)
+		(at 233.68 157.48 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b9a0024c-9a7c-4f29-9090-fa2294b3f82c")
+	)
+  (text "Physical SWD service on dedicated sheet: six-contact Tag-Connect.\nEPS_SWDIO / SWCLK / NRST pass through supply-qualified TMUX.\nNo probe target power; connect-under-reset is independent of firmware."
+    (at 254 142.24 0)
+    (effects (font (size 1 1)) (justify left bottom))
+    (uuid "6cf2cf3c-f012-444b-bad0-fb2022cb1a98")
+  )
 	(symbol
 		(lib_id "Ember_EPS_Candidates:ECS_3225MV_DRAFT_v2")
 		(at 73.66 99.06 0)
@@ -4306,93 +4266,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Generic:Conn_01x05")
-		(at 238.76 157.48 0)
-		(unit 1)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "48a57f7f-ecb7-47e6-a75b-f3836dae5a4d")
-		(property "Reference" "J100"
-			(at 238.76 149.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "SWD_ACCESS_LOGICAL"
-			(at 238.76 165.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 238.76 157.48 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 238.76 157.48 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 238.76 157.48 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MFG P/N" "UNSELECTED - LOGICAL PLACEHOLDER"
-			(at 238.76 157.48 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "PhysicalPinMap" "UNSELECTED; logical numbering is not stack/SWD connector numbering"
-			(at 238.76 157.48 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Status" "Not a production connector; no footprint"
-			(at 238.76 157.48 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(instances
-			(project "eps_rev_b"
-				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a"
-					(reference "J100")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "MCU_ST_STM32G0:STM32G0B1KETxN")
 		(at 160.02 105.41 0)
 		(unit 1)
@@ -5052,128 +4925,6 @@
 			(project "eps_rev_b"
 				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a"
 					(reference "#PWR0108")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3V3")
-		(at 228.6 146.05 0)
-		(unit 1)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "1d26d049-5419-4854-9228-abd2f8957ee2")
-		(property "Reference" "#PWR0109"
-			(at 228.6 149.86 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 228.6 142.494 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 228.6 146.05 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 228.6 146.05 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 228.6 146.05 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(instances
-			(project "eps_rev_b"
-				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a"
-					(reference "#PWR0109")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 223.52 168.91 0)
-		(unit 1)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "b379c9a3-4ee6-4eaa-b3bb-25df89338385")
-		(property "Reference" "#PWR0110"
-			(at 223.52 175.26 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 223.52 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 223.52 168.91 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 223.52 168.91 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 223.52 168.91 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(instances
-			(project "eps_rev_b"
-				(path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a"
-					(reference "#PWR0110")
 					(unit 1)
 				)
 			)

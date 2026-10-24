@@ -1,0 +1,28 @@
+{
+  "status": "ACCEPTED_FOR_DEVELOPMENT_SCHEMATIC_ONLY",
+  "date": "2026-10-24",
+  "parts": [
+    "TC2030-CTX-NL PCB target contacts",
+    "TMUX1511PWR",
+    "TPS3839K33DBZR"
+  ],
+  "basis": "0660ad3",
+  "root_checks": [
+    "Reran verify_parts.py: PASS (23 electrical pins/26 raw objects/3 NPTH)",
+    "Reran 124-file portable manifest: PASS",
+    "Read physical_map.csv and calculate.py/calculated.json",
+    "Fresh Konnect TMUX symbol readback: all14 numbers/functions/types match TI",
+    "Opened final symbols.png and switch/supervisor details",
+    "Opened common copper/mask/paste/fab/silk layer details",
+    "Opened J1 allfive individual layers and U1/U2 numberedfab details",
+    "Opened actual Tag CTX table/no-leg footprint, TI TMUX pin/land and TPS pin/land pages"
+  ],
+  "limits": [
+    "Custom review marker remains; construction approval is not final part approval.",
+    "Stock generic lands and inherited fab-field overlap documented; full mechanical/assembly acceptance open.",
+    "330ohm screens depend on actual probe VOL<=.4V, VOH>=2.4V, VTref<=1mA, stated load/capacitance, initial100kHz and proposed>=10ms reset hold.",
+    "No guaranteed rapid-collapse, low-VDD or hysteresis/partial-power proof; no full RBF closure."
+  ],
+  "integration_handoff": "hardware/eps/design/rev_b_swd_interface_integration.md",
+  "native_owner": "/root/kicad_schematic_build_agent"
+}

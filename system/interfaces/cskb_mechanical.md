@@ -2,8 +2,7 @@
 
 [System interfaces](../README.md) · [Canonical pin map](cskb_pinmap.md)
 
-**Status: documented v0.1 connector baseline.** Use this page for connector
-selection, stack spacing, and alignment. Signal assignments remain in the pin map.
+**Status: historical v0.1 connector baseline with an operator-approved EMBER Rev B mechanical exception below.** Use this page for connector selection, stack spacing, and alignment. Signal assignments remain in the pin map.
 
 ## Connectors — mechanical
 
@@ -49,11 +48,7 @@ spacing on that interface. Flag this early during mechanical review.
 
 ### Mechanical alignment note
 
-X/Y position of H1 and H2 on every PCB MUST match Pumpkin's
-motherboard layout (see [`DS_CSK_MB_710-00484-E.pdf`](DS_CSK_MB_710-00484-E.pdf) page 5,
-"Simplified Mechanical Layout") so a mixed stack with any Pumpkin /
-MBM2 / iSpace board mates without rework. Verify footprint position
-and H1–H2 spacing against the Pumpkin drawing before any PCB layout.
+The historical intent was to match Pumpkin H1/H2 positions for mixed-stack compatibility. The simplified motherboard p5 drawing alone does not dimension those origins. The operator-approved EMBER exception below supersedes that mechanical intent for EPS Rev B; do not claim third-party mating from a shared connector family.
 
 
 ## Source
@@ -61,3 +56,11 @@ and H1–H2 spacing against the Pumpkin drawing before any PCB layout.
 [Pumpkin Motherboard Rev. E datasheet](DS_CSK_MB_710-00484-E.pdf)
 (P/N 710-00484, document Rev. A, March 2012): page 5 for
 mechanical alignment, pages 13–17 for connector numbering and catalog.
+
+## Operator-approved EMBER Rev B exception —2026-10-24
+
+Preserve the existing EMBER **5.08 mm H1/H2 center spacing** for EPS Rev B. Fresh saved EPS Rev A/COMMS readbacks match all104 pad coordinates, while primary Pumpkin810-00253 RevA5 specifies7.62 mm separation. The operator explicitly chooses compatibility with existing EMBER geometry and accepts documenting the departure; this does not establish Pumpkin/MBM2/iSpace mechanical compatibility. Preserve the existing logical pin numbering and canonical electrical assignments. Mounting-hole alignment, connector side/rotation and mating assembly still require verification.
+
+The operator confirms **16 mm clear gap between EPS top and next-board underside**, replacing any15 mm baseline assumption for that interface. At an assumed1.6 mm upper PCB, −39 tails into an11.05 mm lower socket give5.64 mm nominal insertion; dimensional/tolerance acceptance remains open. The closely spaced bodies and overlapping stock courtyards require explicit paired-envelope review. Existing −39 artwork/3D is not automatic exact −37 endpoint acceptance.
+
+See the [read-only geometry evidence](../../hardware/eps/verification/fit/stack_interfaces_2026_10_24/README.md) for source drawings, all-pad correspondence, generic-footprint comparison, uncertainty and actual COMMS CAN pin mismatch. This mechanical exception does not authorize electrical reassignment of reserved pins or modifying other boards.

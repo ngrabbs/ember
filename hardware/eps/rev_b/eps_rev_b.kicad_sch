@@ -323,4 +323,30 @@
     (effects (font (size 0.85 0.85)) (justify left top))
     (uuid "10111399-91c0-421f-8337-bcebdbb23656")
   )
+	(sheet
+    (at 30.48 200.66)
+    (size 100.33 20.32)
+    (fields_autoplaced yes)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0))
+    (uuid "565ece12-4e2c-4551-be1f-e0be1a1e0ec9")
+    (property "Sheetname" "SWD Service"
+      (at 30.48 200.025 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "swd_service.kicad_sch"
+      (at 30.48 221.61499999999998 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "eps_rev_b"
+        (path "/8eba9f22-6f11-42d7-8e4a-b8de8905b113" (page "13"))
+      )
+    )
+  )
+  (text "Supply-qualified four-path SWD; no probe target power."
+    (at 35.56 213.36 0)
+    (effects (font (size 1 1)) (justify left bottom))
+    (uuid "91accd5d-56a7-4949-9773-07abdbace0bd")
+  )
 )
