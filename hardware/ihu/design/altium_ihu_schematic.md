@@ -1,5 +1,12 @@
 # Altium Schematic Instructions — Internal Housekeeping Unit Board
 
+> **Historical Pico/RP2040 design — not the new PCB baseline.** On October 24,
+> 2026 the IHU direction changed to STM32G0B1 dual native CAN with a ground/demo
+> GNSS module. Start with the [hardware requirements and electrical interface
+> specification](hardware_requirements.md). MCU pins, Pico VSYS power, boot/debug,
+> external CAN controllers and watchdog circuits below must not be copied into
+> the STM32 board without a new design review.
+
 ## Design Summary
 
 This board implements the CubeSat's internal housekeeping unit (system orchestrator)

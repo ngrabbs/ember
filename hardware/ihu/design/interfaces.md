@@ -1,6 +1,15 @@
 # Internal Housekeeping Unit Interfaces
 
-**Scope:** board allocation and provisional targets. The FreeRTOS prototype
+**New PCB design authority:** [Hardware requirements and electrical interface specification](hardware_requirements.md),
+draft 0.1, October 24, 2026. STM32G0B1 dual native CAN replaces RP2040/external-CAN-controller
+architecture for the new IHU PCB; ATGM336H-5N31 is ground/demo initially. That spec
+owns decided/proposed/open status, drive limits, supply questions and freeze gates.
+
+The sections below are an **earlier interface record**, retained for context. Do
+not use their provisional timings, processor pins or old SPI allocation as the
+new-board implementation checklist. Canonical stack pin names remain preserved.
+
+**Historical scope:** board allocation and provisional targets. The FreeRTOS prototype
 uses 100 kHz I2C0 GP4/GP5; the CAN Feather EPS reader uses 100 kHz I2C1 GP2/GP3.
 Use the [operator guide](../../../docs/user/README.md) for the appropriate application.
 

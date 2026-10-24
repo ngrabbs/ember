@@ -3,8 +3,10 @@
 [System guide](../README.md) · [Bus architecture](board_to_board.md)
 
 **Status: CAN Feather bench packet transport demonstrated; full application integration pending.**
-The communications-board RP2040 is the **COMMS MCU**; the IHU-board RP2040 is
-the **IHU MCU**. COMMS owns link handling; IHU owns system command authority.
+The communications-board RP2040 is the **COMMS MCU**. The IHU bench uses RP2040;
+the **new IHU PCB direction is STM32G0B1 with dual native CAN**, as recorded in
+the [IHU hardware specification](../../hardware/ihu/design/hardware_requirements.md).
+COMMS owns link handling; IHU owns system command authority.
 The [COMMS–Walter plan](comms_walter.md) owns the transport integration checklist.
 
 | Stage | Transport | Use |
