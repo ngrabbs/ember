@@ -59,6 +59,16 @@ although the actual device is open-drain; retain that explicit library-model
 limitation rather than silently editing its type. This is a proposed real branch, not a
 logical two-pin connector standing in for protection.
 
+Select the unchanged stock footprint
+`Package_DFN_QFN:Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm`
+without embedded vias. The symbol's default ThermalVias variant has nine0.20mm
+holes below the configured0.30mm drill minimum. Thermal vias must be designed
+separately at PCB layout; omitting them from the footprint is not thermal
+acceptance. The [stock control/protection checkpoint](../verification/managed_payload/control_packages/README.md)
+verifies all68 leads across the eFuse, four control ICs and diode. Its generic
+eFuse paste windows cover62.25% of EP area versus TI's78% example. Retain
+stencil/voiding, generic-land and thermal qualification open.
+
 Q1400 is CSD18543Q3A with its approved project manufacturer-pattern footprint.
 Q1401 development selection is **Toshiba T2N7002AK,LM**, unchanged stock
 `Transistor_FET:T2N7002AK`, G1/S2/D3 and SOT23. Its60V/±20V ratings and
@@ -170,6 +180,12 @@ U1413 is **SN74LVC2G08DCUR**, stock `74xGxx:74LVC2G08`; U1414
 **SN74LVC1G32DBVR**, stock1G32; U1416 **SN74LVC1G14DBVR**, stock1G14.
 Verify exact selected package lands, source fields and physical maps before
 placement; incompatible ordering suffixes are not substitutions.
+The linked stock checkpoint now checks U1411/U1412/U1413/U1414 contact maps
+with all multi-unit power pins, corrected saved field presentation and actual
+page/detail inspection. Use full placement reservations: HCS08/HC74
+7.70×5.90mm,2G08 4.56×2.90mm,1G32 4.76×4.05mm and eFuse5.26×5.26mm.
+These supplement stock notched courtyards for maximum body/flash dimensions;
+they are not edited vendor footprints or assembly approval.
 
 U1415 **TPS3700DDCR**, construction subject to the
 [pending exact rules](rev_b_payload_tps3700_library_rules.md), monitors the raw

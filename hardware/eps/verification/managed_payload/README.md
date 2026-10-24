@@ -88,6 +88,15 @@ full native S11 field presentation and assembly qualification remain open.
 
 ## Remaining boundary
 
+The [six-part stock control/protection checkpoint](control_packages/README.md)
+now verifies68 physical leads/72 pad objects and corrects fixture field
+collisions through a discovered existing local Konnect MCP presentation tool.
+The eFuse selects the stock no-via footprint because its default0.20mm holes
+miss the configured0.30mm minimum. Generic lands,62.25% EP paste coverage,
+thermal vias and full placement reservations remain assembly/layout gates.
+No real EPS circuit changed. Prior S11 limitations describe earlier checkpoints;
+the newly verified field-position route can support subsequent repairs.
+
 Exact parts/lands, helper loading, clamp cold/dynamic response, integrated
 startup/short/reverse cases, healthy essential-rail survival, unknown carrier
 capacitance/inrush, thermal/vacuum behavior, complete off-state back-power,
