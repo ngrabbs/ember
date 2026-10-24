@@ -1,0 +1,27 @@
+* NOMINAL CONNECTED DEVELOPMENT EXPERIMENT, NOT A SELECTED CIRCUIT
+.lib "${LTSPICE_LIBRARY}/sub/LTC4368-1.sub"
+.lib "${TI_MODEL}"
+Vsource drive 0 PWL(0 0 1m 0 2m 3.2328 0.4 3.2328)
+Rsource drive vin 0.001
+Cpre vin 0 96u Rser=.01
+Lguard vin pin 10u Rser=.02
+Cpin pin 0 100n Rser=.01
+XQ1 pin gate common csd18543q3a
+XQ2 sense gate common csd18543q3a
+Rsense sense out .015
+Rgs gate common 10meg
+Cgate gate gc 100n
+Rgc gc 0 22k
+Rov vin ov 58.8k
+Rovb ov 0 10k
+Ruv vin uv 47.5k
+Ruvb uv 0 10k
+Cretry retry 0 22n
+Rfault vin fault 47k
+Cout out 0 192u Rser=.01
+Bload out 0 I=min(max(V(out),0)/.1,if(time<0.25,.2,2))
+Xcontroller vin uv ov retry 0 vin fault out sense gate LTC4368-1
+.options plotwinsize=0
+.tran 0 0.4 0 2u
+.save V(vin) V(pin) V(out) V(common) V(gate) V(retry) V(uv) V(ov) I(Rsense) I(Vsource)
+.end
