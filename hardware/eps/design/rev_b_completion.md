@@ -123,3 +123,15 @@ other native files are unchanged. Fresh ERC remains6 errors/2 warnings across
 from electrical evidence. Historical field-tool limitations above remain true
 for those checkpoints; this repair proves sheet-field positioning, without
 closing component S11 or other design/qualification gates.
+
+## Telemetry native-field presentation, 2026-10-24
+
+The [new presentation checkpoint](../verification/rev_b/telemetry_presentation/README.md)
+resolves this sheet's earlier S11 field-tool blocker:19 resistors and6 capacitors
+now expose81 actual rating/package fields in0.5mm Arial, with orientation-aware
+placement and93 total field edits. Redundant annotation substitutes are removed.
+Actual final page, all-channel and every-passive detail inspection is separate
+from the unchanged whole-root XML/ERC evidence. All229 other native files are
+preserved. This is the current345-part/14-sheet presentation source state;
+earlier checkpoint verifiers remain frozen at their recorded commits. Other
+sheets' S11 issues and all electrical/mechanical/PCB/qualification gates remain.
