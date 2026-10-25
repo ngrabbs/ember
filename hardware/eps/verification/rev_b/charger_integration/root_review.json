@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "method": "Independent fresh kicad-cli full-root export compared to reviewed endpoint/metadata gate",
+  "parts": 187,
+  "nets": 103,
+  "source": "hardware/eps/verification/rev_b/charger_integration/eps_rev_b.xml",
+  "review_export_sha256": "d5045ec6e7aa8110c2fbdf4e0e5fb4d3307c12d5c295cb72ae9fbf676179e4c8",
+  "actual_visual_review": [
+    "root full/current note",
+    "controller full/bus/pullups details",
+    "charger full/power/IC/NTC details including final clear alert label",
+    "essential3V3 full",
+    "recovery/source current-note details",
+    "connector full symbol/copper/fab"
+  ],
+  "limits": "Full rendered eight-sheet inspection separately performed by design owner; S03/S04/S11 and retained obsolete-text limits remain documented",
+  "annotation_warning": false,
+  "annotation_symbols_checked": 359,
+  "prior_all_symbol_records_preserved": 304,
+  "environment_warnings": "Fontconfig environment warnings remain; no annotation warning",
+  "staged_whitespace": {
+    "exact_generated_byte_exceptions": [
+      "hardware/eps/rev_b/essential_3v3.kicad_sch",
+      "hardware/eps/verification/rev_b/charger_integration/connector_render/copper.svg",
+      "hardware/eps/verification/rev_b/charger_integration/connector_render/fab.svg",
+      "hardware/eps/verification/rev_b/charger_integration/parts_disposable/charger_parts_check.kicad_sch"
+    ],
+    "remaining_staged_files_check": "PASS",
+    "note": "Generated SVG/native bytes preserved; no manual native normalization"
+  }
+}

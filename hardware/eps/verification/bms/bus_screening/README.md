@@ -1,0 +1,7 @@
+# BMS bus static screen
+
+2026-10-24. ISO1540DR is selected for development integration after its physical-map gate. This directory contains reproducible conditional electrical calculations only. It does not establish native connectivity, rendered-sheet acceptance, powered/unpowered behavior or hardware qualification.
+
+Run `python3 calculate.py` to regenerate `calculated.json`. Inputs and limitations are documented in the [bus candidate update](../../../design/rev_b_bms_bus_candidate.md). Results include the separate current-shunt references, pull-up tolerance/temperature allowance, low-level margins, high-state leakage/pulldown screen, RC rise estimates and static current allocation. The MCU 1 µA leakage allocation remains provisional. The capacitance values are complete local-bus budgets, not guaranteed device capacitances.
+
+The root reviewer viewed the downloaded TI PDF pin map (page 4), electrical characteristics (10), application (24) and example land (34). The design owner separately verifies saved stock-library geometry and disposable renders in the BMS integration checkpoint. Source: [TI ISO1540 SLLSEB6F](https://www.ti.com/lit/ds/symlink/iso1540.pdf), Rev F December 2022, retrieved 2026-10-24. BMS and STM32 level limits retain the primary sources linked in the design record. Neither a passing assertion nor the rail's static range qualifies communication during its unresolved load transient.

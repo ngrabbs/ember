@@ -1,0 +1,113 @@
+{
+  "status": "FULL_GRAPH_AND_METADATA_PASS; QUALIFICATION_OPEN",
+  "cad_basis": "b5b1c03",
+  "physical_parts": 160,
+  "new_protection_parts": 83,
+  "protection_sets": 41,
+  "protection_functional_sets": 37,
+  "protection_NC_sets": 4,
+  "root_nets": 91,
+  "root_functional_nets": 68,
+  "previous_part_UUIDs_preserved": 77,
+  "previous_endpoint_sets_preserved_with_approved_scope_migration": 56,
+  "fault_reset_endpoints": {
+    "REC5_FAULT": [
+      "R619.2",
+      "U100.14",
+      "U601.11"
+    ],
+    "REC5_RESET": [
+      "R623.1",
+      "U100.13"
+    ],
+    "SRC_FAULT": [
+      "R608.2",
+      "U100.3",
+      "U600.11"
+    ]
+  },
+  "VIN_CHG_joined_to_SYS_PWR_PERMITTED": false,
+  "protected_+5V_has_only_barrier_downstream_nodes": true,
+  "crosswalk_rows": 312,
+  "retained_native_instances": 304,
+  "new_retained_protection_instances": 161,
+  "omitted_protection_instances": [
+    "#FLG172",
+    "#FLG173",
+    "#FLG202",
+    "#PWR171"
+  ],
+  "retained_protection_flags": [
+    "#FLG0600",
+    "#FLG0601",
+    "#FLG0602",
+    "#FLG0603",
+    "#FLG0604",
+    "#FLG0605",
+    "#FLG0606"
+  ],
+  "geometry": {
+    "source": {
+      "orthogonal_on_grid_wires": 107,
+      "joined_fourway": 0,
+      "unconnected_crossings": [
+        [
+          200.66,
+          147.32
+        ]
+      ],
+      "pins_at_branches": 0
+    },
+    "rail": {
+      "orthogonal_on_grid_wires": 138,
+      "joined_fourway": 0,
+      "unconnected_crossings": [
+        [
+          114.3,
+          68.58
+        ],
+        [
+          114.3,
+          88.9
+        ],
+        [
+          190.5,
+          48.26
+        ],
+        [
+          190.5,
+          68.58
+        ],
+        [
+          200.66,
+          147.32
+        ]
+      ],
+      "pins_at_branches": 0
+    }
+  },
+  "netclass_actual_members": 68,
+  "netclass_patterns": 71,
+  "orphan_patterns_proven_unmatched": [
+    "/Controller/REC5_FAULT",
+    "/Controller/REC5_RESET",
+    "/Controller/SRC_FAULT"
+  ],
+  "erc_counts": {
+    "error": 16,
+    "warning": 0
+  },
+  "erc_types": {
+    "pin_not_connected": 16
+  },
+  "historical_files_unchanged": 18,
+  "previous_evidence_files_unchanged": 69,
+  "open": [
+    "physical RBF/charger PowerPath/BMS absent; SYS and SOLAR external fixtures",
+    "low-VCC FB accuracy/hot SOA/source-energy/component bounds",
+    "102.6uF nominal SYS input load and simultaneous startup unqualified",
+    "autonomous3V3OVcontainment absent",
+    "S03 severity/S11 display/S04 page metadata/S08 earlier custom review",
+    "3 orphan native class patterns cannot be deleted with exposedAPI"
+  ]
+}

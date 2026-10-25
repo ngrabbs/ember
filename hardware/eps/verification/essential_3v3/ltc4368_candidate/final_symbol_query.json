@@ -1,0 +1,85 @@
+{
+  "lib_id": "Ember_Charger_BMS_Review:LTC4368IMS_1_REVIEW",
+  "library": "Ember_Charger_BMS_Review",
+  "name": "LTC4368IMS_1_REVIEW",
+  "pin_count": 10,
+  "pins": [
+    {
+      "name": "VIN",
+      "number": "1",
+      "type": "power_in",
+      "x": -10.16,
+      "y": 20.32
+    },
+    {
+      "name": "UV",
+      "number": "2",
+      "type": "input",
+      "x": -25.4,
+      "y": 10.16
+    },
+    {
+      "name": "OV",
+      "number": "3",
+      "type": "input",
+      "x": -25.4,
+      "y": 2.54
+    },
+    {
+      "name": "RETRY",
+      "number": "4",
+      "type": "bidirectional",
+      "x": -15.24,
+      "y": -20.32
+    },
+    {
+      "name": "GND",
+      "number": "5",
+      "type": "power_in",
+      "x": 15.24,
+      "y": -20.32
+    },
+    {
+      "name": "~{SHDN}",
+      "number": "6",
+      "type": "input",
+      "x": -25.4,
+      "y": -5.08
+    },
+    {
+      "name": "~{FAULT}",
+      "number": "7",
+      "type": "open_collector",
+      "x": 25.4,
+      "y": -5.08
+    },
+    {
+      "name": "VOUT",
+      "number": "8",
+      "type": "input",
+      "x": 25.4,
+      "y": 0
+    },
+    {
+      "name": "SENSE",
+      "number": "9",
+      "type": "input",
+      "x": 25.4,
+      "y": 5.08
+    },
+    {
+      "name": "GATE",
+      "number": "10",
+      "type": "output",
+      "x": 25.4,
+      "y": 10.16
+    }
+  ],
+  "properties": {
+    "Datasheet": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf",
+    "Description": "",
+    "Footprint": "Ember_Charger_BMS_Review:ADI_MS10_05_08_1661_REVIEW",
+    "Reference": "U",
+    "Value": "LTC4368IMS-1#TRPBF"
+  }
+}

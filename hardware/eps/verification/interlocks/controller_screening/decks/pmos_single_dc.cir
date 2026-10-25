@@ -1,0 +1,10 @@
+* Isolated SUD model diagnostic; not an interlock acceptance fixture
+.include "${PMOS_MODEL}"
+Vsource src 0 8.4
+Vgate gate src 0
+Xdevice drain gate src SUD50P08-25L
+Rload drain 0 10
+.options plotwinsize=0
+.dc Vgate 0 -8.4 -.02
+.save V(drain) I(Vsource) V(gate,src)
+.end

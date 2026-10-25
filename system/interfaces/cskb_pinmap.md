@@ -15,8 +15,7 @@ Iteration 2 CAN components remain DNP in v0.1.
 | CAN implementation boundaries | [CAN A/B](#can-a--can-b-allocation-iteration-2) |
 
 This is the Pumpkin **CSKB**, not the separate PC/104 J1/J2 bus or PPM H10.
-The April 15, 2026 connector decision preserves Pumpkin's mechanical layout;
-electrical compatibility still requires checking each board's USER-pin usage.
+The April 15, 2026 connector decision intended Pumpkin's mechanical layout. The operator-approved 2026-10-24 EMBER Rev B spacing exception is recorded in the mechanical reference; third-party mating is not established. Electrical compatibility still requires checking each board's USER-pin usage.
 See the [mechanical reference](cskb_mechanical.md) for parts, spacing, and source drawings.
 
 ## Pin numbering convention
@@ -231,3 +230,36 @@ which supersedes the earlier v0.1 payload routing descriptions:
 - Launch isolation must cover the raw stack feed to **both** AON and main paths
   and alternate feeds. The location/design of that physical flight inhibit is
   unresolved; this update makes no flight-readiness claim.
+
+## EPS Rev B development interpretation (2026-10-24)
+
+The operator-authorized [EPS Rev B architecture](../../hardware/eps/design/rev_b_plan.md)
+adds EPS as a node on **both existing buses**: H1.51/H1.52 remain
+`CAN_H`/`CAN_L`, and H2.49/H2.50 remain `CAN_B_H`/`CAN_B_L`.
+The earlier statement that EPS is not a CAN node describes v0.1 only.
+Rev B's STM32G0B1KET6N uses separate FDCAN controllers and TCAN3413DR
+transceivers; this introduces no new stack-pin assignment or net rename.
+The current schematic still uses logical stack-access connectors, so this
+record is an integration requirement rather than proof of physical H1/H2 wiring.
+
+The [CAN branch contract](../../hardware/eps/design/rev_b_can_branch_integration.md)
+adds separate development current-limited transceiver supplies and reuses
+each board-local standby GPIO for disable/latch reset. Both buses are enabled
+after initialization. A disabled transceiver has no CAN wake reception;
+the stack CAN electrical names and pin roles are unchanged. The branch
+FAULT diagnostics are bench test points, not stack signals. Shared MCU,
+clock, source and connector failures remain common causes; guaranteed
+ground recovery over B requires the complete EPS/IHU/COMMS implementation.
+
+This appendix does not alter the legacy H1.41/H1.43 I2C or H1.49 alert
+electrical contracts. Rev B stack-interface work must explicitly reconcile
+those connections and consumers before routing them. The protected,
+interlocked and managed interpretation of H2.45/H2.46 `VBAT` likewise
+requires its pending distribution circuit and consumer review; no direct
+raw-cell bypass is authorized by the retained pin names.
+
+## EPS Rev B physical-stack audit —2026-10-24
+
+The operator approves retaining the existing EMBER5.08 mm H1/H2 center spacing and confirms16 mm clear gap above EPS; see the [mechanical exception](cskb_mechanical.md#operator-approved-ember-rev-b-exception-2026-10-24). This changes no electrical pin assignment.
+
+Fresh saved-board readbacks reveal that current COMMS CAN is on H1.1/2/3/4 (`CAN_A_N`, `CAN_B_N`, `CAN_A_P`, `CAN_B_P`), while canonical H1.51/52 and H2.49/50 are unconnected. Retain the canonical EPS Rev B assignments; the existing COMMS board needs a coordinated electrical revision and peer verification before stack A/B recovery can be accepted. No COMMS source is changed by this record, and reserved pins1–4 are not newly allocated. See the [bound geometry and pad-net evidence](../../hardware/eps/verification/fit/stack_interfaces_2026_10_24/README.md).

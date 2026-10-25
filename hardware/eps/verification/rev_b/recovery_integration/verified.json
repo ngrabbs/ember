@@ -1,0 +1,80 @@
+{
+  "status": "COMBINED_GRAPH_METADATA_PASS; POWER_PROTECTION_AND_QUALIFICATION_OPEN",
+  "commit_basis": "96702c3",
+  "source_authority": "protection/bank/native/after.xml, fresh current study matches",
+  "physical_parts": 77,
+  "new_converter_parts": 34,
+  "converter_functional_sets": 16,
+  "converter_intentional_NC_sets": 3,
+  "root_nets": 56,
+  "functional_nets": 37,
+  "previous_43_UUIDs_preserved": true,
+  "previous_endpoint_sets_preserved": 40,
+  "shared_nets_only_add_expected_converter_nodes": [
+    "+3V3",
+    "GND",
+    "SYS_PWR_PERMITTED"
+  ],
+  "postshunt_translation": "+5V ->5V0_RECOVERY_REG at R503.2/R504.1/U500.13",
+  "shared_+5V_bypass_present": false,
+  "crosswalk_rows": 147,
+  "retained_unique_native_instances": 143,
+  "omitted_redundant_fixtures": [
+    "#FLG01",
+    "#FLG02",
+    "#FLG04",
+    "#PWR001"
+  ],
+  "erc_counts": {
+    "error": 16,
+    "warning": 3
+  },
+  "erc_types": {
+    "pin_not_connected": 16,
+    "isolated_pin_label": 3
+  },
+  "converter_geometry": {
+    "orthogonal_on_grid_wires": 124,
+    "connected_fourway": 0,
+    "unconnected_crossings": [
+      [
+        215.9,
+        166.37
+      ],
+      [
+        240.03,
+        166.37
+      ],
+      [
+        240.03,
+        168.91
+      ],
+      [
+        242.57,
+        184.15
+      ],
+      [
+        242.57,
+        194.31
+      ],
+      [
+        243.84,
+        101.6
+      ],
+      [
+        245.11,
+        184.15
+      ]
+    ],
+    "pins_at_branches": 0
+  },
+  "netclass_members": 37,
+  "historical_files_unchanged": 18,
+  "previous_evidence_files_unchanged": 41,
+  "shared_input_nominal_uF": 102.6,
+  "converter_output_bank_nominal_uF_plus_bypass": 420.1,
+  "converter_output_high_endurance_tolerance_uF_excluding_bypass": 618.4,
+  "C515_bypass_nominal_uF": 0.1,
+  "output_development_allocation_uF": 650,
+  "qualified_combined_startup": false
+}

@@ -1,0 +1,12 @@
+* Two-device isolated DC diagnostic; no inrush/off-state acceptance
+.include "${PMOS_MODEL}"
+Vsource input 0 8.4
+Vgate gate cs 0
+Xpass input gate cs SUD50P08-25L
+Xreverse out gate cs SUD50P08-25L
+Rbias cs 0 1G
+Rload out 0 10
+.options plotwinsize=0
+.dc Vgate 0 -8.4 -.02
+.save V(out) V(cs) I(Vsource) V(gate,cs)
+.end

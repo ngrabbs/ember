@@ -1,0 +1,145 @@
+{
+  "status": "NOMINAL_TPS_MODEL_DIAGNOSTIC; IMPOSED_UCC_LOAD; NO_SYSTEM_QUALIFICATION",
+  "model_url": "https://www.ti.com/lit/zip/SLVM426",
+  "model_sha256": "2c4436b54cf8efc9dd522e110708fcb942e741a9620d6f442c577f787f451622",
+  "adapted_model_sha256": "354d0e0c2e67a8d750fb0c1174b98e369139719d69d4d0df027b6d7ce9ef22f9",
+  "adaptation": "Only PSpice XNOR caret changed to explicit Boolean inequality; external source otherwise unchanged",
+  "cases": [
+    {
+      "name": "startup_3v3_115k_upperC",
+      "source_V": 3.232799,
+      "reservoir_uF": 102.65,
+      "RILIM_kohm": 115,
+      "load_mode": "dc",
+      "planning_average_load_A": 0.05,
+      "final_time_s": 0.02,
+      "points": 80612,
+      "final_input_V": 3.175504684448242,
+      "settled_input_min_max_V": [
+        3.175504684448242,
+        3.175504684448242
+      ],
+      "source_current_peak_A": 0.22699806094169617,
+      "timer_max_V": 0.11859756708145142,
+      "settled_fault_min_V": 3.2302210330963135,
+      "raw_sha256": "1a87cdf93e5465078619389dbfb3943d81a826d78c4cc9940eeb6477229543ff"
+    },
+    {
+      "name": "startup_3v3_210k_upperC",
+      "source_V": 3.232799,
+      "reservoir_uF": 102.65,
+      "RILIM_kohm": 210,
+      "load_mode": "dc",
+      "planning_average_load_A": 0.05,
+      "final_time_s": 0.02,
+      "points": 80617,
+      "final_input_V": 3.175504684448242,
+      "settled_input_min_max_V": [
+        3.175504684448242,
+        3.175504684448242
+      ],
+      "source_current_peak_A": 0.12752309441566467,
+      "timer_max_V": 0.2543994188308716,
+      "settled_fault_min_V": 3.2302210330963135,
+      "raw_sha256": "c9b86f10c28d2dedd3362337aa3d2f37c9a8d3f120b0e1a1e46c0fd8d0321acd"
+    },
+    {
+      "name": "startup_3v3_115k_100mA",
+      "source_V": 3.232799,
+      "reservoir_uF": 102.65,
+      "RILIM_kohm": 115,
+      "load_mode": "dc",
+      "planning_average_load_A": 0.1,
+      "final_time_s": 0.02,
+      "points": 80579,
+      "final_input_V": 3.1191539764404297,
+      "settled_input_min_max_V": [
+        3.1191539764404297,
+        3.1191539764404297
+      ],
+      "source_current_peak_A": 0.2275829017162323,
+      "timer_max_V": 0.14174069464206696,
+      "settled_fault_min_V": 3.227721691131592,
+      "raw_sha256": "c69f1cbd4a690bd15bf450cb343b20ea308445eded553101cc17e6e349f0a8fc"
+    },
+    {
+      "name": "startup_5v_115k_smallC",
+      "source_V": 4.8,
+      "reservoir_uF": 12.96,
+      "RILIM_kohm": 115,
+      "load_mode": "dc",
+      "planning_average_load_A": 0.05,
+      "final_time_s": 0.02,
+      "points": 80360,
+      "final_input_V": 4.741260528564453,
+      "settled_input_min_max_V": [
+        4.741260528564453,
+        4.741260528564453
+      ],
+      "source_current_peak_A": 0.11314886808395386,
+      "timer_max_V": 1.0811567335622385e-05,
+      "settled_fault_min_V": 4.797386169433594,
+      "raw_sha256": "f4d64d6777cbcd174f4ff36f36f2fcad98b60ec3881148c394d90cf5949d37de"
+    },
+    {
+      "name": "bursts_3v3_115k_lowC",
+      "source_V": 3.232799,
+      "reservoir_uF": 54.38,
+      "RILIM_kohm": 115,
+      "load_mode": "burst",
+      "planning_average_load_A": 0.05,
+      "final_time_s": 0.02,
+      "points": 80937,
+      "final_input_V": 3.1905581951141357,
+      "settled_input_min_max_V": [
+        3.0936031341552734,
+        3.208134651184082
+      ],
+      "source_current_peak_A": 0.22420424222946167,
+      "timer_max_V": 0.04652845859527588,
+      "settled_fault_min_V": 3.227675437927246,
+      "raw_sha256": "efdcb290625332d63af59e0b75e816722202ae1b93d1b86f83de3f196b174dcc"
+    },
+    {
+      "name": "bursts_5v_115k_smallC",
+      "source_V": 4.8,
+      "reservoir_uF": 6.79,
+      "RILIM_kohm": 115,
+      "load_mode": "burst",
+      "planning_average_load_A": 0.05,
+      "final_time_s": 0.02,
+      "points": 96908,
+      "final_input_V": 4.773970603942871,
+      "settled_input_min_max_V": [
+        4.137598991394043,
+        4.776413440704346
+      ],
+      "source_current_peak_A": 0.5234553813934326,
+      "timer_max_V": 0.00045054551446810365,
+      "settled_fault_min_V": 4.78542423248291,
+      "raw_sha256": "392ec53361aabeca91e077564cd82d4be756dfecf6a8d2302940f7adb2529428"
+    },
+    {
+      "name": "short_latch_reset_3v3",
+      "source_V": 3.232799,
+      "reservoir_uF": 54.38,
+      "RILIM_kohm": 115,
+      "load_mode": "fault",
+      "planning_average_load_A": 0.05,
+      "final_time_s": 0.06,
+      "points": 241684,
+      "final_input_V": 3.175504684448242,
+      "settled_input_min_max_V": [
+        3.175504684448242,
+        3.175504684448242
+      ],
+      "source_current_peak_A": 2.6049721240997314,
+      "timer_max_V": 0.9998491406440735,
+      "settled_fault_min_V": 3.2302210330963135,
+      "raw_sha256": "d2fa2193a35b4d920da333980ee953551534d72cd696ed9573f950030c813085",
+      "latched_fault_max_V": 0.01928098127245903,
+      "latched_current_max_A": 0.00010000003385357559,
+      "shared_input_min_during_initial_short_V": 3.161686658859253
+    }
+  ]
+}

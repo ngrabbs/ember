@@ -1,0 +1,3867 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/eps_rev_b.kicad_sch</source>
+    <date>2026-10-23T15:45:24</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>controller.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="2" name="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>can_interfaces.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="3" name="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>essential_3v3.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="4" name="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>recovery_5v.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="5" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>eps_rev_b.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C100">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM188R72A104KA35D</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0603</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="VoltageRating">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM188R72A104KA35D"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="VoltageRating" value="100 V"/>
+      <property name="Sheetname" value="Controller"/>
+      <property name="Sheetfile" value="controller.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/"/>
+      <tstamps>0c7f0897-67df-4dd4-86c4-1561a0a0c9e9</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C101">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM188R72A104KA35D</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0603</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="VoltageRating">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM188R72A104KA35D"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="VoltageRating" value="100 V"/>
+      <property name="Sheetname" value="Controller"/>
+      <property name="Sheetfile" value="controller.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/"/>
+      <tstamps>3b2bef47-3367-414f-87d0-f7ebf96111c4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C102">
+      <value>4.7uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71A475KE51%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM21BR71A475KE51L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0805</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">10 V</field>
+        <field name="VoltageRating">10 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71A475KE51%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM21BR71A475KE51L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0805"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="10 V"/>
+      <property name="VoltageRating" value="10 V"/>
+      <property name="Sheetname" value="Controller"/>
+      <property name="Sheetfile" value="controller.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/"/>
+      <tstamps>6191da7d-b6ff-429c-846d-436f7c200df1</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C103">
+      <value>4.7uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71A475KE51%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM21BR71A475KE51L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0805</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">10 V</field>
+        <field name="VoltageRating">10 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71A475KE51%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM21BR71A475KE51L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0805"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="10 V"/>
+      <property name="VoltageRating" value="10 V"/>
+      <property name="Sheetname" value="Controller"/>
+      <property name="Sheetfile" value="controller.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/"/>
+      <tstamps>9da9283e-6866-44f2-af13-2b7821b302e4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C110">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM188R72A104KA35D</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0603</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="VoltageRating">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM188R72A104KA35D"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="VoltageRating" value="100 V"/>
+      <property name="Sheetname" value="Controller"/>
+      <property name="Sheetfile" value="controller.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/"/>
+      <tstamps>486d516a-0d19-45e0-acd5-42cebd631ee6</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C111">
+      <value>1uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71C105KA01%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM21BR71C105KA01L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0805</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">16 V</field>
+        <field name="VoltageRating">16 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71C105KA01%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM21BR71C105KA01L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0805"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="16 V"/>
+      <property name="VoltageRating" value="16 V"/>
+      <property name="Sheetname" value="Controller"/>
+      <property name="Sheetfile" value="controller.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/"/>
+      <tstamps>0de691ab-6af0-49b8-a52b-deade8d302b4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C112">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM188R72A104KA35D</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0603</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="VoltageRating">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM188R72A104KA35D"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="VoltageRating" value="100 V"/>
+      <property name="Sheetname" value="Controller"/>
+      <property name="Sheetfile" value="controller.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/"/>
+      <tstamps>4656f4c9-ed62-48ae-9131-262e9f7976e1</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J100">
+      <value>SWD_ACCESS_LOGICAL</value>
+      <description>Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <fields>
+        <field name="MFG P/N">UNSELECTED - LOGICAL PLACEHOLDER</field>
+        <field name="PhysicalPinMap">UNSELECTED; logical numbering is not stack/SWD connector numbering</field>
+        <field name="Status">Not a production connector; no footprint</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x05" description="Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="MFG P/N" value="UNSELECTED - LOGICAL PLACEHOLDER"/>
+      <property name="PhysicalPinMap" value="UNSELECTED; logical numbering is not stack/SWD connector numbering"/>
+      <property name="Status" value="Not a production connector; no footprint"/>
+      <property name="Sheetname" value="Controller"/>
+      <property name="Sheetfile" value="controller.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/"/>
+      <tstamps>48a57f7f-ecb7-47e6-a75b-f3836dae5a4d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R105">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060310K0BEEA</field>
+        <field name="Manufacturer">Vishay</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W general P70</field>
+        <field name="Status">Development; procurement confirmation open</field>
+        <field name="TemperatureCoefficient">25 ppm/K</field>
+        <field name="TemperatureRange">-55 to +125 C general operation</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060310K0BEEA"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W general P70"/>
+      <property name="Status" value="Development; procurement confirmation open"/>
+      <property name="TemperatureCoefficient" value="25 ppm/K"/>
+      <property name="TemperatureRange" value="-55 to +125 C general operation"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="Controller"/>
+      <property name="Sheetfile" value="controller.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/"/>
+      <tstamps>bdc6686d-2813-4aa7-aa31-e47b60bca1bf</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U100">
+      <value>STM32G0B1KET6N</value>
+      <footprint>Ember_EPS_Candidates:ST_LQFP32_7x7mm_P0.8mm_DRAFT</footprint>
+      <datasheet>https://www.st.com/resource/en/datasheet/stm32g0b1ke.pdf</datasheet>
+      <description>STMicroelectronics Arm Cortex-M0+ MCU, 512KB flash, 144KB RAM, 64 MHz, 1.7-3.6V, 29 GPIO, LQFP32</description>
+      <fields>
+        <field name="MFG P/N">STM32G0B1KET6N</field>
+        <field name="Manufacturer">STMicroelectronics</field>
+        <field name="PackageSize">LQFP32 7x7 mm P0.8</field>
+        <field name="PinMap">DS13560 Rev6 Fig3 N suffix; pin20=VDDIO2</field>
+        <field name="Status">Development; errata/CubeMX/bench pending</field>
+        <field name="TemperatureRange">-40 to +85 C</field>
+        <field name="Footprint">Ember_EPS_Candidates:ST_LQFP32_7x7mm_P0.8mm_DRAFT</field>
+        <field name="Datasheet">https://www.st.com/resource/en/datasheet/stm32g0b1ke.pdf</field>
+        <field name="Description">STMicroelectronics Arm Cortex-M0+ MCU, 512KB flash, 144KB RAM, 64 MHz, 1.7-3.6V, 29 GPIO, LQFP32</field>
+      </fields>
+      <libsource lib="MCU_ST_STM32G0" part="STM32G0B1KETxN" description="STMicroelectronics Arm Cortex-M0+ MCU, 512KB flash, 144KB RAM, 64 MHz, 1.7-3.6V, 29 GPIO, LQFP32"/>
+      <property name="MFG P/N" value="STM32G0B1KET6N"/>
+      <property name="Manufacturer" value="STMicroelectronics"/>
+      <property name="PackageSize" value="LQFP32 7x7 mm P0.8"/>
+      <property name="PinMap" value="DS13560 Rev6 Fig3 N suffix; pin20=VDDIO2"/>
+      <property name="Status" value="Development; errata/CubeMX/bench pending"/>
+      <property name="TemperatureRange" value="-40 to +85 C"/>
+      <property name="Sheetname" value="Controller"/>
+      <property name="Sheetfile" value="controller.kicad_sch"/>
+      <property name="ki_keywords" value="Arm Cortex-M0+ STM32G0 STM32G0x1"/>
+      <property name="ki_fp_filters" value="LQFP*7x7mm*P0.8mm*"/>
+      <sheetpath names="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/"/>
+      <tstamps>88e3cab9-2325-4cb0-9187-ca7865f88c27</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="6"/>
+            <pin num="26"/>
+            <pin num="27"/>
+            <pin num="28"/>
+            <pin num="29"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="15"/>
+            <pin num="16"/>
+            <pin num="30"/>
+            <pin num="31"/>
+            <pin num="32"/>
+            <pin num="1"/>
+            <pin num="17"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="20"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="11"/>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="14"/>
+            <pin num="18"/>
+            <pin num="22"/>
+            <pin num="19"/>
+            <pin num="23"/>
+            <pin num="21"/>
+            <pin num="24"/>
+            <pin num="25"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="Y100">
+      <value>ECS-3225MV-160-BN-TR</value>
+      <footprint>Ember_EPS_Candidates:ECS_3225MV_3.2x2.5mm_DRAFT</footprint>
+      <datasheet>https://ecsxtal.com/store/pdf/ECS-3225MV.pdf</datasheet>
+      <fields>
+        <field name="Frequency">16 MHz</field>
+        <field name="FrequencyTolerance">50 ppm</field>
+        <field name="MFG P/N">ECS-3225MV-160-BN-TR</field>
+        <field name="Manufacturer">ECS</field>
+        <field name="PackageSize">3225 3.2x2.5 mm</field>
+        <field name="Status">Development; startup/HSE timing bench pending</field>
+        <field name="SupplyVoltage">3.3 V</field>
+        <field name="TemperatureRange">-40 to +85 C</field>
+        <field name="Footprint">Ember_EPS_Candidates:ECS_3225MV_3.2x2.5mm_DRAFT</field>
+        <field name="Datasheet">https://ecsxtal.com/store/pdf/ECS-3225MV.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Ember_EPS_Candidates" part="ECS_3225MV_DRAFT_v2" description=""/>
+      <property name="Frequency" value="16 MHz"/>
+      <property name="FrequencyTolerance" value="50 ppm"/>
+      <property name="MFG P/N" value="ECS-3225MV-160-BN-TR"/>
+      <property name="Manufacturer" value="ECS"/>
+      <property name="PackageSize" value="3225 3.2x2.5 mm"/>
+      <property name="Status" value="Development; startup/HSE timing bench pending"/>
+      <property name="SupplyVoltage" value="3.3 V"/>
+      <property name="TemperatureRange" value="-40 to +85 C"/>
+      <property name="Sheetname" value="Controller"/>
+      <property name="Sheetfile" value="controller.kicad_sch"/>
+      <sheetpath names="/Controller/" tstamps="/3887cba2-4b11-469e-838c-d35f1fb4fc5a/"/>
+      <tstamps>73818338-0227-45a3-a85e-2c2a0f985268</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="4"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C104">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM188R72A104KA35D</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0603</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="VoltageRating">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM188R72A104KA35D"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="VoltageRating" value="100 V"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>230ae393-8371-478d-b728-0903c1cbc584</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C105">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM188R72A104KA35D</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0603</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="VoltageRating">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM188R72A104KA35D"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="VoltageRating" value="100 V"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>a6121e6e-9a0a-4daf-b6c5-1e1a6f316bdd</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C106">
+      <value>1uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71C105KA01%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM21BR71C105KA01L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0805</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">16 V</field>
+        <field name="VoltageRating">16 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71C105KA01%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM21BR71C105KA01L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0805"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="16 V"/>
+      <property name="VoltageRating" value="16 V"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>5d41ab2e-ecee-41d3-aad5-69b7361ce517</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C107">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM188R72A104KA35D</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0603</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="VoltageRating">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM188R72A104KA35D"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="VoltageRating" value="100 V"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>750672ca-798f-4c73-8726-9491840caf2e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C108">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM188R72A104KA35D</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0603</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="VoltageRating">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM188R72A104KA35D"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="VoltageRating" value="100 V"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>f31d4f7a-e031-4b4a-a9d8-db7088c5d288</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C109">
+      <value>1uF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71C105KA01%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">GRM21BR71C105KA01L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0805</field>
+        <field name="Status">Development; effective capacitance at 3.3V/temperature qualification open</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">16 V</field>
+        <field name="VoltageRating">16 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0805_2012Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM21BR71C105KA01%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="GRM21BR71C105KA01L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0805"/>
+      <property name="Status" value="Development; effective capacitance at 3.3V/temperature qualification open"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="16 V"/>
+      <property name="VoltageRating" value="16 V"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>21104b1d-3dcc-4f19-af09-a5a111ee580f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J101">
+      <value>CAN_A_STACK_LOGICAL</value>
+      <description>Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <fields>
+        <field name="MFG P/N">UNSELECTED - LOGICAL PLACEHOLDER</field>
+        <field name="PhysicalPinMap">UNSELECTED; logical numbering is not stack/SWD connector numbering</field>
+        <field name="Status">Not a production connector; no footprint</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="MFG P/N" value="UNSELECTED - LOGICAL PLACEHOLDER"/>
+      <property name="PhysicalPinMap" value="UNSELECTED; logical numbering is not stack/SWD connector numbering"/>
+      <property name="Status" value="Not a production connector; no footprint"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>cf9575d8-a048-4b54-b53b-610a2f525c93</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J102">
+      <value>CAN_B_STACK_LOGICAL</value>
+      <description>Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <fields>
+        <field name="MFG P/N">UNSELECTED - LOGICAL PLACEHOLDER</field>
+        <field name="PhysicalPinMap">UNSELECTED; logical numbering is not stack/SWD connector numbering</field>
+        <field name="Status">Not a production connector; no footprint</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="MFG P/N" value="UNSELECTED - LOGICAL PLACEHOLDER"/>
+      <property name="PhysicalPinMap" value="UNSELECTED; logical numbering is not stack/SWD connector numbering"/>
+      <property name="Status" value="Not a production connector; no footprint"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>f19856cc-2ecf-4dd3-b456-a92c95b3a7b4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R101">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060310K0BEEA</field>
+        <field name="Manufacturer">Vishay</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W general P70</field>
+        <field name="Status">Development; procurement confirmation open</field>
+        <field name="TemperatureCoefficient">25 ppm/K</field>
+        <field name="TemperatureRange">-55 to +125 C general operation</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060310K0BEEA"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W general P70"/>
+      <property name="Status" value="Development; procurement confirmation open"/>
+      <property name="TemperatureCoefficient" value="25 ppm/K"/>
+      <property name="TemperatureRange" value="-55 to +125 C general operation"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>60667672-dfe6-43c7-b9ba-b3ad63ee53d3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R102">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060310K0BEEA</field>
+        <field name="Manufacturer">Vishay</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W general P70</field>
+        <field name="Status">Development; procurement confirmation open</field>
+        <field name="TemperatureCoefficient">25 ppm/K</field>
+        <field name="TemperatureRange">-55 to +125 C general operation</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060310K0BEEA"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W general P70"/>
+      <property name="Status" value="Development; procurement confirmation open"/>
+      <property name="TemperatureCoefficient" value="25 ppm/K"/>
+      <property name="TemperatureRange" value="-55 to +125 C general operation"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>f7b7f2d9-2c9a-49b1-b4be-a3b86d75b9a5</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R103">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060310K0BEEA</field>
+        <field name="Manufacturer">Vishay</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W general P70</field>
+        <field name="Status">Development; procurement confirmation open</field>
+        <field name="TemperatureCoefficient">25 ppm/K</field>
+        <field name="TemperatureRange">-55 to +125 C general operation</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060310K0BEEA"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W general P70"/>
+      <property name="Status" value="Development; procurement confirmation open"/>
+      <property name="TemperatureCoefficient" value="25 ppm/K"/>
+      <property name="TemperatureRange" value="-55 to +125 C general operation"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>d9fb9678-420a-4dd4-9a22-3fc04f96d270</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R104">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060310K0BEEA</field>
+        <field name="Manufacturer">Vishay</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W general P70</field>
+        <field name="Status">Development; procurement confirmation open</field>
+        <field name="TemperatureCoefficient">25 ppm/K</field>
+        <field name="TemperatureRange">-55 to +125 C general operation</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060310K0BEEA"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W general P70"/>
+      <property name="Status" value="Development; procurement confirmation open"/>
+      <property name="TemperatureCoefficient" value="25 ppm/K"/>
+      <property name="TemperatureRange" value="-55 to +125 C general operation"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>4cb81d8f-2d8f-4181-9d23-4b4fb6d49296</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R106">
+      <value>120R</value>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">UNSELECTED - sustained CAN fault rating required</field>
+        <field name="PackageSize">UNSELECTED</field>
+        <field name="Population">DNP</field>
+        <field name="Power">UNSELECTED</field>
+        <field name="Status">Logical termination option only; no footprint until fault envelope selected</field>
+        <field name="Tolerance">UNSELECTED</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="UNSELECTED - sustained CAN fault rating required"/>
+      <property name="PackageSize" value="UNSELECTED"/>
+      <property name="Population" value="DNP"/>
+      <property name="Power" value="UNSELECTED"/>
+      <property name="Status" value="Logical termination option only; no footprint until fault envelope selected"/>
+      <property name="Tolerance" value="UNSELECTED"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>9571459a-eac1-4e3a-882f-946d400a26f2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R107">
+      <value>120R</value>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">UNSELECTED - sustained CAN fault rating required</field>
+        <field name="PackageSize">UNSELECTED</field>
+        <field name="Population">DNP</field>
+        <field name="Power">UNSELECTED</field>
+        <field name="Status">Logical termination option only; no footprint until fault envelope selected</field>
+        <field name="Tolerance">UNSELECTED</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="UNSELECTED - sustained CAN fault rating required"/>
+      <property name="PackageSize" value="UNSELECTED"/>
+      <property name="Population" value="DNP"/>
+      <property name="Power" value="UNSELECTED"/>
+      <property name="Status" value="Logical termination option only; no footprint until fault envelope selected"/>
+      <property name="Tolerance" value="UNSELECTED"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>f07bede5-152b-4ce2-bb5d-a6066abfe1e7</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U101">
+      <value>TCAN3413DR</value>
+      <footprint>Ember_EPS_Candidates:TI_D0008A_SOIC8_3.9x4.9mm_P1.27mm_DRAFT</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/tcan3413.pdf</datasheet>
+      <fields>
+        <field name="MFG P/N">TCAN3413DR</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">SOIC-8 D0008A</field>
+        <field name="Status">Development; branch current isolation/ESD qualification open</field>
+        <field name="TemperatureRange">-40 to +125 C</field>
+        <field name="Footprint">Ember_EPS_Candidates:TI_D0008A_SOIC8_3.9x4.9mm_P1.27mm_DRAFT</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tcan3413.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Ember_EPS_Candidates" part="TCAN3413D_DRAFT_v3" description=""/>
+      <property name="MFG P/N" value="TCAN3413DR"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="SOIC-8 D0008A"/>
+      <property name="Status" value="Development; branch current isolation/ESD qualification open"/>
+      <property name="TemperatureRange" value="-40 to +125 C"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>15484eb6-c55f-4356-880d-27a935b7339e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="8"/>
+            <pin num="4"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="5"/>
+            <pin num="7"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U102">
+      <value>TCAN3413DR</value>
+      <footprint>Ember_EPS_Candidates:TI_D0008A_SOIC8_3.9x4.9mm_P1.27mm_DRAFT</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/tcan3413.pdf</datasheet>
+      <fields>
+        <field name="MFG P/N">TCAN3413DR</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">SOIC-8 D0008A</field>
+        <field name="Status">Development; branch current isolation/ESD qualification open</field>
+        <field name="TemperatureRange">-40 to +125 C</field>
+        <field name="Footprint">Ember_EPS_Candidates:TI_D0008A_SOIC8_3.9x4.9mm_P1.27mm_DRAFT</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tcan3413.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Ember_EPS_Candidates" part="TCAN3413D_DRAFT_v3" description=""/>
+      <property name="MFG P/N" value="TCAN3413DR"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="SOIC-8 D0008A"/>
+      <property name="Status" value="Development; branch current isolation/ESD qualification open"/>
+      <property name="TemperatureRange" value="-40 to +125 C"/>
+      <property name="Sheetname" value="CAN interfaces"/>
+      <property name="Sheetfile" value="can_interfaces.kicad_sch"/>
+      <sheetpath names="/CAN interfaces/" tstamps="/fe5345f2-e583-4a64-a085-08644425dbe8/"/>
+      <tstamps>74e32c68-3336-48f8-9b3d-ef2c2f954c64</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="8"/>
+            <pin num="4"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="5"/>
+            <pin num="7"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C400">
+      <value>2.2uF</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM32ER72A225KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">&gt;=1.1uF per part through 35V qualification</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">1210</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM32ER72A225KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="&gt;=1.1uF per part through 35V qualification"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>d0f30a2f-fd45-41df-a069-8e49d660768c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C401">
+      <value>2.2uF</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM32ER72A225KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">&gt;=1.1uF per part through 35V qualification</field>
+        <field name="MFG P/N">GRM32ER72A225KA35L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">1210</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM32ER72A225KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="&gt;=1.1uF per part through 35V qualification"/>
+      <property name="MFG P/N" value="GRM32ER72A225KA35L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>40452eb1-de5b-476a-aad8-68d84303a230</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C402">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">Nominal100nF; verify bias/temp</field>
+        <field name="MFG P/N">GRM188R72A104KA35D</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0603</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="Nominal100nF; verify bias/temp"/>
+      <property name="MFG P/N" value="GRM188R72A104KA35D"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>aa275142-35a6-47b6-8297-41ebf099b6fa</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C403">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">Nominal100nF; verify bias/temp</field>
+        <field name="MFG P/N">GRM188R72A104KA35D</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">0603</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">100 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM188R72A104KA35%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="Nominal100nF; verify bias/temp"/>
+      <property name="MFG P/N" value="GRM188R72A104KA35D"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="100 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>883fe395-42fa-4b08-afd2-917c85087826</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C404">
+      <value>22uF</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">&gt;=12uF per part through 3.6V/temp/aging qualification</field>
+        <field name="MFG P/N">GRM32ER71E226KE15L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">1210</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="&gt;=12uF per part through 3.6V/temp/aging qualification"/>
+      <property name="MFG P/N" value="GRM32ER71E226KE15L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>30fed876-b3c3-4cf7-8e9c-f34825fa4bfc</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C405">
+      <value>22uF</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">&gt;=12uF per part through 3.6V/temp/aging qualification</field>
+        <field name="MFG P/N">GRM32ER71E226KE15L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">1210</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="&gt;=12uF per part through 3.6V/temp/aging qualification"/>
+      <property name="MFG P/N" value="GRM32ER71E226KE15L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>fa2e249c-4eb7-4ff3-a039-18784f293116</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C406">
+      <value>22uF</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">&gt;=12uF per part through 3.6V/temp/aging qualification</field>
+        <field name="MFG P/N">GRM32ER71E226KE15L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">1210</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="&gt;=12uF per part through 3.6V/temp/aging qualification"/>
+      <property name="MFG P/N" value="GRM32ER71E226KE15L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>8fe3d998-58f5-4c2a-b917-61a0a4b48b93</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C407">
+      <value>22uF</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">&gt;=12uF per part through 3.6V/temp/aging qualification</field>
+        <field name="MFG P/N">GRM32ER71E226KE15L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">1210</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="&gt;=12uF per part through 3.6V/temp/aging qualification"/>
+      <property name="MFG P/N" value="GRM32ER71E226KE15L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>b4213a09-91ac-476e-a1b3-dcbb0e40bf50</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C408">
+      <value>22uF</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">&gt;=12uF per part through 3.6V/temp/aging qualification</field>
+        <field name="MFG P/N">GRM32ER71E226KE15L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">1210</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="&gt;=12uF per part through 3.6V/temp/aging qualification"/>
+      <property name="MFG P/N" value="GRM32ER71E226KE15L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>654c6403-591a-4bb2-8bad-aaaac4a33db9</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C409">
+      <value>22uF</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">&gt;=12uF per part through 3.6V/temp/aging qualification</field>
+        <field name="MFG P/N">GRM32ER71E226KE15L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">1210</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="&gt;=12uF per part through 3.6V/temp/aging qualification"/>
+      <property name="MFG P/N" value="GRM32ER71E226KE15L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>a5dd2adb-65cf-4db2-b49d-b6d5fd75ad1e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C410">
+      <value>22uF</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">&gt;=12uF per part through 3.6V/temp/aging qualification</field>
+        <field name="MFG P/N">GRM32ER71E226KE15L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">1210</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="&gt;=12uF per part through 3.6V/temp/aging qualification"/>
+      <property name="MFG P/N" value="GRM32ER71E226KE15L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>99b0535d-8dd7-43ce-aff4-8e877082819b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C411">
+      <value>22uF</value>
+      <footprint>Capacitor_SMD:C_1210_3225Metric</footprint>
+      <datasheet>https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="EffectiveCapacitance">&gt;=12uF per part through 3.6V/temp/aging qualification</field>
+        <field name="MFG P/N">GRM32ER71E226KE15L</field>
+        <field name="Manufacturer">Murata</field>
+        <field name="PackageSize">1210</field>
+        <field name="Status">Development; effective-C and ripple heating bounds require supplier/bench confirmation</field>
+        <field name="TemperatureRange">-55 to +125 C</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">25 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1210_3225Metric</field>
+        <field name="Datasheet">https://www.murata.com/en-us/products/productdetail?partno=GRM32ER71E226KE15%23</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="EffectiveCapacitance" value="&gt;=12uF per part through 3.6V/temp/aging qualification"/>
+      <property name="MFG P/N" value="GRM32ER71E226KE15L"/>
+      <property name="Manufacturer" value="Murata"/>
+      <property name="PackageSize" value="1210"/>
+      <property name="Status" value="Development; effective-C and ripple heating bounds require supplier/bench confirmation"/>
+      <property name="TemperatureRange" value="-55 to +125 C"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="25 V"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>b600dec5-b168-4daa-9c6b-a08477f76d8d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="L400">
+      <value>5.6uH</value>
+      <footprint>Inductor_SMD:L_Coilcraft_XAL6060-XXX</footprint>
+      <datasheet>https://www.coilcraft.com/en-us/products/power/shielded-inductors/molded-inductor/xal/xal60xx/xal6060-562/</datasheet>
+      <description>Inductor</description>
+      <fields>
+        <field name="DCR">15.9 mohm max at 25C</field>
+        <field name="InductanceMinimum">3.136 uH screening sensitivity; hot guarantee open</field>
+        <field name="MFG P/N">XAL6060-562MEC</field>
+        <field name="Manufacturer">Coilcraft</field>
+        <field name="PackageSize">6.56x6.76x6.1 mm</field>
+        <field name="RatedCurrent">7.5 A at 20C rise (reference)</field>
+        <field name="SaturationCurrent">9.9 A typ at 30% L drop</field>
+        <field name="Status">Development; hot L/current/core-loss qualification open</field>
+        <field name="Tolerance">20%</field>
+        <field name="Footprint">Inductor_SMD:L_Coilcraft_XAL6060-XXX</field>
+        <field name="Datasheet">https://www.coilcraft.com/en-us/products/power/shielded-inductors/molded-inductor/xal/xal60xx/xal6060-562/</field>
+        <field name="Description">Inductor</field>
+      </fields>
+      <libsource lib="Device" part="L" description="Inductor"/>
+      <property name="DCR" value="15.9 mohm max at 25C"/>
+      <property name="InductanceMinimum" value="3.136 uH screening sensitivity; hot guarantee open"/>
+      <property name="MFG P/N" value="XAL6060-562MEC"/>
+      <property name="Manufacturer" value="Coilcraft"/>
+      <property name="PackageSize" value="6.56x6.76x6.1 mm"/>
+      <property name="RatedCurrent" value="7.5 A at 20C rise (reference)"/>
+      <property name="SaturationCurrent" value="9.9 A typ at 30% L drop"/>
+      <property name="Status" value="Development; hot L/current/core-loss qualification open"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="inductor choke coil reactor magnetic"/>
+      <property name="ki_fp_filters" value="Choke_* *Coil* Inductor_* L_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>3f0b0518-b923-4d49-b5bb-a9da1a60087b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R400">
+      <value>31.6k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060331K6BEEA</field>
+        <field name="Manufacturer">Vishay</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W general P70</field>
+        <field name="Status">Development; procurement confirmation open</field>
+        <field name="TemperatureCoefficient">25 ppm/K</field>
+        <field name="TemperatureRange">-55 to +125 C general operation</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060331K6BEEA"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W general P70"/>
+      <property name="Status" value="Development; procurement confirmation open"/>
+      <property name="TemperatureCoefficient" value="25 ppm/K"/>
+      <property name="TemperatureRange" value="-55 to +125 C general operation"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>53075063-2b6b-4e7b-8fe1-c6ca366ab6d7</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R401">
+      <value>10.2k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060310K2BEEA</field>
+        <field name="Manufacturer">Vishay</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W general P70</field>
+        <field name="Status">Development; procurement confirmation open</field>
+        <field name="TemperatureCoefficient">25 ppm/K</field>
+        <field name="TemperatureRange">-55 to +125 C general operation</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060310K2BEEA"/>
+      <property name="Manufacturer" value="Vishay"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W general P70"/>
+      <property name="Status" value="Development; procurement confirmation open"/>
+      <property name="TemperatureCoefficient" value="25 ppm/K"/>
+      <property name="TemperatureRange" value="-55 to +125 C general operation"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>3be4d6bd-3a97-4ecc-9fae-c34140ecb9aa</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U400">
+      <value>LMR51635XDDCR</value>
+      <footprint>Ember_EPS_Power:TI_DDC0006A_SOT23_6_DRAFT</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/lmr51635.pdf</datasheet>
+      <fields>
+        <field name="Frequency">400 kHz PFM</field>
+        <field name="MFG P/N">LMR51635XDDCR</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">SOT-23-THN DDC6</field>
+        <field name="Status">Development; 2 A target conditional on thermal/loop/source qualification</field>
+        <field name="TemperatureRange">-40 to +150 C junction</field>
+        <field name="Footprint">Ember_EPS_Power:TI_DDC0006A_SOT23_6_DRAFT</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/lmr51635.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Ember_EPS_Power" part="LMR51635XDDCR_DRAFT_v2" description=""/>
+      <property name="Frequency" value="400 kHz PFM"/>
+      <property name="MFG P/N" value="LMR51635XDDCR"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="SOT-23-THN DDC6"/>
+      <property name="Status" value="Development; 2 A target conditional on thermal/loop/source qualification"/>
+      <property name="TemperatureRange" value="-40 to +150 C junction"/>
+      <property name="Sheetname" value="Essential 3V3"/>
+      <property name="Sheetfile" value="essential_3v3.kicad_sch"/>
+      <sheetpath names="/Essential 3V3/" tstamps="/f65fe20e-e663-42b7-8f35-60abec560633/"/>
+      <tstamps>32dd8095-2335-4b24-93e7-5672099bfeee</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="3"/>
+            <pin num="2"/>
+            <pin num="4"/>
+            <pin num="6"/>
+            <pin num="5"/>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C500">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GCM188L81H104KA57-01A.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X8L</field>
+        <field name="MFG P/N">GCM188L81H104KA57D</field>
+        <field name="PackageSize">0603</field>
+        <field name="Review status">EVM reference; effective capacitance acceptance open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GCM188L81H104KA57-01A.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X8L"/>
+      <property name="MFG P/N" value="GCM188L81H104KA57D"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Review status" value="EVM reference; effective capacitance acceptance open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>e46adf59-97c4-4fac-890f-46a659137d95</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C501">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GCM188L81H104KA57-01A.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X8L</field>
+        <field name="MFG P/N">GCM188L81H104KA57D</field>
+        <field name="PackageSize">0603</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GCM188L81H104KA57-01A.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X8L"/>
+      <property name="MFG P/N" value="GCM188L81H104KA57D"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>d0b2883c-24e9-427d-a741-dd8492969021</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C502">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Source status">TI EVM BOM reference; full effective-capacitance acceptance open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Source status" value="TI EVM BOM reference; full effective-capacitance acceptance open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>e5acf1d8-35bc-4b9d-850d-3cb90ee96464</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C503">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Source status">TI EVM BOM reference; full effective-capacitance acceptance open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Source status" value="TI EVM BOM reference; full effective-capacitance acceptance open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>a4c89522-67ce-496d-b55a-b8db6fb2a98f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C504">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Source status">TI EVM BOM reference; full effective-capacitance acceptance open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Source status" value="TI EVM BOM reference; full effective-capacitance acceptance open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>fc599f82-cabe-46fe-a707-fcad9d40f545</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C505">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Source status">TI EVM BOM reference; full effective-capacitance acceptance open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Source status" value="TI EVM BOM reference; full effective-capacitance acceptance open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>c8899f4a-a2e0-47f7-a858-83abe04c45b2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C506">
+      <value>68u</value>
+      <footprint>Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</footprint>
+      <datasheet>https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">Hybrid aluminum</field>
+        <field name="Footprint review">Manufacturer land geometry query-back/render checked; assembly/stencil qualification open</field>
+        <field name="Height">10.2 mm nominal; tolerance/mechanical acceptance open</field>
+        <field name="MFG P/N">EEHZA1H680P</field>
+        <field name="PackageSize">8 x 10.2 mm</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</field>
+        <field name="Datasheet">https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Dielectric" value="Hybrid aluminum"/>
+      <property name="Footprint review" value="Manufacturer land geometry query-back/render checked; assembly/stencil qualification open"/>
+      <property name="Height" value="10.2 mm nominal; tolerance/mechanical acceptance open"/>
+      <property name="MFG P/N" value="EEHZA1H680P"/>
+      <property name="PackageSize" value="8 x 10.2 mm"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>066dd9bd-e5ea-4c23-aef0-f035bf455967</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C507">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_0402_1005Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA2B3X7R1H104K050BB</field>
+        <field name="PackageSize">0402</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0402_1005Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA2B3X7R1H104K050BB"/>
+      <property name="PackageSize" value="0402"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>a94eaae6-5662-4b37-8fae-5caf413a38d6</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C508">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development bank voltage correction; effective capacitance/aging/temperature qualification open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development bank voltage correction; effective capacitance/aging/temperature qualification open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>908102aa-393e-49a6-89b2-ccb0dc72c236</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C509">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development bank voltage correction; effective capacitance/aging/temperature qualification open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development bank voltage correction; effective capacitance/aging/temperature qualification open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>92343a2c-741f-4d8e-ad2a-0138cb908a18</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C510">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development bank voltage correction; effective capacitance/aging/temperature qualification open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development bank voltage correction; effective capacitance/aging/temperature qualification open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>3ac82946-2ac9-4b3e-b233-c0a582b99360</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C511">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development bank voltage correction; effective capacitance/aging/temperature qualification open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development bank voltage correction; effective capacitance/aging/temperature qualification open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>726146c6-17b2-4167-97d9-aba1abd2b2fb</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C512">
+      <value>68u</value>
+      <footprint>Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</footprint>
+      <datasheet>https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</datasheet>
+      <description>Polarized capacitor</description>
+      <fields>
+        <field name="Dielectric">Hybrid aluminum</field>
+        <field name="Footprint review">Approved Panasonic F land; pad1 positive; assembly/stencil qualification open</field>
+        <field name="Height">10.2 mm nominal; tolerance/mechanical acceptance open</field>
+        <field name="MFG P/N">EEHZA1H680P</field>
+        <field name="PackageSize">8 x 10.2 mm</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</field>
+        <field name="Datasheet">https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</field>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Dielectric" value="Hybrid aluminum"/>
+      <property name="Footprint review" value="Approved Panasonic F land; pad1 positive; assembly/stencil qualification open"/>
+      <property name="Height" value="10.2 mm nominal; tolerance/mechanical acceptance open"/>
+      <property name="MFG P/N" value="EEHZA1H680P"/>
+      <property name="PackageSize" value="8 x 10.2 mm"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>5e984eda-9176-4ef5-b4d3-3a9cd79620ac</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C513">
+      <value>68u</value>
+      <footprint>Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</footprint>
+      <datasheet>https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</datasheet>
+      <description>Polarized capacitor</description>
+      <fields>
+        <field name="Dielectric">Hybrid aluminum</field>
+        <field name="Footprint review">Approved Panasonic F land; pad1 positive; assembly/stencil qualification open</field>
+        <field name="Height">10.2 mm nominal; tolerance/mechanical acceptance open</field>
+        <field name="MFG P/N">EEHZA1H680P</field>
+        <field name="PackageSize">8 x 10.2 mm</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</field>
+        <field name="Datasheet">https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</field>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Dielectric" value="Hybrid aluminum"/>
+      <property name="Footprint review" value="Approved Panasonic F land; pad1 positive; assembly/stencil qualification open"/>
+      <property name="Height" value="10.2 mm nominal; tolerance/mechanical acceptance open"/>
+      <property name="MFG P/N" value="EEHZA1H680P"/>
+      <property name="PackageSize" value="8 x 10.2 mm"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>bbbd3ba8-65d2-42a1-b2b3-b36b4ff96f58</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C514">
+      <value>68u</value>
+      <footprint>Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</footprint>
+      <datasheet>https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</datasheet>
+      <description>Polarized capacitor</description>
+      <fields>
+        <field name="Dielectric">Hybrid aluminum</field>
+        <field name="Footprint review">Approved Panasonic F land; pad1 positive; assembly/stencil qualification open</field>
+        <field name="Height">10.2 mm nominal; tolerance/mechanical acceptance open</field>
+        <field name="MFG P/N">EEHZA1H680P</field>
+        <field name="PackageSize">8 x 10.2 mm</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</field>
+        <field name="Datasheet">https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</field>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Dielectric" value="Hybrid aluminum"/>
+      <property name="Footprint review" value="Approved Panasonic F land; pad1 positive; assembly/stencil qualification open"/>
+      <property name="Height" value="10.2 mm nominal; tolerance/mechanical acceptance open"/>
+      <property name="MFG P/N" value="EEHZA1H680P"/>
+      <property name="PackageSize" value="8 x 10.2 mm"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>1ac44513-c554-4d51-b921-2b1fab9a3df3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C515">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_0402_1005Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA2B3X7R1H104K050BB</field>
+        <field name="PackageSize">0402</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0402_1005Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA2B3X7R1H104K050BB"/>
+      <property name="PackageSize" value="0402"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>404f1bba-240e-413d-8850-860fa736f26c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C516">
+      <value>75n</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM31C5C1H753JA01-01A-EN_PDF_CERAMICCAPACITORSMD</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">C0G</field>
+        <field name="MFG P/N">GRM31C5C1H753JA01L</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Tolerance">5%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM31C5C1H753JA01-01A-EN_PDF_CERAMICCAPACITORSMD</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="C0G"/>
+      <property name="MFG P/N" value="GRM31C5C1H753JA01L"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Tolerance" value="5%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>b702a97c-c41e-4cdb-9334-05f0436c2677</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C517">
+      <value>300p</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H301JA01-01A-EN_PDF_CERAMICCAPACITORSMD</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">C0G</field>
+        <field name="MFG P/N">GRM1885C1H301JA01D</field>
+        <field name="PackageSize">0603</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Tolerance">5%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_0603_1608Metric</field>
+        <field name="Datasheet">https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H301JA01-01A-EN_PDF_CERAMICCAPACITORSMD</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="C0G"/>
+      <property name="MFG P/N" value="GRM1885C1H301JA01D"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Tolerance" value="5%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>4c52ebe0-2f7a-40b9-88f8-e7957777fadd</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C518">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development bank voltage correction; effective capacitance/aging/temperature qualification open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development bank voltage correction; effective capacitance/aging/temperature qualification open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>999c1349-1203-494c-a35e-cfa9bb4f0496</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C519">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development bank voltage correction; effective capacitance/aging/temperature qualification open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development bank voltage correction; effective capacitance/aging/temperature qualification open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>bf8f09c8-15df-4f9d-ac6f-ab85e23a0989</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C520">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development bank voltage correction; effective capacitance/aging/temperature qualification open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development bank voltage correction; effective capacitance/aging/temperature qualification open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>b4ffdd63-d73c-4f4c-b59d-d97937a78220</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C521">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric</footprint>
+      <datasheet>https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">X7R</field>
+        <field name="MFG P/N">CGA5L1X7R1H106K160AC</field>
+        <field name="PackageSize">1206</field>
+        <field name="Review status">Development bank voltage correction; effective capacitance/aging/temperature qualification open</field>
+        <field name="Tolerance">10%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric</field>
+        <field name="Datasheet">https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="X7R"/>
+      <property name="MFG P/N" value="CGA5L1X7R1H106K160AC"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Review status" value="Development bank voltage correction; effective capacitance/aging/temperature qualification open"/>
+      <property name="Tolerance" value="10%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>73f24b20-5bb4-4202-8660-c8c74e9694a3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C522">
+      <value>68u</value>
+      <footprint>Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</footprint>
+      <datasheet>https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</datasheet>
+      <description>Polarized capacitor</description>
+      <fields>
+        <field name="Dielectric">Hybrid aluminum</field>
+        <field name="Footprint review">Approved Panasonic F land; pad1 positive; assembly/stencil qualification open</field>
+        <field name="Height">10.2 mm nominal; tolerance/mechanical acceptance open</field>
+        <field name="MFG P/N">EEHZA1H680P</field>
+        <field name="PackageSize">8 x 10.2 mm</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</field>
+        <field name="Datasheet">https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</field>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Dielectric" value="Hybrid aluminum"/>
+      <property name="Footprint review" value="Approved Panasonic F land; pad1 positive; assembly/stencil qualification open"/>
+      <property name="Height" value="10.2 mm nominal; tolerance/mechanical acceptance open"/>
+      <property name="MFG P/N" value="EEHZA1H680P"/>
+      <property name="PackageSize" value="8 x 10.2 mm"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>fba3f830-2867-4984-97bd-bae289d3a7b5</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C523">
+      <value>68u</value>
+      <footprint>Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</footprint>
+      <datasheet>https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</datasheet>
+      <description>Polarized capacitor</description>
+      <fields>
+        <field name="Dielectric">Hybrid aluminum</field>
+        <field name="Footprint review">Approved Panasonic F land; pad1 positive; assembly/stencil qualification open</field>
+        <field name="Height">10.2 mm nominal; tolerance/mechanical acceptance open</field>
+        <field name="MFG P/N">EEHZA1H680P</field>
+        <field name="PackageSize">8 x 10.2 mm</field>
+        <field name="Review status">Development selection; application qualification open</field>
+        <field name="Tolerance">20%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW</field>
+        <field name="Datasheet">https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P</field>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C_Polarized" description="Polarized capacitor"/>
+      <property name="Dielectric" value="Hybrid aluminum"/>
+      <property name="Footprint review" value="Approved Panasonic F land; pad1 positive; assembly/stencil qualification open"/>
+      <property name="Height" value="10.2 mm nominal; tolerance/mechanical acceptance open"/>
+      <property name="MFG P/N" value="EEHZA1H680P"/>
+      <property name="PackageSize" value="8 x 10.2 mm"/>
+      <property name="Review status" value="Development selection; application qualification open"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="CP_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>76c68ff2-1a81-4b25-8ad3-15fea1b03c82</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="L500">
+      <value>6u8</value>
+      <footprint>Inductor_SMD:L_Coilcraft_XAL7070-XXX</footprint>
+      <datasheet>https://www.coilcraft.com/en-us/products/power/high-voltage-inductors/xal/xal7070/xal7070-682/</datasheet>
+      <description>Inductor</description>
+      <fields>
+        <field name="DCR">19.6 mOhm maximum at 25 C</field>
+        <field name="Height">7.0 mm family reference; direct drawing verification open</field>
+        <field name="MFG P/N">XAL7070-682MEC</field>
+        <field name="PackageSize">XAL7070</field>
+        <field name="Rated current">6.8 A reference, 20 C rise at 25 C; not application rating</field>
+        <field name="Review status">Development selection; hot current/fault and thermal acceptance open</field>
+        <field name="Saturation current">12.8 A typical, 30% L drop at 25 C</field>
+        <field name="Tolerance">20%</field>
+        <field name="Footprint">Inductor_SMD:L_Coilcraft_XAL7070-XXX</field>
+        <field name="Datasheet">https://www.coilcraft.com/en-us/products/power/high-voltage-inductors/xal/xal7070/xal7070-682/</field>
+        <field name="Description">Inductor</field>
+      </fields>
+      <libsource lib="Device" part="L" description="Inductor"/>
+      <property name="DCR" value="19.6 mOhm maximum at 25 C"/>
+      <property name="Height" value="7.0 mm family reference; direct drawing verification open"/>
+      <property name="MFG P/N" value="XAL7070-682MEC"/>
+      <property name="PackageSize" value="XAL7070"/>
+      <property name="Rated current" value="6.8 A reference, 20 C rise at 25 C; not application rating"/>
+      <property name="Review status" value="Development selection; hot current/fault and thermal acceptance open"/>
+      <property name="Saturation current" value="12.8 A typical, 30% L drop at 25 C"/>
+      <property name="Tolerance" value="20%"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="inductor choke coil reactor magnetic"/>
+      <property name="ki_fp_filters" value="Choke_* *Coil* Inductor_* L_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>2dfae252-91c5-4296-afe5-65055897a825</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R500">
+      <value>39.2k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060339K2BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W @70 C general mode</field>
+        <field name="Review status">Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060339K2BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W @70 C general mode"/>
+      <property name="Review status" value="Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>c8c600e5-1d29-45ed-ad5e-802bea5301b9</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R501">
+      <value>16.9k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060316K9BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W @70 C general mode</field>
+        <field name="Review status">Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060316K9BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W @70 C general mode"/>
+      <property name="Review status" value="Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>ff80238f-9fba-4301-82b9-e21154ffddfb</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R502">
+      <value>49.3k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060349K3BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W @70 C general mode</field>
+        <field name="Review status">Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060349K3BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W @70 C general mode"/>
+      <property name="Review status" value="Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>1ab0cdcb-bd30-4689-925b-6b969a8cd00a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R503">
+      <value>20m</value>
+      <footprint>Resistor_SMD:R_1206_3216Metric</footprint>
+      <datasheet>https://www.bourns.com/docs/product-datasheets/crf.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">CRF1206-FZ-R020ELF</field>
+        <field name="PackageSize">1206</field>
+        <field name="Power">1 W @70 C</field>
+        <field name="TCR">50 ppm/K</field>
+        <field name="Tolerance">1%</field>
+        <field name="Footprint">Resistor_SMD:R_1206_3216Metric</field>
+        <field name="Datasheet">https://www.bourns.com/docs/product-datasheets/crf.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="CRF1206-FZ-R020ELF"/>
+      <property name="PackageSize" value="1206"/>
+      <property name="Power" value="1 W @70 C"/>
+      <property name="TCR" value="50 ppm/K"/>
+      <property name="Tolerance" value="1%"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>a41f4e30-a5d1-4ab1-8e1c-da0513032f88</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R504">
+      <value>31.6k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060331K6BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W @70 C general mode</field>
+        <field name="Review status">Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060331K6BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W @70 C general mode"/>
+      <property name="Review status" value="Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>5e03ca48-6cf6-4f5f-a815-54c09f24cd3a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R505">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060310K0BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W @70 C general mode</field>
+        <field name="Review status">Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060310K0BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W @70 C general mode"/>
+      <property name="Review status" value="Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>b0d19bfa-5f3d-4b8d-b693-0302893bf033</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R506">
+      <value>3.74k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW06033K74BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W @70 C general mode</field>
+        <field name="Review status">Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW06033K74BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W @70 C general mode"/>
+      <property name="Review status" value="Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>f00a3fa5-0043-48e5-9efb-5d1f4c80daa6</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R507">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>https://www.vishay.com/docs/28758/tnpw_e3.pdf</datasheet>
+      <description>Resistor</description>
+      <fields>
+        <field name="MFG P/N">TNPW060310K0BEEA</field>
+        <field name="PackageSize">0603</field>
+        <field name="Power">0.11 W @70 C general mode</field>
+        <field name="Review status">Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open</field>
+        <field name="TCR">25 ppm/K</field>
+        <field name="Tolerance">0.1%</field>
+        <field name="Footprint">Resistor_SMD:R_0603_1608Metric</field>
+        <field name="Datasheet">https://www.vishay.com/docs/28758/tnpw_e3.pdf</field>
+        <field name="Description">Resistor</field>
+      </fields>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="MFG P/N" value="TNPW060310K0BEEA"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Power" value="0.11 W @70 C general mode"/>
+      <property name="Review status" value="Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open"/>
+      <property name="TCR" value="25 ppm/K"/>
+      <property name="Tolerance" value="0.1%"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <property name="ki_fp_filters" value="R_*"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>27537d12-4319-40b9-8756-186e9c9d0a53</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U500">
+      <value>TPS
+552872</value>
+      <footprint>Ember_EPS_Recovery:TI_RYQ0021A_DRAFT</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/tps552872.pdf</datasheet>
+      <fields>
+        <field name="MFG P/N">TPS552872RYQR</field>
+        <field name="Review">CUSTOM — REVIEW REQUIRED</field>
+        <field name="Footprint">Ember_EPS_Recovery:TI_RYQ0021A_DRAFT</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tps552872.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="Ember_EPS_Recovery" part="TPS552872RYQR_REVIEW" description=""/>
+      <property name="MFG P/N" value="TPS552872RYQR"/>
+      <property name="Review" value="CUSTOM — REVIEW REQUIRED"/>
+      <property name="Sheetname" value="Recovery 5V converter"/>
+      <property name="Sheetfile" value="recovery_5v.kicad_sch"/>
+      <sheetpath names="/Recovery 5V converter/" tstamps="/db3cadf5-bca6-4a2a-9514-e7323a7f1145/"/>
+      <tstamps>8cd24c20-aef0-4456-92af-817efc5c781b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="7"/>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="16"/>
+            <pin num="21"/>
+            <pin num="18"/>
+            <pin num="20"/>
+            <pin num="8"/>
+            <pin num="17"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="19"/>
+            <pin num="11"/>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="14"/>
+            <pin num="15"/>
+            <pin num="3"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Connector_Generic" part="Conn_01x02">
+      <description>Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x02</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x05">
+      <description>Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x05</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C_Polarized">
+      <description>Polarized capacitor</description>
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C_Polarized</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Polarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="L">
+      <description>Inductor</description>
+      <footprints>
+        <fp>Choke_*</fp>
+        <fp>*Coil*</fp>
+        <fp>Inductor_*</fp>
+        <fp>L_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">L</field>
+        <field name="Value">L</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Inductor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Resistor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Ember_EPS_Candidates" part="ECS_3225MV_DRAFT_v2">
+      <docs>https://ecsxtal.com/store/pdf/ECS-3225MV.pdf</docs>
+      <fields>
+        <field name="Reference">Y</field>
+        <field name="Value">ECS-3225MV-160-BN-TR</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">https://ecsxtal.com/store/pdf/ECS-3225MV.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="EN" type="input"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="OUT" type="tri_state"/>
+        <pin num="4" name="VDD" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Ember_EPS_Candidates" part="TCAN3413D_DRAFT_v3">
+      <docs>https://www.ti.com/lit/ds/symlink/tcan3413.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TCAN3413DR</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tcan3413.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="TXD" type="input"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="VCC" type="power_in"/>
+        <pin num="4" name="RXD" type="tri_state"/>
+        <pin num="5" name="VIO" type="power_in"/>
+        <pin num="6" name="CANL" type="bidirectional"/>
+        <pin num="7" name="CANH" type="bidirectional"/>
+        <pin num="8" name="STB" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="Ember_EPS_Power" part="LMR51635XDDCR_DRAFT_v2">
+      <docs>https://www.ti.com/lit/ds/symlink/lmr51635.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LMR51635XDDCR</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/lmr51635.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="FB" type="input"/>
+        <pin num="2" name="EN" type="input"/>
+        <pin num="3" name="VIN" type="power_in"/>
+        <pin num="4" name="GND" type="power_in"/>
+        <pin num="5" name="SW" type="power_out"/>
+        <pin num="6" name="CB" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Ember_EPS_Recovery" part="TPS552872RYQR_REVIEW">
+      <docs>https://www.ti.com/lit/ds/symlink/tps552872.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TPS552872RYQR</field>
+        <field name="Footprint">Ember_EPS_Recovery:TI_RYQ0021A_DRAFT</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tps552872.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="EN/UVLO" type="input"/>
+        <pin num="2" name="MODE" type="input"/>
+        <pin num="3" name="PG" type="open_collector"/>
+        <pin num="4" name="CC" type="open_collector"/>
+        <pin num="5" name="DITH/SYNC" type="input"/>
+        <pin num="6" name="FSW" type="input"/>
+        <pin num="7" name="VIN" type="power_in"/>
+        <pin num="8" name="SW1" type="passive"/>
+        <pin num="9" name="PGND" type="power_in"/>
+        <pin num="10" name="SW2" type="passive"/>
+        <pin num="11" name="VOUT" type="power_out"/>
+        <pin num="12" name="ISP" type="input"/>
+        <pin num="13" name="ISN" type="input"/>
+        <pin num="14" name="FB" type="input"/>
+        <pin num="15" name="COMP" type="output"/>
+        <pin num="16" name="CDC" type="output"/>
+        <pin num="17" name="AGND" type="power_in"/>
+        <pin num="18" name="VCC" type="power_out"/>
+        <pin num="19" name="BOOT2" type="passive"/>
+        <pin num="20" name="BOOT1" type="passive"/>
+        <pin num="21" name="EXTVCC" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="MCU_ST_STM32G0" part="STM32G0B1KETxN">
+      <description>STMicroelectronics Arm Cortex-M0+ MCU, 512KB flash, 144KB RAM, 64 MHz, 1.7-3.6V, 29 GPIO, LQFP32</description>
+      <docs>https://www.st.com/resource/en/datasheet/stm32g0b1ke.pdf</docs>
+      <footprints>
+        <fp>LQFP*7x7mm*P0.8mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">STM32G0B1KETxN</field>
+        <field name="Footprint">Package_QFP:LQFP-32_7x7mm_P0.8mm</field>
+        <field name="Datasheet">https://www.st.com/resource/en/datasheet/stm32g0b1ke.pdf</field>
+        <field name="Description">STMicroelectronics Arm Cortex-M0+ MCU, 512KB flash, 144KB RAM, 64 MHz, 1.7-3.6V, 29 GPIO, LQFP32</field>
+      </fields>
+      <pins>
+        <pin num="1" name="PB9" type="bidirectional"/>
+        <pin num="2" name="PC14" type="bidirectional"/>
+        <pin num="3" name="PC15" type="bidirectional"/>
+        <pin num="4" name="VDD" type="power_in"/>
+        <pin num="5" name="VSS" type="power_in"/>
+        <pin num="6" name="PF2" type="bidirectional"/>
+        <pin num="7" name="PA0" type="bidirectional"/>
+        <pin num="8" name="PA1" type="bidirectional"/>
+        <pin num="9" name="PA2" type="bidirectional"/>
+        <pin num="10" name="PA3" type="bidirectional"/>
+        <pin num="11" name="PA4" type="bidirectional"/>
+        <pin num="12" name="PA5" type="bidirectional"/>
+        <pin num="13" name="PA6" type="bidirectional"/>
+        <pin num="14" name="PA7" type="bidirectional"/>
+        <pin num="15" name="PB0" type="bidirectional"/>
+        <pin num="16" name="PB1" type="bidirectional"/>
+        <pin num="17" name="PB15" type="bidirectional"/>
+        <pin num="18" name="PA8" type="bidirectional"/>
+        <pin num="19" name="PA9/UCPD1_DBCC1" type="bidirectional"/>
+        <pin num="20" name="VDD" type="power_in"/>
+        <pin num="21" name="PA10/UCPD1_DBCC2" type="bidirectional"/>
+        <pin num="22" name="PA9/PA11" type="bidirectional"/>
+        <pin num="23" name="PA10/PA12" type="bidirectional"/>
+        <pin num="24" name="PA13" type="bidirectional"/>
+        <pin num="25" name="PA14" type="bidirectional"/>
+        <pin num="26" name="PD0" type="bidirectional"/>
+        <pin num="27" name="PD1" type="bidirectional"/>
+        <pin num="28" name="PD2" type="bidirectional"/>
+        <pin num="29" name="PD3" type="bidirectional"/>
+        <pin num="30" name="PB6" type="bidirectional"/>
+        <pin num="31" name="PB7" type="bidirectional"/>
+        <pin num="32" name="PB8" type="bidirectional"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector_Generic">
+      <uri>${KICAD10_SYMBOL_DIR}/Connector_Generic.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>${KICAD10_SYMBOL_DIR}/Device.kicad_sym</uri>
+    </library>
+    <library logical="Ember_EPS_Candidates">
+      <uri>${KIPRJMOD}/../libraries/Ember_EPS_Candidates.kicad_sym</uri>
+    </library>
+    <library logical="Ember_EPS_Power">
+      <uri>${KIPRJMOD}/../libraries/Ember_EPS_Power.kicad_sym</uri>
+    </library>
+    <library logical="Ember_EPS_Recovery">
+      <uri>${KIPRJMOD}/../libraries/Ember_EPS_Recovery.kicad_sym</uri>
+    </library>
+    <library logical="MCU_ST_STM32G0">
+      <uri>${KICAD10_SYMBOL_DIR}/MCU_ST_STM32G0.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+3V3" class="Default">
+      <node ref="C100" pin="1" pintype="passive"/>
+      <node ref="C101" pin="1" pintype="passive"/>
+      <node ref="C102" pin="1" pintype="passive"/>
+      <node ref="C103" pin="1" pintype="passive"/>
+      <node ref="C104" pin="1" pintype="passive"/>
+      <node ref="C105" pin="1" pintype="passive"/>
+      <node ref="C106" pin="1" pintype="passive"/>
+      <node ref="C107" pin="1" pintype="passive"/>
+      <node ref="C108" pin="1" pintype="passive"/>
+      <node ref="C109" pin="1" pintype="passive"/>
+      <node ref="C110" pin="1" pintype="passive"/>
+      <node ref="C111" pin="1" pintype="passive"/>
+      <node ref="C404" pin="1" pintype="passive"/>
+      <node ref="C405" pin="1" pintype="passive"/>
+      <node ref="C406" pin="1" pintype="passive"/>
+      <node ref="C407" pin="1" pintype="passive"/>
+      <node ref="C408" pin="1" pintype="passive"/>
+      <node ref="C409" pin="1" pintype="passive"/>
+      <node ref="C410" pin="1" pintype="passive"/>
+      <node ref="C411" pin="1" pintype="passive"/>
+      <node ref="J100" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="L400" pin="2" pinfunction="2_2" pintype="passive"/>
+      <node ref="R101" pin="1" pintype="passive"/>
+      <node ref="R102" pin="1" pintype="passive"/>
+      <node ref="R103" pin="1" pintype="passive"/>
+      <node ref="R104" pin="1" pintype="passive"/>
+      <node ref="R105" pin="1" pintype="passive"/>
+      <node ref="R400" pin="1" pintype="passive"/>
+      <node ref="R507" pin="1" pintype="passive"/>
+      <node ref="U100" pin="20" pinfunction="VDD_20" pintype="power_in"/>
+      <node ref="U100" pin="4" pinfunction="VDD_4" pintype="power_in"/>
+      <node ref="U101" pin="3" pinfunction="VCC_3" pintype="power_in"/>
+      <node ref="U101" pin="5" pinfunction="VIO_5" pintype="power_in"/>
+      <node ref="U102" pin="3" pinfunction="VCC_3" pintype="power_in"/>
+      <node ref="U102" pin="5" pinfunction="VIO_5" pintype="power_in"/>
+      <node ref="Y100" pin="4" pinfunction="VDD_4" pintype="power_in"/>
+    </net>
+    <net code="2" name="/CAN interfaces/CAN_B_H" class="Default">
+      <node ref="J102" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="R107" pin="1" pintype="passive"/>
+      <node ref="U102" pin="7" pinfunction="CANH_7" pintype="bidirectional"/>
+    </net>
+    <net code="3" name="/CAN interfaces/CAN_B_L" class="Default">
+      <node ref="J102" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="R107" pin="2" pintype="passive"/>
+      <node ref="U102" pin="6" pinfunction="CANL_6" pintype="bidirectional"/>
+    </net>
+    <net code="4" name="/CAN interfaces/CAN_H" class="Default">
+      <node ref="J101" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+      <node ref="R106" pin="1" pintype="passive"/>
+      <node ref="U101" pin="7" pinfunction="CANH_7" pintype="bidirectional"/>
+    </net>
+    <net code="5" name="/CAN interfaces/CAN_L" class="Default">
+      <node ref="J101" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="R106" pin="2" pintype="passive"/>
+      <node ref="U101" pin="6" pinfunction="CANL_6" pintype="bidirectional"/>
+    </net>
+    <net code="6" name="/Controller/EPS_HSE_16M" class="Default">
+      <node ref="U100" pin="2" pinfunction="PC14_2" pintype="bidirectional"/>
+      <node ref="Y100" pin="3" pinfunction="OUT_3" pintype="tri_state"/>
+    </net>
+    <net code="7" name="/Controller/EPS_NRST" class="Default">
+      <node ref="C112" pin="1" pintype="passive"/>
+      <node ref="J100" pin="4" pinfunction="Pin_4_4" pintype="passive"/>
+      <node ref="U100" pin="6" pinfunction="PF2_6" pintype="bidirectional"/>
+    </net>
+    <net code="8" name="/Controller/EPS_OSC_EN" class="Default">
+      <node ref="R105" pin="2" pintype="passive"/>
+      <node ref="Y100" pin="1" pinfunction="EN_1" pintype="input"/>
+    </net>
+    <net code="9" name="/Controller/EPS_SWCLK" class="Default">
+      <node ref="J100" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+      <node ref="U100" pin="25" pinfunction="PA14_25" pintype="bidirectional"/>
+    </net>
+    <net code="10" name="/Controller/EPS_SWDIO" class="Default">
+      <node ref="J100" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+      <node ref="U100" pin="24" pinfunction="PA13_24" pintype="bidirectional"/>
+    </net>
+    <net code="11" name="/Controller/REC5_FAULT" class="Default">
+      <node ref="U100" pin="14" pinfunction="PA7_14" pintype="bidirectional"/>
+    </net>
+    <net code="12" name="/Controller/REC5_RESET" class="Default">
+      <node ref="U100" pin="13" pinfunction="PA6_13" pintype="bidirectional"/>
+    </net>
+    <net code="13" name="/Controller/SRC_FAULT" class="Default">
+      <node ref="U100" pin="3" pinfunction="PC15_3" pintype="bidirectional"/>
+    </net>
+    <net code="14" name="/Essential 3V3/BUCK33_CB" class="Default">
+      <node ref="C403" pin="1" pintype="passive"/>
+      <node ref="U400" pin="6" pinfunction="CB_6" pintype="passive"/>
+    </net>
+    <net code="15" name="/Essential 3V3/BUCK33_FB" class="Default">
+      <node ref="R400" pin="2" pintype="passive"/>
+      <node ref="R401" pin="1" pintype="passive"/>
+      <node ref="U400" pin="1" pinfunction="FB_1" pintype="input"/>
+    </net>
+    <net code="16" name="/Essential 3V3/BUCK33_SW" class="Default">
+      <node ref="C403" pin="2" pintype="passive"/>
+      <node ref="L400" pin="1" pinfunction="1_1" pintype="passive"/>
+      <node ref="U400" pin="5" pinfunction="SW_5" pintype="power_out"/>
+    </net>
+    <net code="17" name="/Recovery 5V converter/REC5_BOOT1" class="Default">
+      <node ref="C500" pin="1" pintype="passive"/>
+      <node ref="U500" pin="20" pinfunction="BOOT1_20" pintype="passive"/>
+    </net>
+    <net code="18" name="/Recovery 5V converter/REC5_BOOT2" class="Default">
+      <node ref="C501" pin="2" pintype="passive"/>
+      <node ref="U500" pin="19" pinfunction="BOOT2_19" pintype="passive"/>
+    </net>
+    <net code="19" name="/Recovery 5V converter/REC5_COMP" class="Default">
+      <node ref="C517" pin="1" pintype="passive"/>
+      <node ref="R506" pin="1" pintype="passive"/>
+      <node ref="U500" pin="15" pinfunction="COMP_15" pintype="output"/>
+    </net>
+    <net code="20" name="/Recovery 5V converter/REC5_COMP_ZERO" class="Default">
+      <node ref="C516" pin="1" pintype="passive"/>
+      <node ref="R506" pin="2" pintype="passive"/>
+    </net>
+    <net code="21" name="/Recovery 5V converter/REC5_EN" class="Default">
+      <node ref="R500" pin="2" pintype="passive"/>
+      <node ref="R501" pin="1" pintype="passive"/>
+      <node ref="U500" pin="1" pinfunction="EN/UVLO_1" pintype="input"/>
+    </net>
+    <net code="22" name="/Recovery 5V converter/REC5_FB" class="Default">
+      <node ref="R504" pin="2" pintype="passive"/>
+      <node ref="R505" pin="1" pintype="passive"/>
+      <node ref="U500" pin="14" pinfunction="FB_14" pintype="input"/>
+    </net>
+    <net code="23" name="/Recovery 5V converter/REC5_FSW" class="Default">
+      <node ref="R502" pin="1" pintype="passive"/>
+      <node ref="U500" pin="6" pinfunction="FSW_6" pintype="input"/>
+    </net>
+    <net code="24" name="/Recovery 5V converter/REC5_PG" class="Default">
+      <node ref="R507" pin="2" pintype="passive"/>
+      <node ref="U500" pin="3" pinfunction="PG_3" pintype="open_collector"/>
+    </net>
+    <net code="25" name="/Recovery 5V converter/REC5_SW1" class="Default">
+      <node ref="C500" pin="2" pintype="passive"/>
+      <node ref="L500" pin="1" pinfunction="1_1" pintype="passive"/>
+      <node ref="U500" pin="8" pinfunction="SW1_8" pintype="passive"/>
+    </net>
+    <net code="26" name="/Recovery 5V converter/REC5_SW2" class="Default">
+      <node ref="C501" pin="1" pintype="passive"/>
+      <node ref="L500" pin="2" pinfunction="2_2" pintype="passive"/>
+      <node ref="U500" pin="10" pinfunction="SW2_10" pintype="passive"/>
+    </net>
+    <net code="27" name="5V0_RECOVERY_RAW" class="Default">
+      <node ref="C508" pin="1" pintype="passive"/>
+      <node ref="C509" pin="1" pintype="passive"/>
+      <node ref="C510" pin="1" pintype="passive"/>
+      <node ref="C511" pin="1" pintype="passive"/>
+      <node ref="C512" pin="1" pintype="passive"/>
+      <node ref="C513" pin="1" pintype="passive"/>
+      <node ref="C514" pin="1" pintype="passive"/>
+      <node ref="C515" pin="1" pintype="passive"/>
+      <node ref="C518" pin="1" pintype="passive"/>
+      <node ref="C519" pin="1" pintype="passive"/>
+      <node ref="C520" pin="1" pintype="passive"/>
+      <node ref="C521" pin="1" pintype="passive"/>
+      <node ref="C522" pin="1" pintype="passive"/>
+      <node ref="C523" pin="1" pintype="passive"/>
+      <node ref="R503" pin="1" pintype="passive"/>
+      <node ref="U500" pin="11" pinfunction="VOUT_11" pintype="power_out"/>
+      <node ref="U500" pin="12" pinfunction="ISP_12" pintype="input"/>
+    </net>
+    <net code="28" name="5V0_RECOVERY_REG" class="Default">
+      <node ref="R503" pin="2" pintype="passive"/>
+      <node ref="R504" pin="1" pintype="passive"/>
+      <node ref="U500" pin="13" pinfunction="ISN_13" pintype="input"/>
+    </net>
+    <net code="29" name="5V2_RECOVERY_BIAS" class="Default">
+      <node ref="C502" pin="1" pintype="passive"/>
+      <node ref="U500" pin="18" pinfunction="VCC_18" pintype="power_out"/>
+    </net>
+    <net code="30" name="EPS_CAN_A_RX" class="Default">
+      <node ref="U100" pin="22" pinfunction="PA9/PA11_22" pintype="bidirectional"/>
+      <node ref="U101" pin="4" pinfunction="RXD_4" pintype="tri_state"/>
+    </net>
+    <net code="31" name="EPS_CAN_A_STB" class="Default">
+      <node ref="R102" pin="2" pintype="passive"/>
+      <node ref="U100" pin="1" pinfunction="PB9_1" pintype="bidirectional"/>
+      <node ref="U101" pin="8" pinfunction="STB_8" pintype="input"/>
+    </net>
+    <net code="32" name="EPS_CAN_A_TX" class="Default">
+      <node ref="R101" pin="2" pintype="passive"/>
+      <node ref="U100" pin="23" pinfunction="PA10/PA12_23" pintype="bidirectional"/>
+      <node ref="U101" pin="1" pinfunction="TXD_1" pintype="input"/>
+    </net>
+    <net code="33" name="EPS_CAN_B_RX" class="Default">
+      <node ref="U100" pin="15" pinfunction="PB0_15" pintype="bidirectional"/>
+      <node ref="U102" pin="4" pinfunction="RXD_4" pintype="tri_state"/>
+    </net>
+    <net code="34" name="EPS_CAN_B_STB" class="Default">
+      <node ref="R104" pin="2" pintype="passive"/>
+      <node ref="U100" pin="27" pinfunction="PD1_27" pintype="bidirectional"/>
+      <node ref="U102" pin="8" pinfunction="STB_8" pintype="input"/>
+    </net>
+    <net code="35" name="EPS_CAN_B_TX" class="Default">
+      <node ref="R103" pin="2" pintype="passive"/>
+      <node ref="U100" pin="16" pinfunction="PB1_16" pintype="bidirectional"/>
+      <node ref="U102" pin="1" pinfunction="TXD_1" pintype="input"/>
+    </net>
+    <net code="36" name="GND" class="Default">
+      <node ref="C100" pin="2" pintype="passive"/>
+      <node ref="C101" pin="2" pintype="passive"/>
+      <node ref="C102" pin="2" pintype="passive"/>
+      <node ref="C103" pin="2" pintype="passive"/>
+      <node ref="C104" pin="2" pintype="passive"/>
+      <node ref="C105" pin="2" pintype="passive"/>
+      <node ref="C106" pin="2" pintype="passive"/>
+      <node ref="C107" pin="2" pintype="passive"/>
+      <node ref="C108" pin="2" pintype="passive"/>
+      <node ref="C109" pin="2" pintype="passive"/>
+      <node ref="C110" pin="2" pintype="passive"/>
+      <node ref="C111" pin="2" pintype="passive"/>
+      <node ref="C112" pin="2" pintype="passive"/>
+      <node ref="C400" pin="2" pintype="passive"/>
+      <node ref="C401" pin="2" pintype="passive"/>
+      <node ref="C402" pin="2" pintype="passive"/>
+      <node ref="C404" pin="2" pintype="passive"/>
+      <node ref="C405" pin="2" pintype="passive"/>
+      <node ref="C406" pin="2" pintype="passive"/>
+      <node ref="C407" pin="2" pintype="passive"/>
+      <node ref="C408" pin="2" pintype="passive"/>
+      <node ref="C409" pin="2" pintype="passive"/>
+      <node ref="C410" pin="2" pintype="passive"/>
+      <node ref="C411" pin="2" pintype="passive"/>
+      <node ref="C502" pin="2" pintype="passive"/>
+      <node ref="C503" pin="2" pintype="passive"/>
+      <node ref="C504" pin="2" pintype="passive"/>
+      <node ref="C505" pin="2" pintype="passive"/>
+      <node ref="C506" pin="2" pintype="passive"/>
+      <node ref="C507" pin="2" pintype="passive"/>
+      <node ref="C508" pin="2" pintype="passive"/>
+      <node ref="C509" pin="2" pintype="passive"/>
+      <node ref="C510" pin="2" pintype="passive"/>
+      <node ref="C511" pin="2" pintype="passive"/>
+      <node ref="C512" pin="2" pintype="passive"/>
+      <node ref="C513" pin="2" pintype="passive"/>
+      <node ref="C514" pin="2" pintype="passive"/>
+      <node ref="C515" pin="2" pintype="passive"/>
+      <node ref="C516" pin="2" pintype="passive"/>
+      <node ref="C517" pin="2" pintype="passive"/>
+      <node ref="C518" pin="2" pintype="passive"/>
+      <node ref="C519" pin="2" pintype="passive"/>
+      <node ref="C520" pin="2" pintype="passive"/>
+      <node ref="C521" pin="2" pintype="passive"/>
+      <node ref="C522" pin="2" pintype="passive"/>
+      <node ref="C523" pin="2" pintype="passive"/>
+      <node ref="J100" pin="5" pinfunction="Pin_5_5" pintype="passive"/>
+      <node ref="R401" pin="2" pintype="passive"/>
+      <node ref="R501" pin="2" pintype="passive"/>
+      <node ref="R502" pin="2" pintype="passive"/>
+      <node ref="R505" pin="2" pintype="passive"/>
+      <node ref="U100" pin="5" pinfunction="VSS_5" pintype="power_in"/>
+      <node ref="U101" pin="2" pinfunction="GND_2" pintype="power_in"/>
+      <node ref="U102" pin="2" pinfunction="GND_2" pintype="power_in"/>
+      <node ref="U400" pin="4" pinfunction="GND_4" pintype="power_in"/>
+      <node ref="U500" pin="17" pinfunction="AGND_17" pintype="power_in"/>
+      <node ref="U500" pin="2" pinfunction="MODE_2" pintype="input"/>
+      <node ref="U500" pin="5" pinfunction="DITH/SYNC_5" pintype="input"/>
+      <node ref="U500" pin="9" pinfunction="PGND_9" pintype="power_in"/>
+      <node ref="Y100" pin="2" pinfunction="GND_2" pintype="power_in"/>
+    </net>
+    <net code="37" name="SYS_PWR_PERMITTED" class="Default">
+      <node ref="C400" pin="1" pintype="passive"/>
+      <node ref="C401" pin="1" pintype="passive"/>
+      <node ref="C402" pin="1" pintype="passive"/>
+      <node ref="C503" pin="1" pintype="passive"/>
+      <node ref="C504" pin="1" pintype="passive"/>
+      <node ref="C505" pin="1" pintype="passive"/>
+      <node ref="C506" pin="1" pintype="passive"/>
+      <node ref="C507" pin="1" pintype="passive"/>
+      <node ref="R500" pin="1" pintype="passive"/>
+      <node ref="U400" pin="2" pinfunction="EN_2" pintype="input"/>
+      <node ref="U400" pin="3" pinfunction="VIN_3" pintype="power_in"/>
+      <node ref="U500" pin="7" pinfunction="VIN_7" pintype="power_in"/>
+    </net>
+    <net code="38" name="unconnected-(U100-PA0-Pad7)" class="Default">
+      <node ref="U100" pin="7" pinfunction="PA0_7" pintype="bidirectional"/>
+    </net>
+    <net code="39" name="unconnected-(U100-PA1-Pad8)" class="Default">
+      <node ref="U100" pin="8" pinfunction="PA1_8" pintype="bidirectional"/>
+    </net>
+    <net code="40" name="unconnected-(U100-PA2-Pad9)" class="Default">
+      <node ref="U100" pin="9" pinfunction="PA2_9" pintype="bidirectional"/>
+    </net>
+    <net code="41" name="unconnected-(U100-PA3-Pad10)" class="Default">
+      <node ref="U100" pin="10" pinfunction="PA3_10" pintype="bidirectional"/>
+    </net>
+    <net code="42" name="unconnected-(U100-PA4-Pad11)" class="Default">
+      <node ref="U100" pin="11" pinfunction="PA4_11" pintype="bidirectional"/>
+    </net>
+    <net code="43" name="unconnected-(U100-PA5-Pad12)" class="Default">
+      <node ref="U100" pin="12" pinfunction="PA5_12" pintype="bidirectional"/>
+    </net>
+    <net code="44" name="unconnected-(U100-PA8-Pad18)" class="Default">
+      <node ref="U100" pin="18" pinfunction="PA8_18" pintype="bidirectional"/>
+    </net>
+    <net code="45" name="unconnected-(U100-PA9/UCPD1_DBCC1-Pad19)" class="Default">
+      <node ref="U100" pin="19" pinfunction="PA9/UCPD1_DBCC1_19" pintype="bidirectional"/>
+    </net>
+    <net code="46" name="unconnected-(U100-PA10/UCPD1_DBCC2-Pad21)" class="Default">
+      <node ref="U100" pin="21" pinfunction="PA10/UCPD1_DBCC2_21" pintype="bidirectional"/>
+    </net>
+    <net code="47" name="unconnected-(U100-PB6-Pad30)" class="Default">
+      <node ref="U100" pin="30" pinfunction="PB6_30" pintype="bidirectional"/>
+    </net>
+    <net code="48" name="unconnected-(U100-PB7-Pad31)" class="Default">
+      <node ref="U100" pin="31" pinfunction="PB7_31" pintype="bidirectional"/>
+    </net>
+    <net code="49" name="unconnected-(U100-PB8-Pad32)" class="Default">
+      <node ref="U100" pin="32" pinfunction="PB8_32" pintype="bidirectional"/>
+    </net>
+    <net code="50" name="unconnected-(U100-PB15-Pad17)" class="Default">
+      <node ref="U100" pin="17" pinfunction="PB15_17" pintype="bidirectional"/>
+    </net>
+    <net code="51" name="unconnected-(U100-PD0-Pad26)" class="Default">
+      <node ref="U100" pin="26" pinfunction="PD0_26" pintype="bidirectional"/>
+    </net>
+    <net code="52" name="unconnected-(U100-PD2-Pad28)" class="Default">
+      <node ref="U100" pin="28" pinfunction="PD2_28" pintype="bidirectional"/>
+    </net>
+    <net code="53" name="unconnected-(U100-PD3-Pad29)" class="Default">
+      <node ref="U100" pin="29" pinfunction="PD3_29" pintype="bidirectional"/>
+    </net>
+    <net code="54" name="unconnected-(U500-CC-Pad4)" class="Default">
+      <node ref="U500" pin="4" pinfunction="CC_4" pintype="open_collector+no_connect"/>
+    </net>
+    <net code="55" name="unconnected-(U500-CDC-Pad16)" class="Default">
+      <node ref="U500" pin="16" pinfunction="CDC_16" pintype="output+no_connect"/>
+    </net>
+    <net code="56" name="unconnected-(U500-EXTVCC-Pad21)" class="Default">
+      <node ref="U500" pin="21" pinfunction="EXTVCC_21" pintype="input+no_connect"/>
+    </net>
+  </nets>
+</export>

@@ -8,7 +8,7 @@ The [provisional BOM and schematic checklist](rev_b_bom_and_schematic_checklist.
 
 The [pin allocation and circuit fit study](rev_b_pin_and_fit_study.md) establishes a provisional LQFP32 allocation and circuit-area budget. It recommends BQ40Z50 as the protection reference and four layers for evaluation; physical fit and final component selection remain open.
 
-Its controller circuit definition selects two essential-3.3-V TCAN3413DR transceiver candidates and a 16 MHz ECS oscillator candidate, with initial 500 kbit/s timing. CAN A standby now uses PB9; PD0 is reserved to avoid using its UCPD-related reset behavior for that control. Package maps, clock/reset checks and bench acceptance remain required.
+Its controller circuit definition selects two essential-3.3-V TCAN3413DR transceiver candidates and a 16 MHz ECS oscillator candidate, with initial 500 kbit/s timing. CAN A standby uses PB9. The 2026-10-24 [isolated BMS supply integration](rev_b_bms_isolated_supply_integration.md) uses former reserves PD0/PD3 for diagnostic fault and open-drain enable/reset, with explicit UCPD startup handling. The supply derives from permitted essential 3V3 so telemetry does not depend on recovery 5V. Package review, startup/source/fault checks and bench acceptance remain separate.
 
 The [source-isolation study](rev_b_source_isolation_study.md) recommends evaluating separate back-to-back P-channel pairs with direct hardware interlock control. It includes preliminary loss calculations and identifies depleted-pack recovery, inrush and cold solar voltage as unresolved acceptance gates.
 
@@ -19,6 +19,12 @@ The [BMS and temperature specification](rev_b_bms_and_temperature_spec.md) defin
 The [regulator and OV candidate study](rev_b_regulator_and_ov_candidates.md) carries forward LMR51635XDDCR for 3.3 V and LM5177DCPR for 5 V evaluation. The operator selected regulated 5 V for COMMS recovery down to the provisional 5 V pack floor, so the 5 V stage is buck-boost. Complete stages, fit and cutoff trip/reset windows remain unaccepted.
 
 The [power-stage sizing and fit checkpoint](rev_b_power_stage_sizing_and_fit.md) records illustrative rail-current cases, passive/FET constraints and larger converter reservations. It incorporates the operator’s 16 mm top standoff; usable height and complete stage ratings remain unverified.
+
+The [2026-10-23 5 V recovery design](rev_b_5v_recovery_design.md) evaluates TPS552872RYQR as a simpler integrated alternative. Its native development circuit passes electrical checks, conditional on the protected source envelope; LM5177 remains a fallback. Final BOM, startup/load-release, thermal and presentation acceptance remain open.
+
+The [5 V recovery closure/handoff](rev_b_5v_recovery_closure.md) records the subsequent 6.8 µH correction, selected passive MPNs, expanded tolerance checks and IHU startup requirements. The operator confirms COMMS TX defaults off with no other COMMS power controls, and selects −40 to +85 °C for electronics component screening only; actual electronics/battery operating temperatures remain open.
+
+The [completion ledger](rev_b_completion.md) tracks the remaining integrated design and the separately authorized Rev B PCB stage. The [MCU pinout correction](../verification/stm32_gp_candidate_verification.md) supersedes the earlier GP identity: the selected part is STM32G0B1KET6N.
 
 ## Agreed requirements
 
@@ -31,7 +37,7 @@ The [power-stage sizing and fit checkpoint](rev_b_power_stage_sizing_and_fit.md)
 | Power isolation | RBF insertion shuts down powered spacecraft functions, including charger and EPS MCU. Deployment switches also enforce hardware shutdown while stowed. |
 | RBF access | Exit through a spacecraft side; the side and location may be chosen to suit the EPS, structure and dispenser. Design the mounting and access arrangement rather than relying on an existing opening. |
 | Authority | EPS owns autonomous protection and load shedding; IHU requests operating states. IHU requests cannot override hardware interlocks or protection. |
-| Controller | STM32G0B1KE is the preferred MCU, pending package pin allocation. |
+| Controller | STM32G0B1KET6N selected on 2026-10-23 to match the intended N-variant allocation; earlier GP mapping claims are withdrawn. |
 | Communications | Separate CAN A and B. A is primary; B must provide recovery access after A fails. |
 | Rev A | Inspect damaged thermistor area later. Do not treat the current reworked circuit as a reference implementation. |
 
@@ -146,17 +152,17 @@ Shared stack rails cannot independently isolate consumers at EPS. The following 
 
 ## Managed loads and recovery power
 
-Recommend retaining the shared stack 3.3 V supply for essential consumers and placing payload auxiliary and COMMS transmit switches on their consuming boards. Add an EPS-side switch on the protected, interlocked battery feed to the payload. This is a proposed distribution design, pending circuit review and measured currents; it does not change existing pin assignments or signal ownership.
+Retain the shared stack 3.3 V supply for essential consumers and place payload peripheral and COMMS transmit switches on their consuming boards. Add an EPS-side switch on the protected, interlocked battery feed to both the payload always-on (AON) and main branches. This is a proposed distribution design, pending circuit review and measured currents; it does not change existing pin assignments or signal ownership.
 
 | Load group | Proposed switching location | Startup and shedding policy |
 |---|---|---|
 | EPS MCU, both CAN interfaces, IHU | Essential supply after hardware source interlocks | Start automatically when power is available; preserve during ordinary shedding. RBF and independent pack protection still remove power. |
 | COMMS controller, recovery CAN and receive path | Local essential branches of shared rails | Retain a ground recovery path in safe mode if its measured consumption fits the budget. Transmit permission starts disabled. If continuous receive is too expensive, define scheduled receive windows and an autonomous wake mechanism. |
-| Jetson main converter | EPS-side switch ahead of H2.45/H2.46, plus existing payload buck enable | Default off; EPS admits a bounded operating interval. Shed on low energy or local fault. Existing IHU `PAYLOAD_EN` still controls the local buck within EPS permission. |
-| Cameras and payload auxiliary electronics | Payload-local switch downstream of shared 3.3 V | Default off for nonessential branches; sequence with Jetson power according to module and peripheral requirements. Keep only an explicitly budgeted control interface alive if needed. |
+| Payload AON and main input | EPS-side switch ahead of H2.45/H2.46; carrier supervises its own main/peripheral sequence | Default off; EPS admits a bounded operating interval. Hold IHU `PAYLOAD_EN` low during input/AON startup. Removing VBAT also removes AON if no alternate source is present. |
+| Cameras and payload auxiliary electronics | Payload-local switched rails, generated from the admitted carrier inputs | Default off for nonessential branches; sequence with Jetson power according to module and peripheral requirements. The AON allocation belongs to the carrier input budget. |
 | COMMS transmit circuitry | COMMS-local switch or verified local power gating | Default off; admit transmit windows only when energy and independent RF inhibits permit. Disabling TX must preserve required receive/control circuitry. |
 
-The [payload carrier record](../../payload_compute/design/payload_carrier_pinmap.md), §§6.2–6.4, assigns Jetson converter power to `VBAT`, but cameras, interface parts and the bench-only M.2 socket to stack 3.3 V. Cutting the battery feed alone therefore does not power down the whole payload. The same record says stack 5 V is unconnected on the carrier, despite the broader consumer marking in the canonical map. Reconcile the actual circuits before changing that authority. Its current figures are design estimates, not measurements.
+The current [payload pin plan](../../payload_compute/design/payload_carrier_pinmap.md), “Module power and control” and “Stack boundaries,” supersedes the former carrier arrangement: `VBAT` feeds independent AON/main branches; stack +3V3/+5V pass through separately; cameras and M.2 use locally switched supplies. USB/bench sources can also power the carrier, so an EPS VBAT cutoff alone is not an all-source inhibit in bench configurations. Flight isolation must cover the alternate paths. The [bootstrap contract](../../payload_compute/design/bootstrap_input_contract.md) requires persistent unclean-session handling after complete AON loss; an EPS feed cycle is not evidence of a clean shutdown. IHU retains H1.50 `PAYLOAD_EN` ownership as its hard kill, and EPS must not drive it. This is an interface/documentation correction; it does not claim either board's unfinished input circuits are integrated or qualified.
 
 Switching H2.45/H2.46 also removes the voltage seen by the COMMS battery-monitor tap. Treat that reading as switched-feed voltage, not cell voltage. Ground battery telemetry should come from EPS with validity and provenance preserved. Before assigning any other consumer to this feed, account for the fact that the switch controls both parallel pins together.
 
@@ -174,7 +180,7 @@ After a trip, latch the affected load off until a defined recovery check passes.
 
 For switch selection, require voltage and transient margin, default-off enables, controlled inrush, fault response, thermal margin, and a discharge strategy compatible with the attached load. Validate output-to-input current paths in both powered and unpowered states. [TI's reverse-current application report](https://www.ti.com/lit/an/slva730/slva730.pdf) shows that blocking behavior depends on topology and device operating conditions; a generic load switch designation does not prove isolation. Signal interfaces also need power-off analysis: [TI SCDA015](https://www.ti.com/document-viewer/lit/html/scda015) describes back-power through signal protection paths. Check I2C, CAN, UART, GPIO, cameras and external bench connections with the payload off.
 
-Before setting ratings, measure each group's idle, active, startup and peak consumption, input capacitance, and acceptable rail droop. The [power model](../../../analysis/power/power_budget.py) currently uses a 200 mW placeholder continuous load, so its positive-energy result cannot establish a payload duty cycle. For illustration only, a 15 W converter output at an assumed 90% efficiency draws about 2.8 A from a 6.0 V feed, before other loads. The user's 2 A or more estimate is therefore not a sufficient peak-current rating. Use measured mode power, usable pack energy and orbit-average harvest to set operating windows.
+Before setting ratings, measure each group's idle, active, startup and peak consumption, input capacitance, and acceptable rail droop. The [power model](../../../analysis/power/power_budget.py) currently uses a 200 mW placeholder continuous load, so its positive-energy result cannot establish a payload duty cycle. The current [payload development budget](../../payload_compute/design/power_budget.md) allocates 18.075 W regulated for its flight illustration (15 W Jetson mode, no Wi-Fi/fan): 3.35 A at 6 V/90% aggregate efficiency, or 3.54 A at 85%. Applying 20% load margin at 90% gives 4.02 A; applying that same margin at 85% instead would require 4.25 A. These are distinct planning cases, not peak-current guarantees. A 2 A switch would not support even these illustrative steady loads. Actual module peaks/inrush, connector/contact sharing, pack limits and thermal performance remain unqualified. Use measured mode power, usable pack energy and orbit-average harvest to set operating windows.
 
 ## CAN fallback proposal
 
@@ -219,3 +225,7 @@ Keep charger-enable testing separate from protection acceptance. A working charg
 - Resolve board layer count, component-side clearance against the holder, and harness connection/retention details.
 
 This file owns the Rev B planning checklist. Link to it from broader TODOs rather than duplicating the work list. Existing canonical pin assignments and Rev A documentation remain unchanged until the corresponding implementation decision is made.
+
+## Source and 5 V fault-containment follow-up — 2026-10-23
+
+The [complete protection selection](rev_b_5v_recovery_protection_selection.md) advances the [earlier architecture record](rev_b_5v_recovery_fault_containment.md): separate LTC4364 source/recovery barriers, autonomous solar restart, latched rail containment, independent reset, gate discharge/clamps, source RC damping and rail fault-slew inductance. An isolated 81-part, two-sheet native study and executable transient screening now exist. Low-VCC accuracy, bounded source/consumer limits, package/parasitic and hot SOA acceptance, upstream fault-capacitor coordination, physical fit and integration remain open. No PCB layout or physical qualification is claimed.

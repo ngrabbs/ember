@@ -1,0 +1,144 @@
+[
+  {
+    "cmd": [
+      "/opt/homebrew/bin/kicad-cli",
+      "pcb",
+      "export",
+      "svg",
+      "--mode-single",
+      "--page-size-mode",
+      "2",
+      "--exclude-drawing-sheet",
+      "--sketch-pads-on-fab-layers",
+      "--layers",
+      "F.Cu,F.CrtYd",
+      "--output",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/board_copper.svg",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/disposable/swd_parts_check.kicad_pcb"
+    ],
+    "stdout": "Plotted to 'hardware/eps/verification/controller_rev_b/swd_interface_candidate/board_copper.svg'.\nDone.\n",
+    "stderr": ""
+  },
+  {
+    "cmd": [
+      "/opt/homebrew/bin/kicad-cli",
+      "pcb",
+      "export",
+      "svg",
+      "--mode-single",
+      "--page-size-mode",
+      "2",
+      "--exclude-drawing-sheet",
+      "--sketch-pads-on-fab-layers",
+      "--layers",
+      "F.Mask,F.CrtYd",
+      "--output",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/board_mask.svg",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/disposable/swd_parts_check.kicad_pcb"
+    ],
+    "stdout": "Plotted to 'hardware/eps/verification/controller_rev_b/swd_interface_candidate/board_mask.svg'.\nDone.\n",
+    "stderr": ""
+  },
+  {
+    "cmd": [
+      "/opt/homebrew/bin/kicad-cli",
+      "pcb",
+      "export",
+      "svg",
+      "--mode-single",
+      "--page-size-mode",
+      "2",
+      "--exclude-drawing-sheet",
+      "--sketch-pads-on-fab-layers",
+      "--layers",
+      "F.Paste,F.CrtYd",
+      "--output",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/board_paste.svg",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/disposable/swd_parts_check.kicad_pcb"
+    ],
+    "stdout": "Plotted to 'hardware/eps/verification/controller_rev_b/swd_interface_candidate/board_paste.svg'.\nDone.\n",
+    "stderr": ""
+  },
+  {
+    "cmd": [
+      "/opt/homebrew/bin/kicad-cli",
+      "pcb",
+      "export",
+      "svg",
+      "--mode-single",
+      "--page-size-mode",
+      "2",
+      "--exclude-drawing-sheet",
+      "--sketch-pads-on-fab-layers",
+      "--layers",
+      "F.Fab,F.CrtYd",
+      "--output",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/board_fab.svg",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/disposable/swd_parts_check.kicad_pcb"
+    ],
+    "stdout": "Plotted to 'hardware/eps/verification/controller_rev_b/swd_interface_candidate/board_fab.svg'.\nDone.\n",
+    "stderr": ""
+  },
+  {
+    "cmd": [
+      "/opt/homebrew/bin/kicad-cli",
+      "pcb",
+      "export",
+      "svg",
+      "--mode-single",
+      "--page-size-mode",
+      "2",
+      "--exclude-drawing-sheet",
+      "--sketch-pads-on-fab-layers",
+      "--layers",
+      "F.SilkS,F.CrtYd",
+      "--output",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/board_silk.svg",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/disposable/swd_parts_check.kicad_pcb"
+    ],
+    "stdout": "Plotted to 'hardware/eps/verification/controller_rev_b/swd_interface_candidate/board_silk.svg'.\nDone.\n",
+    "stderr": ""
+  },
+  {
+    "cmd": [
+      "/opt/homebrew/bin/kicad-cli",
+      "sch",
+      "export",
+      "netlist",
+      "--format",
+      "kicadxml",
+      "--output",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/fixture.xml",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/disposable/swd_parts_check.kicad_sch"
+    ],
+    "stdout": "",
+    "stderr": "Fontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 19: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 20: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 23: invalid constant used : monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 42: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 43: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 46: invalid constant used : sans-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 68: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 69: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 72: invalid constant used : serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 88: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 89: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 92: invalid constant used : emoji\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 108: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 109: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 112: invalid constant used : math\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 120: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 121: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 124: invalid constant used : system-ui\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 132: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 133: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 136: invalid constant used : cursive\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 144: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 145: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 148: invalid constant used : fantasy\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 156: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 157: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 160: invalid constant used : ui-sans-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 168: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 169: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 172: invalid constant used : ui-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 180: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 181: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 184: invalid constant used : ui-monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 192: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 193: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 196: invalid constant used : ui-rounded\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 204: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 205: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 208: invalid constant used : fangsong\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-spacing.conf\", line 14: invalid constant used : monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 10: invalid constant used : serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 18: invalid constant used : sans-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 26: invalid constant used : monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 34: invalid constant used : emoji\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 42: invalid constant used : math\n"
+  },
+  {
+    "cmd": [
+      "/opt/homebrew/bin/kicad-cli",
+      "sch",
+      "erc",
+      "--format",
+      "json",
+      "--output",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/erc.json",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/disposable/swd_parts_check.kicad_sch"
+    ],
+    "stdout": "Found 34 violations\nSaved ERC Report to hardware/eps/verification/controller_rev_b/swd_interface_candidate/erc.json\n",
+    "stderr": "Fontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 19: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 20: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 23: invalid constant used : monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 42: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 43: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 46: invalid constant used : sans-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 68: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 69: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 72: invalid constant used : serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 88: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 89: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 92: invalid constant used : emoji\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 108: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 109: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 112: invalid constant used : math\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 120: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 121: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 124: invalid constant used : system-ui\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 132: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 133: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 136: invalid constant used : cursive\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 144: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 145: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 148: invalid constant used : fantasy\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 156: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 157: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 160: invalid constant used : ui-sans-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 168: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 169: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 172: invalid constant used : ui-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 180: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 181: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 184: invalid constant used : ui-monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 192: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 193: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 196: invalid constant used : ui-rounded\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 204: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 205: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 208: invalid constant used : fangsong\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-spacing.conf\", line 14: invalid constant used : monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 10: invalid constant used : serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 18: invalid constant used : sans-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 26: invalid constant used : monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 34: invalid constant used : emoji\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 42: invalid constant used : math\n"
+  },
+  {
+    "cmd": [
+      "/opt/homebrew/bin/kicad-cli",
+      "sch",
+      "export",
+      "pdf",
+      "--output",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/fixture.pdf",
+      "hardware/eps/verification/controller_rev_b/swd_interface_candidate/disposable/swd_parts_check.kicad_sch"
+    ],
+    "stdout": "Plotted to 'hardware/eps/verification/controller_rev_b/swd_interface_candidate/fixture.pdf'.\nDone.\n",
+    "stderr": "Fontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 19: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 20: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 23: invalid constant used : monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 42: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 43: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 46: invalid constant used : sans-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 68: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 69: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 72: invalid constant used : serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 88: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 89: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 92: invalid constant used : emoji\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 108: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 109: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 112: invalid constant used : math\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 120: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 121: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 124: invalid constant used : system-ui\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 132: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 133: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 136: invalid constant used : cursive\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 144: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 145: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 148: invalid constant used : fantasy\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 156: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 157: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 160: invalid constant used : ui-sans-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 168: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 169: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 172: invalid constant used : ui-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 180: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 181: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 184: invalid constant used : ui-monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 192: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 193: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 196: invalid constant used : ui-rounded\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 204: invalid attribute 'xsi:nil'\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 205: invalid constant used : \nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-guessfamily.conf\", line 208: invalid constant used : fangsong\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/48-spacing.conf\", line 14: invalid constant used : monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 10: invalid constant used : serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 18: invalid constant used : sans-serif\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 26: invalid constant used : monospace\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 34: invalid constant used : emoji\nFontconfig warning: \"/opt/homebrew/etc/fonts/conf.d/49-sansserif.conf\", line 42: invalid constant used : math\n"
+  }
+]

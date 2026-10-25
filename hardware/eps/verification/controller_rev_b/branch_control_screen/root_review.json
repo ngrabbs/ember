@@ -1,0 +1,72 @@
+{
+  "status": "ROOT_INDEPENDENT_EXPORT_AND_ACTUAL_RENDER_REVIEW",
+  "fresh_cli_commands": [
+    {
+      "command": "kicad-cli sch export netlist --format kicadxml -o /tmp/ember-can-root-final.xml hardware/eps/rev_b/eps_rev_b.kicad_sch",
+      "exit_code": 0
+    },
+    {
+      "command": "kicad-cli sch erc --format json -o /tmp/ember-can-root-final-erc.json hardware/eps/rev_b/eps_rev_b.kicad_sch",
+      "exit_code": 0,
+      "reported_violations": 10
+    }
+  ],
+  "components_and_nets_equal_owner_export": true,
+  "independent_graph_contract": "integrated_graph_verified.json",
+  "fresh_raw_netlist_retained": "hardware/eps/verification/fit/can_branches_2026_10_24/eps_rev_b_at_can_branches.xml",
+  "fresh_ERC_retained": "root_erc.json",
+  "full_pages_actually_inspected": {
+    "rail_protection.png": "44ff5a541fd8c8459af354a6266b8d3849e09c515ec1850de6fdeb47c9f8eee0",
+    "controller.png": "31d9c7b2eeb6d1c8c48bd0f2dbaf129d7b474c946ac0a22cb58cf2208b07c3b2",
+    "recovery_5v.png": "bcecec02a804985581f558d0e5b61d9e4b92d02b038793a4d919507018d72847",
+    "essential_3v3.png": "477068b8fcda8d2d839efb49006be4f31f72913f62fdaf49a9da8513e39d4a13",
+    "can_interfaces.png": "63f0042f29f9f5a445a74ef6c36069b044cc7dfd6c576b3bdf9ece1944a0b9a8",
+    "eps_rev_b.png": "4e3a6c1262d4a856210e349969c69f4b40bea489ea967bd366686008aab7909d",
+    "can_branch_power.png": "eecc5e84aaedc44e88e17b70756d1e04fa8bd56e5a815ece9eb9c694bc25b702",
+    "charger.png": "09b0cdb3c22e65964629509d1a391ddcf0c04282e1303bb367b539208a7d0ad9",
+    "source_protection.png": "2fa54cec8dc0511fe1ea5992b0d0e6948c45d6075d7f88fe5b2216b93751c57f",
+    "bms_isolated_power.png": "f6abc08116b562c44c61cf69a9d40672df3de685f33be3f48e54aaa83fd435a7",
+    "bms_protection.png": "e7379b71f1f4081aace364a2388269a1723671cecad8f3668aa4f845f70a487e",
+    "uart_debug.png": "82347a133c46628db9793c084b28194ac0f45a16ca5d2665bf66019b015863e4"
+  },
+  "details_actually_inspected": {
+    "controller_review_detail.png": "dd28a78d966d1926723d713c508fee0215668e0de2d72ce910e949e7c4c98102",
+    "bms_isolated_power_review_detail.png": "4c59b57384751bb9286ebe828ac192502ca9eb24299d1a3d1393fb8ae415c3a4",
+    "essential_3v3_review_detail.png": "4f251a3ab922d2babb39c83774a9b0afb31725c31c275fd3db4574b99424a9fc",
+    "branch_b_detail.png": "7972149b94a3f1cecad12720ca63652ae7c1872364cdb699e3a3bb1ed013ae65",
+    "recovery_5v_review_detail.png": "5c6126a64b1788dafe2eab0a79aa9d0c0644a26e5abd6bd3fcbb63cef17a470a",
+    "rail_protection_review_detail.png": "94a4ac497826200af9ee7b7c1eff90a29f476de68c903d3f024b1c587d3e8d0e",
+    "can_b_signals_detail.png": "eeb0233e0769d73031685d8302e72a847f6c6df603372b8f0e4cb94b56f0b1a5",
+    "uart_debug_review_detail.png": "3159c6074571221593333829e166fd4d87eb8de7d8c672ffc90ccd108bd06cd0",
+    "branch_a_detail.png": "84cb7d381205737565f1e4fe7e1a4f485fbf34ded420a4dd2c10ad8871b7eddd",
+    "can_a_signals_detail.png": "3100181e7cd9afb5034d8a8360c75a6621bfa7796b3bdddd58e61bbe05c4fa44",
+    "bms_protection_review_detail.png": "73832450bc25a80a2f2744bdaeaef5ced5c10f3b9bf3ec859749eb9fbc5f9ac2",
+    "source_protection_review_detail.png": "3728229eae3cb88e281d9ba83f680391a1e038e4d859af9d23c293787acaa74a",
+    "charger_review_detail.png": "560fdbed6cccac1a695e54b19587d45e5a1dea4d8f1a50ff2351fc5a8a71a819",
+    "root_branch_tile.png": "2714c92587aa86d79b6e65de697c08f4a0e7f6832feaae0730feb4d6d97f28de"
+  },
+  "source_binding": {
+    "hardware/eps/rev_b/bms_isolated_power.kicad_sch": "fe940ebd1aa3e295d3bdb2a815d8a6013f00c35e51ef87342ebedb85e49a5b6c",
+    "hardware/eps/rev_b/bms_protection.kicad_sch": "9fe2b01652dcf983210f1790738e1b27fba27b53845321419f50b745763d6efb",
+    "hardware/eps/rev_b/can_branch_power.kicad_sch": "d2b281a6dbeb65ba75503b3ce1433fe491339ee9de75cc33f2f793ae7f7bae4c",
+    "hardware/eps/rev_b/can_interfaces.kicad_sch": "83dd3904d37e765402b11d890689220fff2b9e856fa8d460aef06da3f016f0c0",
+    "hardware/eps/rev_b/charger.kicad_sch": "d0443387c4e7432e9d328d193e848f850b16e7053bd9ef82d032829aa5f8c25d",
+    "hardware/eps/rev_b/controller.kicad_sch": "17f90066a9094a9e575c9d9bd336652f602be24a88239bf8b54badf74f892e13",
+    "hardware/eps/rev_b/eps_rev_b.kicad_sch": "bc03a870d31246a3a6a855fbae1c8a42e53151aea1988ec7f4de687c47806984",
+    "hardware/eps/rev_b/essential_3v3.kicad_sch": "ff01bb904e926b4784f292e805521998665b15adc6267cbb2ec0fd6d791f5e5c",
+    "hardware/eps/rev_b/rail_protection.kicad_sch": "844b3feb51d707c29c60885bc23ddb9e7b7ae6aa483ad983b1a3008168602cce",
+    "hardware/eps/rev_b/recovery_5v.kicad_sch": "027b78ca918528542a8288e262b9f90dee11a176e1d807b81f80162969177277",
+    "hardware/eps/rev_b/source_protection.kicad_sch": "76bc0839dc9f252b99cb67418e31a19ad8759d96ea1a91688b4bda331c7bbdae",
+    "hardware/eps/rev_b/uart_debug.kicad_sch": "c480ced5369170a4ff9f77ec1c5efc91f602912cf096413ace346b7ce44a5277",
+    "hardware/eps/rev_b/eps_rev_b.kicad_pro": "ec77a69084d93e635dda49c78865bf3d8bedac589dff89d0a4e00c5b5e06956e"
+  },
+  "PDF_pages": 12,
+  "limits": [
+    "This is not electrical/PVT/PCB or full-policy acceptance.",
+    "TPS Value remains close to bottom pin5 number but separate/readable.",
+    "S11 field/font/position limits; inherited root filename anchors and root/child page IDs remain unresolved.",
+    "Actual PDF first root page also shows Id12/12; page count12 is not coherent-pagination acceptance.",
+    "Shared-source and pre-resistor TPS-OUT short behavior remain unqualified."
+  ],
+  "PDF_sha256": "b11c815aad2b48518ef075cb0c1487ace1dd2f30f422ef5f845b8d61e0ac3e22"
+}

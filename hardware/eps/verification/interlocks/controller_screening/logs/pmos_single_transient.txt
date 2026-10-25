@@ -1,0 +1,20 @@
+LTspice 26.0.2 for MacOS
+Circuit: ${RUN_DIRECTORY}/single_transient.cir
+Start Time: Fri Oct 23 16:33:40 2026
+Options:plotwinsize=0
+solver = Normal
+Maximum thread count: 10
+tnom = 27
+temp = 27
+method = trap
+Instance "xdevice:M1": Length shorter than recommended for a level 3 MOSFET.
+Instance "xdevice:M2": Length shorter than recommended for a level 3 MOSFET.
+Direct Newton iteration succeeded in finding operating point.
+Total elapsed time: 0.109 seconds.
+
+Files loaded:
+${RUN_DIRECTORY}/single_transient.cir
+${PMOS_MODEL}
+
+output_on: V(drain) =8.38221073151 at 0.004
+output_off: V(drain) =0.598114132881 at 0.009

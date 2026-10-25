@@ -38,6 +38,21 @@ immediate hardware kill. This contract is not proof of the current IHU circuit.
 See [receiver/mode requirements](../../payload_compute/design/bench_mode.md)
 for proposed voltage/load limits and outstanding qualification.
 
+## Power-startup handoff — 2026-10-23
+
+The operator confirms the IHU schematic is not yet complete. Keep its minimum
+boot/control path on essential power. Substantial nonessential loads must have
+local default-off enables or switches, with hardware rail-good qualification
+and a settling delay before software can admit them. Do not require an unpowered
+IHU to command its own boot supply on.
+
+COMMS has a default-off TX switch and no other reported power controls; its
+receive/control load must therefore be included in direct startup consumption.
+This does not establish the physical mapping or full behavior of the provisional
+`COMMS_EN` signal above. No EPS power-good wire is allocated on the stack, so
+IHU should qualify its rails locally unless a new interface is explicitly agreed.
+See [5 V recovery startup requirements and proposed current/capacitance allocations](../../eps/design/rev_b_5v_recovery_closure.md).
+
 ## Timing and Throughput Targets (Provisional)
 
 - I2C target: 400 kHz fast mode for housekeeping telemetry

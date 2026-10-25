@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/verification/controller_rev_b/can_branch_parts/disposable/can_branch_parts_check.kicad_sch</source>
+    <date>2026-10-24T12:10:12</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>can_branch_parts_check.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="U1">
+      <value>SN74LVC1G14DBVR</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23-5_HandSoldering</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/sn74lvc1g14.pdf</datasheet>
+      <description>Single Schmitt NOT Gate, Low-Voltage CMOS, SOT-23</description>
+      <fields>
+        <field name="MFG P/N">SN74LVC1G14DBVR</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">DBV0005A / SOT-23-5</field>
+        <field name="Qualification">DEVELOPMENT contact map; generic land / full-flash clearance / assembly qualification open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-5_HandSoldering</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/sn74lvc1g14.pdf</field>
+        <field name="Description">Single Schmitt NOT Gate, Low-Voltage CMOS, SOT-23</field>
+      </fields>
+      <libsource lib="74xGxx" part="SN74LVC1G14DBV" description="Single Schmitt NOT Gate, Low-Voltage CMOS, SOT-23"/>
+      <property name="MFG P/N" value="SN74LVC1G14DBVR"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="DBV0005A / SOT-23-5"/>
+      <property name="Qualification" value="DEVELOPMENT contact map; generic land / full-flash clearance / assembly qualification open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="can_branch_parts_check.kicad_sch"/>
+      <property name="ki_keywords" value="Single Gate NOT Schmitt LVC CMOS"/>
+      <property name="ki_fp_filters" value="SOT*23*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>63525bfa-a2ce-4493-92de-34dc35c23567</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="1"/>
+            <pin num="5"/>
+            <pin num="3"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="74xGxx" part="SN74LVC1G14DBV">
+      <description>Single Schmitt NOT Gate, Low-Voltage CMOS, SOT-23</description>
+      <docs>https://www.ti.com/lit/ds/symlink/sn74lvc1g14.pdf</docs>
+      <footprints>
+        <fp>SOT*23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">SN74LVC1G14DBV</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-5</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/sn74lvc1g14.pdf</field>
+        <field name="Description">Single Schmitt NOT Gate, Low-Voltage CMOS, SOT-23</field>
+      </fields>
+      <pins>
+        <pin num="1" name="NC" type="no_connect"/>
+        <pin num="2" name="" type="input"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="" type="output"/>
+        <pin num="5" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="74xGxx">
+      <uri>${KICAD10_SYMBOL_DIR}/74xGxx.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="unconnected-(U1-GND-Pad3)" class="Default">
+      <node ref="U1" pin="3" pinfunction="GND_3" pintype="power_in"/>
+    </net>
+    <net code="2" name="unconnected-(U1-NC-Pad1)" class="Default">
+      <node ref="U1" pin="1" pinfunction="NC_1" pintype="no_connect"/>
+    </net>
+    <net code="3" name="unconnected-(U1-Pad2)" class="Default">
+      <node ref="U1" pin="2" pintype="input"/>
+    </net>
+    <net code="4" name="unconnected-(U1-Pad4)" class="Default">
+      <node ref="U1" pin="4" pintype="output"/>
+    </net>
+    <net code="5" name="unconnected-(U1-VCC-Pad5)" class="Default">
+      <node ref="U1" pin="5" pinfunction="VCC_5" pintype="power_in"/>
+    </net>
+  </nets>
+</export>

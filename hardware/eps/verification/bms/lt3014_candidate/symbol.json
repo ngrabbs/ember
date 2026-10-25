@@ -1,0 +1,52 @@
+{
+  "lib_id": "Regulator_Linear:LT3014xS5",
+  "library": "Regulator_Linear",
+  "name": "LT3014xS5",
+  "pin_count": 5,
+  "pins": [
+    {
+      "name": "VIN",
+      "number": "1",
+      "type": "power_in",
+      "x": -10.16,
+      "y": 2.54
+    },
+    {
+      "name": "GND",
+      "number": "2",
+      "type": "power_in",
+      "x": 0,
+      "y": -7.62
+    },
+    {
+      "name": "~{SHDN}",
+      "number": "3",
+      "type": "input",
+      "x": -10.16,
+      "y": -2.54
+    },
+    {
+      "name": "ADJ",
+      "number": "4",
+      "type": "input",
+      "x": 10.16,
+      "y": -2.54
+    },
+    {
+      "name": "VOUT",
+      "number": "5",
+      "type": "power_out",
+      "x": 10.16,
+      "y": 2.54
+    }
+  ],
+  "properties": {
+    "Datasheet": "https://www.analog.com/media/en/technical-documentation/data-sheets/3014fd.pdf",
+    "Description": "20mA output, 3V..80Vin, High voltage low-dropout regulator, SOT-23-5",
+    "Footprint": "Package_TO_SOT_SMD:SOT-23-5",
+    "Reference": "U",
+    "Value": "LT3014xS5",
+    "ki_fp_filters": "SOT?23*",
+    "ki_keywords": "analog analog-devices linear linear-technology linear LDO"
+  }
+}

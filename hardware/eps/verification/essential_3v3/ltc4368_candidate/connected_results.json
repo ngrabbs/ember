@@ -1,0 +1,95 @@
+{
+  "scope": "NOMINAL_CONNECTED_TYPICAL_MODELS;NO_FAULT_OR_PVT_ACCEPTANCE",
+  "cases": {
+    "source50m": {
+      "status": "completed",
+      "scope": "NOMINAL_MODEL_ONLY_NO_FAULT_OR_QUALIFICATION",
+      "TI_archive_sha256": "fbf5e0b576e11f2e0a1a65b0b2c589f86a182ae9ef5c412a0b0b98cd8c569715",
+      "TI_unmodified_model_sha256": "fa4ef72177bc7691b956ef047985e6fc0a490ae1e12d41295c787e6e51dba170",
+      "controller_model_sha256": "d02c1dc157882e68619668ee8b843971984874514a0bb07bf5e0f9f4ebe3410f",
+      "returncode": 0,
+      "end_s": 0.12,
+      "points": 75052,
+      "out_late_min_V": 3.0064148902893066,
+      "vgs_late_min_V": 4.509669780731201,
+      "shunt_peak_abs_A": 2.783245325088501,
+      "raw_sha256": "258ba8bb79eb758f514b1caf0b41aec2006c0d2b20b98bbaa6120eaed34dc88a",
+      "log_sha256": "90e38674b4a4ccc1f4f1b9e0fb80a38feeac23015e97797a06f78fb229e38a7a",
+      "load_step_window_out_min_V": 2.5633418560028076,
+      "load_step_window_out_max_V": 3.0824873447418213,
+      "observed_below3V_after_step": true,
+      "source_resistance_ohm": 0.05,
+      "load_step_window_s": [
+        0.08,
+        0.12
+      ],
+      "out_min_time_s": 0.08008718505893563,
+      "portable_deck_sha256": "4644d7f04e47e7649afb5126ce5181ec6c22a2de5a5e5d46a99c98e64c3692f5",
+      "normalized_log_sha256": "da7fa226b4d752cf784234cce35c6b0df67ec2f56952043a19d9783d7f4a6e70"
+    },
+    "source1m": {
+      "source_resistance_ohm": 0.001,
+      "status": "completed",
+      "scope": "NOMINAL_MODEL_ONLY_NO_FAULT_OR_QUALIFICATION",
+      "TI_archive_sha256": "fbf5e0b576e11f2e0a1a65b0b2c589f86a182ae9ef5c412a0b0b98cd8c569715",
+      "TI_unmodified_model_sha256": "fa4ef72177bc7691b956ef047985e6fc0a490ae1e12d41295c787e6e51dba170",
+      "controller_model_sha256": "d02c1dc157882e68619668ee8b843971984874514a0bb07bf5e0f9f4ebe3410f",
+      "returncode": 0,
+      "end_s": 0.12,
+      "points": 78542,
+      "out_late_min_V": 3.10536789894104,
+      "vgs_late_min_V": 4.5870866775512695,
+      "shunt_peak_abs_A": 2.911762237548828,
+      "raw_sha256": "b29a13847c870dc54dcd66d494bcee222c03c25a93cd4c9358473a518817f59a",
+      "log_sha256": "fce33d3bd91fc284050016648d6008923be40fae9e4bf513857ecef75ae530b0",
+      "load_step_window_out_min_V": 2.6019153594970703,
+      "load_step_window_out_max_V": 3.108769416809082,
+      "observed_below3V_after_step": true,
+      "load_step_window_s": [
+        0.08,
+        0.12
+      ],
+      "out_min_time_s": 0.08008397678686398,
+      "portable_deck_sha256": "2f296f5741d472d4cbe042e720dbd2d804c7f403be4a3db11f23bfb11022f21c",
+      "normalized_log_sha256": "9a4875ed09e6fd80599efcb25c94668695489d6d7a50f03ff142706209e8c6e3"
+    },
+    "source1m_late": {
+      "source_resistance_ohm": 0.001,
+      "load_step_s": 0.25,
+      "stop_s": 0.4,
+      "status": "completed",
+      "scope": "NOMINAL_MODEL_ONLY_NO_FAULT_OR_QUALIFICATION",
+      "TI_archive_sha256": "fbf5e0b576e11f2e0a1a65b0b2c589f86a182ae9ef5c412a0b0b98cd8c569715",
+      "TI_unmodified_model_sha256": "fa4ef72177bc7691b956ef047985e6fc0a490ae1e12d41295c787e6e51dba170",
+      "controller_model_sha256": "d02c1dc157882e68619668ee8b843971984874514a0bb07bf5e0f9f4ebe3410f",
+      "returncode": 0,
+      "end_s": 0.4,
+      "points": 218564,
+      "out_late_min_V": 3.114739179611206,
+      "vgs_late_min_V": 6.296725273132324,
+      "load_step_window_s": [
+        0.25,
+        0.4
+      ],
+      "load_step_window_out_min_V": 2.7988054752349854,
+      "load_step_window_out_max_V": 3.3120670318603516,
+      "observed_below3V_after_step": true,
+      "shunt_peak_abs_A": 3.1182820796966553,
+      "raw_sha256": "4a7b14c01e33f7790acea54544288467f20759cd881f34146e6102a8ac963aee",
+      "log_sha256": "d69254100ee779b6fc84276e0505c59b68e6fd4aee73144d89b7ea655978f75f",
+      "portable_deck_sha256": "f84caa1007884fe72ec644f3ceb33884f702fc3e2791d7072d76fa96d89913e2",
+      "normalized_log_sha256": "89ff10613c6dbca9fe85ad71b19a3e294f7af9945eb14bd1540c3f013736e369",
+      "out_min_time_s": 0.25007342134815796,
+      "before_step_240_250ms_out_range_V": [
+        3.221031665802002,
+        3.2210354804992676
+      ],
+      "before_step_240_250ms_vgs_range_V": [
+        6.44793701171875,
+        6.463962554931641
+      ]
+    }
+  },
+  "plot_csv_note": "Linear interpolation for plotting only; reported extrema use all original raw samples.",
+  "simulator": "LTspice 26.0.2; 27 C default"
+}

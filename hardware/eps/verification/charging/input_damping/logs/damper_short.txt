@@ -1,0 +1,22 @@
+LTspice 26.0.2 for MacOS
+Circuit: ${RUN_DIRECTORY}/damper_short.cir
+Start Time: Fri Oct 23 17:06:30 2026
+Options:plotwinsize=0
+solver = Normal
+Maximum thread count: 10
+tnom = 27
+temp = 85
+method = trap
+Cbulk: Increased Cpar to 3.8e-11
+Ccer: Increased Cpar to 1e-11
+Cdamper: Increased Cpar to 3.1824e-10
+Direct Newton iteration failed to find operating point.
+Starting Gmin stepping
+Gmin stepping succeeded in finding the operating point.
+
+Total elapsed time: 14.281 seconds.
+
+Files loaded:
+${RUN_DIRECTORY}/damper_short.cir
+${LTSPICE_LIBRARY}/sub/LTC4364-2.sub
+${LTSPICE_LIBRARY}/cmp/standard.mos

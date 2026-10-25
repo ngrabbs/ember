@@ -1,0 +1,418 @@
+{
+  "basis": "f11ee84a0b302c72e44ec62f3172903e350f7f2a",
+  "status": "DEVELOPMENT CONNECTIVITY / PRESERVATION PASS; ELECTRICAL/PVT/PCB QUALIFICATION OPEN",
+  "parts": 275,
+  "nets": 146,
+  "functional_nets": 132,
+  "physical_pin_endpoints": 754,
+  "old_physical_parts_preserved": 243,
+  "old_symbol_objects_retained": 472,
+  "current_symbol_objects": 524,
+  "added_parts": 32,
+  "frozen_tracked_files": 1257,
+  "ERC_errors": 10,
+  "ERC_warnings": 0,
+  "protected_delta": {
+    "hardware/eps/rev_b/bms_isolated_power.kicad_sch": "A",
+    "hardware/eps/rev_b/bms_protection.kicad_sch": "M",
+    "hardware/eps/rev_b/controller.kicad_sch": "M",
+    "hardware/eps/rev_b/eps_rev_b.kicad_pro": "M",
+    "hardware/eps/rev_b/eps_rev_b.kicad_sch": "M"
+  },
+  "symbol_exceptions": {
+    "#PWR0223": "Value +3V3\u21923V3_BMS_ISO; UUID/other content preserved",
+    "#PWR0228": "Value +3V3\u21923V3_BMS_ISO; UUID/other content preserved",
+    "#PWR0229": "Value +3V3\u21923V3_BMS_ISO; UUID/other content preserved",
+    "#PWR0103": "Ground symbol/stub shortened 2.54mm for FAULT glyph clearance; UUID/metadata preserved"
+  },
+  "geometry": {
+    "eps_rev_b": {
+      "segments": 0,
+      "connected_fourways": 0,
+      "unconnected_crossings": [],
+      "queried_pin_anchors_including_power_flags": 0,
+      "pin_branch_anchors": 0
+    },
+    "controller": {
+      "segments": 88,
+      "connected_fourways": 0,
+      "unconnected_crossings": [
+        [
+          83.82,
+          187.96
+        ],
+        [
+          109.22,
+          187.96
+        ],
+        [
+          109.22,
+          190.5
+        ],
+        [
+          123.19,
+          66.04
+        ],
+        [
+          123.19,
+          90.17
+        ],
+        [
+          123.19,
+          92.71
+        ],
+        [
+          124.46,
+          123.19
+        ],
+        [
+          124.46,
+          187.96
+        ],
+        [
+          127,
+          118.11
+        ],
+        [
+          127,
+          123.19
+        ],
+        [
+          219.71,
+          92.71
+        ],
+        [
+          219.71,
+          100.33
+        ],
+        [
+          219.71,
+          102.87
+        ],
+        [
+          219.71,
+          105.41
+        ],
+        [
+          222.25,
+          90.17
+        ],
+        [
+          222.25,
+          91.44
+        ],
+        [
+          222.25,
+          92.71
+        ],
+        [
+          222.25,
+          100.33
+        ],
+        [
+          222.25,
+          102.87
+        ],
+        [
+          222.25,
+          105.41
+        ],
+        [
+          222.25,
+          110.49
+        ],
+        [
+          226.06,
+          110.49
+        ],
+        [
+          226.06,
+          115.57
+        ],
+        [
+          226.06,
+          154.94
+        ],
+        [
+          226.06,
+          157.48
+        ],
+        [
+          226.06,
+          160.02
+        ],
+        [
+          226.06,
+          162.56
+        ],
+        [
+          233.68,
+          88.9
+        ],
+        [
+          233.68,
+          90.17
+        ]
+      ],
+      "queried_pin_anchors_including_power_flags": 83,
+      "pin_branch_anchors": 0
+    },
+    "can_interfaces": {
+      "segments": 64,
+      "connected_fourways": 0,
+      "unconnected_crossings": [],
+      "queried_pin_anchors_including_power_flags": 54,
+      "pin_branch_anchors": 0
+    },
+    "essential_3v3": {
+      "segments": 51,
+      "connected_fourways": 0,
+      "unconnected_crossings": [],
+      "queried_pin_anchors_including_power_flags": 44,
+      "pin_branch_anchors": 0
+    },
+    "recovery_5v": {
+      "segments": 124,
+      "connected_fourways": 0,
+      "unconnected_crossings": [
+        [
+          215.9,
+          166.37
+        ],
+        [
+          240.03,
+          166.37
+        ],
+        [
+          240.03,
+          168.91
+        ],
+        [
+          242.57,
+          184.15
+        ],
+        [
+          242.57,
+          194.31
+        ],
+        [
+          243.84,
+          101.6
+        ],
+        [
+          245.11,
+          184.15
+        ]
+      ],
+      "queried_pin_anchors_including_power_flags": 124,
+      "pin_branch_anchors": 0
+    },
+    "source_protection": {
+      "segments": 107,
+      "connected_fourways": 0,
+      "unconnected_crossings": [
+        [
+          200.66,
+          147.32
+        ]
+      ],
+      "queried_pin_anchors_including_power_flags": 132,
+      "pin_branch_anchors": 0
+    },
+    "rail_protection": {
+      "segments": 138,
+      "connected_fourways": 0,
+      "unconnected_crossings": [
+        [
+          114.3,
+          68.58
+        ],
+        [
+          114.3,
+          88.9
+        ],
+        [
+          190.5,
+          48.26
+        ],
+        [
+          190.5,
+          68.58
+        ],
+        [
+          200.66,
+          147.32
+        ]
+      ],
+      "queried_pin_anchors_including_power_flags": 149,
+      "pin_branch_anchors": 0
+    },
+    "charger": {
+      "segments": 120,
+      "connected_fourways": 0,
+      "unconnected_crossings": [
+        [
+          124.46,
+          93.98
+        ],
+        [
+          128.27,
+          139.7
+        ],
+        [
+          137.16,
+          137.16
+        ],
+        [
+          137.16,
+          139.7
+        ],
+        [
+          142.24,
+          116.84
+        ],
+        [
+          147.32,
+          93.98
+        ],
+        [
+          147.32,
+          116.84
+        ],
+        [
+          152.4,
+          137.16
+        ],
+        [
+          152.4,
+          139.7
+        ],
+        [
+          200.66,
+          96.52
+        ],
+        [
+          205.74,
+          96.52
+        ],
+        [
+          210.82,
+          96.52
+        ],
+        [
+          228.6,
+          53.34
+        ],
+        [
+          228.6,
+          96.52
+        ],
+        [
+          236.22,
+          96.52
+        ],
+        [
+          266.7,
+          109.22
+        ],
+        [
+          266.7,
+          124.46
+        ],
+        [
+          266.7,
+          127
+        ],
+        [
+          279.4,
+          129.54
+        ]
+      ],
+      "queried_pin_anchors_including_power_flags": 103,
+      "pin_branch_anchors": 0
+    },
+    "bms_protection": {
+      "segments": 182,
+      "connected_fourways": 0,
+      "unconnected_crossings": [
+        [
+          172.72,
+          63.5
+        ],
+        [
+          172.72,
+          73.66
+        ],
+        [
+          173.99,
+          154.94
+        ],
+        [
+          231.14,
+          226.06
+        ],
+        [
+          231.14,
+          228.6
+        ],
+        [
+          250.19,
+          226.06
+        ],
+        [
+          254,
+          99.06
+        ],
+        [
+          254,
+          129.54
+        ],
+        [
+          254,
+          132.08
+        ],
+        [
+          269.24,
+          87.63
+        ],
+        [
+          302.26,
+          36.83
+        ],
+        [
+          307.34,
+          87.63
+        ],
+        [
+          335.28,
+          87.63
+        ],
+        [
+          350.52,
+          129.54
+        ]
+      ],
+      "queried_pin_anchors_including_power_flags": 177,
+      "pin_branch_anchors": 0
+    },
+    "uart_debug": {
+      "segments": 28,
+      "connected_fourways": 0,
+      "unconnected_crossings": [],
+      "queried_pin_anchors_including_power_flags": 34,
+      "pin_branch_anchors": 0
+    },
+    "bms_isolated_power": {
+      "segments": 111,
+      "connected_fourways": 0,
+      "unconnected_crossings": [
+        [
+          130.81,
+          68.58
+        ]
+      ],
+      "queried_pin_anchors_including_power_flags": 101,
+      "pin_branch_anchors": 0
+    }
+  }
+}

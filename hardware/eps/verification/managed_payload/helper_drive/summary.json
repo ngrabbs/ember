@@ -1,0 +1,126 @@
+{
+  "scope": "NOMINAL_HELPER_ONLY_BENCH; NO_TPS_DRIVER_OR_MAIN_FET_SURVIVAL_ACCEPTANCE",
+  "completed_no_warning_cases": 26,
+  "initial_charge_V": 14,
+  "imposed_DRV_V": 3,
+  "imposed_DRV_R_ohm": 10,
+  "imposed_routing_cap_pF": 10,
+  "rows": [
+    {
+      "part": "T2N7002AK",
+      "drain_R_ohm": 0.001,
+      "helper_Id_peak_A": [
+        0.3170015811920166,
+        0.4419786036014557
+      ],
+      "main_gate_first_below_1V_after_DRV_s": [
+        9.331781585044178e-08,
+        2.2322497170666846e-07
+      ],
+      "diagnostic_charge_over_3V_pF": [
+        67.0305357959562,
+        67.06451075268315
+      ],
+      "helper_positive_drain_energy_J": [
+        1.968110123105171e-07,
+        3.9307067353108724e-07
+      ],
+      "drain_resistor_energy_J": [
+        6.611376213790276e-12,
+        1.8579504563061093e-11
+      ]
+    },
+    {
+      "part": "T2N7002AK",
+      "drain_R_ohm": 180,
+      "helper_Id_peak_A": [
+        0.07390280067920685,
+        0.07481171190738678
+      ],
+      "main_gate_first_below_1V_after_DRV_s": [
+        9.875432896070949e-07,
+        1.9673410913322536e-06
+      ],
+      "diagnostic_charge_over_3V_pF": [
+        67.21127565377853,
+        67.39568447431262
+      ],
+      "helper_positive_drain_energy_J": [
+        5.920447905574191e-09,
+        1.180391366142039e-08
+      ],
+      "drain_resistor_energy_J": [
+        1.898249931784168e-07,
+        3.8260358828523304e-07
+      ]
+    },
+    {
+      "part": "SSM3K15AMFV",
+      "drain_R_ohm": 0.001,
+      "helper_Id_peak_A": [
+        0.26884838938713074,
+        0.3492075800895691
+      ],
+      "main_gate_first_below_1V_after_DRV_s": [
+        1.046152539491546e-07,
+        2.1559407267514094e-07
+      ],
+      "diagnostic_charge_over_3V_pF": [
+        58.62933604981964,
+        58.93335684462227
+      ],
+      "helper_positive_drain_energy_J": [
+        1.964560445646272e-07,
+        3.925912774917501e-07
+      ],
+      "drain_resistor_energy_J": [
+        6.393409499911891e-12,
+        1.6718888583674556e-11
+      ]
+    },
+    {
+      "part": "SSM3K15AMFV",
+      "drain_R_ohm": 180,
+      "helper_Id_peak_A": [
+        0.0725574642419815,
+        0.07464968413114548
+      ],
+      "main_gate_first_below_1V_after_DRV_s": [
+        9.78869018303232e-07,
+        1.9556485759712826e-06
+      ],
+      "diagnostic_charge_over_3V_pF": [
+        58.54371248933885,
+        58.85267057138235
+      ],
+      "helper_positive_drain_energy_J": [
+        5.780730347998157e-09,
+        1.081196137125265e-08
+      ],
+      "drain_resistor_energy_J": [
+        1.8948995970479954e-07,
+        3.8436380879204095e-07
+      ]
+    }
+  ],
+  "finer_step_comparison": [
+    {
+      "part": "T2N7002AK",
+      "helper_Id_peak_A": 0.008998686015428208,
+      "driver_positive_charge_C": 0.004740813251379411,
+      "main_gate_first_below_1V_after_DRV_s": 0.0037201313043197064
+    },
+    {
+      "part": "SSM3K15AMFV",
+      "helper_Id_peak_A": 0.005425207464265477,
+      "driver_positive_charge_C": 0.0012316127911766288,
+      "main_gate_first_below_1V_after_DRV_s": 0.0024886061735843934
+    }
+  ],
+  "coupled_probe_counts": {
+    "COMPLETED_PILOT_ONLY_NO_SELECTION": 1,
+    "COMPLETED_WITH_RELAXATION_WARNINGS_NO_SELECTION": 3,
+    "FAILED_NO_ACCEPTANCE": 4,
+    "TERMINAL_TIMEOUT_NO_ACCEPTANCE": 1
+  }
+}

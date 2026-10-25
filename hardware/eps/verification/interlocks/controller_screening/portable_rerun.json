@@ -1,0 +1,39 @@
+{
+  "runs": [
+    {
+      "case": "controller_battery_c1u",
+      "returncode": 0,
+      "status": "completed"
+    },
+    {
+      "case": "controller_solar_c800n",
+      "returncode": 0,
+      "status": "completed"
+    },
+    {
+      "case": "pmos_pair_dc",
+      "returncode": 0,
+      "status": "completed"
+    }
+  ],
+  "models": {
+    "/Users/nick/Documents/ChatGPT/EMBER/eps-rev-b-study/interlock-2026-10-23/sud50p08.lib": "449483d3774ae1c26e56d38a2224c200df4715db28e14f9278d50d9bb2da04b6",
+    "/Users/nick/Library/Application Support/LTspice/lib/sub/LTC4367.sub": "d2618804aab8e5f65f54cad5189274df944028f78694d3a6f27ca3030b0fdd3e",
+    "/Users/nick/Library/Application Support/LTspice/lib/cmp/standard.mos": "adfdcda82e1b6186f907df2dc3905659a2ea2be2a0887a016d1fd9f1b3b1b40e"
+  },
+  "comparison": {
+    "controller_battery_c1u": {
+      "maximum_compared_voltage_delta_V": 0.0,
+      "compared": "sense extrema"
+    },
+    "controller_solar_c800n": {
+      "maximum_compared_voltage_delta_V": 0.0,
+      "compared": "sense extrema"
+    },
+    "pmos_pair_dc": {
+      "maximum_compared_voltage_delta_V": 0.0,
+      "compared": "final output"
+    }
+  },
+  "scope": "Three selected portable decks rerun serially; not full 28-case rerun or circuit acceptance."
+}
