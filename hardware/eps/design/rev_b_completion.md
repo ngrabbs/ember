@@ -135,3 +135,14 @@ from the unchanged whole-root XML/ERC evidence. All229 other native files are
 preserved. This is the current345-part/14-sheet presentation source state;
 earlier checkpoint verifiers remain frozen at their recorded commits. Other
 sheets' S11 issues and all electrical/mechanical/PCB/qualification gates remain.
+
+## Payload helper-drive comparison, 2026-10-24
+
+The [new helper study](../verification/managed_payload/helper_drive/README.md)
+retains T2N7002AK provisionally after 26 completed nominal capacitor-load cases.
+A 180 ohm drain-resistor sensitivity reduces helper current to about73–75mA
+but extends proxy-gate discharge to about1–2us; it is not selected. Coupled
+CSD18543 attempts expose numerical failures/warnings and supply no survival
+acceptance. Actual DRV loading, hot SOA and reverse interruption remain open.
+All230 tracked native files match ac4a4b9; the EPS and 49-part managed-feed
+candidate counts remain unchanged. No new library approval or PCB work occurs.

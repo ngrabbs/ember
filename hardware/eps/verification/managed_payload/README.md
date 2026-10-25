@@ -111,3 +111,10 @@ scoped evidence above. Actual new functional circuit rendered-sheet inspection
 remains **not applicable: no real EPS sheet was authored**. The fixture's page,
 symbol details and five board layers were actually inspected. No fresh real-EPS
 ERC, netlist, PCB synchronization, DRC or flight acceptance is claimed.
+
+## Helper drive comparison
+
+The [26-case helper benchmark](helper_drive/README.md) retains T2N7002AK as a
+provisional choice. It quantifies the direct-versus-180-ohm discharge tradeoff,
+preserves failed/warned coupled attempts separately, and does not establish
+actual TPS driver timing or main-FET survival. No native sources changed.

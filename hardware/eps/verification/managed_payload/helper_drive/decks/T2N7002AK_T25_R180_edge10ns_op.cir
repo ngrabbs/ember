@@ -1,0 +1,32 @@
+* Nominal helper comparison, imposed TPS drive and reverse fault
+.lib "/tmp/ember-ltc4231-input-first/CSD18543Q3A.LIB"
+.lib "/Users/nick/Library/Application Support/LTspice/lib/sub/Contrib/Toshiba/LVMOS/T2N7002AK_G0_00_enc.lib"
+Vraw raw 0 PWL(0 8.4 10u 8.4 1.001e-05 0 30u 0)
+Rsource raw wire .05
+Lsource wire src 100n Rser=.01
+Csrc src 0 2.3u Rser=.02
+Cinternal drain 0 100n Rser=.02
+Rpass drain out .031
+Cout out 0 1m Rser=.02
+Rload out 0 1meg
+Vmain drain md 0
+Vmaing bg mg 0
+Xmain md mg src CSD18543Q3A
+Vpre pre src 14
+Vinit init 0 PWL(0 1 9u 1 9.001u 0 30u 0)
+Spre pre bg init 0 pre
+.model pre SW(Ron=1 Roff=1e12 Vt=.5)
+Ibias src bg 23u
+Rbleed bg src 800k
+Vcmd cmd 0 PWL(0 0 13u 0 13.01u 3 30u 3)
+Bdrv drv 0 V=V(src)+V(cmd)
+Rdrv drv hg 10
+Croute hg src 10p
+Roff bg hd 180
+Vhgate hg hgm 0
+Xhelper hd hgm src T2N7002AK_G0_00
+.temp 25
+.options plotwinsize=0 method=gear
+.tran 0 30u 0 2e-09
+.save V(raw) V(src) V(bg) V(hd) V(hg) V(drain) V(out) I(Roff) I(Rdrv) I(Lsource) I(Rpass) I(Vmain) I(Vmaing) I(Vhgate)
+.end

@@ -80,6 +80,13 @@ not prove sink resistance/timing at minimum3V DRV over temperature. Keep
 drive/loading and reverse interruption conditional. Manufacturer delivery
 suffix/MOQ must be confirmed at purchase. The stock glyph simplifies the
 internal gate protection; annotate it explicitly. The
+[helper-drive comparison](../verification/managed_payload/helper_drive/README.md)
+retains T2N provisionally after 26 nominal helper-only cases; SSM3K15AMFV's
+capacitance is only typical and its pulse margin is smaller. A 180 ohm helper
+drain-resistor sensitivity reduces current but slows the imposed gate load;
+it is not selected or added to this 49-part circuit. Coupled CSD18543 attempts
+failed or needed tolerance relaxation, so no main-FET survival or actual DRV
+load/timing acceptance follows from those traces. The
 [disposable fixture](../verification/managed_payload/helper_package/README.md)
 verifies both helper/reference pin-pad maps and saved metadata, with actual
 page/detail and board-layer inspection separate from ERC. Generic land and
