@@ -43,15 +43,18 @@ static bool rd_bit(rd_lane *s, unsigned bit, rd_result *out) {
 }
 /* Optional callback between frequency candidates keeps control/service bounded. */
 typedef bool (*rd_continue)(void);
+/* Measured bench IF is near 1325Hz. Track only a CRC-validated acquisition;
+ * warming oscillators must not spend the whole deadline reaching this band. */
+static unsigned rd_preferred_hz=1325;
 static bool rd_decode(const uint16_t *samples,size_t count,rd_result *out,rd_continue proceed){
  if(!samples||!out||count!=32768)return false;
  uint32_t sum=0;
  for(size_t i=0;i<count;i++){if(!samples[i]||samples[i]>=4095)return false;sum+=samples[i];}
  int32_t mean=(int32_t)(sum/count);
- /* Try the intended 1.2 kHz IF first, then expand in 25 Hz steps. */
+ /* Search the last verified IF first, then expand in 25 Hz steps. */
  for(unsigned candidate=0;candidate<=112;candidate++){
   int offset=(int)((candidate+1)/2)*25;
-  int trial=1200+(candidate%2 ? -offset : offset);
+  int trial=(int)rd_preferred_hz+(candidate%2 ? -offset : offset);
   if(trial<400||trial>2600)continue;
   unsigned hz=(unsigned)trial;
   if(proceed&&!proceed())return false;
@@ -67,7 +70,7 @@ static bool rd_decode(const uint16_t *samples,size_t count,rd_result *out,rd_con
     if(tick<t*5)continue;
     if(i && (tick-t*5)/40 != (tick-6<t*5?0:(tick-6-t*5)/40)){
      if(s->previous && rd_bit(s,(int64_t)s->re*s->prev_re+(int64_t)s->im*s->prev_im<0,out)){
-      out->frequency=hz;return true;
+      out->frequency=hz;rd_preferred_hz=hz;return true;
      }
      s->prev_re=s->re;s->prev_im=s->im;s->previous=true;s->re=s->im=0;
     }
