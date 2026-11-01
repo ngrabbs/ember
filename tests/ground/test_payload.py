@@ -111,6 +111,19 @@ class PayloadTests(unittest.TestCase):
                 self.assertEqual(FIRE_REPORT.unpack(response.payload)[1:3], (expected, 2))
         self.assertEqual(self.service.checks, 2)
 
+    def test_quality_unknown_is_versioned_but_deadlines_remain_errors(self):
+        from concurrent.futures import Future
+        self.request(HELLO)
+        for reason in ('REGISTRATION_LOW_CONTRAST','REGISTRATION_WEAK_FIT','ANALYSIS_DEADLINE','IMAGE_DECODE'):
+            future=Future();self.service.capture=lambda packet:future
+            self.request(FIRE_CHECK);future.set_result(dict(result='UNKNOWN',reason=reason))
+            reply=self.service.poll_capture()
+            if reason.startswith('REGISTRATION_'):
+                self.assertEqual(reply.kind,FIRE_RESULT)
+                self.assertEqual(FIRE_REPORT.unpack(reply.payload)[:4],(2,2,2,0))
+            else:self.assertEqual((reply.kind,reply.payload),(ERROR,b'\x0b'))
+        self.assertEqual(self.service.checks,2)
+
     def test_saved_evidence_links_exact_binary_and_unavailable_replies(self):
         from concurrent.futures import Future
         self.request(HELLO)

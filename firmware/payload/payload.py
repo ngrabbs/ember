@@ -36,7 +36,7 @@ class Service:
         uptime = int((self.now() - self.started) * 1000) & 0xffffffff
         # Real capture can precede this result; detection is still a static stub.
         return Packet(FIRE_RESULT, self.boot, packet.origin, packet.request,
-                      FIRE_REPORT.pack(1, decision, mode, 0, self.boot, uptime, self.checks))
+                      FIRE_REPORT.pack(2 if decision == 2 else 1, decision, mode, 0, self.boot, uptime, self.checks))
 
     def poll_capture(self):
         if not self.pending_capture:
@@ -53,7 +53,11 @@ class Service:
             self.replies += 1
             return Packet(ERROR, self.boot, packet.origin, packet.request, b'\x08')
         if isinstance(outcome, dict) and 'result' in outcome:
-            if outcome['result'] not in ('FIRE', 'NO_FIRE'):
+            quality_unknown = (outcome['result'] == 'UNKNOWN' and outcome.get('reason') in
+                               ('REGISTRATION_LOW_CONTRAST', 'REGISTRATION_WEAK_FIT'))
+            if quality_unknown:
+                response = self.fire_result(packet, 2, 2)
+            elif outcome['result'] not in ('FIRE', 'NO_FIRE'):
                 self.replies += 1
                 response = Packet(ERROR, self.boot, packet.origin, packet.request, b'\x0b')
             else:
