@@ -52,7 +52,7 @@ static bool rd_decode(const uint16_t *samples,size_t count,rd_result *out,rd_con
  for(size_t i=0;i<count;i++){if(!samples[i]||samples[i]>=4095)return false;sum+=samples[i];}
  int32_t mean=(int32_t)(sum/count);
  /* Search the last verified IF first, then expand in 25 Hz steps. */
- for(unsigned candidate=0;candidate<=112;candidate++){
+ for(unsigned candidate=0;candidate<=176;candidate++){
   int offset=(int)((candidate+1)/2)*25;
   int trial=(int)rd_preferred_hz+(candidate%2 ? -offset : offset);
   if(trial<400||trial>2600)continue;
