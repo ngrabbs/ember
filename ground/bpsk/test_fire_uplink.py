@@ -52,4 +52,24 @@ class FireUplink(unittest.TestCase):
         p['mode']=3
         other=encode('REQUEST_STATUS',source=1,target=2,payload={},**dict(kw,transaction_id=9))
         self.assertFalse(matches(packet(),other))
+    def test_cdh_queries_and_frozen_records(self):
+        kw=dict(sequence=1,source_boot_id=7,uptime_ms=0,transaction_epoch=7,transaction_id=8)
+        query=encode('REQUEST_TELEMETRY',source=1,target=2,payload=dict(data_group=255),**kw)
+        self.assertTrue(valid_command(query))
+        reject=dict(command_id=3,stage=1,reason=2,parameter_id=0,value=0)
+        packet=encode('COMMAND_RESPONSE',source=2,target=1,payload=reject,**kw)
+        self.assertTrue(matches(packet,query))
+        reject['stage']=2;reject['reason']=0
+        self.assertFalse(matches(encode('COMMAND_RESPONSE',source=2,target=1,payload=reject,**kw),query))
+        capture=encode('STATUS_CAPTURE',source=1,target=2,payload={},**kw)
+        fetch=encode('STATUS_FETCH',source=1,target=2,payload=dict(capture_id=9),**kw)
+        payload=dict(payload_version=1,count=5,record_size=16,volatile=1,capture_id=9)
+        for i in range(1,6):
+            for name,value in dict(sequence=i,uptime_ms=i*1000,mode=3,configuration=1,outputs=0,
+                    can_ready=1,can_eflg=0,eps_valid=1,eps_age_ms=i*1000).items():payload[f'record{i}_{name}']=value
+        def tm():return encode('STATUS_RECORDS',source=2,target=1,payload=payload,**kw)
+        self.assertTrue(matches(tm(),capture));self.assertTrue(matches(tm(),fetch))
+        payload['capture_id']=10;self.assertFalse(matches(tm(),fetch));payload['capture_id']=9
+        payload['record3_sequence']=2;self.assertFalse(matches(tm(),capture));payload['record3_sequence']=3
+        payload['record4_uptime_ms']=4800;self.assertFalse(matches(tm(),capture))
 if __name__=='__main__':unittest.main()

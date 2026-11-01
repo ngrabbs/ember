@@ -3,6 +3,10 @@ package com.example.ember;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.HexFormat;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -51,8 +55,10 @@ public final class EmberResults {
             command.parameter = Short.toUnsignedInt(b.getShort(WireProfile.SET_PARAMETER_PARAMETER_ID));
             command.value = Integer.toUnsignedLong(b.getInt(WireProfile.SET_PARAMETER_VALUE));
         }
+        if(command.command==3) command.parameter=Byte.toUnsignedInt(b.get(30));
+        if(command.command==5) command.value=Integer.toUnsignedLong(b.getInt(30));
         command.started = System.nanoTime();
-        command.deadline = command.started + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 1 || command.command == 2 ? 40 : 5);
+        command.deadline = command.started + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 1 || (command.command >= 2 && command.command <= 6) ? 40 : 5);
         pending.put(key(b), command);
         history.publishAck(id, "Acknowledge_EMBER_Acceptance", TimeEncoding.getWallclockTime(), AckStatus.PENDING);
         history.publishAck(id, CommandHistoryPublisher.CommandComplete_KEY, TimeEncoding.getWallclockTime(), AckStatus.PENDING);
@@ -82,14 +88,55 @@ public final class EmberResults {
             Byte.toUnsignedInt(b.get(WireProfile.POWER_STATUS_PROVENANCE)) != 2) return;
         long currentBoot = Integer.toUnsignedLong(b.getInt(WireProfile.SOURCE_BOOT_ID));
         if (boot != 0 && boot != currentBoot) {
-            pending.values().forEach(command -> unknown(command, "Unknown outcome: IHU boot identity changed"));
-            pending.clear();
+            // A fresh, correlated read-only response can establish the new boot.
+            // Other outstanding work remains uncertain across the reset.
+            String currentKey=key(b);
+            pending.entrySet().removeIf(entry -> {
+                Pending x=entry.getValue();
+                if(entry.getKey().equals(currentKey) && (x.command==1 || x.command==2 || x.command==3 || x.command==5))return false;
+                unknown(x,"Unknown outcome: IHU boot identity changed");return true;
+            });
         }
         boot = currentBoot;
         if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
+            Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 59) {
+            Pending records=pending.get(key(b));
+            if(records==null || (records.command!=4 && records.command!=5) || bytes.length!=120 ||
+                b.get(30)!=1 || b.get(31)!=5 || b.get(32)!=16 || b.get(33)!=1 || b.getInt(34)==0 ||
+                (records.command==5 && records.value!=Integer.toUnsignedLong(b.getInt(34))))return;
+            StringBuilder intervals=new StringBuilder();
+            for(int i=0;i<5;i++){
+                int offset=38+16*i;
+                if(Short.toUnsignedInt(b.getShort(offset))!=i+1 || Byte.toUnsignedInt(b.get(offset+6))>4 ||
+                    (b.get(offset+7)!=1 && b.get(offset+7)!=2) || Byte.toUnsignedInt(b.get(offset+9))>1 ||
+                    Byte.toUnsignedInt(b.get(offset+11))>1)return;
+                if(i>0){long dt=Integer.toUnsignedLong(b.getInt(offset+2)-b.getInt(offset-14));
+                    if(dt<900 || dt>1100)return;
+                    if(i>1)intervals.append(",");intervals.append(dt);
+                }
+            }
+            String digest;
+            try {digest=HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(Arrays.copyOfRange(bytes,38,118)));}
+            catch(NoSuchAlgorithmException impossible){throw new IllegalStateException(impossible);}
+            long now=TimeEncoding.getWallclockTime();
+            records.history.publish(records.id,"ember-outcome","COMPLETED");
+            records.history.publish(records.id,"ember-elapsed-ms",Long.toString((System.nanoTime()-records.started)/1000000));
+            records.history.publish(records.id,"ember-result-boot-id",Long.toString(currentBoot));
+            records.history.publish(records.id,"ember-ground-packet-bytes","120");
+            records.history.publish(records.id,"ember-capture-id",Long.toString(Integer.toUnsignedLong(b.getInt(34))));
+            records.history.publish(records.id,"ember-record-count","5");
+            records.history.publish(records.id,"ember-record-bytes","80");
+            records.history.publish(records.id,"ember-records-sha256",digest);
+            records.history.publish(records.id,"ember-sample-intervals-ms",intervals.toString());
+            records.history.publish(records.id,"ember-retention-age-ms",Long.toString(Integer.toUnsignedLong(b.getInt(24)-b.getInt(104))));
+            records.history.publishAck(records.id,"Acknowledge_EMBER_Acceptance",now,AckStatus.NA,"Correlated frozen record set received");
+            records.history.publishAck(records.id,CommandHistoryPublisher.CommandComplete_KEY,now,AckStatus.OK);
+            pending.remove(key(b));return;
+        }
+        if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
             Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 58) {
             Pending status = pending.get(key(b));
-            if (status == null || status.command != 2 || bytes.length != 56 || b.get(30)!=1 ||
+            if (status == null || (status.command != 2 && !(status.command==3 && status.parameter==1)) || bytes.length != 56 || b.get(30)!=1 ||
                 Byte.toUnsignedInt(b.get(31))>4 || (b.get(32)!=1 && b.get(32)!=2) || b.get(53)!=0) return;
             long now=TimeEncoding.getWallclockTime();
             status.history.publish(status.id,"ember-outcome","COMPLETED");
@@ -146,6 +193,10 @@ public final class EmberResults {
         command.history.publish(command.id, "ember-result-reason", reason);
         if(stage==3 && command.command==1028 && reason==7)
             command.history.publish(command.id, "ember-payload-error-code", Long.toString(Integer.toUnsignedLong(b.getInt(WireProfile.COMMAND_RESPONSE_VALUE))));
+        if(command.command==6 && stage==2){
+            if(b.getInt(WireProfile.COMMAND_RESPONSE_VALUE)!=5000 || b.getShort(WireProfile.COMMAND_RESPONSE_PARAMETER_ID)!=0)return;
+            command.history.publish(command.id,"ember-reboot-delay-ms","5000");
+        }
         if (stage == 0) {
             if (!command.accepted) {
                 command.accepted = true;

@@ -13,18 +13,32 @@ from codec import decode as native_decode
 from modem import frame,decode
 from uplink_probe import RATE,DIGITAL_OFFSET,FPGA_SHA
 
-VERSION='0.1.5'
+VERSION='0.2.0'
 
 def valid_command(wire):
     c=native_decode(wire);h=c['header']
-    return c['name'] in ('PAYLOAD_FIRE_CHECK','PING','REQUEST_STATUS') and h['source']==1 and h['target']==2 and all(h[k] for k in ('transaction_epoch','transaction_id','source_boot_id'))
+    return c['name'] in ('PAYLOAD_FIRE_CHECK','PING','REQUEST_STATUS','REQUEST_TELEMETRY','STATUS_CAPTURE','STATUS_FETCH','IHU_REBOOT') and h['source']==1 and h['target']==2 and all(h[k] for k in ('transaction_epoch','transaction_id','source_boot_id'))
 
 def matches(wire,command):
     r=native_decode(wire);c=native_decode(command);p=r['payload'];h=r['header']
     correlated=(h['source']==2 and h['target']==1 and h['source_boot_id'] and
         all(h[k]==c['header'][k] for k in ('transaction_epoch','transaction_id')))
     if not correlated:return False
-    if c['name']=='REQUEST_STATUS':
+    if c['name'] in ('REQUEST_TELEMETRY','STATUS_CAPTURE','STATUS_FETCH','IHU_REBOOT') and r['name']=='COMMAND_RESPONSE':
+        if c['name']=='IHU_REBOOT' and p==dict(command_id=6,stage=2,reason=0,parameter_id=0,value=5000):return True
+        return (p['command_id']==c['header']['message_id'] and p['parameter_id']==0 and p['value']==0 and
+            ((p['stage']==1 and p['reason'] in (2,3,5,9)) or (p['stage']==3 and p['reason'] in (7,8))))
+    if c['name'] in ('STATUS_CAPTURE','STATUS_FETCH','IHU_REBOOT'):
+        if not (r['name']=='STATUS_RECORDS' and p['payload_version']==1 and p['count']==5 and
+                p['record_size']==16 and p['volatile']==1 and p['capture_id'] and
+                (c['name']!='STATUS_FETCH' or p['capture_id']==c['payload']['capture_id'])):return False
+        for i in range(1,6):
+            if not (p[f'record{i}_sequence']==i and p[f'record{i}_mode'] in range(5) and
+                    p[f'record{i}_configuration'] in (1,2) and p[f'record{i}_can_ready'] in (0,1) and
+                    p[f'record{i}_eps_valid'] in (0,1)):return False
+            if i>1 and not 900<=(p[f'record{i}_uptime_ms']-p[f'record{i-1}_uptime_ms'])%2**32<=1100:return False
+        return True
+    if c['name']=='REQUEST_STATUS' or (c['name']=='REQUEST_TELEMETRY' and c['payload']['data_group']==1):
         return (r['name']=='IHU_STATUS' and p['payload_version']==1 and
             p['mode'] in range(5) and p['configuration'] in (1,2) and
             p['can_ready'] in (0,1) and p['eps_attempted'] in (0,1) and p['eps_valid'] in (0,1) and

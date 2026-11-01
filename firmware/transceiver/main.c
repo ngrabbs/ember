@@ -36,7 +36,8 @@ static bool disable_clocks(void) {
 #include "rx_ping.h"
 static rp_cache rx_ping_cache;
 static bool uplink_pending;
-static uint8_t uplink_ping[32];
+static uint8_t uplink_ping[36];
+static unsigned uplink_size;
 #include "bpsk_emit.h"
 #include "rf_bridge.h"
 static void bpsk_test(unsigned drive) {
@@ -110,7 +111,7 @@ static void rx_test(bool lo, bool packet_capture) {
         printf("\n");
         if(found && result.packet[W_KIND]==W_KINDS_COMMAND) {
             const char *status=rp_check(&rx_ping_cache,result.packet,result.size);
-            if(!strcmp(status,"PING_ACCEPTED")){memcpy(uplink_ping,result.packet,32);uplink_pending=true;}
+            if(!strcmp(status,"PING_ACCEPTED")){memcpy(uplink_ping,result.packet,result.size);uplink_size=result.size;uplink_pending=true;}
             printf("[rx_ping] outcome=%s epoch=%lu transaction=%lu ingress_only=1 forwarded=0 rf_reply=0\n",
                    status,(unsigned long)rd_u32(result.packet+W_TRANSACTION_EPOCH),
                    (unsigned long)rd_u32(result.packet+W_TRANSACTION_ID));

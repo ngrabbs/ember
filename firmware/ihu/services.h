@@ -30,6 +30,8 @@ static inline bool ihu_sensor_receive(ihu_sensor_result *r){
     if(!host_sensor_ready || host_sensor_defer)return false;
     *r=host_sensor;host_sensor_ready=false;return true;
 }
+static unsigned host_reboots;
+static inline void ihu_reboot(void){++host_reboots;}
 static inline void ihu_runtime_status(void){}
 static inline void ihu_vprintf(bool reply,const char *fmt,va_list args){(void)reply;vprintf(fmt,args);}
 #else
@@ -43,6 +45,7 @@ bool ihu_sensor_submit(bool adc,bool enable);
 bool ihu_sensor_receive(ihu_sensor_result *r);
 void ihu_vprintf(bool reply,const char *fmt,va_list args);
 void ihu_runtime_status(void);
+void ihu_reboot(void);
 #endif
 static inline void ihu_printf(bool reply,const char *fmt,...){
     va_list args;va_start(args,fmt);ihu_vprintf(reply,fmt,args);va_end(args);

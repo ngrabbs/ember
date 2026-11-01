@@ -8,12 +8,15 @@ typedef struct {uint32_t epoch,id,boot;} rp_key;
 #define RP_TRANSACTION_CAPACITY 256
 typedef struct {rp_key keys[RP_TRANSACTION_CAPACITY];unsigned used;} rp_cache;
 static const char *rp_check(rp_cache *cache,const uint8_t *p,unsigned n){
- if(!cache||!p||n!=32)return "REJECT_SIZE";
+ if(!cache||!p||n<32||n>36)return "REJECT_SIZE";
  if(rd_u16(p)!=0x1900 || (rd_u16(p+2)&0xc000)!=0xc000 || rd_u16(p+4)!=n-7 ||
     p[W_SCHEMA_VERSION]!=W_VERSION || p[W_KIND]!=W_KINDS_COMMAND ||
-    rd_u16(p+W_PAYLOAD_LENGTH)!=0 || bp_crc16(p,n-2)!=rd_u16(p+n-2))return "REJECT_FRAME";
+    rd_u16(p+W_PAYLOAD_LENGTH)!=n-32 || bp_crc16(p,n-2)!=rd_u16(p+n-2))return "REJECT_FRAME";
  if(p[W_SOURCE]!=W_ENDPOINTS_GROUND || p[W_TARGET]!=W_ENDPOINTS_IHU)return "REJECT_ROUTE";
- if(rd_u16(p+W_MESSAGE_ID)!=W_ID_PING && rd_u16(p+W_MESSAGE_ID)!=W_ID_PAYLOAD_FIRE_CHECK && rd_u16(p+W_MESSAGE_ID)!=W_ID_REQUEST_STATUS)return "REJECT_COMMAND";
+ unsigned command=rd_u16(p+W_MESSAGE_ID);
+ unsigned args=command==W_ID_REQUEST_TELEMETRY?1:command==W_ID_STATUS_FETCH?4:
+  (command==W_ID_PING || command==W_ID_PAYLOAD_FIRE_CHECK || command==W_ID_REQUEST_STATUS || command==W_ID_STATUS_CAPTURE || command==W_ID_IHU_REBOOT)?0:99;
+ if(n!=32+args)return "REJECT_COMMAND";
  uint32_t epoch=rd_u32(p+W_TRANSACTION_EPOCH),id=rd_u32(p+W_TRANSACTION_ID),boot=rd_u32(p+W_SOURCE_BOOT_ID);
  if(!epoch||!id||!boot)return "REJECT_IDENTITY";
  for(unsigned i=0;i<cache->used;i++)if(cache->keys[i].epoch==epoch&&cache->keys[i].id==id)

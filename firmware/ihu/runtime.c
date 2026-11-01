@@ -37,6 +37,7 @@ static uint32_t milliseconds(void){return to_ms_since_boot(get_absolute_time());
 static void checkin(unsigned who){taskENTER_CRITICAL();progress[who]=milliseconds();taskEXIT_CRITICAL();}
 static void wake_app(void){if(app_handle)xTaskNotifyGive(app_handle);}
 static void increment(uint32_t *p){taskENTER_CRITICAL();++*p;taskEXIT_CRITICAL();}
+void ihu_reboot(void){watchdog_reboot(0,0,10);for(;;)tight_loop_contents();}
 void ihu_runtime_panic(unsigned reason){
     watchdog_hw->scratch[0]=0x49485500u|reason;
     watchdog_reboot(0,0,10);

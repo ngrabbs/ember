@@ -98,7 +98,7 @@ def generate(destination, command_filter=None, command_description="EMBER softwa
         if command_filter is not None and message['name'] not in command_filter:
             continue
         command = node(commands, "MetaCommand", name=message["name"],
-                       shortDescription=command_description)
+                       shortDescription=message.get("description",command_description))
         arguments = node(command, "ArgumentList")
         for field in message["fields"]:
             name = message["name"] + "_" + field["name"] + "_type"

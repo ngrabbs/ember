@@ -1,6 +1,6 @@
 #pragma once
 #include "uplink_ping.h"
-static uint8_t uplink_response[56];
+static uint8_t uplink_response[120];
 static bool uplink_response_valid;
 static unsigned uplink_response_size;
 static uint64_t uplink_response_time;
@@ -13,9 +13,9 @@ static bool uplink_forward(void){
  static ul_packet sent,reply;static cf_reader fragments;static uint8_t wire[UL_WIRE_MAX];
  memset(&sent,0,sizeof(sent));memset(&fragments,0,sizeof(fragments));
  sent.version=1;sent.type=UP_PING;sent.sender=sent.origin=responder_boot;sent.request=++uplink_request;
- sent.size=32;memcpy(sent.payload,uplink_ping,32);
+ sent.size=(uint16_t)uplink_size;memcpy(sent.payload,uplink_ping,uplink_size);
  /* Payload capture/analysis has a five-second IHU deadline, plus HELLO and CAN transfer. */
- size_t size=ul_encode(&sent,wire);uint64_t end=time_us_64()+(up_native_fire(sent.payload,sent.size)?7000000:2000000);
+ size_t size=ul_encode(&sent,wire);uint64_t end=time_us_64()+((up_native_fire(sent.payload,sent.size)||ul_u16(sent.payload+8)==4)?7000000:2000000);
  bool sent_ok=size!=0;
  for(unsigned i=0;sent_ok && i*CF_CHUNK<size;i++){
   cf_frame f;sent_ok=cf_fragment(wire,size,UP_REQUEST_ID,(uint16_t)sent.request,i,&f)&&can_send_frame(&f,end);
@@ -36,7 +36,7 @@ static bool uplink_forward(void){
    cf_frame discovery;
    if(dr_respond(&f,DR_COMMS_NODE,responder_boot,&discovery)){(void)can_send_frame(&discovery,end);continue;}
    if(cf_feed(&fragments,&f,UP_REPLY_ID,(uint32_t)(time_us_64()/1000)) &&
-      up_envelope(&fragments,&reply) && (up_native_ping(sent.payload,sent.size)?up_completed(&reply,&sent):up_native_status(sent.payload,sent.size)?up_status_completed(&reply,&sent):up_native_fire(sent.payload,sent.size)&&(up_fire_completed(&reply,&sent)||up_fire_failed(&reply,&sent)))){
+      up_envelope(&fragments,&reply) && (up_native_ping(sent.payload,sent.size)?up_completed(&reply,&sent):(up_status_completed(&reply,&sent)||up_records_completed(&reply,&sent)||up_cdh_rejected(&reply,&sent)||up_reboot_scheduled(&reply,&sent)||(up_native_fire(sent.payload,sent.size)&&(up_fire_completed(&reply,&sent)||up_fire_failed(&reply,&sent)))))){
     uplink_response_size=reply.size;memcpy(uplink_response,reply.payload,reply.size);uplink_response_valid=true;uplink_response_time=time_us_64();
     printf("[uplink] IHU_COMPLETED boot=%lu response_hex=",(unsigned long)reply.sender);
     for(unsigned i=0;i<uplink_response_size;i++){printf("%02x",uplink_response[i]);}printf(" RF=0\n");

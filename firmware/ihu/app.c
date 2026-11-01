@@ -83,6 +83,8 @@ static void sensor_complete(const ihu_sensor_result *r);
 static uint16_t telemetry_sequence;
 static uint32_t eps_readout_count,boot_ready_ms;
 static size_t status_packet(uint8_t *b,const uint8_t *request);
+static void cdh_receive(const ul_packet *request);
+static void cdh_pump(uint32_t now);
 static uint32_t now_ms(void) {return to_ms_since_boot(get_absolute_time());}
 static void firmware_status(void) {
     LOG("FIRMWARE role=%s version=%s git=%s dirty=%u boot=%" PRIu32 "\n",ROLE_NAME,FW_VERSION,FW_GIT,FW_DIRTY,boot);
@@ -127,7 +129,7 @@ static void fire_unavailable(uint8_t payload_reason){
 }
 static bool uplink_emit(const uint8_t *p,size_t n,void *context){
     const ul_packet *request=context;
-    if(up_native_status(request->payload,request->size)){
+    if(up_native_status(request->payload,request->size) || (up_native_cdh(request->payload,request->size) && ul_u16(request->payload+8)==3)){
         if(p[W_KIND]!=W_KINDS_TELEMETRY || ul_u16(p+W_MESSAGE_ID)!=W_ID_SYSTEM_STATUS)return true;
         ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,.request=request->request};
         reply.size=(uint16_t)status_packet(reply.payload,request->payload);
@@ -148,9 +150,9 @@ static bool uplink_emit(const uint8_t *p,size_t n,void *context){
 static void uplink_receive(const cf_frame *frame,uint32_t now){
     static ul_packet p;
     if(!cf_feed(&uplink_fragments,frame,UP_REQUEST_ID,now))return;
-    if(!up_envelope(&uplink_fragments,&p)||p.type!=UP_PING||p.origin!=p.sender||(!up_native_ping(p.payload,p.size)&&!up_native_fire(p.payload,p.size)&&!up_native_status(p.payload,p.size)))return;
+    if(!up_envelope(&uplink_fragments,&p)||p.type!=UP_PING||p.origin!=p.sender||(!up_native_ping(p.payload,p.size)&&!up_native_fire(p.payload,p.size)&&!up_native_status(p.payload,p.size)&&!up_native_cdh(p.payload,p.size)))return;
     if(!ip_test(&policy))return;
-    if((sensor_job.active && !up_native_status(p.payload,p.size)) || output.active||(can.pending&&!discovery.active)){LOG("UPLINK_PING rejected=BUSY\n");return;}
+    if((sensor_job.active && !up_native_status(p.payload,p.size) && !up_native_cdh(p.payload,p.size)) || output.active||(can.pending&&!discovery.active)){LOG("UPLINK_PING rejected=BUSY\n");return;}
     if(up_native_fire(p.payload,p.size)){
         if(fire_uplink.active || pending.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING){LOG("UPLINK_FIRE rejected=BUSY\n");return;}
         uint32_t epoch=ul_u32(p.payload+12),id=ul_u32(p.payload+16);
@@ -165,6 +167,7 @@ static void uplink_receive(const cf_frame *frame,uint32_t now){
         submit(UL_HELLO,NULL,0);return;
     }
     if(fire_uplink.active)return;
+    if(up_native_cdh(p.payload,p.size)){cdh_receive(&p);return;}
     ember_command(&uplink_engine,p.payload,p.size,now,uplink_emit,&p);
 }
 static void pump_tx(uint32_t now) {
@@ -507,6 +510,80 @@ static size_t status_packet(uint8_t *b,const uint8_t *request){
     b[53]=0; /* Health-gated mission enablement is not implemented. */
     ul_p16(b+54,ul_crc(b,54));return n;
 }
+static bool reboot_scheduled;static uint32_t reboot_at;
+/* One frozen five-record bank; an explicit new capture replaces it. */
+static struct {
+ bool active,valid;uint8_t count;uint32_t id,last;
+ ul_packet request;uint8_t records[80];
+ struct {uint32_t epoch,id,source,capture;} keys[64];unsigned used;
+} cdh;
+static void cdh_header(uint8_t *b,size_t n,const ul_packet *request,uint8_t kind,uint16_t id,unsigned payload){
+ memset(b,0,n);ul_p16(b,W_TM_IDENTITY);ul_p16(b+2,0xc000|(telemetry_sequence++&0x3fff));ul_p16(b+4,n-7);
+ b[6]=1;b[7]=kind;ul_p16(b+8,id);b[10]=2;b[11]=1;
+ memcpy(b+12,request->payload+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,payload);
+}
+static bool cdh_send(ul_packet *reply){
+ ul_p16(reply->payload+reply->size-2,ul_crc(reply->payload,reply->size-2));
+ if(!queue(reply))return false;
+ output.route=UP_REPLY_ID;return true;
+}
+static void cdh_error(const ul_packet *request,unsigned stage,unsigned reason){
+ ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,.request=request->request,.size=43};
+ cdh_header(reply.payload,43,request,2,W_ID_COMMAND_RESPONSE,11);
+ ul_p16(reply.payload+30,ul_u16(request->payload+8));reply.payload[32]=(uint8_t)stage;ul_p16(reply.payload+33,(uint16_t)reason);
+ (void)cdh_send(&reply);
+}
+static void cdh_records(const ul_packet *request){
+ ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,.request=request->request,.size=120};
+ cdh_header(reply.payload,120,request,1,W_ID_STATUS_RECORDS,88);
+ reply.payload[30]=1;reply.payload[31]=5;reply.payload[32]=16;reply.payload[33]=1;ul_p32(reply.payload+34,cdh.id);
+ memcpy(reply.payload+38,cdh.records,80);(void)cdh_send(&reply);
+}
+static void cdh_receive(const ul_packet *request){
+ unsigned id=ul_u16(request->payload+8);
+ if(id==6){
+  if(policy.mode!=IP_SAFE || policy.outputs){cdh_error(request,1,W_REASON_MODE_NOT_ALLOWED);return;}
+  if(reboot_scheduled || cdh.active || pending.active || uhf_run.state==UR_RUNNING){cdh_error(request,1,W_REASON_BUSY);return;}
+  ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,.request=request->request,.size=43};
+  cdh_header(reply.payload,43,request,2,W_ID_COMMAND_RESPONSE,11);ul_p16(reply.payload+30,6);
+  reply.payload[32]=2;ul_p32(reply.payload+37,5000);
+  if(cdh_send(&reply)){reboot_scheduled=true;reboot_at=now_ms();}
+  return;
+ }
+ if(id==3){
+  if(request->payload[30]!=W_DATA_GROUP_SYSTEM){++uplink_engine.rejected;cdh_error(request,1,W_REASON_INVALID_PARAMETER);}
+  else ember_command(&uplink_engine,request->payload,request->size,now_ms(),uplink_emit,(void *)request);
+  return;
+ }
+ if(id==5){
+  if(!cdh.valid){cdh_error(request,3,W_REASON_NOT_AVAILABLE);return;}
+  if(ul_u32(request->payload+30)!=cdh.id){cdh_error(request,1,W_REASON_INVALID_PARAMETER);return;}
+  cdh_records(request);return;
+ }
+ uint32_t epoch=ul_u32(request->payload+12),tx=ul_u32(request->payload+16),source=ul_u32(request->payload+20);
+ for(unsigned i=0;i<cdh.used;i++)if(cdh.keys[i].epoch==epoch && cdh.keys[i].id==tx){
+  if(cdh.keys[i].source!=source || cdh.keys[i].capture!=cdh.id)cdh_error(request,1,W_REASON_TRANSACTION_CONFLICT);
+  else if(cdh.valid)cdh_records(request);
+  else cdh_error(request,1,W_REASON_BUSY);
+  return;
+ }
+ if(cdh.active || cdh.used==64 || cdh.id==UINT32_MAX){cdh_error(request,1,W_REASON_BUSY);return;}
+ ++cdh.id;cdh.keys[cdh.used].epoch=epoch;cdh.keys[cdh.used].id=tx;
+ cdh.keys[cdh.used].source=source;cdh.keys[cdh.used++].capture=cdh.id;
+ cdh.active=true;cdh.valid=false;cdh.count=0;cdh.last=now_ms();cdh.request=*request;
+ cdh_pump(now_ms());
+}
+static void cdh_pump(uint32_t now){
+ if(reboot_scheduled && (uint32_t)(now-reboot_at)>=5000){reboot_scheduled=false;ihu_reboot();}
+ if(!cdh.active || (cdh.count && (uint32_t)(now-cdh.last)<1000))return;
+ if((cdh.count && (uint32_t)(now-cdh.last)>1100) || (cdh.count==4 && output.active)){
+  cdh.active=false;cdh.valid=false;cdh_error(&cdh.request,3,W_REASON_EXECUTION_ERROR);return;
+ }
+ uint8_t status[56];status_packet(status,cdh.request.payload);uint8_t *v=cdh.records+16*cdh.count;
+ ul_p16(v,cdh.count+1);ul_p32(v+2,now);
+ v[6]=status[31];v[7]=status[32];v[8]=status[33];v[9]=status[38];v[10]=status[39];v[11]=status[41];memcpy(v+12,status+42,4);
+ cdh.last=now;if(++cdh.count==5){cdh.active=false;cdh.valid=true;cdh_records(&cdh.request);}
+}
 static void housekeeping_pump(uint32_t now){
     if((uint32_t)(now-housekeeping.last)<5000 || pending.active || output.active || can.pending ||
        discovery.active || uplink_fragments.active || fire_uplink.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING)return;
@@ -689,7 +766,7 @@ void ihu_app_step(bool scheduled) {
          * unsigned elapsed checks: an older loop timestamp would underflow and
          * expire newly submitted RF work immediately. */
         now=now_ms();
-        cf_expire(&fragments,now);pump_tx(now);
+        cf_expire(&fragments,now);pump_tx(now);cdh_pump(now);
         for(unsigned i=0;i<UC_CAPACITY;i++) {
             uc_item *x=&uhf_client.items[i];
             if(x->active && (uint32_t)(now-x->started)>=UC_RESULT_MS) {
