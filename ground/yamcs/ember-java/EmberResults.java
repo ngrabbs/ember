@@ -25,12 +25,13 @@ public final class EmberResults {
         CommandId id;
         CommandHistoryPublisher history;
         int command, parameter;
-        long value, deadline;
+        long value, deadline, idleBeforeDispatchMs;
         boolean accepted;
         long started;
     }
     private final Map<String, Pending> pending = new HashMap<>();
-    private long boot;
+    private long boot, lastObserved, baselineBoot, baselineCapture;
+    private byte[] capturedBaseline;
 
     private EmberResults() {
         var timer = Executors.newSingleThreadScheduledExecutor(task -> {
@@ -58,6 +59,7 @@ public final class EmberResults {
         if(command.command==3) command.parameter=Byte.toUnsignedInt(b.get(30));
         if(command.command==5) command.value=Integer.toUnsignedLong(b.getInt(30));
         command.started = System.nanoTime();
+        command.idleBeforeDispatchMs=pending.isEmpty() && lastObserved!=0 ? (command.started-lastObserved)/1000000 : -1;
         command.deadline = command.started + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 1 || (command.command >= 2 && command.command <= 6) ? 40 : 5);
         pending.put(key(b), command);
         history.publishAck(id, "Acknowledge_EMBER_Acceptance", TimeEncoding.getWallclockTime(), AckStatus.PENDING);
@@ -98,6 +100,7 @@ public final class EmberResults {
             });
         }
         boot = currentBoot;
+        lastObserved=System.nanoTime();
         if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
             Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 59) {
             Pending records=pending.get(key(b));
@@ -129,6 +132,14 @@ public final class EmberResults {
             records.history.publish(records.id,"ember-records-sha256",digest);
             records.history.publish(records.id,"ember-sample-intervals-ms",intervals.toString());
             records.history.publish(records.id,"ember-retention-age-ms",Long.toString(Integer.toUnsignedLong(b.getInt(24)-b.getInt(104))));
+            byte[] recordBytes=Arrays.copyOfRange(bytes,38,118);
+            if(records.command==4){capturedBaseline=recordBytes;baselineBoot=currentBoot;baselineCapture=Integer.toUnsignedLong(b.getInt(34));}
+            else {
+                String match=capturedBaseline==null ? "NO_BASELINE" : Boolean.toString(baselineBoot==currentBoot &&
+                    baselineCapture==Integer.toUnsignedLong(b.getInt(34)) && Arrays.equals(capturedBaseline,recordBytes));
+                records.history.publish(records.id,"ember-records-match-capture",match);
+                records.history.publish(records.id,"ember-ground-idle-ms",Long.toString(records.idleBeforeDispatchMs));
+            }
             records.history.publishAck(records.id,"Acknowledge_EMBER_Acceptance",now,AckStatus.NA,"Correlated frozen record set received");
             records.history.publishAck(records.id,CommandHistoryPublisher.CommandComplete_KEY,now,AckStatus.OK);
             pending.remove(key(b));return;
