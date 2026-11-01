@@ -3,7 +3,7 @@
 [Operator guides](README.md) · [IHU console](ihu-can-console.md) · [Yamcs](yamcs.md)
 
 This guide covers the Raspberry Pi 4 on the LibreCube LC2502, payload software
-**0.2.0**, IHU **0.13.0**, and the five implemented payload operations. Checked
+**0.3.0**, IHU **0.13.0**, and the five implemented payload operations. Checked
 against repository source and the installed Pi identity on October 17, 2026.
 Earlier IHU 0.12.0 fire-check transcripts below remain useful examples of the
 same payload protocol. Boot IDs, request IDs, uptimes and counters vary per run.
@@ -12,11 +12,57 @@ The payload responds on **CAN A at 500 kbit/s**, node **4**. It starts its CAN
 interface and responder at boot without needing Wi-Fi or an open console.
 It does not send periodic heartbeats or fire results on its own.
 
-Fire check currently returns **NO_FIRE / STATIC_STUB**. It increments a check
-counter but does not invoke a camera or detection algorithm. There are no
-implemented camera, image acquisition/download, detector configuration,
-payload power-switch, or CAN reboot/shutdown commands. Linux maintenance is
-available separately through SSH.
+Fire check returns **NO_FIRE / STATIC_STUB** because the CAN detector remains
+a stub. In 0.3.0, an optional camera adapter first captures and saves a real
+three-camera set. The result is sent only after the camera daemon confirms all
+three files. This result does not evaluate the images for fire.
+
+### Real capture before the fire-check reply
+
+Enable this adapter on a Pi already running the Koenig capture daemon at
+`127.0.0.1:8001`. Keep its timer disabled, focus stopped, and `burst_count=1`.
+Use `sudo systemctl edit ember-payload.service` to add:
+
+```ini
+[Service]
+Environment=EMBER_PAYLOAD_CAPTURE_URL=http://127.0.0.1:8001
+RestrictAddressFamilies=AF_CAN AF_UNIX AF_INET
+```
+
+Restart `ember-payload.service`, then run `hello payload` on the IHU to establish
+the new responder identity. `payload fire-check` now follows this flow:
+
+```mermaid
+flowchart LR
+    I[IHU fire-check] --> C[CAN request reassembled and session checked]
+    C --> W[Single capture worker]
+    W --> H[Local camera daemon: POST /capture]
+    H --> P[Sequential camera 0, 1, 2 capture]
+    P --> J[Encode and save three JPEGs]
+    J --> V[Validate three saved-image confirmations]
+    V --> L[Log CAPTURE_SAVED with origin, request and filenames]
+    L --> R[CAN FIRE_RESULT: detector still STATIC_STUB]
+    R --> I
+```
+
+Discovery, heartbeat and other CAN requests remain serviced during capture.
+A second fire-check while a capture is pending returns error 5 (busy). Adapter
+failure returns error 8, logs `CAPTURE_FAILED`, and never sends a successful fire
+result. A timeout can leave images saved later by the camera daemon: the adapter
+does not retry. Capture operations have a 3.8-second HTTP budget to fit inside
+the current IHU five-second transaction timeout. An IHU timeout is an uncertain
+outcome; inspect logs before issuing another capture.
+
+Follow `journalctl -u ember-payload.service -f` for `CAPTURE_START` and
+`CAPTURE_SAVED`. Both include origin/request IDs and Pi monotonic timestamps;
+the saved event lists filenames and sizes. The camera daemon closes the JPEG
+files before returning; this is not an explicit disk power-loss durability test.
+Files remain in the camera daemon's configured image store. The adapter uses
+the existing resolution, exposure and wavelength settings without changing them.
+
+Without `EMBER_PAYLOAD_CAPTURE_URL`, the original immediate static stub behavior
+is preserved. Image download, detector tuning, power switching and reboot remain
+outside this CAN command. Linux maintenance is available through SSH.
 
 ## Stored-image detector and planned command integration
 

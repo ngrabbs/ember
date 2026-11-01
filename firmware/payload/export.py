@@ -18,7 +18,7 @@ def main():
     if args.destination.exists():
         raise SystemExit('Export destination already exists')
     args.destination.mkdir(parents=True)
-    for filename in ('protocol.py', 'payload.py', 'can_setup.py', 'install.sh', 'client.py', 'VERSION'):
+    for filename in ('protocol.py', 'payload.py', 'camera_capture.py', 'can_setup.py', 'install.sh', 'client.py', 'VERSION'):
         shutil.copy2(source / filename, args.destination / filename)
     shutil.copytree(source / 'systemd', args.destination / 'systemd')
     (args.destination / 'build_identity.json').write_text(json.dumps({

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Boot-ready Pi payload responder. No camera, power or image operations."""
+"""Boot-ready Pi payload responder with optional camera-daemon capture."""
 import argparse
 from collections import deque
 import fcntl
 import json
 import logging
+import os
 from pathlib import Path
 import secrets
 import signal
@@ -19,13 +20,39 @@ from protocol import (Packet, Reassembler, CAN_FRAME, REPORT, QUERY_ID, DISCOVER
 
 
 class Service:
-    def __init__(self, identity, boot=None, now=time.monotonic):
+    def __init__(self, identity, boot=None, now=time.monotonic, capture=None):
         self.identity = identity
         self.boot = boot or secrets.randbelow(0xffffffff) + 1
         self.now = now; self.started = now()
         self.peer = 0
         self.requests = self.replies = self.rejected = 0
         self.checks = 0
+        self.capture = capture
+        self.pending_capture = None
+
+    def fire_result(self, packet):
+        self.checks = (self.checks % 0xffffffff) + 1
+        self.replies += 1
+        uptime = int((self.now() - self.started) * 1000) & 0xffffffff
+        # Real capture can precede this result; detection is still a static stub.
+        return Packet(FIRE_RESULT, self.boot, packet.origin, packet.request,
+                      FIRE_REPORT.pack(1, 0, 1, 0, self.boot, uptime, self.checks))
+
+    def poll_capture(self):
+        if not self.pending_capture:
+            return None
+        packet, future = self.pending_capture
+        if not future.done():
+            return None
+        self.pending_capture = None
+        try:
+            future.result()
+        except Exception:
+            logging.exception('CAPTURE_FAILED origin=%u request=%u outcome=UNCERTAIN no_auto_retry=1',
+                              packet.origin, packet.request)
+            self.replies += 1
+            return Packet(ERROR, self.boot, packet.origin, packet.request, b'\x08')
+        return self.fire_result(packet)
 
     def handle(self, packet, fragment_errors=0):
         self.requests += 1
@@ -52,9 +79,12 @@ class Service:
             return reply(ECHO_ACK, packet.payload)
         uptime = int((self.now() - self.started) * 1000) & 0xffffffff
         if packet.kind == FIRE_CHECK:
-            # Replace this explicit stub with the algorithm when it is ready.
-            self.checks = (self.checks % 0xffffffff) + 1
-            return reply(FIRE_RESULT, FIRE_REPORT.pack(1, 0, 1, 0, self.boot, uptime, self.checks))
+            if self.capture:
+                if self.pending_capture:
+                    return reject(5)
+                self.pending_capture = (packet, self.capture(packet))
+                return None
+            return self.fire_result(packet)
         if packet.kind == IDENT:
             version = bytes(int(x) for x in self.identity['version'].split('.'))
             data = version + bytes([self.identity['dirty']]) + bytes.fromhex(self.identity['git'])
@@ -80,11 +110,11 @@ def open_can(interface):
         raise
 
 
-def run(interface, identity, lock_path='/run/ember-payload/owner.lock'):
+def run(interface, identity, lock_path='/run/ember-payload/owner.lock', capture=None):
     # Keep one responder/boot identity per physical payload interface.
     with open(lock_path, 'w') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        service = Service(identity)
+        service = Service(identity, capture=capture)
         parser = Reassembler()
         outgoing = deque()
         stopped = False
@@ -94,11 +124,18 @@ def run(interface, identity, lock_path='/run/ember-payload/owner.lock'):
         signal.signal(signal.SIGTERM, stop)
         signal.signal(signal.SIGINT, stop)
         with open_can(interface) as bus:
+            def queue_response(response):
+                start = max(time.monotonic(), outgoing[-1][0] + .002 if outgoing else 0)
+                for index, part in enumerate(fragments(response)):
+                    outgoing.append((start + index * .002, REPLY_ID, part))
             logging.info('CAN_READY interface=%s node=4 boot=%u git=%s version=%s',
                          interface, service.boot, identity['git'], identity['version'])
             while not stopped:
                 now = time.monotonic()
                 parser.expire(now)
+                completed = service.poll_capture()
+                if completed:
+                    queue_response(completed)
                 bus.settimeout(.002 if outgoing else .05)
                 if outgoing and now >= outgoing[0][0]:
                     due, ident, data = outgoing.popleft()
@@ -127,11 +164,11 @@ def run(interface, identity, lock_path='/run/ember-payload/owner.lock'):
                 if packet is None:
                     continue
                 response = service.handle(packet, parser.errors + parser.timeouts)
+                if response is None:
+                    continue
                 logging.info('REQUEST type=%02x origin=%u request=%u reply=%02x',
                              packet.kind, packet.origin, packet.request, response.kind)
-                start = max(now, outgoing[-1][0] + .002 if outgoing else now)
-                for index, part in enumerate(fragments(response)):
-                    outgoing.append((start + index * .002, REPLY_ID, part))
+                queue_response(response)
 
 
 def main():
@@ -139,13 +176,20 @@ def main():
     parser.add_argument('--interface', default='can0')
     parser.add_argument('--identity', type=Path, default=Path(__file__).with_name('build_identity.json'))
     parser.add_argument('--lock', default='/run/ember-payload/owner.lock')
+    parser.add_argument('--capture-url', default=os.environ.get('EMBER_PAYLOAD_CAPTURE_URL'),
+                        help='Opt in to real capture using http://127.0.0.1:8001')
     args = parser.parse_args()
     identity = json.loads(args.identity.read_text())
     if (len(identity['git']) != 40 or len(bytes.fromhex(identity['git'])) != 20
             or identity['dirty'] not in (0, 1) or len(identity['version'].split('.')) != 3):
         raise ValueError('invalid build identity')
     logging.basicConfig(level=logging.INFO, format='%(message)s')
-    run(args.interface, identity, args.lock)
+    if args.capture_url:
+        from camera_capture import CameraCapture
+        with CameraCapture(args.capture_url) as camera:
+            run(args.interface, identity, args.lock, capture=camera.submit)
+    else:
+        run(args.interface, identity, args.lock)
 
 
 if __name__ == '__main__':

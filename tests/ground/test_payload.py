@@ -62,6 +62,40 @@ class PayloadTests(unittest.TestCase):
         self.assertEqual(self.request(FIRE_CHECK,sender=99).kind,ERROR)
         self.assertEqual(FIRE_REPORT.unpack(self.request(FIRE_CHECK).payload)[-1],2)
 
+    def test_capture_defers_result_but_keeps_heartbeat_responsive(self):
+        from concurrent.futures import Future
+        future = Future()
+        accepted = []
+        def capture(packet):
+            accepted.append(packet)
+            return future
+        self.service.capture = capture
+        self.request(HELLO)
+        self.assertIsNone(self.request(FIRE_CHECK))
+        self.assertIsNone(self.service.poll_capture())
+        self.assertEqual(self.service.checks, 0)
+        self.assertEqual(self.request(HEARTBEAT).kind, 0x97)
+        self.assertEqual(self.request(FIRE_CHECK).payload, b'\x05')
+        self.assertEqual(len(accepted), 1)
+        future.set_result([{'port': i} for i in range(3)])
+        result = self.service.poll_capture()
+        self.assertEqual((result.origin, result.request), (11, 7))
+        self.assertEqual(FIRE_REPORT.unpack(result.payload), (1, 0, 1, 0, 42, 0, 1))
+        self.assertIsNone(self.service.poll_capture())
+
+    def test_failed_capture_never_reports_success_or_retries(self):
+        from concurrent.futures import Future
+        future = Future()
+        self.service.capture = lambda packet: future
+        self.request(HELLO)
+        self.assertIsNone(self.request(FIRE_CHECK))
+        future.set_exception(TimeoutError('camera timed out'))
+        with self.assertLogs(level='ERROR'):
+            result = self.service.poll_capture()
+        self.assertEqual((result.kind, result.payload), (ERROR, b'\x08'))
+        self.assertEqual(self.service.checks, 0)
+        self.assertIsNone(self.service.poll_capture())
+
     def test_reassembly_rejects_corruption_and_recovers(self):
         packet = Packet(ECHO, 11, 11, 0x12345678, bytes(range(240)))
         parts = list(fragments(packet))
