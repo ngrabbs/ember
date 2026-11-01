@@ -14,7 +14,7 @@ def node(parent, tag, **attrs):
                           for k, v in attrs.items()})
 
 
-def generate(destination, command_filter=None):
+def generate(destination, command_filter=None, command_description="EMBER software bench command; no RF endpoint"):
     destination = Path(destination)
     destination.mkdir(parents=True, exist_ok=True)
     root = ET.Element("{" + NS + "}SpaceSystem", name="ember")
@@ -98,7 +98,7 @@ def generate(destination, command_filter=None):
         if command_filter is not None and message['name'] not in command_filter:
             continue
         command = node(commands, "MetaCommand", name=message["name"],
-                       shortDescription="EMBER software bench command; no RF endpoint")
+                       shortDescription=command_description)
         arguments = node(command, "ArgumentList")
         for field in message["fields"]:
             name = message["name"] + "_" + field["name"] + "_type"

@@ -23,6 +23,7 @@ public final class EmberResults {
         int command, parameter;
         long value, deadline;
         boolean accepted;
+        long started;
     }
     private final Map<String, Pending> pending = new HashMap<>();
     private long boot;
@@ -50,7 +51,8 @@ public final class EmberResults {
             command.parameter = Short.toUnsignedInt(b.getShort(WireProfile.SET_PARAMETER_PARAMETER_ID));
             command.value = Integer.toUnsignedLong(b.getInt(WireProfile.SET_PARAMETER_VALUE));
         }
-        command.deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(command.command == 1028 ? 40 : 5);
+        command.started = System.nanoTime();
+        command.deadline = command.started + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 1 ? 40 : 5);
         pending.put(key(b), command);
         history.publishAck(id, "Acknowledge_EMBER_Acceptance", TimeEncoding.getWallclockTime(), AckStatus.PENDING);
         history.publishAck(id, CommandHistoryPublisher.CommandComplete_KEY, TimeEncoding.getWallclockTime(), AckStatus.PENDING);
@@ -59,6 +61,7 @@ public final class EmberResults {
         long now = TimeEncoding.getWallclockTime();
         if (!command.accepted) command.history.publishAck(command.id, "Acknowledge_EMBER_Acceptance", now, AckStatus.TIMEOUT, reason);
         command.history.publish(command.id, "ember-outcome", "UNKNOWN");
+        command.history.publish(command.id, "ember-elapsed-ms", Long.toString((System.nanoTime()-command.started)/1000000));
         command.history.publishAck(command.id, CommandHistoryPublisher.CommandComplete_KEY, now, AckStatus.TIMEOUT, reason);
     }
     private synchronized void expire() {
@@ -95,6 +98,9 @@ public final class EmberResults {
             fire.history.publish(fire.id, "ember-fire-mode", b.get(33) == 1 ? "STATIC_STUB" : "ALGORITHM");
             fire.history.publish(fire.id, "ember-result-boot-id", Long.toString(currentBoot));
             fire.history.publish(fire.id, "ember-outcome", "COMPLETED");
+            fire.history.publish(fire.id, "ember-elapsed-ms", Long.toString((System.nanoTime()-fire.started)/1000000));
+            fire.history.publish(fire.id, "ember-application-result-bytes", "16");
+            fire.history.publish(fire.id, "ember-ground-packet-bytes", Integer.toString(bytes.length));
             if (!fire.accepted) fire.history.publishAck(fire.id, "Acknowledge_EMBER_Acceptance", now,
                 AckStatus.NA, "Correlated payload final result received");
             fire.history.publishAck(fire.id, CommandHistoryPublisher.CommandComplete_KEY, now, AckStatus.OK);
@@ -110,6 +116,8 @@ public final class EmberResults {
         long now = TimeEncoding.getWallclockTime();
         command.history.publish(command.id, "ember-result-boot-id", Long.toString(currentBoot));
         command.history.publish(command.id, "ember-result-reason", reason);
+        if(stage==3 && command.command==1028 && reason==7)
+            command.history.publish(command.id, "ember-payload-error-code", Long.toString(Integer.toUnsignedLong(b.getInt(WireProfile.COMMAND_RESPONSE_VALUE))));
         if (stage == 0) {
             if (!command.accepted) {
                 command.accepted = true;
@@ -126,6 +134,8 @@ public final class EmberResults {
         else if (!command.accepted) command.history.publishAck(command.id, "Acknowledge_EMBER_Acceptance", now,
                 AckStatus.NA, "Acceptance report missing; correlated terminal result received");
         command.history.publish(command.id, "ember-outcome", stage == 2 ? "COMPLETED" : stage == 1 ? "REJECTED" : "EXECUTION_FAILED");
+        command.history.publish(command.id, "ember-elapsed-ms", Long.toString((System.nanoTime()-command.started)/1000000));
+        command.history.publish(command.id, "ember-ground-packet-bytes", Integer.toString(bytes.length));
         command.history.publishAck(command.id, CommandHistoryPublisher.CommandComplete_KEY, now,
                                   stage == 2 ? AckStatus.OK : AckStatus.NOK, "EMBER stage " + stage + ", reason " + reason);
         pending.remove(key(b));

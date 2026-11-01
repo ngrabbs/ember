@@ -32,7 +32,8 @@ static void record_fault(uint8_t code,uint32_t at){unsigned i=fault_count++%16;f
 static ember_state uplink_engine;
 static cf_reader uplink_fragments;
 static struct {bool active;ul_packet request;uint8_t target;uint32_t peer;} fire_uplink;
-static struct {uint32_t epoch,id;} fire_keys[16];
+#define FIRE_TRANSACTION_CAPACITY 256
+static struct {uint32_t epoch,id;} fire_keys[FIRE_TRANSACTION_CAPACITY];
 static unsigned fire_keys_used;
 static void submit(uint8_t type,const uint8_t *payload,size_t size);
 static void fire_restore(void);
@@ -146,7 +147,7 @@ static void uplink_receive(const cf_frame *frame,uint32_t now){
         if(fire_uplink.active || pending.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING){LOG("UPLINK_FIRE rejected=BUSY\n");return;}
         uint32_t epoch=ul_u32(p.payload+12),id=ul_u32(p.payload+16);
         for(unsigned i=0;i<fire_keys_used;i++)if(fire_keys[i].epoch==epoch && fire_keys[i].id==id)return;
-        if(fire_keys_used==16)return;
+        if(fire_keys_used==FIRE_TRANSACTION_CAPACITY)return;
         fire_keys[fire_keys_used].epoch=epoch;fire_keys[fire_keys_used++].id=id;
         /* Addressed commands take precedence over an observational probe. */
         discovery.active=false;

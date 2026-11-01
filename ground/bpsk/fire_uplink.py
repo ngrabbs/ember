@@ -13,11 +13,11 @@ from codec import decode as native_decode
 from modem import frame,decode
 from uplink_probe import RATE,DIGITAL_OFFSET,FPGA_SHA
 
-VERSION='0.1.1'
+VERSION='0.1.2'
 
 def valid_command(wire):
     c=native_decode(wire);h=c['header']
-    return c['name']=='PAYLOAD_FIRE_CHECK' and h['source']==1 and h['target']==2 and all(h[k] for k in ('transaction_epoch','transaction_id','source_boot_id'))
+    return c['name'] in ('PAYLOAD_FIRE_CHECK','PING') and h['source']==1 and h['target']==2 and all(h[k] for k in ('transaction_epoch','transaction_id','source_boot_id'))
 
 def matches(wire,command):
     r=native_decode(wire);c=native_decode(command);p=r['payload'];h=r['header']
@@ -25,7 +25,10 @@ def matches(wire,command):
         all(h[k]==c['header'][k] for k in ('transaction_epoch','transaction_id')))
     if not correlated:return False
     if r['name']=='COMMAND_RESPONSE':
+        if c['name']=='PING':
+            return (p['command_id']==1 and p['stage']==2 and p['reason']==0 and p['parameter_id']==0 and p['value']==0)
         return (p['command_id']==1028 and p['stage']==3 and p['reason']==7 and p['parameter_id']==0)
+    if c['name']!='PAYLOAD_FIRE_CHECK':return False
     return (r['name']=='PAYLOAD_FIRE_RESULT' and
         p['payload_version']==1 and p['transport']==2 and p['bridge_session_id']==0 and
         p['result'] in (0,1) and p['execution_mode'] in (1,2) and p['reported_boot_id'] and p['check_id'])
@@ -117,7 +120,7 @@ def main():
                 run=a.output/datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
                 result=execute(wire,run,a.images)
                 out.sendto(result,('127.0.0.1',10019))
-                print('FIRE_RESULT '+result.hex(),flush=True)
+                print('RF_RESULT '+result.hex(),flush=True)
             except Exception as error:print('UNKNOWN '+str(error),flush=True)
 
 if __name__=='__main__':main()

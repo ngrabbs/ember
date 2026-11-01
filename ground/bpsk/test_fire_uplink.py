@@ -6,7 +6,7 @@ class FireUplink(unittest.TestCase):
         tc=encode('PAYLOAD_FIRE_CHECK',sequence=1,source=1,target=2,source_boot_id=7,uptime_ms=0,
                   transaction_epoch=7,transaction_id=8,payload={})
         self.assertTrue(valid_command(tc))
-        self.assertFalse(valid_command(encode('PING',sequence=1,source=1,target=2,source_boot_id=7,
+        self.assertTrue(valid_command(encode('PING',sequence=1,source=1,target=2,source_boot_id=7,
                   uptime_ms=0,transaction_epoch=7,transaction_id=8,payload={})))
         p=dict(payload_version=1,transport=2,result=0,execution_mode=1,bridge_session_id=0,
                reported_boot_id=42,reported_uptime_ms=100,check_id=1)
@@ -25,4 +25,13 @@ class FireUplink(unittest.TestCase):
         self.assertFalse(matches(response(9),tc))
         p['stage']=2;p['reason']=0;self.assertFalse(matches(response(),tc))
         p['stage']=3;p['reason']=7;p['command_id']=1;self.assertFalse(matches(response(),tc))
+    def test_ping_completes_only_on_exact_ping_response(self):
+        tc=encode('PING',sequence=1,source=1,target=2,source_boot_id=7,
+                  uptime_ms=0,transaction_epoch=7,transaction_id=8,payload={})
+        p=dict(command_id=1,stage=2,reason=0,parameter_id=0,value=0)
+        def response():return encode('COMMAND_RESPONSE',sequence=2,source=2,target=1,
+            source_boot_id=9,uptime_ms=10,transaction_epoch=7,transaction_id=8,payload=p)
+        self.assertTrue(matches(response(),tc))
+        p['command_id']=1028;self.assertFalse(matches(response(),tc))
+        p['command_id']=1;p['value']=11;self.assertFalse(matches(response(),tc))
 if __name__=='__main__':unittest.main()

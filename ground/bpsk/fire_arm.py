@@ -24,7 +24,7 @@ def main():
             if address[0]!='192.168.1.251':continue
             try:
                 packet=decode(wire)
-                if packet['name']!='PAYLOAD_FIRE_CHECK' or packet['header']['source']!=1 or packet['header']['target']!=2:continue
+                if packet['name'] not in ('PAYLOAD_FIRE_CHECK','PING') or packet['header']['source']!=1 or packet['header']['target']!=2:continue
                 with serial.Serial(a.device,115200,timeout=.1,write_timeout=.5,exclusive=True) as console:
                     console.reset_input_buffer();console.write(b'A');console.flush()
                     armed=False;end=time.monotonic()+24
