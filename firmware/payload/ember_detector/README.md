@@ -162,13 +162,13 @@ UNKNOWN uses ERROR 11 with detailed JSON evidence, preserving old binary
 decoders. A richer UNKNOWN telemetry report still requires coordinated changes
 across IHU/bench/RF/Yamcs. No fixture result is sent as a live observation.
 
-Keep image processing out of the CAN receive loop. A bounded worker, explicit
-busy admission, an analysis deadline, persistent run/check correlation, and a
-versioned fixture/UNKNOWN result contract are still required before enabling
-commanded image analysis. The current 16-byte result cannot distinguish fixture
-analysis from current camera observation. Update IHU/bench/RF/Yamcs consumers
-together, and preserve old result decoding. Do not repurpose the existing stub
-or mark it ALGORITHM while the live path still returns a fixed answer.
+Keep image processing out of the CAN receive loop. The live adapter supplies
+bounded admission, an enforced deadline and persistent run/request correlation.
+The current 16-byte result cannot distinguish fixture analysis from current
+camera observation, so fixture selection remains outside the CAN command. A
+richer fixture/UNKNOWN report needs IHU/bench/RF/Yamcs consumer updates together
+with preserved old decoding. ALGORITHM mode is used only for valid binary
+decisions produced from the live captured triplet.
 
 ## Prepared Pi development environment
 
