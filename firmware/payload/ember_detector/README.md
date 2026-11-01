@@ -1,7 +1,9 @@
 # Replaceable stored-image detectors (pipeline 0.2.0)
 
-This is an **offline development pipeline**. The CAN responder remains payload
-0.2.0 with its static stub. This module never opens CAN, camera, mux, or RF devices.
+This is a replaceable development pipeline with an offline CLI. The optional
+payload 0.4.0 live-image adapter also invokes it after real camera capture; see
+the [user guide](../../../docs/user/payload.md#real-capture-and-detection-version-040).
+This module itself never opens CAN, camera, mux, or RF devices.
 
 ```mermaid
 flowchart LR
@@ -152,7 +154,13 @@ UNKNOWNs, is retained in the report. The report also records the base profile,
 implementation/tuner hashes and dependency versions. Run on the target Pi:
 matching results and downstream decisions can differ across OpenCV builds/CPUs.
 
-## Remaining command integration
+## Command integration
+
+Payload 0.4.0 implements an opt-in, bounded live-image worker with persistent
+per-request evidence. Valid binary results use the existing ALGORITHM report;
+UNKNOWN uses ERROR 11 with detailed JSON evidence, preserving old binary
+decoders. A richer UNKNOWN telemetry report still requires coordinated changes
+across IHU/bench/RF/Yamcs. No fixture result is sent as a live observation.
 
 Keep image processing out of the CAN receive loop. A bounded worker, explicit
 busy admission, an analysis deadline, persistent run/check correlation, and a

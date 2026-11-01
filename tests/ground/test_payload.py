@@ -96,6 +96,21 @@ class PayloadTests(unittest.TestCase):
         self.assertEqual(self.service.checks, 0)
         self.assertIsNone(self.service.poll_capture())
 
+    def test_analysis_decisions_and_unknown_preserve_wire_contract(self):
+        from concurrent.futures import Future
+        self.request(HELLO)
+        for decision, expected in [('FIRE', 1), ('NO_FIRE', 0), ('UNKNOWN', None)]:
+            future = Future()
+            self.service.capture = lambda packet: future
+            self.assertIsNone(self.request(FIRE_CHECK))
+            future.set_result(dict(result=decision, reason='example'))
+            response = self.service.poll_capture()
+            if expected is None:
+                self.assertEqual((response.kind, response.payload), (ERROR, b'\x0b'))
+            else:
+                self.assertEqual(FIRE_REPORT.unpack(response.payload)[1:3], (expected, 2))
+        self.assertEqual(self.service.checks, 2)
+
     def test_reassembly_rejects_corruption_and_recovers(self):
         packet = Packet(ECHO, 11, 11, 0x12345678, bytes(range(240)))
         parts = list(fragments(packet))

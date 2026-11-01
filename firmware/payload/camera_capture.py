@@ -4,6 +4,7 @@ import json
 import logging
 import time
 import urllib.request
+import os
 
 
 class CameraCapture:
@@ -13,6 +14,7 @@ class CameraCapture:
         self.url = url
         self.executor = ThreadPoolExecutor(max_workers=1)
         self.opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+        self.analysis_config = os.environ.get('EMBER_PAYLOAD_DETECTOR_CONFIG')
 
     def __enter__(self):
         return self
@@ -25,6 +27,7 @@ class CameraCapture:
 
     def capture(self, packet):
         start = time.monotonic_ns()
+        analysis_deadline = time.monotonic() + 4.3
         logging.info('CAPTURE_START origin=%u request=%u monotonic_ns=%u',
                      packet.origin, packet.request, start)
         # One total budget leaves room inside the IHU's five-second deadline.
@@ -49,4 +52,8 @@ class CameraCapture:
         logging.info('CAPTURE_SAVED origin=%u request=%u monotonic_ns=%u elapsed_ms=%.3f images=%s',
                      packet.origin, packet.request, end, (end-start)/1e6,
                      json.dumps(captures, separators=(',', ':')))
+        if self.analysis_config:
+            from live_analysis import analyze
+            return analyze(captures, settings, packet, self.opener, self.url,
+                           self.analysis_config, analysis_deadline)
         return captures

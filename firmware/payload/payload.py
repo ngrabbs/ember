@@ -30,13 +30,13 @@ class Service:
         self.capture = capture
         self.pending_capture = None
 
-    def fire_result(self, packet):
+    def fire_result(self, packet, decision=0, mode=1):
         self.checks = (self.checks % 0xffffffff) + 1
         self.replies += 1
         uptime = int((self.now() - self.started) * 1000) & 0xffffffff
         # Real capture can precede this result; detection is still a static stub.
         return Packet(FIRE_RESULT, self.boot, packet.origin, packet.request,
-                      FIRE_REPORT.pack(1, 0, 1, 0, self.boot, uptime, self.checks))
+                      FIRE_REPORT.pack(1, decision, mode, 0, self.boot, uptime, self.checks))
 
     def poll_capture(self):
         if not self.pending_capture:
@@ -46,12 +46,17 @@ class Service:
             return None
         self.pending_capture = None
         try:
-            future.result()
+            outcome = future.result()
         except Exception:
             logging.exception('CAPTURE_FAILED origin=%u request=%u outcome=UNCERTAIN no_auto_retry=1',
                               packet.origin, packet.request)
             self.replies += 1
             return Packet(ERROR, self.boot, packet.origin, packet.request, b'\x08')
+        if isinstance(outcome, dict) and 'result' in outcome:
+            if outcome['result'] not in ('FIRE', 'NO_FIRE'):
+                self.replies += 1
+                return Packet(ERROR, self.boot, packet.origin, packet.request, b'\x0b')
+            return self.fire_result(packet, int(outcome['result'] == 'FIRE'), 2)
         return self.fire_result(packet)
 
     def handle(self, packet, fragment_errors=0):

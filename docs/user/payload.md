@@ -3,7 +3,7 @@
 [Operator guides](README.md) · [IHU console](ihu-can-console.md) · [Yamcs](yamcs.md)
 
 This guide covers the Raspberry Pi 4 on the LibreCube LC2502, payload software
-**0.3.0** and the five implemented payload operations. The capture adapter was
+**0.4.0** and the five implemented payload operations. The capture adapter was
 tested with IHU **0.15.0** on November 1, 2026. Older command examples were checked
 against IHU **0.13.0** and the installed Pi identity on October 17, 2026.
 Earlier IHU 0.12.0 fire-check transcripts below remain useful examples of the
@@ -13,10 +13,9 @@ The payload responds on **CAN A at 500 kbit/s**, node **4**. It starts its CAN
 interface and responder at boot without needing Wi-Fi or an open console.
 It does not send periodic heartbeats or fire results on its own.
 
-Fire check returns **NO_FIRE / STATIC_STUB** because the CAN detector remains
-a stub. In 0.3.0, an optional camera adapter first captures and saves a real
-three-camera set. The result is sent only after the camera daemon confirms all
-three files. This result does not evaluate the images for fire.
+Fire check supports three configurations: the original immediate static stub;
+real capture with a static detector (0.3.0); and real capture followed by the
+replaceable image detector (0.4.0). Select the last option as described below.
 
 ### Real capture before the fire-check reply
 
@@ -64,6 +63,60 @@ the existing resolution, exposure and wavelength settings without changing them.
 Without `EMBER_PAYLOAD_CAPTURE_URL`, the original immediate static stub behavior
 is preserved. Image download, detector tuning, power switching and reboot remain
 outside this CAN command. Linux maintenance is available through SSH.
+
+### Real capture and detection, version 0.4.0
+
+With the camera adapter enabled, install NumPy/OpenCV and the pinned calibration
+file in `/opt/ember-payload/correction_20261003.npz`. Add these service settings:
+
+```ini
+[Service]
+Environment=EMBER_PAYLOAD_DETECTOR_CONFIG=/opt/ember-payload/config/live-camera-pass2.json
+Environment=EMBER_PAYLOAD_CALIBRATION=/opt/ember-payload/correction_20261003.npz
+StateDirectory=ember-payload
+```
+
+Restart the responder and establish a fresh IHU `hello payload` session. Each
+`payload fire-check` now captures three real images, downloads copies locally,
+undoes output rotation into sensor coordinates for calibration, and runs the
+existing preparation/registration/detector pipeline. The original JPEGs remain
+unchanged. The selected algorithm is `spectral_guarded_v1`, using the pass-2
+thresholds. The live profile increases the permitted intermediate file size to
+4 MB for lossless sensor-coordinate PNGs; detector thresholds are unchanged.
+Change the configuration's registered algorithm to swap the detector.
+
+```mermaid
+flowchart LR
+    C[CAN fire-check] --> A[Capture and save three JPEGs]
+    A --> S[Snapshot settings and copy images]
+    S --> P[Undo rotation, calibrate and register]
+    P --> D[Selected detector from registry]
+    D --> E[Persist result, hashes, metrics and request correlation]
+    E --> K{Decision}
+    K -->|FIRE or NO_FIRE| R[FIRE_RESULT with ALGORITHM mode]
+    K -->|UNKNOWN| U[Error 11: analysis unavailable]
+```
+
+Current IHU firmware can decode ALGORITHM binary results, but its fixed fire
+report has no UNKNOWN value. UNKNOWN therefore returns CAN ERROR reason **11**;
+IHU prints `PEER_REJECTED reason=11`. This means analysis unavailable, and must
+not be read as NO_FIRE. The detailed reason is in `ANALYSIS_RESULT` and
+`/var/lib/ember-payload/<origin>-<request>-<unique>/result.json`. Cover-on black
+images normally return `UNKNOWN / REGISTRATION_LOW_CONTRAST`. Alignment gates
+are retained, including for dark or featureless images.
+
+The capture/analysis worker has a 4.3-second total budget from capture start;
+analysis runs in a killable subprocess using the remaining time. Deadline
+exhaustion is UNKNOWN, not a binary result. CAN reception remains independent.
+The complete record preserves originals, configuration/calibration/code hashes,
+dependency versions, transforms, metrics, source `LIVE_CAMERA` and request IDs.
+Only live images enter this CAN path; stored-fixture runs remain separate.
+
+Exposure and gain currently come from the camera daemon's settings, not actual
+per-frame sensor metadata, and each record carries that warning. JPEG linearity,
+optical calibration compatibility and detector operating performance remain
+experimental. The old 107-image selection was used for tuning; it is not an
+independent validation set. New OpenCV versions can change registration outcomes.
 
 ## Stored-image detector and planned command integration
 

@@ -137,6 +137,11 @@ Hardware evidence and remaining deployment limits are in `validation.json`.
 
 ## Fire check 0.2.0
 
+Version 0.4.0 can run the existing replaceable detector on real captures. Enable
+`EMBER_PAYLOAD_DETECTOR_CONFIG` as described in the [user guide](../../docs/user/payload.md#real-capture-and-detection-version-040).
+Valid binary decisions return ALGORITHM mode; UNKNOWN returns ERROR 11 and a
+persistent evidence record, so unusable images never become a false NO_FIRE.
+
 Version 0.3.0 adds an opt-in real-camera capture before this static detector
 result. Set `EMBER_PAYLOAD_CAPTURE_URL=http://127.0.0.1:8001` and permit AF_INET
 in the systemd service. See the [user guide](../../docs/user/payload.md#real-capture-before-the-fire-check-reply)
