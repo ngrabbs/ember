@@ -55,8 +55,25 @@ class Service:
         if isinstance(outcome, dict) and 'result' in outcome:
             if outcome['result'] not in ('FIRE', 'NO_FIRE'):
                 self.replies += 1
-                return Packet(ERROR, self.boot, packet.origin, packet.request, b'\x0b')
-            return self.fire_result(packet, int(outcome['result'] == 'FIRE'), 2)
+                response = Packet(ERROR, self.boot, packet.origin, packet.request, b'\x0b')
+            else:
+                response = self.fire_result(packet, int(outcome['result'] == 'FIRE'), 2)
+            evidence = outcome.get('_evidence_path')
+            if evidence:
+                try:
+                    record = dict(outcome);record.pop('_evidence_path')
+                    record.update(payload_boot_id=self.boot,
+                        payload_check_id=self.checks if response.kind == FIRE_RESULT else None,
+                        reply_type=response.kind, reply_payload_hex=response.payload.hex(),
+                        application_result_bytes=len(response.payload),
+                        reply_evidence='GENERATED_NOT_DELIVERY_CONFIRMED')
+                    path = Path(evidence); temporary = path.with_suffix('.reply.tmp')
+                    temporary.write_text(json.dumps(record,indent=2,allow_nan=False)+'\n')
+                    temporary.replace(path)
+                except Exception:
+                    logging.exception('REPLY_EVIDENCE_FAILED origin=%u request=%u',packet.origin,packet.request)
+                    return Packet(ERROR,self.boot,packet.origin,packet.request,b'\x08')
+            return response
         return self.fire_result(packet)
 
     def handle(self, packet, fragment_errors=0):

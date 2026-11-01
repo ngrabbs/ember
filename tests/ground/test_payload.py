@@ -111,6 +111,26 @@ class PayloadTests(unittest.TestCase):
                 self.assertEqual(FIRE_REPORT.unpack(response.payload)[1:3], (expected, 2))
         self.assertEqual(self.service.checks, 2)
 
+    def test_saved_evidence_links_exact_binary_and_unavailable_replies(self):
+        from concurrent.futures import Future
+        self.request(HELLO)
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'result.json'
+            for decision in ('FIRE','UNKNOWN'):
+                future=Future();self.service.capture=lambda packet:future
+                self.request(FIRE_CHECK)
+                future.set_result(dict(result=decision,reason='example',config_sha256='unchanged',
+                    original_inputs=[dict(id='source.jpg',sha256='preserved')],_evidence_path=str(path)))
+                reply=self.service.poll_capture();record=json.loads(path.read_text())
+                self.assertEqual(record['reply_payload_hex'],reply.payload.hex())
+                self.assertEqual(record['application_result_bytes'],len(reply.payload))
+                self.assertEqual(record['payload_boot_id'],42)
+                self.assertEqual(record['payload_check_id'],1 if decision=='FIRE' else None)
+                self.assertEqual(record['original_inputs'][0]['sha256'],'preserved')
+                self.assertEqual(record['config_sha256'],'unchanged')
+                self.assertNotIn('_evidence_path',record)
+                self.assertEqual(record['reply_evidence'],'GENERATED_NOT_DELIVERY_CONFIRMED')
+
     def test_reassembly_rejects_corruption_and_recovers(self):
         packet = Packet(ECHO, 11, 11, 0x12345678, bytes(range(240)))
         parts = list(fragments(packet))

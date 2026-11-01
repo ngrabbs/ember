@@ -95,6 +95,8 @@ def analyze(captures, settings, packet, opener, url, config, deadline, worker):
     logging.info('ANALYSIS_RESULT origin=%u request=%u result=%s reason=%s monotonic_ns=%u evidence=%s',
                  packet.origin, packet.request, record['result'], record['reason'],
                  time.monotonic_ns(), case/'result.json')
+    # Internal handoff only: the responder adds the exact generated CAN reply.
+    record['_evidence_path'] = str(case/'result.json')
     return record
 
 
