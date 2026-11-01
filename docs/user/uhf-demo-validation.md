@@ -1,39 +1,44 @@
-# UHF demonstration validation in progress
+# UHF demonstration validation — November 1, 2026
 
-The demonstration route is Yamcs `ember/realtime` through LibreSDR uplink,
-COMMS, IHU and payload CAN, then a correlated RF response back into Yamcs.
-The serial bench bridge is not part of this route. COMMS's enabled fire-arm
-service opens one bounded receive/reply window per ground command; this is
-readiness at boot without unsolicited RF transmission.
+The demonstrated route is Yamcs `ember/realtime` → LibreSDR uplink → COMMS →
+IHU → payload CAN → IHU → COMMS → UHF ground receiver. The serial bench bridge
+is disabled. COMMS USB opens a bounded window automatically; it does not carry
+the command or response. Services start ready and transmit on command.
 
-IHU 0.15.2 forwards explicit payload rejections as a native COMMAND_RESPONSE:
-PAYLOAD_FIRE_CHECK, EXECUTION_FAILED, NOT_AVAILABLE, parameter_id=0, with the
-payload error code in value. This is not a FIRE/NO_FIRE classification. Covered
-cameras returning error 11 should produce this terminal failure in Yamcs,
-not an unexplained timeout. Ambiguous missing replies remain UNKNOWN.
+Deployed integration: IHU 0.15.3, COMMS 0.34.5, fire_uplink 0.1.4, payload 0.5.0.
+The coordinated protocol v2 preserves the 16-byte result and adds explicit
+UNKNOWN only in ALGORITHM mode. Selected registration quality gates complete
+with UNKNOWN; capture faults, corrupt inputs and processing deadlines fail.
+No detector threshold or quality gate was weakened. FIRE/NO_FIRE accuracy is
+outside this demonstration. See `system/protocols/payload_result_v2.md`.
 
-COMMS 0.34.3 waits up to seven seconds for the fire-check CAN exchange (including
-HELLO and the IHU's five-second payload deadline); the PING wait remains two
-seconds. Its 25-second RF lease preserves at least three seconds for one reply.
-The original 20-second lease refused an observed 17.7-second first post-reboot
-reply because less than three seconds remained. The ground capture is now
-20 seconds and the arming-service observation bound is 29 seconds.
-The ground receiver admits only matching valid binary results or correlated
-NOT_AVAILABLE execution failures. No application retry is introduced.
+The rubric target is 35 seconds from ground dispatch to correlated completion,
+including setup and decoding, with at most 16 application result bytes.
+Three fixed-scene UHF checks completed in 29.418, 29.588 and 28.807 seconds.
+Each returned COMPLETED / ALGORITHM / UNKNOWN, 16 application bytes and a
+52-byte native ground packet, independently archived on `uhf-tm-in`.
+All nine original images decoded at 1456 × 1088 and matched their SHA-256.
+The quality reason was REGISTRATION_WEAK_FIT. Configured exposure was 20 ms,
+gain 1.0, auto exposure/AWB off; actual per-frame exposure is not recorded.
 
-Yamcs `ember/realtime` exposes PING and PAYLOAD_FIRE_CHECK over UHF. Reports
-include elapsed milliseconds and ground packet size. Successful fire replies
-also include the 16-byte application result size and payload boot/check IDs.
-Payload 0.4.1 stores those IDs and exact generated reply bytes in result.json;
-this enables a unique lookup without confusing ground and IHU transaction IDs.
-Both MCU duplicate-tracking caches are bounded at 256 transactions per boot.
-The IHU serial bench bridge is disabled; the RF/arming and payload services
-are enabled at boot and idle between commands.
+After a controlled Pi Linux reboot, all four payload/camera services recovered.
+A fresh UHF check completed in 29.565 seconds with a new payload boot identity,
+without manual HELLO. This is not full-stack cold-power qualification.
 
-The rubric now targets 35 seconds ground-dispatch to correlated completion,
-including radio setup, processing, RF and decoding. Four PING trials before
-the receive-window extension completed in 23.942–24.758 seconds. The expanded
-window must be remeasured. Covered-camera failures are independently received
-over RF, but successful live analysis still requires a usable uncovered scene.
-Neither these development trials nor the target establish detection accuracy
-or full cold-power qualification.
+Fixes include a seven-second COMMS payload wait, 25-second bounded RF lease
+with three-second reply reserve, 20-second ground capture, 29-second arming
+observer and strict correlated failure forwarding. The IF decoder starts at
+1325 Hz, tracks the last CRC-valid IF and searches in 25 Hz steps; an actual
+failed capture decoded at 1350 Hz in three candidates. Duplicate caches remain
+bounded/non-evicting (256 per boot), with cache-full refusal and no auto retry.
+
+Yamcs reports `ember-analysis-result`, `ember-elapsed-ms`, application and native
+packet byte counts, payload boot/check identity and processing mode. A command
+outcome UNKNOWN/TIMEOUT still fails; it is distinct from an explicit UNKNOWN
+analysis result on a COMPLETED report. Payload result.json stores exact generated
+reply bytes and source hashes. Ground reception separately proves delivery.
+
+Evidence lives in the EMBER workspace under
+`debug-notes/2026-11-01-evidence/uhf-demo/`. Earlier unsuccessful RF/quality and
+post-reboot trials remain retained. Full C&DH startup/command/outage qualification
+and EPS instrument tests remain pending or blocked by the operator-guide prerequisites.
