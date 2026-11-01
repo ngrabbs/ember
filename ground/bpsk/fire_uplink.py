@@ -13,7 +13,7 @@ from codec import decode as native_decode
 from modem import frame,decode
 from uplink_probe import RATE,DIGITAL_OFFSET,FPGA_SHA
 
-VERSION='0.1.2'
+VERSION='0.1.3'
 
 def valid_command(wire):
     c=native_decode(wire);h=c['header']
@@ -73,7 +73,7 @@ def execute(wire,output,images):
         if not ack:raise RuntimeError('Missing burst acknowledgment')
         report['transmitted']=True;radio.set_tx_gain(0,0)
         stream=uhd.types.StreamCMD(uhd.types.StreamMode.start_cont);stream.stream_now=True;rx.issue_stream_cmd(stream);started=True
-        buf=np.empty((1,8192),np.complex64);metadata=uhd.types.RXMetadata();end=time.monotonic()+16
+        buf=np.empty((1,8192),np.complex64);metadata=uhd.types.RXMetadata();end=time.monotonic()+20
         while time.monotonic()<end:
             n=rx.recv(buf,metadata,.5)
             if metadata.error_code!=uhd.types.RXMetadataErrorCode.none:raise RuntimeError(metadata.strerror())

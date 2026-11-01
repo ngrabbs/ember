@@ -66,7 +66,7 @@ static bool uplink_transmit_response(void){
 static bool uplink_auto_window(void){
  ar_lease lease;ar_start(&lease,time_us_64());
  uplink_response_valid=false;uplink_pending=false;
- printf("[auto_reply] BEGIN max20s max_replies=1 boot_resume=0\n");
+ printf("[auto_reply] BEGIN max25s max_replies=1 boot_resume=0\n");
  rx_test(true,true);
  bool fresh=uplink_pending,healthy=true;
  if(fresh)healthy=uplink_forward();

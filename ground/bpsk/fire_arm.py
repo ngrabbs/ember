@@ -27,7 +27,7 @@ def main():
                 if packet['name'] not in ('PAYLOAD_FIRE_CHECK','PING') or packet['header']['source']!=1 or packet['header']['target']!=2:continue
                 with serial.Serial(a.device,115200,timeout=.1,write_timeout=.5,exclusive=True) as console:
                     console.reset_input_buffer();console.write(b'A');console.flush()
-                    armed=False;end=time.monotonic()+24
+                    armed=False;end=time.monotonic()+29
                     while time.monotonic()<end:
                         line=console.readline().decode('utf-8','replace').strip()
                         if line:print(line,flush=True)
