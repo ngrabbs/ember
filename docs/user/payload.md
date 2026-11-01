@@ -3,7 +3,7 @@
 [Operator guides](README.md) · [IHU console](ihu-can-console.md) · [Yamcs](yamcs.md)
 
 This guide covers the Raspberry Pi 4 on the LibreCube LC2502, payload software
-**0.4.0** and the five implemented payload operations. The capture adapter was
+**0.5.0** and the five implemented payload operations. The capture adapter was
 tested with IHU **0.15.0** on November 1, 2026. Older command examples were checked
 against IHU **0.13.0** and the installed Pi identity on October 17, 2026.
 Earlier IHU 0.12.0 fire-check transcripts below remain useful examples of the
@@ -94,20 +94,29 @@ flowchart LR
     D --> E[Persist result, hashes, metrics and request correlation]
     E --> K{Decision}
     K -->|FIRE or NO_FIRE| R[FIRE_RESULT with ALGORITHM mode]
-    K -->|UNKNOWN| U[Error 11: analysis unavailable]
+    K -->|Selected registration quality gates| U[Version 2 UNKNOWN result]
+    K -->|Capture or processing fault| F[CAN ERROR; not completed]
 ```
 
-Current IHU firmware can decode ALGORITHM binary results, but its fixed fire
-report has no UNKNOWN value. UNKNOWN therefore returns CAN ERROR reason **11**;
-IHU prints `PEER_REJECTED reason=11`. This means analysis unavailable, and must
-not be read as NO_FIRE. The detailed reason is in `ANALYSIS_RESULT` and
-`/var/lib/ember-payload/<origin>-<request>-<unique>/result.json`. Cover-on black
-images normally return `UNKNOWN / REGISTRATION_LOW_CONTRAST`. Alignment gates
-are retained, including for dark or featureless images.
+Payload 0.5.0 and IHU 0.15.3 / COMMS 0.34.5 support a coordinated
+16-byte result v2. `REGISTRATION_LOW_CONTRAST` and `REGISTRATION_WEAK_FIT`
+return explicit `UNKNOWN` (result 2, ALGORITHM mode), with the detailed reason
+in `ANALYSIS_RESULT` and the saved `result.json`. They are completed quality
+outcomes, never NO_FIRE. Version 1 FIRE/NO_FIRE remains compatible. Capture
+faults, corrupt inputs and processing deadlines still return errors and fail
+the demonstration. Other UNKNOWN reasons are not automatically accepted.
+See `system/protocols/payload_result_v2.md` in the UHF integration worktree.
+
+Yamcs `ember/realtime` exposes `PAYLOAD_FIRE_CHECK` over UHF and establishes
+payload discovery automatically; no manual HELLO is needed for that route.
+Require `ember-outcome=COMPLETED`, `ember-fire-mode=ALGORITHM`, elapsed at most
+35000 ms and at most 16 application bytes. `ember-analysis-result=UNKNOWN`
+on that completed report differs from an uncertain command outcome UNKNOWN.
+The native wrapped result is 52 bytes. Detection accuracy is not graded.
 
 The capture/analysis worker has a 4.3-second total budget from capture start;
 analysis runs in a preloaded, reusable, killable subprocess using the remaining time. Deadline
-exhaustion is UNKNOWN, not a binary result. CAN reception remains independent.
+exhaustion remains a processing error, not a completed quality result. CAN reception remains independent.
 The complete record preserves originals, configuration/calibration/code hashes,
 dependency versions, transforms, metrics, source `LIVE_CAMERA` and request IDs.
 Only live images enter this CAN path; stored-fixture runs remain separate.
