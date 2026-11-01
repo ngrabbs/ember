@@ -16,6 +16,22 @@ static inline bool up_native_fire(const uint8_t *p,size_t n){
  uint8_t copy[32];memcpy(copy,p,32);ul_p16(copy+8,1);ul_p16(copy+30,ul_crc(copy,30));
  return ul_crc(p,30)==ul_u16(p+30) && up_native_ping(copy,32);
 }
+static inline bool up_native_status(const uint8_t *p,size_t n){
+ if(n!=32 || ul_u16(p+8)!=2)return false;
+ uint8_t copy[32];memcpy(copy,p,32);ul_p16(copy+8,1);ul_p16(copy+30,ul_crc(copy,30));
+ return ul_crc(p,30)==ul_u16(p+30) && up_native_ping(copy,32);
+}
+static inline bool up_status_completed(const ul_packet *reply,const ul_packet *sent){
+ const uint8_t *p=reply->payload;
+ return up_native_status(sent->payload,sent->size) && reply->version==1 &&
+  reply->type==UP_RESULT && reply->sender && reply->origin==sent->sender &&
+  reply->request==sent->request && reply->size==56 && ul_u16(p)==0x0901 &&
+  (ul_u16(p+2)&0xc000)==0xc000 && ul_u16(p+4)==49 && p[6]==1 && p[7]==1 &&
+  ul_u16(p+8)==58 && p[10]==2 && p[11]==1 && ul_u32(p+20)==reply->sender &&
+  !memcmp(p+12,sent->payload+12,8) && ul_u16(p+28)==24 && p[30]==1 &&
+  p[31]<=4 && (p[32]==1 || p[32]==2) && p[38]<=1 && p[40]<=1 && p[41]<=1 &&
+  p[50]<=3 && p[51]<=3 && p[52]<=3 && p[53]==0 && ul_crc(p,54)==ul_u16(p+54);
+}
 static inline bool up_fire_completed(const ul_packet *reply,const ul_packet *sent){
  const uint8_t *p=reply->payload;
  return reply->version==1 && reply->type==UP_RESULT && reply->sender && reply->origin==sent->sender &&

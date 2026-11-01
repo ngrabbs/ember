@@ -13,17 +13,23 @@ from codec import decode as native_decode
 from modem import frame,decode
 from uplink_probe import RATE,DIGITAL_OFFSET,FPGA_SHA
 
-VERSION='0.1.4'
+VERSION='0.1.5'
 
 def valid_command(wire):
     c=native_decode(wire);h=c['header']
-    return c['name'] in ('PAYLOAD_FIRE_CHECK','PING') and h['source']==1 and h['target']==2 and all(h[k] for k in ('transaction_epoch','transaction_id','source_boot_id'))
+    return c['name'] in ('PAYLOAD_FIRE_CHECK','PING','REQUEST_STATUS') and h['source']==1 and h['target']==2 and all(h[k] for k in ('transaction_epoch','transaction_id','source_boot_id'))
 
 def matches(wire,command):
     r=native_decode(wire);c=native_decode(command);p=r['payload'];h=r['header']
     correlated=(h['source']==2 and h['target']==1 and h['source_boot_id'] and
         all(h[k]==c['header'][k] for k in ('transaction_epoch','transaction_id')))
     if not correlated:return False
+    if c['name']=='REQUEST_STATUS':
+        return (r['name']=='IHU_STATUS' and p['payload_version']==1 and
+            p['mode'] in range(5) and p['configuration'] in (1,2) and
+            p['can_ready'] in (0,1) and p['eps_attempted'] in (0,1) and p['eps_valid'] in (0,1) and
+            all(p[k] in range(4) for k in ('comms_state','payload_state','lte_state')) and
+            p['health_gate_implemented']==0)
     if r['name']=='COMMAND_RESPONSE':
         if c['name']=='PING':
             return (p['command_id']==1 and p['stage']==2 and p['reason']==0 and p['parameter_id']==0 and p['value']==0)

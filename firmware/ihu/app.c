@@ -81,7 +81,8 @@ static uint32_t output_generation[IP_OUTPUT_COUNT],run_generation;
 static bool request_sensor(unsigned kind,unsigned route,bool enable);
 static void sensor_complete(const ihu_sensor_result *r);
 static uint16_t telemetry_sequence;
-static uint32_t eps_readout_count;
+static uint32_t eps_readout_count,boot_ready_ms;
+static size_t status_packet(uint8_t *b,const uint8_t *request);
 static uint32_t now_ms(void) {return to_ms_since_boot(get_absolute_time());}
 static void firmware_status(void) {
     LOG("FIRMWARE role=%s version=%s git=%s dirty=%u boot=%" PRIu32 "\n",ROLE_NAME,FW_VERSION,FW_GIT,FW_DIRTY,boot);
@@ -126,6 +127,13 @@ static void fire_unavailable(uint8_t payload_reason){
 }
 static bool uplink_emit(const uint8_t *p,size_t n,void *context){
     const ul_packet *request=context;
+    if(up_native_status(request->payload,request->size)){
+        if(p[W_KIND]!=W_KINDS_TELEMETRY || ul_u16(p+W_MESSAGE_ID)!=W_ID_SYSTEM_STATUS)return true;
+        ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,.request=request->request};
+        reply.size=(uint16_t)status_packet(reply.payload,request->payload);
+        if(!queue(&reply))return false;
+        output.route=UP_REPLY_ID;return true;
+    }
     if(n!=43 || p[W_KIND]!=W_KINDS_RESPONSE)return false;
     if(p[W_PAYLOAD+W_COMMAND_RESPONSE_STAGE]!=W_STAGE_COMPLETED)return true;
     ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,
@@ -140,9 +148,9 @@ static bool uplink_emit(const uint8_t *p,size_t n,void *context){
 static void uplink_receive(const cf_frame *frame,uint32_t now){
     static ul_packet p;
     if(!cf_feed(&uplink_fragments,frame,UP_REQUEST_ID,now))return;
-    if(!up_envelope(&uplink_fragments,&p)||p.type!=UP_PING||p.origin!=p.sender||(!up_native_ping(p.payload,p.size)&&!up_native_fire(p.payload,p.size)))return;
+    if(!up_envelope(&uplink_fragments,&p)||p.type!=UP_PING||p.origin!=p.sender||(!up_native_ping(p.payload,p.size)&&!up_native_fire(p.payload,p.size)&&!up_native_status(p.payload,p.size)))return;
     if(!ip_test(&policy))return;
-    if(sensor_job.active || output.active||(can.pending&&!discovery.active)){LOG("UPLINK_PING rejected=BUSY\n");return;}
+    if((sensor_job.active && !up_native_status(p.payload,p.size)) || output.active||(can.pending&&!discovery.active)){LOG("UPLINK_PING rejected=BUSY\n");return;}
     if(up_native_fire(p.payload,p.size)){
         if(fire_uplink.active || pending.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING){LOG("UPLINK_FIRE rejected=BUSY\n");return;}
         uint32_t epoch=ul_u32(p.payload+12),id=ul_u32(p.payload+16);
@@ -482,6 +490,23 @@ static void policy_command(const char *s){
     outputs_status();
 }
 static struct {ltc4162_raw_t eps;bool valid,attempted;uint32_t sampled,last;} housekeeping;
+/* Solicited snapshot: age is explicit and failed/missing EPS is never healthy. */
+static size_t status_packet(uint8_t *b,const uint8_t *request){
+    const size_t n=56;memset(b,0,n);
+    ul_p16(b,W_TM_IDENTITY);ul_p16(b+2,0xc000|(telemetry_sequence++&0x3fff));ul_p16(b+4,n-7);
+    b[6]=1;b[7]=1;ul_p16(b+8,W_ID_IHU_STATUS);b[10]=2;b[11]=1;
+    memcpy(b+12,request+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,24);
+    b[30]=1;b[31]=policy.mode;b[32]=policy.configuration;b[33]=policy.outputs;
+    ul_p32(b+34,boot_ready_ms);b[38]=can.ready;b[39]=ihu_can_register(0x2d);
+    b[40]=housekeeping.attempted;b[41]=housekeeping.valid;
+    ul_p32(b+42,housekeeping.valid?now_ms()-housekeeping.sampled:UINT32_MAX);
+    /* Raw readout is retained elsewhere; voltage is unavailable if conversion is unverified. */
+    ul_p32(b+46,0x80000000u);
+    for(unsigned i=0;i<DR_COUNT;i++)dr_age(&devices[i],now_ms());
+    b[50]=devices[DR_COMMS_INDEX].state;b[51]=devices[DR_PAYLOAD_INDEX].state;b[52]=devices[DR_LTE_INDEX].state;
+    b[53]=0; /* Health-gated mission enablement is not implemented. */
+    ul_p16(b+54,ul_crc(b,54));return n;
+}
 static void housekeeping_pump(uint32_t now){
     if((uint32_t)(now-housekeeping.last)<5000 || pending.active || output.active || can.pending ||
        discovery.active || uplink_fragments.active || fire_uplink.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING)return;
@@ -644,6 +669,7 @@ void ihu_app_init(void) {
     ember_init(&uplink_engine,boot);
     ip_finish_boot(&policy,can.ready,false,false);
     if(!can.ready)record_fault(1,now_ms());
+    boot_ready_ms=now_ms();
 }
 void ihu_app_command(const char *line){command(line);}
 void ihu_app_step(bool scheduled) {

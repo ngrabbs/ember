@@ -40,6 +40,17 @@ int main(void){
  unsigned faults_before=fault_count;can.tx_fail=1;
  /* Worker snapshots can observe an error before the actor's TX pump. */
  pump_tx(fake_now);assert(fault_count==faults_before+1);pump_tx(fake_now);assert(fault_count==faults_before+1);
+ /* Status snapshots use live policy, disclose unavailable battery conversion,
+  * stale EPS and absent health gating instead of presenting them as healthy. */
+ uint8_t status[56],request[32]={0};ul_p32(request+12,7);ul_p32(request+16,8);
+ policy.mode=IP_SAFE;policy.outputs=0;boot_ready_ms=42;housekeeping.attempted=true;
+ housekeeping.valid=false;
+ assert(status_packet(status,request)==56 && status[31]==IP_SAFE && status[33]==0);
+ assert(ul_u32(status+34)==42 && status[40]==1 && status[41]==0);
+ assert(ul_u32(status+42)==UINT32_MAX && ul_u32(status+46)==0x80000000u && status[53]==0);
+ assert(ul_crc(status,54)==ul_u16(status+54) && !memcmp(status+12,request+12,8));
+ housekeeping.valid=true;housekeeping.sampled=fake_now-123;policy.mode=IP_NOMINAL;policy.outputs=4;
+ status_packet(status,request);assert(status[31]==IP_NOMINAL && status[33]==4 && ul_u32(status+42)==123);
  puts("ASYNC_PASS");return 0;
 }
 '''

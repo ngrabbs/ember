@@ -13,7 +13,7 @@ static const char *rp_check(rp_cache *cache,const uint8_t *p,unsigned n){
     p[W_SCHEMA_VERSION]!=W_VERSION || p[W_KIND]!=W_KINDS_COMMAND ||
     rd_u16(p+W_PAYLOAD_LENGTH)!=0 || bp_crc16(p,n-2)!=rd_u16(p+n-2))return "REJECT_FRAME";
  if(p[W_SOURCE]!=W_ENDPOINTS_GROUND || p[W_TARGET]!=W_ENDPOINTS_IHU)return "REJECT_ROUTE";
- if(rd_u16(p+W_MESSAGE_ID)!=W_ID_PING && rd_u16(p+W_MESSAGE_ID)!=W_ID_PAYLOAD_FIRE_CHECK)return "REJECT_COMMAND";
+ if(rd_u16(p+W_MESSAGE_ID)!=W_ID_PING && rd_u16(p+W_MESSAGE_ID)!=W_ID_PAYLOAD_FIRE_CHECK && rd_u16(p+W_MESSAGE_ID)!=W_ID_REQUEST_STATUS)return "REJECT_COMMAND";
  uint32_t epoch=rd_u32(p+W_TRANSACTION_EPOCH),id=rd_u32(p+W_TRANSACTION_ID),boot=rd_u32(p+W_SOURCE_BOOT_ID);
  if(!epoch||!id||!boot)return "REJECT_IDENTITY";
  for(unsigned i=0;i<cache->used;i++)if(cache->keys[i].epoch==epoch&&cache->keys[i].id==id)

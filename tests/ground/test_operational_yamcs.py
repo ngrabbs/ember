@@ -30,7 +30,7 @@ class OperationalYamcs(unittest.TestCase):
             self.assertEqual((c/'yamcs.ember-lte.yaml').read_text(),body)
             self.assertIn('port: 10018',flight);self.assertIn('port: 10019',flight)
             self.assertIn('port: 10029',flight)
-            self.assertIn('/ember/(PING|PAYLOAD_FIRE_CHECK)',flight)
+            self.assertIn('/ember/(PING|REQUEST_STATUS|PAYLOAD_FIRE_CHECK)',flight)
             self.assertNotIn('10020',flight)
             self.assertIn('port: 10020',bench);self.assertIn('port: 10028',bench)
             self.assertNotIn('10018',bench);self.assertNotIn('10019',bench)
@@ -39,10 +39,10 @@ class OperationalYamcs(unittest.TestCase):
             pattern=re.findall('tcPatterns: \\["(.*?)"\\]',bench)[0]
             self.assertTrue(re.fullmatch(pattern,'/ember/PAYLOAD_STATUS_QUERY'))
             self.assertFalse(re.fullmatch(pattern,'/ember/PING'))
-            for file,count in [('ember.xml',2),('ember-bench.xml',5)]:
+            for file,count in [('ember.xml',3),('ember-bench.xml',5)]:
                 tree=ET.parse(r/'src/main/yamcs/mdb'/file)
                 self.assertEqual(len(tree.findall('.//{'+op.NS+'}MetaCommand')),count)
-                self.assertEqual(len(tree.findall('.//{'+op.NS+'}Parameter')),198)
+                self.assertEqual(len(tree.findall('.//{'+op.NS+'}Parameter')),215)
 
     def test_legacy_history_has_no_hardware_routes(self):
         with tempfile.TemporaryDirectory() as temp:

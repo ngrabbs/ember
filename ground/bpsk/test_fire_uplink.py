@@ -38,4 +38,18 @@ class FireUplink(unittest.TestCase):
         self.assertTrue(matches(response(),tc))
         p['command_id']=1028;self.assertFalse(matches(response(),tc))
         p['command_id']=1;p['value']=11;self.assertFalse(matches(response(),tc))
+    def test_status_is_correlated_live_snapshot_not_a_ping(self):
+        kw=dict(sequence=1,source_boot_id=7,uptime_ms=0,transaction_epoch=7,transaction_id=8)
+        tc=encode('REQUEST_STATUS',source=1,target=2,payload={},**kw)
+        self.assertTrue(valid_command(tc))
+        p=dict(payload_version=1,mode=3,configuration=1,outputs=0,boot_ready_ms=42,
+            can_ready=1,can_eflg=0,eps_attempted=1,eps_valid=0,eps_age_ms=4294967295,
+            battery_mv=-2147483648,comms_state=1,payload_state=1,lte_state=0,health_gate_implemented=0)
+        def packet(): return encode('IHU_STATUS',source=2,target=1,payload=p,**kw)
+        self.assertTrue(matches(packet(),tc))
+        p['health_gate_implemented']=1;self.assertFalse(matches(packet(),tc))
+        p['health_gate_implemented']=0;p['mode']=5;self.assertFalse(matches(packet(),tc))
+        p['mode']=3
+        other=encode('REQUEST_STATUS',source=1,target=2,payload={},**dict(kw,transaction_id=9))
+        self.assertFalse(matches(packet(),other))
 if __name__=='__main__':unittest.main()

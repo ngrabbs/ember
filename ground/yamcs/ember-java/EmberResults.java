@@ -52,7 +52,7 @@ public final class EmberResults {
             command.value = Integer.toUnsignedLong(b.getInt(WireProfile.SET_PARAMETER_VALUE));
         }
         command.started = System.nanoTime();
-        command.deadline = command.started + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 1 ? 40 : 5);
+        command.deadline = command.started + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 1 || command.command == 2 ? 40 : 5);
         pending.put(key(b), command);
         history.publishAck(id, "Acknowledge_EMBER_Acceptance", TimeEncoding.getWallclockTime(), AckStatus.PENDING);
         history.publishAck(id, CommandHistoryPublisher.CommandComplete_KEY, TimeEncoding.getWallclockTime(), AckStatus.PENDING);
@@ -86,6 +86,29 @@ public final class EmberResults {
             pending.clear();
         }
         boot = currentBoot;
+        if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
+            Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 58) {
+            Pending status = pending.get(key(b));
+            if (status == null || status.command != 2 || bytes.length != 56 || b.get(30)!=1 ||
+                Byte.toUnsignedInt(b.get(31))>4 || (b.get(32)!=1 && b.get(32)!=2) || b.get(53)!=0) return;
+            long now=TimeEncoding.getWallclockTime();
+            status.history.publish(status.id,"ember-outcome","COMPLETED");
+            status.history.publish(status.id,"ember-elapsed-ms",Long.toString((System.nanoTime()-status.started)/1000000));
+            status.history.publish(status.id,"ember-ground-packet-bytes",Integer.toString(bytes.length));
+            status.history.publish(status.id,"ember-result-boot-id",Long.toString(currentBoot));
+            String[] modes={"BOOT","STARTUP","COMMISSIONING","SAFE","NOMINAL"};
+            status.history.publish(status.id,"ember-ihu-mode",modes[b.get(31)]);
+            status.history.publish(status.id,"ember-ihu-outputs",Integer.toString(Byte.toUnsignedInt(b.get(33))));
+            status.history.publish(status.id,"ember-boot-ready-ms",Long.toString(Integer.toUnsignedLong(b.getInt(34))));
+            status.history.publish(status.id,"ember-can-ready",Integer.toString(Byte.toUnsignedInt(b.get(38))));
+            status.history.publish(status.id,"ember-can-eflg",Integer.toString(Byte.toUnsignedInt(b.get(39))));
+            status.history.publish(status.id,"ember-eps-valid",Integer.toString(Byte.toUnsignedInt(b.get(41))));
+            status.history.publish(status.id,"ember-eps-age-ms",Long.toString(Integer.toUnsignedLong(b.getInt(42))));
+            status.history.publish(status.id,"ember-health-gate-implemented","false");
+            status.history.publishAck(status.id,"Acknowledge_EMBER_Acceptance",now,AckStatus.NA,"Correlated status snapshot received");
+            status.history.publishAck(status.id,CommandHistoryPublisher.CommandComplete_KEY,now,AckStatus.OK);
+            pending.remove(key(b));return;
+        }
         if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
             Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 57) {
             Pending fire = pending.get(key(b));
