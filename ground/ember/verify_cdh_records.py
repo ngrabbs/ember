@@ -1,5 +1,8 @@
 """Read-only comparison of two Yamcs UHF record-set reports and archived bytes."""
 import argparse,base64,hashlib,json,urllib.parse,urllib.request
+import sys
+from pathlib import Path
+if not Path(__file__).with_name("codec.py").exists():sys.path.insert(0,"/opt/ember-fire/ember")
 from codec import decode
 
 def compare_records(first,last,first_command,last_command):
