@@ -8,10 +8,12 @@
 #define PL_FIRE_CHECK 0x98
 #define PL_FIRE_RESULT 0x99
 #define PL_FIRE_SIZE 16u
-/* version, result (0=no fire,1=fire), mode (1=stub,2=algorithm), reserved,
+/* v1 binary result; v2 additionally permits 2=UNKNOWN in ALGORITHM mode.
+ * version, result, mode (1=stub,2=algorithm), reserved (still zero),
  * then big endian boot, uptime_ms, nonzero check_id. */
 static inline bool pl_fire_valid(const uint8_t *p,size_t n,uint32_t boot) {
-    return n==PL_FIRE_SIZE && p[0]==1 && p[1]<=1 && (p[2]==1 || p[2]==2) && !p[3] &&
+    return n==PL_FIRE_SIZE && (p[0]==1 || p[0]==2) && p[1]<=(p[0]==1?1:2) &&
+        (p[2]==1 || p[2]==2) && (p[1]!=2 || p[2]==2) && !p[3] &&
         boot && ul_u32(p+4)==boot && ul_u32(p+12);
 }
 #define PL_REPORT_SIZE 28u

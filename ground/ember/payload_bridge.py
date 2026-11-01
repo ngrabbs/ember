@@ -105,10 +105,11 @@ class Console:
 def observed(name, raw, peer, elapsed, bridge):
     common={'transport':1,'bridge_session_id':bridge,'reported_boot_id':peer}
     if name=='PAYLOAD_FIRE_CHECK':
-        if (len(raw)!=16 or raw[0]!=1 or raw[1]>1 or raw[2] not in (1,2) or raw[3] or
+        if (len(raw)!=16 or raw[0] not in (1,2) or raw[1]>(1 if raw[0]==1 else 2) or
+                raw[2] not in (1,2) or (raw[1]==2 and raw[2]!=2) or raw[3] or
                 int.from_bytes(raw[4:8],'big')!=peer or not int.from_bytes(raw[12:16],'big')):
             raise UnknownOutcome('Fire check result invalid')
-        return 'PAYLOAD_FIRE_RESULT',dict(common,payload_version=1,result=raw[1],execution_mode=raw[2],
+        return 'PAYLOAD_FIRE_RESULT',dict(common,payload_version=raw[0],result=raw[1],execution_mode=raw[2],
             reported_uptime_ms=int.from_bytes(raw[8:12],'big'),check_id=int.from_bytes(raw[12:16],'big'))
     if name=='PAYLOAD_PING':
         if not 1<=len(raw)<=240 or raw!=bytes(range(len(raw))):

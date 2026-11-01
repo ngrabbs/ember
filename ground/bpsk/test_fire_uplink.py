@@ -15,6 +15,10 @@ class FireUplink(unittest.TestCase):
         self.assertTrue(matches(tm(),tc));self.assertFalse(matches(tm(9),tc))
         p['transport']=1;self.assertFalse(matches(tm(),tc))
         p['transport']=2;p['check_id']=0;self.assertFalse(matches(tm(),tc))
+        p['check_id']=1;p['payload_version']=2;p['result']=2;p['execution_mode']=2
+        self.assertTrue(matches(tm(),tc))
+        p['payload_version']=1;self.assertFalse(matches(tm(),tc))
+        p['payload_version']=2;p['execution_mode']=1;self.assertFalse(matches(tm(),tc))
     def test_analysis_unavailable_is_correlated_failure_not_fire(self):
         tc=encode('PAYLOAD_FIRE_CHECK',sequence=1,source=1,target=2,source_boot_id=7,
                   uptime_ms=0,transaction_epoch=7,transaction_id=8,payload={})

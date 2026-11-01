@@ -23,7 +23,8 @@ static inline bool up_fire_completed(const ul_packet *reply,const ul_packet *sen
   (ul_u16(p+2)&0xc000)==0xc000 && ul_u16(p+4)==45 && p[6]==1 && p[7]==1 &&
   ul_u16(p+8)==57 && p[10]==2 && p[11]==1 && ul_u32(p+20)==reply->sender &&
   !memcmp(p+12,sent->payload+12,8) && ul_u16(p+28)==20 &&
-  p[30]==1 && p[31]==2 && p[32]<=1 && (p[33]==1 || p[33]==2) && !ul_u32(p+34) &&
+  (p[30]==1 || p[30]==2) && p[31]==2 && p[32]<=(p[30]==1?1:2) &&
+  (p[33]==1 || p[33]==2) && (p[32]!=2 || p[33]==2) && !ul_u32(p+34) &&
   ul_u32(p+38) && ul_u32(p+46) && ul_crc(p,50)==ul_u16(p+50);
 }
 /* Explicit execution failure is a terminal response, never a NO_FIRE result. */

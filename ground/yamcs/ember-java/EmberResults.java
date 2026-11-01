@@ -90,11 +90,14 @@ public final class EmberResults {
             Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 57) {
             Pending fire = pending.get(key(b));
             if (fire == null || fire.command != 1028 || bytes.length != 52 ||
-                b.get(30) != 1 || (b.get(31) != 1 && b.get(31) != 2) ||
-                Byte.toUnsignedInt(b.get(32)) > 1 || (b.get(33) != 1 && b.get(33) != 2) ||
+                (b.get(30) != 1 && b.get(30) != 2) || (b.get(31) != 1 && b.get(31) != 2) ||
+                Byte.toUnsignedInt(b.get(32)) > (b.get(30)==1 ? 1 : 2) ||
+                (b.get(33) != 1 && b.get(33) != 2) || (b.get(32)==2 && b.get(33)!=2) ||
                 b.getInt(38) == 0 || b.getInt(46) == 0) return;
             long now = TimeEncoding.getWallclockTime();
-            fire.history.publish(fire.id, "ember-fire-result", b.get(32) == 0 ? "NO_FIRE" : "FIRE");
+            String decision=b.get(32)==2 ? "UNKNOWN" : b.get(32)==0 ? "NO_FIRE" : "FIRE";
+            fire.history.publish(fire.id, "ember-fire-result", decision);
+            fire.history.publish(fire.id, "ember-analysis-result", decision);
             fire.history.publish(fire.id, "ember-fire-mode", b.get(33) == 1 ? "STATIC_STUB" : "ALGORITHM");
             fire.history.publish(fire.id, "ember-result-boot-id", Long.toString(currentBoot));
             fire.history.publish(fire.id, "ember-outcome", "COMPLETED");

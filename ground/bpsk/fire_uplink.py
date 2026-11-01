@@ -13,7 +13,7 @@ from codec import decode as native_decode
 from modem import frame,decode
 from uplink_probe import RATE,DIGITAL_OFFSET,FPGA_SHA
 
-VERSION='0.1.3'
+VERSION='0.1.4'
 
 def valid_command(wire):
     c=native_decode(wire);h=c['header']
@@ -30,8 +30,10 @@ def matches(wire,command):
         return (p['command_id']==1028 and p['stage']==3 and p['reason']==7 and p['parameter_id']==0)
     if c['name']!='PAYLOAD_FIRE_CHECK':return False
     return (r['name']=='PAYLOAD_FIRE_RESULT' and
-        p['payload_version']==1 and p['transport']==2 and p['bridge_session_id']==0 and
-        p['result'] in (0,1) and p['execution_mode'] in (1,2) and p['reported_boot_id'] and p['check_id'])
+        p['payload_version'] in (1,2) and p['transport']==2 and p['bridge_session_id']==0 and
+        p['result'] in ((0,1) if p['payload_version']==1 else (0,1,2)) and
+        p['execution_mode'] in (1,2) and (p['result']!=2 or p['execution_mode']==2) and
+        p['reported_boot_id'] and p['check_id'])
 
 def execute(wire,output,images):
     if not valid_command(wire):raise ValueError('Command not admitted')

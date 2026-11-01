@@ -182,11 +182,11 @@ def generate(destination, instance="ember"):
     for title,pv,y in [('Bytes','bytes',222),('Echo matched','echo_ok',276),('Round-trip time (ms)','round_trip_ms',330)]:
         label(title,528,y,240,22,11);observed('PAYLOAD_PING_RESULT_'+pv,778,y-3,178,17)
     stamp('PAYLOAD_PING_RESULT_echo_ok',528,435,430)
-    label('LAST FIRE CHECK',22,483,180,24,12,BLUE,True)
+    label('LAST ANALYSIS',22,483,180,24,12,BLUE,True)
     observed('PAYLOAD_FIRE_RESULT_result',205,479,180,17)
     observed('PAYLOAD_FIRE_RESULT_execution_mode',395,479,200,17)
     stamp('PAYLOAD_FIRE_RESULT_result',610,481,360)
-    label('STATIC_STUB returns NO_FIRE without running the detector. Missing replies remain UNKNOWN.',22,513,956,24,11,ORANGE)
+    label('UNKNOWN = explicit quality outcome. A missing reply is an uncertain command, not NO_FIRE.',22,513,956,24,11,ORANGE)
     label('Bench path: Yamcs → m75q → IHU serial → CAN A → payload Pi.' if instance=='ember-bench' else 'Flight command path: Yamcs → LibreSDR RF → transceiver → IHU → CAN A → payload; result returns over RF.',22,541,956,20,10)
     nav('Payload raw / history','Payload.par',22,568)
     web('Send payload command','/commanding/send',250,568,235);web('Command history','/commanding/history',503,568,210)

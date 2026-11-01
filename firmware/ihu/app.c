@@ -254,7 +254,7 @@ static void receive_impl(const ul_packet *p) {
             p->type==CF_MODEM_ACCEPTED?"MODEM_ACCEPTED":p->type==CF_LINK_STATUS_ACK?"LTE_STATUS":p->type==CF_LINK_DIAG_ACK?"LTE_DIAG":p->type==CF_CHAIN_ACK?"WALTER_BENCH_RETURN":"CAN_ECHO_MATCHED",peer,p->size);
         for(size_t i=0;i<p->size;++i) {LOG("%02x",p->payload[i]);}
         LOG("\n");
-        if(fire)LOG("FIRE_CHECK result=%s mode=%s check_id=%" PRIu32 "\n",p->payload[1]?"fire":"no_fire",p->payload[2]==1?"STATIC_STUB":"ALGORITHM",ul_u32(p->payload+12));
+        if(fire)LOG("FIRE_CHECK result=%s mode=%s check_id=%" PRIu32 "\n",p->payload[1]==2?"unknown":p->payload[1]?"fire":"no_fire",p->payload[2]==1?"STATIC_STUB":"ALGORITHM",ul_u32(p->payload+12));
         if(fire_uplink.active){
             if(hello){submit(PL_FIRE_CHECK,NULL,0);return;}
             if(fire){
@@ -264,7 +264,7 @@ static void receive_impl(const ul_packet *p) {
                 ul_p16(b,W_TM_IDENTITY);ul_p16(b+2,0xc000|(telemetry_sequence++&0x3fff));ul_p16(b+4,45);
                 b[6]=1;b[7]=1;ul_p16(b+8,W_ID_PAYLOAD_FIRE_RESULT);b[10]=2;b[11]=1;
                 memcpy(b+12,fire_uplink.request.payload+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,20);
-                b[30]=1;b[31]=2;b[32]=p->payload[1];b[33]=p->payload[2];memcpy(b+38,p->payload+4,12);
+                b[30]=p->payload[0];b[31]=2;b[32]=p->payload[1];b[33]=p->payload[2];memcpy(b+38,p->payload+4,12);
                 ul_p16(b+50,ul_crc(b,50));
                 if(queue(&reply))output.route=UP_REPLY_ID;
                 fire_restore();
