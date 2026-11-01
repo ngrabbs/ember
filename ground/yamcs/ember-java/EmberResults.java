@@ -101,6 +101,8 @@ public final class EmberResults {
             fire.history.publish(fire.id, "ember-elapsed-ms", Long.toString((System.nanoTime()-fire.started)/1000000));
             fire.history.publish(fire.id, "ember-application-result-bytes", "16");
             fire.history.publish(fire.id, "ember-ground-packet-bytes", Integer.toString(bytes.length));
+            fire.history.publish(fire.id, "ember-payload-boot-id", Long.toString(Integer.toUnsignedLong(b.getInt(38))));
+            fire.history.publish(fire.id, "ember-payload-check-id", Long.toString(Integer.toUnsignedLong(b.getInt(46))));
             if (!fire.accepted) fire.history.publishAck(fire.id, "Acknowledge_EMBER_Acceptance", now,
                 AckStatus.NA, "Correlated payload final result received");
             fire.history.publishAck(fire.id, CommandHistoryPublisher.CommandComplete_KEY, now, AckStatus.OK);
