@@ -137,11 +137,19 @@ Hardware evidence and remaining deployment limits are in `validation.json`.
 
 ## Fire check 0.2.0
 
+Version 0.3.0 adds an opt-in real-camera capture before this static detector
+result. Set `EMBER_PAYLOAD_CAPTURE_URL=http://127.0.0.1:8001` and permit AF_INET
+in the systemd service. See the [user guide](../../docs/user/payload.md#real-capture-before-the-fire-check-reply)
+for setup, logging, deadlines and failure handling. Capture uses a worker so
+CAN discovery and heartbeat remain responsive. With the adapter enabled, a
+successful reply confirms that all three image files have been saved; the
+NO_FIRE/STATIC_STUB fields still describe a stub detector.
+
 IHU0.12.0 `hello payload` then `payload fire-check` commands one check. The
 payload returns version1, result0=NO_FIRE/1=FIRE, mode1=STATIC_STUB/2=ALGORITHM,
 reserved0, boot32, uptime_ms32, check_id32 (all integers big endian).
-This release always returns NO_FIRE/STATIC_STUB and increments check_id.
-No camera or detector is invoked. An absent, corrupt or uncorrelated reply is
+Version 0.2.0 always returns NO_FIRE/STATIC_STUB and increments check_id.
+No camera or detector is invoked in that version. An absent, corrupt or uncorrelated reply is
 UNKNOWN, never NO_FIRE. Session HELLO, envelope CRC and request correlation apply.
 The future detector replaces the explicit stub and reports ALGORITHM.
 

@@ -3,8 +3,9 @@
 [Operator guides](README.md) · [IHU console](ihu-can-console.md) · [Yamcs](yamcs.md)
 
 This guide covers the Raspberry Pi 4 on the LibreCube LC2502, payload software
-**0.3.0**, IHU **0.13.0**, and the five implemented payload operations. Checked
-against repository source and the installed Pi identity on October 17, 2026.
+**0.3.0** and the five implemented payload operations. The capture adapter was
+tested with IHU **0.15.0** on November 1, 2026. Older command examples were checked
+against IHU **0.13.0** and the installed Pi identity on October 17, 2026.
 Earlier IHU 0.12.0 fire-check transcripts below remain useful examples of the
 same payload protocol. Boot IDs, request IDs, uptimes and counters vary per run.
 
