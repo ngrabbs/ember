@@ -26,6 +26,18 @@ static inline bool up_fire_completed(const ul_packet *reply,const ul_packet *sen
   p[30]==1 && p[31]==2 && p[32]<=1 && (p[33]==1 || p[33]==2) && !ul_u32(p+34) &&
   ul_u32(p+38) && ul_u32(p+46) && ul_crc(p,50)==ul_u16(p+50);
 }
+/* Explicit execution failure is a terminal response, never a NO_FIRE result. */
+static inline bool up_fire_failed(const ul_packet *reply,const ul_packet *sent){
+ const uint8_t *p=reply->payload;
+ return up_native_fire(sent->payload,sent->size) && reply->version==1 &&
+  reply->type==UP_RESULT && reply->sender && reply->origin==sent->sender &&
+  reply->request==sent->request && reply->size==43 && ul_u16(p)==0x0901 &&
+  (ul_u16(p+2)&0xc000)==0xc000 && ul_u16(p+4)==36 && p[6]==1 && p[7]==2 &&
+  ul_u16(p+8)==49 && p[10]==2 && p[11]==1 && ul_u32(p+20)==reply->sender &&
+  !memcmp(p+12,sent->payload+12,8) && ul_u16(p+28)==11 && ul_u16(p+30)==1028 &&
+  p[32]==3 && ul_u16(p+33)==7 && !ul_u16(p+35) &&
+  ul_crc(p,41)==ul_u16(p+41);
+}
 static inline bool up_envelope(const cf_reader *f,ul_packet *out){
  ul_reader r={0};unsigned count=0;
  for(size_t i=0;i<f->used;i++)if(ul_feed(&r,f->wire[i],0,out))++count;

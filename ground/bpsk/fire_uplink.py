@@ -13,7 +13,7 @@ from codec import decode as native_decode
 from modem import frame,decode
 from uplink_probe import RATE,DIGITAL_OFFSET,FPGA_SHA
 
-VERSION='0.1.0'
+VERSION='0.1.1'
 
 def valid_command(wire):
     c=native_decode(wire);h=c['header']
@@ -21,8 +21,12 @@ def valid_command(wire):
 
 def matches(wire,command):
     r=native_decode(wire);c=native_decode(command);p=r['payload'];h=r['header']
-    return (r['name']=='PAYLOAD_FIRE_RESULT' and h['source']==2 and h['target']==1 and h['source_boot_id'] and
-        all(h[k]==c['header'][k] for k in ('transaction_epoch','transaction_id')) and
+    correlated=(h['source']==2 and h['target']==1 and h['source_boot_id'] and
+        all(h[k]==c['header'][k] for k in ('transaction_epoch','transaction_id')))
+    if not correlated:return False
+    if r['name']=='COMMAND_RESPONSE':
+        return (p['command_id']==1028 and p['stage']==3 and p['reason']==7 and p['parameter_id']==0)
+    return (r['name']=='PAYLOAD_FIRE_RESULT' and
         p['payload_version']==1 and p['transport']==2 and p['bridge_session_id']==0 and
         p['result'] in (0,1) and p['execution_mode'] in (1,2) and p['reported_boot_id'] and p['check_id'])
 

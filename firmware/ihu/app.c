@@ -110,6 +110,19 @@ static bool queue(const ul_packet *p) {
     output.route=TX_ID;output.size=size;output.token=(uint16_t)p->request;output.index=0;output.last=now_ms()-2;output.active=true;return true;
 }
 static void fire_restore(void){target_index=fire_uplink.target;peer=fire_uplink.peer;fire_uplink.active=false;}
+static void fire_unavailable(uint8_t payload_reason){
+    if(!fire_uplink.active)return;
+    ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,
+        .origin=fire_uplink.request.sender,.request=fire_uplink.request.request,.size=43};
+    uint8_t *b=reply.payload;memset(b,0,43);
+    ul_p16(b,W_TM_IDENTITY);ul_p16(b+2,0xc000|(telemetry_sequence++&0x3fff));ul_p16(b+4,36);
+    b[6]=1;b[7]=2;ul_p16(b+8,W_ID_COMMAND_RESPONSE);b[10]=2;b[11]=1;
+    memcpy(b+12,fire_uplink.request.payload+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,11);
+    ul_p16(b+30,W_ID_PAYLOAD_FIRE_CHECK);b[32]=W_STAGE_EXECUTION_FAILED;
+    ul_p16(b+33,W_REASON_NOT_AVAILABLE);ul_p32(b+37,payload_reason);ul_p16(b+41,ul_crc(b,41));
+    if(queue(&reply))output.route=UP_REPLY_ID;
+    fire_restore();
+}
 static bool uplink_emit(const uint8_t *p,size_t n,void *context){
     const ul_packet *request=context;
     if(n!=43 || p[W_KIND]!=W_KINDS_RESPONSE)return false;
@@ -204,7 +217,9 @@ static void receive_impl(const ul_packet *p) {
             bool uncertain=p->payload[0]==CF_LINK_UNKNOWN || p->payload[0]==UL_ERR_MODEM_UNKNOWN;
             if(uncertain) {++unknown;peer=0;}
             else ++refused_requests;
-            LOG("RESULT request=%" PRIu32 " outcome=%s reason=%u\n",p->request,uncertain?"UNKNOWN_REMOTE_LINK":"PEER_REJECTED",p->payload[0]);return;
+            LOG("RESULT request=%" PRIu32 " outcome=%s reason=%u\n",p->request,uncertain?"UNKNOWN_REMOTE_LINK":"PEER_REJECTED",p->payload[0]);
+            if(!uncertain)fire_unavailable(p->payload[0]);
+            return;
         }
         bool identity=pending.packet.type==UL_FIRMWARE_INFO || pending.packet.type==CF_MODEM_FIRMWARE;
         bool diag=pending.packet.type==CF_LINK_DIAG;
