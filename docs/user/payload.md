@@ -106,7 +106,7 @@ images normally return `UNKNOWN / REGISTRATION_LOW_CONTRAST`. Alignment gates
 are retained, including for dark or featureless images.
 
 The capture/analysis worker has a 4.3-second total budget from capture start;
-analysis runs in a killable subprocess using the remaining time. Deadline
+analysis runs in a preloaded, reusable, killable subprocess using the remaining time. Deadline
 exhaustion is UNKNOWN, not a binary result. CAN reception remains independent.
 The complete record preserves originals, configuration/calibration/code hashes,
 dependency versions, transforms, metrics, source `LIVE_CAMERA` and request IDs.
@@ -118,16 +118,15 @@ optical calibration compatibility and detector operating performance remain
 experimental. The old 107-image selection was used for tuning; it is not an
 independent validation set. New OpenCV versions can change registration outcomes.
 
-## Stored-image detector and planned command integration
+## Stored-image detector development
 
 The offline image pipeline is implemented in
 [`firmware/payload/ember_detector`](../../firmware/payload/ember_detector/README.md),
 with replaceable basic and registration-guarded spectral detectors, validated
 configuration, per-run evidence and batch threshold evaluation. It runs real
-image processing on selected stored files. The running 0.2.0 CAN responder still
-returns the static stub described above; camera acquisition and commanded-image
-integration remain subsequent stages. Its image acquisition adapter uses fixtures;
-the offline detection stage is not a stub.
+image processing on selected stored files. The offline acquisition adapter uses
+fixtures; the optional 0.4.0 CAN worker above instead supplies current camera
+images to this same replaceable pipeline.
 
 The baseline is the spectral approach in
 [`koenig_wildfire`](https://github.com/ngrabbs/koenig_wildfire), reviewed at
@@ -897,7 +896,9 @@ before incrementing for that status/heartbeat reply. These are handler/queued
 reply counters, not proof of bus delivery; SocketCAN statistics are separate.
 Uptime and report counters are 32-bit; fire check IDs run from 1 through
 `0xFFFFFFFF`, then wrap to 1. All reset when the responder restarts. The current
-stub always reports result 0/mode 1; mode 2 is a defined future algorithm value.
+stub reports result 0/mode 1; enabled live detection reports valid binary
+decisions in mode 2. An unavailable analysis returns ERROR 11 rather than a
+binary fire report; details remain in the correlated JSON record.
 
 ## Troubleshooting
 

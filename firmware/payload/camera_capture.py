@@ -15,12 +15,18 @@ class CameraCapture:
         self.executor = ThreadPoolExecutor(max_workers=1)
         self.opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
         self.analysis_config = os.environ.get('EMBER_PAYLOAD_DETECTOR_CONFIG')
+        self.analysis_worker = None
+        if self.analysis_config:
+            from live_analysis import AnalysisWorker
+            self.analysis_worker = AnalysisWorker()
 
     def __enter__(self):
         return self
 
     def __exit__(self, *args):
         self.executor.shutdown(wait=True)
+        if self.analysis_worker:
+            self.analysis_worker.stop()
 
     def submit(self, packet):
         return self.executor.submit(self.capture, packet)
@@ -28,6 +34,8 @@ class CameraCapture:
     def capture(self, packet):
         start = time.monotonic_ns()
         analysis_deadline = time.monotonic() + 4.3
+        if self.analysis_worker:
+            self.analysis_worker.ensure_started(timeout=max(.01, analysis_deadline-time.monotonic()))
         logging.info('CAPTURE_START origin=%u request=%u monotonic_ns=%u',
                      packet.origin, packet.request, start)
         # One total budget leaves room inside the IHU's five-second deadline.
@@ -55,5 +63,5 @@ class CameraCapture:
         if self.analysis_config:
             from live_analysis import analyze
             return analyze(captures, settings, packet, self.opener, self.url,
-                           self.analysis_config, analysis_deadline)
+                           self.analysis_config, analysis_deadline, self.analysis_worker)
         return captures

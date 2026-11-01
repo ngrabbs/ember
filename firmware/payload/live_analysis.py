@@ -5,13 +5,62 @@ import logging
 import os
 from pathlib import Path
 import subprocess
+import select
 import sys
 import time
 import urllib.parse
 import uuid
 
 
-def analyze(captures, settings, packet, opener, url, config, deadline):
+class AnalysisWorker:
+    """One preloaded, killable process. Only the single capture thread uses it."""
+    def __init__(self):
+        self.process = None
+        self.ensure_started()
+
+    def ensure_started(self, timeout=10):
+        if self.process and self.process.poll() is None:
+            return
+        self.stop()
+        self.process = subprocess.Popen(
+            [sys.executable, '-u', str(Path(__file__).resolve()), '--worker'],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+        try:
+            if self.read(timeout) != 'READY':
+                raise RuntimeError('analysis worker startup')
+        except BaseException:
+            self.stop()
+            raise
+
+    def read(self, timeout):
+        if timeout <= 0 or not select.select([self.process.stdout], [], [], timeout)[0]:
+            raise TimeoutError('ANALYSIS_DEADLINE')
+        line = self.process.stdout.readline().strip()
+        if not line:
+            raise RuntimeError('analysis worker exited')
+        return line
+
+    def run(self, case, timeout):
+        try:
+            self.process.stdin.write(str(case)+'\n')
+            self.process.stdin.flush()
+            if self.read(timeout) != 'DONE':
+                raise RuntimeError('analysis worker protocol')
+        except BaseException:
+            self.stop()
+            raise
+
+    def stop(self):
+        if self.process:
+            if self.process.poll() is None:
+                self.process.kill()
+            self.process.wait()
+            self.process.stdin.close()
+            self.process.stdout.close()
+            self.process = None
+
+
+def analyze(captures, settings, packet, opener, url, config, deadline, worker):
     root = Path(os.environ.get('EMBER_PAYLOAD_ANALYSIS_STORE', '/var/lib/ember-payload'))
     case = root / f'{packet.origin}-{packet.request}-{uuid.uuid4().hex[:12]}'
     case.mkdir(parents=True, exist_ok=False)
@@ -36,10 +85,7 @@ def analyze(captures, settings, packet, opener, url, config, deadline):
         remaining = deadline-time.monotonic()
         if remaining <= 0:
             raise TimeoutError('ANALYSIS_DEADLINE')
-        # A process, rather than a cancellable thread, enforces the compute deadline.
-        with (case/'analysis.log').open('w') as log:
-            subprocess.run([sys.executable, str(Path(__file__).resolve()), str(case)],
-                           stdout=log, stderr=subprocess.STDOUT, timeout=remaining, check=True)
+        worker.run(case, remaining)
         record = json.loads((case/'result.json').read_text())
     except Exception as error:
         record = dict(result='UNKNOWN', reason='ANALYSIS_DEADLINE' if isinstance(error, (TimeoutError, subprocess.TimeoutExpired)) else type(error).__name__+':'+str(error),
@@ -98,4 +144,19 @@ def process(case):
 
 
 if __name__ == '__main__':
-    process(Path(sys.argv[1]))
+    if sys.argv[1] == '--worker':
+        import cv2
+        from ember_detector import pipeline
+        cv2.setNumThreads(1)
+        print('READY', flush=True)
+        for line in sys.stdin:
+            case = Path(line.strip())
+            try:
+                process(case)
+            except Exception as error:
+                (case/'result.json').write_text(json.dumps(dict(result='UNKNOWN',
+                    reason=type(error).__name__+':'+str(error), input_source='LIVE_CAMERA',
+                    camera_capture_performed=True), indent=2)+'\n')
+            print('DONE', flush=True)
+    else:
+        process(Path(sys.argv[1]))
