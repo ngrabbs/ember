@@ -60,35 +60,27 @@ files before returning; this is not an explicit disk power-loss durability test.
 Files remain in the camera daemon's configured image store. The adapter uses
 the existing resolution, exposure and wavelength settings without changing them.
 
-Without `EMBER_PAYLOAD_CAPTURE_URL`, the original immediate static stub behavior
-is preserved. Image download, detector tuning, power switching and reboot remain
+The original immediate static stub applies when neither the fire-check config
+nor the capture-only URL is supplied. Image download, detector tuning, power switching and reboot remain
 outside this CAN command. Linux maintenance is available through SSH.
 
-### Real capture and detection, version 0.4.0
+### Real capture and detection, version 0.6.0
 
-With the camera adapter enabled, install NumPy/OpenCV and the pinned calibration
-file in `/opt/ember-payload/correction_20261003.npz`. Add these service settings:
+Both payload services read `/etc/ember-payload/fire-check.json`. It contains the
+camera and evidence directories, camera request timeout, combined fire-check
+deadline, worker startup timeout, calibration, and full detector profile. See
+the [live configuration setup](../../firmware/payload/README.md#live-fire-check-configuration-060)
+for the systemd drop-ins. Restart both services after editing the file.
 
-```ini
-[Service]
-Environment=EMBER_PAYLOAD_DETECTOR_CONFIG=/opt/ember-payload/config/live-camera-pass2.json
-Environment=EMBER_PAYLOAD_CALIBRATION=/opt/ember-payload/correction_20261003.npz
-StateDirectory=ember-payload
-```
-
-Restart the responder and establish a fresh IHU `hello payload` session. Each
-`payload fire-check` now captures three real images, downloads copies locally,
-undoes output rotation into sensor coordinates for calibration, and runs the
-existing preparation/registration/detector pipeline. The original JPEGs remain
-unchanged. The selected algorithm is `spectral_guarded_v1`, using the pass-2
-thresholds. The live profile increases the permitted intermediate file size to
-4 MB for lossless sensor-coordinate PNGs; detector thresholds are unchanged.
-Change the configuration's registered algorithm to swap the detector.
+Each check captures three JPEGs. The detector reads those originals directly,
+undoes output rotation in memory, and runs calibration, registration and
+detection. The active algorithm defaults to `spectral_guarded_v1`. The
+evidence directory holds JSON records referencing the originals by name.
 
 ```mermaid
 flowchart LR
     C[CAN fire-check] --> A[Capture and save three JPEGs]
-    A --> S[Snapshot settings and copy images]
+    A --> S[Snapshot settings and read original images]
     S --> P[Undo rotation, calibrate and register]
     P --> D[Selected detector from registry]
     D --> E[Persist result, hashes, metrics and request correlation]
@@ -117,8 +109,9 @@ The native wrapped result is 52 bytes. Detection accuracy is not graded.
 The capture/analysis worker has a 4.3-second total budget from capture start;
 analysis runs in a preloaded, reusable, killable subprocess using the remaining time. Deadline
 exhaustion remains a processing error, not a completed quality result. CAN reception remains independent.
-The complete record preserves originals, configuration/calibration/code hashes,
-dependency versions, transforms, metrics, source `LIVE_CAMERA` and request IDs.
+The complete record identifies the camera originals and includes their hashes,
+configuration/calibration/code hashes, dependency versions, transforms, metrics,
+source `LIVE_CAMERA` and request IDs.
 Only live images enter this CAN path; stored-fixture runs remain separate.
 
 Exposure and gain currently come from the camera daemon's settings, not actual
