@@ -15,6 +15,14 @@ static uint8_t demo_response[BD_PACKET_MAX];
 static size_t demo_response_size;
 static uint32_t demo_uplinks,demo_replies,demo_tx_ok,demo_drops;
 
+static bool demo_store_response(const uint8_t *p,size_t n){
+    if(demo_response_size || n>sizeof(demo_response))return false;
+    memcpy(demo_response,p,n);
+    demo_response_size=n;
+    ++demo_replies;
+    return true;
+}
+
 static bool demo_command_reply(const uint8_t *p,size_t n,void *unused){
     const uint8_t *request=unused;
     bool status_request=ul_u16(request+8)==W_ID_REQUEST_STATUS;
@@ -26,17 +34,21 @@ static bool demo_command_reply(const uint8_t *p,size_t n,void *unused){
     if(n!=43 || p[W_KIND]!=W_KINDS_RESPONSE)return false;
     unsigned stage=p[W_PAYLOAD+W_COMMAND_RESPONSE_STAGE];
     if(stage==W_STAGE_ACCEPTED || (status_request && stage==W_STAGE_COMPLETED))return true;
-    if(demo_response_size)return false;
-    memcpy(demo_response,p,n);demo_response_size=n;++demo_replies;
-    return true;
+    return demo_store_response(p,n);
 }
 static void demo_uplink(const cf_frame *f,uint32_t now){
     static ul_packet p;
     if(!cf_feed(&demo_up,f,BD_UP_ID,now))return;
     if(!bd_packet(&demo_up,&p,startup_demo.radio_boot,boot) || p.request<=startup_demo.last_up)return;
     startup_demo.last_up=p.request;++demo_uplinks;
-    /* Bench command allowlist is an IHU decision. No payload or reboot actions. */
-    if((!up_native_ping(p.payload,p.size) && !up_native_status(p.payload,p.size)) || demo_response_size){++demo_drops;return;}
+    if(demo_response_size || fire_uplink.active || cdh.active){++demo_drops;return;}
+    if(up_native_cdh(p.payload,p.size)){cdh_receive(&p);return;}
+    if(up_native_fire(p.payload,p.size)){
+        if(output.active || pending.active){cdh_error(&p,W_STAGE_REJECTED,W_REASON_BUSY);return;}
+        uplink_start_fire(&p);
+        return;
+    }
+    if(!up_native_ping(p.payload,p.size) && !up_native_status(p.payload,p.size)){++demo_drops;return;}
     ember_command(&uplink_engine,p.payload,p.size,now,demo_command_reply,p.payload);
 }
 static bool demo_queue_packet(const uint8_t *p,size_t n,uint32_t now){
@@ -70,6 +82,8 @@ static void demo_fail(const char *reason) {
     demo_event("SAFE: outputs off; no automatic retry");
     policy.mode=IP_SAFE;policy.reason=reason;policy.outputs=0;
     output.active=false;demo_response_size=0;startup_demo.tx_pending=false;
+    pending.active=false;cdh.active=false;
+    if(fire_uplink.active)fire_restore();
     startup_demo.stop_pending=startup_demo.radio_boot!=0;startup_demo.stop_at=now;
     demo_stage(DEMO_FAILED,now);
 }
@@ -80,6 +94,13 @@ static bool demo_send(unsigned id,uint32_t radio_boot) {
 static void demo_receive(const cf_frame *f,uint32_t now) {
     if(startup_demo.stage==DEMO_ACTIVE){
         if(f->id==BD_UP_ID){demo_uplink(f,now);return;}
+        if(fire_uplink.active && pending.active && f->id==CF_PAYLOAD_REPLY_ID){
+            ul_packet reply;
+            if(cf_feed(&fragments,f,CF_PAYLOAD_REPLY_ID,now) && up_envelope(&fragments,&reply) &&
+               reply.origin==boot && reply.request==pending.packet.request)
+                receive(&reply);
+            return;
+        }
         if((f->id==BD_TX_OK || f->id==BD_TX_FAILED) && startup_demo.tx_pending &&
            bd_matches(f,startup_demo.tx_id,startup_demo.radio_boot)){
             if(f->id==BD_TX_FAILED)demo_fail("UHF packet TX... FAILED");
@@ -213,11 +234,21 @@ static void demo_step(void) {
             startup_demo.stop_pending=false;
         break;
     }
-    if(startup_demo.stage!=DEMO_FAILED)housekeeping_pump(now);
+    if(startup_demo.stage!=DEMO_FAILED && !sensor_job.active && (uint32_t)(now-housekeeping.last)>=5000){
+        housekeeping.last=now;
+        (void)request_sensor(SENSOR_HEALTH,0,false);
+    }
 }
 static void demo_link_pump(uint32_t now){
     if(startup_demo.stage!=DEMO_ACTIVE)return;
     cf_expire(&demo_up,now);
+    cf_expire(&fragments,now);
+    if(fire_uplink.active && (!pending.active || (uint32_t)(now-pending.started)>=5000)){
+        pending.active=false;
+        output.active=false;
+        fire_unavailable(0);
+    }
+    cdh_pump(now);
     bool due=(uint32_t)(now-startup_demo.last_heartbeat)>=BD_HEARTBEAT_MS;
     if(due)startup_demo.last_heartbeat=now; /* No catch-up burst. */
     if(!startup_demo.tx_pending && !output.active){
@@ -225,7 +256,7 @@ static void demo_link_pump(uint32_t now){
             if(!demo_queue_packet(demo_response,demo_response_size,now))
                 demo_fail("UHF reply queue... FAILED");
             demo_response_size=0;
-        }else if(due && !demo_up.active){
+        }else if(due && !demo_up.active && !fire_uplink.active && !cdh.active){
             uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2];
             size_t n=health_packet(p,false,boot,telemetry_sequence++,now,BD_HEARTBEAT_MS,
                 uplink_engine.accepted,uplink_engine.rejected,policy.mode,policy.configuration);

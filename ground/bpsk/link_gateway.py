@@ -48,9 +48,10 @@ def admit_command(wire):
         raise ValueError('Packet too large')
     packet = native_decode(wire)
     h = packet['header']
-    if (packet['name'] not in ('PING','REQUEST_STATUS') or h['source'] != 1 or h['target'] != 2 or
+    if (packet['name'] not in ('PING', 'REQUEST_STATUS', 'REQUEST_TELEMETRY', 'STATUS_CAPTURE',
+                              'STATUS_FETCH', 'PAYLOAD_FIRE_CHECK', 'IHU_REBOOT') or h['source'] != 1 or h['target'] != 2 or
             not all(h[k] for k in ('transaction_epoch', 'transaction_id', 'source_boot_id'))):
-        raise ValueError('Only addressed PING and REQUEST_STATUS are admitted in this profile')
+        raise ValueError('Command is unsupported or missing EMBER addressing/correlation')
     return packet['sequence'], (h['transaction_epoch'], h['transaction_id'])
 
 

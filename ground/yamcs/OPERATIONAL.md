@@ -2,7 +2,7 @@
 
 One Docker container runs two Yamcs instances at [the ground Pi](http://192.168.1.251:8090).
 Use **ember / realtime** for live RF. See the [continuous UHF gateway](../bpsk/LINK_GATEWAY.md)
-for how Yamcs sends PING and receives heartbeats and replies.
+for how Yamcs sends commands and receives heartbeats and replies.
 
 | Instance | Purpose | Links | Displays |
 |---|---|---|---|
@@ -10,8 +10,8 @@ for how Yamcs sends PING and receives heartbeats and replies.
 | `ember-bench` | Historical wired-bench data | No active hardware links | `ember_bench_displays` |
 
 m75q is used for console debug and flashing. It is not in the live RF
-telemetry or command path. The current IHU LINK_ACTIVE profile admits PING and REQUEST_STATUS;
-older command names in the MDB are not proof of support in this profile.
+telemetry or command path. See the [LINK_ACTIVE command matrix](../../docs/user/ihu-link-active.md#packet-flow)
+for supported commands, arguments and mode restrictions.
 
 The sections below preserve earlier integration and operator procedures.
 Where they describe the retired wired path, use the current gateway guide.

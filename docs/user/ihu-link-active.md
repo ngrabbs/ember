@@ -1,6 +1,6 @@
 # IHU automatic UHF link bench profile
 
-**IHU 0.18.1 and transceiver 0.37.1** are the matching pair. This profile is
+**IHU 0.19.0 and transceiver 0.37.1** are the matching pair. This profile is
 for the conducted CAN Feather / original Pico bench, with the two RF paths
 connected and attenuated. The legacy bench profile and the flight stub remain
 separate. See [startup and CW procedure](ihu-cw-startup-demo.md) for wiring,
@@ -31,15 +31,27 @@ switches, which stay off in this profile.
 
 The radio validates the outer RF frame length/CRC, then passes its payload
 bytes unchanged over CAN. The IHU validates native message integrity,
-addressing and command semantics. This profile admits **PING and REQUEST_STATUS**;
-other uplinks still reach the IHU and are counted as dropped there. It does
-not admit payload execution or reboot commands. The IHU generates the terminal
-correlated PING response or IHU_STATUS snapshot from its latest validated observations, and schedules a native HEARTBEAT every **10 seconds**
-(first due 10 seconds after activation). A queued reply has priority over a
+addressing and command semantics.
+
+| Yamcs command | Result in GROUND_TEST / NOMINAL |
+| --- | --- |
+| PING | Correlated command completion |
+| REQUEST_STATUS | Current IHU_STATUS snapshot |
+| REQUEST_TELEMETRY | IHU_STATUS for SYSTEM (`data_group=1`). Other groups are rejected. |
+| STATUS_CAPTURE | Five status records sampled at 1 Hz and returned as STATUS_RECORDS. Each new capture replaces the previous RAM bank. |
+| STATUS_FETCH | The same frozen records for the matching `capture_id` while the IHU stays powered |
+| PAYLOAD_FIRE_CHECK | The IHU commands the payload over CAN and sends its result back over UHF. An unavailable payload returns NOT_AVAILABLE. Inspect payload files separately when needed. |
+| IHU_REBOOT | Returns MODE_NOT_ALLOWED in NOMINAL. Reboot requires SAFE with outputs off. This profile stops the link on entry to SAFE. |
+
+Issue one command at a time and wait for its result. While a status capture
+or fire check is in progress, the IHU reserves the reply slot and drops new
+commands. The IHU schedules a native HEARTBEAT every **10 seconds** (first due
+10 seconds after activation), skipping an interval when the link is busy.
+A queued reply has priority over a
 heartbeat not yet submitted. There is one in-flight transmission, one waiting
 reply, no telemetry backlog, and no automatic retry of uncertain TX.
 
-Both kinds of outgoing packet use the same opaque transmit request. The radio
+All outgoing packets use the same opaque transmit request. The radio
 frames the bytes, sends the bounded BPSK burst, mutes TX and reestablishes RX.
 The radio never checks whether the bytes represent a reply or telemetry.
 A local completion reports local send and restored RX, not Yamcs reception.
@@ -61,7 +73,7 @@ initial bench policy, not a flight requirement.
 ## Ground test
 
 The [ground RF gateway](../../ground/bpsk/LINK_GATEWAY.md) keeps SDR receive
-streaming and transmits Yamcs PINGs without an m75q serial arm. It continuously
+streaming and transmits Yamcs commands without an m75q serial arm. It continuously
 forwards valid telemetry and replies to Yamcs `ember`. A single PING can miss a
 receive window: the spacecraft radio uses ADC capture blocks with decoder gaps
 and is half-duplex during transmission. An RF timeout is UNKNOWN; the gateway

@@ -41,6 +41,27 @@ static void start(void){
     tick(1);tick(1);tick(1);
     assert(startup_demo.stage==DEMO_PROBE && last_frame.id==BD_PROBE);
 }
+static void inject(const ul_packet *p,unsigned route){
+    uint8_t wire[UL_WIRE_MAX];size_t n=ul_encode(p,wire);
+    for(unsigned i=0;i*CF_CHUNK<n;i++){
+        cf_frame f;assert(cf_fragment(wire,n,route,(uint16_t)p->request,i,&f));
+        demo_receive(&f,fake_now);
+    }
+}
+static void request(ul_packet *p,unsigned cmd,unsigned arg_size,uint32_t arg){
+    ++p->request;p->size=32+arg_size;
+    ul_p16(p->payload+4,p->size-7);ul_p16(p->payload+8,cmd);
+    ul_p32(p->payload+16,p->request);ul_p16(p->payload+28,arg_size);
+    if(arg_size==1)p->payload[30]=arg;
+    if(arg_size==4)ul_p32(p->payload+30,arg);
+    ul_p16(p->payload+p->size-2,ul_crc(p->payload,p->size-2));
+    inject(p,BD_UP_ID);
+}
+static void complete_reply(void){
+    tick(1);assert(startup_demo.tx_pending && output.route==BD_DOWN_ID);
+    while(output.active)tick(2);
+    cf_frame f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+}
 int main(void){
     assert(boot_morse(segment));decode();assert(!strcmp(text,"KI5YNG - EMBER BOOT"));
     assert(marks>30 && units*BOOT_CW_UNIT_US<BD_CW_LIMIT_MS*1000);
@@ -93,6 +114,53 @@ int main(void){
     assert(demo_response[31]==IP_NOMINAL && demo_response[41] && demo_response[50]==DR_ONLINE);
     assert(ul_crc(demo_response,54)==ul_u16(demo_response+54));
     tick(1);while(output.active)tick(2);
+    f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+
+    request(&uplink,W_ID_REQUEST_TELEMETRY,1,W_DATA_GROUP_SYSTEM);
+    assert(demo_response_size==56 && ul_u16(demo_response+8)==W_ID_IHU_STATUS);
+    complete_reply();
+    request(&uplink,W_ID_STATUS_CAPTURE,0,0);
+    assert(cdh.active && cdh.count==1 && !demo_response_size);
+    for(unsigned i=0;i<4;i++)tick(1000);
+    assert(cdh.valid && !cdh.active && output.route==BD_DOWN_ID);
+    reader=(ul_reader){0};
+    for(size_t i=0;i<output.size;i++)ul_feed(&reader,output.wire[i],0,&reply);
+    assert(reply.size==120 && ul_u16(reply.payload+8)==W_ID_STATUS_RECORDS);
+    uint32_t capture_id=ul_u32(reply.payload+34);
+    while(output.active)tick(2);
+    f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+    request(&uplink,W_ID_STATUS_FETCH,4,capture_id);
+    assert(demo_response_size==120 && !memcmp(demo_response+38,reply.payload+38,80));
+    complete_reply();
+    request(&uplink,W_ID_IHU_REBOOT,0,0);
+    assert(demo_response_size==43 && demo_response[32]==W_STAGE_REJECTED);
+    assert(ul_u16(demo_response+33)==W_REASON_MODE_NOT_ALLOWED && !reboot_scheduled);
+    complete_reply();
+
+    request(&uplink,W_ID_PAYLOAD_FIRE_CHECK,0,0);
+    assert(pending.active && pending.packet.type==UL_HELLO && output.route==CF_PAYLOAD_REQUEST_ID);
+    while(output.active)tick(2);
+    ul_packet ack=pending.packet;ack.type=UL_HELLO_ACK;ack.sender=44;
+    inject(&ack,CF_PAYLOAD_REPLY_ID);
+    assert(pending.active && pending.packet.type==PL_FIRE_CHECK);
+    while(output.active)tick(2);
+    ack=pending.packet;ack.type=PL_FIRE_RESULT;ack.sender=44;ack.size=PL_FIRE_SIZE;
+    ack.payload[0]=1;ack.payload[2]=1;ul_p32(ack.payload+4,44);ul_p32(ack.payload+12,1);
+    inject(&ack,CF_PAYLOAD_REPLY_ID);
+    assert(!pending.active && !fire_uplink.active && demo_response_size==52);
+    assert(ul_u16(demo_response+8)==W_ID_PAYLOAD_FIRE_RESULT && demo_response[32]==0);
+    assert(ul_u32(demo_response+16)==uplink.request);
+    complete_reply();
+
+    request(&uplink,W_ID_PAYLOAD_FIRE_CHECK,0,0);
+    assert(pending.active && fire_uplink.active);
+    tick(5000);
+    assert(!pending.active && !fire_uplink.active && output.route==BD_DOWN_ID);
+    reader=(ul_reader){0};
+    for(size_t i=0;i<output.size;i++)ul_feed(&reader,output.wire[i],0,&reply);
+    assert(reply.size==43 && reply.payload[32]==W_STAGE_EXECUTION_FAILED);
+    assert(ul_u16(reply.payload+33)==W_REASON_NOT_AVAILABLE);
+    while(output.active)tick(2);
     f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
 
     tick(BD_HEARTBEAT_MS);

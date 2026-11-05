@@ -8,7 +8,7 @@ from modem import frame
 
 
 def packet(name, sequence, payload=None):
-    command = name in ('PING','REQUEST_STATUS')
+    command = name != 'HEARTBEAT'
     return encode(name, sequence=sequence, source=1 if command else 2,
                   target=2 if command else 1, source_boot_id=7, uptime_ms=4,
                   transaction_epoch=5 if command else 0, transaction_id=6 if command else 0,
@@ -33,6 +33,20 @@ class LinkGatewayTests(unittest.TestCase):
             admit_command(wire[:-1])
         with self.assertRaises(ValueError):
             admit_command(packet('HEARTBEAT', 5, dict(mode=4, configuration=1, telemetry_period_ms=10000)))
+
+    def test_all_native_commands_fit_a_single_uplink(self):
+        commands = {
+            'REQUEST_TELEMETRY': {'data_group': 1},
+            'STATUS_CAPTURE': {},
+            'STATUS_FETCH': {'capture_id': 1},
+            'PAYLOAD_FIRE_CHECK': {},
+            'IHU_REBOOT': {},
+        }
+        for name, args in commands.items():
+            with self.subTest(name=name):
+                wire = packet(name, 9, args)
+                self.assertEqual(admit_command(wire), (9, (5, 6)))
+                self.assertLess(len(waveform(wire, 9)), RATE)
 
     def test_unsolicited_telemetry_forwards_original_packet_once(self):
         wire = packet('HEARTBEAT', 5, dict(mode=4, configuration=1, telemetry_period_ms=10000))

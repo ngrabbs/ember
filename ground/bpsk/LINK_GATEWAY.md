@@ -1,6 +1,6 @@
 # Continuous UHF link to Yamcs
 
-For the conducted bench with **IHU 0.18.1 / transceiver 0.37.1** in
+For the conducted bench with **IHU 0.19.0 / transceiver 0.37.1** in
 `GROUND_TEST / NOMINAL / LINK_ACTIVE`, use Yamcs instance **ember**, processor
 **realtime**. The ground Pi at 192.168.1.251 runs one LibreSDR owner,
 `ember-fire-uplink.service` (now the continuous gateway).
@@ -34,9 +34,9 @@ receive window, so a timeout is UNKNOWN and is not automatically retried.
   starting the service. No RF TX occurs at service startup.
 - `systemctl status ember-fire-uplink` and
   `journalctl -fu ember-fire-uplink` on the ground Pi show readiness and counts.
-- In `ember / realtime`, check for recent HEARTBEAT packets and issue **PING** or **REQUEST_STATUS**.
-  The startup profile admits PING and read-only REQUEST_STATUS. Older command definitions in
-  the MDB do not make those commands supported by this firmware.
+- In `ember / realtime`, check for recent HEARTBEAT packets and issue one command
+  at a time. See the [IHU command matrix](../../docs/user/ihu-link-active.md#packet-flow)
+  for the seven commands and their mode restrictions.
 - Stop the gateway before using another SDR diagnostic or listener. On this
   bench, `ember-lte-listener` is a UDP listener and does not own the UHF SDR.
 - m75q remains available for USB console debug and flashing. Its serial arm

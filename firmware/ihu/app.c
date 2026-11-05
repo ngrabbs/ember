@@ -36,6 +36,7 @@ static struct {bool active;ul_packet request;uint8_t target;uint32_t peer;} fire
 static struct {uint32_t epoch,id;} fire_keys[FIRE_TRANSACTION_CAPACITY];
 static unsigned fire_keys_used;
 static void submit(uint8_t type,const uint8_t *payload,size_t size);
+static bool (*link_reply_sink)(const uint8_t *,size_t);
 static void fire_restore(void);
 
 #include "power_packet.h"
@@ -113,6 +114,12 @@ static bool queue(const ul_packet *p) {
     size_t size=ul_encode(p,output.wire);if(!size)return false;
     output.route=TX_ID;output.size=size;output.token=(uint16_t)p->request;output.index=0;output.last=now_ms()-2;output.active=true;return true;
 }
+static bool uplink_queue(const ul_packet *reply) {
+    if(link_reply_sink)return link_reply_sink(reply->payload,reply->size);
+    if(!queue(reply))return false;
+    output.route=UP_REPLY_ID;
+    return true;
+}
 static void fire_restore(void){target_index=fire_uplink.target;peer=fire_uplink.peer;fire_uplink.active=false;}
 static void fire_unavailable(uint8_t payload_reason){
     if(!fire_uplink.active)return;
@@ -124,7 +131,7 @@ static void fire_unavailable(uint8_t payload_reason){
     memcpy(b+12,fire_uplink.request.payload+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,11);
     ul_p16(b+30,W_ID_PAYLOAD_FIRE_CHECK);b[32]=W_STAGE_EXECUTION_FAILED;
     ul_p16(b+33,W_REASON_NOT_AVAILABLE);ul_p32(b+37,payload_reason);ul_p16(b+41,ul_crc(b,41));
-    if(queue(&reply))output.route=UP_REPLY_ID;
+    (void)uplink_queue(&reply);
     fire_restore();
 }
 static bool uplink_emit(const uint8_t *p,size_t n,void *context){
@@ -133,19 +140,29 @@ static bool uplink_emit(const uint8_t *p,size_t n,void *context){
         if(p[W_KIND]!=W_KINDS_TELEMETRY || ul_u16(p+W_MESSAGE_ID)!=W_ID_SYSTEM_STATUS)return true;
         ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,.request=request->request};
         reply.size=(uint16_t)status_packet(reply.payload,request->payload);
-        if(!queue(&reply))return false;
-        output.route=UP_REPLY_ID;return true;
+        return uplink_queue(&reply);
     }
     if(n!=43 || p[W_KIND]!=W_KINDS_RESPONSE)return false;
     if(p[W_PAYLOAD+W_COMMAND_RESPONSE_STAGE]!=W_STAGE_COMPLETED)return true;
     ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,
                      .origin=request->sender,.request=request->request,.size=(uint16_t)n};
     memcpy(reply.payload,p,n);
-    if(!queue(&reply))return false;
-    output.route=UP_REPLY_ID;
+    if(!uplink_queue(&reply))return false;
     LOG("UPLINK_PING COMPLETED epoch=%" PRIu32 " transaction=%" PRIu32 " response_hex=",
         ul_u32(p+12),ul_u32(p+16));
     for(size_t i=0;i<n;i++){LOG("%02x",p[i]);}LOG("\n");return true;
+}
+static void uplink_start_fire(const ul_packet *p){
+    uint32_t epoch=ul_u32(p->payload+12),id=ul_u32(p->payload+16);
+    for(unsigned i=0;i<fire_keys_used;i++)if(fire_keys[i].epoch==epoch && fire_keys[i].id==id)return;
+    if(fire_keys_used==FIRE_TRANSACTION_CAPACITY)return;
+    fire_keys[fire_keys_used].epoch=epoch;fire_keys[fire_keys_used++].id=id;
+    /* Addressed commands take precedence over an observational probe. */
+    discovery.active=false;
+    LOG("UPLINK_FIRE admitted epoch=%" PRIu32 " transaction=%" PRIu32 "\n",epoch,id);
+    fire_uplink.active=true;fire_uplink.request=*p;fire_uplink.target=target_index;fire_uplink.peer=peer;
+    target_index=DR_PAYLOAD_INDEX;peer=0;memset(&fragments,0,sizeof(fragments));
+    submit(UL_HELLO,NULL,0);
 }
 static void uplink_receive(const cf_frame *frame,uint32_t now){
     static ul_packet p;
@@ -155,16 +172,7 @@ static void uplink_receive(const cf_frame *frame,uint32_t now){
     if((sensor_job.active && !up_native_status(p.payload,p.size) && !up_native_cdh(p.payload,p.size)) || output.active||(can.pending&&!discovery.active)){LOG("UPLINK_PING rejected=BUSY\n");return;}
     if(up_native_fire(p.payload,p.size)){
         if(fire_uplink.active || pending.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING){LOG("UPLINK_FIRE rejected=BUSY\n");return;}
-        uint32_t epoch=ul_u32(p.payload+12),id=ul_u32(p.payload+16);
-        for(unsigned i=0;i<fire_keys_used;i++)if(fire_keys[i].epoch==epoch && fire_keys[i].id==id)return;
-        if(fire_keys_used==FIRE_TRANSACTION_CAPACITY)return;
-        fire_keys[fire_keys_used].epoch=epoch;fire_keys[fire_keys_used++].id=id;
-        /* Addressed commands take precedence over an observational probe. */
-        discovery.active=false;
-        LOG("UPLINK_FIRE admitted epoch=%" PRIu32 " transaction=%" PRIu32 "\n",epoch,id);
-        fire_uplink.active=true;fire_uplink.request=p;fire_uplink.target=target_index;fire_uplink.peer=peer;
-        target_index=DR_PAYLOAD_INDEX;peer=0;memset(&fragments,0,sizeof(fragments));
-        submit(UL_HELLO,NULL,0);return;
+        uplink_start_fire(&p);return;
     }
     if(fire_uplink.active)return;
     if(up_native_cdh(p.payload,p.size)){cdh_receive(&p);return;}
@@ -277,7 +285,7 @@ static void receive_impl(const ul_packet *p) {
                 memcpy(b+12,fire_uplink.request.payload+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,20);
                 b[30]=p->payload[0];b[31]=2;b[32]=p->payload[1];b[33]=p->payload[2];memcpy(b+38,p->payload+4,12);
                 ul_p16(b+50,ul_crc(b,50));
-                if(queue(&reply))output.route=UP_REPLY_ID;
+                (void)uplink_queue(&reply);
                 fire_restore();
             }
         }
@@ -524,8 +532,7 @@ static void cdh_header(uint8_t *b,size_t n,const ul_packet *request,uint8_t kind
 }
 static bool cdh_send(ul_packet *reply){
  ul_p16(reply->payload+reply->size-2,ul_crc(reply->payload,reply->size-2));
- if(!queue(reply))return false;
- output.route=UP_REPLY_ID;return true;
+ return uplink_queue(reply);
 }
 static void cdh_error(const ul_packet *request,unsigned stage,unsigned reason){
  ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,.request=request->request,.size=43};
@@ -779,6 +786,7 @@ void ihu_app_init(void) {
     if(!can.ready)record_fault(1,now_ms());
     boot_ready_ms=now_ms();
 #if IHU_BOOT_DEMO
+    link_reply_sink=demo_store_response;
     startup_demo.usb=stdio_usb_connected();
     demo_stage(DEMO_LOCAL,boot_ready_ms);
     housekeeping.last=boot_ready_ms-5000;
