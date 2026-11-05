@@ -35,6 +35,7 @@ static void tick(uint32_t delta){
 }
 static void start(void){
     memset(&startup_demo,0,sizeof(startup_demo));memset(&housekeeping,0,sizeof(housekeeping));
+    memset(&demo_up,0,sizeof(demo_up));output.active=false;demo_response_size=0;
     ihu_app_init();assert(policy.mode==IP_SAFE && !policy.outputs);
     housekeeping.attempted=housekeeping.valid=true;
     tick(1);tick(1);tick(1);
@@ -59,9 +60,34 @@ int main(void){
     assert(fires==1);
     tick(200);assert(last_frame.id==BD_KEEP && fires==1);
     f=bd_frame(BD_RX,boot,23);demo_receive(&f,fake_now);assert(policy.mode==IP_COMMISSIONING);
-    f=bd_frame(BD_RX,boot,22);demo_receive(&f,fake_now);assert(policy.mode==IP_NOMINAL && !policy.outputs);
+    f=bd_frame(BD_RX,boot,22);demo_receive(&f,fake_now);assert(policy.mode==IP_COMMISSIONING);
+    tick(1);assert(last_frame.id==BD_LINK);
+    f=bd_frame(BD_LINKED,boot,22);demo_receive(&f,fake_now);
+    assert(policy.mode==IP_NOMINAL && startup_demo.stage==DEMO_ACTIVE && !policy.outputs);
     command("output uhf_telem on");assert(!policy.outputs);
-    tick(BD_RX_TIMEOUT_MS);tick(1);assert(policy.mode==IP_SAFE && last_frame.id==BD_STOP && fires==1);
+    ul_packet uplink={.version=1,.type=BD_PACKET,.sender=22,.origin=boot,.request=1,.size=32};
+    uint8_t *p=uplink.payload;
+    ul_p16(p,0x1900);ul_p16(p+2,0xc001);ul_p16(p+4,25);p[6]=1;ul_p16(p+8,1);
+    p[10]=1;p[11]=2;ul_p32(p+12,11);ul_p32(p+16,42);ul_p32(p+20,55);ul_p16(p+30,ul_crc(p,30));
+    uint8_t wire[UL_WIRE_MAX];size_t n=ul_encode(&uplink,wire);
+    for(unsigned i=0;i*CF_CHUNK<n;i++){
+        assert(cf_fragment(wire,n,BD_UP_ID,1,i,&f));demo_receive(&f,fake_now);
+    }
+    assert(demo_uplinks==1 && demo_replies==1 && demo_response_size==43);
+    tick(BD_HEARTBEAT_MS);
+    assert(output.route==BD_DOWN_ID && startup_demo.tx_pending && !demo_response_size);
+    ul_reader reader={0};ul_packet reply={0};
+    for(size_t i=0;i<output.size;i++)ul_feed(&reader,output.wire[i],0,&reply);
+    assert(reply.type==BD_PACKET && reply.origin==22 && reply.size==43);
+    assert(ul_u16(reply.payload+30)==1 && ul_u32(reply.payload+16)==42 && reply.payload[32]==2);
+    while(output.active)tick(2);
+    f=bd_frame(BD_TX_OK,reply.request,22);demo_receive(&f,fake_now);
+    assert(!startup_demo.tx_pending && demo_tx_ok==1);
+    tick(BD_HEARTBEAT_MS);
+    memset(&reader,0,sizeof(reader));memset(&reply,0,sizeof(reply));
+    for(size_t i=0;i<output.size;i++)ul_feed(&reader,output.wire[i],0,&reply);
+    assert(reply.type==BD_PACKET && ul_u16(reply.payload+8)==W_ID_HEARTBEAT);
+    tick(BD_TX_TIMEOUT_MS);tick(1);assert(policy.mode==IP_SAFE && last_frame.id==BD_STOP && fires==1);
 
     start();f=bd_frame(BD_READY,boot,22);demo_receive(&f,fake_now);
     housekeeping.valid=false;tick(15000);
@@ -90,7 +116,7 @@ class BootDemo(unittest.TestCase):
                 f.parent.mkdir(exist_ok=True)
                 f.write_text('#include "sdk.h"\n')
             (p / "build_identity.h").write_text(
-                '#define FW_VERSION "0.17.0"\n#define FW_MAJOR 0\n#define FW_MINOR 17\n'
+                '#define FW_VERSION "0.18.0"\n#define FW_MAJOR 0\n#define FW_MINOR 18\n'
                 '#define FW_PATCH 0\n#define FW_DIRTY 0\n#define FW_GIT "host-test"\n')
             generate(p / "wire.h")
             driver = DRIVER.split("static ul_packet queued")[0].replace(

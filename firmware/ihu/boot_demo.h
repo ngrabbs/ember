@@ -1,15 +1,47 @@
 #pragma once
 #include "boot_demo_link.h"
 
-enum demo_stage { DEMO_LOCAL, DEMO_EPS, DEMO_PROBE, DEMO_WAIT, DEMO_BEACON, DEMO_LISTEN, DEMO_FAILED };
+enum demo_stage { DEMO_LOCAL, DEMO_EPS, DEMO_PROBE, DEMO_WAIT, DEMO_BEACON, DEMO_ACTIVATE, DEMO_ACTIVE, DEMO_LISTEN, DEMO_FAILED };
 static struct {
     enum demo_stage stage;
-    uint32_t since,radio_boot,last_send,last_rx,stop_at,last_log;
-    bool antenna,probe_sent,stop_pending,usb;
+    uint32_t since,radio_boot,last_send,last_rx,stop_at,last_log,last_heartbeat,tx_at,tx_id,last_up;
+    bool antenna,probe_sent,stop_pending,usb,tx_pending;
     unsigned count,shown;
     struct {uint32_t at;const char *line;} events[24];
 } startup_demo;
 
+static cf_reader demo_up;
+static uint8_t demo_response[BD_PACKET_MAX];
+static size_t demo_response_size;
+static uint32_t demo_uplinks,demo_replies,demo_tx_ok,demo_drops;
+
+static bool demo_command_reply(const uint8_t *p,size_t n,void *unused){
+    (void)unused;
+    if(n!=43 || p[W_KIND]!=W_KINDS_RESPONSE)return false;
+    if(p[W_PAYLOAD+W_COMMAND_RESPONSE_STAGE]==W_STAGE_ACCEPTED)return true;
+    if(demo_response_size)return false;
+    memcpy(demo_response,p,n);demo_response_size=n;++demo_replies;
+    return true;
+}
+static void demo_uplink(const cf_frame *f,uint32_t now){
+    static ul_packet p;
+    if(!cf_feed(&demo_up,f,BD_UP_ID,now))return;
+    if(!bd_packet(&demo_up,&p,startup_demo.radio_boot,boot) || p.request<=startup_demo.last_up)return;
+    startup_demo.last_up=p.request;++demo_uplinks;
+    /* Bench command allowlist is an IHU decision. No payload or reboot actions. */
+    if(!up_native_ping(p.payload,p.size) || demo_response_size){++demo_drops;return;}
+    ember_command(&uplink_engine,p.payload,p.size,now,demo_command_reply,NULL);
+}
+static bool demo_queue_packet(const uint8_t *p,size_t n,uint32_t now){
+    static ul_packet packet;
+    if(!n || n>BD_PACKET_MAX || startup_demo.tx_id==UINT32_MAX)return false;
+    packet=(ul_packet){.version=1,.type=BD_PACKET,.sender=boot,.origin=startup_demo.radio_boot,
+        .request=++startup_demo.tx_id,.size=(uint16_t)n};
+    memcpy(packet.payload,p,n);
+    if(!queue(&packet))return false;
+    output.route=BD_DOWN_ID;startup_demo.tx_at=now;startup_demo.tx_pending=true;
+    return true;
+}
 static void demo_history(bool reply) {
     for(unsigned i=0;i<startup_demo.count;i++)
         ihu_printf(reply,"STARTUP t_ms=%" PRIu32 " %s\n",startup_demo.events[i].at,startup_demo.events[i].line);
@@ -30,6 +62,7 @@ static void demo_fail(const char *reason) {
     demo_event(reason);
     demo_event("SAFE: outputs off; no automatic retry");
     policy.mode=IP_SAFE;policy.reason=reason;policy.outputs=0;
+    output.active=false;demo_response_size=0;startup_demo.tx_pending=false;
     startup_demo.stop_pending=startup_demo.radio_boot!=0;startup_demo.stop_at=now;
     demo_stage(DEMO_FAILED,now);
 }
@@ -38,6 +71,15 @@ static bool demo_send(unsigned id,uint32_t radio_boot) {
     return ihu_can_send(&can,&f);
 }
 static void demo_receive(const cf_frame *f,uint32_t now) {
+    if(startup_demo.stage==DEMO_ACTIVE){
+        if(f->id==BD_UP_ID){demo_uplink(f,now);return;}
+        if((f->id==BD_TX_OK || f->id==BD_TX_FAILED) && startup_demo.tx_pending &&
+           bd_matches(f,startup_demo.tx_id,startup_demo.radio_boot)){
+            if(f->id==BD_TX_FAILED)demo_fail("UHF packet TX... FAILED");
+            else {startup_demo.tx_pending=false;startup_demo.last_rx=now;++demo_tx_ok;}
+            return;
+        }
+    }
     if(f->size!=8 || ul_u32(f->data)!=boot)return;
     uint32_t sender=ul_u32(f->data+4);
     if(f->id==BD_READY && startup_demo.stage==DEMO_PROBE && startup_demo.probe_sent &&
@@ -56,11 +98,24 @@ static void demo_receive(const cf_frame *f,uint32_t now) {
        (uint32_t)(now-startup_demo.since)<BD_CW_LIMIT_MS+2000){
         demo_event("CW beacon complete; transmitter muted");
         demo_event("Checking UHF receive readiness... PASSED");
+#if IHU_BOOT_RX_ONLY
         policy.mode=IP_NOMINAL;policy.reason="DEMO_RX_ONLY";policy.outputs=0;
         demo_event("COMMISSIONING -> NOMINAL: UHF LISTEN ONLY");
         demo_stage(DEMO_LISTEN,now);
+#else
+        demo_event("Enabling UHF LINK_ACTIVE...");
+        demo_stage(DEMO_ACTIVATE,now);startup_demo.last_send=now-200;
+#endif
+        startup_demo.last_rx=now;
     }
-    if(f->id==BD_RX && startup_demo.stage==DEMO_LISTEN)startup_demo.last_rx=now;
+    if(f->id==BD_LINKED && startup_demo.stage==DEMO_ACTIVATE){
+        policy.mode=IP_NOMINAL;policy.reason="DEMO_LINK_ACTIVE";policy.outputs=0;
+        demo_event("COMMISSIONING -> NOMINAL: UHF LINK_ACTIVE");
+        demo_stage(DEMO_ACTIVE,now);
+        startup_demo.last_heartbeat=now;
+    }
+    if((f->id==BD_LINKED && startup_demo.stage==DEMO_ACTIVE) ||
+       (f->id==BD_RX && startup_demo.stage==DEMO_LISTEN))startup_demo.last_rx=now;
 }
 static void demo_step(void) {
     uint32_t now=now_ms();
@@ -123,6 +178,19 @@ static void demo_step(void) {
         else if((uint32_t)(now-startup_demo.last_send)>=BD_KEEP_PERIOD_MS && !can.pending &&
                 demo_send(BD_KEEP,startup_demo.radio_boot))startup_demo.last_send=now;
         break;
+    case DEMO_ACTIVATE:
+        if(elapsed>=2000)demo_fail("UHF LINK_ACTIVE... FAILED (no acknowledgement)");
+        else if((uint32_t)(now-startup_demo.last_send)>=200 && !can.pending &&
+                demo_send(BD_LINK,startup_demo.radio_boot))startup_demo.last_send=now;
+        break;
+    case DEMO_ACTIVE:
+        if((uint32_t)(now-startup_demo.last_rx)>=BD_RX_TIMEOUT_MS)
+            demo_fail("UHF LINK_ACTIVE... FAILED (status timeout)");
+        else if(startup_demo.tx_pending && (uint32_t)(now-startup_demo.tx_at)>=BD_TX_TIMEOUT_MS)
+            demo_fail("UHF packet TX... FAILED (outcome unknown; no retry)");
+        else if((uint32_t)(now-startup_demo.last_send)>=BD_KEEP_PERIOD_MS && !can.pending &&
+                demo_send(BD_KEEP,startup_demo.radio_boot))startup_demo.last_send=now;
+        break;
     case DEMO_LISTEN:
         if((uint32_t)(now-startup_demo.last_rx)>=BD_RX_TIMEOUT_MS)
             demo_fail("UHF receive readiness... FAILED (status timeout)");
@@ -135,4 +203,23 @@ static void demo_step(void) {
         break;
     }
     if(startup_demo.stage!=DEMO_FAILED)housekeeping_pump(now);
+}
+static void demo_link_pump(uint32_t now){
+    if(startup_demo.stage!=DEMO_ACTIVE)return;
+    cf_expire(&demo_up,now);
+    bool due=(uint32_t)(now-startup_demo.last_heartbeat)>=BD_HEARTBEAT_MS;
+    if(due)startup_demo.last_heartbeat=now; /* No catch-up burst. */
+    if(!startup_demo.tx_pending && !output.active){
+        if(demo_response_size){
+            if(!demo_queue_packet(demo_response,demo_response_size,now))
+                demo_fail("UHF reply queue... FAILED");
+            demo_response_size=0;
+        }else if(due && !demo_up.active){
+            uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2];
+            size_t n=health_packet(p,false,boot,telemetry_sequence++,now,BD_HEARTBEAT_MS,
+                uplink_engine.accepted,uplink_engine.rejected,policy.mode,policy.configuration);
+            if(!demo_queue_packet(p,n,now))demo_fail("UHF heartbeat queue... FAILED");
+        }
+    }
+    if(startup_demo.stage==DEMO_ACTIVE)pump_tx(now);
 }

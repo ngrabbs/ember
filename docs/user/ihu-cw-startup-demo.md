@@ -1,5 +1,7 @@
 # Automatic IHU startup and CW beacon bench demo
 
+> This records the 0.17.0 / 0.36.0 RX-only demo. The newer [LINK_ACTIVE profile](ihu-link-active.md) boots into the packet link automatically.
+
 **IHU 0.17.0 + transceiver 0.36.0.** This is a matched, explicitly built
 GROUND_TEST profile for the existing CAN Feather IHU and original-Pico radio
 controller. It is separate from the standalone Pico switch demo and from flight
@@ -61,7 +63,7 @@ The transceiver demo excludes the ordinary transmit and command-dispatch loop.
 ## CAN and bounds
 
 The demo reserves classic CAN A IDs 0x750–0x756, in order: PROBE, FIRE, STOP,
-READY, RX, FAILED, KEEP. Each frame has two little-endian 32-bit words: IHU boot
+READY, RX, FAILED, KEEP. Each frame has two big-endian 32-bit words: IHU boot
 token, then transceiver boot ID (zero for PROBE). This is correlation for an
 isolated bench, not authentication. The transceiver admits only one token per
 boot, requires a 15 s local wait and 30 s arm expiry, and consumes the beacon

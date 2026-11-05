@@ -1,5 +1,7 @@
 # Transceiver firmware
 
+Version 0.37.0 adds the [automatic LINK_ACTIVE bench profile](../../docs/user/ihu-link-active.md).
+
 Version 0.36.0 adds the opt-in [automatic startup/CW bench demo](../../docs/user/ihu-cw-startup-demo.md) (`-DTRANSCEIVER_BOOT_DEMO=ON`). The option defaults off.
 
 Original Pico only. Source: `firmware/transceiver`. The earlier

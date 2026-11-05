@@ -2,9 +2,13 @@
 #include "boot_demo_link.h"
 #include "boot_morse.h"
 #include "hardware/sync.h"
+#include "hardware/dma.h"
 
 static bd_radio demo_radio;
-static bool demo_abort,demo_fire,demo_listen;
+static bool demo_abort,demo_fire,demo_listen,demo_link,demo_tx_pending;
+static uint32_t demo_last_tx,demo_uplink_id;
+static cf_reader demo_down;
+static ul_packet demo_tx;
 static uint32_t demo_keep_ms;
 static uint64_t demo_cw_deadline,demo_decode_deadline;
 
@@ -13,6 +17,7 @@ static bool demo_reply(unsigned id) {
     return can_send_frame(&f,time_us_64()+50000);
 }
 static bool demo_radio_poll(bool keying) {
+    if(demo_link && (uint32_t)((uint32_t)(time_us_64()/1000)-demo_keep_ms)>=BD_KEEP_TIMEOUT_MS)return false;
     if((can_read(14,0x0e)&0xe0) || can_read(14,0x2d))return false;
     uint8_t flags=can_read(14,0x2c);
     for(unsigned b=0;b<2;b++){
@@ -29,7 +34,19 @@ static bool demo_radio_poll(bool keying) {
         }
         if(f.id==BD_KEEP && demo_radio.spent && bd_matches(&f,demo_radio.token,responder_boot))
             demo_keep_ms=(uint32_t)(time_us_64()/1000);
-        if(keying)continue; /* No blocking reply transmissions during marks. */
+        if(keying)continue;
+        if(demo_listen && f.id==BD_LINK && bd_matches(&f,demo_radio.token,responder_boot)){
+            if(!demo_link){demo_link=true;demo_keep_ms=(uint32_t)(time_us_64()/1000);}
+            if(!demo_reply(BD_LINKED))return false;
+        }
+        if(demo_link && f.id==BD_DOWN_ID &&
+           cf_feed(&demo_down,&f,BD_DOWN_ID,(uint32_t)(time_us_64()/1000))){
+            static ul_packet candidate;
+            if(!demo_tx_pending && bd_packet(&demo_down,&candidate,demo_radio.token,responder_boot) &&
+               candidate.request>demo_last_tx){
+                demo_tx=candidate;demo_last_tx=candidate.request;demo_tx_pending=true;
+            }
+        } /* No blocking reply transmissions during marks. */
         if(dr_respond(&f,DR_COMMS_NODE,responder_boot,&reply)){
             (void)can_send_frame(&reply,time_us_64()+50000);continue;
         }
@@ -75,37 +92,113 @@ static bool demo_emit(uint64_t deadline) {
 }
 static bool demo_decode_continue(void) {
     return !demo_abort && time_us_64()<demo_decode_deadline &&
-           getchar_timeout_us(0)<0 && demo_radio_poll(false);
+           getchar_timeout_us(0)<0 && demo_radio_poll(false) && !demo_tx_pending;
 }
 static bool demo_rx_healthy(void){
     uint8_t enabled,status;
     return clock_read(3,&enabled) && enabled==0xfd && clock_read(0,&status) && !(status&0xa8);
 }
+/* Hardware-paced ADC samples allow CAN service during capture. Stop the
+ * capture immediately for a pending TX; the board is half-duplex. */
+static int demo_dma;
+static bool demo_capture(void){
+    adc_run(false);adc_fifo_drain();
+    dma_channel_config c=dma_channel_get_default_config((unsigned)demo_dma);
+    channel_config_set_transfer_data_size(&c,DMA_SIZE_16);
+    channel_config_set_read_increment(&c,false);
+    channel_config_set_write_increment(&c,true);
+    channel_config_set_dreq(&c,DREQ_ADC);
+    dma_channel_configure((unsigned)demo_dma,&c,rx_samples,&adc_hw->fifo,32768,true);
+    adc_run(true);
+    uint64_t deadline=time_us_64()+4300000;
+    bool ok=true;
+    while(dma_channel_is_busy((unsigned)demo_dma) && !demo_tx_pending){
+        if(time_us_64()>=deadline || getchar_timeout_us(0)>=0 || !demo_radio_poll(false)){ok=false;break;}
+        sleep_us(300);
+    }
+    adc_run(false);dma_channel_abort((unsigned)demo_dma);adc_fifo_drain();
+    return ok;
+}
+static bool demo_forward(const rd_result *decoded){
+    static ul_packet p;
+    static uint8_t wire[UL_WIRE_MAX];
+    if(decoded->size>BD_PACKET_MAX || demo_uplink_id==UINT32_MAX)return true;
+    p=(ul_packet){.version=1,.type=BD_PACKET,.sender=responder_boot,.origin=demo_radio.token,
+        .request=++demo_uplink_id,.size=(uint16_t)decoded->size};
+    memcpy(p.payload,decoded->packet,p.size);
+    size_t n=ul_encode(&p,wire);
+    if(!n)return false;
+    for(unsigned i=0;i*CF_CHUNK<n;i++){
+        cf_frame f;
+        if(!cf_fragment(wire,n,BD_UP_ID,(uint16_t)p.request,i,&f) ||
+           !can_send_frame(&f,time_us_64()+50000) || !demo_radio_poll(false))return false;
+        sleep_ms(2);
+    }
+    return true;
+}
+/* Reuse the verified clock preparation/mute path, with CAN kept live for
+ * stop and keepalive during each bounded BPSK packet. */
+static bool demo_bpsk(uint64_t deadline){
+    uint64_t start=time_us_64();
+    bool phase=false;
+    for(unsigned i=0;i<packet_frame_size*8u;i++){
+        uint64_t due=start+(uint64_t)i*1000000/BPSK_BAUD;
+        while(time_us_64()<due)if(clock_deadline_fired)return false;
+        uint64_t now=time_us_64();
+        if(now>due+150 || now>=deadline || clock_deadline_fired || getchar_timeout_us(0)>=0)return false;
+        phase^=(packet_frame[i/8]>>(7-i%8))&1;
+        gpio_put(16,phase);
+        if(!demo_radio_poll(true))return false;
+    }
+    uint64_t end=start+(uint64_t)packet_frame_size*8u*1000000/BPSK_BAUD;
+    while(time_us_64()<end)if(clock_deadline_fired)return false;
+    return time_us_64()<deadline && !clock_deadline_fired;
+}
+static bool demo_tx_permitted(void){return demo_radio_poll(true);}
+static bool demo_transmit(void){
+    uint32_t request=demo_tx.request;
+    demo_tx_pending=false;
+    packet_frame_size=bridge_frame(packet_frame,demo_tx.payload,demo_tx.size,request);
+    bool sent=packet_frame_size && clock_window_impl(true,false,demo_bpsk,1,0,demo_tx_permitted);
+    bool rx=sent && rx_start(true) && demo_rx_healthy();
+    cf_frame report=bd_frame(rx?BD_TX_OK:BD_TX_FAILED,request,responder_boot);
+    printf("[boot_demo] TX request=%lu sent=%u RX_READY=%u ground_ack=0\n",
+           (unsigned long)request,sent,rx);
+    return can_send_frame(&report,time_us_64()+50000) && rx;
+}
 static void demo_radio_run(bool can_ok) {
-    printf("[boot_demo] CONDUCTED ONLY; normal RF TX and RF command dispatch disabled\n");
+    printf("[boot_demo] CONDUCTED ONLY; generic packet link; ordinary console RF paths disabled\n");
     if(!can_ok || !rx_stop())goto failed;
+    demo_dma=dma_claim_unused_channel(false);
+    if(demo_dma<0)goto failed;
+    adc_fifo_setup(true,true,1,true,false);
+    adc_set_clkdiv(5999.0f);
     for(;;){
         if(getchar_timeout_us(0)>=0 || !demo_radio_poll(false))goto failed;
         if(demo_fire){
             demo_fire=false;
             printf("[boot_demo] CW begin nominal_hz=437000000 wpm=%u text=%s\n",BOOT_CW_WPM,BOOT_CW_TEXT);
-            if(!clock_window_impl(true,false,demo_emit,1,BD_CW_LIMIT_MS) ||
+            if(!clock_window_impl(true,false,demo_emit,1,BD_CW_LIMIT_MS,demo_tx_permitted) ||
                !rx_start(true) || !demo_rx_healthy())goto failed;
             demo_listen=true;
             printf("[boot_demo] CW complete; RX_READY TX=0 dispatch=0\n");
             if(!demo_reply(BD_RX))goto failed;
         }
         if(demo_listen){
-            /* RX stays enabled. Capture/decode are bounded and have acquisition gaps.
-             * Do not forward packets into the command engine or send a reply. */
-            rx_requested=32768;rx_late=0;
-            if(!rx_capture() || !demo_radio_poll(false) || !demo_rx_healthy())goto failed;
+            if(demo_tx_pending){
+                if(!demo_transmit())goto failed;
+                continue;
+            }
+            if(!demo_capture() || !demo_rx_healthy())goto failed;
             rd_result result={0};
             demo_decode_deadline=time_us_64()+3000000;
-            if(!rx_late && rd_decode(rx_samples,rx_count,&result,demo_decode_continue))
-                printf("[boot_demo] RX packet sequence=%lu bytes=%u mixer_hz=%u dispatch=0 TX=0\n",
-                       (unsigned long)result.sequence,(unsigned)result.size,result.frequency);
-            if(demo_abort || !demo_radio_poll(false) || !demo_rx_healthy() || !demo_reply(BD_RX))goto failed;
+            if(!demo_tx_pending && rd_decode_impl(rx_samples,32768,&result,demo_decode_continue,false)){
+                printf("[boot_demo] RX sequence=%lu bytes=%u forward=%u\n",
+                       (unsigned long)result.sequence,(unsigned)result.size,demo_link);
+                if(demo_link && !demo_forward(&result))goto failed;
+            }
+            if(demo_abort || !demo_radio_poll(false) || !demo_rx_healthy() ||
+               !demo_reply(demo_link?BD_LINKED:BD_RX))goto failed;
         }else sleep_ms(1);
     }
 failed:

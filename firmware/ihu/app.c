@@ -656,18 +656,29 @@ static void sensor_complete(const ihu_sensor_result *r){
 #ifndef IHU_BOOT_DEMO
 #define IHU_BOOT_DEMO 0
 #endif
+#ifndef IHU_BOOT_RX_ONLY
+#define IHU_BOOT_RX_ONLY 0
+#endif
 #if IHU_BOOT_DEMO
 #include "boot_demo.h"
 #endif
 
 static void command_impl(const char *s) {
 #if IHU_BOOT_DEMO
-    if(!strcmp(s,"startup")){demo_history(true);mode_status();return;}
+    if(!strcmp(s,"startup") || !strcmp(s,"radio")){
+        if(!strcmp(s,"startup"))demo_history(true);
+        mode_status();
+        LOG("RADIO behavior=%s uplinks=%" PRIu32 " replies=%" PRIu32 " tx_ok=%" PRIu32 " dropped=%" PRIu32 " heartbeat_ms=%u\n",
+            startup_demo.stage==DEMO_ACTIVE?"LINK_ACTIVE":(startup_demo.stage==DEMO_LISTEN || startup_demo.stage==DEMO_ACTIVATE)?"RX_ONLY":
+            startup_demo.stage==DEMO_BEACON?"STARTUP_CW":"MUTED",
+            demo_uplinks,demo_replies,demo_tx_ok,demo_drops,startup_demo.stage==DEMO_ACTIVE?BD_HEARTBEAT_MS:0);
+        return;
+    }
     if(!strcmp(s,"mode safe") || !strcmp(s,"uhf stop")){
         demo_fail("Operator stop");mode_status();return;
     }
     if(!strcmp(s,"help")){
-        LOG("COMMANDS startup | status | version | mode | outputs | faults | rtos | mode safe | uhf stop\n");return;
+        LOG("COMMANDS startup | radio | status | version | mode | outputs | faults | rtos | mode safe | uhf stop\n");return;
     }
     if(strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"mode") && strcmp(s,"outputs") &&
        strcmp(s,"faults") && strcmp(s,"rtos")){
@@ -785,6 +796,7 @@ void ihu_app_step(bool scheduled) {
     uint32_t demo_now=now_ms();
     cf_frame demo_frame;
     for(unsigned i=0;i<16 && ihu_can_receive(&can,&demo_frame);i++)demo_receive(&demo_frame,demo_now);
+    demo_link_pump(now_ms());
     (void)scheduled;
     return;
 #endif

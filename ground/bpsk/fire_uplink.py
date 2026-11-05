@@ -8,12 +8,13 @@ import os
 from pathlib import Path
 import socket
 import time
+import threading
 import numpy as np
 from codec import decode as native_decode
 from modem import frame,decode
 from uplink_probe import RATE,DIGITAL_OFFSET,FPGA_SHA
 
-VERSION='0.2.0'
+VERSION='0.3.0'
 
 def valid_command(wire):
     c=native_decode(wire);h=c['header']
@@ -55,10 +56,11 @@ def matches(wire,command):
         p['execution_mode'] in (1,2) and (p['result']!=2 or p['execution_mode']==2) and
         p['reported_boot_id'] and p['check_id'])
 
-def execute(wire,output,images):
-    if not valid_command(wire):raise ValueError('Command not admitted')
+def execute(wire,output,images,link_active=False):
+    if not valid_command(wire) or (link_active and native_decode(wire)['name']!='PING'):
+        raise ValueError('Command not admitted in selected profile')
     output.mkdir(parents=True,exist_ok=False)
-    report=dict(command_hex=wire.hex(),transmitted=False,packets=[],matching=[],errors=[])
+    report=dict(command_hex=wire.hex(),link_active=link_active,transmitted=False,packets=[],matching=[],errors=[])
     path=output/'result.json'
     fpga=images/'usrp_b210_fpga.bin'
     if hashlib.sha256(fpga.read_bytes()).hexdigest()!=FPGA_SHA:raise ValueError('FPGA mismatch')
@@ -77,13 +79,30 @@ def execute(wire,output,images):
     if len(iq)>RATE*2 or not np.isfinite(iq).all() or np.max(np.abs(iq))>.200001:raise ValueError('Burst bound')
     sa=uhd.usrp.StreamArgs('fc32','sc16');sa.channels=[0];tx=radio.get_tx_stream(sa);rx=radio.get_rx_stream(sa)
     blocks=[];started=False
+    stop_capture=threading.Event()
+    worker=None
+    def start_rx():
+        stream=uhd.types.StreamCMD(uhd.types.StreamMode.start_cont)
+        stream.stream_now=True;rx.issue_stream_cmd(stream)
+    def capture():
+        buf=np.empty((1,8192),np.complex64);metadata=uhd.types.RXMetadata();end=time.monotonic()+20
+        try:
+            while time.monotonic()<end and not stop_capture.is_set():
+                n=rx.recv(buf,metadata,.5)
+                if metadata.error_code!=uhd.types.RXMetadataErrorCode.none:raise RuntimeError(metadata.strerror())
+                if n:blocks.append(buf[0,:n].copy())
+        except Exception as error:
+            report['errors'].append(str(error))
     try:
-        with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as arm:
-            arm.settimeout(4);arm.sendto(wire,('192.168.1.252',10030));answer,address=arm.recvfrom(512)
-            if address[0]!='192.168.1.252' or answer!=b'ARMED'+wire:raise RuntimeError('COMMS not armed')
-        # The COMMS ADC capture starts one second after clock setup.
-        # Match the previously qualified OTA orchestration timing.
-        time.sleep(1.8)
+        if link_active:
+            # A reply may arrive without the legacy radio-console arm step.
+            start_rx();started=True
+            worker=threading.Thread(target=capture);worker.start()
+        else:
+            with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as arm:
+                arm.settimeout(4);arm.sendto(wire,('192.168.1.252',10030));answer,address=arm.recvfrom(512)
+                if address[0]!='192.168.1.252' or answer!=b'ARMED'+wire:raise RuntimeError('COMMS not armed')
+            time.sleep(1.8)
         md=uhd.types.TXMetadata();md.start_of_burst=True;md.end_of_burst=True
         md.has_time_spec=True;md.time_spec=uhd.types.TimeSpec(radio.get_time_now().get_real_secs()+.25)
         if tx.send(iq.reshape(1,-1),md,3)!=len(iq):raise RuntimeError('Short transmit; no retry')
@@ -94,15 +113,15 @@ def execute(wire,output,images):
                 ack=True;break
         if not ack:raise RuntimeError('Missing burst acknowledgment')
         report['transmitted']=True;radio.set_tx_gain(0,0)
-        stream=uhd.types.StreamCMD(uhd.types.StreamMode.start_cont);stream.stream_now=True;rx.issue_stream_cmd(stream);started=True
-        buf=np.empty((1,8192),np.complex64);metadata=uhd.types.RXMetadata();end=time.monotonic()+20
-        while time.monotonic()<end:
-            n=rx.recv(buf,metadata,.5)
-            if metadata.error_code!=uhd.types.RXMetadataErrorCode.none:raise RuntimeError(metadata.strerror())
-            if n:blocks.append(buf[0,:n].copy())
+        if worker is not None:worker.join()
+        else:
+            start_rx();started=True;capture()
+        if report['errors']:raise RuntimeError('Receive capture failed')
     except BaseException as error:
         report['errors'].append(str(error));raise
     finally:
+        stop_capture.set()
+        if worker is not None:worker.join()
         if started:rx.issue_stream_cmd(uhd.types.StreamCMD(uhd.types.StreamMode.stop_cont))
         stop=uhd.types.TXMetadata();stop.end_of_burst=True
         tx.send(np.zeros((1,0),np.complex64),stop,.5);radio.set_tx_gain(0,0)
@@ -122,7 +141,9 @@ def execute(wire,output,images):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--version',action='version',version=VERSION)
     p.add_argument('--images',type=Path,default=Path.home()/'work/ember-lte/images')
-    p.add_argument('--output',type=Path,required=True);a=p.parse_args();seen=OrderedDict()
+    p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--link-active',action='store_true',help='Conducted startup demo: send PING without serial arm')
+    a=p.parse_args();seen=OrderedDict()
     with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as sock, socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as out:
         sock.bind(('192.168.1.251',10029))
         notify=os.environ.get('NOTIFY_SOCKET')
@@ -140,7 +161,7 @@ def main():
                 seen[key]=True
                 if len(seen)>64:seen.popitem(last=False)
                 run=a.output/datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
-                result=execute(wire,run,a.images)
+                result=execute(wire,run,a.images,link_active=a.link_active)
                 out.sendto(result,('127.0.0.1',10019))
                 print('RF_RESULT '+result.hex(),flush=True)
             except Exception as error:print('UNKNOWN '+str(error),flush=True)

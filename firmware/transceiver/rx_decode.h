@@ -18,7 +18,7 @@ typedef struct {
 } rd_lane;
 static uint16_t rd_u16(const uint8_t *p){return (uint16_t)((p[0]<<8)|p[1]);}
 static uint32_t rd_u32(const uint8_t *p){return ((uint32_t)p[0]<<24)|((uint32_t)p[1]<<16)|((uint32_t)p[2]<<8)|p[3];}
-static bool rd_bit(rd_lane *s, unsigned bit, rd_result *out) {
+static bool rd_bit_impl(rd_lane *s, unsigned bit, rd_result *out,bool native) {
  if(!s->collecting){
   s->sync=(s->sync<<1)|bit;
   if(s->sync==0x1acffc1d){s->collecting=true;s->bits=s->bytes=s->wanted=0;memset(s->body,0,sizeof(s->body));}
@@ -29,7 +29,7 @@ static bool rd_bit(rd_lane *s, unsigned bit, rd_result *out) {
  s->bits=0;++s->bytes;
  if(s->bytes==7){
   unsigned n=rd_u16(s->body+5);
-  if(s->body[0]!=3||n<32||n>240){s->collecting=false;s->sync=0;return false;}
+  if(s->body[0]!=3||n<(native?32u:1u)||n>240){s->collecting=false;s->sync=0;return false;}
   s->wanted=7+n+4;
  }
  if(!s->wanted||s->bytes<s->wanted)return false;
@@ -37,16 +37,19 @@ static bool rd_bit(rd_lane *s, unsigned bit, rd_result *out) {
  unsigned n=s->wanted-11;const uint8_t *p=s->body+7;
  if(bp_crc32(s->body,s->wanted-4)!=rd_u32(s->body+s->wanted-4))return false;
  /* Envelope validation only; command acceptance is a separate PING-only gate. */
- if(!((rd_u16(p)==0x0901&&p[7]==1)||(rd_u16(p)==0x1900&&p[7]==0))||(rd_u16(p+2)&0xc000)!=0xc000||rd_u16(p+4)!=n-7||
-    p[6]!=1||rd_u16(p+28)!=n-32||bp_crc16(p,n-2)!=rd_u16(p+n-2))return false;
+ if(native && (!((rd_u16(p)==0x0901&&p[7]==1)||(rd_u16(p)==0x1900&&p[7]==0))||(rd_u16(p+2)&0xc000)!=0xc000||rd_u16(p+4)!=n-7||
+    p[6]!=1||rd_u16(p+28)!=n-32||bp_crc16(p,n-2)!=rd_u16(p+n-2)))return false;
  out->size=n;out->sequence=rd_u32(s->body+1);memcpy(out->packet,p,n);return true;
+}
+static inline bool rd_bit(rd_lane *s,unsigned bit,rd_result *out){
+ return rd_bit_impl(s,bit,out,true);
 }
 /* Optional callback between frequency candidates keeps control/service bounded. */
 typedef bool (*rd_continue)(void);
 /* Measured bench IF is near 1325Hz. Track only a CRC-validated acquisition;
  * warming oscillators must not spend the whole deadline reaching this band. */
 static unsigned rd_preferred_hz=1325;
-static bool rd_decode(const uint16_t *samples,size_t count,rd_result *out,rd_continue proceed){
+static bool rd_decode_impl(const uint16_t *samples,size_t count,rd_result *out,rd_continue proceed,bool native){
  if(!samples||!out||count!=32768)return false;
  uint32_t sum=0;
  for(size_t i=0;i<count;i++){if(!samples[i]||samples[i]>=4095)return false;sum+=samples[i];}
@@ -69,7 +72,7 @@ static bool rd_decode(const uint16_t *samples,size_t count,rd_result *out,rd_con
     rd_lane *s=&lanes[t];unsigned tick=(unsigned)i*6;
     if(tick<t*5)continue;
     if(i && (tick-t*5)/40 != (tick-6<t*5?0:(tick-6-t*5)/40)){
-     if(s->previous && rd_bit(s,(int64_t)s->re*s->prev_re+(int64_t)s->im*s->prev_im<0,out)){
+     if(s->previous && rd_bit_impl(s,(int64_t)s->re*s->prev_re+(int64_t)s->im*s->prev_im<0,out,native)){
       out->frequency=hz;rd_preferred_hz=hz;return true;
      }
      s->prev_re=s->re;s->prev_im=s->im;s->previous=true;s->re=s->im=0;
@@ -79,4 +82,7 @@ static bool rd_decode(const uint16_t *samples,size_t count,rd_result *out,rd_con
   }
  }
  return false;
+}
+static inline bool rd_decode(const uint16_t *samples,size_t count,rd_result *out,rd_continue proceed){
+ return rd_decode_impl(samples,count,out,proceed,true);
 }
