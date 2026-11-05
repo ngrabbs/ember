@@ -105,8 +105,8 @@ class PayloadGroundTests(unittest.TestCase):
             body='services: []\ndataLinks: []\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember-uhf.xml\n'
             old.write_text(body);(config/'yamcs.yaml').write_text('instances:\n  - ember-uhf\n')
             original=runtime/'src/main/java/com/example/ember/WireProfile.java';original.parent.mkdir(parents=True);original.write_text('preserve deployed source')
-            module.prepare(runtime);first=(config/'yamcs.ember-payload.yaml').read_bytes()
-            module.prepare(runtime)
+            module.prepare(runtime,'127.0.0.1');first=(config/'yamcs.ember-payload.yaml').read_bytes()
+            module.prepare(runtime,'127.0.0.1')
             self.assertEqual((config/'yamcs.ember-payload.yaml').read_bytes(),first)
             self.assertEqual((config/'yamcs.yaml').read_text().count('  - ember-payload\n'),1)
             self.assertEqual(old.read_text(),body)

@@ -64,6 +64,9 @@ static bool rd_decode_impl(const uint16_t *samples,size_t count,rd_result *out,r
   /* Single diagnostic owner; keep workspace off the Pico stack. */
   static rd_lane lanes[8];memset(lanes,0,sizeof(lanes));uint32_t phase=0,step=(uint32_t)(((uint64_t)hz<<32)/8000);
   for(size_t i=0;i<count;i++,phase+=step){
+   /* The packet link owns CAN during DSP. Two MCP RX buffers cannot
+    * hold a complete IHU transmit envelope while a candidate is searched. */
+   if(!native && i && !(i&127u) && proceed && !proceed())return false;
    int32_t v=(int32_t)samples[i]-mean;
    /* Divide mixer output before accumulation to bound differential products. */
    int32_t re=v*rd_sine[((phase>>24)+64)&255]/256;

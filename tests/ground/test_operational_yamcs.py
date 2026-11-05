@@ -32,12 +32,13 @@ class OperationalYamcs(unittest.TestCase):
             self.assertIn('port: 10029',flight)
             self.assertIn('/ember/(PING|REQUEST_STATUS|REQUEST_TELEMETRY|STATUS_CAPTURE|STATUS_FETCH|IHU_REBOOT|PAYLOAD_FIRE_CHECK)',flight)
             self.assertNotIn('10020',flight)
-            self.assertIn('port: 10020',bench);self.assertIn('port: 10028',bench)
+            self.assertIn('dataLinks: []',bench)
+            self.assertNotIn('10020',bench);self.assertNotIn('10028',bench)
             self.assertNotIn('10018',bench);self.assertNotIn('10019',bench)
             self.assertNotIn('10016',flight+bench);self.assertNotIn('10017',flight+bench)
             self.assertIn('displayBucket: ember_bench_displays',bench)
             pattern=re.findall('tcPatterns: \\["(.*?)"\\]',bench)[0]
-            self.assertTrue(re.fullmatch(pattern,'/ember/PAYLOAD_STATUS_QUERY'))
+            self.assertFalse(re.fullmatch(pattern,'/ember/PAYLOAD_STATUS_QUERY'))
             self.assertFalse(re.fullmatch(pattern,'/ember/PING'))
             for file,count in [('ember.xml',7),('ember-bench.xml',5)]:
                 tree=ET.parse(r/'src/main/yamcs/mdb'/file)

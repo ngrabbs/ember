@@ -212,7 +212,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--version',action='version',version=VERSION)
     parser.add_argument('--device',required=True)
-    parser.add_argument('--bind',default='192.168.1.252')
+    parser.add_argument('--bind',required=True,help='Explicit host for optional wired lab use')
     parser.add_argument('--ground',default='192.168.1.251')
     parser.add_argument('--poll-eps',action='store_true',help='Check IHU output policy every five seconds; read/forward EPS only while umb_telem is enabled')
     parser.add_argument('--cells',type=int,default=2)

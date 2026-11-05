@@ -1,4 +1,4 @@
-"""Prepare separate flight and serial-bench instances; retain all archives.
+"""Prepare live RF and archived bench instances; retain all archives.
 
 Run against an existing prepared runtime. Never calls legacy prepare.py.
 Back up the running data volume while Yamcs is stopped before deploying.
@@ -49,16 +49,8 @@ def prepare(runtime, legacy_history=()):
       resultDomain: spacecraft
 """
     flight += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember.xml\n'+tc_tail('/ember/(PING|REQUEST_STATUS|REQUEST_TELEMETRY|STATUS_CAPTURE|STATUS_FETCH|IHU_REBOOT|PAYLOAD_FIRE_CHECK)')
-    bench = services+'\ndataLinks:\n'+tm('ihu-serial-in',10020)+'''  - name: ihu-serial-out
-    class: org.yamcs.tctm.UdpTcDataLink
-    stream: tc_realtime
-    host: 192.168.1.252
-    port: 10028
-    commandPostprocessorClassName: com.example.ember.EmberCommandPostprocessor
-    commandPostprocessorArgs:
-      resultDomain: spacecraft
-'''
-    bench += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember-bench.xml\n'+tc_tail('/ember/PAYLOAD_(PING|IDENT|STATUS_QUERY|HEARTBEAT_QUERY|FIRE_CHECK)')
+    bench = services+'\ndataLinks: []\n'
+    bench += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember-bench.xml\n'+tc_tail('(?!)')
     bench=bench.replace('displayBucket: ember_displays','displayBucket: ember_bench_displays')
     current = main.read_text()
     # Remove live transport instances and upstream demo from the default server.
@@ -107,7 +99,7 @@ def prepare(runtime, legacy_history=()):
         current = current.replace('  - ember\n','  - ember\n  - '+name+'\n',1)
     main.write_text(current)
     (runtime/'.operational-consolidated').write_text('ember\nember-bench\n')
-    print('Prepared ember radio reception and ember-bench serial telemetry/commands.')
+    print('Prepared ember RF links and ember-bench archive (no hardware links).')
     print('Previous configuration/source saved privately under '+str(backup))
 
 if __name__=='__main__':

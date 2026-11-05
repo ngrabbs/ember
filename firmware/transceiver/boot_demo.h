@@ -7,6 +7,8 @@
 static bd_radio demo_radio;
 static bool demo_abort,demo_fire,demo_listen,demo_link,demo_tx_pending;
 static uint32_t demo_last_tx,demo_uplink_id;
+static uint8_t demo_can_error;
+static const char *demo_fault="startup_or_radio";
 static cf_reader demo_down;
 static ul_packet demo_tx;
 static uint32_t demo_keep_ms;
@@ -17,8 +19,12 @@ static bool demo_reply(unsigned id) {
     return can_send_frame(&f,time_us_64()+50000);
 }
 static bool demo_radio_poll(bool keying) {
-    if(demo_link && (uint32_t)((uint32_t)(time_us_64()/1000)-demo_keep_ms)>=BD_KEEP_TIMEOUT_MS)return false;
-    if((can_read(14,0x0e)&0xe0) || can_read(14,0x2d))return false;
+    if(demo_link && (uint32_t)((uint32_t)(time_us_64()/1000)-demo_keep_ms)>=BD_KEEP_TIMEOUT_MS){
+        demo_fault="keepalive_expired";return false;
+    }
+    if(can_read(14,0x0e)&0xe0){demo_fault="can_mode";return false;}
+    demo_can_error=can_read(14,0x2d);
+    if(demo_can_error){demo_fault="can_error";return false;}
     uint8_t flags=can_read(14,0x2c);
     for(unsigned b=0;b<2;b++){
         if(!(flags&(1u<<b)))continue;
@@ -30,7 +36,7 @@ static bool demo_radio_poll(bool keying) {
         cf_frame f={.id=(uint16_t)((d[0]<<3)|(d[1]>>5)),.size=d[4]&15},reply;
         memcpy(f.data,d+5,f.size);
         if(f.id==BD_STOP && bd_matches(&f,demo_radio.token,responder_boot)){
-            gpio_put(10,false);demo_abort=true;return false;
+            gpio_put(10,false);demo_abort=true;demo_fault="ihu_stop";return false;
         }
         if(f.id==BD_KEEP && demo_radio.spent && bd_matches(&f,demo_radio.token,responder_boot))
             demo_keep_ms=(uint32_t)(time_us_64()/1000);
@@ -205,6 +211,7 @@ failed:
     demo_radio.spent=true;
     bool muted=rx_stop();
     if(can_ok && demo_radio.token)(void)demo_reply(BD_FAILED);
-    printf("[boot_demo] SAFE stopped clock_shutdown_verified=%u; reset both boards for a new run\n",muted);
+    printf("[boot_demo] SAFE reason=%s can_eflg=%02x clock_shutdown_verified=%u; reset both boards for a new run\n",
+           demo_fault,demo_can_error,muted);
     for(;;)sleep_ms(100);
 }

@@ -1,5 +1,7 @@
 # Y24 bounded BPSK bench link
 
+For live Yamcs commanding and telemetry, use the [continuous UHF gateway](LINK_GATEWAY.md). The finite captures below are bench diagnostics; stop the live owner before running them.
+
 Separate from the working SDRB 1200-baud FSK path. Not a flight modem: no FEC,
 pulse shaping, retransmission, uplink decoder, or continuous telemetry service.
 

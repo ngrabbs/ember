@@ -1,27 +1,20 @@
-# EMBER flight and bench environments
+# EMBER live RF and bench archive
 
-One Docker container runs two Yamcs instances at [the Pi](http://192.168.1.251:8090).
-Choose the environment, then stay in its `realtime` processor. Both use the same
-`/ember` packet namespace and dictionary source; archives, current values,
-command history and display buckets are independent.
+One Docker container runs two Yamcs instances at [the ground Pi](http://192.168.1.251:8090).
+Use **ember / realtime** for live RF. See the [continuous UHF gateway](../bpsk/LINK_GATEWAY.md)
+for how Yamcs sends PING and receives heartbeats and replies.
 
 | Instance | Purpose | Links | Displays |
 |---|---|---|---|
-| `ember` | Radio reception and bounded fire-check command | `lte-tm-in` UDP10018; `uhf-tm-in` UDP10019; fire-check TC UDP10029 | `ember_displays` |
-| `ember-bench` | One physical IHU serial connection | `ihu-serial-in` UDP10020; `ihu-serial-out` to m75q UDP10028 | `ember_bench_displays` |
+| `ember` | Live radio telemetry and commanding | LTE TM UDP10018; UHF TM UDP10019; UHF TC UDP10029 | `ember_displays` |
+| `ember-bench` | Historical wired-bench data | No active hardware links | `ember_bench_displays` |
 
-The bench input/output pair represents the two directions of one serial path,
-not two connected devices. The IHU is currently attached by its USB serial
-console to m75q (.252), which bridges it to Yamcs on the ground Pi (.251).
-The old spare-Pico USB and separate EPS UART services are disabled.
+m75q is used for console debug and flashing. It is not in the live RF
+telemetry or command path. The current IHU LINK_ACTIVE profile admits PING;
+older command names in the MDB are not proof of support in this profile.
 
-Open [flight overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
-or [bench overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember-bench__realtime).
-Flight Overview summarizes heartbeat/system/power; bench Overview summarizes
-serial EPS/payload/power. Both use Overview, Power, Payload and Devices & firmware.
-Flight exposes PAYLOAD_FIRE_CHECK through the bounded real RF path. Bench exposes
-PAYLOAD_PING, PAYLOAD_IDENT, PAYLOAD_STATUS_QUERY, PAYLOAD_HEARTBEAT_QUERY and
-PAYLOAD_FIRE_CHECK through serial/CAN. See [fire-check operation](FIRE_CHECK.md).
+The sections below preserve earlier integration and operator procedures.
+Where they describe the retired wired path, use the current gateway guide.
 
 ## IHU 0.13.0 quiet-output policy
 

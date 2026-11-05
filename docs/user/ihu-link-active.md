@@ -1,6 +1,6 @@
 # IHU automatic UHF link bench profile
 
-**IHU 0.18.0 and transceiver 0.37.0** are the matching pair. This profile is
+**IHU 0.18.0 and transceiver 0.37.1** are the matching pair. This profile is
 for the conducted CAN Feather / original Pico bench, with the two RF paths
 connected and attenuated. The legacy bench profile and the flight stub remain
 separate. See [startup and CW procedure](ihu-cw-startup-demo.md) for wiring,
@@ -60,14 +60,12 @@ initial bench policy, not a flight requirement.
 
 ## Ground test
 
-The ground BPSK/Yamcs adapter `fire_uplink.py --link-active` sends a PING without
-the legacy serial-arm service, captures downlink starting before TX, and
-returns only a matching PING result to Yamcs. Do not start the old radio
-console-arm service with these demo images. A single PING can miss a receive
-window: the radio uses hardware-paced ADC capture blocks with decoder gaps
-and is half-duplex during transmission. An RF timeout is UNKNOWN; the ground
-adapter does not retransmit automatically. Continuous ground telemetry capture
-needs a receiver owner coordinated with this one-shot adapter.
+The [ground RF gateway](../../ground/bpsk/LINK_GATEWAY.md) keeps SDR receive
+streaming and transmits Yamcs PINGs without an m75q serial arm. It continuously
+forwards valid telemetry and replies to Yamcs `ember`. A single PING can miss a
+receive window: the spacecraft radio uses ADC capture blocks with decoder gaps
+and is half-duplex during transmission. An RF timeout is UNKNOWN; the gateway
+does not retransmit automatically.
 
 Before accepting the pair, verify conducted CW timing, several heartbeats,
 a correlated ground PING result, returned RX, stop/lease expiry during a burst,

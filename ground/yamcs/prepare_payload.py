@@ -4,6 +4,7 @@ Does not run legacy prepare.py or rewrite the existing instances/MDBs.
 Back up the runtime before applying on a deployed station.
 """
 import argparse
+from ipaddress import ip_address
 from pathlib import Path
 import shutil
 import tempfile
@@ -14,7 +15,8 @@ from generate_mdb import generate
 ROOT=Path(__file__).resolve().parent
 
 
-def prepare(runtime):
+def prepare(runtime, bridge_host):
+    bridge_host = str(ip_address(bridge_host))
     if (runtime / '.operational-consolidated').exists():
         raise ValueError('Operational links are in ember; use ground/yamcs/prepare_operational.py')
     config=runtime/'src/main/yamcs/etc'
@@ -22,7 +24,7 @@ def prepare(runtime):
     if not template.exists():template=config/'yamcs.ember.yaml'
     text=template.read_text()
     start,end=text.index('\ndataLinks:'),text.index('\nmdb:')
-    links='''
+    links=f'''
 dataLinks:
   - name: payload-ihu-bench-in
     class: org.yamcs.tctm.UdpTmDataLink
@@ -32,7 +34,7 @@ dataLinks:
   - name: payload-ihu-bench-out
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_realtime
-    host: 192.168.1.252
+    host: {bridge_host}
     port: 10028
     commandPostprocessorClassName: com.example.emberpayload.EmberCommandPostprocessor
 '''
@@ -59,4 +61,6 @@ dataLinks:
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--runtime',required=True,type=Path)
-    prepare(parser.parse_args().runtime)
+    parser.add_argument('--bridge-host',required=True,help='Explicit host for legacy wired lab use')
+    args=parser.parse_args()
+    prepare(args.runtime,args.bridge_host)

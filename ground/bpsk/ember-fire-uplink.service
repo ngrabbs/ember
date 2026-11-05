@@ -1,14 +1,15 @@
 [Unit]
-Description=EMBER one-shot Yamcs fire-check RF command link
+Description=EMBER continuous UHF telemetry and command gateway
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 Type=notify
-TimeoutStartSec=15
+TimeoutStartSec=20
+TimeoutStopSec=12
 User=ngrabbs
 Environment=PYTHONPATH=/opt/ember-fire/ember
-ExecStart=/usr/bin/python3 -u /opt/ember-fire/bpsk/fire_uplink.py --output /home/ngrabbs/work/ember-fire-rf-evidence
+ExecStart=/usr/bin/python3 -u /opt/ember-fire/bpsk/link_gateway.py
 Restart=on-failure
 RestartSec=5
 NoNewPrivileges=yes
