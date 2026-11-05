@@ -50,7 +50,7 @@ A second fire-check while a capture is pending returns error 5 (busy). Adapter
 failure returns error 8, logs `CAPTURE_FAILED`, and never sends a successful fire
 result. A timeout can leave images saved later by the camera daemon: the adapter
 does not retry. Capture operations have a 3.8-second HTTP budget to fit inside
-the current IHU five-second transaction timeout. An IHU timeout is an uncertain
+the current IHU 12-second fire-check reply window. An IHU timeout is an uncertain
 outcome; inspect logs before issuing another capture.
 
 Follow `journalctl -u ember-payload.service -f` for `CAPTURE_START` and
@@ -106,7 +106,7 @@ Require `ember-outcome=COMPLETED`, `ember-fire-mode=ALGORITHM`, elapsed at most
 on that completed report differs from an uncertain command outcome UNKNOWN.
 The native wrapped result is 52 bytes. Detection accuracy is not graded.
 
-The capture/analysis worker has a 4.3-second total budget from capture start;
+The capture/analysis worker has a 10-second total budget from capture start;
 analysis runs in a preloaded, reusable, killable subprocess using the remaining time. Deadline
 exhaustion remains a processing error, not a completed quality result. CAN reception remains independent.
 The complete record identifies the camera originals and includes their hashes,

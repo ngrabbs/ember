@@ -176,8 +176,8 @@ after editing the JSON so both processes use the same configuration.
 This file selects the camera directory, evidence directory, camera request
 budget, total fire-check deadline, worker startup timeout, calibration, and
 detector profile. The profile selects a registered algorithm and holds its
-thresholds and registration settings. The default 4.3-second total budget
-includes capture and detection and must leave room for the IHU's five-second
+thresholds and registration settings. The default 10-second total budget
+includes capture and detection and leaves room for the IHU's 12-second
 CAN reply window. Camera settings used for each exposure are read from the
 camera daemon and recorded with the result.
 

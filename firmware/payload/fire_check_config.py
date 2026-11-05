@@ -24,8 +24,8 @@ def load(path):
         value = config[key]
         if type(value) not in (int, float) or not math.isfinite(value) or value <= 0:
             raise ValueError(f'{key} must be a positive finite number')
-    if not config['camera_request_timeout_s'] <= config['fire_check_deadline_s'] < 5:
-        raise ValueError('Camera timeout must fit within the fire-check deadline and IHU five-second CAN window')
+    if not config['camera_request_timeout_s'] <= config['fire_check_deadline_s'] <= 10:
+        raise ValueError('Camera timeout must fit within the fire-check deadline, capped at 10 seconds to allow for the IHU 12-second CAN window')
     return config
 
 
