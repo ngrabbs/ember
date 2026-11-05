@@ -46,18 +46,27 @@ static inline bool rd_bit(rd_lane *s,unsigned bit,rd_result *out){
 }
 /* Optional callback between frequency candidates keeps control/service bounded. */
 typedef bool (*rd_continue)(void);
-/* Measured bench IF is near 1325Hz. Track only a CRC-validated acquisition;
- * warming oscillators must not spend the whole deadline reaching this band. */
-static unsigned rd_preferred_hz=1325;
+/* Start near both measured bench IFs before expanding the search.
+ * CRC-valid reception updates the first candidate for the next capture. */
+enum { RD_IF_RECENT_HZ=1675, RD_IF_EARLIER_HZ=1325 };
+static unsigned rd_preferred_hz=RD_IF_RECENT_HZ;
 static bool rd_decode_impl(const uint16_t *samples,size_t count,rd_result *out,rd_continue proceed,bool native){
  if(!samples||!out||count!=32768)return false;
  uint32_t sum=0;
  for(size_t i=0;i<count;i++){if(!samples[i]||samples[i]>=4095)return false;sum+=samples[i];}
  int32_t mean=(int32_t)(sum/count);
- /* Search the last verified IF first, then expand in 25 Hz steps. */
- for(unsigned candidate=0;candidate<=176;candidate++){
-  int offset=(int)((candidate+1)/2)*25;
-  int trial=(int)rd_preferred_hz+(candidate%2 ? -offset : offset);
+ const unsigned initial[]={rd_preferred_hz,RD_IF_RECENT_HZ,RD_IF_EARLIER_HZ};
+ for(unsigned candidate=0;candidate<=178;candidate++){
+  int trial;
+  if(candidate<3){
+   trial=(int)initial[candidate];
+   if(candidate && initial[candidate]==initial[0])continue;
+  }else{
+   unsigned step=candidate-2;
+   int offset=(int)((step+1)/2)*25;
+   trial=(int)rd_preferred_hz+(step%2 ? -offset : offset);
+   if(trial==RD_IF_RECENT_HZ || trial==RD_IF_EARLIER_HZ)continue;
+  }
   if(trial<400||trial>2600)continue;
   unsigned hz=(unsigned)trial;
   if(proceed&&!proceed())return false;

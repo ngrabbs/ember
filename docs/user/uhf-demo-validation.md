@@ -27,8 +27,8 @@ without manual HELLO. This is not full-stack cold-power qualification.
 
 Fixes include a seven-second COMMS payload wait, 25-second bounded RF lease
 with three-second reply reserve, 20-second ground capture, 29-second arming
-observer and strict correlated failure forwarding. The IF decoder starts at
-1325 Hz, tracks the last CRC-valid IF and searches in 25 Hz steps; an actual
+observer and strict correlated failure forwarding. The IF decoder tries 1675 Hz and 1325 Hz early, tracks the last CRC-valid IF,
+and searches in 25 Hz steps. An actual
 failed capture decoded at 1350 Hz in three candidates. Duplicate caches remain
 bounded/non-evicting (256 per boot), with cache-full refusal and no auto retry.
 

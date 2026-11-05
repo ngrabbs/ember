@@ -1,6 +1,6 @@
 # IHU automatic UHF link bench profile
 
-**IHU 0.20.1 and transceiver 0.37.1** are the matching pair. This profile is
+**IHU 0.20.1 and transceiver 0.37.2** are the matching pair. This profile is
 for the conducted CAN Feather / original Pico bench, with the two RF paths
 connected and attenuated. The legacy bench profile and the flight stub remain
 separate. See [startup and CW procedure](ihu-cw-startup-demo.md) for wiring,
