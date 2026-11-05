@@ -48,9 +48,9 @@ The standalone USB Pico application and its C-only USB framing were removed.
 Python `framing.py`, `usb_bridge.py` and `usb_probe.py` remain test/diagnostic tools
 for the historical binary USB protocol; they are not the operational IHU text
 console bridge. Dated hardware results remain in
-[USB validation](../../system/ground_station/usb_validation.md). Use
-[`payload_bridge.py`](payload_bridge.py) for the current sole-owner IHU serial
-bench connection and its payload commands/EPS forwarding.
+[USB validation](../../system/ground_station/usb_validation.md). The live [RF gateway](../bpsk/LINK_GATEWAY.md) replaces the m75q network bridge.
+[`payload_bridge.py`](payload_bridge.py) remains an opt-in wired lab tool and
+requires an explicit bind address.
 
 ## Real IHU EPS observations
 
