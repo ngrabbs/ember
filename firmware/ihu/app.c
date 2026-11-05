@@ -653,7 +653,27 @@ static void sensor_complete(const ihu_sensor_result *r){
     console_reply=saved;
 }
 
+#ifndef IHU_BOOT_DEMO
+#define IHU_BOOT_DEMO 0
+#endif
+#if IHU_BOOT_DEMO
+#include "boot_demo.h"
+#endif
+
 static void command_impl(const char *s) {
+#if IHU_BOOT_DEMO
+    if(!strcmp(s,"startup")){demo_history(true);mode_status();return;}
+    if(!strcmp(s,"mode safe") || !strcmp(s,"uhf stop")){
+        demo_fail("Operator stop");mode_status();return;
+    }
+    if(!strcmp(s,"help")){
+        LOG("COMMANDS startup | status | version | mode | outputs | faults | rtos | mode safe | uhf stop\n");return;
+    }
+    if(strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"mode") && strcmp(s,"outputs") &&
+       strcmp(s,"faults") && strcmp(s,"rtos")){
+        LOG("REJECT reason=STARTUP_DEMO_READ_ONLY\n");return;
+    }
+#endif
     if(!strncmp(s,"output ",7) || !strcmp(s,"outputs") || !strncmp(s,"mode",4) || !strcmp(s,"faults")){
         policy_command(s);return;
     }
@@ -747,11 +767,27 @@ void ihu_app_init(void) {
     ip_finish_boot(&policy,can.ready,false,false);
     if(!can.ready)record_fault(1,now_ms());
     boot_ready_ms=now_ms();
+#if IHU_BOOT_DEMO
+    startup_demo.usb=stdio_usb_connected();
+    demo_stage(DEMO_LOCAL,boot_ready_ms);
+    housekeeping.last=boot_ready_ms-5000;
+    demo_event("BOOT: GROUND_TEST / STARTUP_DEMO (conducted RF only)");
+    demo_event("BOOT -> SAFE: outputs off");
+    demo_event("Checking local CAN controller...");
+#endif
 }
 void ihu_app_command(const char *line){command(line);}
 void ihu_app_step(bool scheduled) {
     ihu_sensor_result result;
     if(ihu_sensor_receive(&result))sensor_complete(&result);
+#if IHU_BOOT_DEMO
+    demo_step();
+    uint32_t demo_now=now_ms();
+    cf_frame demo_frame;
+    for(unsigned i=0;i<16 && ihu_can_receive(&can,&demo_frame);i++)demo_receive(&demo_frame,demo_now);
+    (void)scheduled;
+    return;
+#endif
         uint32_t now=now_ms();ul_packet packet;cf_frame frame;
         for(unsigned i=0;i<16 && ihu_can_receive(&can,&frame);++i) {
             if(frame.id==UP_REQUEST_ID){uplink_receive(&frame,now);continue;}

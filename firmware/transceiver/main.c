@@ -375,6 +375,13 @@ static bool wait_can_ready(unsigned *attempts, uint8_t last[4]) {
     return false;
 }
 
+#ifndef TRANSCEIVER_BOOT_DEMO
+#define TRANSCEIVER_BOOT_DEMO 0
+#endif
+#if TRANSCEIVER_BOOT_DEMO
+#include "boot_demo.h"
+#endif
+
 int main(void) {
     output(10, false); /* TX_ACTIVE: hardware mute asserted. */
     output(11, false); /* RX_ACTIVE */
@@ -421,6 +428,9 @@ int main(void) {
     if (bfailed) gpio_put(9, false);
     if(!afailed && !rf_bus_open())afailed=true;
     printf("[firmware] version=%s git=%s dirty=%u boot=%lu\n",FW_VERSION,FW_GIT,FW_DIRTY,(unsigned long)responder_boot);
+#if TRANSCEIVER_BOOT_DEMO
+    demo_radio_run(!afailed);
+#endif
     while (true) {
         int command = getchar_timeout_us(0);
         if(command>=0 && command!='s' && command!='v' && !afailed && !rf_bus_close())afailed=true;

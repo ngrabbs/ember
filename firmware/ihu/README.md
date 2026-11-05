@@ -1,5 +1,7 @@
 # IHU firmware
 
+Version 0.17.0 adds the opt-in [automatic startup/CW bench demo](../../docs/user/ihu-cw-startup-demo.md) (`-DIHU_BOOT_DEMO=ON`). The option defaults off.
+
 Active IHU CAN Feather application, formerly `firmware/can_feather_bench`.
 The earlier FreeRTOS prototype was removed and remains available in Git history.
 This directory builds only the IHU: CMake project/target `ihu`, output `ihu.uf2`.

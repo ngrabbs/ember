@@ -1,5 +1,7 @@
 # Transceiver firmware
 
+Version 0.36.0 adds the opt-in [automatic startup/CW bench demo](../../docs/user/ihu-cw-startup-demo.md) (`-DTRANSCEIVER_BOOT_DEMO=ON`). The option defaults off.
+
 Original Pico only. Source: `firmware/transceiver`. The earlier
 FreeRTOS application was removed and remains available in Git history.
 The CMake target is `transceiver`; the output image is `transceiver.uf2`.

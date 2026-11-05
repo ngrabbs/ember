@@ -8,6 +8,10 @@ include(${PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 project(ihu C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 option(IHU_FLIGHT_CONFIGURATION "Latch FLIGHT configuration (inactive routine stubs) at boot" OFF)
+option(IHU_BOOT_DEMO "Enable automatic conducted startup demo in GROUND_TEST" OFF)
+if(IHU_BOOT_DEMO AND IHU_FLIGHT_CONFIGURATION)
+    message(FATAL_ERROR "IHU_BOOT_DEMO is GROUND_TEST only")
+endif()
 include(../shared/pico_can/configure.cmake)
 # FreeRTOS V11.2.0; exact archive hash makes exported builds reproducible.
 include(FetchContent)
@@ -25,7 +29,8 @@ add_subdirectory(${FREERTOS_KERNEL_PATH}/portable/ThirdParty/GCC/RP2040 freertos
 add_executable(ihu main.c runtime.c app.c ../comms_transport/mcp25625.c)
 target_include_directories(ihu PRIVATE
     ../comms_transport ${CMAKE_CURRENT_BINARY_DIR}/generated ${CMAKE_CURRENT_BINARY_DIR})
-target_compile_definitions(ihu PRIVATE IHU_FLIGHT_CONFIGURATION=$<BOOL:${IHU_FLIGHT_CONFIGURATION}>)
+target_compile_definitions(ihu PRIVATE IHU_FLIGHT_CONFIGURATION=$<BOOL:${IHU_FLIGHT_CONFIGURATION}>
+    IHU_BOOT_DEMO=$<BOOL:${IHU_BOOT_DEMO}>)
 target_sources(ihu PRIVATE ../shared/ember_protocol/protocol.c)
 target_compile_options(ihu PRIVATE -Wall -Wextra -Werror)
 target_link_libraries(ihu pico_stdlib pico_unique_id pico_rand hardware_spi hardware_i2c hardware_watchdog FreeRTOS-Kernel-Static)
@@ -35,6 +40,10 @@ target_compile_definitions(ihu PRIVATE
     PICO_STDIO_USB_STDOUT_TIMEOUT_US=1000
     PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS=0
     PICO_STDIO_USB_ENABLE_RESET_VIA_BAUD_RATE=0)
-pico_set_program_name(ihu "ihu")
+if(IHU_BOOT_DEMO)
+    pico_set_program_name(ihu "ihu-startup-demo")
+else()
+    pico_set_program_name(ihu "ihu")
+endif()
 pico_set_program_version(ihu "${FW_VERSION}")
 pico_add_extra_outputs(ihu)

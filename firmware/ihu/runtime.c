@@ -156,8 +156,8 @@ static void sensor_task(void *arg){
 }
 static void run_urgent(uint32_t *cancel_before){
     ihu_controls copy;taskENTER_CRITICAL();copy=controls;controls.pending=0;taskEXIT_CRITICAL();
-    static const char *const lines[]={"output cli_debug off","output cli_telem off","output umb_debug off","output umb_telem off","output uhf_telem off","output lte_telem off","uhf stop"};
-    for(unsigned i=0;i<7;i++)if(copy.pending&(1u<<i)){
+    static const char *const lines[]={"output cli_debug off","output cli_telem off","output umb_debug off","output umb_telem off","output uhf_telem off","output lte_telem off","uhf stop","mode safe"};
+    for(unsigned i=0;i<sizeof(lines)/sizeof(lines[0]);i++)if(copy.pending&(1u<<i)){
         urgent_reply=true;ihu_app_command(lines[i]);urgent_reply=false;if(copy.sequence[i]>*cancel_before)*cancel_before=copy.sequence[i];
     }
 }

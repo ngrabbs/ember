@@ -1,0 +1,111 @@
+"""Run the real IHU demo actor with fake time/CAN and validate the wire and Morse."""
+import pathlib
+import subprocess
+import tempfile
+import unittest
+
+from test_can_addressing import DRIVER, SDK
+from generate_c import generate
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+CHECKS = r'''
+#include "boot_morse.h"
+static unsigned units, marks;
+static char symbols[80], text[32];
+static unsigned ns, nt;
+static void decode(void) {
+    static const struct {char ch;const char *pattern;} codes[]={
+        {'K',"-.-"},{'I',".."},{'5',"....."},{'Y',"-.--"},{'N',"-."},{'G',"--."},
+        {'-',"-....-"},{'E',"."},{'M',"--"},{'B',"-..."},{'R',".-."},{'O',"---"},{'T',"-"}
+    };
+    for(unsigned i=0;i<sizeof(codes)/sizeof(codes[0]);i++){
+        if(!strcmp(symbols,codes[i].pattern)){text[nt++]=codes[i].ch;ns=0;symbols[0]=0;return;}
+    }
+    assert(0);
+}
+static bool segment(bool mark,unsigned count){
+    units+=count;
+    if(mark){assert(count==1 || count==3);symbols[ns++]=count==1?'.':'-';symbols[ns]=0;++marks;}
+    else if(count!=1){assert(count==3 || count==7);decode();if(count==7)text[nt++]=' ';}
+    return true;
+}
+static void tick(uint32_t delta){
+    fake_now+=delta;housekeeping.last=fake_now;housekeeping.sampled=fake_now;
+    ihu_app_step(true);
+}
+static void start(void){
+    memset(&startup_demo,0,sizeof(startup_demo));memset(&housekeeping,0,sizeof(housekeeping));
+    ihu_app_init();assert(policy.mode==IP_SAFE && !policy.outputs);
+    housekeeping.attempted=housekeeping.valid=true;
+    tick(1);tick(1);tick(1);
+    assert(startup_demo.stage==DEMO_PROBE && last_frame.id==BD_PROBE);
+}
+int main(void){
+    assert(boot_morse(segment));decode();assert(!strcmp(text,"KI5YNG - EMBER BOOT"));
+    assert(marks>30 && units*BOOT_CW_UNIT_US<BD_CW_LIMIT_MS*1000);
+    bd_radio r={0};uint32_t t=UINT32_MAX-100;
+    assert(bd_arm(&r,7,t));assert(!bd_arm(&r,8,t+1));assert(bd_arm(&r,7,t+500));
+    assert(!bd_take(&r,t+14999));assert(bd_take(&r,t+15000));assert(!bd_take(&r,t+15001));
+    assert(!bd_arm(&r,7,t+16000));r=(bd_radio){0};assert(bd_arm(&r,7,t));assert(!bd_take(&r,t+30000));
+    start();
+    command("mode nominal");assert(policy.mode==IP_SAFE);
+    cf_frame f=bd_frame(BD_READY,boot+1,22);demo_receive(&f,fake_now);assert(policy.mode==IP_SAFE);
+    f=bd_frame(BD_READY,boot,22);demo_receive(&f,fake_now);
+    assert(policy.mode==IP_STARTUP && !startup_demo.antenna);
+    tick(9999);assert(!startup_demo.antenna && last_frame.id==BD_PROBE);
+    tick(1);assert(startup_demo.antenna && last_frame.id==BD_PROBE);
+    tick(4999);assert(policy.mode==IP_STARTUP && last_frame.id==BD_PROBE);
+    tick(1);assert(policy.mode==IP_COMMISSIONING && bd_matches(&last_frame,boot,22) && last_frame.id==BD_FIRE);
+    assert(fires==1);
+    tick(200);assert(last_frame.id==BD_KEEP && fires==1);
+    f=bd_frame(BD_RX,boot,23);demo_receive(&f,fake_now);assert(policy.mode==IP_COMMISSIONING);
+    f=bd_frame(BD_RX,boot,22);demo_receive(&f,fake_now);assert(policy.mode==IP_NOMINAL && !policy.outputs);
+    command("output uhf_telem on");assert(!policy.outputs);
+    tick(BD_RX_TIMEOUT_MS);tick(1);assert(policy.mode==IP_SAFE && last_frame.id==BD_STOP && fires==1);
+
+    start();f=bd_frame(BD_READY,boot,22);demo_receive(&f,fake_now);
+    housekeeping.valid=false;tick(15000);
+    assert(policy.mode==IP_SAFE && fires==1 && last_frame.id==BD_STOP);
+
+    start();f=bd_frame(BD_READY,boot,22);demo_receive(&f,fake_now);tick(15000);
+    assert(fires==2);tick(BD_CW_LIMIT_MS+2000);tick(1);
+    assert(policy.mode==IP_SAFE && last_frame.id==BD_STOP && fires==2);
+    f=bd_frame(BD_RX,boot,22);demo_receive(&f,fake_now);assert(policy.mode==IP_SAFE);
+
+    start();f=bd_frame(BD_READY,boot,22);demo_receive(&f,fake_now);
+    command("mode safe");tick(15000);assert(policy.mode==IP_SAFE && fires==2);
+    puts("BOOT_DEMO_PASS");
+    return 0;
+}
+'''
+
+class BootDemo(unittest.TestCase):
+    def test_timed_actor_and_morse(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = pathlib.Path(tmp)
+            (p / "sdk.h").write_text(SDK)
+            for name in ("pico/stdlib.h", "pico/stdio_usb.h", "pico/unique_id.h",
+                         "pico/rand.h", "hardware/i2c.h"):
+                f = p / name
+                f.parent.mkdir(exist_ok=True)
+                f.write_text('#include "sdk.h"\n')
+            (p / "build_identity.h").write_text(
+                '#define FW_VERSION "0.17.0"\n#define FW_MAJOR 0\n#define FW_MINOR 17\n'
+                '#define FW_PATCH 0\n#define FW_DIRTY 0\n#define FW_GIT "host-test"\n')
+            generate(p / "wire.h")
+            driver = DRIVER.split("static ul_packet queued")[0].replace(
+                "bool mcp_send(mcp_state*s,const cf_frame*f){(void)s;(void)f;return true;}",
+                "static cf_frame last_frame;static unsigned fires;\n"
+                "bool mcp_send(mcp_state*s,const cf_frame*f){(void)s;last_frame=*f;"
+                "if(f->id==BD_FIRE)++fires;return true;}")
+            source = p / "test.c"
+            source.write_text(f'#include <assert.h>\n#include "{ROOT}/firmware/ihu/app.c"\n'
+                              + driver + CHECKS)
+            binary = p / "test"
+            subprocess.run(["cc", "-std=c11", "-Wall", "-Wextra", "-Werror",
+                            "-DIHU_HOST_TEST", "-DIHU_BOOT_DEMO=1",
+                            f"-I{p}", f"-I{ROOT}/firmware/comms_transport",
+                            f"-I{ROOT}/firmware/transceiver", str(source),
+                            str(ROOT / "firmware/shared/ember_protocol/protocol.c"),
+                            "-o", str(binary)], check=True)
+            self.assertIn("BOOT_DEMO_PASS", subprocess.check_output([binary], text=True))
