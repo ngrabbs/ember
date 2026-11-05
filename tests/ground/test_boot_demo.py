@@ -37,6 +37,7 @@ static void start(void){
     memset(&startup_demo,0,sizeof(startup_demo));memset(&housekeeping,0,sizeof(housekeeping));
     memset(&demo_up,0,sizeof(demo_up));output.active=false;demo_response_size=0;
     ihu_app_init();assert(policy.mode==IP_SAFE && !policy.outputs);
+    assert(!demo_schedule.enabled && demo_schedule.listen_seconds==540 && demo_schedule.telemetry_seconds==60);
     housekeeping.attempted=housekeeping.valid=true;
     tick(1);tick(1);tick(1);
     assert(startup_demo.stage==DEMO_PROBE && last_frame.id==BD_PROBE);
@@ -61,6 +62,12 @@ static void complete_reply(void){
     tick(1);assert(startup_demo.tx_pending && output.route==BD_DOWN_ID);
     while(output.active)tick(2);
     cf_frame f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+}
+static unsigned queued_message(void){
+    ul_reader reader={0};ul_packet packet={0};
+    for(size_t i=0;i<output.size;i++)ul_feed(&reader,output.wire[i],0,&packet);
+    assert(packet.type==BD_PACKET && !ul_u32(packet.payload+12) && !ul_u32(packet.payload+16));
+    return ul_u16(packet.payload+W_MESSAGE_ID);
 }
 int main(void){
     assert(boot_morse(segment));decode();assert(!strcmp(text,"KI5YNG - EMBER BOOT"));
@@ -179,6 +186,46 @@ int main(void){
     assert(!startup_demo.heartbeat_enabled && demo_response[32]==W_STAGE_COMPLETED);
     complete_reply();
     tick(BD_HEARTBEAT_MS);
+    assert(!startup_demo.tx_pending);
+    request(&uplink,W_ID_SET_UHF_TELEMETRY_SCHEDULE,4,(5u<<16)|4);
+    assert(demo_response[32]==W_STAGE_REJECTED && demo_schedule.listen_seconds==540);
+    complete_reply();
+    request(&uplink,W_ID_SET_UHF_TELEMETRY_SCHEDULE,4,(5u<<16)|10);
+    assert(demo_response[32]==W_STAGE_COMPLETED && ul_u32(demo_response+37)==((5u<<16)|10));
+    assert(!demo_schedule.enabled && demo_schedule.listen_seconds==5 && demo_schedule.telemetry_seconds==10);
+    complete_reply();
+    request(&uplink,W_ID_SET_UHF_TELEMETRY,1,1);
+    assert(demo_schedule.enabled && !startup_demo.heartbeat_enabled);
+    complete_reply();
+    request(&uplink,W_ID_PING,0,0);
+    assert(demo_response[32]==W_STAGE_COMPLETED);
+    complete_reply();
+    request(&uplink,W_ID_SET_HEARTBEAT,1,1);
+    assert(demo_response[32]==W_STAGE_REJECTED && !startup_demo.heartbeat_enabled);
+    complete_reply();
+    tick(demo_schedule.started+4999-fake_now);
+    assert(!startup_demo.tx_pending);
+    tick(1);
+    assert(startup_demo.tx_pending && queued_message()==W_ID_IHU_STATUS);
+    while(output.active)tick(2);
+    f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+    tick(1);
+    assert(startup_demo.tx_pending && queued_message()==W_ID_POWER_STATUS);
+    while(output.active)tick(2);
+    f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+    tick(7000);
+    assert(!startup_demo.tx_pending);
+    tick(demo_schedule.started+15000-fake_now);
+    assert(!startup_demo.tx_pending);
+    f=bd_frame(BD_LINKED,boot,22);demo_receive(&f,fake_now);
+    tick(5000);
+    assert(startup_demo.tx_pending && queued_message()==W_ID_IHU_STATUS);
+    while(output.active)tick(2);
+    f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+    request(&uplink,W_ID_SET_UHF_TELEMETRY,1,0);
+    assert(!demo_schedule.enabled && demo_schedule.listen_seconds==5 && demo_schedule.telemetry_seconds==10);
+    complete_reply();
+    tick(6000);
     assert(!startup_demo.tx_pending);
     request(&uplink,W_ID_SET_HEARTBEAT,1,1);
     complete_reply();

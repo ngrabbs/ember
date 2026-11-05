@@ -84,6 +84,16 @@ may execute again. Duplicate protection and pending correlation are bounded and
 volatile across process restarts. The latest-response dashboard card is not a
 substitute for the actual command's history.
 
+## Schedule live UHF telemetry
+
+In `ember / realtime`, use `SET_UHF_TELEMETRY_SCHEDULE` to set
+`listen_seconds` and `telemetry_seconds`. Use `SET_UHF_TELEMETRY` with
+`enabled=1` to start, or `enabled=0` to stop. The IHU boots with telemetry
+off and defaults of 540 seconds listening and 60 seconds for telemetry.
+During each telemetry window the IHU sends one `IHU_STATUS` and one
+`POWER_STATUS`. The command report confirms the applied values.
+See the [IHU schedule and RF behavior](ihu-link-active.md#scheduled-telemetry).
+
 ## Command report reason codes
 
 Open the command in **Command History**. The completion message shows the

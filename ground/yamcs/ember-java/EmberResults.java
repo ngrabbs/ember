@@ -22,6 +22,8 @@ public final class EmberResults {
         return INSTANCES.computeIfAbsent(instance, key -> new EmberResults());
     }
     private static final int SET_HEARTBEAT = 7;
+    private static final int SET_UHF_TELEMETRY_SCHEDULE = 8;
+    private static final int SET_UHF_TELEMETRY = 9;
     private static String payloadErrorName(long code) {
         if (code > 255) return "UNRECOGNIZED_PAYLOAD_ERROR";
         return switch ((int) code) {
@@ -73,11 +75,14 @@ public final class EmberResults {
             command.value = Integer.toUnsignedLong(b.getInt(WireProfile.SET_PARAMETER_VALUE));
         }
         if(command.command==3) command.parameter=Byte.toUnsignedInt(b.get(30));
-        if(command.command==SET_HEARTBEAT) command.value=Byte.toUnsignedInt(b.get(30));
+        if(command.command==SET_HEARTBEAT || command.command==SET_UHF_TELEMETRY)
+            command.value=Byte.toUnsignedInt(b.get(30));
+        if(command.command==SET_UHF_TELEMETRY_SCHEDULE)
+            command.value=Integer.toUnsignedLong(b.getInt(30));
         if(command.command==5) command.value=Integer.toUnsignedLong(b.getInt(30));
         command.started = System.nanoTime();
         command.idleBeforeDispatchMs=pending.isEmpty() && lastObserved!=0 ? (command.started-lastObserved)/1000000 : -1;
-        command.deadline = command.started + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 1 || (command.command >= 2 && command.command <= SET_HEARTBEAT) ? 40 : 5);
+        command.deadline = command.started + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 1 || (command.command >= 2 && command.command <= SET_UHF_TELEMETRY) ? 40 : 5);
         pending.put(key(b), command);
         history.publishAck(id, "Acknowledge_EMBER_Acceptance", TimeEncoding.getWallclockTime(), AckStatus.PENDING);
         history.publishAck(id, CommandHistoryPublisher.CommandComplete_KEY, TimeEncoding.getWallclockTime(), AckStatus.PENDING);
@@ -244,8 +249,17 @@ public final class EmberResults {
         if (stage == 2 && command.command == 0x30 &&
             (Short.toUnsignedInt(b.getShort(WireProfile.COMMAND_RESPONSE_PARAMETER_ID)) != command.parameter ||
              Integer.toUnsignedLong(b.getInt(WireProfile.COMMAND_RESPONSE_VALUE)) != command.value)) return;
-        if(stage==2 && command.command==SET_HEARTBEAT &&
-            (command.value>1 || b.getInt(WireProfile.COMMAND_RESPONSE_VALUE)!=command.value))return;
+        if (stage==2 && (command.command==SET_HEARTBEAT || command.command==SET_UHF_TELEMETRY ||
+                         command.command==SET_UHF_TELEMETRY_SCHEDULE) &&
+            (((command.command==SET_HEARTBEAT || command.command==SET_UHF_TELEMETRY) && command.value>1) ||
+             b.getShort(WireProfile.COMMAND_RESPONSE_PARAMETER_ID)!=0 ||
+             Integer.toUnsignedLong(b.getInt(WireProfile.COMMAND_RESPONSE_VALUE))!=command.value)) return;
+        if (stage==2 && command.command==SET_UHF_TELEMETRY_SCHEDULE) {
+            command.history.publish(command.id, "ember-listen-seconds", (int)(command.value>>>16));
+            command.history.publish(command.id, "ember-telemetry-seconds", (int)(command.value&0xffff));
+        }
+        if (stage==2 && command.command==SET_UHF_TELEMETRY)
+            command.history.publish(command.id, "ember-telemetry-enabled", (int)command.value);
         if (stage == 1 && command.accepted) return; // contradictory lifecycle
         if (stage == 1) command.history.publishAck(command.id, "Acknowledge_EMBER_Acceptance", now, AckStatus.NOK, "Rejected: " + reasonText);
         else if (!command.accepted) command.history.publishAck(command.id, "Acknowledge_EMBER_Acceptance", now,

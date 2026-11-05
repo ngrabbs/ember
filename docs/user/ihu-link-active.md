@@ -1,6 +1,6 @@
 # IHU automatic UHF link bench profile
 
-**IHU 0.20.1 and transceiver 0.37.2** are the matching pair. This profile is
+**IHU 0.21.0 and transceiver 0.37.2** are the matching pair. This profile is
 for the conducted CAN Feather / original Pico bench, with the two RF paths
 connected and attenuated. The legacy bench profile and the flight stub remain
 separate. See [startup and CW procedure](ihu-cw-startup-demo.md) for wiring,
@@ -43,6 +43,8 @@ addressing and command semantics.
 | PAYLOAD_FIRE_CHECK | The IHU commands the payload over CAN and sends its result back over UHF. The payload HELLO has a 5-second timeout and the result has a 12-second timeout. An unavailable payload returns NOT_AVAILABLE. Inspect payload files separately when needed. |
 | IHU_REBOOT | Returns MODE_NOT_ALLOWED in NOMINAL. Reboot requires SAFE with outputs off. This profile stops the link on entry to SAFE. |
 | SET_HEARTBEAT | `enabled=1` starts the 10-second heartbeat. `enabled=0` stops it. The IHU boots with heartbeat off. |
+| SET_UHF_TELEMETRY_SCHEDULE | Set `listen_seconds` (1–3600) and `telemetry_seconds` (5–3600). The boot defaults are 540 and 60. |
+| SET_UHF_TELEMETRY | `enabled=1` starts with a listen phase. `enabled=0` stops scheduled telemetry and retains the configured durations until reboot. |
 
 Issue one command at a time and wait for its result. While a status capture
 or fire check is in progress, the IHU reserves the reply slot and drops new
@@ -71,6 +73,21 @@ The IHU renews its active link every 200 ms; expiry at the radio is 750 ms.
 Each BPSK burst has the existing 2-second TX mute alarm. A missing or failed
 local TX result returns the IHU to SAFE, without retry. Telemetry cadence is
 initial bench policy, not a flight requirement.
+
+## Scheduled telemetry
+
+The IHU enters NOMINAL with scheduled telemetry off. The defaults are nine
+minutes listening followed by a one-minute telemetry window. Each window sends
+one unsolicited `IHU_STATUS` and one `POWER_STATUS` from the latest valid EPS
+housekeeping sample. Both packets carry zero transaction IDs. If the link is
+busy, packets wait within the window or are skipped when there is insufficient
+time left. The next cycle starts on schedule.
+
+Uplink reception remains available between bursts in both phases. Solicited
+replies take priority and can transmit during the listen phase. Enabling the
+schedule turns off the separate periodic heartbeat. A change to either
+duration starts a fresh listen phase when enabled. Disable then enable to
+start a new cycle. Both durations and enable state reset on reboot.
 
 ## Ground test
 

@@ -10,6 +10,19 @@ static struct {
     struct {uint32_t at;const char *line;} events[24];
 } startup_demo;
 
+enum {
+    DEMO_LISTEN_DEFAULT_S=540,
+    DEMO_TELEMETRY_DEFAULT_S=60,
+    DEMO_TELEMETRY_MIN_S=5,
+    DEMO_PHASE_MAX_S=3600,
+};
+static struct {
+    bool enabled;
+    uint16_t listen_seconds,telemetry_seconds;
+    uint32_t started;
+    unsigned next_packet;
+} demo_schedule;
+
 static cf_reader demo_up;
 static uint8_t demo_response[BD_PACKET_MAX];
 static size_t demo_response_size;
@@ -36,21 +49,55 @@ static bool demo_command_reply(const uint8_t *p,size_t n,void *unused){
     if(stage==W_STAGE_ACCEPTED || (status_request && stage==W_STAGE_COMPLETED))return true;
     return demo_store_response(p,n);
 }
-static void demo_set_heartbeat(const ul_packet *request,uint32_t now){
-    uint8_t enabled=request->payload[W_PAYLOAD];
+static bool demo_ack_setting(const ul_packet *request,uint32_t value){
+    ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,
+        .request=request->request,.size=43};
+    cdh_header(reply.payload,43,request,W_KINDS_RESPONSE,W_ID_COMMAND_RESPONSE,11);
+    ul_p16(reply.payload+30,ul_u16(request->payload+W_MESSAGE_ID));
+    reply.payload[32]=W_STAGE_COMPLETED;
+    ul_p32(reply.payload+37,value);
+    return cdh_send(&reply);
+}
+static void demo_restart_schedule(uint32_t now){
+    demo_schedule.started=now;
+    demo_schedule.next_packet=0;
+}
+static void demo_set_output(const ul_packet *request,uint32_t now){
+    const uint8_t *wire=request->payload;
+    uint8_t enabled=wire[W_PAYLOAD];
     if(enabled>1){
         cdh_error(request,W_STAGE_REJECTED,W_REASON_INVALID_PARAMETER);
         return;
     }
-    ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,
-        .request=request->request,.size=43};
-    cdh_header(reply.payload,43,request,W_KINDS_RESPONSE,W_ID_COMMAND_RESPONSE,11);
-    ul_p16(reply.payload+30,W_ID_SET_HEARTBEAT);
-    reply.payload[32]=W_STAGE_COMPLETED;
-    ul_p32(reply.payload+37,enabled);
-    if(cdh_send(&reply)){
-        if(enabled && !startup_demo.heartbeat_enabled)startup_demo.last_heartbeat=now;
-        startup_demo.heartbeat_enabled=enabled;
+    if(ul_u16(wire+W_MESSAGE_ID)==W_ID_SET_HEARTBEAT){
+        if(enabled && demo_schedule.enabled){
+            cdh_error(request,W_STAGE_REJECTED,W_REASON_MODE_NOT_ALLOWED);
+            return;
+        }
+        if(demo_ack_setting(request,enabled)){
+            if(enabled && !startup_demo.heartbeat_enabled)startup_demo.last_heartbeat=now;
+            startup_demo.heartbeat_enabled=enabled;
+        }
+        return;
+    }
+    if(demo_ack_setting(request,enabled)){
+        if(enabled && !demo_schedule.enabled)demo_restart_schedule(now);
+        demo_schedule.enabled=enabled;
+        if(enabled)startup_demo.heartbeat_enabled=false;
+    }
+}
+static void demo_set_schedule(const ul_packet *request,uint32_t now){
+    const uint8_t *args=request->payload+W_PAYLOAD;
+    uint16_t listen=ul_u16(args),telem=ul_u16(args+2);
+    if(!listen || listen>DEMO_PHASE_MAX_S || telem<DEMO_TELEMETRY_MIN_S || telem>DEMO_PHASE_MAX_S){
+        cdh_error(request,W_STAGE_REJECTED,W_REASON_INVALID_PARAMETER);
+        return;
+    }
+    if(demo_ack_setting(request,ul_u32(args)) &&
+       (listen!=demo_schedule.listen_seconds || telem!=demo_schedule.telemetry_seconds)){
+        demo_schedule.listen_seconds=listen;
+        demo_schedule.telemetry_seconds=telem;
+        demo_restart_schedule(now);
     }
 }
 static void demo_uplink(const cf_frame *f,uint32_t now){
@@ -58,9 +105,13 @@ static void demo_uplink(const cf_frame *f,uint32_t now){
     if(!cf_feed(&demo_up,f,BD_UP_ID,now))return;
     if(!bd_packet(&demo_up,&p,startup_demo.radio_boot,boot) || p.request<=startup_demo.last_up)return;
     startup_demo.last_up=p.request;++demo_uplinks;
-    if(demo_response_size || fire_uplink.active || cdh.active){++demo_drops;return;}
-    if(up_native_args(p.payload,p.size,1) && ul_u16(p.payload+8)==W_ID_SET_HEARTBEAT){
-        demo_set_heartbeat(&p,now);return;
+    if(p.size<32 || demo_response_size || fire_uplink.active || cdh.active){++demo_drops;return;}
+    unsigned id=ul_u16(p.payload+W_MESSAGE_ID);
+    if((id==W_ID_SET_HEARTBEAT || id==W_ID_SET_UHF_TELEMETRY) && up_native_args(p.payload,p.size,1)){
+        demo_set_output(&p,now);return;
+    }
+    if(id==W_ID_SET_UHF_TELEMETRY_SCHEDULE && up_native_args(p.payload,p.size,4)){
+        demo_set_schedule(&p,now);return;
     }
     if(up_native_cdh(p.payload,p.size)){cdh_receive(&p);return;}
     if(up_native_fire(p.payload,p.size)){
@@ -102,7 +153,7 @@ static void demo_fail(const char *reason) {
     demo_event("SAFE: outputs off; no automatic retry");
     policy.mode=IP_SAFE;policy.reason=reason;policy.outputs=0;
     output.active=false;demo_response_size=0;startup_demo.tx_pending=false;
-    pending.active=false;cdh.active=false;
+    pending.active=false;cdh.active=false;demo_schedule.enabled=false;
     if(fire_uplink.active)fire_restore();
     startup_demo.stop_pending=startup_demo.radio_boot!=0;startup_demo.stop_at=now;
     demo_stage(DEMO_FAILED,now);
@@ -259,6 +310,26 @@ static void demo_step(void) {
         (void)request_sensor(SENSOR_HEALTH,0,false);
     }
 }
+static void demo_schedule_pump(uint32_t now){
+    if(!demo_schedule.enabled)return;
+    uint32_t listen_ms=(uint32_t)demo_schedule.listen_seconds*1000;
+    uint32_t cycle_ms=listen_ms+(uint32_t)demo_schedule.telemetry_seconds*1000;
+    uint32_t elapsed=now-demo_schedule.started;
+    if(elapsed>=cycle_ms){
+        elapsed%=cycle_ms;
+        demo_restart_schedule(now-elapsed);
+    }
+    /* Leave time for the admitted burst to finish before the listen phase. */
+    if(elapsed<listen_ms || cycle_ms-elapsed<=BD_TX_TIMEOUT_MS || demo_schedule.next_packet>=2)return;
+    _Static_assert(W_PAYLOAD+W_SIZE_POWER_STATUS+2<=BD_PACKET_MAX,"EPS packet exceeds RF link limit");
+    uint8_t packet[BD_PACKET_MAX];
+    size_t size;
+    if(demo_schedule.next_packet++==0)size=status_packet(packet,NULL);
+    else if(housekeeping.valid){
+        size=power_packet(packet,&housekeeping.eps,boot,telemetry_sequence++,housekeeping.sampled,++eps_readout_count);
+    }else return;
+    if(!demo_queue_packet(packet,size,now))demo_fail("UHF telemetry queue... FAILED");
+}
 static void demo_link_pump(uint32_t now){
     if(startup_demo.stage!=DEMO_ACTIVE)return;
     cf_expire(&demo_up,now);
@@ -276,11 +347,14 @@ static void demo_link_pump(uint32_t now){
             if(!demo_queue_packet(demo_response,demo_response_size,now))
                 demo_fail("UHF reply queue... FAILED");
             demo_response_size=0;
-        }else if(due && !demo_up.active && !fire_uplink.active && !cdh.active){
-            uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2];
-            size_t n=health_packet(p,false,boot,telemetry_sequence++,now,BD_HEARTBEAT_MS,
-                uplink_engine.accepted,uplink_engine.rejected,policy.mode,policy.configuration);
-            if(!demo_queue_packet(p,n,now))demo_fail("UHF heartbeat queue... FAILED");
+        }else if(!demo_up.active && !fire_uplink.active && !cdh.active){
+            if(demo_schedule.enabled)demo_schedule_pump(now);
+            else if(due){
+                uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2];
+                size_t n=health_packet(p,false,boot,telemetry_sequence++,now,BD_HEARTBEAT_MS,
+                    uplink_engine.accepted,uplink_engine.rejected,policy.mode,policy.configuration);
+                if(!demo_queue_packet(p,n,now))demo_fail("UHF heartbeat queue... FAILED");
+            }
         }
     }
     if(startup_demo.stage==DEMO_ACTIVE)pump_tx(now);

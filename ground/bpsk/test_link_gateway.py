@@ -42,6 +42,8 @@ class LinkGatewayTests(unittest.TestCase):
             'PAYLOAD_FIRE_CHECK': {},
             'IHU_REBOOT': {},
             'SET_HEARTBEAT': {'enabled': 1},
+            'SET_UHF_TELEMETRY_SCHEDULE': {'listen_seconds': 540, 'telemetry_seconds': 60},
+            'SET_UHF_TELEMETRY': {'enabled': 1},
         }
         for name, args in commands.items():
             with self.subTest(name=name):

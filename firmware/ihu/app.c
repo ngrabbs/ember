@@ -510,7 +510,8 @@ static size_t status_packet(uint8_t *b,const uint8_t *request){
     const size_t n=56;memset(b,0,n);
     ul_p16(b,W_TM_IDENTITY);ul_p16(b+2,0xc000|(telemetry_sequence++&0x3fff));ul_p16(b+4,n-7);
     b[6]=1;b[7]=1;ul_p16(b+8,W_ID_IHU_STATUS);b[10]=2;b[11]=1;
-    memcpy(b+12,request+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,24);
+    if(request)memcpy(b+12,request+12,8);
+    ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,24);
     b[30]=1;b[31]=policy.mode;b[32]=policy.configuration;b[33]=policy.outputs;
     ul_p32(b+34,boot_ready_ms);b[38]=can.ready;b[39]=ihu_can_register(0x2d);
     b[40]=housekeeping.attempted;b[41]=housekeeping.valid;
@@ -683,6 +684,8 @@ static void command_impl(const char *s) {
             startup_demo.stage==DEMO_ACTIVE?"LINK_ACTIVE":(startup_demo.stage==DEMO_LISTEN || startup_demo.stage==DEMO_ACTIVATE)?"RX_ONLY":
             startup_demo.stage==DEMO_BEACON?"STARTUP_CW":"MUTED",
             demo_uplinks,demo_replies,demo_tx_ok,demo_drops,startup_demo.stage==DEMO_ACTIVE && startup_demo.heartbeat_enabled?BD_HEARTBEAT_MS:0);
+        LOG("UHF_TELEMETRY enabled=%u listen_seconds=%u telemetry_seconds=%u\n",
+            demo_schedule.enabled,demo_schedule.listen_seconds,demo_schedule.telemetry_seconds);
         return;
     }
     if(!strcmp(s,"mode safe") || !strcmp(s,"uhf stop")){
@@ -791,6 +794,9 @@ void ihu_app_init(void) {
     boot_ready_ms=now_ms();
 #if IHU_BOOT_DEMO
     link_reply_sink=demo_store_response;
+    demo_schedule.enabled=false;
+    demo_schedule.listen_seconds=DEMO_LISTEN_DEFAULT_S;
+    demo_schedule.telemetry_seconds=DEMO_TELEMETRY_DEFAULT_S;
     startup_demo.usb=stdio_usb_connected();
     demo_stage(DEMO_LOCAL,boot_ready_ms);
     housekeeping.last=boot_ready_ms-5000;
