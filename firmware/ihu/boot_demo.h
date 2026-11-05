@@ -263,7 +263,7 @@ static void demo_link_pump(uint32_t now){
     if(startup_demo.stage!=DEMO_ACTIVE)return;
     cf_expire(&demo_up,now);
     cf_expire(&fragments,now);
-    if(fire_uplink.active && (!pending.active || (uint32_t)(now-pending.started)>=5000)){
+    if(fire_uplink.active && (!pending.active || (uint32_t)(now-pending.started)>=request_timeout_ms(pending.packet.type))){
         pending.active=false;
         output.active=false;
         fire_unavailable(0);

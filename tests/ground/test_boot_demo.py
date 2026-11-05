@@ -146,6 +146,8 @@ int main(void){
     inject(&ack,CF_PAYLOAD_REPLY_ID);
     assert(pending.active && pending.packet.type==PL_FIRE_CHECK);
     while(output.active)tick(2);
+    tick(10000);
+    assert(pending.active && fire_uplink.active && !demo_response_size);
     ack=pending.packet;ack.type=PL_FIRE_RESULT;ack.sender=44;ack.size=PL_FIRE_SIZE;
     ack.payload[0]=1;ack.payload[2]=1;ul_p32(ack.payload+4,44);ul_p32(ack.payload+12,1);
     inject(&ack,CF_PAYLOAD_REPLY_ID);
@@ -156,7 +158,9 @@ int main(void){
 
     request(&uplink,W_ID_PAYLOAD_FIRE_CHECK,0,0);
     assert(pending.active && fire_uplink.active);
-    tick(5000);
+    tick(4999);
+    assert(pending.active && pending.packet.type==UL_HELLO);
+    tick(1);
     assert(!pending.active && !fire_uplink.active && output.route==BD_DOWN_ID);
     reader=(ul_reader){0};
     for(size_t i=0;i<output.size;i++)ul_feed(&reader,output.wire[i],0,&reply);

@@ -63,7 +63,11 @@ static uint8_t target_index=DR_COMMS_INDEX;
 #define target_payload (target_index==DR_PAYLOAD_INDEX)
 #define TX_ID (dr_devices[target_index].request_id)
 #define RX_ID (dr_devices[target_index].reply_id)
-#define REQUEST_TIMEOUT 22000
+static uint32_t request_timeout_ms(uint8_t type){
+    if(type==PL_FIRE_CHECK)return 12000;
+    if(type==CF_SEND_PACKET)return 22000;
+    return 5000;
+}
 static mcp_state can;
 static cf_reader fragments;
 static ul_reader can_reader;
@@ -833,7 +837,7 @@ void ihu_app_step(bool scheduled) {
                 if(uhf_run.state==UR_RUNNING){ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT result_timeout\n");}
             }
         }
-        if(pending.active && (uint32_t)(now-pending.started)>=(pending.packet.type==CF_SEND_PACKET?REQUEST_TIMEOUT:5000)) {
+        if(pending.active && (uint32_t)(now-pending.started)>=request_timeout_ms(pending.packet.type)) {
 
             record_fault(4,now);bool previous=console_reply;console_reply=pending.console;
             LOG("RESULT request=%" PRIu32 " outcome=UNKNOWN reason=TIMEOUT\n",pending.packet.request);

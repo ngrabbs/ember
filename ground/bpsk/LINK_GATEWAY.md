@@ -1,6 +1,6 @@
 # Continuous UHF link to Yamcs
 
-For the conducted bench with **IHU 0.20.0 / transceiver 0.37.1** in
+For the conducted bench with **IHU 0.20.1 / transceiver 0.37.1** in
 `GROUND_TEST / NOMINAL / LINK_ACTIVE`, use Yamcs instance **ember**, processor
 **realtime**. The ground Pi at 192.168.1.251 runs one LibreSDR owner,
 `ember-fire-uplink.service` (now the continuous gateway).

@@ -1,6 +1,6 @@
 # IHU automatic UHF link bench profile
 
-**IHU 0.20.0 and transceiver 0.37.1** are the matching pair. This profile is
+**IHU 0.20.1 and transceiver 0.37.1** are the matching pair. This profile is
 for the conducted CAN Feather / original Pico bench, with the two RF paths
 connected and attenuated. The legacy bench profile and the flight stub remain
 separate. See [startup and CW procedure](ihu-cw-startup-demo.md) for wiring,
@@ -40,7 +40,7 @@ addressing and command semantics.
 | REQUEST_TELEMETRY | IHU_STATUS for SYSTEM (`data_group=1`). Other groups are rejected. |
 | STATUS_CAPTURE | Five status records sampled at 1 Hz and returned as STATUS_RECORDS. Each new capture replaces the previous RAM bank. |
 | STATUS_FETCH | The same frozen records for the matching `capture_id` while the IHU stays powered |
-| PAYLOAD_FIRE_CHECK | The IHU commands the payload over CAN and sends its result back over UHF. An unavailable payload returns NOT_AVAILABLE. Inspect payload files separately when needed. |
+| PAYLOAD_FIRE_CHECK | The IHU commands the payload over CAN and sends its result back over UHF. The payload HELLO has a 5-second timeout and the result has a 12-second timeout. An unavailable payload returns NOT_AVAILABLE. Inspect payload files separately when needed. |
 | IHU_REBOOT | Returns MODE_NOT_ALLOWED in NOMINAL. Reboot requires SAFE with outputs off. This profile stops the link on entry to SAFE. |
 | SET_HEARTBEAT | `enabled=1` starts the 10-second heartbeat. `enabled=0` stops it. The IHU boots with heartbeat off. |
 
