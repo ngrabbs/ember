@@ -85,6 +85,8 @@ int main(void){
     tick(1);assert(last_frame.id==BD_LINK);
     f=bd_frame(BD_LINKED,boot,22);demo_receive(&f,fake_now);
     assert(policy.mode==IP_NOMINAL && startup_demo.stage==DEMO_ACTIVE && !policy.outputs);
+    tick(BD_HEARTBEAT_MS);
+    assert(!startup_demo.heartbeat_enabled && !startup_demo.tx_pending);
     command("output uhf_telem on");assert(!policy.outputs);
     ul_packet uplink={.version=1,.type=BD_PACKET,.sender=22,.origin=boot,.request=1,.size=32};
     uint8_t *p=uplink.payload;
@@ -95,7 +97,7 @@ int main(void){
         assert(cf_fragment(wire,n,BD_UP_ID,1,i,&f));demo_receive(&f,fake_now);
     }
     assert(demo_uplinks==1 && demo_replies==1 && demo_response_size==43);
-    tick(BD_HEARTBEAT_MS);
+    tick(1);
     assert(output.route==BD_DOWN_ID && startup_demo.tx_pending && !demo_response_size);
     ul_reader reader={0};ul_packet reply={0};
     for(size_t i=0;i<output.size;i++)ul_feed(&reader,output.wire[i],0,&reply);
@@ -162,6 +164,20 @@ int main(void){
     assert(ul_u16(reply.payload+33)==W_REASON_NOT_AVAILABLE);
     while(output.active)tick(2);
     f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+
+    request(&uplink,W_ID_SET_HEARTBEAT,1,2);
+    assert(!startup_demo.heartbeat_enabled && demo_response[32]==W_STAGE_REJECTED);
+    complete_reply();
+    request(&uplink,W_ID_SET_HEARTBEAT,1,1);
+    assert(startup_demo.heartbeat_enabled && demo_response[32]==W_STAGE_COMPLETED);
+    complete_reply();
+    request(&uplink,W_ID_SET_HEARTBEAT,1,0);
+    assert(!startup_demo.heartbeat_enabled && demo_response[32]==W_STAGE_COMPLETED);
+    complete_reply();
+    tick(BD_HEARTBEAT_MS);
+    assert(!startup_demo.tx_pending);
+    request(&uplink,W_ID_SET_HEARTBEAT,1,1);
+    complete_reply();
 
     tick(BD_HEARTBEAT_MS);
     memset(&reader,0,sizeof(reader));memset(&reply,0,sizeof(reply));

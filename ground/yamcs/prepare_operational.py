@@ -48,7 +48,7 @@ def prepare(runtime, legacy_history=()):
     commandPostprocessorArgs:
       resultDomain: spacecraft
 """
-    flight += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember.xml\n'+tc_tail('/ember/(PING|REQUEST_STATUS|REQUEST_TELEMETRY|STATUS_CAPTURE|STATUS_FETCH|IHU_REBOOT|PAYLOAD_FIRE_CHECK)')
+    flight += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember.xml\n'+tc_tail('/ember/(PING|REQUEST_STATUS|REQUEST_TELEMETRY|STATUS_CAPTURE|STATUS_FETCH|IHU_REBOOT|PAYLOAD_FIRE_CHECK|SET_HEARTBEAT)')
     bench = services+'\ndataLinks: []\n'
     bench += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember-bench.xml\n'+tc_tail('(?!)')
     bench=bench.replace('displayBucket: ember_displays','displayBucket: ember_bench_displays')
@@ -71,7 +71,7 @@ def prepare(runtime, legacy_history=()):
     if java.exists():shutil.copytree(java, backup/'java')
     java.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory() as temp:
-        generate(temp, command_filter={'PING','REQUEST_STATUS','REQUEST_TELEMETRY','STATUS_CAPTURE','STATUS_FETCH','IHU_REBOOT','PAYLOAD_FIRE_CHECK'},
+        generate(temp, command_filter={'PING','REQUEST_STATUS','REQUEST_TELEMETRY','STATUS_CAPTURE','STATUS_FETCH','IHU_REBOOT','PAYLOAD_FIRE_CHECK','SET_HEARTBEAT'},
                  command_description="EMBER UHF command via LibreSDR, COMMS and IHU; correlated RF reply")
         tree=ET.parse(Path(temp)/'ember.xml')
         # Shared sparse-radio freshness policy; sample timestamps stay visible.

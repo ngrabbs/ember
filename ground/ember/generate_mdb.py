@@ -110,7 +110,7 @@ def generate(destination, command_filter=None, command_description="EMBER softwa
             # Full integer domain permits a deliberate endpoint rejection test.
             node(arguments, "Argument", name=field["name"], argumentTypeRef=name,
                  initialValue=D["parameters"]["TELEMETRY_PERIOD"]["default"]
-                 if field["name"] == "value" else 1)
+                 if field["name"] == "value" else field.get("default", 1))
         entries = node(node(command, "CommandContainer", name=message["name"]), "EntryList")
         placeholder = encode(message["name"], sequence=0, source=D["endpoints"]["ground"],
                              target=D["endpoints"]["ihu"], transaction_epoch=1,

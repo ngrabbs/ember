@@ -678,7 +678,7 @@ static void command_impl(const char *s) {
         LOG("RADIO behavior=%s uplinks=%" PRIu32 " replies=%" PRIu32 " tx_ok=%" PRIu32 " dropped=%" PRIu32 " heartbeat_ms=%u\n",
             startup_demo.stage==DEMO_ACTIVE?"LINK_ACTIVE":(startup_demo.stage==DEMO_LISTEN || startup_demo.stage==DEMO_ACTIVATE)?"RX_ONLY":
             startup_demo.stage==DEMO_BEACON?"STARTUP_CW":"MUTED",
-            demo_uplinks,demo_replies,demo_tx_ok,demo_drops,startup_demo.stage==DEMO_ACTIVE?BD_HEARTBEAT_MS:0);
+            demo_uplinks,demo_replies,demo_tx_ok,demo_drops,startup_demo.stage==DEMO_ACTIVE && startup_demo.heartbeat_enabled?BD_HEARTBEAT_MS:0);
         return;
     }
     if(!strcmp(s,"mode safe") || !strcmp(s,"uhf stop")){

@@ -1,6 +1,6 @@
 # Continuous UHF link to Yamcs
 
-For the conducted bench with **IHU 0.19.0 / transceiver 0.37.1** in
+For the conducted bench with **IHU 0.20.0 / transceiver 0.37.1** in
 `GROUND_TEST / NOMINAL / LINK_ACTIVE`, use Yamcs instance **ember**, processor
 **realtime**. The ground Pi at 192.168.1.251 runs one LibreSDR owner,
 `ember-fire-uplink.service` (now the continuous gateway).
@@ -21,7 +21,7 @@ radio to receive during TX. The spacecraft radio is half-duplex and returns
 to RX after each transmission.
 
 Continuous RX forwards valid native packets, including unsolicited 10-second
-heartbeats, without a preceding command. The gateway forwards original bytes,
+heartbeats after they have been enabled with SET_HEARTBEAT. The gateway forwards original bytes,
 suppresses overlap duplicates, bounds receive/decode memory, and logs receive
 gaps and local TX status. It does not retain raw IQ during ordinary operation.
 SDR TX acknowledgment means a local burst completed; only Yamcs receiving the
@@ -36,7 +36,7 @@ receive window, so a timeout is UNKNOWN and is not automatically retried.
   `journalctl -fu ember-fire-uplink` on the ground Pi show readiness and counts.
 - In `ember / realtime`, check for recent HEARTBEAT packets and issue one command
   at a time. See the [IHU command matrix](../../docs/user/ihu-link-active.md#packet-flow)
-  for the seven commands and their mode restrictions.
+  for the commands and their mode restrictions.
 - Stop the gateway before using another SDR diagnostic or listener. On this
   bench, `ember-lte-listener` is a UDP listener and does not own the UHF SDR.
 - m75q remains available for USB console debug and flashing. Its serial arm
@@ -59,9 +59,9 @@ using the Links page; there is no need to rebuild the running MDB or archive.
 
 ## Acceptance
 
-Verify several consecutive RF heartbeats appear in the Yamcs archive without
-issuing commands. Send PING from Yamcs and check a correlated COMPLETED reply.
-Verify a correlated IHU_STATUS for REQUEST_STATUS and continued heartbeats with the same gateway process.
+Verify heartbeat is off after boot. Send PING from Yamcs and check a correlated
+COMPLETED reply. Send SET_HEARTBEAT with enabled=1 and verify consecutive
+HEARTBEAT packets, then send enabled=0 and verify they stop.
 Check that m75q bridge services are absent and both retired Yamcs links are
 disabled. This is an integration test of the conducted bench, not a claim of
 gap-free spacecraft receive coverage or over-the-air qualification.

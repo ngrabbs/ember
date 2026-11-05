@@ -1,6 +1,6 @@
 # IHU automatic UHF link bench profile
 
-**IHU 0.19.0 and transceiver 0.37.1** are the matching pair. This profile is
+**IHU 0.20.0 and transceiver 0.37.1** are the matching pair. This profile is
 for the conducted CAN Feather / original Pico bench, with the two RF paths
 connected and attenuated. The legacy bench profile and the flight stub remain
 separate. See [startup and CW procedure](ihu-cw-startup-demo.md) for wiring,
@@ -42,11 +42,13 @@ addressing and command semantics.
 | STATUS_FETCH | The same frozen records for the matching `capture_id` while the IHU stays powered |
 | PAYLOAD_FIRE_CHECK | The IHU commands the payload over CAN and sends its result back over UHF. An unavailable payload returns NOT_AVAILABLE. Inspect payload files separately when needed. |
 | IHU_REBOOT | Returns MODE_NOT_ALLOWED in NOMINAL. Reboot requires SAFE with outputs off. This profile stops the link on entry to SAFE. |
+| SET_HEARTBEAT | `enabled=1` starts the 10-second heartbeat. `enabled=0` stops it. The IHU boots with heartbeat off. |
 
 Issue one command at a time and wait for its result. While a status capture
 or fire check is in progress, the IHU reserves the reply slot and drops new
-commands. The IHU schedules a native HEARTBEAT every **10 seconds** (first due
-10 seconds after activation), skipping an interval when the link is busy.
+commands. When enabled, the first HEARTBEAT is due 10 seconds after the
+command, with subsequent intervals skipped when the link is busy. The setting
+is held in RAM and resets to off on boot.
 A queued reply has priority over a
 heartbeat not yet submitted. There is one in-flight transmission, one waiting
 reply, no telemetry backlog, and no automatic retry of uncertain TX.
@@ -79,7 +81,7 @@ receive window: the spacecraft radio uses ADC capture blocks with decoder gaps
 and is half-duplex during transmission. An RF timeout is UNKNOWN; the gateway
 does not retransmit automatically.
 
-Before accepting the pair, verify conducted CW timing, several heartbeats,
+Before accepting the pair, verify conducted CW timing, heartbeat off on boot, heartbeat enable and disable,
 a correlated ground PING result, returned RX, stop/lease expiry during a burst,
 and no replay of an uncertain transmission. Hardware acceptance is separate
 from builds and host tests.

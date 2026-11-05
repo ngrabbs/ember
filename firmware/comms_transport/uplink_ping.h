@@ -22,12 +22,15 @@ static inline bool up_native_status(const uint8_t *p,size_t n){
  return ul_crc(p,30)==ul_u16(p+30) && up_native_ping(copy,32);
 }
 /* Structurally valid arguments reach the IHU even when their value is unsupported. */
-static inline bool up_native_cdh(const uint8_t *p,size_t n){
- if(n<32 || n>36)return false;
- unsigned id=ul_u16(p+8),args=id==3?1:(id==4||id==6)?0:id==5?4:99;
+static inline bool up_native_args(const uint8_t *p,size_t n,unsigned args){
  return n==32+args && ul_u16(p)==0x1900 && (ul_u16(p+2)&0xc000)==0xc000 &&
   ul_u16(p+4)==n-7 && p[6]==1 && p[7]==0 && p[10]==1 && p[11]==2 &&
   ul_u32(p+12) && ul_u32(p+16) && ul_u32(p+20) && ul_u16(p+28)==args && ul_crc(p,n-2)==ul_u16(p+n-2);
+}
+static inline bool up_native_cdh(const uint8_t *p,size_t n){
+ if(n<32 || n>36)return false;
+ unsigned id=ul_u16(p+8),args=id==3?1:(id==4||id==6)?0:id==5?4:99;
+ return up_native_args(p,n,args);
 }
 static inline bool up_records_completed(const ul_packet *reply,const ul_packet *sent){
  const uint8_t *p=reply->payload;unsigned command=ul_u16(sent->payload+8);

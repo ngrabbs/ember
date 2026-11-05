@@ -41,6 +41,7 @@ class LinkGatewayTests(unittest.TestCase):
             'STATUS_FETCH': {'capture_id': 1},
             'PAYLOAD_FIRE_CHECK': {},
             'IHU_REBOOT': {},
+            'SET_HEARTBEAT': {'enabled': 1},
         }
         for name, args in commands.items():
             with self.subTest(name=name):

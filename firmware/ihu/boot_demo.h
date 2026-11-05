@@ -5,7 +5,7 @@ enum demo_stage { DEMO_LOCAL, DEMO_EPS, DEMO_PROBE, DEMO_WAIT, DEMO_BEACON, DEMO
 static struct {
     enum demo_stage stage;
     uint32_t since,radio_boot,last_send,last_rx,stop_at,last_log,last_heartbeat,tx_at,tx_id,last_up;
-    bool antenna,probe_sent,stop_pending,usb,tx_pending;
+    bool heartbeat_enabled,antenna,probe_sent,stop_pending,usb,tx_pending;
     unsigned count,shown;
     struct {uint32_t at;const char *line;} events[24];
 } startup_demo;
@@ -36,12 +36,32 @@ static bool demo_command_reply(const uint8_t *p,size_t n,void *unused){
     if(stage==W_STAGE_ACCEPTED || (status_request && stage==W_STAGE_COMPLETED))return true;
     return demo_store_response(p,n);
 }
+static void demo_set_heartbeat(const ul_packet *request,uint32_t now){
+    uint8_t enabled=request->payload[W_PAYLOAD];
+    if(enabled>1){
+        cdh_error(request,W_STAGE_REJECTED,W_REASON_INVALID_PARAMETER);
+        return;
+    }
+    ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,
+        .request=request->request,.size=43};
+    cdh_header(reply.payload,43,request,W_KINDS_RESPONSE,W_ID_COMMAND_RESPONSE,11);
+    ul_p16(reply.payload+30,W_ID_SET_HEARTBEAT);
+    reply.payload[32]=W_STAGE_COMPLETED;
+    ul_p32(reply.payload+37,enabled);
+    if(cdh_send(&reply)){
+        if(enabled && !startup_demo.heartbeat_enabled)startup_demo.last_heartbeat=now;
+        startup_demo.heartbeat_enabled=enabled;
+    }
+}
 static void demo_uplink(const cf_frame *f,uint32_t now){
     static ul_packet p;
     if(!cf_feed(&demo_up,f,BD_UP_ID,now))return;
     if(!bd_packet(&demo_up,&p,startup_demo.radio_boot,boot) || p.request<=startup_demo.last_up)return;
     startup_demo.last_up=p.request;++demo_uplinks;
     if(demo_response_size || fire_uplink.active || cdh.active){++demo_drops;return;}
+    if(up_native_args(p.payload,p.size,1) && ul_u16(p.payload+8)==W_ID_SET_HEARTBEAT){
+        demo_set_heartbeat(&p,now);return;
+    }
     if(up_native_cdh(p.payload,p.size)){cdh_receive(&p);return;}
     if(up_native_fire(p.payload,p.size)){
         if(output.active || pending.active){cdh_error(&p,W_STAGE_REJECTED,W_REASON_BUSY);return;}
@@ -249,7 +269,7 @@ static void demo_link_pump(uint32_t now){
         fire_unavailable(0);
     }
     cdh_pump(now);
-    bool due=(uint32_t)(now-startup_demo.last_heartbeat)>=BD_HEARTBEAT_MS;
+    bool due=startup_demo.heartbeat_enabled && (uint32_t)(now-startup_demo.last_heartbeat)>=BD_HEARTBEAT_MS;
     if(due)startup_demo.last_heartbeat=now; /* No catch-up burst. */
     if(!startup_demo.tx_pending && !output.active){
         if(demo_response_size){
