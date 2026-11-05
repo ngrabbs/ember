@@ -163,3 +163,34 @@ flight uses the real finite RF path documented in ground/yamcs/FIRE_CHECK.md.
 
 Fire-check deployment and the two byte-matched Yamcs RF results are recorded in
 [`validation.json`](../../system/ground_station/evidence/fire-check-20261017/validation.json).
+
+## Live fire-check configuration (0.6.0)
+
+On a Pi with the Koenig camera daemon, install the supplied optional systemd
+drop-ins for both `ember-payload.service` and `payload-daemon.service`. Install
+`config/fire-check.json` as `/etc/ember-payload/fire-check.json` on first setup.
+Preserve the installed JSON on upgrades. Retire the old `camera-capture.conf`
+and `detector.conf` settings when enabling this profile. Restart both services
+after editing the JSON so both processes use the same configuration.
+
+This file selects the camera directory, evidence directory, camera request
+budget, total fire-check deadline, worker startup timeout, calibration, and
+detector profile. The profile selects a registered algorithm and holds its
+thresholds and registration settings. The default 4.3-second total budget
+includes capture and detection and must leave room for the IHU's five-second
+CAN reply window. Camera settings used for each exposure are read from the
+camera daemon and recorded with the result.
+
+The daemon owns the original JPEGs. The detector reads them in place and
+undoes camera rotation in memory. The evidence directory stores JSON only,
+including the image names, sizes, and hashes for inputs the worker read.
+Keep the originals if the run must be reproducible. Choose an evidence
+directory under the service's writable state directory or explicitly grant
+write access when changing that root. The responder needs read access to
+the camera image directory. The drop-in exposes the default camera directory
+read-only. Update that sandbox permission when moving the camera store outside
+the allowed directory.
+
+A future uplink could stage a validated profile and activate it by version
+or hash, using algorithms already installed on the payload. Adding a new
+algorithm would require a separate software update.

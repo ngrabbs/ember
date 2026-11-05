@@ -2,23 +2,32 @@
 from concurrent.futures import ThreadPoolExecutor
 import json
 import logging
+from pathlib import Path
 import time
 import urllib.request
-import os
 
 
 class CameraCapture:
-    def __init__(self, url):
+    def __init__(self, url, config=None):
         if url != 'http://127.0.0.1:8001':
             raise ValueError('capture URL must be http://127.0.0.1:8001')
         self.url = url
         self.executor = ThreadPoolExecutor(max_workers=1)
         self.opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-        self.analysis_config = os.environ.get('EMBER_PAYLOAD_DETECTOR_CONFIG')
+        if config is None:
+            from fire_check_config import load
+            config = load(Path(__file__).with_name('config') / 'fire-check.json')
+        self.config = config
         self.analysis_worker = None
-        if self.analysis_config:
-            from live_analysis import AnalysisWorker
-            self.analysis_worker = AnalysisWorker()
+
+    @classmethod
+    def from_config(cls, config):
+        from ember_detector.pipeline import validate_config
+        from live_analysis import AnalysisWorker
+        validate_config(config['detector_profile'])
+        camera = cls(config['camera_url'], config)
+        camera.analysis_worker = AnalysisWorker(config['worker_startup_timeout_s'])
+        return camera
 
     def __enter__(self):
         return self
@@ -33,13 +42,14 @@ class CameraCapture:
 
     def capture(self, packet):
         start = time.monotonic_ns()
-        analysis_deadline = time.monotonic() + 4.3
+        analysis_deadline = time.monotonic() + self.config['fire_check_deadline_s']
         if self.analysis_worker:
             self.analysis_worker.ensure_started(timeout=max(.01, analysis_deadline-time.monotonic()))
         logging.info('CAPTURE_START origin=%u request=%u monotonic_ns=%u',
                      packet.origin, packet.request, start)
         # One total budget leaves room inside the IHU's five-second deadline.
-        deadline = time.monotonic() + 3.8
+        deadline = min(analysis_deadline, time.monotonic() +
+                       self.config['camera_request_timeout_s'])
         def request(path, post=False):
             remaining = deadline - time.monotonic()
             if remaining <= 0:
@@ -60,8 +70,8 @@ class CameraCapture:
         logging.info('CAPTURE_SAVED origin=%u request=%u monotonic_ns=%u elapsed_ms=%.3f images=%s',
                      packet.origin, packet.request, end, (end-start)/1e6,
                      json.dumps(captures, separators=(',', ':')))
-        if self.analysis_config:
+        if self.analysis_worker:
             from live_analysis import analyze
-            return analyze(captures, settings, packet, self.opener, self.url,
-                           self.analysis_config, analysis_deadline, self.analysis_worker)
+            return analyze(captures, settings, packet, self.config,
+                           analysis_deadline, self.analysis_worker)
         return captures

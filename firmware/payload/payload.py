@@ -204,13 +204,19 @@ def main():
     parser.add_argument('--lock', default='/run/ember-payload/owner.lock')
     parser.add_argument('--capture-url', default=os.environ.get('EMBER_PAYLOAD_CAPTURE_URL'),
                         help='Opt in to real capture using http://127.0.0.1:8001')
+    parser.add_argument('--fire-check-config', type=Path)
     args = parser.parse_args()
     identity = json.loads(args.identity.read_text())
     if (len(identity['git']) != 40 or len(bytes.fromhex(identity['git'])) != 20
             or identity['dirty'] not in (0, 1) or len(identity['version'].split('.')) != 3):
         raise ValueError('invalid build identity')
     logging.basicConfig(level=logging.INFO, format='%(message)s')
-    if args.capture_url:
+    if args.fire_check_config:
+        from camera_capture import CameraCapture
+        from fire_check_config import load
+        with CameraCapture.from_config(load(args.fire_check_config)) as camera:
+            run(args.interface, identity, args.lock, capture=camera.submit)
+    elif args.capture_url:
         from camera_capture import CameraCapture
         with CameraCapture(args.capture_url) as camera:
             run(args.interface, identity, args.lock, capture=camera.submit)

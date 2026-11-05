@@ -1,24 +1,21 @@
 """Live-image adapter around the unchanged, replaceable detector pipeline."""
-import hashlib
 import json
 import logging
-import os
 from pathlib import Path
 import subprocess
 import select
 import sys
 import time
-import urllib.parse
 import uuid
 
 
 class AnalysisWorker:
     """One preloaded, killable process. Only the single capture thread uses it."""
-    def __init__(self):
+    def __init__(self, startup_timeout):
         self.process = None
-        self.ensure_started()
+        self.ensure_started(startup_timeout)
 
-    def ensure_started(self, timeout=10):
+    def ensure_started(self, timeout):
         if self.process and self.process.poll() is None:
             return
         self.stop()
@@ -60,27 +57,12 @@ class AnalysisWorker:
             self.process = None
 
 
-def analyze(captures, settings, packet, opener, url, config, deadline, worker):
-    root = Path(os.environ.get('EMBER_PAYLOAD_ANALYSIS_STORE', '/var/lib/ember-payload'))
-    case = root / f'{packet.origin}-{packet.request}-{uuid.uuid4().hex[:12]}'
+def analyze(captures, settings, packet, config, deadline, worker):
+    case = Path(config['evidence_directory']) / f'{packet.origin}-{packet.request}-{uuid.uuid4().hex[:12]}'
     case.mkdir(parents=True, exist_ok=False)
     job = dict(captures=captures, settings=settings, origin=packet.origin,
-               request=packet.request, config=str(Path(config).resolve()),
-               calibration=os.environ.get('EMBER_PAYLOAD_CALIBRATION',
-                                          '/opt/ember-payload/correction_20261003.npz'))
+               request=packet.request, config=config)
     try:
-        for capture in captures:
-            name = capture['id']
-            if Path(name).name != name:
-                raise ValueError('IMAGE_PATH')
-            remaining = deadline-time.monotonic()
-            if remaining <= 0:
-                raise TimeoutError('ANALYSIS_DEADLINE')
-            with opener.open(url+'/images/'+urllib.parse.quote(name, safe=''), timeout=remaining) as response:
-                data = response.read(1000001)
-            if len(data) != capture['bytes'] or len(data) > 1000000:
-                raise ValueError('IMAGE_SIZE')
-            (case/name).write_bytes(data)
         (case/'job.json').write_text(json.dumps(job, indent=2)+'\n')
         remaining = deadline-time.monotonic()
         if remaining <= 0:
@@ -106,41 +88,34 @@ def process(case):
     cv2.setNumThreads(1)
     job = json.loads((case/'job.json').read_text())
     settings = job['settings']
+    config = job['config']
+    if isinstance(config, str):
+        # Pre-0.6 evidence already has the source JPEGs in the case directory.
+        config = dict(detector_profile=load_config(config), calibration=job['calibration'],
+                      camera_image_directory=str(case.resolve()))
     channels = {}
-    originals = []
     for capture in job['captures']:
         port = str(capture['port'])
         controls = dict(settings['shared'], **settings['per_camera'].get(port, {}))
         if controls.get('AeEnable') is not False:
             raise ValueError('MANUAL_EXPOSURE_REQUIRED')
-        source = case/capture['id']
-        data = source.read_bytes()
-        image = cv2.imread(str(source), cv2.IMREAD_GRAYSCALE)
-        if image is None:
-            raise ValueError('IMAGE_DECODE')
+        name = capture['id']
+        if Path(name).name != name or name in ('', '.', '..'):
+            raise ValueError('IMAGE_PATH')
         rotation = settings['rotations'].get(port, 0)
         if rotation not in (0, 180):
             raise ValueError('ROTATION')
-        # Gain maps are in sensor coordinates. Undo the daemon's output rotation
-        # losslessly in a PNG before the existing calibration/registration stages.
-        if rotation == 180:
-            image = cv2.rotate(image, cv2.ROTATE_180)
-        normalized = case/f'sensor-{port}.png'
-        if not cv2.imwrite(str(normalized), image):
-            raise OSError('PNG_WRITE')
-        channels[port] = dict(path=normalized.name, port=int(port),
+        channels[port] = dict(path=name, port=int(port), bytes=capture['bytes'],
                               wavelength_nm=settings['wavelengths'][port],
-                              width=image.shape[1], height=image.shape[0],
-                              exposure_us=controls['ExposureTime'],
-                              sha256=hashlib.sha256(normalized.read_bytes()).hexdigest())
-        originals.append(dict(**capture, sha256=hashlib.sha256(data).hexdigest(),
-                              output_rotation_undone=rotation, configured_controls=controls))
+                              exposure_us=controls['ExposureTime'], rotation=rotation,
+                              configured_controls=controls)
     manifest = dict(fixtures=[dict(fixture_id='live', channels=channels)])
     path = case/'manifest.json'
     path.write_text(json.dumps(manifest, indent=2)+'\n')
-    record, _ = run(path, 'live', load_config(job['config']), job['calibration'])
+    record, _ = run(path, 'live', config['detector_profile'], config['calibration'],
+                    live_image_root=config['camera_image_directory'])
     record.update(input_source='LIVE_CAMERA', camera_capture_performed=True,
-                  origin=job['origin'], request=job['request'], original_inputs=originals)
+                  origin=job['origin'], request=job['request'])
     record['warnings'].append('EXPOSURE_AND_GAIN_FROM_SETTINGS_NOT_SENSOR_METADATA')
     (case/'result.json').write_text(json.dumps(record, indent=2, allow_nan=False)+'\n')
 
