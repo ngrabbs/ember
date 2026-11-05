@@ -1,6 +1,6 @@
 # IHU automatic UHF link bench profile
 
-**IHU 0.18.0 and transceiver 0.37.1** are the matching pair. This profile is
+**IHU 0.18.1 and transceiver 0.37.1** are the matching pair. This profile is
 for the conducted CAN Feather / original Pico bench, with the two RF paths
 connected and attenuated. The legacy bench profile and the flight stub remain
 separate. See [startup and CW procedure](ihu-cw-startup-demo.md) for wiring,
@@ -31,10 +31,10 @@ switches, which stay off in this profile.
 
 The radio validates the outer RF frame length/CRC, then passes its payload
 bytes unchanged over CAN. The IHU validates native message integrity,
-addressing and command semantics. This first profile admits **PING only**;
+addressing and command semantics. This profile admits **PING and REQUEST_STATUS**;
 other uplinks still reach the IHU and are counted as dropped there. It does
 not admit payload execution or reboot commands. The IHU generates the terminal
-correlated PING response, and schedules a native HEARTBEAT every **10 seconds**
+correlated PING response or IHU_STATUS snapshot from its latest validated observations, and schedules a native HEARTBEAT every **10 seconds**
 (first due 10 seconds after activation). A queued reply has priority over a
 heartbeat not yet submitted. There is one in-flight transmission, one waiting
 reply, no telemetry backlog, and no automatic retry of uncertain TX.

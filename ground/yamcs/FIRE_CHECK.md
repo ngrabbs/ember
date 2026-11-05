@@ -2,7 +2,7 @@
 
 > Historical validation of older firmware. The m75q serial-arm path described
 > below is retired. Use the [continuous UHF link guide](../bpsk/LINK_GATEWAY.md)
-> for the current PING-only LINK_ACTIVE profile; this report is not a deployment
+> for the current LINK_ACTIVE profile; this report is not a deployment
 > procedure for that profile.
 
 **IHU 0.13.0 / bridge 0.4.0:** [quiet-output policy](../../docs/architecture/operations/04-ihu-runtime-policy.md).

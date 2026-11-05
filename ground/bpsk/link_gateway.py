@@ -1,4 +1,4 @@
-"""One LibreSDR owner: continuous DBPSK receive and bounded Yamcs PING uplink."""
+"""One LibreSDR owner: continuous DBPSK receive and bounded Yamcs command uplink."""
 import argparse
 from collections import OrderedDict
 import hashlib
@@ -43,14 +43,14 @@ class Recent:
         return True
 
 
-def ping(wire):
+def admit_command(wire):
     if len(wire) > UPLINK_LIMIT:
         raise ValueError('Packet too large')
     packet = native_decode(wire)
     h = packet['header']
-    if (packet['name'] != 'PING' or h['source'] != 1 or h['target'] != 2 or
+    if (packet['name'] not in ('PING','REQUEST_STATUS') or h['source'] != 1 or h['target'] != 2 or
             not all(h[k] for k in ('transaction_epoch', 'transaction_id', 'source_boot_id'))):
-        raise ValueError('Only addressed PING is admitted in this profile')
+        raise ValueError('Only addressed PING and REQUEST_STATUS are admitted in this profile')
     return packet['sequence'], (h['transaction_epoch'], h['transaction_id'])
 
 
@@ -61,7 +61,7 @@ def waveform(wire, sequence):
                    np.zeros(RATE//20)]
     iq = (signal*AMPLITUDE*np.exp(2j*np.pi*DIGITAL_OFFSET*np.arange(len(signal))/RATE)).astype(np.complex64)
     if len(iq) >= RATE or not np.isfinite(iq).all() or np.max(np.abs(iq)) > AMPLITUDE+1e-6:
-        raise ValueError('PING waveform exceeds burst limit')
+        raise ValueError('Uplink waveform exceeds burst limit')
     return iq
 
 
@@ -153,7 +153,7 @@ def run(args, stop):
             except socket.timeout:
                 continue
             try:
-                seq, key = ping(wire)
+                seq, key = admit_command(wire)
             except ValueError as exc:
                 print(f'RF_TC_REJECT {exc}', flush=True)
                 continue
@@ -188,7 +188,7 @@ def run(args, stop):
         try:
             for thread in threads:thread.start()
             notify_ready()
-            print('RF_LINK_READY rx=continuous tx=bounded_ping', flush=True)
+            print('RF_LINK_READY rx=continuous tx=bounded_command', flush=True)
             next_status = time.monotonic()+30
             gaps = 0
             while not stop.is_set():

@@ -16,9 +16,16 @@ static size_t demo_response_size;
 static uint32_t demo_uplinks,demo_replies,demo_tx_ok,demo_drops;
 
 static bool demo_command_reply(const uint8_t *p,size_t n,void *unused){
-    (void)unused;
+    const uint8_t *request=unused;
+    bool status_request=ul_u16(request+8)==W_ID_REQUEST_STATUS;
+    if(status_request && p[W_KIND]==W_KINDS_TELEMETRY && ul_u16(p+8)==W_ID_SYSTEM_STATUS){
+        if(demo_response_size)return false;
+        demo_response_size=status_packet(demo_response,request);++demo_replies;
+        return true;
+    }
     if(n!=43 || p[W_KIND]!=W_KINDS_RESPONSE)return false;
-    if(p[W_PAYLOAD+W_COMMAND_RESPONSE_STAGE]==W_STAGE_ACCEPTED)return true;
+    unsigned stage=p[W_PAYLOAD+W_COMMAND_RESPONSE_STAGE];
+    if(stage==W_STAGE_ACCEPTED || (status_request && stage==W_STAGE_COMPLETED))return true;
     if(demo_response_size)return false;
     memcpy(demo_response,p,n);demo_response_size=n;++demo_replies;
     return true;
@@ -29,8 +36,8 @@ static void demo_uplink(const cf_frame *f,uint32_t now){
     if(!bd_packet(&demo_up,&p,startup_demo.radio_boot,boot) || p.request<=startup_demo.last_up)return;
     startup_demo.last_up=p.request;++demo_uplinks;
     /* Bench command allowlist is an IHU decision. No payload or reboot actions. */
-    if(!up_native_ping(p.payload,p.size) || demo_response_size){++demo_drops;return;}
-    ember_command(&uplink_engine,p.payload,p.size,now,demo_command_reply,NULL);
+    if((!up_native_ping(p.payload,p.size) && !up_native_status(p.payload,p.size)) || demo_response_size){++demo_drops;return;}
+    ember_command(&uplink_engine,p.payload,p.size,now,demo_command_reply,p.payload);
 }
 static bool demo_queue_packet(const uint8_t *p,size_t n,uint32_t now){
     static ul_packet packet;
@@ -76,7 +83,8 @@ static void demo_receive(const cf_frame *f,uint32_t now) {
         if((f->id==BD_TX_OK || f->id==BD_TX_FAILED) && startup_demo.tx_pending &&
            bd_matches(f,startup_demo.tx_id,startup_demo.radio_boot)){
             if(f->id==BD_TX_FAILED)demo_fail("UHF packet TX... FAILED");
-            else {startup_demo.tx_pending=false;startup_demo.last_rx=now;++demo_tx_ok;}
+            else {startup_demo.tx_pending=false;startup_demo.last_rx=now;++demo_tx_ok;
+                dr_seen(&devices[DR_COMMS_INDEX],now,startup_demo.radio_boot);}
             return;
         }
     }
@@ -115,7 +123,10 @@ static void demo_receive(const cf_frame *f,uint32_t now) {
         startup_demo.last_heartbeat=now;
     }
     if((f->id==BD_LINKED && startup_demo.stage==DEMO_ACTIVE) ||
-       (f->id==BD_RX && startup_demo.stage==DEMO_LISTEN))startup_demo.last_rx=now;
+       (f->id==BD_RX && startup_demo.stage==DEMO_LISTEN)){
+        startup_demo.last_rx=now;
+        dr_seen(&devices[DR_COMMS_INDEX],now,startup_demo.radio_boot);
+    }
 }
 static void demo_step(void) {
     uint32_t now=now_ms();

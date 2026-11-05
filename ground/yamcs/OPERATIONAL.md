@@ -10,7 +10,7 @@ for how Yamcs sends PING and receives heartbeats and replies.
 | `ember-bench` | Historical wired-bench data | No active hardware links | `ember_bench_displays` |
 
 m75q is used for console debug and flashing. It is not in the live RF
-telemetry or command path. The current IHU LINK_ACTIVE profile admits PING;
+telemetry or command path. The current IHU LINK_ACTIVE profile admits PING and REQUEST_STATUS;
 older command names in the MDB are not proof of support in this profile.
 
 The sections below preserve earlier integration and operator procedures.

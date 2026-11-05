@@ -83,6 +83,18 @@ int main(void){
     while(output.active)tick(2);
     f=bd_frame(BD_TX_OK,reply.request,22);demo_receive(&f,fake_now);
     assert(!startup_demo.tx_pending && demo_tx_ok==1);
+    uplink.request=2;ul_p16(p+8,W_ID_REQUEST_STATUS);ul_p32(p+16,43);ul_p16(p+30,ul_crc(p,30));
+    n=ul_encode(&uplink,wire);
+    for(unsigned i=0;i*CF_CHUNK<n;i++){
+        assert(cf_fragment(wire,n,BD_UP_ID,2,i,&f));demo_receive(&f,fake_now);
+    }
+    assert(demo_uplinks==2 && demo_replies==2 && demo_response_size==56);
+    assert(ul_u16(demo_response+8)==W_ID_IHU_STATUS && ul_u32(demo_response+16)==43);
+    assert(demo_response[31]==IP_NOMINAL && demo_response[41] && demo_response[50]==DR_ONLINE);
+    assert(ul_crc(demo_response,54)==ul_u16(demo_response+54));
+    tick(1);while(output.active)tick(2);
+    f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+
     tick(BD_HEARTBEAT_MS);
     memset(&reader,0,sizeof(reader));memset(&reply,0,sizeof(reply));
     for(size_t i=0;i<output.size;i++)ul_feed(&reader,output.wire[i],0,&reply);
@@ -116,8 +128,8 @@ class BootDemo(unittest.TestCase):
                 f.parent.mkdir(exist_ok=True)
                 f.write_text('#include "sdk.h"\n')
             (p / "build_identity.h").write_text(
-                '#define FW_VERSION "0.18.0"\n#define FW_MAJOR 0\n#define FW_MINOR 18\n'
-                '#define FW_PATCH 0\n#define FW_DIRTY 0\n#define FW_GIT "host-test"\n')
+                '#define FW_VERSION "0.18.1"\n#define FW_MAJOR 0\n#define FW_MINOR 18\n'
+                '#define FW_PATCH 1\n#define FW_DIRTY 0\n#define FW_GIT "host-test"\n')
             generate(p / "wire.h")
             driver = DRIVER.split("static ul_packet queued")[0].replace(
                 "bool mcp_send(mcp_state*s,const cf_frame*f){(void)s;(void)f;return true;}",

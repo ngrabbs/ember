@@ -3,12 +3,12 @@ from unittest.mock import Mock
 import numpy as np
 
 from codec import encode
-from link_gateway import DOWNLINK, RATE, Recent, forward_window, ping, waveform
+from link_gateway import DOWNLINK, RATE, Recent, forward_window, admit_command, waveform
 from modem import frame
 
 
 def packet(name, sequence, payload=None):
-    command = name == 'PING'
+    command = name in ('PING','REQUEST_STATUS')
     return encode(name, sequence=sequence, source=1 if command else 2,
                   target=2 if command else 1, source_boot_id=7, uptime_ms=4,
                   transaction_epoch=5 if command else 0, transaction_id=6 if command else 0,
@@ -18,8 +18,9 @@ def packet(name, sequence, payload=None):
 class LinkGatewayTests(unittest.TestCase):
     def test_admitted_ping_is_bounded_and_replay_is_suppressed(self):
         wire = packet('PING', 9)
-        seq, key = ping(wire)
+        seq, key = admit_command(wire)
         self.assertEqual((seq, key), (9, (5, 6)))
+        self.assertEqual(admit_command(packet('REQUEST_STATUS',10)), (10, (5, 6)))
         iq = waveform(wire, seq)
         self.assertLess(len(iq), RATE)
         self.assertLessEqual(float(np.max(np.abs(iq))), .200001)
@@ -29,9 +30,9 @@ class LinkGatewayTests(unittest.TestCase):
         self.assertFalse(seen.admit((9, 9), 599))
         self.assertTrue(seen.admit((9, 9), 600))
         with self.assertRaises(ValueError):
-            ping(wire[:-1])
+            admit_command(wire[:-1])
         with self.assertRaises(ValueError):
-            ping(packet('HEARTBEAT', 5, dict(mode=4, configuration=1, telemetry_period_ms=10000)))
+            admit_command(packet('HEARTBEAT', 5, dict(mode=4, configuration=1, telemetry_period_ms=10000)))
 
     def test_unsolicited_telemetry_forwards_original_packet_once(self):
         wire = packet('HEARTBEAT', 5, dict(mode=4, configuration=1, telemetry_period_ms=10000))

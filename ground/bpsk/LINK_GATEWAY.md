@@ -1,6 +1,6 @@
 # Continuous UHF link to Yamcs
 
-For the conducted bench with **IHU 0.18.0 / transceiver 0.37.1** in
+For the conducted bench with **IHU 0.18.1 / transceiver 0.37.1** in
 `GROUND_TEST / NOMINAL / LINK_ACTIVE`, use Yamcs instance **ember**, processor
 **realtime**. The ground Pi at 192.168.1.251 runs one LibreSDR owner,
 `ember-fire-uplink.service` (now the continuous gateway).
@@ -34,8 +34,8 @@ receive window, so a timeout is UNKNOWN and is not automatically retried.
   starting the service. No RF TX occurs at service startup.
 - `systemctl status ember-fire-uplink` and
   `journalctl -fu ember-fire-uplink` on the ground Pi show readiness and counts.
-- In `ember / realtime`, check for recent HEARTBEAT packets and issue **PING**.
-  The current startup profile admits PING only. Older command definitions in
+- In `ember / realtime`, check for recent HEARTBEAT packets and issue **PING** or **REQUEST_STATUS**.
+  The startup profile admits PING and read-only REQUEST_STATUS. Older command definitions in
   the MDB do not make those commands supported by this firmware.
 - Stop the gateway before using another SDR diagnostic or listener. On this
   bench, `ember-lte-listener` is a UDP listener and does not own the UHF SDR.
@@ -61,7 +61,7 @@ using the Links page; there is no need to rebuild the running MDB or archive.
 
 Verify several consecutive RF heartbeats appear in the Yamcs archive without
 issuing commands. Send PING from Yamcs and check a correlated COMPLETED reply.
-Verify heartbeats before and after the PING with the same gateway process.
+Verify a correlated IHU_STATUS for REQUEST_STATUS and continued heartbeats with the same gateway process.
 Check that m75q bridge services are absent and both retired Yamcs links are
 disabled. This is an integration test of the conducted bench, not a claim of
 gap-free spacecraft receive coverage or over-the-air qualification.
