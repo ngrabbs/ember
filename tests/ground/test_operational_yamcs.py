@@ -40,10 +40,12 @@ class OperationalYamcs(unittest.TestCase):
             pattern=re.findall('tcPatterns: \\["(.*?)"\\]',bench)[0]
             self.assertFalse(re.fullmatch(pattern,'/ember/PAYLOAD_STATUS_QUERY'))
             self.assertFalse(re.fullmatch(pattern,'/ember/PING'))
-            for file,count in [('ember.xml',10),('ember-bench.xml',5)]:
+            for file,count,interval in [('ember.xml',10,360),('ember-bench.xml',5,5)]:
                 tree=ET.parse(r/'src/main/yamcs/mdb'/file)
                 self.assertEqual(len(tree.findall('.//{'+op.NS+'}MetaCommand')),count)
                 self.assertEqual(len(tree.findall('.//{'+op.NS+'}Parameter')),267)
+                rate=tree.find('.//{'+op.NS+'}SequenceContainer[@name="POWER_STATUS"]/{'+op.NS+'}DefaultRateInStream')
+                self.assertAlmostEqual(float(rate.get('minimumValue')),1/interval)
 
     def test_legacy_history_has_no_hardware_routes(self):
         with tempfile.TemporaryDirectory() as temp:

@@ -35,7 +35,7 @@ is shown as No identity. A cached firmware version is not a liveness check.
 Compare packet timestamps, link activity and validity before trusting a value.
 The bench bridge polls `eps json` every five seconds between command transactions;
 this reads the charger without changing settings. POWER_STATUS expires after
-9.5 seconds in bench and 57 seconds in flight. Cached payload observations are
+9.5 seconds in bench and 11 minutes 24 seconds in the live instance. Cached payload observations are
 not proof that the payload is currently reachable.
 
 EPS provenance 1 identifies a ground-wrapped IHU console observation, whose

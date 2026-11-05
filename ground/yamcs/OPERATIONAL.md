@@ -70,7 +70,7 @@ Bench traffic is not forwarded into flight automatically.
 Within each instance, exact CRC-valid duplicates are suppressed for 120 seconds,
 with a 4096-entry bound. Flight LTE/UHF copies therefore share one archive entry;
 the same bytes may independently appear in the bench archive. Suppression resets
-with Yamcs. Link counters still count arrivals. POWER_STATUS expiry is 57 seconds
+with Yamcs. Link counters still count arrivals. POWER_STATUS expiry is 11 minutes 24 seconds
 in flight and 9.5 seconds in bench, using Yamcs's default 1.9 tolerance. Inspect
 receive times and readout validity; cached values alone do not establish liveness.
 
