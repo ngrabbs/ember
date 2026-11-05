@@ -84,6 +84,47 @@ may execute again. Duplicate protection and pending correlation are bounded and
 volatile across process restarts. The latest-response dashboard card is not a
 substitute for the actual command's history.
 
+## Command report reason codes
+
+Open the command in **Command History**. The completion message shows the
+numeric reason and its name, for example `reason 7 (NOT_AVAILABLE), payload
+error 11 (ANALYSIS_NO_DECISION)`. The report also exposes separate fields
+`ember-result-reason` and `ember-result-reason-name`, plus
+`ember-payload-error-code` and `ember-payload-error-name` when applicable.
+A timeout has no reason code from the spacecraft. The names are added to new
+command records as replies arrive.
+
+| `ember-result-reason` | Name | Meaning |
+| ---: | --- | --- |
+| 0 | `NONE` | No error reported |
+| 1 | `UNKNOWN_COMMAND` | Command is unrecognized |
+| 2 | `INVALID_PARAMETER` | An argument is invalid or unsupported |
+| 3 | `MODE_NOT_ALLOWED` | The current mode prohibits the command |
+| 4 | `INTERLOCK` | A required interlock condition is unmet |
+| 5 | `BUSY` | A required resource is busy |
+| 6 | `FAULT_ACTIVE` | An active fault blocks the command |
+| 7 | `NOT_AVAILABLE` | The requested data or result is unavailable |
+| 8 | `EXECUTION_ERROR` | The command encountered an execution error |
+| 9 | `TRANSACTION_CONFLICT` | The transaction conflicts with a previous request |
+
+For a fire check that returns `NOT_AVAILABLE`, read the payload error as a
+second code. These meanings apply to payload 0.6.1.
+
+| `ember-payload-error-code` | Name | Meaning |
+| ---: | --- | --- |
+| 0 | `NO_PAYLOAD_ERROR_REPORTED` | The IHU had no specific payload error to forward, including when no CAN reply arrived. |
+| 1 | `UNSUPPORTED_CAN_VERSION` | Unsupported CAN packet version |
+| 2 | `UNSUPPORTED_PAYLOAD_COMMAND` | Unsupported payload command |
+| 3 | `SENDER_OR_SESSION_MISMATCH` | Sender or session mismatch, including a missing valid HELLO |
+| 4 | `INVALID_CAN_PAYLOAD` | Invalid CAN command payload |
+| 5 | `CAPTURE_BUSY` | A capture is already in progress |
+| 8 | `CAPTURE_OR_EVIDENCE_ERROR` | Capture raised an exception or the responder could not save reply evidence. |
+| 11 | `ANALYSIS_NO_DECISION` | The analysis returned no usable decision. Check the run's `result.json` on the payload Pi for the detector reason. |
+
+For example, `7 / 0` can indicate that the IHU got no response to its CAN
+handshake. `7 / 11` means the payload replied with an analysis error, such as
+`ANALYSIS_DEADLINE` or `REGISTRATION_TOO_FEW_MATCHES`.
+
 ## Manual console and troubleshooting
 
 On m75q, run `sudo systemctl stop ember-bench-bridge` before opening the IHU

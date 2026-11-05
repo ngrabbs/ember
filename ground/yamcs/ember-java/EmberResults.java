@@ -22,6 +22,21 @@ public final class EmberResults {
         return INSTANCES.computeIfAbsent(instance, key -> new EmberResults());
     }
     private static final int SET_HEARTBEAT = 7;
+    private static String payloadErrorName(long code) {
+        if (code > 255) return "UNRECOGNIZED_PAYLOAD_ERROR";
+        return switch ((int) code) {
+            case 0 -> "NO_PAYLOAD_ERROR_REPORTED";
+            case 1 -> "UNSUPPORTED_CAN_VERSION";
+            case 2 -> "UNSUPPORTED_PAYLOAD_COMMAND";
+            case 3 -> "SENDER_OR_SESSION_MISMATCH";
+            case 4 -> "INVALID_CAN_PAYLOAD";
+            case 5 -> "CAPTURE_BUSY";
+            case 8 -> "CAPTURE_OR_EVIDENCE_ERROR";
+            case 11 -> "ANALYSIS_NO_DECISION";
+            default -> "UNRECOGNIZED_PAYLOAD_ERROR";
+        };
+    }
+
     private static final class Pending {
         CommandId id;
         CommandHistoryPublisher history;
@@ -200,12 +215,20 @@ public final class EmberResults {
         if (command == null || Short.toUnsignedInt(b.getShort(WireProfile.COMMAND_RESPONSE_COMMAND_ID)) != command.command) return;
         int stage = Byte.toUnsignedInt(b.get(WireProfile.COMMAND_RESPONSE_STAGE));
         int reason = Short.toUnsignedInt(b.getShort(WireProfile.COMMAND_RESPONSE_REASON));
-        if (stage > 3 || reason > 9 || ((stage == 0 || stage == 2) != (reason == 0))) return;
+        String reasonName = WireProfile.reasonName(reason);
+        if (stage > 3 || reasonName == null || ((stage == 0 || stage == 2) != (reason == 0))) return;
         long now = TimeEncoding.getWallclockTime();
         command.history.publish(command.id, "ember-result-boot-id", Long.toString(currentBoot));
         command.history.publish(command.id, "ember-result-reason", reason);
-        if(stage==3 && command.command==1028 && reason==7)
-            command.history.publish(command.id, "ember-payload-error-code", Long.toString(Integer.toUnsignedLong(b.getInt(WireProfile.COMMAND_RESPONSE_VALUE))));
+        command.history.publish(command.id, "ember-result-reason-name", reasonName);
+        String reasonText = "reason " + reason + " (" + reasonName + ")";
+        if (stage == 3 && command.command == 1028 && reason == 7) {
+            long code = Integer.toUnsignedLong(b.getInt(WireProfile.COMMAND_RESPONSE_VALUE));
+            String name = payloadErrorName(code);
+            command.history.publish(command.id, "ember-payload-error-code", Long.toString(code));
+            command.history.publish(command.id, "ember-payload-error-name", name);
+            reasonText += ", payload error " + code + " (" + name + ")";
+        }
         if(command.command==6 && stage==2){
             if(b.getInt(WireProfile.COMMAND_RESPONSE_VALUE)!=5000 || b.getShort(WireProfile.COMMAND_RESPONSE_PARAMETER_ID)!=0)return;
             command.history.publish(command.id,"ember-reboot-delay-ms","5000");
@@ -224,14 +247,14 @@ public final class EmberResults {
         if(stage==2 && command.command==SET_HEARTBEAT &&
             (command.value>1 || b.getInt(WireProfile.COMMAND_RESPONSE_VALUE)!=command.value))return;
         if (stage == 1 && command.accepted) return; // contradictory lifecycle
-        if (stage == 1) command.history.publishAck(command.id, "Acknowledge_EMBER_Acceptance", now, AckStatus.NOK, "Rejected: reason " + reason);
+        if (stage == 1) command.history.publishAck(command.id, "Acknowledge_EMBER_Acceptance", now, AckStatus.NOK, "Rejected: " + reasonText);
         else if (!command.accepted) command.history.publishAck(command.id, "Acknowledge_EMBER_Acceptance", now,
                 AckStatus.NA, "Acceptance report missing; correlated terminal result received");
         command.history.publish(command.id, "ember-outcome", stage == 2 ? "COMPLETED" : stage == 1 ? "REJECTED" : "EXECUTION_FAILED");
         command.history.publish(command.id, "ember-elapsed-ms", Long.toString((System.nanoTime()-command.started)/1000000));
         command.history.publish(command.id, "ember-ground-packet-bytes", Integer.toString(bytes.length));
         command.history.publishAck(command.id, CommandHistoryPublisher.CommandComplete_KEY, now,
-                                  stage == 2 ? AckStatus.OK : AckStatus.NOK, "EMBER stage " + stage + ", reason " + reason);
+                                  stage == 2 ? AckStatus.OK : AckStatus.NOK, "EMBER stage " + stage + ", " + reasonText);
         pending.remove(key(b));
     }
 }

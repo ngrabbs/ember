@@ -144,7 +144,12 @@ def generate(destination, command_filter=None, command_description="EMBER softwa
     for m in D["messages"]:
         if m["kind"] != "command":
             constants.append(f"      case {(D['kinds'][m['kind']] << 16) | m['id']} -> {layout(m['fields']).size};")
-    constants += ["      default -> -1;", "    };", "  }", "}"]
+    constants += ["      default -> -1;", "    };", "  }",
+                  "  public static String reasonName(int reason) {",
+                  "    return switch (reason) {"]
+    for name, code in D["enums"]["reason"].items():
+        constants.append(f'      case {code} -> "{name}";')
+    constants += ["      default -> null;", "    };", "  }", "}"]
     (destination / "WireProfile.java").write_text("\n".join(constants) + "\n")
 
 
