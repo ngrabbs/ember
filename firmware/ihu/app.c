@@ -80,7 +80,7 @@ static struct {
     uint8_t wire[UL_WIRE_MAX];size_t size;
     uint16_t token,route;unsigned index;uint32_t last;
 } output;
-enum {SENSOR_HEALTH, SENSOR_JSON, SENSOR_ADC, SENSOR_TELEMETRY};
+enum {SENSOR_HEALTH, SENSOR_JSON, SENSOR_ADC, SENSOR_TELEMETRY, SENSOR_GPS};
 static struct {bool active,console,from_run;unsigned kind,route;uint32_t generation;uint32_t run;} sensor_job;
 static uint32_t output_generation[IP_OUTPUT_COUNT],run_generation;
 static bool request_sensor(unsigned kind,unsigned route,bool enable);
@@ -621,7 +621,8 @@ static bool request_sensor(unsigned kind,unsigned route,bool enable){
     sensor_job.active=true;sensor_job.kind=kind;sensor_job.route=route;sensor_job.console=console_reply;
     sensor_job.from_run=kind==SENSOR_TELEMETRY && route==2 && uhf_run.state==UR_RUNNING;
     sensor_job.generation=output_generation[route==2?IP_UHF_TELEM:IP_LTE_TELEM];sensor_job.run=run_generation;
-    if(!ihu_sensor_submit(kind==SENSOR_ADC,enable)){sensor_job.active=false;LOG("REJECT reason=SENSOR_BUSY\n");return false;}
+    enum ihu_sensor_op op=kind==SENSOR_GPS?IHU_SENSOR_READ_GPS:kind==SENSOR_ADC?IHU_SENSOR_SET_ADC:IHU_SENSOR_READ_EPS;
+    if(!ihu_sensor_submit(op,enable)){sensor_job.active=false;LOG("REJECT reason=SENSOR_BUSY\n");return false;}
 #ifdef IHU_HOST_TEST
     ihu_sensor_result r;if(ihu_sensor_receive(&r))sensor_complete(&r);
 #endif
@@ -635,7 +636,12 @@ static void sensor_complete(const ihu_sensor_result *r){
     if(from_run && uhf_run.state==UR_RUNNING && (uint32_t)(now_ms()-uhf_run.started)>=uhf_run.duration)
         ur_stop(&uhf_run,UR_EXPIRED);
     sensor_job.active=false;
-    if(kind==SENSOR_HEALTH)health_result(r);
+    if(kind==SENSOR_GPS){
+        if(r->gps.status==GPS_FIX)
+            LOG("GPS status=FIX latitude_deg=%.6f longitude_deg=%.6f satellites=%u\n",r->gps.latitude,r->gps.longitude,r->gps.satellites);
+        else if(r->gps.status==GPS_NO_FIX)LOG("GPS status=NO_FIX satellites=%u\n",r->gps.satellites);
+        else LOG("GPS status=%s address=0x10\n",r->gps.status==GPS_BUS_ERROR?"I2C_ERROR":"NO_DATA");
+    }else if(kind==SENSOR_HEALTH)health_result(r);
     else if(kind==SENSOR_ADC)LOG("EPS_ADC outcome=%s requested=%d config_before=%04x config_after=%04x\n",r->ok?"VERIFIED":"UNKNOWN",r->enable,r->before,r->after);
     else if(!r->ok){
         LOG("EPS_READ outcome=FAILED register=%02x reason=I2C_OR_PEC\n",r->failed);
@@ -677,6 +683,15 @@ static void sensor_complete(const ihu_sensor_result *r){
 #endif
 
 static void command_impl(const char *s) {
+    if(!strcmp(s,"gps")){
+#if IHU_BOOT_DEMO
+        /* Reserve time for the 2.5 s GPS read and the next EPS refresh. */
+        if(startup_demo.stage!=DEMO_FAILED && now_ms()-housekeeping.last>=3500){
+            LOG("REJECT reason=SENSOR_BUSY\n");return;
+        }
+#endif
+        (void)request_sensor(SENSOR_GPS,0,false);return;
+    }
 #if IHU_BOOT_DEMO
     if(!strcmp(s,"startup") || !strcmp(s,"radio")){
         if(!strcmp(s,"startup"))demo_history(true);
@@ -694,7 +709,7 @@ static void command_impl(const char *s) {
         demo_fail("Operator stop");mode_status();return;
     }
     if(!strcmp(s,"help")){
-        LOG("COMMANDS startup | radio | status | version | mode | outputs | faults | rtos | mode safe | uhf stop\n");return;
+        LOG("COMMANDS startup | gps | radio | status | version | mode | outputs | faults | rtos | mode safe | uhf stop\n");return;
     }
     if(strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"mode") && strcmp(s,"outputs") &&
        strcmp(s,"faults") && strcmp(s,"rtos")){
@@ -779,7 +794,7 @@ static void command_impl(const char *s) {
         if(!s[4] || *end || seconds>120) {LOG("REJECT reason=RF_WINDOW_RANGE\n");return;}
         uint8_t p[4];ul_p32(p,seconds);submit(CF_RF_WINDOW,p,4);
     }
-    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | rtos | selftest | normal | hello | ping N%s\n"," | hello transceiver | hello lte | hello payload | payload fire-check | payload ident | payload status | payload heartbeat | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf transceiver firmware | uhf devices | uhf heartbeat | uhf system | uhf eps | mode [safe/startup/commissioning/nominal] | outputs | output NAME on/off | faults | eps json | eps adc on/off | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte");
+    else if(!strcmp(s,"help"))LOG("COMMANDS version | status | rtos | selftest | normal | hello | ping N%s\n"," | hello transceiver | hello lte | hello payload | payload fire-check | payload ident | payload status | payload heartbeat | lte firmware | lte modem firmware | devices | devices scan | uhf run SECONDS PERIOD | uhf stop | uhf transceiver firmware | uhf devices | uhf heartbeat | uhf system | uhf eps | mode [safe/startup/commissioning/nominal] | outputs | output NAME on/off | faults | gps | eps json | eps adc on/off | lte N | lte status | lte diagnostics | heartbeat lte | system lte | eps lte");
     else if(*s)LOG("ERROR unknown command\n");
 }
 static void command(const char *s){

@@ -112,3 +112,19 @@ Before accepting the pair, verify conducted CW timing, heartbeat off on boot, he
 a correlated ground PING result, returned RX, stop/lease expiry during a burst,
 and no replay of an uncertain transmission. Hardware acceptance is separate
 from builds and host tests.
+
+
+## GPS position from USB
+
+On IHU 0.24.0, connect the Adafruit PA1010D breakout to the Feather's STEMMA
+QT port and run `gps` on the IHU USB console. The IHU reads a fresh
+checksummed GGA sentence over I²C at address `0x10`, on demand. A fix reports
+latitude and longitude in signed decimal degrees and the satellites used.
+`NO_FIX` means the receiver replied without a fix. `NO_DATA` means no valid
+fresh GGA sentence arrived within 2.5 seconds. `I2C_ERROR` means the I²C read
+failed. If the sensor worker is busy, retry the command.
+
+For a first fix, give the patch antenna an unobstructed view of the sky,
+pointing up. STEMMA QT supplies power whenever its rail is on. The command
+controls when the IHU reads the receiver. It leaves receiver power and its
+NMEA settings alone.

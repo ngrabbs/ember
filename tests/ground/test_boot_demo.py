@@ -70,7 +70,25 @@ static unsigned queued_message(void){
     assert(packet.type==BD_PACKET && !ul_u32(packet.payload+12) && !ul_u32(packet.payload+16));
     return ul_u16(packet.payload+W_MESSAGE_ID);
 }
+static void gps_sentence(gps_reader *reader,const char *body,bool valid,gps_result *result){
+    unsigned sum=0;
+    for(const char *p=body;*p;p++)sum^=(unsigned char)*p;
+    char sentence[83];
+    snprintf(sentence,sizeof(sentence),"$%s*%02X\r\n",body,valid?sum:sum^1);
+    bool received=false;
+    for(const char *p=sentence;*p;p++)if(gps_feed(reader,*p,result))received=true;
+    assert(received==valid);
+}
 int main(void){
+    gps_reader gps={0};gps_result position={0};
+    gps_sentence(&gps,"GNGGA,123519,4807.038,S,01131.000,W,1,08,0.9",true,&position);
+    assert(position.status==GPS_FIX && position.satellites==8);
+    assert(position.latitude<-48.1172 && position.latitude>-48.1174);
+    assert(position.longitude<-11.5166 && position.longitude>-11.5168);
+    gps_sentence(&gps,"GPGGA,123519,,,,,0,00,99.99",false,&position);
+    assert(position.status==GPS_FIX);
+    gps_sentence(&gps,"GPGGA,123519,,,,,0,00,99.99",true,&position);
+    assert(position.status==GPS_NO_FIX && position.satellites==0);
     assert(boot_morse(segment));decode();assert(!strcmp(text,"KI5YNG - EMBER BOOT"));
     assert(marks>30 && units*BOOT_CW_UNIT_US<BD_CW_LIMIT_MS*1000);
     bd_radio r={0};uint32_t t=UINT32_MAX-100;
@@ -93,6 +111,7 @@ int main(void){
     tick(1);assert(last_frame.id==BD_LINK);
     f=bd_frame(BD_LINKED,boot,22);demo_receive(&f,fake_now);
     assert(policy.mode==IP_NOMINAL && startup_demo.stage==DEMO_ACTIVE && !policy.outputs);
+    command("gps");
     tick(BD_HEARTBEAT_MS);
     assert(!startup_demo.heartbeat_enabled && !startup_demo.tx_pending);
     command("output uhf_telem on");assert(!policy.outputs);
@@ -331,4 +350,6 @@ class BootDemo(unittest.TestCase):
                             f"-I{ROOT}/firmware/transceiver", str(source),
                             str(ROOT / "firmware/shared/ember_protocol/protocol.c"),
                             "-o", str(binary)], check=True)
-            self.assertIn("BOOT_DEMO_PASS", subprocess.check_output([binary], text=True))
+            output = subprocess.check_output([binary], text=True)
+            self.assertIn("GPS status=NO_DATA", output)
+            self.assertIn("BOOT_DEMO_PASS", output)

@@ -17,7 +17,7 @@
 /* One core, one application actor. Workers never access application globals. */
 typedef struct {bool mode;uint8_t wanted;cf_frame frame;} can_call;
 typedef struct {bool ok;mcp_state state;} can_reply;
-typedef struct {bool adc,enable;} sensor_call;
+typedef struct {enum ihu_sensor_op op;bool enable;} sensor_call;
 typedef struct {uint16_t size;char text[IHU_RECORD_SIZE];} usb_record;
 typedef struct {mcp_state state;uint8_t registers[7];} can_snapshot;
 static const uint8_t observed_registers[]={0x0e,0x2a,0x29,0x28,0x1c,0x1d,0x2d};
@@ -65,7 +65,7 @@ static bool call_can(mcp_state *s,can_call *call){
 bool ihu_can_mode(mcp_state *s,uint8_t mode){can_call call={.mode=true,.wanted=mode};return call_can(s,&call);}
 bool ihu_can_send(mcp_state *s,const cf_frame *frame){can_call call={.frame=*frame};return call_can(s,&call);}
 bool ihu_can_receive(mcp_state *s,cf_frame *frame){copy_snapshot(s);return xQueueReceive(can_frames,frame,0)==pdPASS;}
-bool ihu_sensor_submit(bool adc,bool enable){sensor_call call={adc,enable};return xQueueSend(sensor_calls,&call,0)==pdPASS;}
+bool ihu_sensor_submit(enum ihu_sensor_op op,bool enable){sensor_call call={op,enable};return xQueueSend(sensor_calls,&call,0)==pdPASS;}
 bool ihu_sensor_receive(ihu_sensor_result *r){return xQueueReceive(sensor_results,r,0)==pdPASS;}
 
 /* Only the application actor builds fragmented printf records. USB and workers
@@ -142,13 +142,35 @@ static void can_task(void *arg){
         checkin(IHU_CAN);vTaskDelay(pdMS_TO_TICKS(1));
     }
 }
+/* Read a fresh GGA after draining the receiver's queued NMEA output. */
+static gps_result sensor_read_gps(void){
+    const uint32_t started=milliseconds();
+    gps_reader reader={0};
+    gps_result result={.status=GPS_NO_DATA};
+    bool fresh=false;
+    while(milliseconds()-started<2500){
+        uint8_t chunk[32];
+        if(i2c_read_timeout_us(i2c1,0x10,chunk,sizeof(chunk),false,10000)!=(int)sizeof(chunk))
+            return (gps_result){.status=GPS_BUS_ERROR};
+        bool idle=true;
+        for(unsigned i=0;i<sizeof(chunk);++i){
+            if(chunk[i]!='\n')idle=false;
+            if(fresh && gps_feed(&reader,chunk[i],&result))return result;
+        }
+        checkin(IHU_SENSOR);
+        if(idle){fresh=true;vTaskDelay(pdMS_TO_TICKS(20));}
+    }
+    return result;
+}
+
 static void sensor_task(void *arg){
     (void)arg;eps_bus_init();taskENTER_CRITICAL();sensor_ready=true;taskEXIT_CRITICAL();
     for(;;){
         sensor_call call;
         if(xQueueReceive(sensor_calls,&call,pdMS_TO_TICKS(100))==pdPASS){
             ihu_sensor_result r={.enable=call.enable};
-            r.ok=call.adc?eps_force_adc(call.enable,&r.before,&r.after):eps_read(&r.raw,&r.failed);
+            if(call.op==IHU_SENSOR_READ_GPS)r.gps=sensor_read_gps();
+            else r.ok=call.op==IHU_SENSOR_SET_ADC?eps_force_adc(call.enable,&r.before,&r.after):eps_read(&r.raw,&r.failed);
             r.sampled=milliseconds();configASSERT(xQueueSend(sensor_results,&r,0)==pdPASS);wake_app();
         }
         checkin(IHU_SENSOR);
