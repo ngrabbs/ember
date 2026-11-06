@@ -100,6 +100,17 @@ health fields on the Payload display. BASIC is the boot
 default. The command report confirms the selected set and applied values.
 See the [IHU schedule and RF behavior](ihu-link-active.md#scheduled-telemetry).
 
+## Fire check capture GPS
+
+Send `PAYLOAD_FIRE_CHECK` from `ember / realtime`. The Payload display shows
+the latest tagged result, check ID and GPS status. Command History retains
+the tag for each command. The payload writes `capture.json` beside the case
+evidence, with the original image filenames, capture interval, GPS status
+and check ID. An on-demand GPS read runs before capture. The payload
+qualifies the estimated fix age at the end of the capture interval using a
+6-second limit. An unavailable or stale fix leaves the coordinates empty
+and the fire check proceeds.
+
 ## Command report reason codes
 
 Open the command in **Command History**. The completion message shows the

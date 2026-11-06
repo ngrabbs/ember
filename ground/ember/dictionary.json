@@ -19,6 +19,7 @@
     {"name": "payload_length", "type": "u16"}
   ],
   "enums": {
+    "fire_gps_status": {"UNAVAILABLE": 0, "FIX": 1, "STALE": 2},
     "gps_status": {"NO_DATA": 0, "I2C_ERROR": 1, "NO_FIX": 2, "FIX": 3},
     "payload_transport": {"IHU_CONSOLE_CAN_BENCH": 1, "IHU_NATIVE_RF": 2},
     "payload_report_kind": {"STATUS": 1, "HEARTBEAT": 2},
@@ -71,6 +72,7 @@
     {"name": "PAYLOAD_PING_RESULT", "kind": "telemetry", "id": 56, "expected_interval_ms": 15000, "fields": [{"name": "transport", "type": "u8", "enum": "payload_transport"}, {"name": "bridge_session_id", "type": "u32"}, {"name": "reported_boot_id", "type": "u32"}, {"name": "bytes", "type": "u16"}, {"name": "echo_ok", "type": "u8"}, {"name": "round_trip_ms", "type": "u32"}]},
     {"name": "PAYLOAD_FIRE_CHECK", "kind": "command", "id": 1028, "fields": []},
     {"name": "GPS_STATUS", "kind": "telemetry", "id": 60, "expected_interval_ms": 360000, "fields": [{"name": "status", "type": "u8", "enum": "gps_status"}, {"name": "satellites", "type": "u8"}, {"name": "latitude_deg", "type": "i32", "scale": 0.0000001, "unit": "deg"}, {"name": "longitude_deg", "type": "i32", "scale": 0.0000001, "unit": "deg"}, {"name": "altitude_msl_m", "type": "i32", "scale": 0.001, "unit": "m"}]},
-    {"name": "PAYLOAD_FIRE_RESULT", "kind": "telemetry", "id": 57, "fields": [{"name": "payload_version", "type": "u8"}, {"name": "transport", "type": "u8", "enum": "payload_transport"}, {"name": "result", "type": "u8", "enum": "fire_result"}, {"name": "execution_mode", "type": "u8", "enum": "fire_check_mode"}, {"name": "bridge_session_id", "type": "u32"}, {"name": "reported_boot_id", "type": "u32"}, {"name": "reported_uptime_ms", "type": "u32"}, {"name": "check_id", "type": "u32"}]}
+    {"name": "PAYLOAD_FIRE_RESULT", "kind": "telemetry", "id": 57, "fields": [{"name": "payload_version", "type": "u8"}, {"name": "transport", "type": "u8", "enum": "payload_transport"}, {"name": "result", "type": "u8", "enum": "fire_result"}, {"name": "execution_mode", "type": "u8", "enum": "fire_check_mode"}, {"name": "bridge_session_id", "type": "u32"}, {"name": "reported_boot_id", "type": "u32"}, {"name": "reported_uptime_ms", "type": "u32"}, {"name": "check_id", "type": "u32"}]},
+    {"name": "PAYLOAD_FIRE_TAGGED", "kind": "telemetry", "id": 61, "fields": [{"name": "payload_version", "type": "u8"}, {"name": "transport", "type": "u8", "enum": "payload_transport"}, {"name": "result", "type": "u8", "enum": "fire_result"}, {"name": "execution_mode", "type": "u8", "enum": "fire_check_mode"}, {"name": "bridge_session_id", "type": "u32"}, {"name": "reported_boot_id", "type": "u32"}, {"name": "reported_uptime_ms", "type": "u32"}, {"name": "check_id", "type": "u32"}, {"name": "gps_status", "type": "u8", "enum": "fire_gps_status"}, {"name": "satellites", "type": "u8"}, {"name": "latitude_deg", "type": "i32", "scale": 1e-07, "unit": "deg"}, {"name": "longitude_deg", "type": "i32", "scale": 1e-07, "unit": "deg"}, {"name": "altitude_msl_m", "type": "i32", "scale": 0.001, "unit": "m"}, {"name": "gps_age_ms", "type": "u32", "unit": "ms"}, {"name": "analysis_error", "type": "u8"}]}
   ]
 }

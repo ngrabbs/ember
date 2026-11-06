@@ -487,7 +487,15 @@ static void demo_link_pump(uint32_t now){
     if(startup_demo.stage!=DEMO_ACTIVE)return;
     cf_expire(&demo_up,now);
     cf_expire(&fragments,now);
-    if(fire_uplink.active && (!pending.active || (uint32_t)(now-pending.started)>=request_timeout_ms(pending.packet.type))){
+    if(fire_uplink.gps_waiting && !fire_uplink.gps_reading){
+        if(now-fire_uplink.gps_since>=2000)fire_submit_gps(NULL);
+        else if(!sensor_job.active && now-housekeeping.last<3500){
+            fire_uplink.gps_reading=true;
+            if(!request_sensor(SENSOR_FIRE_GPS,0,false))fire_submit_gps(NULL);
+        }
+    }
+    now=now_ms();
+    if(fire_uplink.active && !fire_uplink.gps_waiting && (!pending.active || (uint32_t)(now-pending.started)>=request_timeout_ms(pending.packet.type))){
         pending.active=false;
         output.active=false;
         fire_unavailable(0);

@@ -8,6 +8,11 @@
 #define PL_FIRE_CHECK 0x98
 #define PL_FIRE_RESULT 0x99
 #define PL_FIRE_SIZE 16u
+#define PL_GPS_SIZE 18u
+#define PL_GPS_MAX_AGE_MS 6000u
+#define PL_GPS_TAGGED_SIZE (PL_FIRE_SIZE+PL_GPS_SIZE)
+/* Tag: status, satellites, signed latitude/longitude E7 and MSL millimetres, age ms. */
+enum { PL_GPS_UNAVAILABLE, PL_GPS_FIX, PL_GPS_STALE };
 /* v1 binary result; v2 additionally permits 2=UNKNOWN in ALGORITHM mode.
  * version, result, mode (1=stub,2=algorithm), reserved (still zero),
  * then big endian boot, uptime_ms, nonzero check_id. */

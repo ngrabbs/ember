@@ -45,7 +45,7 @@ def matches(wire,command):
             return (p['command_id']==1 and p['stage']==2 and p['reason']==0 and p['parameter_id']==0 and p['value']==0)
         return (p['command_id']==1028 and p['stage']==3 and p['reason']==7 and p['parameter_id']==0)
     if c['name']!='PAYLOAD_FIRE_CHECK':return False
-    return (r['name']=='PAYLOAD_FIRE_RESULT' and
+    return (r['name'] in ('PAYLOAD_FIRE_RESULT','PAYLOAD_FIRE_TAGGED') and
         p['payload_version'] in (1,2) and p['transport']==2 and p['bridge_session_id']==0 and
         p['result'] in ((0,1) if p['payload_version']==1 else (0,1,2)) and
         p['execution_mode'] in (1,2) and (p['result']!=2 or p['execution_mode']==2) and

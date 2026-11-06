@@ -45,7 +45,7 @@ class OperationalYamcs(unittest.TestCase):
             for file,count,interval in [('ember.xml',11,360),('ember-bench.xml',5,5)]:
                 tree=ET.parse(r/'src/main/yamcs/mdb'/file)
                 self.assertEqual(len(tree.findall('.//{'+op.NS+'}MetaCommand')),count)
-                self.assertEqual(len(tree.findall('.//{'+op.NS+'}Parameter')),274)
+                self.assertEqual(len(tree.findall('.//{'+op.NS+'}Parameter')),291)
                 rate=tree.find('.//{'+op.NS+'}SequenceContainer[@name="POWER_STATUS"]/{'+op.NS+'}DefaultRateInStream')
                 self.assertAlmostEqual(float(rate.get('minimumValue')),1/interval)
                 payload=tree.find('.//{'+op.NS+'}SequenceContainer[@name="PAYLOAD_STATUS"]/{'+op.NS+'}DefaultRateInStream')

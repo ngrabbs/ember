@@ -172,15 +172,17 @@ int main(void){
     while(output.active)tick(2);
     ul_packet ack=pending.packet;ack.type=UL_HELLO_ACK;ack.sender=44;
     inject(&ack,CF_PAYLOAD_REPLY_ID);
-    assert(pending.active && pending.packet.type==PL_FIRE_CHECK);
+    for(unsigned i=0;i<21 && fire_uplink.gps_waiting;++i)tick(100);
+    assert(pending.active && pending.packet.type==PL_FIRE_CHECK && pending.packet.size==PL_GPS_SIZE);
     while(output.active)tick(2);
     tick(10000);
     assert(pending.active && fire_uplink.active && !demo_response_size);
-    ack=pending.packet;ack.type=PL_FIRE_RESULT;ack.sender=44;ack.size=PL_FIRE_SIZE;
+    ack=pending.packet;ack.type=PL_FIRE_RESULT;ack.sender=44;ack.size=PL_GPS_TAGGED_SIZE;
+    memset(ack.payload,0,sizeof(ack.payload));
     ack.payload[0]=1;ack.payload[2]=1;ul_p32(ack.payload+4,44);ul_p32(ack.payload+12,1);
     inject(&ack,CF_PAYLOAD_REPLY_ID);
-    assert(!pending.active && !fire_uplink.active && demo_response_size==52);
-    assert(ul_u16(demo_response+8)==W_ID_PAYLOAD_FIRE_RESULT && demo_response[32]==0);
+    assert(!pending.active && !fire_uplink.active && demo_response_size==71);
+    assert(ul_u16(demo_response+8)==W_ID_PAYLOAD_FIRE_TAGGED && demo_response[32]==0);
     assert(ul_u32(demo_response+16)==uplink.request);
     complete_reply();
 

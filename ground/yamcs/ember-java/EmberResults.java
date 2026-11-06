@@ -191,10 +191,11 @@ public final class EmberResults {
             status.history.publishAck(status.id,CommandHistoryPublisher.CommandComplete_KEY,now,AckStatus.OK);
             pending.remove(key(b));return;
         }
-        if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
-            Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 57) {
+        int message = Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID));
+        boolean gpsTagged = message == 61;
+        if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 && (message == 57 || gpsTagged)) {
             Pending fire = pending.get(key(b));
-            if (fire == null || fire.command != 1028 || bytes.length != 52 ||
+            if (fire == null || fire.command != 1028 || bytes.length != (gpsTagged ? 71 : 52) ||
                 (b.get(30) != 1 && b.get(30) != 2) || (b.get(31) != 1 && b.get(31) != 2) ||
                 Byte.toUnsignedInt(b.get(32)) > (b.get(30)==1 ? 1 : 2) ||
                 (b.get(33) != 1 && b.get(33) != 2) || (b.get(32)==2 && b.get(33)!=2) ||
@@ -205,15 +206,36 @@ public final class EmberResults {
             fire.history.publish(fire.id, "ember-analysis-result", decision);
             fire.history.publish(fire.id, "ember-fire-mode", b.get(33) == 1 ? "STATIC_STUB" : "ALGORITHM");
             fire.history.publish(fire.id, "ember-result-boot-id", Long.toString(currentBoot));
-            fire.history.publish(fire.id, "ember-outcome", "COMPLETED");
+            int analysisError = gpsTagged ? Byte.toUnsignedInt(b.get(WireProfile.PAYLOAD_FIRE_TAGGED_ANALYSIS_ERROR)) : 0;
+            fire.history.publish(fire.id, "ember-outcome", analysisError == 0 ? "COMPLETED" : "EXECUTION_FAILED");
+            if (gpsTagged) {
+                int gps = Byte.toUnsignedInt(b.get(WireProfile.PAYLOAD_FIRE_TAGGED_GPS_STATUS));
+                String[] states = {"UNAVAILABLE", "FIX", "STALE"};
+                fire.history.publish(fire.id, "ember-fire-gps-status", gps < states.length ? states[gps] : "UNAVAILABLE");
+                if (gps == 1) {
+                    fire.history.publish(fire.id, "ember-fire-gps-latitude-deg",
+                        Double.toString(b.getInt(WireProfile.PAYLOAD_FIRE_TAGGED_LATITUDE_DEG) / 1e7));
+                    fire.history.publish(fire.id, "ember-fire-gps-longitude-deg",
+                        Double.toString(b.getInt(WireProfile.PAYLOAD_FIRE_TAGGED_LONGITUDE_DEG) / 1e7));
+                    int altitude = b.getInt(WireProfile.PAYLOAD_FIRE_TAGGED_ALTITUDE_MSL_M);
+                    if (altitude != Integer.MIN_VALUE)
+                        fire.history.publish(fire.id, "ember-fire-gps-altitude-msl-m", Double.toString(altitude / 1000.0));
+                }
+                if (gps == 1 || gps == 2)
+                    fire.history.publish(fire.id, "ember-fire-gps-age-ms",
+                        Long.toString(Integer.toUnsignedLong(b.getInt(WireProfile.PAYLOAD_FIRE_TAGGED_GPS_AGE_MS))));
+                if (analysisError != 0)
+                    fire.history.publish(fire.id, "ember-payload-error-code", Integer.toString(analysisError));
+            }
             fire.history.publish(fire.id, "ember-elapsed-ms", Long.toString((System.nanoTime()-fire.started)/1000000));
-            fire.history.publish(fire.id, "ember-application-result-bytes", "16");
+            fire.history.publish(fire.id, "ember-application-result-bytes", gpsTagged ? "34" : "16");
             fire.history.publish(fire.id, "ember-ground-packet-bytes", Integer.toString(bytes.length));
             fire.history.publish(fire.id, "ember-payload-boot-id", Long.toString(Integer.toUnsignedLong(b.getInt(38))));
             fire.history.publish(fire.id, "ember-payload-check-id", Long.toString(Integer.toUnsignedLong(b.getInt(46))));
             if (!fire.accepted) fire.history.publishAck(fire.id, "Acknowledge_EMBER_Acceptance", now,
                 AckStatus.NA, "Correlated payload final result received");
-            fire.history.publishAck(fire.id, CommandHistoryPublisher.CommandComplete_KEY, now, AckStatus.OK);
+            fire.history.publishAck(fire.id, CommandHistoryPublisher.CommandComplete_KEY, now,
+                analysisError == 0 ? AckStatus.OK : AckStatus.NOK);
             pending.remove(key(b));
             return;
         }

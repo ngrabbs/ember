@@ -195,11 +195,26 @@ def generate(destination, instance="ember"):
         label(title,528,y,240,22,11);observed('PAYLOAD_PING_RESULT_'+pv,778,y-3,178,17)
     stamp('PAYLOAD_PING_RESULT_echo_ok',528,435,430)
     label('LAST ANALYSIS',22,483,180,24,12,BLUE,True)
-    observed('PAYLOAD_FIRE_RESULT_result',205,479,180,17)
-    observed('PAYLOAD_FIRE_RESULT_execution_mode',395,479,200,17)
-    stamp('PAYLOAD_FIRE_RESULT_result',610,481,360)
-    label('UNKNOWN = explicit quality outcome. A missing reply is an uncertain command, not NO_FIRE.',22,513,956,24,11,ORANGE)
-    label('Bench path: Yamcs → m75q → IHU serial → CAN A → payload Pi.' if instance=='ember-bench' else 'Flight command path: Yamcs → LibreSDR RF → transceiver → IHU → CAN A → payload; result returns over RF.',22,541,956,20,10)
+    if instance=='ember':
+        observed('PAYLOAD_FIRE_TAGGED_result',205,479,160,17)
+        label('Check ID',372,480,72,25,11)
+        observed('PAYLOAD_FIRE_TAGGED_check_id',445,479,150,17)
+        stamp('PAYLOAD_FIRE_TAGGED_result',610,481,350)
+        for title,field,x in [('GPS status','gps_status',22),('Latitude','latitude_deg',205),
+                              ('Longitude','longitude_deg',395),('Altitude MSL','altitude_msl_m',585),
+                              ('Satellites used','satellites',780)]:
+            label(title,x,515,175,18,11)
+            pv='PAYLOAD_FIRE_TAGGED_'+field
+            if field in ('gps_status','satellites'):
+                observed(pv,x,533,175,15)
+            else:
+                script('Unavailable',[pv],'gps-value.js',x,533,175,30,15)
+    else:
+        observed('PAYLOAD_FIRE_RESULT_result',205,479,180,17)
+        observed('PAYLOAD_FIRE_RESULT_execution_mode',395,479,200,17)
+        stamp('PAYLOAD_FIRE_RESULT_result',610,481,360)
+        label('UNKNOWN = explicit quality outcome. A missing reply is an uncertain command, not NO_FIRE.',22,513,956,24,11,ORANGE)
+        label('Bench path: Yamcs → m75q → IHU serial → CAN A → payload Pi.',22,541,956,20,10)
     nav('Payload raw / history','Payload.par',22,568)
     web('Send payload command','/commanding/send',250,568,235);web('Command history','/commanding/history',503,568,210)
     footer('Payload firmware identity and source commit are consolidated on Devices & firmware.')
@@ -226,7 +241,7 @@ def generate(destination, instance="ember"):
     footer('Firmware rows are last-known reports, not live attestation. Raw table includes each identity’s receive time and boot ID.')
     save('Devices.opi')
 
-    groups={'Payload.par':['PAYLOAD_STATUS','PAYLOAD_PING_RESULT','PAYLOAD_FIRE_RESULT'], 'Devices.par':['DEVICE_STATUS'],
+    groups={'Payload.par':['PAYLOAD_STATUS','PAYLOAD_PING_RESULT','PAYLOAD_FIRE_RESULT','PAYLOAD_FIRE_TAGGED'], 'Devices.par':['DEVICE_STATUS'],
             'Firmware.par':['COMMS_FIRMWARE','LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE','PAYLOAD_FIRMWARE'],
             'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'],
             'LTE-Firmware.par':['LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE'],
