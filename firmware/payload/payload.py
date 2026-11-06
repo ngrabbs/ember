@@ -16,7 +16,8 @@ import time
 from protocol import (Packet, Reassembler, CAN_FRAME, REPORT, QUERY_ID, DISCOVERY_ID,
                       REQUEST_ID, REPLY_ID, NODE, HELLO, HELLO_ACK, ECHO, ECHO_ACK,
                       IDENT, IDENT_ACK, STATUS, STATUS_ACK, HEARTBEAT, HEARTBEAT_ACK,
-                      ERROR, FIRE_CHECK, FIRE_RESULT, FIRE_REPORT, discovery, fragments)
+                      ERROR, FIRE_CHECK, FIRE_RESULT, FIRE_REPORT, GPS_TAG,
+                      unavailable_gps, discovery, fragments)
 
 
 class Service:
@@ -30,13 +31,15 @@ class Service:
         self.capture = capture
         self.pending_capture = None
 
-    def fire_result(self, packet, decision=0, mode=1):
+    def fire_result(self, packet, decision=0, mode=1, gps=None, analysis_error=0):
         self.checks = (self.checks % 0xffffffff) + 1
         self.replies += 1
         uptime = int((self.now() - self.started) * 1000) & 0xffffffff
-        # Real capture can precede this result; detection is still a static stub.
-        return Packet(FIRE_RESULT, self.boot, packet.origin, packet.request,
-                      FIRE_REPORT.pack(2 if decision == 2 else 1, decision, mode, 0, self.boot, uptime, self.checks))
+        report = FIRE_REPORT.pack(2 if decision == 2 else 1, decision, mode,
+                                  analysis_error, self.boot, uptime, self.checks)
+        if packet.payload:
+            report += gps if gps is not None else unavailable_gps()
+        return Packet(FIRE_RESULT, self.boot, packet.origin, packet.request, report)
 
     def poll_capture(self):
         if not self.pending_capture:
@@ -53,15 +56,19 @@ class Service:
             self.replies += 1
             return Packet(ERROR, self.boot, packet.origin, packet.request, b'\x08')
         if isinstance(outcome, dict) and 'result' in outcome:
+            gps = outcome.pop('_gps_wire', None)
             quality_unknown = (outcome['result'] == 'UNKNOWN' and outcome.get('reason') in
                                ('REGISTRATION_LOW_CONTRAST', 'REGISTRATION_WEAK_FIT'))
             if quality_unknown:
-                response = self.fire_result(packet, 2, 2)
+                response = self.fire_result(packet, 2, 2, gps)
+            elif outcome['result'] not in ('FIRE', 'NO_FIRE') and gps is not None:
+                response = self.fire_result(packet, 2, 2, gps, analysis_error=11)
             elif outcome['result'] not in ('FIRE', 'NO_FIRE'):
                 self.replies += 1
                 response = Packet(ERROR, self.boot, packet.origin, packet.request, b'\x0b')
             else:
-                response = self.fire_result(packet, int(outcome['result'] == 'FIRE'), 2)
+                response = self.fire_result(packet, int(outcome['result'] == 'FIRE'),
+                                            1 if outcome.get('execution_mode') == 'STATIC_STUB' else 2, gps)
             evidence = outcome.get('_evidence_path')
             if evidence:
                 try:
@@ -74,6 +81,13 @@ class Service:
                     path = Path(evidence); temporary = path.with_suffix('.reply.tmp')
                     temporary.write_text(json.dumps(record,indent=2,allow_nan=False)+'\n')
                     temporary.replace(path)
+                    capture = path.with_name('capture.json')
+                    if gps is not None and capture.exists():
+                        saved = json.loads(capture.read_text())
+                        saved.update(payload_boot_id=self.boot, payload_check_id=self.checks)
+                        temporary = capture.with_suffix('.tmp')
+                        temporary.write_text(json.dumps(saved, indent=2)+'\n')
+                        temporary.replace(capture)
                 except Exception:
                     logging.exception('REPLY_EVIDENCE_FAILED origin=%u request=%u',packet.origin,packet.request)
                     return Packet(ERROR,self.boot,packet.origin,packet.request,b'\x08')
@@ -94,7 +108,10 @@ class Service:
             return reject(3)
         if packet.kind not in (HELLO, ECHO, IDENT, STATUS, HEARTBEAT, FIRE_CHECK):
             return reject(2)
-        if (packet.kind == ECHO and not packet.payload) or (packet.kind != ECHO and packet.payload):
+        if packet.kind == FIRE_CHECK:
+            if len(packet.payload) not in (0, GPS_TAG.size):
+                return reject(4)
+        elif (packet.kind == ECHO) != bool(packet.payload):
             return reject(4)
         if packet.kind == HELLO:
             self.peer = packet.sender

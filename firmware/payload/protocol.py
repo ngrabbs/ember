@@ -10,6 +10,16 @@ IDENT, IDENT_ACK, ERROR = 0x18, 0x19, 0x7F
 STATUS, STATUS_ACK, HEARTBEAT, HEARTBEAT_ACK = 0x94, 0x95, 0x96, 0x97
 FIRE_CHECK, FIRE_RESULT = 0x98, 0x99
 FIRE_REPORT = struct.Struct('>BBBBIII')
+GPS_TAG = struct.Struct('>BBiiiI')
+GPS_UNAVAILABLE, GPS_FIX, GPS_STALE = range(3)
+GPS_MAX_AGE_MS = 6000
+GPS_NO_COORD = -(2**31)
+GPS_NO_AGE = 2**32-1
+
+
+def unavailable_gps():
+    return GPS_TAG.pack(GPS_UNAVAILABLE, 0, GPS_NO_COORD, GPS_NO_COORD,
+                        GPS_NO_COORD, GPS_NO_AGE)
 HEADER = struct.Struct('>2sBBIIIH')
 REPORT = struct.Struct('>BBBB6I')
 CAN_FRAME = struct.Struct('=IB3x8s')

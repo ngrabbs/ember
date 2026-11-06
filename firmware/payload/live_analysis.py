@@ -57,18 +57,24 @@ class AnalysisWorker:
             self.process = None
 
 
-def analyze(captures, settings, packet, config, deadline, worker):
+def analyze(captures, settings, packet, config, deadline, worker, metadata=None):
     case = Path(config['evidence_directory']) / f'{packet.origin}-{packet.request}-{uuid.uuid4().hex[:12]}'
     case.mkdir(parents=True, exist_ok=False)
     job = dict(captures=captures, settings=settings, origin=packet.origin,
                request=packet.request, config=config)
+    if metadata:
+        (case/'capture.json').write_text(json.dumps(dict(metadata, images=captures,
+            origin=packet.origin, request=packet.request), indent=2)+'\n')
     try:
         (case/'job.json').write_text(json.dumps(job, indent=2)+'\n')
         remaining = deadline-time.monotonic()
         if remaining <= 0:
             raise TimeoutError('ANALYSIS_DEADLINE')
-        worker.run(case, remaining)
-        record = json.loads((case/'result.json').read_text())
+        if worker:
+            worker.run(case, remaining)
+            record = json.loads((case/'result.json').read_text())
+        else:
+            record = dict(result='NO_FIRE', reason='STATIC_STUB', execution_mode='STATIC_STUB')
     except Exception as error:
         record = dict(result='UNKNOWN', reason='ANALYSIS_DEADLINE' if isinstance(error, (TimeoutError, subprocess.TimeoutExpired)) else type(error).__name__+':'+str(error),
                       input_source='LIVE_CAMERA', camera_capture_performed=True,
@@ -77,6 +83,8 @@ def analyze(captures, settings, packet, config, deadline, worker):
     logging.info('ANALYSIS_RESULT origin=%u request=%u result=%s reason=%s monotonic_ns=%u evidence=%s',
                  packet.origin, packet.request, record['result'], record['reason'],
                  time.monotonic_ns(), case/'result.json')
+    if metadata:
+        record.update(metadata, images=captures)
     # Internal handoff only: the responder adds the exact generated CAN reply.
     record['_evidence_path'] = str(case/'result.json')
     return record

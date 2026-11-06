@@ -62,6 +62,21 @@ class PayloadTests(unittest.TestCase):
         self.assertEqual(self.request(FIRE_CHECK,sender=99).kind,ERROR)
         self.assertEqual(FIRE_REPORT.unpack(self.request(FIRE_CHECK).payload)[-1],2)
 
+    def test_capture_gps_is_qualified_at_capture_end(self):
+        from camera_capture import capture_gps
+        from protocol import GPS_TAG, GPS_NO_COORD, unavailable_gps
+        fix = GPS_TAG.pack(1, 8, 330000000, -880000000, 90600, 1100)
+        record, wire = capture_gps(fix, 0, 3_000_000_000)
+        self.assertEqual((record['status'], record['age_upper_estimate_ms']), ('FIX', 4100))
+        self.assertEqual(record['longitude_deg'], -88)
+        self.assertEqual(GPS_TAG.unpack(wire)[4], 90600)
+        stale, wire = capture_gps(fix, 0, 5_000_000_000)
+        self.assertEqual(stale['status'], 'STALE')
+        self.assertEqual(GPS_TAG.unpack(wire)[2:5], (GPS_NO_COORD,)*3)
+        missing, _ = capture_gps(unavailable_gps(), 0, 1_000_000_000)
+        self.assertEqual(missing['status'], 'UNAVAILABLE')
+        self.assertIsNone(missing['latitude_deg'])
+
     def test_capture_defers_result_but_keeps_heartbeat_responsive(self):
         from concurrent.futures import Future
         future = Future()

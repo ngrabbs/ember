@@ -6,6 +6,26 @@ from pathlib import Path
 import time
 import urllib.request
 
+from protocol import (GPS_TAG, GPS_FIX, GPS_STALE, GPS_UNAVAILABLE,
+                      GPS_MAX_AGE_MS, GPS_NO_COORD, GPS_NO_AGE)
+
+
+def capture_gps(payload, received_ns, capture_end_ns):
+    status, satellites, lat, lon, altitude, age = GPS_TAG.unpack(payload)
+    if status == GPS_FIX and -900000000 <= lat <= 900000000 and -1800000000 <= lon <= 1800000000:
+        age = min(GPS_NO_AGE, age + (capture_end_ns - received_ns + 999999) // 1000000)
+        status = GPS_FIX if age <= GPS_MAX_AGE_MS else GPS_STALE
+    else:
+        status, age = GPS_UNAVAILABLE, GPS_NO_AGE
+    if status != GPS_FIX:
+        lat = lon = altitude = GPS_NO_COORD
+    record = dict(status=('UNAVAILABLE', 'FIX', 'STALE')[status], satellites=satellites,
+                  age_upper_estimate_ms=None if age == GPS_NO_AGE else age,
+                  latitude_deg=None if lat == GPS_NO_COORD else lat / 1e7,
+                  longitude_deg=None if lon == GPS_NO_COORD else lon / 1e7,
+                  altitude_msl_m=None if altitude == GPS_NO_COORD else altitude / 1000)
+    return record, GPS_TAG.pack(status, satellites, lat, lon, altitude, age)
+
 
 class CameraCapture:
     def __init__(self, url, config=None):
@@ -38,9 +58,9 @@ class CameraCapture:
             self.analysis_worker.stop()
 
     def submit(self, packet):
-        return self.executor.submit(self.capture, packet)
+        return self.executor.submit(self.capture, packet, time.monotonic_ns())
 
-    def capture(self, packet):
+    def capture(self, packet, received_ns=None):
         start = time.monotonic_ns()
         analysis_deadline = time.monotonic() + self.config['fire_check_deadline_s']
         if self.analysis_worker:
@@ -62,6 +82,7 @@ class CameraCapture:
         if (not health.get('ok') or health.get('timer_active') or
                 health.get('focus_port') is not None or settings.get('burst_count') != 1):
             raise RuntimeError('camera daemon must be idle with timer off and burst_count=1')
+        capture_start = time.monotonic_ns()
         captures = request('/capture', post=True)['captures']
         if (len(captures) != 3 or {c['port'] for c in captures} != {0, 1, 2} or
                 len({c['id'] for c in captures}) != 3 or any(c['bytes'] <= 0 for c in captures)):
@@ -70,8 +91,17 @@ class CameraCapture:
         logging.info('CAPTURE_SAVED origin=%u request=%u monotonic_ns=%u elapsed_ms=%.3f images=%s',
                      packet.origin, packet.request, end, (end-start)/1e6,
                      json.dumps(captures, separators=(',', ':')))
-        if self.analysis_worker:
+        metadata = None
+        wire = None
+        if packet.payload:
+            gps, wire = capture_gps(packet.payload, received_ns if received_ns is not None else start, end)
+            metadata = dict(capture_start_monotonic_ns=capture_start,
+                            capture_end_monotonic_ns=end, gps=gps)
+        if self.analysis_worker or metadata:
             from live_analysis import analyze
-            return analyze(captures, settings, packet, self.config,
-                           analysis_deadline, self.analysis_worker)
+            result = analyze(captures, settings, packet, self.config, analysis_deadline,
+                             self.analysis_worker, metadata=metadata)
+            if wire is not None:
+                result['_gps_wire'] = wire
+            return result
         return captures
