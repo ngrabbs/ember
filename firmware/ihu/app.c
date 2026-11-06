@@ -80,7 +80,7 @@ static struct {
     uint8_t wire[UL_WIRE_MAX];size_t size;
     uint16_t token,route;unsigned index;uint32_t last;
 } output;
-enum {SENSOR_HEALTH, SENSOR_JSON, SENSOR_ADC, SENSOR_TELEMETRY, SENSOR_GPS};
+enum {SENSOR_HEALTH, SENSOR_JSON, SENSOR_ADC, SENSOR_TELEMETRY, SENSOR_GPS, SENSOR_GPS_TELEMETRY};
 static struct {bool active,console,from_run;unsigned kind,route;uint32_t generation;uint32_t run;} sensor_job;
 static uint32_t output_generation[IP_OUTPUT_COUNT],run_generation;
 static bool request_sensor(unsigned kind,unsigned route,bool enable);
@@ -616,12 +616,15 @@ static void health_result(const ihu_sensor_result *r){
     if(ip_enabled(&policy,IP_UMB_TELEM))ihu_printf(false,"{\"profile\":\"ihu-health-v1\",\"mode\":%u,\"configuration\":%u,\"uptime_ms\":%" PRIu32 ",\"eps_valid\":%u,\"eps_sample_ms\":%" PRIu32 ",\"comms_state\":%u,\"lte_state\":%u,\"payload_state\":%u}\n",
         policy.mode,policy.configuration,now_ms(),housekeeping.valid,housekeeping.sampled,devices[DR_COMMS_INDEX].state,devices[DR_LTE_INDEX].state,devices[DR_PAYLOAD_INDEX].state);
 }
+#if IHU_BOOT_DEMO
+static void demo_gps_complete(const gps_result *gps,uint32_t sampled);
+#endif
 static bool request_sensor(unsigned kind,unsigned route,bool enable){
     if(sensor_job.active){LOG("REJECT reason=SENSOR_BUSY\n");return false;}
     sensor_job.active=true;sensor_job.kind=kind;sensor_job.route=route;sensor_job.console=console_reply;
     sensor_job.from_run=kind==SENSOR_TELEMETRY && route==2 && uhf_run.state==UR_RUNNING;
     sensor_job.generation=output_generation[route==2?IP_UHF_TELEM:IP_LTE_TELEM];sensor_job.run=run_generation;
-    enum ihu_sensor_op op=kind==SENSOR_GPS?IHU_SENSOR_READ_GPS:kind==SENSOR_ADC?IHU_SENSOR_SET_ADC:IHU_SENSOR_READ_EPS;
+    enum ihu_sensor_op op=(kind==SENSOR_GPS || kind==SENSOR_GPS_TELEMETRY)?IHU_SENSOR_READ_GPS:kind==SENSOR_ADC?IHU_SENSOR_SET_ADC:IHU_SENSOR_READ_EPS;
     if(!ihu_sensor_submit(op,enable)){sensor_job.active=false;LOG("REJECT reason=SENSOR_BUSY\n");return false;}
 #ifdef IHU_HOST_TEST
     ihu_sensor_result r;if(ihu_sensor_receive(&r))sensor_complete(&r);
@@ -636,6 +639,10 @@ static void sensor_complete(const ihu_sensor_result *r){
     if(from_run && uhf_run.state==UR_RUNNING && (uint32_t)(now_ms()-uhf_run.started)>=uhf_run.duration)
         ur_stop(&uhf_run,UR_EXPIRED);
     sensor_job.active=false;
+#if IHU_BOOT_DEMO
+    if(kind==SENSOR_GPS_TELEMETRY)demo_gps_complete(&r->gps,r->sampled);
+    else
+#endif
     if(kind==SENSOR_GPS){
         if(r->gps.status==GPS_FIX)
             LOG("GPS status=FIX latitude_deg=%.6f longitude_deg=%.6f satellites=%u\n",r->gps.latitude,r->gps.longitude,r->gps.satellites);

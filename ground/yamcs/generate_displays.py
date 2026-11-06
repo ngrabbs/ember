@@ -146,9 +146,21 @@ def generate(destination, instance="ember"):
     for title,pv,y in [('Charger input','input_mv',217),('Battery pack','battery_mv',281),('Power-path output','output_mv',345)]:
         label(title,692,y,260,20,11);eps(pv,692,y+21,260,20)
     box(22,450,956,105)
-    label('WHAT THESE VALUES MEAN',40,461,900,22,11,BLUE,True)
-    label('Heartbeat may come from IHU or transceiver; boot ID belongs to that packet’s producer.' if instance=='ember' else 'EPS is polled every five seconds through one serial owner; payload replies are requested.',40,488,914,21,11)
-    label('Heartbeat/system values do not expire; check timestamps. SAFE / GROUND_TEST are bench labels.' if instance=='ember' else 'The EPS header identifies a ground wrapper session, not an IHU reset or spacecraft UTC.',40,514,914,21,11)
+    if instance=='ember':
+        label('GPS / LAST UHF SAMPLE',40,461,300,22,11,BLUE,True)
+        stamp('GPS_STATUS_status',680,461,270)
+        for title,pv,x in [('Fix status','status',40),('Latitude','latitude_deg',225),
+                           ('Longitude','longitude_deg',410),('Altitude MSL','altitude_msl_m',595),
+                           ('Satellites used','satellites',780)]:
+            label(title,x,487,175,20,11)
+            if pv in ('status','satellites'):
+                observed('GPS_STATUS_'+pv,x,510,175,16)
+            else:
+                script('Unavailable',['GPS_STATUS_'+pv],'gps-value.js',x,510,175,32,16)
+    else:
+        label('WHAT THESE VALUES MEAN',40,461,900,22,11,BLUE,True)
+        label('EPS is polled every five seconds through one serial owner; payload replies are requested.',40,488,914,21,11)
+        label('The EPS header identifies a ground wrapper session, not an IHU reset or spacecraft UTC.',40,514,914,21,11)
     nav('System raw / history' if instance=='ember' else 'Power raw / quality','System.par' if instance=='ember' else 'EPS.par',22,568)
     if instance=='ember-bench':web('Payload commands','/commanding/send',250,568,210);web('Command history','/commanding/history',478,568,210)
     else:label('Receive-only radio environment · no command uplink configured',252,573,720,24,11,ORANGE)

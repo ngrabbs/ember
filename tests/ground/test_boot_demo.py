@@ -81,13 +81,14 @@ static void gps_sentence(gps_reader *reader,const char *body,bool valid,gps_resu
 }
 int main(void){
     gps_reader gps={0};gps_result position={0};
-    gps_sentence(&gps,"GNGGA,123519,4807.038,S,01131.000,W,1,08,0.9",true,&position);
+    gps_sentence(&gps,"GNGGA,123519,4807.038,S,01131.000,W,1,08,0.9,545.4,M,46.9,M,,",true,&position);
     assert(position.status==GPS_FIX && position.satellites==8);
+    assert(position.altitude_valid && position.altitude>545.39 && position.altitude<545.41);
     assert(position.latitude<-48.1172 && position.latitude>-48.1174);
     assert(position.longitude<-11.5166 && position.longitude>-11.5168);
-    gps_sentence(&gps,"GPGGA,123519,,,,,0,00,99.99",false,&position);
+    gps_sentence(&gps,"GPGGA,123519,,,,,0,00,99.99,,,,,,",false,&position);
     assert(position.status==GPS_FIX);
-    gps_sentence(&gps,"GPGGA,123519,,,,,0,00,99.99",true,&position);
+    gps_sentence(&gps,"GPGGA,123519,,,,,0,00,99.99,,,,,,",true,&position);
     assert(position.status==GPS_NO_FIX && position.satellites==0);
     assert(boot_morse(segment));decode();assert(!strcmp(text,"KI5YNG - EMBER BOOT"));
     assert(marks>30 && units*BOOT_CW_UNIT_US<BD_CW_LIMIT_MS*1000);
@@ -282,6 +283,16 @@ int main(void){
     assert(reply.payload[W_PAYLOAD+W_PAYLOAD_STATUS_TRANSPORT]==W_PAYLOAD_TRANSPORT_IHU_NATIVE_RF);
     assert(ul_u32(reply.payload+W_PAYLOAD+W_PAYLOAD_STATUS_REPORTED_BOOT_ID)==44);
     assert(ul_u32(reply.payload+W_PAYLOAD+W_PAYLOAD_STATUS_REPORTED_UPTIME_MS)==1234);
+    while(output.active)tick(2);
+    f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+    tick(1);assert(!startup_demo.tx_pending);
+
+    tick(1);
+    assert(startup_demo.tx_pending && queued_message()==W_ID_GPS_STATUS);
+    memset(&reader,0,sizeof(reader));memset(&reply,0,sizeof(reply));
+    for(size_t i=0;i<output.size;i++)ul_feed(&reader,output.wire[i],0,&reply);
+    assert(reply.payload[W_PAYLOAD+W_GPS_STATUS_STATUS]==W_GPS_STATUS_NO_DATA);
+    assert(ul_u32(reply.payload+W_PAYLOAD+W_GPS_STATUS_LATITUDE_DEG)==(uint32_t)INT32_MIN);
     while(output.active)tick(2);
     f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
     tick(1);assert(!startup_demo.tx_pending);

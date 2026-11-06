@@ -40,10 +40,12 @@ class OperationalYamcs(unittest.TestCase):
             pattern=re.findall('tcPatterns: \\["(.*?)"\\]',bench)[0]
             self.assertFalse(re.fullmatch(pattern,'/ember/PAYLOAD_STATUS_QUERY'))
             self.assertFalse(re.fullmatch(pattern,'/ember/PING'))
+            cases=re.findall(r'case (\d+) ->', (r/'src/main/java/com/example/ember/WireProfile.java').read_text().split('public static String reasonName')[0])
+            self.assertEqual(len(cases),len(set(cases)))
             for file,count,interval in [('ember.xml',11,360),('ember-bench.xml',5,5)]:
                 tree=ET.parse(r/'src/main/yamcs/mdb'/file)
                 self.assertEqual(len(tree.findall('.//{'+op.NS+'}MetaCommand')),count)
-                self.assertEqual(len(tree.findall('.//{'+op.NS+'}Parameter')),267)
+                self.assertEqual(len(tree.findall('.//{'+op.NS+'}Parameter')),274)
                 rate=tree.find('.//{'+op.NS+'}SequenceContainer[@name="POWER_STATUS"]/{'+op.NS+'}DefaultRateInStream')
                 self.assertAlmostEqual(float(rate.get('minimumValue')),1/interval)
                 payload=tree.find('.//{'+op.NS+'}SequenceContainer[@name="PAYLOAD_STATUS"]/{'+op.NS+'}DefaultRateInStream')

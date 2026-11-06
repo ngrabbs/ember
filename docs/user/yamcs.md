@@ -93,7 +93,9 @@ off and defaults of 540 seconds listening and 60 seconds for telemetry.
 Use `SET_UHF_TELEMETRY_SET` to choose `BASIC` or `FULL`. BASIC sends one
 `IHU_STATUS` and one `POWER_STATUS` per window. FULL adds one
 `DEVICE_STATUS`, one `SYSTEM_STATUS`, one `HEARTBEAT`, and one
-`PAYLOAD_STATUS` when the payload replies over CAN. `PAYLOAD_STATUS` fills the
+`PAYLOAD_STATUS` when the payload replies over CAN, plus one `GPS_STATUS`.
+The Overview GPS panel shows the fix status, coordinates, MSL altitude,
+and satellites used. `PAYLOAD_STATUS` fills the
 health fields on the Payload display. BASIC is the boot
 default. The command report confirms the selected set and applied values.
 See the [IHU schedule and RF behavior](ihu-link-active.md#scheduled-telemetry).

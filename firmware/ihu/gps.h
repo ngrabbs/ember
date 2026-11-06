@@ -8,7 +8,8 @@ enum gps_status {GPS_NO_DATA, GPS_BUS_ERROR, GPS_NO_FIX, GPS_FIX};
 typedef struct {
     enum gps_status status;
     unsigned satellites;
-    double latitude, longitude;
+    double latitude, longitude, altitude;
+    bool altitude_valid;
 } gps_result;
 
 typedef struct {
@@ -46,9 +47,9 @@ static inline bool gps_gga(char *line,gps_result *result){
     for(const char *p=line+1;p<checksum;++p)actual^=(unsigned char)*p;
     if(actual!=(unsigned)(high*16+low) || checksum-line<7 || strncmp(line+3,"GGA,",4))return false;
     *checksum=0;
-    char *fields[7];
+    char *fields[10];
     char *field=line+7;
-    for(unsigned i=0;i<7;++i){
+    for(unsigned i=0;i<10;++i){
         fields[i]=field;
         char *comma=strchr(field,',');
         if(!comma)return false;
@@ -65,6 +66,13 @@ static inline bool gps_gga(char *line,gps_result *result){
         if(!gps_coordinate(fields[1],fields[2],true,&next.latitude) ||
            !gps_coordinate(fields[3],fields[4],false,&next.longitude))return false;
         next.status=GPS_FIX;
+        char *end;
+        double altitude=strtod(fields[8],&end);
+        if(end!=fields[8] && !*end && !strcmp(fields[9],"M") &&
+           altitude>-2147483.0 && altitude<2147483.0){
+            next.altitude=altitude;
+            next.altitude_valid=true;
+        }
     }
     *result=next;
     return true;

@@ -25,6 +25,37 @@ static struct {
     unsigned next_packet;
 } demo_schedule;
 
+static struct {
+    bool ready;
+    uint32_t cycle,sampled;
+    gps_result result;
+} demo_gps;
+
+static void demo_gps_complete(const gps_result *gps,uint32_t sampled){
+    if(!demo_schedule.enabled || demo_schedule.started!=demo_gps.cycle ||
+       demo_schedule.next_packet!=8)return;
+    demo_gps.result=*gps;
+    demo_gps.sampled=sampled;
+    demo_gps.ready=true;
+}
+
+static size_t demo_gps_packet(uint8_t *packet){
+    const size_t size=W_PAYLOAD+W_SIZE_GPS_STATUS+2;
+    _Static_assert(W_PAYLOAD+W_SIZE_GPS_STATUS+2<=BD_PACKET_MAX,"GPS packet exceeds RF link limit");
+    cdh_header(packet,size,NULL,W_KINDS_TELEMETRY,W_ID_GPS_STATUS,W_SIZE_GPS_STATUS);
+    ul_p32(packet+W_UPTIME_MS,demo_gps.sampled);
+    uint8_t *p=packet+W_PAYLOAD;
+    const gps_result *gps=&demo_gps.result;
+    bool fix=gps->status==GPS_FIX;
+    p[W_GPS_STATUS_STATUS]=gps->status;
+    p[W_GPS_STATUS_SATELLITES]=gps->satellites;
+    ul_p32(p+W_GPS_STATUS_LATITUDE_DEG,fix?(int32_t)(gps->latitude*1e7):INT32_MIN);
+    ul_p32(p+W_GPS_STATUS_LONGITUDE_DEG,fix?(int32_t)(gps->longitude*1e7):INT32_MIN);
+    ul_p32(p+W_GPS_STATUS_ALTITUDE_MSL_M,fix && gps->altitude_valid?(int32_t)(gps->altitude*1000):INT32_MIN);
+    ul_p16(packet+size-2,ul_crc(packet,size-2));
+    return size;
+}
+
 /* The optional poll borrows the CAN request slot until a reply or timeout. */
 static struct {
     bool active,valid;
@@ -126,6 +157,7 @@ static void demo_restart_schedule(uint32_t now){
     demo_schedule.started=now;
     demo_schedule.next_packet=0;
     demo_payload.valid=false;
+    demo_gps.ready=false;
 }
 static void demo_set_output(const ul_packet *request,uint32_t now){
     const uint8_t *wire=request->payload;
@@ -403,8 +435,17 @@ static void demo_schedule_pump(uint32_t now){
         demo_restart_schedule(now-elapsed);
     }
     /* Leave time for the admitted burst to finish before the listen phase. */
-    unsigned count=demo_schedule.packet_set==W_UHF_TELEMETRY_SET_FULL?7:2;
+    unsigned count=demo_schedule.packet_set==W_UHF_TELEMETRY_SET_FULL?9:2;
     if(elapsed<listen_ms || cycle_ms-elapsed<=BD_TX_TIMEOUT_MS || demo_schedule.next_packet>=count)return;
+    if(demo_schedule.next_packet==7){
+        if(cycle_ms-elapsed<=BD_TX_TIMEOUT_MS+2500 || sensor_job.active ||
+           now-housekeeping.last>=3500)return;
+        demo_gps.cycle=demo_schedule.started;
+        ++demo_schedule.next_packet;
+        if(!request_sensor(SENSOR_GPS_TELEMETRY,0,false))--demo_schedule.next_packet;
+        return;
+    }
+    if(demo_schedule.next_packet==8 && !demo_gps.ready)return;
     _Static_assert(W_PAYLOAD+W_SIZE_POWER_STATUS+2<=BD_PACKET_MAX,"EPS packet exceeds RF link limit");
     _Static_assert(W_PAYLOAD+W_SIZE_DEVICE_STATUS+2<=BD_PACKET_MAX,"Device packet exceeds RF link limit");
     uint8_t packet[BD_PACKET_MAX];
@@ -432,9 +473,12 @@ static void demo_schedule_pump(uint32_t now){
         if(cycle_ms-elapsed>BD_TX_TIMEOUT_MS+2*DEMO_PAYLOAD_TIMEOUT_MS)
             demo_payload_start();
         return;
-    default:
+    case 6:
         if(!demo_payload.valid)return;
         size=demo_payload_packet(packet);
+        break;
+    default:
+        size=demo_gps_packet(packet);
         break;
     }
     if(!demo_queue_packet(packet,size,now))demo_fail("UHF telemetry queue... FAILED");
