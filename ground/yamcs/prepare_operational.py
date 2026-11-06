@@ -75,9 +75,10 @@ def prepare(runtime, legacy_history=()):
                  command_description="EMBER UHF command via LibreSDR, COMMS and IHU; correlated RF reply")
         tree=ET.parse(Path(temp)/'ember.xml')
         # Leave margin for the default ten-minute UHF telemetry cycle.
-        rates=tree.findall('.//{'+NS+'}SequenceContainer[@name="POWER_STATUS"]/{'+NS+'}DefaultRateInStream')
-        if len(rates)!=1:raise ValueError('Missing POWER_STATUS rate')
-        rates[0].set('minimumValue',str(1/360))
+        for packet in ('POWER_STATUS', 'PAYLOAD_STATUS'):
+            rates=tree.findall('.//{'+NS+'}SequenceContainer[@name="'+packet+'"]/{'+NS+'}DefaultRateInStream')
+            if len(rates)!=1:raise ValueError('Missing '+packet+' rate')
+            rates[0].set('minimumValue',str(1/360))
         tree.write(mdb,encoding='utf-8',xml_declaration=True)
         shutil.copy2(Path(temp)/'WireProfile.java',java/'WireProfile.java')
         for source in (ROOT/'ember-java').glob('*.java'):shutil.copy2(source,java/source.name)

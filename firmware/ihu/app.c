@@ -533,7 +533,8 @@ static struct {
 static void cdh_header(uint8_t *b,size_t n,const ul_packet *request,uint8_t kind,uint16_t id,unsigned payload){
  memset(b,0,n);ul_p16(b,W_TM_IDENTITY);ul_p16(b+2,0xc000|(telemetry_sequence++&0x3fff));ul_p16(b+4,n-7);
  b[6]=1;b[7]=kind;ul_p16(b+8,id);b[10]=2;b[11]=1;
- memcpy(b+12,request->payload+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,payload);
+ if(request)memcpy(b+12,request->payload+12,8);
+ ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,payload);
 }
 static bool cdh_send(ul_packet *reply){
  ul_p16(reply->payload+reply->size-2,ul_crc(reply->payload,reply->size-2));

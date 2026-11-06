@@ -46,6 +46,8 @@ class OperationalYamcs(unittest.TestCase):
                 self.assertEqual(len(tree.findall('.//{'+op.NS+'}Parameter')),267)
                 rate=tree.find('.//{'+op.NS+'}SequenceContainer[@name="POWER_STATUS"]/{'+op.NS+'}DefaultRateInStream')
                 self.assertAlmostEqual(float(rate.get('minimumValue')),1/interval)
+                payload=tree.find('.//{'+op.NS+'}SequenceContainer[@name="PAYLOAD_STATUS"]/{'+op.NS+'}DefaultRateInStream')
+                self.assertAlmostEqual(float(payload.get('minimumValue')),1/(360 if file=='ember.xml' else 15))
 
     def test_legacy_history_has_no_hardware_routes(self):
         with tempfile.TemporaryDirectory() as temp:

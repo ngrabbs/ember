@@ -84,10 +84,12 @@ either set. The IHU sends one of each listed packet per window.
 | Set | Packets in transmission order |
 | --- | --- |
 | BASIC | `IHU_STATUS`, `POWER_STATUS` |
-| FULL | `IHU_STATUS`, `POWER_STATUS`, `DEVICE_STATUS`, `SYSTEM_STATUS`, `HEARTBEAT` |
+| FULL | `IHU_STATUS`, `POWER_STATUS`, `DEVICE_STATUS`, `SYSTEM_STATUS`, `HEARTBEAT`, `PAYLOAD_STATUS` |
 
 EPS values use the latest valid housekeeping sample. Device status reports the
-cached registry and its observation ages. Packets carry zero transaction IDs.
+cached registry and its observation ages. The IHU polls the payload over CAN
+once per FULL window. It sends `PAYLOAD_STATUS` only after a valid reply.
+Packets carry zero transaction IDs.
 If the link is busy, packets wait within the window or are skipped when there
 is insufficient time left. The next cycle starts on schedule.
 
