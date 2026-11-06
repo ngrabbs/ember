@@ -684,8 +684,9 @@ static void command_impl(const char *s) {
             startup_demo.stage==DEMO_ACTIVE?"LINK_ACTIVE":(startup_demo.stage==DEMO_LISTEN || startup_demo.stage==DEMO_ACTIVATE)?"RX_ONLY":
             startup_demo.stage==DEMO_BEACON?"STARTUP_CW":"MUTED",
             demo_uplinks,demo_replies,demo_tx_ok,demo_drops,startup_demo.stage==DEMO_ACTIVE && startup_demo.heartbeat_enabled?BD_HEARTBEAT_MS:0);
-        LOG("UHF_TELEMETRY enabled=%u listen_seconds=%u telemetry_seconds=%u\n",
-            demo_schedule.enabled,demo_schedule.listen_seconds,demo_schedule.telemetry_seconds);
+        LOG("UHF_TELEMETRY enabled=%u listen_seconds=%u telemetry_seconds=%u set=%s\n",
+            demo_schedule.enabled,demo_schedule.listen_seconds,demo_schedule.telemetry_seconds,
+            demo_schedule.packet_set==W_UHF_TELEMETRY_SET_FULL?"FULL":"BASIC");
         return;
     }
     if(!strcmp(s,"mode safe") || !strcmp(s,"uhf stop")){
@@ -795,6 +796,7 @@ void ihu_app_init(void) {
 #if IHU_BOOT_DEMO
     link_reply_sink=demo_store_response;
     demo_schedule.enabled=false;
+    demo_schedule.packet_set=W_UHF_TELEMETRY_SET_BASIC;
     demo_schedule.listen_seconds=DEMO_LISTEN_DEFAULT_S;
     demo_schedule.telemetry_seconds=DEMO_TELEMETRY_DEFAULT_S;
     startup_demo.usb=stdio_usb_connected();

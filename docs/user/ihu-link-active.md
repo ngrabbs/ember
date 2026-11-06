@@ -1,6 +1,6 @@
 # IHU automatic UHF link bench profile
 
-**IHU 0.21.0 and transceiver 0.37.2** are the matching pair. This profile is
+**IHU 0.22.0 and transceiver 0.37.2** are the matching pair. This profile is
 for the conducted CAN Feather / original Pico bench, with the two RF paths
 connected and attenuated. The legacy bench profile and the flight stub remain
 separate. See [startup and CW procedure](ihu-cw-startup-demo.md) for wiring,
@@ -45,6 +45,7 @@ addressing and command semantics.
 | SET_HEARTBEAT | `enabled=1` starts the 10-second heartbeat. `enabled=0` stops it. The IHU boots with heartbeat off. |
 | SET_UHF_TELEMETRY_SCHEDULE | Set `listen_seconds` (1–3600) and `telemetry_seconds` (5–3600). The boot defaults are 540 and 60. |
 | SET_UHF_TELEMETRY | `enabled=1` starts with a listen phase. `enabled=0` stops scheduled telemetry and retains the configured durations until reboot. |
+| SET_UHF_TELEMETRY_SET | Choose `BASIC` or `FULL`. Defaults to BASIC on reboot. |
 
 Issue one command at a time and wait for its result. While a status capture
 or fire check is in progress, the IHU reserves the reply slot and drops new
@@ -77,17 +78,24 @@ initial bench policy, not a flight requirement.
 ## Scheduled telemetry
 
 The IHU enters NOMINAL with scheduled telemetry off. The defaults are nine
-minutes listening followed by a one-minute telemetry window. Each window sends
-one unsolicited `IHU_STATUS` and one `POWER_STATUS` from the latest valid EPS
-housekeeping sample. Both packets carry zero transaction IDs. If the link is
-busy, packets wait within the window or are skipped when there is insufficient
-time left. The next cycle starts on schedule.
+minutes listening followed by a one-minute telemetry window. Yamcs can select
+either set. The IHU sends one of each listed packet per window.
+
+| Set | Packets in transmission order |
+| --- | --- |
+| BASIC | `IHU_STATUS`, `POWER_STATUS` |
+| FULL | `IHU_STATUS`, `POWER_STATUS`, `DEVICE_STATUS`, `SYSTEM_STATUS`, `HEARTBEAT` |
+
+EPS values use the latest valid housekeeping sample. Device status reports the
+cached registry and its observation ages. Packets carry zero transaction IDs.
+If the link is busy, packets wait within the window or are skipped when there
+is insufficient time left. The next cycle starts on schedule.
 
 Uplink reception remains available between bursts in both phases. Solicited
 replies take priority and can transmit during the listen phase. Enabling the
-schedule turns off the separate periodic heartbeat. A change to either
-duration starts a fresh listen phase when enabled. Disable then enable to
-start a new cycle. Both durations and enable state reset on reboot.
+schedule turns off the separate periodic heartbeat. A change to either duration
+or the packet set starts a fresh listen phase when enabled. Disable then enable to
+start a new cycle. The durations, packet set, and enable state reset on reboot.
 
 ## Ground test
 

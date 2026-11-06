@@ -90,8 +90,10 @@ In `ember / realtime`, use `SET_UHF_TELEMETRY_SCHEDULE` to set
 `listen_seconds` and `telemetry_seconds`. Use `SET_UHF_TELEMETRY` with
 `enabled=1` to start, or `enabled=0` to stop. The IHU boots with telemetry
 off and defaults of 540 seconds listening and 60 seconds for telemetry.
-During each telemetry window the IHU sends one `IHU_STATUS` and one
-`POWER_STATUS`. The command report confirms the applied values.
+Use `SET_UHF_TELEMETRY_SET` to choose `BASIC` or `FULL`. BASIC sends one
+`IHU_STATUS` and one `POWER_STATUS` per window. FULL adds one
+`DEVICE_STATUS`, one `SYSTEM_STATUS`, and one `HEARTBEAT`. BASIC is the boot
+default. The command report confirms the selected set and applied values.
 See the [IHU schedule and RF behavior](ihu-link-active.md#scheduled-telemetry).
 
 ## Command report reason codes

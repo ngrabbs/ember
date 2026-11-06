@@ -20,6 +20,7 @@ static struct {
     bool enabled;
     uint16_t listen_seconds,telemetry_seconds;
     uint32_t started;
+    uint8_t packet_set;
     unsigned next_packet;
 } demo_schedule;
 
@@ -100,6 +101,17 @@ static void demo_set_schedule(const ul_packet *request,uint32_t now){
         demo_restart_schedule(now);
     }
 }
+static void demo_set_packet_set(const ul_packet *request,uint32_t now){
+    uint8_t set=request->payload[W_PAYLOAD];
+    if(set!=W_UHF_TELEMETRY_SET_BASIC && set!=W_UHF_TELEMETRY_SET_FULL){
+        cdh_error(request,W_STAGE_REJECTED,W_REASON_INVALID_PARAMETER);
+        return;
+    }
+    if(demo_ack_setting(request,set) && set!=demo_schedule.packet_set){
+        demo_schedule.packet_set=set;
+        demo_restart_schedule(now);
+    }
+}
 static void demo_uplink(const cf_frame *f,uint32_t now){
     static ul_packet p;
     if(!cf_feed(&demo_up,f,BD_UP_ID,now))return;
@@ -112,6 +124,9 @@ static void demo_uplink(const cf_frame *f,uint32_t now){
     }
     if(id==W_ID_SET_UHF_TELEMETRY_SCHEDULE && up_native_args(p.payload,p.size,4)){
         demo_set_schedule(&p,now);return;
+    }
+    if(id==W_ID_SET_UHF_TELEMETRY_SET && up_native_args(p.payload,p.size,1)){
+        demo_set_packet_set(&p,now);return;
     }
     if(up_native_cdh(p.payload,p.size)){cdh_receive(&p);return;}
     if(up_native_fire(p.payload,p.size)){
@@ -320,14 +335,32 @@ static void demo_schedule_pump(uint32_t now){
         demo_restart_schedule(now-elapsed);
     }
     /* Leave time for the admitted burst to finish before the listen phase. */
-    if(elapsed<listen_ms || cycle_ms-elapsed<=BD_TX_TIMEOUT_MS || demo_schedule.next_packet>=2)return;
+    unsigned count=demo_schedule.packet_set==W_UHF_TELEMETRY_SET_FULL?5:2;
+    if(elapsed<listen_ms || cycle_ms-elapsed<=BD_TX_TIMEOUT_MS || demo_schedule.next_packet>=count)return;
     _Static_assert(W_PAYLOAD+W_SIZE_POWER_STATUS+2<=BD_PACKET_MAX,"EPS packet exceeds RF link limit");
+    _Static_assert(W_PAYLOAD+W_SIZE_DEVICE_STATUS+2<=BD_PACKET_MAX,"Device packet exceeds RF link limit");
     uint8_t packet[BD_PACKET_MAX];
     size_t size;
-    if(demo_schedule.next_packet++==0)size=status_packet(packet,NULL);
-    else if(housekeeping.valid){
+    switch(demo_schedule.next_packet++){
+    case 0:
+        size=status_packet(packet,NULL);
+        break;
+    case 1:
+        if(!housekeeping.valid)return;
         size=power_packet(packet,&housekeeping.eps,boot,telemetry_sequence++,housekeeping.sampled,++eps_readout_count);
-    }else return;
+        break;
+    case 2:
+        size=device_packet(packet,devices,true,boot,telemetry_sequence++,now);
+        break;
+    case 3:
+        size=health_packet(packet,true,boot,telemetry_sequence++,now,cycle_ms,
+            uplink_engine.accepted,uplink_engine.rejected,policy.mode,policy.configuration);
+        break;
+    default:
+        size=health_packet(packet,false,boot,telemetry_sequence++,now,cycle_ms,
+            uplink_engine.accepted,uplink_engine.rejected,policy.mode,policy.configuration);
+        break;
+    }
     if(!demo_queue_packet(packet,size,now))demo_fail("UHF telemetry queue... FAILED");
 }
 static void demo_link_pump(uint32_t now){

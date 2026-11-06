@@ -30,7 +30,7 @@ class OperationalYamcs(unittest.TestCase):
             self.assertEqual((c/'yamcs.ember-lte.yaml').read_text(),body)
             self.assertIn('port: 10018',flight);self.assertIn('port: 10019',flight)
             self.assertIn('port: 10029',flight)
-            self.assertIn('/ember/(PING|REQUEST_STATUS|REQUEST_TELEMETRY|STATUS_CAPTURE|STATUS_FETCH|IHU_REBOOT|PAYLOAD_FIRE_CHECK|SET_HEARTBEAT|SET_UHF_TELEMETRY_SCHEDULE|SET_UHF_TELEMETRY)',flight)
+            self.assertIn('/ember/(PING|REQUEST_STATUS|REQUEST_TELEMETRY|STATUS_CAPTURE|STATUS_FETCH|IHU_REBOOT|PAYLOAD_FIRE_CHECK|SET_HEARTBEAT|SET_UHF_TELEMETRY_SCHEDULE|SET_UHF_TELEMETRY|SET_UHF_TELEMETRY_SET)',flight)
             self.assertNotIn('10020',flight)
             self.assertIn('dataLinks: []',bench)
             self.assertNotIn('10020',bench);self.assertNotIn('10028',bench)
@@ -40,7 +40,7 @@ class OperationalYamcs(unittest.TestCase):
             pattern=re.findall('tcPatterns: \\["(.*?)"\\]',bench)[0]
             self.assertFalse(re.fullmatch(pattern,'/ember/PAYLOAD_STATUS_QUERY'))
             self.assertFalse(re.fullmatch(pattern,'/ember/PING'))
-            for file,count,interval in [('ember.xml',10,360),('ember-bench.xml',5,5)]:
+            for file,count,interval in [('ember.xml',11,360),('ember-bench.xml',5,5)]:
                 tree=ET.parse(r/'src/main/yamcs/mdb'/file)
                 self.assertEqual(len(tree.findall('.//{'+op.NS+'}MetaCommand')),count)
                 self.assertEqual(len(tree.findall('.//{'+op.NS+'}Parameter')),267)

@@ -102,11 +102,18 @@ def generate(destination, command_filter=None, command_description="EMBER softwa
         arguments = node(command, "ArgumentList")
         for field in message["fields"]:
             name = message["name"] + "_" + field["name"] + "_type"
-            atype = node(argument_types, "IntegerArgumentType", name=name, signed="false")
+            if field.get("argument_enum"):
+                atype = node(argument_types, "EnumeratedArgumentType", name=name)
+            else:
+                atype = node(argument_types, "IntegerArgumentType", name=name, signed="false")
             units = node(atype, "UnitSet")
             if field.get("unit"):
                 node(units, "Unit").text = field["unit"]
             node(atype, "IntegerDataEncoding", sizeInBits=layout([field]).size * 8, encoding="unsigned")
+            if field.get("argument_enum"):
+                enumeration = node(atype, "EnumerationList")
+                for label, value in D["enums"][field["enum"]].items():
+                    node(enumeration, "Enumeration", value=value, label=label)
             # Full integer domain permits a deliberate endpoint rejection test.
             node(arguments, "Argument", name=field["name"], argumentTypeRef=name,
                  initialValue=D["parameters"]["TELEMETRY_PERIOD"]["default"]

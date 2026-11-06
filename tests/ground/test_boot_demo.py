@@ -38,6 +38,7 @@ static void start(void){
     memset(&demo_up,0,sizeof(demo_up));output.active=false;demo_response_size=0;
     ihu_app_init();assert(policy.mode==IP_SAFE && !policy.outputs);
     assert(!demo_schedule.enabled && demo_schedule.listen_seconds==540 && demo_schedule.telemetry_seconds==60);
+    assert(demo_schedule.packet_set==W_UHF_TELEMETRY_SET_BASIC);
     housekeeping.attempted=housekeeping.valid=true;
     tick(1);tick(1);tick(1);
     assert(startup_demo.stage==DEMO_PROBE && last_frame.id==BD_PROBE);
@@ -222,6 +223,28 @@ int main(void){
     assert(startup_demo.tx_pending && queued_message()==W_ID_IHU_STATUS);
     while(output.active)tick(2);
     f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+    request(&uplink,W_ID_SET_UHF_TELEMETRY_SET,1,2);
+    assert(demo_response[32]==W_STAGE_REJECTED && demo_schedule.packet_set==W_UHF_TELEMETRY_SET_BASIC);
+    complete_reply();
+    request(&uplink,W_ID_SET_UHF_TELEMETRY_SET,1,W_UHF_TELEMETRY_SET_FULL);
+    assert(demo_response[32]==W_STAGE_COMPLETED && demo_schedule.packet_set==W_UHF_TELEMETRY_SET_FULL);
+    uint32_t full_started=demo_schedule.started;
+    complete_reply();
+    request(&uplink,W_ID_SET_UHF_TELEMETRY_SET,1,W_UHF_TELEMETRY_SET_FULL);
+    assert(demo_schedule.started==full_started);
+    complete_reply();
+    tick(full_started+4999-fake_now);
+    assert(!startup_demo.tx_pending);
+    const unsigned full_packets[]={W_ID_IHU_STATUS,W_ID_POWER_STATUS,W_ID_DEVICE_STATUS,
+                                   W_ID_SYSTEM_STATUS,W_ID_HEARTBEAT};
+    for(unsigned i=0;i<sizeof(full_packets)/sizeof(full_packets[0]);i++){
+        tick(1);
+        assert(startup_demo.tx_pending && queued_message()==full_packets[i]);
+        while(output.active)tick(2);
+        f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+    }
+    tick(1);
+    assert(!startup_demo.tx_pending);
     request(&uplink,W_ID_SET_UHF_TELEMETRY,1,0);
     assert(!demo_schedule.enabled && demo_schedule.listen_seconds==5 && demo_schedule.telemetry_seconds==10);
     complete_reply();
