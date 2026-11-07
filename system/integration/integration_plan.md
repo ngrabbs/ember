@@ -9,10 +9,10 @@ transport. SPI is an older hardware allocation, not a prerequisite for CAN.
 | Work | Recorded evidence | Remaining gate |
 |---|---|---|
 | EPS standalone | [Rev A bring-up](../../hardware/eps/bringup/phase1_validation.md) | Complete power/protection/load acceptance; Rev B work is a separate design workstream |
-| IHU–EPS I2C | [UART/Yamcs validation](../ground_station/eps_yamcs_setup.md); [CAN Feather EPS reads](../../firmware/ihu/README.md) | Sense resistor verification, thermistor setup, bus stress and recovery |
-| Command/response bench | [USB endpoint validation](../ground_station/usb_validation.md) | Integrate flight command authorization/dispatch into the actual IHU application |
+| IHU–EPS I2C | [UART/Yamcs validation](../../ground/history/2026-10-01/eps_yamcs_setup.md); [CAN Feather EPS reads](../../firmware/ihu/README.md) | Sense resistor verification, thermistor setup, bus stress and recovery |
+| Command/response bench | [USB endpoint validation](../../ground/history/2026-10-01/usb_validation.md) | Integrate flight command authorization/dispatch into the actual IHU application |
 | IHU–COMMS CAN | [Single-bus Feather transport](../../firmware/ihu/README.md) | Production runtime integration, reset/fault recovery and sustained traffic |
-| Native EPS downlink | [LTE evidence](../../ground/lte/README.md) | Reliability/endurance, calibrated RF performance and operational recovery; [optional UHF bench](../../ground/uhf/README.md) is published but unqualified for continuous operation |
+| Native EPS downlink | [LTE evidence](../../ground/lte/results/2026-10-02-bringup-notes.md) | Reliability/endurance, calibrated RF performance and operational recovery; [optional UHF bench](../../ground/uhf/README.md) is published but unqualified for continuous operation |
 | Command uplink over RF | No implemented Yamcs LTE/UHF telecommand link | Define, implement and validate reception, authorization, dispatch and correlated results |
 | Payload and CAN A/B | Proposed architecture | Multi-node arbitration, failed-node containment and independently qualified failover |
 

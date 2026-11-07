@@ -1,6 +1,6 @@
 # Architecture history
 
-[Current architecture](../README.md)
+[Current architecture](../../README.md#understand-the-system)
 
 - [April 15, 2026 inhibit discussion](inhibit_and_deployment_2026-04-15.md) —
   preserved alternatives and assumptions. Use the [current summary](../inhibit_and_deployment.md)

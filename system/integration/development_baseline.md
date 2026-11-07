@@ -78,7 +78,7 @@ root-owned on the host. No container images or SDK installation were changed.
   healthy status changes must not produce a false recovery message.
 - Legacy IHU/comms hardware behavior and RF reception remain unverified.
   The separate USB bench endpoint passes command dispatch on hardware; see
-  [USB validation](../ground_station/usb_validation.md).
+  [USB validation](../../ground/history/2026-10-01/usb_validation.md).
 - The payload carrier is a preserved conversion checkpoint, not an ERC/DRC,
   mechanical, or fabrication acceptance. The older root TODO has other historical
   subsystem status notes that require checking before reuse.
@@ -97,7 +97,7 @@ The standalone USB Pico application and `tools/build_usb_bench.sh` were removed.
 Their [source and original build instructions](https://github.com/ngrabbs/ember/blob/ae5fc3d2fa53ee071c4b79e2851cbe8c079365d1/firmware/usb_bench/README.md)
 remain in Git. Its portable command engine now lives in
 [`firmware/shared/ember_protocol`](../../firmware/shared/ember_protocol/README.md).
-Use the [active firmware index](../../firmware/firmware.md) for current builds.
+Use the [active firmware index](../../firmware/README.md) for current builds.
 
 The earlier SDK was 2.1.1 (`ee68c78d0afae2b69c03ae1a72bf5cc267a2d94c`), GCC ARM
 14.2.1, and the cached SDK picotool was develop revision

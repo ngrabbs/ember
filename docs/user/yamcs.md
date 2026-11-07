@@ -96,10 +96,18 @@ Links and archive reception times. An enabled link alone does not prove traffic.
 For EPS invalid/stale values, check readout/ADC flags rather than interpreting
 sentinels as voltages. Radio apps retain their existing ownership/window controls.
 
-For replay, choose the archive interval in the intended instance, start a named
-Archive processor and confirm the replay header/clock. Return explicitly to
-`realtime` afterward. Historical freshness follows replay time, not laptop time.
-See [archive replay](../../system/ground_station/archive_replay.md).
+## Replay archived telemetry
+
+1. Open **Archive** in the intended instance and select the time range.
+2. Choose **Replay range**, confirm start and stop, and give the Archive
+   processor a unique name.
+3. Start playback. The purple header and historical clock identify the replay
+   context. Open the display and let at least one packet play after subscribing.
+4. Pause or seek as needed. Seeking can resume playback even if it was paused.
+5. Switch explicitly back to `realtime` and confirm the processor clock is current.
+
+Archived samples follow replay time. Commands are disabled in the Archive
+processor. See the [dated replay verification](../../ground/history/2026-10-01/archive_replay.md).
 
 Authoritative packets: [dictionary](../../ground/ember/dictionary.json),
 [bench contract](../../system/protocols/ember_bench_v1.md), and

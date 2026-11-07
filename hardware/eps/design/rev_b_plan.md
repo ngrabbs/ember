@@ -45,7 +45,7 @@ The [completion ledger](rev_b_completion.md) tracks the remaining integrated des
 
 Rev A uses LTC4162-L and two TPS62933F bucks, with a 4S solar string per face. The older EPS overview still names TPSM5D1806 and an earlier solar configuration; it is not the next revision's component authority. Reconcile assembled hardware, fabrication BOM, current CAD, and documentation before carrying over reference designators or networks.
 
-The [bench record](../../../system/ground_station/eps_bench_setup.md) reports that replacing the faulty input resistor with a wire jumper resolved the measured VIN discrepancy. Charging remained in NTC pause, with no real battery thermistor fitted and no charging observed in the timed experiment. The operator subsequently reports damaged traces around the attempted thermistor repair. The thermistor circuit is the leading charging-blocker hypothesis, not a confirmed sole fault. Buck load, ripple, thermal, and transient qualification also remains incomplete.
+The [bench record](../../../ground/history/2026-10-01/eps_bench_setup.md) reports that replacing the faulty input resistor with a wire jumper resolved the measured VIN discrepancy. Charging remained in NTC pause, with no real battery thermistor fitted and no charging observed in the timed experiment. The operator subsequently reports damaged traces around the attempted thermistor repair. The thermistor circuit is the leading charging-blocker hypothesis, not a confirmed sole fault. Buck load, ripple, thermal, and transient qualification also remains incomplete.
 
 ## Proposed power architecture
 

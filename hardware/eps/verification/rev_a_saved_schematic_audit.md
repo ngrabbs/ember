@@ -65,7 +65,7 @@ Consequently, current KiCad reference assignments and exported connectivity cann
 
 ## First bench investigation: thermistor path
 
-The existing [bench record](../../../system/ground_station/eps_bench_setup.md) says no real thermistor was fitted and the substitute divider wiring remained unverified. Establish that path before another software bypass attempt:
+The existing [bench record](../../../ground/history/2026-10-01/eps_bench_setup.md) says no real thermistor was fitted and the substitute divider wiring remained unverified. Establish that path before another software bypass attempt:
 
 1. With all sources disconnected, identify physical U1 pins 9 (NTCBIAS), 10 (NTC), their bias resistor, connector and analog return. Measure endpoint continuity, resistance and unintended bridges. Record photographs and the actual fitted resistor values against the fabrication assembly, not current refdes alone. The operator must supply these physical observations; none were obtained in this audit.
 2. Reconstruct the divider on a controlled fixture first: NTCBIAS → matching 10 kΩ bias resistor → NTC node → 10 kΩ room-temperature substitute → quiet analog ground. Verify the physical chip pin map before board rework. This substitute is a diagnostic fixture, not a flight sensor or permission for unattended pack charging.

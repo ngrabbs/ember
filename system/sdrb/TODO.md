@@ -116,7 +116,7 @@ with zero reassembly errors/timeouts and no application replies or RF. Both
 SDRB interfaces were returned down. The SD boot FAT unclean-unmount warning
 remains recorded for an offline filesystem check.
 
-[UHF ground section](../../ground/uhf/README.md) documents the Pi/LibreSDR
+[October 3 bench record](../../ground/uhf/results/2026-10-03/bench-notes.md) documents the Pi/LibreSDR
 setup, isolated ember-uhf input, optional binary waveform applications and the
 first 128-byte IHU→SDRB→UHF→LibreSDR→Yamcs success. No AMSAT core source or
 existing text demo was changed. First two bursts failed decoding; third passed

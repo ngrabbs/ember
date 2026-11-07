@@ -1,5 +1,9 @@
 # LTE bench bring-up runbook
 
+For a bounded EPS session on the shared station, use the
+[operator walkthrough](../../docs/user/lte-eps-walkthrough.md). The procedures
+below record the original engineering bring-up and isolated Yamcs setup.
+
 Status: OAI and srsEPC are built on the Pi; S1 setup works. Walter completed
 LTE-M attach and reported registration, with IP 172.16.0.2 and bearer setup.
 Experimental RAR release avoids the observed downlink-pool failure in bounded

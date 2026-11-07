@@ -1,6 +1,6 @@
 # System overview
 
-[Architecture](README.md) · [Interfaces](../../system/README.md)
+[Architecture](../README.md#understand-the-system) · [Interfaces](../../system/interfaces/README.md)
 
 **Status: architecture summary; operating modes are a separate draft.** EMBER
 combines power, housekeeping, radio, and payload subsystems on the CSKB stack.

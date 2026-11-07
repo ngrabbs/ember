@@ -16,7 +16,7 @@ instructions contained superseded VHF, package, and power assumptions.
 | TX Chain | BPSK, tripler, filters, ADL5602 | [TX chain](tx_chain.md) |
 | RX Chain | UHF filter, LNA, ADE-1+, baseband | [RX chain](rx_chain.md) |
 | Power | Stack rails and protection | [System power](../../../system/interfaces/power_interfaces.md) |
-| Digital Control | RP2040, modulation/sampling and control | [Firmware roadmap](../../../firmware/firmware.md) |
+| Digital Control | RP2040, modulation/sampling and control | [Firmware roadmap](../../../firmware/README.md) |
 | Connectors (legacy Sheet 7) | Stack, debug, and antenna interfaces | [CSKB pin map](../../../system/interfaces/cskb_pinmap.md) |
 | RF Switch | Shared antenna, protection, 3.0 V supply/buffer | [Single antenna](single_antenna_integration.md) |
 

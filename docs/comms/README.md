@@ -9,7 +9,7 @@ see the [frequency plan](frequency_plan.md).
 | Bench profile | Signal or transport | Receiver and setup |
 |---|---|---|
 | EMBER COMMS downlink | 437 MHz test carrier, 1200 baud DBPSK, RF frame v3 | LibreSDR and the [DBPSK receiver](../../ground/bpsk/README.md#live-uhf-demo-receiver) |
-| AMSAT SDRB downlink | 1200 baud 2-FSK, ±2.4 kHz deviation, RF frame v2. Default bench packet carrier 434.1 MHz with SDR tuned to 434.2 MHz. | LibreSDR and the [SDRB receiver](../../ground/uhf/README.md#optional-binary-packet-bench-applications) |
+| AMSAT SDRB downlink | 1200 baud 2-FSK, ±2.4 kHz deviation, RF frame v2. Default bench packet carrier 434.1 MHz with SDR tuned to 434.2 MHz. | LibreSDR and the [SDRB receiver](../../ground/uhf/README.md#receive-sdrb-telemetry) |
 | Walter LTE-M telemetry | EMBER packet carried in UDP over the lab LTE-M network | [LTE bench runbook](../../ground/lte/BRINGUP.md) and [EPS walkthrough](../user/lte-eps-walkthrough.md) |
 
 ## Packet layout on the air

@@ -1,6 +1,6 @@
 # Spacecraft operations
 
-[Architecture](../README.md)
+[Architecture](../../README.md#understand-the-system)
 
 **Ground runtime:** [IHU modes and output policy](04-ihu-runtime-policy.md) defines
 the implemented0.13.0 ground-test behavior and inactive flight stubs.

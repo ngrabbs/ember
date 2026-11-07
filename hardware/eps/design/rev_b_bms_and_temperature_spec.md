@@ -2,7 +2,7 @@
 
 Draft dated 2026-10-03. Use BQ40Z50-R2 as the circuit and configuration reference for an autonomous 2S pack protector, with two independent cell-temperature sensors. Retain a third, electrically separate sensor for LTC4162 charge qualification. This document defines implementation requirements and simulator tests; it does not freeze production parts, numerical protection limits or pack acceptance. Rev A charging remains unresolved until the damaged circuit is inspected.
 
-[Architecture plan](rev_b_plan.md) · [Source isolation](rev_b_source_isolation_study.md) · [Rev A bench evidence](../../../system/ground_station/eps_bench_setup.md)
+[Architecture plan](rev_b_plan.md) · [Source isolation](rev_b_source_isolation_study.md) · [Rev A bench evidence](../../../ground/history/2026-10-01/eps_bench_setup.md)
 
 ## Protection circuit allocation
 
