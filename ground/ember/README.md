@@ -8,8 +8,8 @@ For day-to-day commanding, responses, displays and replay, start with the
 `dictionary.json` is the machine-readable bench subset of Dustin's operation
 IDs. `codec.py` is a Python-standard-library encoder/decoder with no radio,
 dispatch or flight authorization. `simulator.py` implements the software
-GROUND_TEST endpoint. The [Yamcs lab](../yamcs/README.md) now runs an `ember`
-instance alongside the upstream sample; `generate_mdb.py` generates its
+GROUND_TEST endpoint. The [isolated Yamcs starter](../yamcs/HISTORY.md) runs EMBER alongside
+the upstream sample; `generate_mdb.py` generates its
 telemetry containers, command definitions and Java wire offsets from the JSON.
 
 From the repository root:
@@ -32,7 +32,7 @@ transaction identities, and invalid parameter handling.
 
 `session.py` records a bounded HEARTBEAT/POWER_STATUS archive window from Yamcs
 and replays its validated packets locally with recorded receive times and
-source context. See [session recording and replay](../../system/ground_station/telemetry_sessions.md)
+source context. See [session recording and replay](SESSIONS.md)
 for commands, the demonstrated 60-packet session, and quality/time limitations.
 
 ## Shared command engine and historical USB tools
@@ -48,18 +48,17 @@ The standalone USB Pico application and its C-only USB framing were removed.
 Python `framing.py`, `usb_bridge.py` and `usb_probe.py` remain test/diagnostic tools
 for the historical binary USB protocol; they are not the operational IHU text
 console bridge. Dated hardware results remain in
-[USB validation](../../system/ground_station/usb_validation.md). Use
+[USB validation](../history/2026-10-01/usb_validation.md). Use
 [`payload_bridge.py`](payload_bridge.py) for the current sole-owner IHU serial
 bench connection and its payload commands/EPS forwarding.
 
 ## Real IHU EPS observations
 
-`eps_bridge.py` exclusively polls `eps json` on the IHU UART adapter and sends
-POWER_STATUS (0x10) to Yamcs UDP 10017. This is explicitly a Pi-generated
-wrapper; there is no EPS uplink or charger configuration path. The dictionary
-adds signed i32 fixed-point engineering fields, all 19 raw words, readout
-quality/age and bridge provenance. Yamcs scales engineering values and marks
-unavailable sentinels INVALID. See the [packet contract](../../system/protocols/eps_power_status_v1.md)
-and [Pi setup/validation](../../system/ground_station/eps_yamcs_setup.md).
+The shared station uses the single-owner IHU serial bridge. It polls
+`eps json` and forwards POWER_STATUS to the bench instance. See
+[serial ownership and EPS](../yamcs/OPERATIONAL.md#serial-ownership-and-eps)
+and the [packet contract](../../system/protocols/eps_power_status_v1.md).
+The legacy `eps_bridge.py` and UDP10017 setup are documented in the
+[retired UART adapter record](../history/2026-10-01/eps_yamcs_setup.md).
 
 [Optional SDRB CAN adapter](../../system/interfaces/sdrb_adapter.md) validates native IHU packets without owning RF; [current workstreams](../../system/sdrb/TODO.md).

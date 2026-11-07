@@ -26,7 +26,7 @@ are in the [Dustin coordination note](dustin_followup.md).
 PR #5 is now merged at `a21832b`: the Pi/Yamcs dictionary and simulated loop
 are the established lab baseline. PR #6 is merged at `583ac9a`: the spare
 Pico USB command loop and native overview are verified. Draft PR #7 adds the
-read-only IHU/EPS diagnostics and live [EPS Yamcs path](eps_yamcs_setup.md) on
+read-only IHU/EPS diagnostics and live [EPS Yamcs path](../../ground/history/2026-10-01/eps_yamcs_setup.md) on
 `feature/ihu-eps-definitions`.
 
 ## Current direction and open decisions
@@ -87,7 +87,7 @@ Existing firmware references (separate repositories):
 
 - [x] Export and locally replay a bounded, decoded housekeeping session with
       source context and original receive times: 30 live Pico heartbeats plus
-      30 EPS-quality packets; [session evidence](telemetry_sessions.md).
+      30 EPS-quality packets; [session evidence](../../ground/ember/SESSIONS.md#historical-demonstration--2026-10-02).
 - [x] Observe IHU/EPS UART recovery after the user restored power; a second
       30-second session contains 30 current readouts without a service restart.
 - [x] Identify current EPS power/ADC state: user confirmed battery only, VIN off;
@@ -96,7 +96,7 @@ Existing firmware references (separate repositories):
       setup; use input power or a narrowly scoped battery-only ADC-control path.
 
 - [x] Select and provision the Pi 5 / 8 GB with 64-bit Trixie, static Ethernet,
-  key-only SSH and verified sudo; [lab inventory](lab_inventory.md).
+  key-only SSH and verified sudo; [lab inventory](../../ground/history/2026-10-01/lab_inventory.md).
 - [ ] Assemble a panel with cooling, storage, power distribution, USB, Ethernet,
   Pico/radio mounting, and labelled RF connections.
 - [ ] Confirm USB power budget; use a suitable supply or powered hub as needed.
@@ -112,16 +112,16 @@ Existing firmware references (separate repositories):
 - [ ] Confirm a cold power-up with Ethernet absent and physical LibreSDR
   unplug/replug before relying on the complete demo module.
 - [ ] Configure telemetry retention and archive backup.
-- [x] Add a pinned, reproducible [Yamcs starter lab](../../ground/yamcs/README.md)
+- [x] Add a pinned, reproducible [Yamcs starter lab](../../ground/yamcs/HISTORY.md)
   with isolated simulator and persistent archive storage.
 - [x] Verify starter telemetry, sample command receipt, packet archiving and
-  recovery after server restart on m75q; [validation record](starter_validation.md).
+  recovery after server restart on m75q; [validation record](../../ground/history/2026-10-01/starter_validation.md).
 - [x] Verify Pi starter telemetry, simulator command receipt, packet archive,
   laptop browser access and archive survival across a full Pi reboot.
 - [x] Open native parameter plotting from the system display and verify
   archived/live telemetry on the Pi.
 - [x] Exercise interactive archive replay on the Pi: play/pause, forward/backward
-  seek, historical EPS values and frozen replay clock; [verification](archive_replay.md).
+  seek, historical EPS values and frozen replay clock; [verification](../../ground/history/2026-10-01/archive_replay.md).
 - [x] Add native EMBER overview and detail displays, with received timestamps,
   RSSI-unavailable handling and navigation to command history;
   [display setup](../../ground/yamcs/DISPLAYS.md).
@@ -164,15 +164,15 @@ Existing firmware references (separate repositories):
   debug output. Preserve the same CCSDS packet bytes across transports.
 - [x] Prove the first acceptance test over USB with the spacecraft Pico.
 
-Evidence: [software validation](ember_validation.md) and
-[USB hardware validation](usb_validation.md). USB acceptance is complete; RF
+Evidence: [software validation](../../ground/history/2026-10-01/ember_validation.md) and
+[USB hardware validation](../../ground/history/2026-10-01/usb_validation.md). USB acceptance is complete; RF
 acceptance remains open. While radios are unavailable, the real IHU EPS now
 feeds Yamcs through its UART adapter. Next software work: configure retention/backup, then extend the wired IHU command
 path with correlated results without enabling charger writes.
 
 ## IHU/EPS bench while RF hardware is unavailable
 
-Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
+Details and observed baseline: [IHU/EPS UART bench](../../ground/history/2026-10-01/eps_bench_setup.md).
 
 - [x] Identify the connected IHU UART adapter, confirm LTC4162-LAD and 2S2P
   battery configuration, and capture existing telemetry without charger changes.
@@ -229,7 +229,7 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
   [packet contract](../protocols/eps_power_status_v1.md).
 - [x] Add native Yamcs EPS dashboard/raw table; verify real VIN, battery/output
   voltage, signed current, die temperature and raw status;
-  [setup and validation](eps_yamcs_setup.md).
+  [setup and validation](../../ground/history/2026-10-01/eps_yamcs_setup.md).
 - [x] Verify UART disconnect/reconnect, bridge-stop expiration, INVALID/EXPIRED
   handling and archive survival across Yamcs restart; preserve API evidence.
 - [ ] Move host-packaged EPS observations to a native IHU packet link when the
@@ -288,7 +288,7 @@ Details and observed baseline: [IHU/EPS UART bench](eps_bench_setup.md).
 
 ## UHF / SDRB channel — October 3, 2026
 
-- [x] Inspect Pi Yamcs/LibreSDR setup and document [UHF ground channel](../../ground/uhf/README.md).
+- [x] Inspect Pi Yamcs/LibreSDR setup and document [UHF ground channel](../../ground/uhf/results/2026-10-03/bench-notes.md).
 - [x] Add isolated ember-uhf archive/input with the existing EMBER MDB and EPS display.
 - [x] Demonstrate a 128-byte IHU→CAN→SDRB→UHF→LibreSDR→Yamcs packet with byte identity at each recorded stage.
 - [x] Preserve paused RF archive proof display and stop both radio applications.

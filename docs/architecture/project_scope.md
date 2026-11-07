@@ -1,6 +1,6 @@
 # Project Scope and Positioning
 
-[Architecture](README.md)
+[Architecture](../README.md#understand-the-system)
 
 ## Mission
 

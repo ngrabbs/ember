@@ -111,7 +111,7 @@ EMBER Yamcs definitions and simulated command loop pass on Pi/m75q. The dedicate
 parser/handlers and USB loop now pass on hardware, including duplicate, reset
 and timeout checks. Real IHU EPS telemetry now reaches a read-only native
 Yamcs dashboard through the UART adapter, with validity, expiration, raw data
-and archived plots; see [EPS setup](system/ground_station/eps_yamcs_setup.md).
+and archived plots; see [dated EPS setup](ground/history/2026-10-01/eps_yamcs_setup.md).
 Interactive replay is verified; archive retention/backup is next while radios
 are unavailable. The two-Pico SX1280 RF loop and UHF BPSK validation remain open.
 

@@ -433,7 +433,7 @@ an LTE window or replace the explicit `eps lte` procedure above.
 ## References and evidence limits
 
 - [IHU/COMMS console command reference](ihu-can-console.md)
-- [Yamcs operation](yamcs.md) and [runtime setup](../../ground/yamcs/README.md)
+- [Yamcs operation](yamcs.md) and [runtime setup](../../ground/yamcs/OPERATIONAL.md)
 - [LTE receiver implementation](../../ground/ember/lte_receiver.py)
 - [Bounded cell runner](../../ground/lte/scripts/run-radio-check.py)
 - [Prior native EPS reliability results](../../ground/lte/results/2026-10-02-eps-security-reliability.md)

@@ -11,5 +11,5 @@ the implementation baseline.
 
 ## Usage Notes
 
-- Keep implementation-facing plans in [`firmware/firmware.md`](../../firmware/firmware.md).
+- Keep implementation-facing plans in [`firmware/README.md`](../../firmware/README.md).
 - Keep exploratory links and tutorials in this file.

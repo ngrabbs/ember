@@ -1,6 +1,6 @@
 # EMBER operator guides
 
-[Documentation home](../README.md) · [Review and evidence limits](../review/README.md)
+[Documentation home](../README.md)
 
 Use the guide for the application actually running on your board. Each guide
 names its applicable versions and validation dates. Source implementation,

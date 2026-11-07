@@ -1,23 +1,14 @@
-# Ground software
+# Ground software and deployment
 
-For day-to-day commanding, responses, displays and replay, start with the
-[Yamcs operator guide](../docs/user/yamcs.md).
+For commanding, displays, and replay, use the [Yamcs operator guide](../docs/user/yamcs.md).
+For receiver selection and packet formats, use the [radio guide](../docs/comms/README.md).
 
-[System guide](../system/README.md) · [Ground station checklist](../system/ground_station/TODO.md)
+| Deploy or develop | Start here |
+|---|---|
+| Ground Pi | [Provisioning, readiness, and recovery](pi/README.md) |
+| Shared Yamcs station | [Deployment and service ownership](yamcs/OPERATIONAL.md) |
+| Codec, dictionary, simulator, and session tools | [EMBER packet tools](ember/README.md) |
+| Receiver software | [COMMS DBPSK](bpsk/README.md) · [SDRB FSK](uhf/README.md) · [LTE-M](lte/README.md) |
 
-- [Telemetry data flow](../docs/architecture/telemetry_data_flow.md): shared team reading, battery voltage/current walkthroughs, and definition ownership.
-- [LTE-M telemetry bench](lte/README.md): Walter UE, LibreSDR/eNodeB inventory,
-  recovered LTE configs, bring-up runbook, and spacecraft-channel checklist.
-- [EMBER bench dictionary](ember/README.md): JSON definitions, host codec and
-  wire vectors, generated MDB, simulator and verified Pico USB endpoint.
-- [Yamcs ground lab](yamcs/README.md): EMBER command/telemetry loop and the
-  preserved upstream reference, with reproducible software checks.
-- [Pi preparation](../system/ground_station/pi_setup.md): OS and first-boot settings.
-- [Dustin coordination](../system/ground_station/dustin_followup.md): remaining
-  operations definitions and shared protocol decisions.
-
-Application command and telemetry meanings come from the
-[operations dictionaries](../docs/architecture/operations/Ground_Operations_Command_Telemetry/README.md).
-The radio bridge and waveform implementation will carry that shared interface.
-
-[UHF / SDRB telemetry bench](uhf/README.md): separate Yamcs input, LibreSDR ownership, CAN adapter, packet transport and optional supervision.
+[Ground checklist](../system/ground_station/TODO.md) ·
+[Release identities](releases/README.md) · [Bench history](history/README.md)

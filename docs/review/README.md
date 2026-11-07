@@ -1,4 +1,7 @@
-# EMBER documentation review
+# EMBER documentation review history
+
+Dated review records and inventories. For current instructions, use the
+[documentation index](../README.md).
 
 **Integration update — October 5, 2026:** this review records the original
 LTE-branch publication scope. Main now also includes the separate EPS Rev B,

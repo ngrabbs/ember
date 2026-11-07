@@ -150,7 +150,7 @@ at most 242 stream bytes. Partial frames expire after 500 ms; malformed and
 oversized frames discard through the next delimiter. Debug text uses UART0,
 never the binary USB stream. The Pico COMM_STATUS TX count measures packets
 handed to the bounded SDK USB writer, not confirmed delivery. See
-[hardware validation](../ground_station/usb_validation.md). Events,
+[hardware validation](../../ground/history/2026-10-01/usb_validation.md). Events,
 event persistence, authentication, UTC, PUS, flight limits and SatNOGS decoding
 are not implemented by this lab v1.
 

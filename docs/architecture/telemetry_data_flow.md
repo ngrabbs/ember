@@ -12,7 +12,7 @@ hardware delivery. Flight IDs, production scheduling/queues, and the UHF BPSK
 packet path are not finalized. This guide explains the implementation; it does
 not allocate new IDs or replace the authoritative contracts linked below.
 
-[Architecture index](README.md) · [Documentation home](../README.md) ·
+[Documentation home](../README.md) ·
 [Shared interfaces](../../system/README.md) · [Ground software](../../ground/README.md)
 
 ## 1. The complete path
@@ -135,7 +135,7 @@ ground/yamcs/.runtime/quickstart/src/main/yamcs/etc/
 
 These are ignored runtime outputs and may be absent in a source-only checkout.
 Edit tracked definitions/generators, then regenerate. Follow the
-[Yamcs setup procedure](../../ground/yamcs/README.md) for rebuilding/restarting the
+[Yamcs setup procedure](../../ground/yamcs/OPERATIONAL.md) for rebuilding/restarting the
 running installation and installing displays while preserving the archive.
 
 ## 4. Worked example: battery voltage
@@ -439,8 +439,9 @@ provenance and source timing differ:
 | Input link / UDP port | `eps-uart-in` / 10017 | `eps-lte-in` / 10018 |
 
 The wrapper implementation is [eps_bridge.py](../../ground/ember/eps_bridge.py).
-The [wrapper setup guide](../../system/ground_station/eps_yamcs_setup.md) explains
-its polling, failure handling, and conversion assumptions. A wrapper dashboard
+The [dated UART setup](../../ground/history/2026-10-01/eps_yamcs_setup.md) explains
+its polling, failure handling, and conversion assumptions. The [shared station](../../ground/yamcs/OPERATIONAL.md#serial-ownership-and-eps)
+uses the IHU serial bridge. A wrapper dashboard
 update is not evidence of CAN or radio delivery.
 
 The upstream `myproject` Yamcs instance is demonstration data and is separate
@@ -554,6 +555,6 @@ Expected values include `raw_vbat=20777`, `battery_mv=7995`,
 For transport reproduction and current qualification limits, use the
 [queued hardware delivery record](../../ground/lte/results/2026-10-02-queued-eps.md),
 [CAN bench reference](../../firmware/ihu/README.md), and
-[Yamcs runbook](../../ground/yamcs/README.md). Some earlier overview/status prose
+[Yamcs runbook](../../ground/yamcs/OPERATIONAL.md). Some earlier overview/status prose
 predates these tests; use dated implementation evidence for bench capability
 and the owning interface/operations documents for architectural decisions.
