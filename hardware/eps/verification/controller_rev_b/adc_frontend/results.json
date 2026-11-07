@@ -1,0 +1,124 @@
+{
+  "scope": "CONDITIONAL_ADC_DEVELOPMENT_SCREEN;NO_NATIVE_OR_BROWNOUT_ACCEPTANCE",
+  "independent_resistor_error": 0.002625,
+  "TMUX_Ron_sweep_ohm": [
+    0,
+    4.5
+  ],
+  "switch_power_off_leakage_2uA_into47k_V": 0.09424675,
+  "ADC_source_limit_ohm_at39p5_cycles35MHz": 15000,
+  "selected_sampling_cycles": 160.5,
+  "selected_ADC_clock_max_MHz": 35,
+  "enable_settling_wait_s": 0.002,
+  "channels": [
+    {
+      "rail": "SYS_PWR_PERMITTED",
+      "MCU_pin": 7,
+      "top_resistors_ohm": [
+        100000,
+        100000
+      ],
+      "bottom_ohm": 10000,
+      "series_after_switch_ohm": 1000,
+      "ADC_bleed_ohm": 47000,
+      "normal_V": 35,
+      "design_input_ceiling_V": 60,
+      "gain_nominal": 0.03890593207852045,
+      "gain_min": 0.03870503346287652,
+      "gain_max": 0.039107466715229855,
+      "ADC_V_at_input_ceiling_max": 2.3464480029137915,
+      "open_switch_divider_ceiling_V": 2.871462580772192,
+      "ideal_switch_enable_charged_filter_ADC_max_V": 2.811947195174551,
+      "source_impedance_max_ohm": 8624.08487805471,
+      "filter_half_LSB_full_step_settling_s_sensitivity": 0.0009028484628306483,
+      "rail_V_per_LSB_at3p6V_ref": 0.022590546043882977,
+      "rail_error_from6p5LSB_at3p6V_ref_V": 0.14683854928523937,
+      "rail_error_from_0p2uA_total_on_leakage_V_sensitivity": 0.044333007422361556,
+      "ratio_relative_error_max": 0.005180049055312885,
+      "individual_series_top_resistor_voltage_conservative_bound_V": 30.15791452562978
+    },
+    {
+      "rail": "+5V",
+      "MCU_pin": 8,
+      "top_resistors_ohm": [
+        20000
+      ],
+      "bottom_ohm": 10000,
+      "series_after_switch_ohm": 1000,
+      "ADC_bleed_ohm": 47000,
+      "normal_V": 5,
+      "design_input_ceiling_V": 6,
+      "gain_nominal": 0.2865748814067777,
+      "gain_min": 0.28547127463813615,
+      "gain_max": 0.28767829690504054,
+      "ADC_V_at_input_ceiling_max": 1.7260697814302433,
+      "open_switch_divider_ceiling_V": 2.007006130364069,
+      "ideal_switch_enable_charged_filter_ADC_max_V": 1.9654079063282452,
+      "source_impedance_max_ohm": 6612.09204548737,
+      "filter_half_LSB_full_step_settling_s_sensitivity": 0.0006319939239814538,
+      "rail_V_per_LSB_at3p6V_ref": 0.0030669340093085113,
+      "rail_error_from6p5LSB_at3p6V_ref_V": 0.019935071060505325,
+      "rail_error_from_0p2uA_total_on_leakage_V_sensitivity": 0.00461456497026469,
+      "ratio_relative_error_max": 0.003851024078677212,
+      "individual_series_top_resistor_voltage_conservative_bound_V": 6
+    },
+    {
+      "rail": "+3V3",
+      "MCU_pin": 11,
+      "top_resistors_ohm": [
+        10000
+      ],
+      "bottom_ohm": 10000,
+      "series_after_switch_ohm": 1000,
+      "ADC_bleed_ohm": 47000,
+      "normal_V": 3.3,
+      "design_input_ceiling_V": 3.6,
+      "gain_nominal": 0.4433794951133919,
+      "gain_min": 0.44204131059904095,
+      "gain_max": 0.44471420775274617,
+      "ADC_V_at_input_ceiling_max": 1.6009711479098863,
+      "open_switch_divider_ceiling_V": 1.804725,
+      "ideal_switch_enable_charged_filter_ADC_max_V": 1.7673193569691867,
+      "source_impedance_max_ohm": 5338.260202305545,
+      "filter_half_LSB_full_step_settling_s_sensitivity": 0.0004739954429860903,
+      "rail_V_per_LSB_at3p6V_ref": 0.001982288896276596,
+      "rail_error_from6p5LSB_at3p6V_ref_V": 0.012884877825797874,
+      "rail_error_from_0p2uA_total_on_leakage_V_sensitivity": 0.0024079869552561576,
+      "ratio_relative_error_max": 0.003018147048069353,
+      "individual_series_top_resistor_voltage_conservative_bound_V": 3.6
+    },
+    {
+      "rail": "BATT_PERMITTED",
+      "MCU_pin": 12,
+      "top_resistors_ohm": [
+        100000,
+        100000
+      ],
+      "bottom_ohm": 10000,
+      "series_after_switch_ohm": 1000,
+      "ADC_bleed_ohm": 47000,
+      "normal_V": 8.5,
+      "design_input_ceiling_V": 60,
+      "gain_nominal": 0.03890593207852045,
+      "gain_min": 0.03870503346287652,
+      "gain_max": 0.039107466715229855,
+      "ADC_V_at_input_ceiling_max": 2.3464480029137915,
+      "open_switch_divider_ceiling_V": 2.871462580772192,
+      "ideal_switch_enable_charged_filter_ADC_max_V": 2.811947195174551,
+      "source_impedance_max_ohm": 8624.08487805471,
+      "filter_half_LSB_full_step_settling_s_sensitivity": 0.0009028484628306483,
+      "rail_V_per_LSB_at3p6V_ref": 0.022590546043882977,
+      "rail_error_from6p5LSB_at3p6V_ref_V": 0.14683854928523937,
+      "rail_error_from_0p2uA_total_on_leakage_V_sensitivity": 0.044333007422361556,
+      "ratio_relative_error_max": 0.005180049055312885,
+      "individual_series_top_resistor_voltage_conservative_bound_V": 30.15791452562978
+    }
+  ],
+  "not_included": [
+    "Reference/VREFINT/calibration error",
+    "Full dynamic ADC/switch model",
+    "Leakage outside manufacturer test conditions",
+    "Rapid or slow rail collapse and all-path injection",
+    "Unbounded input fault or divider resistor failure"
+  ]
+}

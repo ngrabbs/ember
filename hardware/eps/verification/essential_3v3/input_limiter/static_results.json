@@ -1,0 +1,286 @@
+{
+  "status": "PROGRAMMING_AND_HEADROOM_FEASIBILITY;DYNAMIC_AND_NATIVE_SELECTION_OPEN",
+  "resistor_initial_and_65K_independent_error": 0.002625,
+  "current_limit_testpoint_windows": {
+    "9000": {
+      "formula_nominal_A": 2.0,
+      "min_A_with_resistor_corner": 1.835182645555417,
+      "max_A_with_resistor_corner": 2.1656849229226722,
+      "conditions": "Datasheet test-point VIN-VOUT=1V; not an initial hot-short peak bound or guarantee at arbitrary dropout."
+    },
+    "4020": {
+      "formula_nominal_A": 4.477611940298507,
+      "min_A_with_resistor_corner": 4.174043136765988,
+      "max_A_with_resistor_corner": 4.82767264068179,
+      "conditions": "Datasheet test-point VIN-VOUT=1V; not an initial hot-short peak bound or guarantee at arbitrary dropout."
+    }
+  },
+  "independent_dividers": {
+    "UVLO": {
+      "top_ohm": 24900,
+      "bottom_ohm": 10000,
+      "rising": {
+        "min_V": 4.085181793528472,
+        "max_V": 4.29154765686278
+      },
+      "falling": {
+        "min_V": 3.7861630851379973,
+        "max_V": 4.0323177458463615
+      }
+    },
+    "OVP": {
+      "top_ohm": 365000,
+      "bottom_ohm": 10000,
+      "rising": {
+        "min_V": 43.820632716381205,
+        "max_V": 46.19006003031787
+      },
+      "falling": {
+        "min_V": 40.61206932029594,
+        "max_V": 43.40084245919367
+      }
+    },
+    "PGTH": {
+      "top_ohm": 19600,
+      "bottom_ohm": 10000,
+      "rising": {
+        "min_V": 3.465958359564579,
+        "max_V": 3.6386158262855623
+      },
+      "falling": {
+        "min_V": 3.2122809826789047,
+        "max_V": 3.4188123621923174
+      }
+    }
+  },
+  "normal_two_amp_sensitivities": [
+    {
+      "vin_V": 4.5,
+      "assumed_efficiency": 0.8,
+      "buck_input_A": 1.8889072985860924,
+      "buck_input_V": 4.399887913174937,
+      "margin_to_buck4p3_V": 0.09988791317493728,
+      "efuse_R_loss_W": 0.18910245148054589,
+      "efuse_max_IQ_source_loss_W": 0.00765,
+      "current_margin_to_9k_testpoint_min_A": -0.05372465303067542,
+      "current_margin_to_4020_testpoint_min_A": 2.2851358381798956
+    },
+    {
+      "vin_V": 4.5,
+      "assumed_efficiency": 0.85,
+      "buck_input_A": 1.775366971196963,
+      "buck_input_V": 4.405905550526561,
+      "margin_to_buck4p3_V": 0.10590555052656114,
+      "efuse_R_loss_W": 0.16705217776810513,
+      "efuse_max_IQ_source_loss_W": 0.00765,
+      "current_margin_to_9k_testpoint_min_A": 0.05981567435845392,
+      "current_margin_to_4020_testpoint_min_A": 2.398676165569025
+    },
+    {
+      "vin_V": 4.5,
+      "assumed_efficiency": 0.9,
+      "buck_input_A": 1.674707632451976,
+      "buck_input_V": 4.411240495480046,
+      "margin_to_buck4p3_V": 0.11124049548004589,
+      "efuse_R_loss_W": 0.14864621967222386,
+      "efuse_max_IQ_source_loss_W": 0.00765,
+      "current_margin_to_9k_testpoint_min_A": 0.16047501310344092,
+      "current_margin_to_4020_testpoint_min_A": 2.499335504314012
+    },
+    {
+      "vin_V": 4.5,
+      "assumed_efficiency": 0.95,
+      "buck_input_A": 1.584854167799209,
+      "buck_input_V": 4.416002729106642,
+      "margin_to_buck4p3_V": 0.11600272910664255,
+      "efuse_R_loss_W": 0.13312342485909773,
+      "efuse_max_IQ_source_loss_W": 0.00765,
+      "current_margin_to_9k_testpoint_min_A": 0.25032847775620803,
+      "current_margin_to_4020_testpoint_min_A": 2.589188968966779
+    },
+    {
+      "vin_V": 5,
+      "assumed_efficiency": 0.8,
+      "buck_input_A": 1.6925626216503729,
+      "buck_input_V": 4.91029418105253,
+      "margin_to_buck4p3_V": 0.61029418105253,
+      "efuse_R_loss_W": 0.1518327160950231,
+      "efuse_max_IQ_source_loss_W": 0.008499999999999999,
+      "current_margin_to_9k_testpoint_min_A": 0.14262002390504414,
+      "current_margin_to_4020_testpoint_min_A": 2.4814805151156154
+    },
+    {
+      "vin_V": 5,
+      "assumed_efficiency": 0.85,
+      "buck_input_A": 1.5912601939759234,
+      "buck_input_V": 4.915663209719276,
+      "margin_to_buck4p3_V": 0.6156632097192762,
+      "efuse_R_loss_W": 0.13420177726141155,
+      "efuse_max_IQ_source_loss_W": 0.008499999999999999,
+      "current_margin_to_9k_testpoint_min_A": 0.24392245157949355,
+      "current_margin_to_4020_testpoint_min_A": 2.5827829427900646
+    },
+    {
+      "vin_V": 5,
+      "assumed_efficiency": 0.9,
+      "buck_input_A": 1.5014022372596467,
+      "buck_input_V": 4.920425681425239,
+      "margin_to_buck4p3_V": 0.6204256814252389,
+      "efuse_R_loss_W": 0.11947305993655843,
+      "efuse_max_IQ_source_loss_W": 0.008499999999999999,
+      "current_margin_to_9k_testpoint_min_A": 0.33378040829577027,
+      "current_margin_to_4020_testpoint_min_A": 2.6726408995063413
+    },
+    {
+      "vin_V": 5,
+      "assumed_efficiency": 0.95,
+      "buck_input_A": 1.4211526185589807,
+      "buck_input_V": 4.924678911216374,
+      "margin_to_buck4p3_V": 0.6246789112163738,
+      "efuse_R_loss_W": 0.10704276255756352,
+      "efuse_max_IQ_source_loss_W": 0.008499999999999999,
+      "current_margin_to_9k_testpoint_min_A": 0.4140300269964363,
+      "current_margin_to_4020_testpoint_min_A": 2.7528905182070074
+    },
+    {
+      "vin_V": 8.5,
+      "assumed_efficiency": 0.8,
+      "buck_input_A": 0.983797272594797,
+      "buck_input_V": 8.447858744552477,
+      "margin_to_buck4p3_V": 4.147858744552477,
+      "efuse_R_loss_W": 0.05129642489894295,
+      "efuse_max_IQ_source_loss_W": 0.01445,
+      "current_margin_to_9k_testpoint_min_A": 0.85138537296062,
+      "current_margin_to_4020_testpoint_min_A": 3.190245864171191
+    },
+    {
+      "vin_V": 8.5,
+      "assumed_efficiency": 0.85,
+      "buck_input_A": 0.9255888318776697,
+      "buck_input_V": 8.450943791910483,
+      "margin_to_buck4p3_V": 4.150943791910483,
+      "efuse_R_loss_W": 0.04540587834192346,
+      "efuse_max_IQ_source_loss_W": 0.01445,
+      "current_margin_to_9k_testpoint_min_A": 0.9095938136777473,
+      "current_margin_to_4020_testpoint_min_A": 3.2484543048883183
+    },
+    {
+      "vin_V": 8.5,
+      "assumed_efficiency": 0.9,
+      "buck_input_A": 0.873883858263721,
+      "buck_input_V": 8.453684155512022,
+      "margin_to_buck4p3_V": 4.153684155512022,
+      "efuse_R_loss_W": 0.040474668879896016,
+      "efuse_max_IQ_source_loss_W": 0.01445,
+      "current_margin_to_9k_testpoint_min_A": 0.961298787291696,
+      "current_margin_to_4020_testpoint_min_A": 3.3001592785022673
+    },
+    {
+      "vin_V": 8.5,
+      "assumed_efficiency": 0.95,
+      "buck_input_A": 0.8276500677498346,
+      "buck_input_V": 8.45613454640926,
+      "margin_to_buck4p3_V": 4.15613454640926,
+      "efuse_R_loss_W": 0.03630524563625421,
+      "efuse_max_IQ_source_loss_W": 0.01445,
+      "current_margin_to_9k_testpoint_min_A": 1.0075325778055824,
+      "current_margin_to_4020_testpoint_min_A": 3.3463930690161536
+    },
+    {
+      "vin_V": 35,
+      "assumed_efficiency": 0.8,
+      "buck_input_A": 0.23754202804448227,
+      "buck_input_V": 34.98741027251364,
+      "margin_to_buck4p3_V": 30.68741027251364,
+      "efuse_R_loss_W": 0.0029905893996367366,
+      "efuse_max_IQ_source_loss_W": 0.0595,
+      "current_margin_to_9k_testpoint_min_A": 1.5976406175109348,
+      "current_margin_to_4020_testpoint_min_A": 3.936501108721506
+    },
+    {
+      "vin_V": 35,
+      "assumed_efficiency": 0.85,
+      "buck_input_A": 0.22356423382432572,
+      "buck_input_V": 34.98815109560731,
+      "margin_to_buck4p3_V": 30.688151095607306,
+      "efuse_R_loss_W": 0.0026489912322092625,
+      "efuse_max_IQ_source_loss_W": 0.0595,
+      "current_margin_to_9k_testpoint_min_A": 1.6116184117310912,
+      "current_margin_to_4020_testpoint_min_A": 3.9504789029416623
+    },
+    {
+      "vin_V": 35,
+      "assumed_efficiency": 0.9,
+      "buck_input_A": 0.21114002491997658,
+      "buck_input_V": 34.98880957867924,
+      "margin_to_buck4p3_V": 30.688809578679237,
+      "efuse_R_loss_W": 0.0023627458365300417,
+      "efuse_max_IQ_source_loss_W": 0.0595,
+      "current_margin_to_9k_testpoint_min_A": 1.6240426206354404,
+      "current_margin_to_4020_testpoint_min_A": 3.9629031118460114
+    },
+    {
+      "vin_V": 35,
+      "assumed_efficiency": 0.95,
+      "buck_input_A": 0.20002402398790067,
+      "buck_input_V": 34.98939872672864,
+      "margin_to_buck4p3_V": 30.689398726728637,
+      "efuse_R_loss_W": 0.0021205093391325498,
+      "efuse_max_IQ_source_loss_W": 0.0595,
+      "current_margin_to_9k_testpoint_min_A": 1.6351586215675162,
+      "current_margin_to_4020_testpoint_min_A": 3.9740191127780875
+    }
+  ],
+  "earliest_PGOOD_ramp_voltage_before_available_supply_cap_V": 5.394514201745118,
+  "output_slew_V_per_s": [
+    1802.3886375519057,
+    2773.6358362380197
+  ],
+  "PGOOD_pullup_ohm": 100000,
+  "PGOOD_low_with_35V_pullup_and130ohm_sink_V": 0.045440926795166287,
+  "input_capacitor_bank": {
+    "refs": [
+      "C400",
+      "C401",
+      "C402"
+    ],
+    "nominal_uF": 4.5,
+    "initial_temp_high_sensitivity_uF": 5.6925,
+    "energy_at35V_max_sensitivity_J": 0.0034866562500000006,
+    "not_a_combined_qualified_capacitance_bound": true
+  },
+  "proposed_migrations_only_not_executed": {
+    "SYS_PWR_3V3_LIMITED": [
+      [
+        "C400",
+        "1"
+      ],
+      [
+        "C401",
+        "1"
+      ],
+      [
+        "C402",
+        "1"
+      ],
+      [
+        "U400",
+        "3"
+      ]
+    ],
+    "EPS_3V3_BUCK_EN": [
+      [
+        "U400",
+        "2"
+      ]
+    ]
+  },
+  "remaining_gates": [
+    "TPS2663 model is encrypted; no LTspice vendor-model execution.",
+    "Current-window test point does not bound first-short transient.",
+    "Post-limiter bank can bypass steady limit; preserve local LMR HF capacitance.",
+    "Downstream opening delay and negative limiter-output clamp need actual guaranteed paths.",
+    "Efficiency, startup/inrush, dropout, shared-source and thermal assumptions remain qualification items.",
+    "Stock PGOOD generic-output ERC type and larger stock lands are explicit review limitations."
+  ]
+}

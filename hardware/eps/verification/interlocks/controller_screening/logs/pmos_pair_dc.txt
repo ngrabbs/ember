@@ -1,0 +1,22 @@
+LTspice 26.0.2 for MacOS
+Circuit: ${RUN_DIRECTORY}/pair_dc.cir
+Start Time: Fri Oct 23 16:33:35 2026
+Options:plotwinsize=0
+solver = Normal
+Maximum thread count: 10
+tnom = 27
+temp = 27
+method = trap
+Instance "xpass:M1": Length shorter than recommended for a level 3 MOSFET.
+Instance "xpass:M2": Length shorter than recommended for a level 3 MOSFET.
+Instance "xreverse:M1": Length shorter than recommended for a level 3 MOSFET.
+Instance "xreverse:M2": Length shorter than recommended for a level 3 MOSFET.
+Direct Newton iteration failed to find operating point.
+Starting Gmin stepping
+Gmin stepping succeeded in finding the operating point.
+
+Total elapsed time: 0.082 seconds.
+
+Files loaded:
+${RUN_DIRECTORY}/pair_dc.cir
+${PMOS_MODEL}

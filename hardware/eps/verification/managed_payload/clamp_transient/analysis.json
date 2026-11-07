@@ -1,0 +1,239 @@
+{
+  "status": "COMPLETED_NOMINAL_SUBCIRCUIT_SENSITIVITY_ONLY",
+  "completed_cases": 24,
+  "peak_without_filter_V": 3.906008720397949,
+  "peak_with_1nF_V": 3.746004581451416,
+  "global_minimum_OVP_V": -0.005941830109804869,
+  "reference_peak_V": 5.007917404174805,
+  "reference_bias_abs_peak_A": 0.0034206113778054714,
+  "full_0_to_4V_operating_screen_passes": 12,
+  "absolute_minus0p3_to5p5V_screen_passes": 24,
+  "model_sha256": "2bf3079630170b07bc3b942ef64af54270ba568d42325de21fb90cd926a4f553",
+  "simulator": "LTspice 26.0.2",
+  "model_source": "https://www.ti.com/lit/zip/SNOM541",
+  "model_revision": "10APR2013 Final 1.00; PSPICE16 transient; TOL=0",
+  "compatibility_warnings": "PBSW, UCRIT, DIOMOD ignored in unused Menable declaration; no M instance uses it. Original model and warnings retained. Not vendor-certified LTspice/PVT validation.",
+  "diode_model": "Imposed instantaneous forward envelope plus capacitance; NOT a BAS116H manufacturer model",
+  "physical_or_PVT_acceptance": false,
+  "threshold_metrics": [
+    {
+      "name": "cycle_warm_step_t-40_c0p_vf0p9",
+      "OVP_peak_V": 3.5501599311828613,
+      "OVP_min_V": 0.881355881690979,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 6.874688340298418e-05,
+        "1.224": 8.350771549953118e-05
+      }
+    },
+    {
+      "name": "cycle_warm_step_t-40_c0p_vf1p2",
+      "OVP_peak_V": 3.74326753616333,
+      "OVP_min_V": 1.074222445487976,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 6.874688340298418e-05,
+        "1.224": 8.350771549953118e-05
+      }
+    },
+    {
+      "name": "cycle_warm_step_t-40_c1000p_vf0p9",
+      "OVP_peak_V": 3.3709123134613037,
+      "OVP_min_V": 1.074222445487976,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.23684741987431945,
+        "1.224": 0.3618474198735771
+      }
+    },
+    {
+      "name": "cycle_warm_step_t-40_c1000p_vf1p2",
+      "OVP_peak_V": 3.6676783561706543,
+      "OVP_min_V": 1.074222445487976,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.23684741987431945,
+        "1.224": 0.3618474198735771
+      }
+    },
+    {
+      "name": "cycle_warm_step_t25_c0p_vf0p9",
+      "OVP_peak_V": 3.5508012771606445,
+      "OVP_min_V": 0.9212565422058105,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 6.876856224226346e-05,
+        "1.224": 8.351913193156701e-05
+      }
+    },
+    {
+      "name": "cycle_warm_step_t25_c0p_vf1p2",
+      "OVP_peak_V": 3.7910356521606445,
+      "OVP_min_V": 1.074222445487976,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 6.876856224226346e-05,
+        "1.224": 8.351913193156701e-05
+      }
+    },
+    {
+      "name": "cycle_warm_step_t25_c1000p_vf0p9",
+      "OVP_peak_V": 3.4111013412475586,
+      "OVP_min_V": 1.074222445487976,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.23663860434087852,
+        "1.224": 0.36163860434013617
+      }
+    },
+    {
+      "name": "cycle_warm_step_t25_c1000p_vf1p2",
+      "OVP_peak_V": 3.707860231399536,
+      "OVP_min_V": 1.074222445487976,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.23663860434087852,
+        "1.224": 0.36163860434013617
+      }
+    },
+    {
+      "name": "cycle_warm_step_t85_c0p_vf0p9",
+      "OVP_peak_V": 3.567617654800415,
+      "OVP_min_V": 0.9490759372711182,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 6.878428165588146e-05,
+        "1.224": 8.35274265118674e-05
+      }
+    },
+    {
+      "name": "cycle_warm_step_t85_c0p_vf1p2",
+      "OVP_peak_V": 3.838880777359009,
+      "OVP_min_V": 1.074222445487976,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 6.878428165588146e-05,
+        "1.224": 8.35274265118674e-05
+      }
+    },
+    {
+      "name": "cycle_warm_step_t85_c1000p_vf0p9",
+      "OVP_peak_V": 3.4492578506469727,
+      "OVP_min_V": 1.074222445487976,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.23316022264448755,
+        "1.224": 0.3631602226437155
+      }
+    },
+    {
+      "name": "cycle_warm_step_t85_c1000p_vf1p2",
+      "OVP_peak_V": 3.746004581451416,
+      "OVP_min_V": 1.074222445487976,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.23316022264448755,
+        "1.224": 0.3631602226437155
+      }
+    },
+    {
+      "name": "cycle_cold_start_t-40_c0p_vf0p9",
+      "OVP_peak_V": 3.606595516204834,
+      "OVP_min_V": -0.005806528963148594,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.0003518182821894006,
+        "1.224": 0.0003759877125354
+      }
+    },
+    {
+      "name": "cycle_cold_start_t-40_c0p_vf1p2",
+      "OVP_peak_V": 3.906008720397949,
+      "OVP_min_V": -0.003981694113463163,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.000351818285875688,
+        "1.224": 0.00037598771557116606
+      }
+    },
+    {
+      "name": "cycle_cold_start_t-40_c1000p_vf0p9",
+      "OVP_peak_V": 3.3590686321258545,
+      "OVP_min_V": -0.0013079410418868065,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 2.6392113778425563,
+        "1.224": 2.7642113778418143
+      }
+    },
+    {
+      "name": "cycle_cold_start_t-40_c1000p_vf1p2",
+      "OVP_peak_V": 3.658997058868408,
+      "OVP_min_V": -0.0013079410418868065,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 2.6392157103163894,
+        "1.224": 2.764215710315647
+      }
+    },
+    {
+      "name": "cycle_cold_start_t25_c0p_vf0p9",
+      "OVP_peak_V": 3.418043613433838,
+      "OVP_min_V": -0.005885842721909285,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.00035679215701703293,
+        "1.224": 0.0003818369930137788
+      }
+    },
+    {
+      "name": "cycle_cold_start_t25_c0p_vf1p2",
+      "OVP_peak_V": 3.717989921569824,
+      "OVP_min_V": -0.0041623483411967754,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.00035679215202970294,
+        "1.224": 0.00038183698802644883
+      }
+    },
+    {
+      "name": "cycle_cold_start_t25_c1000p_vf0p9",
+      "OVP_peak_V": 3.399768829345703,
+      "OVP_min_V": -0.0013079410418868065,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 2.636412854516287,
+        "1.224": 2.766412854515515
+      }
+    },
+    {
+      "name": "cycle_cold_start_t25_c1000p_vf1p2",
+      "OVP_peak_V": 3.699695587158203,
+      "OVP_min_V": -0.0013079410418868065,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 2.636414318238226,
+        "1.224": 2.766414318237454
+      }
+    },
+    {
+      "name": "cycle_cold_start_t85_c0p_vf0p9",
+      "OVP_peak_V": 3.438263416290283,
+      "OVP_min_V": -0.005941830109804869,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.00035884846049522023,
+        "1.224": 0.00037333176263962264
+      }
+    },
+    {
+      "name": "cycle_cold_start_t85_c0p_vf1p2",
+      "OVP_peak_V": 3.738189697265625,
+      "OVP_min_V": -0.00421385932713747,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 0.00035884846765095457,
+        "1.224": 0.00037333176784379307
+      }
+    },
+    {
+      "name": "cycle_cold_start_t85_c1000p_vf0p9",
+      "OVP_peak_V": 3.438263416290283,
+      "OVP_min_V": -0.0013079410418868065,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 2.636793159653062,
+        "1.224": 2.76679315965229
+      }
+    },
+    {
+      "name": "cycle_cold_start_t85_c1000p_vf1p2",
+      "OVP_peak_V": 3.738189697265625,
+      "OVP_min_V": -0.0013079410418868065,
+      "first_threshold_crossing_after_step_us": {
+        "1.176": 2.6340351902823853,
+        "1.224": 2.764035190281613
+      }
+    }
+  ],
+  "download_zip_sha256": "36bf9e5218af7c17b42f939ebbdbeac64978d88549fca372f03009a48e602ab5",
+  "zip_member": "LM4040_NC2P5_PSPICE_TRANS/LM4040_NC2P5_TRANS.lib",
+  "unmodified_zip_member_verified": true
+}

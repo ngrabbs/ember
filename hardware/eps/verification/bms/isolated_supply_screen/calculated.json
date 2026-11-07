@@ -1,0 +1,47 @@
+{
+  "status": "conditional DC screening only; NOT integration acceptance",
+  "proposed_UCC_setting_V": 5.5,
+  "UCC_SEL_binding": "secondary GNDS; not VCC",
+  "UCC_full_range_accuracy_envelope_V": [
+    5.279999999999999,
+    5.720000000000001
+  ],
+  "TLV_nominal_plus_1p5_input_test_condition_V": 4.8,
+  "input_margin_to_that_condition_V": 0.47999999999999954,
+  "LDO_output_accuracy_envelope_V": [
+    3.267,
+    3.3329999999999997
+  ],
+  "ISO1540_operating_min_margin_V": 0.2669999999999999,
+  "bleeder_ohm_range": [
+    2992.125,
+    3007.8750000000005
+  ],
+  "bleeder_current_A": [
+    0.001086148859244483,
+    0.0011139240506329114
+  ],
+  "bleeder_minimum_excess_over_1mA_A": 8.614885924448294e-05,
+  "bleeder_max_power_W": 0.003712708860759493,
+  "side2_two_pullups_zero_volt_sink_max_A": 0.0017137293086660174,
+  "ISO_side2_all_low_IC_max_A": 0.0067,
+  "static_output_load_screen_A": 0.00952765335929893,
+  "provisional_output_allocation_A": 0.012,
+  "allocation_reserve_over_static_A": 0.0024723466407010706,
+  "isolated_stage_power_at_allocation_W": 0.06864,
+  "LDO_pass_element_loss_at_allocation_W": 0.02943600000000001,
+  "BMS_to_ISO2_input_low_margin_V": 0.5801,
+  "ISO2_to_BMS_input_low_margin_V": 0.4,
+  "secondary_rise_30_to_70_s_at_200pF": 6.626288467500001e-07,
+  "unqualified": [
+    "UCC 5.5V cold/hot load rating; 0.5W table specifies 5.0V only",
+    "5.5V ripple over load and temperature; 75mVpp row specifies 5.0V at 25C",
+    "TLV line/load conditions and complete dynamic output envelope",
+    "loaded LDO ground current; 95uA is no-load only",
+    "12mA allocation includes provisional dynamic/ground reserve, not a guaranteed maximum",
+    "primary loaded current/inrush and essential-rail interaction",
+    "effective capacitor values, ESR, startup, prebias and restart",
+    "external reverse-current protection and short-circuit discharge",
+    "fault propagation, RBF leakage, EMC and vacuum thermal behavior"
+  ]
+}

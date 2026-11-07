@@ -1,0 +1,63 @@
+{
+  "status": "CONDITIONAL_DEVELOPMENT_STATIC_SCREEN_NOT_PVT_OR_FAULT_QUALIFICATION",
+  "assumptions": {
+    "essential_static_supply_V": [
+      3.232799137558028,
+      3.324392156862745
+    ],
+    "required_normal_branch_floor_V": 3.0,
+    "GPIO_VOL_allocation_V": 0.4,
+    "GPIO_VOH_allocation_V": 2.832799137558028,
+    "configured_GPIO_abs_leak_guard_A": 5e-06,
+    "resistor_initial_plus_TCR_fraction": 0.002625,
+    "TI_Schmitt_bracketing_guard_VTplus_max_V": 2.74,
+    "TI_Schmitt_bracketing_guard_VTminus_min_V": 0.84,
+    "guard_is_not_continuous_supply_guarantee": true,
+    "TPS_EN_leak_guard_A": 1e-06,
+    "TI_inverter_100uA_VOH_drop_VOL_V": 0.1,
+    "TCAN_TXD_low_input_current_A": 0.0002,
+    "TCAN_STB_low_input_current_A": 2e-05,
+    "TCAN_poweroff_logic_leak_each_A_at_zero_supplies": 1e-06
+  },
+  "results_V": {
+    "STB_floating_reset_min": 3.122510387558028,
+    "EN_high_min": 3.1006270309001134,
+    "EN_low_max": 0.10100262500000001,
+    "TXD_low_max": 0.6005250000000001,
+    "STB_low_max": 0.42005250000000005,
+    "TXD_high_min": 2.8302925750580283,
+    "RXD_high_min": 2.3949868750000003,
+    "RXD_low_max": 0.7409956234054148,
+    "RXD_off_high_min": 2.9500588875580283,
+    "RXD_high_margin": 0.0679123651960789,
+    "RXD_correlated_static_margin_at90mA": 0.23535878875580307
+  },
+  "GPIO_sink_current_A": {
+    "TXD_low_max": 0.0005333141653703717,
+    "STB_low_max": 0.00035831416537037173
+  },
+  "EN_output_load_max_A": 3.433141653703717e-05,
+  "logic_1k_ground_short_current_A": 0.0033331416537037174,
+  "logic_1k_ground_short_power_W": 0.011080669971285158,
+  "checks": {
+    "standby_reset_high_above_schmitt_guard": true,
+    "standby_asserted_low_below_schmitt_guard": true,
+    "enable_high_above_TPS_threshold_max": true,
+    "enable_low_below_TPS_threshold_min": true,
+    "TXD_low_below_0p3_min_branch": true,
+    "STB_low_below_0p3_min_branch": true,
+    "TXD_high_above_0p7_max_branch": true,
+    "RXD_high_above_MCU_0p7_max_supply": true,
+    "RXD_low_below_MCU_0p3_min_supply": true,
+    "RXD_unpowered_high_above_MCU_0p7_max_supply": true
+  },
+  "limits": [
+    "Schmitt threshold guard brackets discrete test points; continuous-supply/PVT confirmation remains open.",
+    "GPIO drive/leak allocations use the selected powered/configured MCU; not unknown or unpowered states.",
+    "RXD high margin is small; actual edge timing, loading, temperature and layout remain open.",
+    "Correlated static RXD margin uses common essential supply and90mA*(.135ohm TPS+1%/TCR1ohm-series bound); it does not cover transient droop/ripple.",
+    "TCAN Ioff at both supplies zero does not prove all partial-power or destructive bus-to-logic faults.",
+    "20ms disable/enable waits are firmware planning values, not guaranteed rail discharge or restart.",
+    "No new GPIO allocation; FAULT is a test diagnostic only, unavailable to MCU directly."
+  ]
+}

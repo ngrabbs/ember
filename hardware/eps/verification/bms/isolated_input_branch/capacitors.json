@@ -1,0 +1,81 @@
+{
+  "exact_part": "CGA5L1X7R1H106K160AC",
+  "source_url": "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA5L1X7R1H106K160AC",
+  "source_hashes": {
+    "CGA5L1X7R1H106K160AC_bias.csv": "e15e03cf3ba4561b59277a85be485cb01e41c6bad0b65e1d3e709d7594a7aff4",
+    "CGA5L1X7R1H106K160AC_temperature.csv": "968ea3e9d03e53d39ca8ebe4d27bdfa890d66201dad5813d025405d8e68e4a4c",
+    "CGA5L1X7R1H106K160AC_esr.csv": "e25c95c1864a2612375fe951594af4957d81725f3d61d1dd250ccf2abc26a043"
+  },
+  "method": "linear interpolation of manufacturer reference curves; independent tolerance/temp/aging factors are conditional assumptions",
+  "tolerance_fraction": 0.1,
+  "X7R_temperature_guard_fraction": 0.15,
+  "aging_guard_fraction_assumed_not_qualified": 0.1,
+  "banks": {
+    "primary": {
+      "quantity": 8,
+      "nominal_uF": 80,
+      "voltage_screen_V": 3.3244,
+      "reference_bias_cap_each_uF": 9.873590724705881,
+      "conditional_low_uF": 54.38373771167999,
+      "zero_bias_upper_tolerance_temperature_and_reference_bias_peak_uF": 102.50446799999999,
+      "reference_ESR_each_at250kHz_ohm_linear_interpolation": 0.0016345865534030872,
+      "reference_ESR_parallel_at250kHz_ohm": 0.0002043233191753859
+    },
+    "isolated_5V": {
+      "quantity": 3,
+      "nominal_uF": 30,
+      "voltage_screen_V": 5.2,
+      "reference_bias_cap_each_uF": 9.36087,
+      "conditional_low_uF": 19.334876985,
+      "zero_bias_upper_tolerance_temperature_and_reference_bias_peak_uF": 38.43917549999999,
+      "reference_ESR_each_at250kHz_ohm_linear_interpolation": 0.0016345865534030872,
+      "reference_ESR_parallel_at250kHz_ohm": 0.0005448621844676957
+    },
+    "LDO_output": {
+      "quantity": 1,
+      "nominal_uF": 10,
+      "voltage_screen_V": 3.401,
+      "reference_bias_cap_each_uF": 9.854836341176469,
+      "conditional_low_uF": 6.7850548209,
+      "zero_bias_upper_tolerance_temperature_and_reference_bias_peak_uF": 12.813058499999999,
+      "reference_ESR_each_at250kHz_ohm_linear_interpolation": 0.0016345865534030872,
+      "reference_ESR_parallel_at250kHz_ohm": 0.0016345865534030872
+    }
+  },
+  "RILIM_bounds": {
+    "210kohm": {
+      "min_A": 0.10999823109954882,
+      "max_A": 0.15119482195063777
+    },
+    "120kohm": {
+      "min_A": 0.19422823279633744,
+      "max_A": 0.2558542784129431
+    },
+    "115kohm": {
+      "min_A": 0.20281099648418788,
+      "max_A": 0.26629749737598873
+    },
+    "110kohm": {
+      "min_A": 0.21218053326898326,
+      "max_A": 0.277660391007665
+    },
+    "100kohm": {
+      "min_A": 0.2337547822995384,
+      "max_A": 0.3036847998293496
+    }
+  },
+  "ideal_charge_time_ms_at50mA_simultaneous_load": {
+    "210kohm": 5.679598334387602,
+    "120kohm": 2.3626848004190024,
+    "115kohm": 2.229982535677402,
+    "110kohm": 2.1011513931454737,
+    "100kohm": 1.8544597814260857
+  },
+  "remaining": [
+    "Reference curves not manufacturer guarantees",
+    "Aging10% is an assumed allocation; mission life and actual aging specification open",
+    "Combined bias/temperature/aging behavior not proven multiplicative",
+    "ESR reference25C only; cold/ripple/inductance and current sharing need review",
+    "No selected RILIM/circuit acceptance; startup/source/fault/reset gates remain"
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "hint": "Only loaded toolsets contribute tools to tools/list. Call load_toolset(name) to expose a toolset's tools. Call unload_toolset(name) to prune tools you no longer need (keeps context small).",
+  "loaded_count": 20,
+  "toolsets": [
+    {
+      "category": "project",
+      "description": "Create, open, save, rename, snapshot KiCAD projects, and launch the live schematic viewer",
+      "loaded": true,
+      "name": "project",
+      "tool_count": 7
+    },
+    {
+      "category": "schematic",
+      "description": "Add, edit, move, rotate, and delete schematic symbols, and set the page size",
+      "loaded": true,
+      "name": "sch_components",
+      "tool_count": 32
+    },
+    {
+      "category": "schematic",
+      "description": "Wires, net labels, power symbols, junctions, no-connects, pin-to-pin connections",
+      "loaded": true,
+      "name": "sch_wiring",
+      "tool_count": 20
+    },
+    {
+      "category": "schematic",
+      "description": "Buses, bus entries, and fanning a group of pins out onto a bus",
+      "loaded": true,
+      "name": "sch_bus",
+      "tool_count": 4
+    },
+    {
+      "category": "schematic",
+      "description": "Net connectivity, pin queries, trace paths, overlap/orphan detection",
+      "loaded": true,
+      "name": "sch_analysis",
+      "tool_count": 15
+    },
+    {
+      "category": "schematic",
+      "description": "Bulk add, edit, delete, and move schematic elements in one call",
+      "loaded": true,
+      "name": "sch_batch",
+      "tool_count": 12
+    },
+    {
+      "category": "schematic",
+      "description": "Export schematic to SVG/PDF/PNG/netlist, run ERC, and synchronize a live PCB",
+      "loaded": true,
+      "name": "sch_export",
+      "tool_count": 10
+    },
+    {
+      "category": "schematic",
+      "description": "Hierarchical sheets: add/edit/move/delete/duplicate a sheet, hierarchy and page-numbering queries, import/add/edit/delete sheet pins, pin/label sync validation",
+      "loaded": true,
+      "name": "sch_hierarchy",
+      "tool_count": 12
+    },
+    {
+      "category": "pcb",
+      "description": "Board outline, layers, zones, mounting holes, board text, SVG logo import",
+      "loaded": true,
+      "name": "pcb_board",
+      "tool_count": 12
+    },
+    {
+      "category": "pcb",
+      "description": "Place, refresh, move, rotate, flip, align, duplicate and repair PCB footprints; inspect pads; inspect and edit a placed footprint's graphics",
+      "loaded": true,
+      "name": "pcb_components",
+      "tool_count": 19
+    },
+    {
+      "category": "pcb",
+      "description": "Traces, vias, copper pours, net classes, differential pairs, and strict Specctra SES import",
+      "loaded": true,
+      "name": "pcb_routing",
+      "tool_count": 15
+    },
+    {
+      "category": "pcb",
+      "description": "Placement quality and automation: score with named deductions, plan decoupling rows and BGA fanouts, first placement, force-directed refinement",
+      "loaded": true,
+      "name": "placement",
+      "tool_count": 5
+    },
+    {
+      "category": "pcb",
+      "description": "Gerber, PDF, SVG, 3D model, BOM, Specctra DSN, pick-and-place, DRC, DXF/GenCAD/IPC-2581/ODB++",
+      "loaded": true,
+      "name": "pcb_export",
+      "tool_count": 14
+    },
+    {
+      "category": "library",
+      "description": "Search, register, and author symbol and footprint libraries \u2014 create symbols and footprints, edit pads, graphics, metadata and 3D models",
+      "loaded": true,
+      "name": "library",
+      "tool_count": 17
+    },
+    {
+      "category": "integration",
+      "description": "JLCPCB parts database, local Freerouting MCP routing, datasheet URLs",
+      "loaded": true,
+      "name": "integration",
+      "tool_count": 9
+    },
+    {
+      "category": "verification",
+      "description": "DRC, design rules, layer constraints, clearance checks, KiCAD UI control (ERC is in sch_export)",
+      "loaded": true,
+      "name": "verification",
+      "tool_count": 10
+    },
+    {
+      "category": "config",
+      "description": "User preferences, project rules, design rules, fab constraints \u2014 call load_user_config at session start",
+      "loaded": true,
+      "name": "config",
+      "tool_count": 7
+    },
+    {
+      "category": "review",
+      "description": "AI-powered design audits: decoupling, connections, power rails, DFM, BOM health",
+      "loaded": true,
+      "name": "design_review",
+      "tool_count": 6
+    },
+    {
+      "category": "templates",
+      "description": "Reference circuit library: USB-C, LDO, buck converter, STM32, I2C, LED \u2014 verified component values",
+      "loaded": true,
+      "name": "templates",
+      "tool_count": 4
+    },
+    {
+      "category": "manufacturing",
+      "description": "Design-to-fab pipeline: export Gerber+BOM+positions package, validate for fab house, estimate cost",
+      "loaded": true,
+      "name": "manufacturing",
+      "tool_count": 3
+    }
+  ],
+  "total_tools": 233
+}

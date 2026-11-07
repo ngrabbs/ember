@@ -1,0 +1,1436 @@
+100
+110
+120
+130
+140
+150
+160
+170
+180
+190
+200
+−40 −15 10 35 60 85
+Temperature (°C)
+Supply Current (nA)
+VDD = 1.2 V
+VDD = 3.3 V
+VDD = 5.0 V
+VDD = 6.5 V
+G001 
+VDD
+RESET
+GND
+TPS383xK33
+RST
+Microprocessor
+3.3 V
+C
+0.1 F
+1
+/c109
+MR
+TPS3831
+Only
+Product
+Folder
+Sample &
+Buy
+T echnical
+Documents
+Tools &
+Software
+Support &
+Community
+TPS3831, TPS3839
+SBVS193D – JUNE 2012 – REVISED JULY 2015
+TPS383x150-nA,UltralowPower,SupplyVoltageMonitor
+1 Features 3 Description
+The TPS3831 and TPS3839 devices (both referred to
+1• Ultralow Supply Current: 150 nA (Typical)
+as TPS383x) are ultralow current (150 nA, typical),• Operating Supply Voltage: 0.9 V to 6.5 V voltage supervisory circuits that monitor a single
+• Valid Reset for VDD > 0.6 V voltage. Both devices initiate an active-low reset
+signal whenever the VDD supply voltage drops below• Push-Pull RESET Output
+the factory-trimmed reset threshold voltage. The reset• Factory-Trimmed Reset Threshold Voltages output remains low for 200 ms (typical) after the VDD
+• Temperature Range: –40°C to 85°C voltage rises above the threshold voltage and
+hysteresis. These devices are designed to ignore fast• Packages: 1-mm × 1-mm X2SON or 3-Pin SOT23
+transients on the VDD pin. The TPS3831 device
+includes a manual reset input that forces RESET low2 Applications
+when MR is low.• Portable and Battery-Powered Equipment
+The ultralow current consumption of 150 nA makes• Metering these voltage supervisors ideal for use in low-power• Industrial Equipment and portable applications. The TPS383x devices are
+• Cell Phones specified to have the correct output logic state for
+supply voltages down to 0.6 V.• Glucose Monitors
+The TPS383x devices feature precision factory-• Tablets
+trimmed threshold voltages and extremely low-power• Wearables operation. The TPS3831 device is available in a 4-
+pin, 1-mm × 1-mm (DQN) X2SON package. The
+TPS3839 device is available in a 3-pin SOT23 (DBZ)
+package or a 4-pin, 1-mm × 1-mm (DQN) X2SON
+package.
+Device Information(1)
+PACKAGE SIZEPART NUMBER PACKAGE (NOM)
+TPS3831 X2SON (4) 1.00 mm x 1.00 mm
+SOT-23 (3) 2.92 mm x 2.37 mm
+TPS3839
+X2SON (4) 1.00 mm x 1.00 mm
+(1) For all available packages, see the orderable addendum at
+the end of the data sheet.
+Typical Application Circuit Supply Current vs Temperature
+1
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+TPS3831, TPS3839
+SBVS193D – JUNE 2012 – REVISED JULY 2015 www.ti.com
+Table of Contents
+8.4 Device Functional Modes........................................ 121 Features .................................................................. 1
+9 Applications and Implementation ...................... 132 Applications ........................................................... 1
+9.1 Application Information............................................ 133 Description ............................................................. 1
+9.2 Typical Application .................................................. 134 Revision History..................................................... 2
+10 Power Supply Recommendations ..................... 155 Device Options....................................................... 4
+11 Layout................................................................... 156 Pin Configuration and Functions ......................... 5
+11.1 Layout Guidelines ................................................. 157 Specifications......................................................... 6
+11.2 Layout Example .................................................... 157.1 Absolute Maximum Ratings ...................................... 6
+12 Device and Documentation Support ................. 167.2 ESD Ratings.............................................................. 6
+12.1 Device Support...................................................... 167.3 Recommended Operating Conditions....................... 6
+12.2 Documentation Support ........................................ 167.4 Thermal Information .................................................. 6
+12.3 Related Links ........................................................ 167.5 Electrical Characteristics........................................... 7
+12.4 Community Resources.......................................... 167.6 Timing Requirements ................................................ 8
+12.5 Trademarks ........................................................... 167.7 Typical Characteristics .............................................. 9
+12.6 Electrostatic Discharge Caution ............................ 168 Detailed Description ............................................ 11
+12.7 Glossary ................................................................ 178.1 Overview ................................................................. 11
+13 Mechanical, Packaging, and Orderable8.2 Functional Block Diagram ....................................... 11
+Information ........................................................... 178.3 Feature Description................................................. 11
+4 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision C (February 2015) to Revision D Page
+• Changed µA to nA in document title....................................................................................................................................... 1
+• Added TPS3839G25 to document ......................................................................................................................................... 1
+• Changed Applications section: moved Metering bullet to second in list, changed Tablets bullet, added Wearables bullet .. 1
+• Changed first paragraph of Description section .................................................................................................................... 1
+• Changed Device Information table: changed Package Size column heading and value of SOT-23 row ............................. 1
+• Added TPS3839G25 row to Device Options table ................................................................................................................ 4
+• Changed Thermal Information table ...................................................................................................................................... 6
+• Changed VIT– and Vhys parameters in Electrical Characteristics table: changed test conditions, added TPS3839G25 rows 7
+Changes from Revision B (April 2013) to Revision C Page
+• Added ESD Ratings table, Feature Description section, Device Functional Modes, Application and Implementation
+section, Power Supply Recommendations section, Layout section, Device and Documentation Support section, and
+Mechanical, Packaging, and Orderable Information section ................................................................................................. 1
+• Changed title of data sheet ................................................................................................................................................... 1
+• Changed Operating Supply Voltage bullet from 0.6 V to 0.9 V.............................................................................................. 1
+• Changed last sentence of Description section ...................................................................................................................... 1
+• Changed front page figure ..................................................................................................................................................... 1
+• Added MR parameter to Absolute Maximum Ratings ........................................................................................................... 6
+• Changed condition statement for Electrical Characteristics .................................................................................................. 7
+• Changed V(VO) parameter symbol to VPOR ............................................................................................................................. 7
+• Changed Figure 1................................................................................................................................................................... 8
+• Changed Functional Block Diagram; added hysteresis symbol to op amp .......................................................................... 11
+• Deleted Typical Application Circuit figure ............................................................................................................................. 13
+2 Submit Documentation Feedback Copyright © 2012–2015, Texas Instruments Incorporated
+TPS3831, TPS3839
+www.ti.com SBVS193D – JUNE 2012 – REVISED JULY 2015
+Changes from Revision A (September 2012) to Revision B Page
+• Changed VDD test conditions for high-level output voltage parameter ................................................................................... 7
+Changes from Original (June 2012) to Revision A Page
+• Changed data sheet status from product preview to production data.................................................................................... 1
+Copyright © 2012–2015, Texas Instruments Incorporated Submit Documentation Feedback 3
+TPS3831, TPS3839
+SBVS193D – JUNE 2012 – REVISED JULY 2015 www.ti.com
+5 Device Options
+THRESHOLD PACKAGEPRODUCT PACKAGE-LEADVOLTAGE (V) DESIGNATOR (1)
+TPS3831A09 0.9 X2SON-4 DQN
+TPS3831G12 1.1 X2SON-4 DQN
+TPS3831E16 1.52 X2SON-4 DQN
+TPS3831G18 1.67 X2SON-4 DQN
+TPS3831L30 2.63 X2SON-4 DQN
+TPS3831K33 2.93 X2SON-4 DQN
+TPS3831G33 3.08 X2SON-4 DQN
+TPS3831K50 4.38 X2SON-4 DQN
+SOT23-3 DBZ
+TPS3839A09 0.9
+X2SON-4 DQN
+SOT23-3 DBZ
+TPS3839G12 1.1
+X2SON-4 DQN
+SOT23-3 DBZ
+TPS3839E16 1.52
+X2SON-4 DQN
+SOT23-3 DBZ
+TPS3839G18 1.67
+X2SON-4 DQN
+TPS3839G25 2.325 SOT23-3 DBZ
+SOT23-3 DBZ
+TPS3839L30 2.63
+X2SON-4 DQN
+SOT23-3 DBZ
+TPS3839K33 2.93
+X2SON-4 DQN
+SOT23-3 DBZ
+TPS3839G33 3.08
+X2SON-4 DQN
+SOT23-3 DBZ
+TPS3839K50 4.38
+X2SON-4 DQN
+(1) For the most current package and ordering information see the Package Option Addendum at the end of this document, or visit the
+device product folder at www.ti.com.
+4 Submit Documentation Feedback Copyright © 2012–2015, Texas Instruments Incorporated
+GND
+RESET
+1
+2
+3 VDD
+VDD
+GND
+RESET
+NC
+1
+2 3
+4
+Thermal
+Pad
+VDD
+GND
+RESET
+MR
+1
+2 3
+4
+Thermal
+Pad
+TPS3831, TPS3839
+www.ti.com SBVS193D – JUNE 2012 – REVISED JULY 2015
+6 Pin Configuration and Functions
+TPS3831 DQN Package TPS3839 DQN Package1-mm × 1-mm X2SON 1-mm × 1-mm X2SONTop View Top View
+TPS3839 DBZ Package
+SOT23-3
+Top View
+Pin Functions
+PIN
+NO. I/O DESCRIPTION
+NAME TPS3839 TPS3839 TPS3831
+(SOT23-3) (X2SON) (X2SON)
+GND 1 3 3 — Ground
+Manual reset. Pull this pin to a logic low to assert the RESET output.
+MR N/A N/A 2 I After the MR pin is deasserted, the RESET output deasserts after the
+reset delay (td) elapses.
+NC N/A 2 N/A — No internal connection.
+Active-low reset output. RESET has a push-pull output drive and is
+capable of directly driving input pins. RESET is low as long as VDDRESET 2 1 1 O remains below the factory threshold voltage, and until the delay time
+(td) elapses after VDD rises above the threshold voltage.
+Connect to ground or to a floating copper plane for mechanicalThermal pad N/A Available Available — stability.
+VDD 3 4 4 I Supply voltage
+Copyright © 2012–2015, Texas Instruments Incorporated Submit Documentation Feedback 5
+TPS3831, TPS3839
+SBVS193D – JUNE 2012 – REVISED JULY 2015 www.ti.com
+7 Specifications
+7.1 Absolute Maximum Ratings
+over operating free-air temperature range, unless otherwise noted (1)
+MIN MAX UNIT
+VDD, RESET –0.3 7 V
+Voltage
+MR –0.3 VDD + 0.3 V
+Current RESET pin –10 10 mA
+Operating ambient, TA –40 85
+Temperature (2) °C
+Storage, Tstg –65 150
+(1) Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress ratings
+only, and functional operation of the device at these or any other conditions beyond those indicated under Recommended Operating
+Conditions is not implied. Exposure to absolute-maximum-rated conditions for extended periods may affect device reliability.
+(2) As a result of the low dissipated power in this device, the junction temperature is assumed to be equal to the ambient temperature.
+7.2 ESD Ratings
+VALUE UNIT
+Human body model (HBM), per ANSI/ESDA/JEDEC JS-001 (1) ±2000
+V(ESD) Electrostatic discharge V
+Charged device model (CDM), per JEDEC specification JESD22-C101 (2) ±500
+(1) JEDEC document JEP155 states that 500-V HBM allows safe manufacturing with a standard ESD control process.
+(2) JEDEC document JEP157 states that 250-V CDM allows safe manufacturing with a standard ESD control process.
+7.3 Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+MIN NOM MAX UNIT
+VDD Input supply voltage 0.9 6.5 V
+VMR Manual reset pin voltage 0 VDD V
+VRESET RESET pin voltage 0 6.5 V
+IRESET RESET pin current 0 8 mA
+7.4 Thermal Information
+TPS3831,TPS3839 TPS3839
+THERMAL METRIC (1) UNITDBZ (SOT23-3) DQN (X2SON)
+3 PINS 4 PINS
+RθJA Junction-to-ambient thermal resistance 346.6 216.1 °C/W
+RθJC(top) Junction-to-case (top) thermal resistance 124.4 161.7 °C/W
+RθJB Junction-to-board thermal resistance 78.9 162.1 °C/W
+ψJT Junction-to-top characterization parameter 11.5 5.1 °C/W
+ψJB Junction-to-board characterization parameter 77.3 161.7 °C/W
+RθJC(bot) Junction-to-case (bottom) thermal resistance N/A 123.0 °C/W
+(1) For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application
+report, SPRA953.
+6 Submit Documentation Feedback Copyright © 2012–2015, Texas Instruments Incorporated
+TPS3831, TPS3839
+www.ti.com SBVS193D – JUNE 2012 – REVISED JULY 2015
+7.5 Electrical Characteristics
+At TA = –40°C to 85°C, 0.9 V < VDD < 6.5 V, and C1 = 0.1 µF, unless otherwise noted. Typical values are at 25°C.
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+VDD Input supply voltage 0.9 6.5 V
+V(POR) Minimum VDD voltage for valid output IOL = 1 µA 0.6 V
+IDD Supply current (into VDD pin) Output not connected 150 500 nA
+VDD = 0.9 V to 1.2 V, IOL = 120 µA 0.4
+VOL Low-level output voltage (RESET pin) VDD = 1.2 V to 2.8 V, IOL = 0.5 mA 0.4 V
+VDD = 2.8 V to 6.5 V, IOL = 2 mA 0.4
+VDD = 0.9 V to 1.2 V, IOH = –50 µA VDD – 0.4
+VOH High-level output voltage (RESET pin) VDD = 1.2 V to 3.3 V, IOH = –0.5 mA VDD – 0.4 V
+VDD = 3.3 V to 6.5 V, IOH = –2 mA VDD – 0.4
+VIL Low-level input voltage (MR pin) 0.3VDD V
+VIH High-level input voltage (MR pin) 0.7VDD V
+RMR MR pin pullup resistance 10 20 30 kΩ
+Negative-going input threshold accuracy TA = 25°C ±1%
+TPS383xA09 0.874 0.9 0.914
+TPS383xG12 1.073 1.1 1.117
+TPS383xE16 1.482 1.52 1.543
+TPS383xG18 1.628 1.67 1.695
+VIT– Negative-going threshold voltage TPS3839G25 2.267 2.325 2.360 V
+TPS383xL30 2.564 2.63 2.669
+TPS383xK33 2.857 2.93 2.974
+TPS383xG33 3.003 3.08 3.126
+TPS383xK50 4.271 4.38 4.446
+TPS383xA09 54
+TPS383xG12 11
+TPS383xE16 15
+TPS383xG18 17
+Vhys Hysteresis voltage TPS383xL30 26 mV
+TPS3839G25 23
+TPS383xK33 29
+TPS383xG33 31
+TPS383xK50 44
+Copyright © 2012–2015, Texas Instruments Incorporated Submit Documentation Feedback 7
+Time
+VIT/c45+ V HYS
+VIT/c45
+0.7VDD
+0.3VDD
+MR
+VDD
+0.6 V
+RESET
+td td td
+td = Reset Delay
+= Undefined State
+TPS3831, TPS3839
+SBVS193D – JUNE 2012 – REVISED JULY 2015 www.ti.com
+7.6 Timing Requirements
+At TA = –40°C to 85°C, 0.9 V < VDD < 6.5 V, and C1 = 0.1 µF, unless otherwise noted. Typical values are at 25°C.
+MIN TYP MAX UNIT
+td RESET delay time (power-up delay) 120 200 350 ms
+tPD_VDD Propagation delay, VDD falling (power-down delay) 20 µs
+tPD_MR Propagation delay from MR low to RESET low 46 ns
+Figure 1. MR and VDD Reset Timing
+8 Submit Documentation Feedback Copyright © 2012–2015, Texas Instruments Incorporated
+0.5
+1.5
+2.5
+3.5
+0 2 4 6 8 10
+IOH (mA)
+VOH (V)
+TA = −40°C
+TA = 0°C
+TA = +25°C
+TA = +85°C
+VDD = 3.3 V
+G005 
+2
+2.5
+3
+3.5
+4
+0 2 4 6 8 10 12
+IOH (mA)
+VOH (V)
+TA = −40°C
+TA = 0°C
+TA = +25°C
+TA = +85°C
+VDD =4.0 V
+G006 
+−1
+−0.8
+−0.6
+−0.4
+−0.2
+0
+0.2
+−40 −15 10 35 60 85
+Temperature (°C)
+Change in VIT–  (%)
+TPS3839A09
+TPS3839K50
+G003 
+0.8
+1
+1.2
+1.4
+1.6
+1.8
+0 0.5 1 1.5 2 2.5 3 3.5
+IOH  (mA)
+VOH (V)
+TA = −40°C
+TA = 0°C
+TA = +25°C
+TA = +85°C
+VDD = 1.8 V
+G004 
+100
+110
+120
+130
+140
+150
+160
+170
+180
+190
+200
+−40 −15 10 35 60 85
+Temperature (°C)
+Supply Current (nA)
+VDD = 1.2 V
+VDD = 3.3 V
+VDD = 5.0 V
+VDD = 6.5 V
+G001 
+180
+190
+200
+210
+220
+−40 −15 10 35 60 85
+Temperature (°C)
+Reset Delay Time (ms)
+TPS3839K33
+G002 
+TPS3831, TPS3839
+www.ti.com SBVS193D – JUNE 2012 – REVISED JULY 2015
+7.7 Typical Characteristics
+At TA = 25°C and C1 = 0.1 µF, unless otherwise noted.
+Figure 2. Supply Current vs Temperature Figure 3. Reset Delay vs Temperature
+Figure 4. Threshold Voltage vs Temperature Figure 5. VOH vs IOH and Temperature for VDD = 1.8 V
+Figure 6. VOH vs IOH and Temperature for VDD = 3.3 V Figure 7. VOH vs IOH and Temperature for VDD = 4.0 V
+Copyright © 2012–2015, Texas Instruments Incorporated Submit Documentation Feedback 9
+0
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+0 2 4 6 8 10
+IOL (mA)
+VOL (V)
+TA = −40°C
+TA = 0°C
+TA = +25°C
+TA = +85°C
+VDD = 4.0 V
+G009 
+10
+15
+20
+25
+30
+35
+40
+45
+50
+0 5 10 15 20 25 30 35
+VDD voltage drop below VIT−  (%)
+Minimum Pulse Duration Trigger Reset (µs)
+Reset Occurs Above Line
+G010 
+0
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+0 1 2 3 4 5
+IOL (mA)
+VOL (V)
+TA = −40°C
+TA = 0°C
+TA = +25°C
+TA = +25°C
+VDD = 1.8 V
+G007 
+0
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+0 2 4 6 8 10
+IOL (mA)
+VOL (V)
+TA = −40°C
+TA = 0°C
+TA = +25°C
+TA = +85°C
+VDD = 3.3 V
+G008 
+TPS3831, TPS3839
+SBVS193D – JUNE 2012 – REVISED JULY 2015 www.ti.com
+Typical Characteristics (continued)
+At TA = 25°C and C1 = 0.1 µF, unless otherwise noted.
+Figure 8. VOL vs IOL and Temperature for VDD = 1.8 V Figure 9. VOL vs IOL and Temperature for VDD = 3.3 V
+Figure 10. VOL vs IOL and Temperature for VDD = 4.0 V Figure 11. Maximum Pulse Duration vs Percent of
+Threshold Overdrive
+10 Submit Documentation Feedback Copyright © 2012–2015, Texas Instruments Incorporated
+Transient
+Duration
+(t )W
+Transient
+Amplitude
+VDD
+VIT/c45
+Delay
+VREF
+VDD
+GND
+RESET
+MR
+( Only)TPS3831
+VDD
+TPS3831, TPS3839
+www.ti.com SBVS193D – JUNE 2012 – REVISED JULY 2015
+8 Detailed Description
+8.1 Overview
+The TPS3831 and TPS3839 are ultralow current voltage supervisory circuits that monitor the input supply voltage
+of these devices. Both devices assert an active-low reset whenever the VDD supply voltage drops below the
+negative-going threshold voltage (VIT–). The output, RESET, remains asserted for approximately
+200 ms after the VDD voltage rises above the positive-going threshold voltage (VIT– + Vhys). These devices are
+designed to ignore fast transients on the VDD pin.
+The TPS3831 device includes a manual reset input (MR) that can be used to force the RESET signal low, even if
+the supply voltage is above VIT–.
+8.2 Functional Block Diagram
+8.3 Feature Description
+8.3.1 VDD Transient Rejection
+The TPS383x (TPS3831 and TPS3839) devices have built-in rejection of fast transients on the VDD pin.
+Transient rejection depends on both the duration and amplitude of the transient. Transient amplitude is measured
+from the bottom of the transient to the negative threshold voltage (VIT–) of the device, as shown in Figure 12.
+Figure 12. Voltage Transient Measurement
+Copyright © 2012–2015, Texas Instruments Incorporated Submit Documentation Feedback 11
+VDD
+GND
+TPS3831
+20 k/c87
+MR
+10
+15
+20
+25
+30
+35
+40
+45
+50
+0 5 10 15 20 25 30 35
+VDD voltage drop below VIT−  (%)
+Minimum Pulse Duration Trigger Reset (µs)
+Reset Occurs Above Line
+G010 
+TPS3831, TPS3839
+SBVS193D – JUNE 2012 – REVISED JULY 2015 www.ti.com
+Feature Description (continued)
+Figure 13 shows the relationship between the transient amplitude and duration required to trigger a reset. Any
+combination of duration and amplitude greater than that shown in Figure 13 generates a reset signal.
+Figure 13. TPS3839 Transient Rejection
+8.3.2 Manual Reset (MR) Input (TPS3831 Only)
+The manual reset (MR) input allows a processor, or other logic devices, to initiate a reset (TPS3831 device only).
+A logic low (0.3 VDD) on MR causes RESET to assert. After MR returns to a logic high and VDD is greater than
+the threshold voltage, RESET is deasserted after the reset delay time, td, elapses. MR is internally tied to VDD
+with a 20-kΩ resistor; therefore, this pin can be left unconnected if MR is not used. If a logic signal driving MR
+does not go fully to VDD, some additional current draws into VDD as a result of the internal pullup resistor on MR.
+To minimize current draw, a logic-level FET can be used, as shown in Figure 14.
+Figure 14. Using a Logic-Level FET to Minimize Current Draw
+8.4 Device Functional Modes
+8.4.1 Normal Operation (VDD > VDD(min))
+When the voltage on VDD is greater than VDD(min), the RESET output corresponds to the voltage on the VDD pin
+relative to VIT–.
+8.4.2 Below VDD(min) (V(POR) < VDD < VDD(min)
+When the voltage on VDD is less than VDD(min) but greater than the power-on reset voltage (V(POR)), the RESET
+output is asserted.
+8.4.3 Below Power-On Reset (VDD < V(POR)
+When the voltage on VDD is lower than the power-on reset voltage (V(POR)), the RESET output is undefined. Do
+not rely on the RESET output for proper device function under this condition.
+12 Submit Documentation Feedback Copyright © 2012–2015, Texas Instruments Incorporated
+4.7 /c50H
+10 /c50F10 /c50F
+5 k/c3a
+L
+VIN VOUT
+RI
+GND
+FB
+EN
+One-Cell
+Alkaline
+VDD
+GND
+RESET
+TPS3839A09
+3.3 V at 40 mA
+TPS61261
+TPS3831, TPS3839
+www.ti.com SBVS193D – JUNE 2012 – REVISED JULY 2015
+9 Applications and Implementation
+NOTE
+Information in the following applications sections is not part of the TI component
+specification, and TI does not warrant its accuracy or completeness. TI’s customers are
+responsible for determining suitability of components for their purposes. Customers should
+validate and test their design implementation to confirm system functionality.
+9.1 Application Information
+Low operating voltage and threshold options make the TPS383x devices well-suited for monitoring single-cell,
+alkaline-battery applications.
+9.2 Typical Application
+Figure 15 shows the TPS3839A09 used to disable a boost converter when the cell voltage reaches 0.9 V, which
+is the end of the discharge voltage for a single alkaline battery cell. When the cell voltage reaches 0.9 V, the
+TPS61261 enable pin is driven low. This setting disables the TPS61261 and places it in a low-current shutdown
+state. The combination of the TPS3839 and TPS61261 devices consumes only 250 nA (typical) from the
+discharged battery.
+Figure 15. Disabled Boost Converter
+9.2.1 Design Requirements
+Table 1 lists the design requirements for Figure 15.
+Table 1. Design Requirements and Results
+DESIGN RESULT
+DESIGN REQUIREMENTS
+TPS3839A09 TPS61261 COMBINED
+Input voltage range of 0.9 V to 1.7 V 0.9 V to 6.5 V 0.8 V to 4 V 0.9 V to 4 V
+Shutdown current < 3 µA 0.5 μA (maximum) 1.5 μA (maximum) 2.0 μA (maximum)
+Output voltage of 3.3 V N/A 3.3 V 3.3 V
+Output current of 50 mA N/A 100 mA 100 mA
+Switching frequency ≥ 1 MHz N/A 2.5 MHz 2.5 MHz
+Copyright © 2012–2015, Texas Instruments Incorporated Submit Documentation Feedback 13
+100
+110
+120
+130
+140
+150
+160
+170
+180
+190
+200
+−40 −15 10 35 60 85
+Temperature (°C)
+Supply Current (nA)
+VDD = 1.2 V
+VDD = 3.3 V
+VDD = 5.0 V
+VDD = 6.5 V
+G001 
+RESET
+GND
+TPS3839K33
+VDD
+RST
+Microprocessor
+3.3 V
+ 
+VCC
+47 k/c3a
+ 
+TPS3831, TPS3839
+SBVS193D – JUNE 2012 – REVISED JULY 2015 www.ti.com
+9.2.2 Detailed Design Procedure
+9.2.2.1 Input Capacitor
+The TPS383x devices use a unique sampling scheme to maintain an extremely low average quiescent current of
+150 nA. The TPS383x devices typically consume only approximately 100 nA of dc current. However, this current
+rises to approximately 15 µA for about 200 µs when the TPS383x devices sample the input voltage. If the source
+impedance back to the supply voltage is high, then the additional current during sampling may trigger a false
+reset as a result of the apparent voltage drop at VDD. For applications with high-impedance input supplies
+(including trace impedance), TI recommends adding a small 0.1-µF bypass capacitor near the TPS3839 VDD
+pin. This bypass capacitor effectively keeps the average current at 150 nA and reduces the effects of a high-
+impedance voltage source.
+9.2.2.2 Bidirectional Reset Pins
+Some devices have bidirectional reset pins that act both as an input and an output. For applications where the
+TPS383x devices drive a bidirectional reset pin, place a series resistor between the TPS383x output and the
+reset pin to protect against excessive current flow when both the TPS383x devices and the reset pin attempt to
+drive the reset line. Figure 16 shows the connection of the TPS3839K33 to a bidirectional reset pin of a
+microcontroller using a series resistor.
+Figure 16. Connection to a Bidirectional Reset Pin
+9.2.3 Application Curve
+Figure 17. Supply Current vs Temperature
+14 Submit Documentation Feedback Copyright © 2012–2015, Texas Instruments Incorporated
+Input
+Supply
+1
+2RESET
+ Flag
+3
+CVDD
+TPS3831, TPS3839
+www.ti.com SBVS193D – JUNE 2012 – REVISED JULY 2015
+10 Power Supply Recommendations
+These devices are designed to operate from an input supply with a voltage range between 0.9 V and 6.5 V. Use
+a low-impedance power supply to eliminate inaccuracies caused by the extra current during the input-voltage
+sampling discussed in the Input Capacitor section.
+11 Layout
+11.1 Layout Guidelines
+Make sure the connection to the VDD pin is low impedance and able to carry 15 µA without a significant voltage
+drop. Place a 0.1-µF bypass capacitor near the VDD pin if the 15-µA sampling current causes too much voltage
+droop.
+11.2 Layout Example
+Figure 18. Recommended Layout
+Copyright © 2012–2015, Texas Instruments Incorporated Submit Documentation Feedback 15
+TPS3831, TPS3839
+SBVS193D – JUNE 2012 – REVISED JULY 2015 www.ti.com
+12 Device and Documentation Support
+12.1 Device Support
+12.1.1 Development Support
+12.1.1.1 Evaluation Modules
+Two evaluation modules (EVMs) are available to assist in the initial circuit performance evaluation using the
+TPS3831 and TPS3839. The TPS3831G33EVM-187 and TPS3839K33EVM-112 evaluation modules (and
+related user's guides) can be requested at the TI website through the product folders or purchased directly from
+the TI eStore.
+12.1.1.2 Spice Models
+Computer simulation of circuit performance using SPICE is often useful when analyzing the performance of
+analog circuits and systems. SPICE models for the TPS3831 and TPS3839 devices are available through each
+of the product folders under Tools & Software.
+12.2 Documentation Support
+12.2.1 Related Documentation
+• TPS3831G33EVM-187 User's Guide, SLVU774
+• TPS3839K33EVM-112 User's Guide, SLVU758.
+• TPS61261 Data Sheet, SLVSA99
+12.3 Related Links
+Table 2 lists quick access links. Categories include technical documents, support and community resources,
+tools and software, and quick access to sample or buy.
+Table 2. Related Links
+TECHNICAL TOOLS & SUPPORT &PARTS PRODUCT FOLDER SAMPLE & BUY DOCUMENTS SOFTWARE COMMUNITY
+TPS3831 Click here Click here Click here Click here Click here
+TPS3839 Click here Click here Click here Click here Click here
+12.4 Community Resources
+The following links connect to TI community resources. Linked contents are provided "AS IS" by the respective
+contributors. They do not constitute TI specifications and do not necessarily reflect TI's views; see TI's Terms of
+Use.
+TI E2E™ Online Community TI's Engineer-to-Engineer (E2E) Community. Created to foster collaboration
+among engineers. At e2e.ti.com, you can ask questions, share knowledge, explore ideas and help
+solve problems with fellow engineers.
+Design Support TI's Design Support Quickly find helpful E2E forums along with design support tools and
+contact information for technical support.
+12.5 Trademarks
+E2E is a trademark of Texas Instruments.
+All other trademarks are the property of their respective owners.
+12.6 Electrostatic Discharge Caution
+These devices have limited built-in ESD protection. The leads should be shorted together or the device placed in conductive foam
+during storage or handling to prevent electrostatic damage to the MOS gates.
+16 Submit Documentation Feedback Copyright © 2012–2015, Texas Instruments Incorporated
+TPS3831, TPS3839
+www.ti.com SBVS193D – JUNE 2012 – REVISED JULY 2015
+12.7 Glossary
+SLYZ022 — TI Glossary.
+This glossary lists and explains terms, acronyms, and definitions.
+13 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most
+current data available for the designated devices. This data is subject to change without notice and revision of
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+Copyright © 2012–2015, Texas Instruments Incorporated Submit Documentation Feedback 17
+PACKAGE OPTION ADDENDUM
+www.ti.com 10-Nov-2025
+PACKAGING INFORMATION
+Orderable part number Status
+(1)
+Material type
+(2)
+Package | Pins Package qty | Carrier RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C) Part marking
+(6)
+TPS3831A09DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A3
+TPS3831A09DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A3
+TPS3831A09DQNRG4 Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A3
+TPS3831A09DQNRG4.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A3
+TPS3831A09DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A3
+TPS3831A09DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A3
+TPS3831E16DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A5
+TPS3831E16DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A5
+TPS3831E16DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A5
+TPS3831E16DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A5
+TPS3831G12DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A4
+TPS3831G12DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A4
+TPS3831G12DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A4
+TPS3831G12DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A4
+TPS3831G18DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A6
+TPS3831G18DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A6
+TPS3831G18DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A6
+TPS3831G18DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A6
+TPS3831G33DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A7
+TPS3831G33DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A7
+TPS3831G33DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A7
+TPS3831G33DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A7
+TPS3831G33DQNTG4 Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A7
+TPS3831G33DQNTG4.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A7
+TPS3831K33DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A8
+TPS3831K33DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A8
+TPS3831K33DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A8
+TPS3831K33DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A8
+TPS3831K50DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A9
+Addendum-Page 1
+PACKAGE OPTION ADDENDUM
+www.ti.com 10-Nov-2025
+Orderable part number Status
+(1)
+Material type
+(2)
+Package | Pins Package qty | Carrier RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C) Part marking
+(6)
+TPS3831K50DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A9
+TPS3831K50DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A9
+TPS3831K50DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 A9
+TPS3831L30DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 BA
+TPS3831L30DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 BA
+TPS3831L30DQNRG4 Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 BA
+TPS3831L30DQNRG4.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 BA
+TPS3831L30DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 BA
+TPS3831L30DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 BA
+TPS3839A09DBZR Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZDI
+TPS3839A09DBZR.B Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZDI
+TPS3839A09DBZT Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZDI
+TPS3839A09DBZT.B Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZDI
+TPS3839A09DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZJ
+TPS3839A09DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZJ
+TPS3839A09DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZJ
+TPS3839A09DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZJ
+TPS3839E16DBZR Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZCI
+TPS3839E16DBZR.B Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZCI
+TPS3839E16DBZT Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZCI
+TPS3839E16DBZT.B Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZCI
+TPS3839E16DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZK
+TPS3839E16DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZK
+TPS3839E16DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZK
+TPS3839E16DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZK
+TPS3839G12DBZR Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZBI
+TPS3839G12DBZR.B Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZBI
+TPS3839G12DBZT Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZBI
+TPS3839G12DBZT.B Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZBI
+TPS3839G12DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZE
+TPS3839G12DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZE
+Addendum-Page 2
+PACKAGE OPTION ADDENDUM
+www.ti.com 10-Nov-2025
+Orderable part number Status
+(1)
+Material type
+(2)
+Package | Pins Package qty | Carrier RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C) Part marking
+(6)
+TPS3839G12DQNRG4 Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZE
+TPS3839G12DQNRG4.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZE
+TPS3839G12DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZE
+TPS3839G12DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZE
+TPS3839G18DBZR Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZAI
+TPS3839G18DBZR.B Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZAI
+TPS3839G18DBZT Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZAI
+TPS3839G18DBZT.B Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PZAI
+TPS3839G18DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZL
+TPS3839G18DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZL
+TPS3839G18DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZL
+TPS3839G18DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZL
+TPS3839G25DBZR Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 PZNI
+TPS3839G25DBZR.B Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 PZNI
+TPS3839G25DBZRG4 Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 PZNI
+TPS3839G25DBZRG4.B Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 PZNI
+TPS3839G25DBZT Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 PZNI
+TPS3839G25DBZT.B Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 PZNI
+TPS3839G33DBZR Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYZI
+TPS3839G33DBZR.B Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYZI
+TPS3839G33DBZT Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYZI
+TPS3839G33DBZT.B Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYZI
+TPS3839G33DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZG
+TPS3839G33DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZG
+TPS3839G33DQNRG4 Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZG
+TPS3839G33DQNRG4.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZG
+TPS3839G33DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZG
+TPS3839G33DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZG
+TPS3839K33DBZR Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYYI
+TPS3839K33DBZR.B Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYYI
+TPS3839K33DBZT Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYYI
+Addendum-Page 3
+PACKAGE OPTION ADDENDUM
+www.ti.com 10-Nov-2025
+Orderable part number Status
+(1)
+Material type
+(2)
+Package | Pins Package qty | Carrier RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C) Part marking
+(6)
+TPS3839K33DBZT.B Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYYI
+TPS3839K33DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZF
+TPS3839K33DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZF
+TPS3839K33DQNRG4 Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZF
+TPS3839K33DQNRG4.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZF
+TPS3839K33DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZF
+TPS3839K33DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZF
+TPS3839K50DBZR Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYXI
+TPS3839K50DBZR.B Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYXI
+TPS3839K50DBZT Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYXI
+TPS3839K50DBZT.B Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYXI
+TPS3839K50DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZH
+TPS3839K50DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZH
+TPS3839K50DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZH
+TPS3839K50DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZH
+TPS3839L30DBZR Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYWI
+TPS3839L30DBZR.B Active Production SOT-23 (DBZ) | 3 3000 | LARGE T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYWI
+TPS3839L30DBZT Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYWI
+TPS3839L30DBZT.B Active Production SOT-23 (DBZ) | 3 250 | SMALL T&R Yes NIPDAUAG Level-1-260C-UNLIM -40 to 85 PYWI
+TPS3839L30DQNR Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZI
+TPS3839L30DQNR.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZI
+TPS3839L30DQNRG4 Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZI
+TPS3839L30DQNRG4.B Active Production X2SON (DQN) | 4 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZI
+TPS3839L30DQNT Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZI
+TPS3839L30DQNT.B Active Production X2SON (DQN) | 4 250 | SMALL T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 85 ZI
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+Addendum-Page 4
+PACKAGE OPTION ADDENDUM
+www.ti.com 10-Nov-2025
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+Addendum-Page 5
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 18-Sep-2026
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0B0K0WDimension designed to accommodate the component lengthDimension designed to accommodate the component thicknessOverall width of the carrier tapePitch between successive cavity centersDimension designed to accommodate the component width
+TAPE DIMENSIONSK0 P1B0WA0Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket QuadrantsSprocket HolesQ1Q1Q2Q2Q3Q3Q4Q4User Direction of Feed
+P1ReelDiameter
+ 
+*All dimensions are nominal
+Device Package
+Type
+Package
+Drawing
+Pins SPQ Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+TPS3831A09DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831A09DQNRG4 X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831A09DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831E16DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831E16DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831G12DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831G12DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831G18DQNR X2SON DQN 4 3000 180.0 9.5 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831G18DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831G33DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831G33DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831G33DQNTG4 X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831K33DQNR X2SON DQN 4 3000 180.0 9.5 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831K33DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831K33DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831K50DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+Pack Materials-Page 1
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 18-Sep-2026
+Device Package
+Type
+Package
+Drawing
+Pins SPQ Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+TPS3831K50DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831L30DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831L30DQNRG4 X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3831L30DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839A09DBZR SOT-23 DBZ 3 3000 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839A09DBZT SOT-23 DBZ 3 250 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839A09DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839A09DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839E16DBZR SOT-23 DBZ 3 3000 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839E16DBZT SOT-23 DBZ 3 250 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839E16DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839E16DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839G12DBZR SOT-23 DBZ 3 3000 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839G12DBZT SOT-23 DBZ 3 250 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839G12DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839G12DQNR X2SON DQN 4 3000 180.0 9.5 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839G12DQNRG4 X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839G12DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839G18DBZR SOT-23 DBZ 3 3000 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839G18DBZT SOT-23 DBZ 3 250 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839G18DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839G18DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839G25DBZR SOT-23 DBZ 3 3000 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839G25DBZRG4 SOT-23 DBZ 3 3000 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839G25DBZT SOT-23 DBZ 3 250 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839G33DBZR SOT-23 DBZ 3 3000 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839G33DBZT SOT-23 DBZ 3 250 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839G33DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839G33DQNRG4 X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839G33DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839K33DBZR SOT-23 DBZ 3 3000 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839K33DBZT SOT-23 DBZ 3 250 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839K33DQNR X2SON DQN 4 3000 180.0 9.5 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839K33DQNRG4 X2SON DQN 4 3000 180.0 9.5 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839K33DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839K50DBZR SOT-23 DBZ 3 3000 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839K50DBZT SOT-23 DBZ 3 250 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839K50DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839K50DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839L30DBZR SOT-23 DBZ 3 3000 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+TPS3839L30DBZT SOT-23 DBZ 3 250 179.0 8.4 3.15 2.95 1.22 4.0 8.0 Q3
+Pack Materials-Page 2
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 18-Sep-2026
+Device Package
+Type
+Package
+Drawing
+Pins SPQ Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+TPS3839L30DQNR X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839L30DQNRG4 X2SON DQN 4 3000 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+TPS3839L30DQNT X2SON DQN 4 250 180.0 8.4 1.16 1.16 0.5 4.0 8.0 Q2
+Pack Materials-Page 3
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 18-Sep-2026
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W LH
+ 
+*All dimensions are nominal
+Device Package Type Package Drawing Pins SPQ Length (mm) Width (mm) Height (mm)
+TPS3831A09DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3831A09DQNRG4 X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3831A09DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3831E16DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3831E16DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3831G12DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3831G12DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3831G18DQNR X2SON DQN 4 3000 184.0 184.0 19.0
+TPS3831G18DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3831G33DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3831G33DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3831G33DQNTG4 X2SON DQN 4 250 210.0 185.0 35.0
+TPS3831K33DQNR X2SON DQN 4 3000 184.0 184.0 19.0
+TPS3831K33DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3831K33DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3831K50DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3831K50DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3831L30DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+Pack Materials-Page 4
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 18-Sep-2026
+Device Package Type Package Drawing Pins SPQ Length (mm) Width (mm) Height (mm)
+TPS3831L30DQNRG4 X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3831L30DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3839A09DBZR SOT-23 DBZ 3 3000 203.0 203.0 35.0
+TPS3839A09DBZT SOT-23 DBZ 3 250 200.0 183.0 25.0
+TPS3839A09DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3839A09DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3839E16DBZR SOT-23 DBZ 3 3000 200.0 183.0 25.0
+TPS3839E16DBZT SOT-23 DBZ 3 250 200.0 183.0 25.0
+TPS3839E16DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3839E16DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3839G12DBZR SOT-23 DBZ 3 3000 200.0 183.0 25.0
+TPS3839G12DBZT SOT-23 DBZ 3 250 203.0 203.0 35.0
+TPS3839G12DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3839G12DQNR X2SON DQN 4 3000 184.0 184.0 19.0
+TPS3839G12DQNRG4 X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3839G12DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3839G18DBZR SOT-23 DBZ 3 3000 200.0 183.0 25.0
+TPS3839G18DBZT SOT-23 DBZ 3 250 203.0 203.0 35.0
+TPS3839G18DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3839G18DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3839G25DBZR SOT-23 DBZ 3 3000 200.0 183.0 25.0
+TPS3839G25DBZRG4 SOT-23 DBZ 3 3000 200.0 183.0 25.0
+TPS3839G25DBZT SOT-23 DBZ 3 250 200.0 183.0 25.0
+TPS3839G33DBZR SOT-23 DBZ 3 3000 200.0 183.0 25.0
+TPS3839G33DBZT SOT-23 DBZ 3 250 200.0 183.0 25.0
+TPS3839G33DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3839G33DQNRG4 X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3839G33DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3839K33DBZR SOT-23 DBZ 3 3000 200.0 183.0 25.0
+TPS3839K33DBZT SOT-23 DBZ 3 250 200.0 183.0 25.0
+TPS3839K33DQNR X2SON DQN 4 3000 184.0 184.0 19.0
+TPS3839K33DQNRG4 X2SON DQN 4 3000 184.0 184.0 19.0
+TPS3839K33DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3839K50DBZR SOT-23 DBZ 3 3000 200.0 183.0 25.0
+TPS3839K50DBZT SOT-23 DBZ 3 250 203.0 203.0 35.0
+TPS3839K50DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3839K50DQNT X2SON DQN 4 250 210.0 185.0 35.0
+TPS3839L30DBZR SOT-23 DBZ 3 3000 200.0 183.0 25.0
+TPS3839L30DBZT SOT-23 DBZ 3 250 200.0 183.0 25.0
+TPS3839L30DQNR X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3839L30DQNRG4 X2SON DQN 4 3000 210.0 185.0 35.0
+TPS3839L30DQNT X2SON DQN 4 250 210.0 185.0 35.0
+Pack Materials-Page 5
+www.ti.com
+PACKAGE OUTLINE
+C
+0.20
+0.08 TYP
+0.25
+2.64
+2.10
+1.12 MAX
+0.10
+0.01 TYP
+3X 0.5
+0.3
+0.6
+0.2 TYP
+1.9
+0.95
+0 -8  TYP
+4X 0 -15
+4X 4 -15
+A
+3.04
+2.80
+B1.4
+1.2
+(0.95)
+(0.15)
+(0.125)
+SOT-23 - 1.12 mm max heightDBZ0003A
+SMALL OUTLINE TRANSISTOR
+4214838/F   08/2024
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. Reference JEDEC registration TO-236, except minimum foot length.
+4. Support pin may differ or may not be present.
+5. Body dimensions do not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not exceed
+    0.25mm per side
+ 
+0.2 C A B
+1
+3
+2
+INDEX AREA
+PIN 1
+NOTE 4
+GAGE PLANE
+SEATING PLANE
+0.1 C
+SCALE  4.000
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.07 MAX
+ALL AROUND
+0.07 MIN
+ALL AROUND
+3X (1.3)
+3X (0.6)
+(2.1)
+2X (0.95)
+(R0.05) TYP
+4214838/F   08/2024
+SOT-23 - 1.12 mm max heightDBZ0003A
+SMALL OUTLINE TRANSISTOR
+NOTES: (continued)
+ 
+5. Publication IPC-7351 may have alternate designs. 
+6. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+SYMM
+LAND PATTERN EXAMPLE
+SCALE:15X
+PKG
+1
+3
+2
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+DEFINED
+METALSOLDER MASK
+OPENING
+NON SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK DETAILS
+www.ti.com
+EXAMPLE STENCIL DESIGN
+(2.1)
+2X(0.95)
+3X (1.3)
+3X (0.6)
+(R0.05) TYP
+SOT-23 - 1.12 mm max heightDBZ0003A
+SMALL OUTLINE TRANSISTOR
+4214838/F   08/2024
+NOTES: (continued)
+ 
+7. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations. 
+8. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 THICK STENCIL
+SCALE:15X
+SYMM
+PKG
+1
+3
+2
+
+PACKAGE OUTLINE
+DQN0004A X2SON - 0.4 mm max height
+PLASTIC SMALL OUTLINE - NO LEAD
+4215302/E  12/2016
+NOTES:
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+          per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. The package thermal pad must be soldered to the printed circuit board for optimal thermal and mechanical performance.
+4. Features may not exist. Recommend use of pin 1 marking on top of package for orientation purposes.
+5. Shape of exposed side leads may differ.
+6. Number and location of exposed tie bars may vary.
+www.ti.com
+B A
+SEATING PLANE
+C
+0.08
+PIN 1
+INDEX AREA
+0.1 C A B
+0.05 C
+PIN 1 ID
+(OPTIONAL)
+NOTE 4
+EXPOSED
+THERMAL PAD
+1
+2 3
+4
+1
+1.05
+0.95
+1.05
+0.95
+0.4 MAX
+2X 0.65
+0.48+0.12
+-0.1
+3X 0.30
+0.15
+0.3
+0.2
+4X 0.28
+0.15
+0.05
+0.00
+(0.11)
+NOTE 5
+NOTE 6
+NOTE 6
+5
+(0.07) TYP
+(0.05) TYP
+EXAMPLE BOARD LAYOUT
+DQN0004A X2SON - 0.4 mm max height
+PLASTIC SMALL OUTLINE - NO LEAD
+4215302/E 12/2016
+NOTES: (continued)
+7. This package is designed to be soldered to a thermal pad on the board. For more information, see Texas Instruments literature
+number SLUA271 (www.ti.com/lit/slua271) .
+8. If any vias are implemented, it is recommended that vias under paste be filled, plugged or tented.
+www.ti.com
+SOLDER MASK
+DEFINED
+SOLDER MASK DETAIL
+0.05 MIN
+ALL AROUND
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+LAND PATTERN EXAMPLE
+SCALE: 40X
+SYMM
+SYMM
+1
+2
+3
+4
+4X (0.21)
+4X (0.36)
+(0.65)
+(0.86)
+(    0.48)
+SEE DETAIL
+4X (0.18)
+(0.22) TYP
+EXPOSED METAL
+CLEARANCE
+4X
+(0.03)
+EXPOSED METAL
+5
+EXAMPLE STENCIL DESIGN
+DQN0004A X2SON - 0.4 mm max height
+PLASTIC SMALL OUTLINE - NO LEAD
+4215302/E 12/2016
+NOTES: (continued)
+9. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+design recommendations.
+www.ti.com
+SOLDER PASTE EXAMPLE
+BASED ON 0.075 - 0.1mm THICK STENCIL
+EXPOSED PAD
+88% PRINTED SOLDER COVERAGE BY AREA
+SCALE: 60X
+SYMM
+SYMM
+1
+2
+3
+4
+SOLDER MASK
+EDGE
+4X (0.21)
+4X (0.4)
+(0.65)
+(0.9)
+(    0.45)
+4X (0.03)
+4X (0.235)
+4X (0.22)
+5
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

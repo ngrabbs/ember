@@ -1,4 +1,21 @@
-# STM32G0B1KET6 GP candidate verification
+# STM32G0B1 candidate verification and pinout correction
+
+## Correction on 2026-10-23
+
+**The historical GP acceptance claim below is withdrawn.** Independent inspection of both drawings in ST DS13560 Rev 6 Figure 3, printed p.36, confirms that the authored `STM32G0B1KET6_GP_DRAFT_v2` actually uses the **N variant** map. The standard GP map was incorrectly rejected in the earlier audit. The operator now selects **STM32G0B1KET6N** to preserve the intended allocation. Correct library identity, exact part metadata and fresh native verification are required before integration; a matching footprint does not make these variants interchangeable.
+
+| Physical pin | Actual GP STM32G0B1KET6 | Actual N STM32G0B1KET6N, intended allocation |
+|---|---|---|
+| 17 | PB2 | PB15 |
+| 20 | PC6 | VDDIO2 |
+| 26 | PA15 | PD0 |
+| 27 | PB3 | PD1 |
+| 28 | PB4 | PD2 |
+| 29 | PB5 | PD3 |
+
+The other 26 lead identities match between these two LQFP32 maps. The N figure marks its VDDIO2-powered pins explicitly. Supply, reset-state and alternate-function checks must use that exact variant. The earlier pad-geometry evidence remains useful for the common physical package; its GP electrical identity does not.
+
+## Historical candidate record
 
 2026-10-04. Draft symbol created through Konnect in `hardware/eps/libraries/Ember_EPS_Candidates.kicad_sym`. It is registered only in the disposable validation project, not the EPS project. The first draft remains as a superseded geometry trial; use `STM32G0B1KET6_GP_DRAFT_v2` for continued validation.
 

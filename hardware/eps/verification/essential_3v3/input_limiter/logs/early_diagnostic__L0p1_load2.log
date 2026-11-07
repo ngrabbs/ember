@@ -1,0 +1,28 @@
+LTspice 26.0.2 for MacOS
+Circuit: /private${RUN_DIR}/L0p1_load2.cir
+Start Time: Sat Oct 24 15:39:39 2026
+Options:plotwinsize=0
+solver = Normal
+Maximum thread count: 10
+tnom = 27
+temp = 27
+method = trap
+Direct Newton iteration failed to find operating point.
+Starting Gmin stepping
+Gmin stepping failed to find operating point. Use".option gminsteps=0" to skip all Gmin stepping.
+Starting source stepping with srcstepmethod=0
+Source stepping succeeded in finding the operating point.
+
+Warning: Simulation tolerance relaxed to achieve convergence from 1.0023136318451872e-01 
+Convergence Failure:  Time step too small; time = 0.100231, timestep = 1.25005e-16: trouble with instance "xinput"
+
+Simulation Failed: Iteration limit reached
+
+Total elapsed time: 11.496 seconds.
+
+Files loaded:
+/private${RUN_DIR}/L0p1_load2.cir
+${LTSPICE_LIBRARY}/sub/LTC4231-2.sub
+${LTSPICE_LIBRARY}/sub/LTC4368-1.sub
+/private${RUN_DIR}/CSD18543Q3A.LIB
+

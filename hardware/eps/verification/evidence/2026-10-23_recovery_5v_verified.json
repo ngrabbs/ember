@@ -1,0 +1,500 @@
+{
+  "date": "2026-10-23",
+  "net_endpoints": {
+    "+3V3": [
+      "R8.1"
+    ],
+    "+5V": [
+      "R4.2",
+      "R5.1",
+      "U1.13"
+    ],
+    "/REC5_BOOT1": [
+      "C1.1",
+      "U1.20"
+    ],
+    "/REC5_BOOT2": [
+      "C2.2",
+      "U1.19"
+    ],
+    "/REC5_COMP": [
+      "C18.1",
+      "R7.1",
+      "U1.15"
+    ],
+    "/REC5_COMP_ZERO": [
+      "C17.1",
+      "R7.2"
+    ],
+    "/REC5_EN": [
+      "R1.2",
+      "R2.1",
+      "U1.1"
+    ],
+    "/REC5_FB": [
+      "R5.2",
+      "R6.1",
+      "U1.14"
+    ],
+    "/REC5_FSW": [
+      "R3.1",
+      "U1.6"
+    ],
+    "/REC5_PG": [
+      "R8.2",
+      "U1.3"
+    ],
+    "/REC5_SW1": [
+      "C1.2",
+      "L1.1",
+      "U1.8"
+    ],
+    "/REC5_SW2": [
+      "C2.1",
+      "L1.2",
+      "U1.10"
+    ],
+    "5V0_RECOVERY_RAW": [
+      "C10.1",
+      "C11.1",
+      "C12.1",
+      "C13.1",
+      "C14.1",
+      "C15.1",
+      "C16.1",
+      "C9.1",
+      "R4.1",
+      "U1.11",
+      "U1.12"
+    ],
+    "5V2_RECOVERY_BIAS": [
+      "C3.1",
+      "U1.18"
+    ],
+    "GND": [
+      "C10.2",
+      "C11.2",
+      "C12.2",
+      "C13.2",
+      "C14.2",
+      "C15.2",
+      "C16.2",
+      "C17.2",
+      "C18.2",
+      "C3.2",
+      "C4.2",
+      "C5.2",
+      "C6.2",
+      "C7.2",
+      "C8.2",
+      "C9.2",
+      "R2.2",
+      "R3.2",
+      "R6.2",
+      "U1.17",
+      "U1.2",
+      "U1.5",
+      "U1.9"
+    ],
+    "SYS_PWR_PERMITTED": [
+      "C4.1",
+      "C5.1",
+      "C6.1",
+      "C7.1",
+      "C8.1",
+      "R1.1",
+      "U1.7"
+    ],
+    "unconnected-(U1-CC-Pad4)": [
+      "U1.4"
+    ],
+    "unconnected-(U1-CDC-Pad16)": [
+      "U1.16"
+    ],
+    "unconnected-(U1-EXTVCC-Pad21)": [
+      "U1.21"
+    ]
+  },
+  "named_nets_verified": 16,
+  "intentional_unconnected_pins": [
+    "U1.4 CC",
+    "U1.16 CDC",
+    "U1.21 EXTVCC (floating selects internal LDO)"
+  ],
+  "pad_objects": 23,
+  "unique_electrical_pads": 21,
+  "duplicate_objects": "Pad 9 has three overlapping constituent lands",
+  "pin_map": "21 TI function names match exported candidate",
+  "netclass_membership_from_saved_project": {
+    "SYS_PWR_PERMITTED": [
+      "POWER"
+    ],
+    "5V0_RECOVERY_RAW": [
+      "POWER"
+    ],
+    "+5V": [
+      "POWER"
+    ],
+    "+3V3": [
+      "POWER"
+    ],
+    "5V2_RECOVERY_BIAS": [
+      "POWER"
+    ],
+    "/REC5_SW1": [
+      "POWER"
+    ],
+    "/REC5_SW2": [
+      "POWER"
+    ],
+    "/REC5_BOOT1": [
+      "POWER"
+    ],
+    "/REC5_BOOT2": [
+      "POWER"
+    ],
+    "/REC5_FB": [
+      "ANALOG_CONTROL"
+    ],
+    "/REC5_COMP": [
+      "ANALOG_CONTROL"
+    ],
+    "/REC5_COMP_ZERO": [
+      "ANALOG_CONTROL"
+    ],
+    "/REC5_EN": [
+      "ANALOG_CONTROL"
+    ],
+    "/REC5_FSW": [
+      "ANALOG_CONTROL"
+    ],
+    "/REC5_PG": [
+      "ANALOG_CONTROL"
+    ],
+    "GND": [
+      "POWER"
+    ]
+  },
+  "note": "PCB is a disposable package comparison and carries no stage nets; project assignments checked against schematic netlist.",
+  "saved_schematic_sha256": "5217e17901639e43359173530a27620ca074fe8aae80525c2fade755bb323501",
+  "final_cli_netlist_comparison": "Exact endpoint equality after approved Panasonic footprint assignments; all 28 development footprints now populated",
+  "component_metadata_verified_from_cli_netlist": {
+    "C1": {
+      "Dielectric": "X8L",
+      "MFG P/N": "GCM188L81H104KA57D",
+      "PackageSize": "0603",
+      "Review status": "EVM reference; effective capacitance acceptance open",
+      "Tolerance": "10%",
+      "Voltage": "50 V",
+      "Footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "Datasheet": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GCM188L81H104KA57-01A.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C2": {
+      "Dielectric": "X8L",
+      "MFG P/N": "GCM188L81H104KA57D",
+      "PackageSize": "0603",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "10%",
+      "Voltage": "50 V",
+      "Footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "Datasheet": "https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GCM188L81H104KA57-01A.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C3": {
+      "Dielectric": "X7R",
+      "MFG P/N": "CGA5L1X7R1H106K160AC",
+      "PackageSize": "1206",
+      "Review status": "Development selection; application qualification open",
+      "Source status": "TI EVM BOM reference; full effective-capacitance acceptance open",
+      "Tolerance": "10%",
+      "Voltage": "50 V",
+      "Footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "Datasheet": "https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C4": {
+      "Dielectric": "X7R",
+      "MFG P/N": "CGA5L1X7R1H106K160AC",
+      "PackageSize": "1206",
+      "Review status": "Development selection; application qualification open",
+      "Source status": "TI EVM BOM reference; full effective-capacitance acceptance open",
+      "Tolerance": "10%",
+      "Voltage": "50 V",
+      "Footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "Datasheet": "https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C5": {
+      "Dielectric": "X7R",
+      "MFG P/N": "CGA5L1X7R1H106K160AC",
+      "PackageSize": "1206",
+      "Review status": "Development selection; application qualification open",
+      "Source status": "TI EVM BOM reference; full effective-capacitance acceptance open",
+      "Tolerance": "10%",
+      "Voltage": "50 V",
+      "Footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "Datasheet": "https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C6": {
+      "Dielectric": "X7R",
+      "MFG P/N": "CGA5L1X7R1H106K160AC",
+      "PackageSize": "1206",
+      "Review status": "Development selection; application qualification open",
+      "Source status": "TI EVM BOM reference; full effective-capacitance acceptance open",
+      "Tolerance": "10%",
+      "Voltage": "50 V",
+      "Footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "Datasheet": "https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C7": {
+      "Dielectric": "Hybrid aluminum",
+      "Height": "10.2 mm nominal; tolerance/mechanical acceptance open",
+      "MFG P/N": "EEHZA1H680P",
+      "PackageSize": "8 x 10.2 mm",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "20%",
+      "Voltage": "50 V",
+      "Footprint review": "Manufacturer land geometry query-back/render checked; assembly/stencil qualification open",
+      "Footprint": "Ember_EPS_Recovery:Panasonic_CP_F_8x10.2mm_REVIEW",
+      "Datasheet": "https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZA1H680P",
+      "Description": "Unpolarized capacitor"
+    },
+    "C8": {
+      "Dielectric": "X7R",
+      "MFG P/N": "CGA2B3X7R1H104K050BB",
+      "PackageSize": "0402",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "10%",
+      "Voltage": "50 V",
+      "Footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "Datasheet": "https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C9": {
+      "Dielectric": "X7R",
+      "MFG P/N": "CGA6P3X7R1E226M250AB",
+      "PackageSize": "1210",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "20%",
+      "Voltage": "25 V",
+      "Footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "Datasheet": "https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C10": {
+      "Dielectric": "X7R",
+      "MFG P/N": "CGA6P3X7R1E226M250AB",
+      "PackageSize": "1210",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "20%",
+      "Voltage": "25 V",
+      "Footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "Datasheet": "https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C11": {
+      "Dielectric": "X7R",
+      "MFG P/N": "CGA6P3X7R1E226M250AB",
+      "PackageSize": "1210",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "20%",
+      "Voltage": "25 V",
+      "Footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "Datasheet": "https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C12": {
+      "Dielectric": "X7R",
+      "MFG P/N": "CGA6P3X7R1E226M250AB",
+      "PackageSize": "1210",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "20%",
+      "Voltage": "25 V",
+      "Footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "Datasheet": "https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C13": {
+      "Dielectric": "Hybrid aluminum",
+      "Height": "7.7 mm nominal; tolerance/mechanical acceptance open",
+      "MFG P/N": "EEHZK1V101XP",
+      "PackageSize": "6.3 x 7.7 mm",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "20%",
+      "Voltage": "35 V",
+      "Footprint review": "Manufacturer land geometry query-back/render checked; assembly/stencil qualification open",
+      "Footprint": "Ember_EPS_Recovery:Panasonic_CP_D8_6.3x7.7mm_REVIEW",
+      "Datasheet": "https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZK1V101XP",
+      "Description": "Polarized capacitor"
+    },
+    "C14": {
+      "Dielectric": "Hybrid aluminum",
+      "Height": "7.7 mm nominal; tolerance/mechanical acceptance open",
+      "MFG P/N": "EEHZK1V101XP",
+      "PackageSize": "6.3 x 7.7 mm",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "20%",
+      "Voltage": "35 V",
+      "Footprint review": "Manufacturer land geometry query-back/render checked; assembly/stencil qualification open",
+      "Footprint": "Ember_EPS_Recovery:Panasonic_CP_D8_6.3x7.7mm_REVIEW",
+      "Datasheet": "https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZK1V101XP",
+      "Description": "Polarized capacitor"
+    },
+    "C15": {
+      "Dielectric": "Hybrid aluminum",
+      "Height": "7.7 mm nominal; tolerance/mechanical acceptance open",
+      "MFG P/N": "EEHZK1V101XP",
+      "PackageSize": "6.3 x 7.7 mm",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "20%",
+      "Voltage": "35 V",
+      "Footprint review": "Manufacturer land geometry query-back/render checked; assembly/stencil qualification open",
+      "Footprint": "Ember_EPS_Recovery:Panasonic_CP_D8_6.3x7.7mm_REVIEW",
+      "Datasheet": "https://industrial.panasonic.com/ww/products/pt/hybrid-aluminum/models/EEHZK1V101XP",
+      "Description": "Polarized capacitor"
+    },
+    "C16": {
+      "Dielectric": "X7R",
+      "MFG P/N": "CGA2B3X7R1H104K050BB",
+      "PackageSize": "0402",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "10%",
+      "Voltage": "50 V",
+      "Footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "Datasheet": "https://www.ti.com/lit/ug/slvucs0/slvucs0.pdf",
+      "Description": "Unpolarized capacitor"
+    },
+    "C17": {
+      "Dielectric": "C0G",
+      "MFG P/N": "GRM31C5C1H753JA01L",
+      "PackageSize": "1206",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "5%",
+      "Voltage": "50 V",
+      "Footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "Datasheet": "https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM31C5C1H753JA01-01A-EN_PDF_CERAMICCAPACITORSMD",
+      "Description": "Unpolarized capacitor"
+    },
+    "C18": {
+      "Dielectric": "C0G",
+      "MFG P/N": "GRM1885C1H301JA01D",
+      "PackageSize": "0603",
+      "Review status": "Development selection; application qualification open",
+      "Tolerance": "5%",
+      "Voltage": "50 V",
+      "Footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "Datasheet": "https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H301JA01-01A-EN_PDF_CERAMICCAPACITORSMD",
+      "Description": "Unpolarized capacitor"
+    },
+    "L1": {
+      "Height": "7.0 mm family reference; direct drawing verification open",
+      "MFG P/N": "XAL7070-682MEC",
+      "PackageSize": "XAL7070",
+      "Rated current": "6.8 A reference, 20 C rise at 25 C; not application rating",
+      "Review status": "Development selection; hot current/fault and thermal acceptance open",
+      "Saturation current": "12.8 A typical, 30% L drop at 25 C",
+      "Tolerance": "20%",
+      "DCR": "19.6 mOhm maximum at 25 C",
+      "Footprint": "Inductor_SMD:L_Coilcraft_XAL7070-XXX",
+      "Datasheet": "https://www.coilcraft.com/en-us/products/power/high-voltage-inductors/xal/xal7070/xal7070-682/",
+      "Description": "Inductor"
+    },
+    "R1": {
+      "MFG P/N": "TNPW060339K2BEEA",
+      "PackageSize": "0603",
+      "Power": "0.11 W @70 C general mode",
+      "Review status": "Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open",
+      "TCR": "25 ppm/K",
+      "Tolerance": "0.1%",
+      "Footprint": "Resistor_SMD:R_0603_1608Metric",
+      "Datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "Description": "Resistor"
+    },
+    "R2": {
+      "MFG P/N": "TNPW060316K9BEEA",
+      "PackageSize": "0603",
+      "Power": "0.11 W @70 C general mode",
+      "Review status": "Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open",
+      "TCR": "25 ppm/K",
+      "Tolerance": "0.1%",
+      "Footprint": "Resistor_SMD:R_0603_1608Metric",
+      "Datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "Description": "Resistor"
+    },
+    "R3": {
+      "MFG P/N": "TNPW060349K3BEEA",
+      "PackageSize": "0603",
+      "Power": "0.11 W @70 C general mode",
+      "Review status": "Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open",
+      "TCR": "25 ppm/K",
+      "Tolerance": "0.1%",
+      "Footprint": "Resistor_SMD:R_0603_1608Metric",
+      "Datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "Description": "Resistor"
+    },
+    "R4": {
+      "MFG P/N": "CRF1206-FZ-R020ELF",
+      "PackageSize": "1206",
+      "Power": "1 W @70 C",
+      "TCR": "50 ppm/K",
+      "Tolerance": "1%",
+      "Footprint": "Resistor_SMD:R_1206_3216Metric",
+      "Datasheet": "https://www.bourns.com/docs/product-datasheets/crf.pdf",
+      "Description": "Resistor"
+    },
+    "R5": {
+      "MFG P/N": "TNPW060331K6BEEA",
+      "PackageSize": "0603",
+      "Power": "0.11 W @70 C general mode",
+      "Review status": "Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open",
+      "TCR": "25 ppm/K",
+      "Tolerance": "0.1%",
+      "Footprint": "Resistor_SMD:R_0603_1608Metric",
+      "Datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "Description": "Resistor"
+    },
+    "R6": {
+      "MFG P/N": "TNPW060310K0BEEA",
+      "PackageSize": "0603",
+      "Power": "0.11 W @70 C general mode",
+      "Review status": "Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open",
+      "TCR": "25 ppm/K",
+      "Tolerance": "0.1%",
+      "Footprint": "Resistor_SMD:R_0603_1608Metric",
+      "Datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "Description": "Resistor"
+    },
+    "R7": {
+      "MFG P/N": "TNPW06033K74BEEA",
+      "PackageSize": "0603",
+      "Power": "0.11 W @70 C general mode",
+      "Review status": "Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open",
+      "TCR": "25 ppm/K",
+      "Tolerance": "0.1%",
+      "Footprint": "Resistor_SMD:R_0603_1608Metric",
+      "Datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "Description": "Resistor"
+    },
+    "R8": {
+      "MFG P/N": "TNPW060310K0BEEA",
+      "PackageSize": "0603",
+      "Power": "0.11 W @70 C general mode",
+      "Review status": "Development selection; ordering-code construction from manufacturer table; availability and lot confirmation open",
+      "TCR": "25 ppm/K",
+      "Tolerance": "0.1%",
+      "Footprint": "Resistor_SMD:R_0603_1608Metric",
+      "Datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+      "Description": "Resistor"
+    },
+    "U1": {
+      "MFG P/N": "TPS552872RYQR",
+      "Review": "CUSTOM \u2014 REVIEW REQUIRED",
+      "Footprint": "Ember_EPS_Recovery:TI_RYQ0021A_DRAFT",
+      "Datasheet": "https://www.ti.com/lit/ds/symlink/tps552872.pdf",
+      "Description": ""
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "status": "CONDITIONAL DEVELOPMENT SCREEN; actual debugger and dynamic/PVT gates open",
+  "resistor_MPN_verified_from_frozen_R800": "TNPW0603330RBEEA",
+  "R_fraction_tolerance_plus_65C_TCR": 0.002625,
+  "R330_max_ohm": 330.86625000000004,
+  "series_plus_Ron_max_ohm": 335.36625000000004,
+  "assumed_rail_V": [
+    3.2328,
+    3.3244
+  ],
+  "probe_requirements": {
+    "VOL_screen_max_V": 0.4,
+    "VOH_clock_min_required_V": 2.3470821326714337,
+    "digital_load_guard_A": 1e-05,
+    "VTref_load_max_A": 0.001,
+    "capacitance_F": 5.6e-11
+  },
+  "SWDIO_target_low_guard_V": 0.4984874293250662,
+  "MCU_fractional_VIL_guard_V": 0.96984,
+  "VTref_loaded_min_V": 3.2268000827171326,
+  "MCU_to_probe_series_drop_10uA_V": 0.0033536625000000005,
+  "SEL_load_max_A": 0.0003413149517483393,
+  "TPS_drive_row_max_A": 0.0005,
+  "SEL_high_min_V": 2.8328,
+  "SEL_high_margin_V": 1.6328000000000003,
+  "SEL_low_margin_V": 0.04999999999999999,
+  "series_RC_tau_s": 1.8780510000000004e-08,
+  "series_RC_10_90_s": 4.126499814690865e-08,
+  "10k_pullup_RC_10_90_s": 1.2336756834369675e-06,
+  "NRST_100n_discharge_tau_s": 3.245117154442484e-05,
+  "NRST_100n_release_tau_s": 0.001002625,
+  "NRST_hold_recommendation_s": 0.01,
+  "off_held_zero_conditional": {
+    "each_10k_node_V": 0.020052500000000004,
+    "47k_node_V": 0.09424675,
+    "4path_rail_10k_V": 0.08021000000000002
+  },
+  "limitations": [
+    "330 ohm is not a complete external fault current limiter.",
+    "MCU .3/.7 VDD screen is not a replacement for exact NRST threshold/pulse/probe checks.",
+    "10ms reset hold is a service condition proposal, not a measured probe guarantee.",
+    "TPS assertion 20us and hysteresis29mV are typical only; no max collapse guarantee.",
+    "IPOFF2uA is at VDD=0, not a floating rail or continuous brownout guarantee.",
+    "RC excludes active-driver slew, cable transmission, MCU input C and turnaround.",
+    "Actual probe VOH/VOL/VTref/clock and capacitance must be verified."
+  ]
+}

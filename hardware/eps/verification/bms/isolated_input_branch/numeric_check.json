@@ -1,0 +1,26 @@
+{
+  "method": "Independent midpoint ODE integration, timestep <=20ns,100 periods; compares last-cycle extrema to analytical1000-period solution",
+  "cases": [
+    {
+      "C_uF": 10,
+      "limit_A": 0.11,
+      "independent_min_V": 2.6398874181414307,
+      "independent_max_V": 3.2157722706212946,
+      "max_difference_V": 4.816947818397921e-08
+    },
+    {
+      "C_uF": 47,
+      "limit_A": 0.11,
+      "independent_min_V": 3.078557448489736,
+      "independent_max_V": 3.210673592341656,
+      "max_difference_V": 8.659797323673502e-09
+    },
+    {
+      "C_uF": 100,
+      "limit_A": 0.2,
+      "independent_min_V": 3.131841912950194,
+      "independent_max_V": 3.199237386021267,
+      "max_difference_V": 2.1494761526241746e-10
+    }
+  ]
+}

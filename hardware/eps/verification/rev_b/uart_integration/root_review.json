@@ -1,0 +1,44 @@
+{
+  "status": "Independent current graph/metadata/ERC comparison passed; presentation and bench acceptance incomplete",
+  "physical_parts": 243,
+  "nets": 137,
+  "functional_nets": 121,
+  "physical_endpoints": 673,
+  "ERC_errors": 12,
+  "ERC_warnings": 0,
+  "fresh_graph_and_metadata_equal": true,
+  "fresh_ERC_equal_excluding_run_marker_UUIDs": true,
+  "verified_artifact_hashes": 62,
+  "old_net_changes": [
+    "+3V3",
+    "GND",
+    "unconnected-(U100-PA2-Pad9)",
+    "unconnected-(U100-PA3-Pad10)"
+  ],
+  "fresh_netlist_sha256": "25ba362b4f402ff6b9825aff75575c4e4472c6cf0856d0a13e0db7d19920809b",
+  "fresh_erc_sha256": "ff073a2a5e27c0b419aef31116f2ca5108feb0413f074e957c0ce56fea6c184b",
+  "root_actual_images_opened": [
+    "eps_rev_b.png",
+    "root_uart_tile.png",
+    "controller.png",
+    "uart_debug.png",
+    "uart_signals.png",
+    "uart_power.png",
+    "parts_copper.png"
+  ],
+  "root_primary_images_opened": [
+    "Nexperia Rev13 p3 pin map",
+    "Nexperia Rev13 p8 SOT363-2 outline"
+  ],
+  "owner_actual_scope": "All ten full sheets, changed/root details and disposable views per visual_review.json",
+  "open_presentation_findings": [
+    "Stock power-unit Reference/Value cross pin strokes; separate pin callout is clear",
+    "Inherited root Controller and CAN filename fields are visually detached/misassociated",
+    "S03 native severity/S11 visible-field APIs and standalone pagination remain limited"
+  ],
+  "open_electrical_gates": [
+    "Input slew, actual adapter/cable and UART clock budget",
+    "Undefined-supply/brownout and total interface back-power",
+    "All prior BMS gate/SOA/bus-power, RBF and incomplete EPS gates"
+  ]
+}

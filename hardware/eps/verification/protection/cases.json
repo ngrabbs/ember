@@ -1,0 +1,289 @@
+[
+  {
+    "name": "rail_lc_nominal"
+  },
+  {
+    "name": "rail_lc_cold",
+    "temperature": -40
+  },
+  {
+    "name": "rail_lc_hot",
+    "temperature": 85
+  },
+  {
+    "name": "rail_lc_high_trip",
+    "threshold": 1
+  },
+  {
+    "name": "rail_bridge",
+    "feed_l": 1e-07,
+    "feed_r": 0.1
+  },
+  {
+    "name": "rail_bridge_high_trip",
+    "feed_l": 1e-07,
+    "feed_r": 0.1,
+    "threshold": 1
+  },
+  {
+    "name": "rail_slow_ov",
+    "rise": 0.01
+  },
+  {
+    "name": "rail_short",
+    "mode": "short"
+  },
+  {
+    "name": "rail_input_short",
+    "mode": "input_short"
+  },
+  {
+    "name": "rail_reset",
+    "mode": "reset"
+  },
+  {
+    "name": "rail_start_min",
+    "mode": "startup",
+    "normal": 4.919254,
+    "threshold": -1
+  },
+  {
+    "name": "rail_stiff_rejection",
+    "stiff": true,
+    "feed_l": 1e-07,
+    "no_guard": true
+  },
+  {
+    "name": "source_cold_start",
+    "stage": "source",
+    "mode": "startup",
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "source_ov40",
+    "stage": "source",
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "source_ov60",
+    "stage": "source",
+    "fault": 60,
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "source_ov60_high_trip",
+    "stage": "source",
+    "fault": 60,
+    "threshold": 1,
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "source_short",
+    "stage": "source",
+    "mode": "short",
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "source_return",
+    "stage": "source",
+    "normal": 28,
+    "fault": 32.164,
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "rail_slow_high_trip",
+    "rise": 0.01,
+    "threshold": 1
+  },
+  {
+    "name": "rail_slow_low_trip",
+    "rise": 0.01,
+    "threshold": -1
+  },
+  {
+    "name": "rail_bridge_lowC",
+    "feed_l": 1e-07,
+    "feed_r": 0.1,
+    "bulk": 0.000112,
+    "ceramic": 2.4e-05
+  },
+  {
+    "name": "source_ov60_hot",
+    "stage": "source",
+    "fault": 60,
+    "temperature": 85,
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "source_cold_low_trip",
+    "stage": "source",
+    "mode": "startup",
+    "threshold": -1,
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "source_ov_return",
+    "stage": "source",
+    "mode": "source_recover",
+    "stop": 5.5,
+    "maxstep": 2e-05
+  },
+  {
+    "name": "rail_start_maxC",
+    "mode": "startup",
+    "bulk": 0.00024,
+    "ceramic": 0.0003112
+  },
+  {
+    "name": "rail_hard_bridge",
+    "feed_l": 1e-08,
+    "feed_r": 0.01,
+    "threshold": 1,
+    "detect_extra_delay": 1e-06
+  },
+  {
+    "name": "rail_hard_bridge_cold",
+    "feed_l": 1e-08,
+    "feed_r": 0.01,
+    "threshold": 1,
+    "detect_extra_delay": 1e-06,
+    "temperature": -40
+  },
+  {
+    "name": "rail_hard_bridge_hot",
+    "feed_l": 1e-08,
+    "feed_r": 0.01,
+    "threshold": 1,
+    "detect_extra_delay": 1e-06,
+    "temperature": 85
+  },
+  {
+    "name": "rail_lc_max_guard",
+    "barrier_l": 5.64e-06
+  },
+  {
+    "name": "rail_load_release",
+    "mode": "load_release"
+  },
+  {
+    "name": "rail_guard_nominal",
+    "barrier_l": 4.7e-06
+  },
+  {
+    "name": "rail_hard_bridge_no_guard_rejection",
+    "feed_l": 1e-08,
+    "feed_r": 0.01,
+    "threshold": 1,
+    "detect_extra_delay": 1e-06,
+    "no_guard": true
+  },
+  {
+    "name": "rail_start_maxC_hot",
+    "mode": "startup",
+    "bulk": 0.00024,
+    "ceramic": 0.0003112,
+    "temperature": 85
+  },
+  {
+    "name": "rail_start_maxC_cold",
+    "mode": "startup",
+    "bulk": 0.00024,
+    "ceramic": 0.0003112,
+    "temperature": -40
+  },
+  {
+    "name": "rail_prebias",
+    "mode": "prebias",
+    "load": 0,
+    "startup": 0
+  },
+  {
+    "name": "source_short_350mA",
+    "stage": "source",
+    "mode": "short",
+    "pv_current": 0.35,
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "source_short_60mA",
+    "stage": "source",
+    "mode": "short",
+    "pv_current": 0.06,
+    "load": 0.02,
+    "startup": 0.01,
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "source_hotplug60",
+    "stage": "source",
+    "normal": 60,
+    "mode": "startup",
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "source_mid_ov",
+    "stage": "source",
+    "fault": 35.5,
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "source_start_maxC",
+    "stage": "source",
+    "mode": "startup",
+    "bulk": 8.16e-05,
+    "ceramic": 3.3e-05,
+    "stop": 0.5,
+    "maxstep": 1e-05
+  },
+  {
+    "name": "rail_finite_220u",
+    "finite_energy": 0.00022,
+    "threshold": 1,
+    "detect_extra_delay": 1e-06
+  },
+  {
+    "name": "rail_finite_330u",
+    "finite_energy": 0.00033,
+    "threshold": 1,
+    "detect_extra_delay": 1e-06
+  },
+  {
+    "name": "rail_load_release_high_trip",
+    "mode": "load_release",
+    "threshold": 1
+  },
+  {
+    "name": "source_persistent60",
+    "stage": "source",
+    "fault": 60,
+    "stop": 5.5,
+    "maxstep": 2e-05
+  },
+  {
+    "name": "rail_load_min_hot",
+    "mode": "startup",
+    "normal": 4.919254,
+    "threshold": -1,
+    "temperature": 85
+  },
+  {
+    "name": "source_package_short",
+    "stage": "source",
+    "mode": "short",
+    "package_parasitics": true,
+    "stop": 0.5,
+    "maxstep": 1e-05
+  }
+]

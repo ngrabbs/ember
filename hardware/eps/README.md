@@ -1,5 +1,7 @@
 # Electrical Power System (EPS)
 
+2026-10-23 recovery checkpoint: [latch correction, source-short slew limiting and MOSFET survival screening](design/rev_b_5v_latch_and_mosfet_survival.md). This is a development study; physical/hot-SOA qualification and Rev B integration remain open.
+
 **Configuration review pending, 2026-10-04.** This older architecture record
 uses a TPSM5D1806 regulation target; the [Rev A bring-up plan](bringup/phase1_validation.md)
 describes the TPS62933 hardware. Newer EPS Rev B planning is in a separate

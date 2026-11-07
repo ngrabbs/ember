@@ -1,0 +1,69 @@
+{
+  "status": "NO_SIMULATION_ACCEPTANCE",
+  "simulator": "LTspice26.0.2 macOS",
+  "vendor_url": "https://www.vishay.com/docs/77820/sud50p08.zip",
+  "vendor_archive_sha256": "e9e37c6a671159c476cb10a75bbb90f4f1ce952934f3b91a493f65cedd1e7974",
+  "vendor_library_filename": "sud50p08-25L_PS.lib",
+  "vendor_library_sha256": "449483d3774ae1c26e56d38a2224c200df4715db28e14f9278d50d9bb2da04b6",
+  "changes_to_vendor_model": false,
+  "models_other_than_MOSFET": "Unselected generic NPN, diode, zener and switch sensitivity models; not manufacturer limits",
+  "attempts": [
+    {
+      "case": "normal",
+      "status": "NOT_VERIFIED_CONVERGENCE_FAILURE",
+      "completed_measurements": false,
+      "last_relaxed_time_s": 0.2260226167515701,
+      "original_deck_sha256": "8414912eefc5d122bac9d531a39f5cbe1d438a6bca7b3e1424f011b256b1c61f",
+      "portable_deck_sha256": "d7b51d6d576779202ac9fe660310947f0a3fd06f5edbb1df1eee88a7f1b9e230",
+      "full_log_sha256": "bb22a1a3b512c5a0579d86e9fed8bb421caf210da35c408d850b7f5481858b64",
+      "log_tail": [
+        "Warning: Simulation tolerance relaxed to achieve convergence from 2.2602261675156810e-01 to 2.2602261675156909e-01 seconds.",
+        "Warning: Simulation tolerance relaxed to achieve convergence from 2.2602261675156909e-01 to 2.2602261675157009e-01 seconds.",
+        "Warning: Simulation tolerance relaxed to achieve convergence from 2.2602261675157009e-01 "
+      ]
+    },
+    {
+      "case": "normal_g",
+      "status": "NOT_VERIFIED_CONVERGENCE_FAILURE",
+      "completed_measurements": false,
+      "last_relaxed_time_s": 0.05000386957204921,
+      "original_deck_sha256": "c1092ddb6c4c65cc44b5cf7b4f733e37bcfcfa4d0b5c9c56d3dcda007b412670",
+      "portable_deck_sha256": "88a5012b06f4fc03a7695f137b870b48cb337dfcab3e501c3a9b64ed6db3569a",
+      "full_log_sha256": "f54ab6b0d7171c0651753b209399d3e33fd617343ed97acf9a422b022b7487d9",
+      "log_tail": [
+        "Warning: Simulation tolerance relaxed to achieve convergence from 5.0003869572048922e-02 to 5.0003869572049019e-02 seconds.",
+        "Warning: Simulation tolerance relaxed to achieve convergence from 5.0003869572049019e-02 to 5.0003869572049116e-02 seconds.",
+        "Warning: Simulation tolerance relaxed to achieve convergence from 5.0003869572049116e-02 to 5.0003869572049213e-02 seconds."
+      ]
+    },
+    {
+      "case": "normal_alt",
+      "status": "NOT_VERIFIED_CONVERGENCE_FAILURE",
+      "completed_measurements": false,
+      "last_relaxed_time_s": 0.05005405011924489,
+      "original_deck_sha256": "7f9eec25881a0d3de825ccbef03f348064f1e7dbeb06e8c3d828c6f3d9a3f2f1",
+      "portable_deck_sha256": "23ddc80b62612d95b682af9242f25270910176b74abc32f7aa70d5b3688115de",
+      "full_log_sha256": "564cea1a0ae166f3b4f63798a05b420df4f538703d66019b8985d6750e3802c1",
+      "log_tail": [
+        "Warning: Simulation tolerance relaxed to achieve convergence from 5.0054050119244693e-02 to 5.0054050119244790e-02 seconds.",
+        "Warning: Simulation tolerance relaxed to achieve convergence from 5.0054050119244790e-02 to 5.0054050119244888e-02 seconds.",
+        "Warning: Simulation tolerance relaxed to achieve convergence from 5.0054050119244888e-02 "
+      ]
+    },
+    {
+      "case": "passive_8V",
+      "status": "NOT_VERIFIED_CONVERGENCE_FAILURE",
+      "completed_measurements": false,
+      "last_relaxed_time_s": 0.0501101554981779,
+      "original_deck_sha256": "2be6f9b102197b52e6e1da1f78ac37115d0a021dac5bed6d8fdd658114e93894",
+      "portable_deck_sha256": "201664629f1500f9c079acc411705a47765b0508251e0c66a8a2de38cf14b432",
+      "full_log_sha256": "9d2e7a71f55a9d0fb2fdfde97293a296834a7e640091070dbf07cb86a85d8f69",
+      "log_tail": [
+        "Warning: Simulation tolerance relaxed to achieve convergence from 5.0110155498177704e-02 to 5.0110155498177801e-02 seconds.",
+        "Warning: Simulation tolerance relaxed to achieve convergence from 5.0110155498177801e-02 to 5.0110155498177898e-02 seconds.",
+        "Warning: Simulation tolerance relaxed to achieve convergence from 5.0110155498177898e-02 "
+      ]
+    }
+  ],
+  "termination": "First run manually terminated after repeated tolerance-relaxation loops; other runs reached process timeout. No terminal measurement results were accepted."
+}

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/verification/managed_payload/tdk_filter_package/fixture/tdk_filter_check.kicad_sch</source>
+    <date>2026-10-24T18:23:56</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>tdk_filter_check.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>1nF</value>
+      <footprint>Ember_Charger_BMS_Review:C_0603_TDK_CGA3_PA0.70_PB0.70_PC0.70_REVIEW</footprint>
+      <datasheet>https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA3E2C0G1H102J080AA</datasheet>
+      <description>Unpolarized capacitor</description>
+      <fields>
+        <field name="Dielectric">C0G</field>
+        <field name="MFG P/N">CGA3E2C0G1H102J080AA</field>
+        <field name="Manufacturer">TDK</field>
+        <field name="PackageSize">0603</field>
+        <field name="Review">CUSTOM FOOTPRINT — REVIEW REQUIRED</field>
+        <field name="Tolerance">5%</field>
+        <field name="Voltage">50 V</field>
+        <field name="Footprint">Ember_Charger_BMS_Review:C_0603_TDK_CGA3_PA0.70_PB0.70_PC0.70_REVIEW</field>
+        <field name="Datasheet">https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA3E2C0G1H102J080AA</field>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Dielectric" value="C0G"/>
+      <property name="MFG P/N" value="CGA3E2C0G1H102J080AA"/>
+      <property name="Manufacturer" value="TDK"/>
+      <property name="PackageSize" value="0603"/>
+      <property name="Review" value="CUSTOM FOOTPRINT — REVIEW REQUIRED"/>
+      <property name="Tolerance" value="5%"/>
+      <property name="Voltage" value="50 V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="tdk_filter_check.kicad_sch"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <property name="ki_fp_filters" value="C_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a260f137-2812-42a7-98c2-2b29859ca21e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Unpolarized capacitor</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Device">
+      <uri>${KICAD10_SYMBOL_DIR}/Device.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="unconnected-(C1-Pad1)" class="Default">
+      <node ref="C1" pin="1" pintype="passive"/>
+    </net>
+    <net code="2" name="unconnected-(C1-Pad2)" class="Default">
+      <node ref="C1" pin="2" pintype="passive"/>
+    </net>
+  </nets>
+</export>

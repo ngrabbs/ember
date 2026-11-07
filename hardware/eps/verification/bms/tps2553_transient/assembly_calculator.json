@@ -1,0 +1,80 @@
+{
+  "source_sha256": "6001da9f256856a29aa73adbbccd0972da93cc199bcabfb3478e128e3e6531e3",
+  "C0_upper_sensitivity_uF": 38.58465049999999,
+  "C5_conditional_low_uF": 19.334876985,
+  "cases": [
+    {
+      "vin_V": 3.0,
+      "load_mA": 14.10929487777757,
+      "rise_us": 1025,
+      "before16ms": true,
+      "burst_at_allocated_load": {
+        "burst_A": 0.19140000000000001,
+        "ripple_estimate_mV": 44.76653854005431,
+        "ton_us": 4.937828934584398
+      }
+    },
+    {
+      "vin_V": 3.0,
+      "load_mA": 50,
+      "rise_us": 1250,
+      "before16ms": true,
+      "burst_at_allocated_load": {
+        "burst_A": 0.19140000000000001,
+        "ripple_estimate_mV": 44.76653854005431,
+        "ton_us": 4.937828934584398
+      }
+    },
+    {
+      "vin_V": 3.0,
+      "load_mA": 100,
+      "rise_us": 1900,
+      "before16ms": true,
+      "burst_at_allocated_load": {
+        "burst_A": 0.19140000000000001,
+        "ripple_estimate_mV": 44.76653854005431,
+        "ton_us": 4.937828934584398
+      }
+    },
+    {
+      "vin_V": 3.3,
+      "load_mA": 14.10929487777757,
+      "rise_us": 925,
+      "before16ms": true,
+      "burst_at_allocated_load": {
+        "burst_A": 0.2519,
+        "ripple_estimate_mV": 45.84294984533046,
+        "ton_us": 3.759129501858604
+      }
+    },
+    {
+      "vin_V": 3.3,
+      "load_mA": 50,
+      "rise_us": 1075,
+      "before16ms": true,
+      "burst_at_allocated_load": {
+        "burst_A": 0.2519,
+        "ripple_estimate_mV": 45.84294984533046,
+        "ton_us": 3.759129501858604
+      }
+    },
+    {
+      "vin_V": 3.3,
+      "load_mA": 100,
+      "rise_us": 1475,
+      "before16ms": true,
+      "burst_at_allocated_load": {
+        "burst_A": 0.2519,
+        "ripple_estimate_mV": 45.84294984533046,
+        "ton_us": 3.759129501858604
+      }
+    }
+  ],
+  "status": "TI calculator aid with selected capacitor/load inputs; not coupled startup qualification",
+  "remaining": [
+    "LDO output-capacitor charging and current limit not modeled explicitly",
+    "Imposed constant loads are scenarios, not guaranteed maxima",
+    "Real source and TPS ramp/current-limit/timer not coupled to calculator",
+    "Cold full-power limits and arbitrary prebias unresolved"
+  ]
+}

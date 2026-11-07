@@ -1,0 +1,51 @@
+{
+  "konnect": "0.11.1",
+  "kicad": "10.0.0",
+  "S03": {
+    "status": "blocked",
+    "reason": "No exposed tool persists native ERC rule severity. run_erc.severity only filters reports; save_project_config writes Konnect JSON; no direct native project edit authorized.",
+    "tools": [
+      {
+        "name": "mcp__konnect__get_design_rules",
+        "description": "Return the current design rule constraints defined in the sibling KiCAD project file.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__konnect__get_design_rules(args: {\n  "
+      },
+      {
+        "name": "mcp__konnect__get_effective_config",
+        "description": "Return the merged configuration (user defaults + project overrides). This is the config Claude should use for all design decisions.\n\nexec tool declaration:\n```ts\ndeclare const tool"
+      },
+      {
+        "name": "mcp__konnect__list_design_rules",
+        "description": "List all active design rules (user-level + project-level).\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__konnect__list_design_rules(args: {\n  // Project directory (opti"
+      },
+      {
+        "name": "mcp__konnect__load_project_config",
+        "description": "Load project-specific configuration from <project_dir>/.konnect/project.json. Project config overrides user config where both exist.\n\nexec tool declaration:\n```ts\ndeclare const too"
+      },
+      {
+        "name": "mcp__konnect__load_user_config",
+        "description": "Load the user's global Konnect preferences. Call this at the start of every session to get preferred manufacturers, fab constraints, default passives, and design rules.\n\nexec tool "
+      },
+      {
+        "name": "mcp__konnect__run_erc",
+        "description": "Run the Electrical Rules Check (ERC) on the schematic via kicad-cli and return a list of violations filtered by severity.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__"
+      },
+      {
+        "name": "mcp__konnect__save_project_config",
+        "description": "Save a project-specific rule or override. Same dot-notation as save_user_config but writes to the project's .konnect/project.json.\n\nexec tool declaration:\n```ts\ndeclare const tools"
+      },
+      {
+        "name": "mcp__konnect__save_user_config",
+        "description": "Update a user preference. Use dot-notation for nested keys, e.g. 'fab_constraints.fab_house'. Call this when the user says things like 'always use JLCPCB' or 'I prefer 0402 passive"
+      },
+      {
+        "name": "mcp__konnect__set_design_rules",
+        "description": "Set board-level design rules (clearance, trace width, via size) in the sibling KiCAD project file.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__konnect__set_design_rul"
+      }
+    ]
+  },
+  "S11": {
+    "status": "blocked",
+    "reason": "edit_schematic_component supports value/footprint/datasheet and custom field values; no custom field visibility/font/size/position/justification setters. Saved metadata and notes do not satisfy required rendered Arial parameter blocks.",
+    "schema": "Update fields (Reference, Value, Footprint, custom properties) consistently across every placed unit of a component.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__konnect__edit_schematic_component(args: {\n  // New datasheet URL (optional)\n  datasheet?: string;\n  // Additional property fields to set as key:value pairs\n  fields?: { [key: string]: unknown; };\n  // New footprint (optional)\n  footprint?: string;\n  // New reference designator (optional)\n  new_reference?: string;\n  // Current reference designator\n  reference: string;\n  schematic: string;\n  // New value (optional)\n  value?: string;\n}): Promise<CallToolResult>; };\n```"
+  }
+}

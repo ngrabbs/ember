@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/verification/essential_3v3/ltc4368_candidate/disposable/ltc4368_check.kicad_sch</source>
+    <date>2026-10-24T14:14:55</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>ltc4368_check.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="U1">
+      <value>LTC4368IMS-1#TRPBF</value>
+      <footprint>Ember_Charger_BMS_Review:ADI_MS10_05_08_1661_REVIEW</footprint>
+      <datasheet>https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf</datasheet>
+      <description>Industrial bidirectional +/-50mV circuit-breaker controller; exact MS10 review part</description>
+      <fields>
+        <field name="MFG P/N">LTC4368IMS-1#TRPBF</field>
+        <field name="Manufacturer">Analog Devices</field>
+        <field name="PackageSize">MS10 / MSOP-10</field>
+        <field name="Review">CUSTOM — REVIEW REQUIRED; construction authorized2026-10-24</field>
+        <field name="Footprint">Ember_Charger_BMS_Review:ADI_MS10_05_08_1661_REVIEW</field>
+        <field name="Datasheet">https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf</field>
+        <field name="Description">Industrial bidirectional +/-50mV circuit-breaker controller; exact MS10 review part</field>
+      </fields>
+      <libsource lib="Ember_Charger_BMS_Review" part="LTC4368IMS_1_REVIEW" description=""/>
+      <property name="MFG P/N" value="LTC4368IMS-1#TRPBF"/>
+      <property name="Manufacturer" value="Analog Devices"/>
+      <property name="PackageSize" value="MS10 / MSOP-10"/>
+      <property name="Review" value="CUSTOM — REVIEW REQUIRED; construction authorized2026-10-24"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="ltc4368_check.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e0cbd24f-89d5-43c8-8426-75d024c46a7f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="6"/>
+            <pin num="4"/>
+            <pin num="1"/>
+            <pin num="5"/>
+            <pin num="10"/>
+            <pin num="9"/>
+            <pin num="8"/>
+            <pin num="7"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Ember_Charger_BMS_Review" part="LTC4368IMS_1_REVIEW">
+      <docs>https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LTC4368IMS-1#TRPBF</field>
+        <field name="Footprint">Ember_Charger_BMS_Review:ADI_MS10_05_08_1661_REVIEW</field>
+        <field name="Datasheet">https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4368.pdf</field>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="power_in"/>
+        <pin num="2" name="UV" type="input"/>
+        <pin num="3" name="OV" type="input"/>
+        <pin num="4" name="RETRY" type="bidirectional"/>
+        <pin num="5" name="GND" type="power_in"/>
+        <pin num="6" name="~{SHDN}" type="input"/>
+        <pin num="7" name="~{FAULT}" type="open_collector"/>
+        <pin num="8" name="VOUT" type="input"/>
+        <pin num="9" name="SENSE" type="input"/>
+        <pin num="10" name="GATE" type="output"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Ember_Charger_BMS_Review">
+      <uri>${KIPRJMOD}/../../../../rev_b/libraries/Ember_Charger_BMS_Review.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="unconnected-(U1-GATE-Pad10)" class="Default">
+      <node ref="U1" pin="10" pinfunction="GATE_10" pintype="output"/>
+    </net>
+    <net code="2" name="unconnected-(U1-GND-Pad5)" class="Default">
+      <node ref="U1" pin="5" pinfunction="GND_5" pintype="power_in"/>
+    </net>
+    <net code="3" name="unconnected-(U1-OV-Pad3)" class="Default">
+      <node ref="U1" pin="3" pinfunction="OV_3" pintype="input"/>
+    </net>
+    <net code="4" name="unconnected-(U1-RETRY-Pad4)" class="Default">
+      <node ref="U1" pin="4" pinfunction="RETRY_4" pintype="bidirectional"/>
+    </net>
+    <net code="5" name="unconnected-(U1-SENSE-Pad9)" class="Default">
+      <node ref="U1" pin="9" pinfunction="SENSE_9" pintype="input"/>
+    </net>
+    <net code="6" name="unconnected-(U1-UV-Pad2)" class="Default">
+      <node ref="U1" pin="2" pinfunction="UV_2" pintype="input"/>
+    </net>
+    <net code="7" name="unconnected-(U1-VIN-Pad1)" class="Default">
+      <node ref="U1" pin="1" pinfunction="VIN_1" pintype="power_in"/>
+    </net>
+    <net code="8" name="unconnected-(U1-VOUT-Pad8)" class="Default">
+      <node ref="U1" pin="8" pinfunction="VOUT_8" pintype="input"/>
+    </net>
+    <net code="9" name="unconnected-(U1-~{FAULT}-Pad7)" class="Default">
+      <node ref="U1" pin="7" pinfunction="~{FAULT}_7" pintype="open_collector"/>
+    </net>
+    <net code="10" name="unconnected-(U1-~{SHDN}-Pad6)" class="Default">
+      <node ref="U1" pin="6" pinfunction="~{SHDN}_6" pintype="input"/>
+    </net>
+  </nets>
+</export>

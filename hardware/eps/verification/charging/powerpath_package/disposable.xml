@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/verification/charging/powerpath_package/disposable/powerpath_check.kicad_sch</source>
+    <date>2026-10-24T05:30:36</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>powerpath_check.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="Q1">
+      <value>CSD18543Q3A</value>
+      <footprint>Ember_Charger_BMS_Review:TI_CSD18543Q3A_Q3A_Manufacturer</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/csd18543q3a.pdf</datasheet>
+      <description>35A Id, 60V Vds, NexFET N-Channel Power MOSFET, 8.1mOhm Ron, Qg Typ 11.1nC, VSON-8 3.3x3.3mm</description>
+      <fields>
+        <field name="Drain aliases">Physical5/6/7/8/9 → logical5</field>
+        <field name="MFG P/N">CSD18543Q3A</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">Q3A; TI SLPS633 pp8–10</field>
+        <field name="Review">CUSTOM FOOTPRINT — REVIEW REQUIRED</field>
+        <field name="Footprint">Ember_Charger_BMS_Review:TI_CSD18543Q3A_Q3A_Manufacturer</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/csd18543q3a.pdf</field>
+        <field name="Description">35A Id, 60V Vds, NexFET N-Channel Power MOSFET, 8.1mOhm Ron, Qg Typ 11.1nC, VSON-8 3.3x3.3mm</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="CSD18543Q3A" description="35A Id, 60V Vds, NexFET N-Channel Power MOSFET, 8.1mOhm Ron, Qg Typ 11.1nC, VSON-8 3.3x3.3mm"/>
+      <property name="Drain aliases" value="Physical5/6/7/8/9 → logical5"/>
+      <property name="MFG P/N" value="CSD18543Q3A"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="Q3A; TI SLPS633 pp8–10"/>
+      <property name="Review" value="CUSTOM FOOTPRINT — REVIEW REQUIRED"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="powerpath_check.kicad_sch"/>
+      <property name="ki_keywords" value="NexFET Power MOSFET N-MOS"/>
+      <property name="ki_fp_filters" value="VSON*3.3x3.3mm*P0.65mm*NexFET*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0f08022b-7117-48c3-9fe5-0e10c83b9aec</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Transistor_FET" part="CSD18543Q3A">
+      <description>35A Id, 60V Vds, NexFET N-Channel Power MOSFET, 8.1mOhm Ron, Qg Typ 11.1nC, VSON-8 3.3x3.3mm</description>
+      <docs>https://www.ti.com/lit/ds/symlink/csd18543q3a.pdf</docs>
+      <footprints>
+        <fp>VSON*3.3x3.3mm*P0.65mm*NexFET*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">CSD18543Q3A</field>
+        <field name="Footprint">Package_SON:VSON-8_3.3x3.3mm_P0.65mm_NexFET</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/csd18543q3a.pdf</field>
+        <field name="Description">35A Id, 60V Vds, NexFET N-Channel Power MOSFET, 8.1mOhm Ron, Qg Typ 11.1nC, VSON-8 3.3x3.3mm</field>
+      </fields>
+      <pins>
+        <pin num="1" name="S" type="passive"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="S" type="passive"/>
+        <pin num="4" name="G" type="input"/>
+        <pin num="5" name="D" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Transistor_FET">
+      <uri>${KICAD10_SYMBOL_DIR}/Transistor_FET.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(Q1-S-Pad1)" class="Default">
+      <node ref="Q1" pin="1" pinfunction="S_1" pintype="passive"/>
+      <node ref="Q1" pin="2" pinfunction="S_2" pintype="passive"/>
+      <node ref="Q1" pin="3" pinfunction="S_3" pintype="passive"/>
+    </net>
+    <net code="2" name="unconnected-(Q1-D-Pad5)" class="Default">
+      <node ref="Q1" pin="5" pinfunction="D_5" pintype="passive"/>
+    </net>
+    <net code="3" name="unconnected-(Q1-G-Pad4)" class="Default">
+      <node ref="Q1" pin="4" pinfunction="G_4" pintype="input"/>
+    </net>
+  </nets>
+</export>

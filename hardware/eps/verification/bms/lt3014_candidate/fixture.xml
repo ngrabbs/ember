@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/verification/bms/lt3014_candidate/fixture/lt3014_check.kicad_sch</source>
+    <date>2026-10-24T09:25:01</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>lt3014_check.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="U1">
+      <value>LT3014IS5#TRPBF</value>
+      <footprint>Package_TO_SOT_SMD:TSOT-23-5_HandSoldering</footprint>
+      <datasheet>https://www.analog.com/media/en/technical-documentation/data-sheets/3014fd.pdf</datasheet>
+      <description>20mA output, 3V..80Vin, High voltage low-dropout regulator, SOT-23-5</description>
+      <fields>
+        <field name="MFG P/N">LT3014IS5#TRPBF</field>
+        <field name="Manufacturer">Analog Devices</field>
+        <field name="PackageSize">S5 TSOT-23-5</field>
+        <field name="Review">Stock package fixture; no circuit acceptance</field>
+        <field name="Temperature">-40 to +125 C junction</field>
+        <field name="Footprint">Package_TO_SOT_SMD:TSOT-23-5_HandSoldering</field>
+        <field name="Datasheet">https://www.analog.com/media/en/technical-documentation/data-sheets/3014fd.pdf</field>
+        <field name="Description">20mA output, 3V..80Vin, High voltage low-dropout regulator, SOT-23-5</field>
+      </fields>
+      <libsource lib="Regulator_Linear" part="LT3014xS5" description="20mA output, 3V..80Vin, High voltage low-dropout regulator, SOT-23-5"/>
+      <property name="MFG P/N" value="LT3014IS5#TRPBF"/>
+      <property name="Manufacturer" value="Analog Devices"/>
+      <property name="PackageSize" value="S5 TSOT-23-5"/>
+      <property name="Review" value="Stock package fixture; no circuit acceptance"/>
+      <property name="Temperature" value="-40 to +125 C junction"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="lt3014_check.kicad_sch"/>
+      <property name="ki_keywords" value="analog analog-devices linear linear-technology linear LDO"/>
+      <property name="ki_fp_filters" value="SOT?23*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9b428ba1-09e7-43c2-a3bb-b9b0d9c966ac</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="3"/>
+            <pin num="2"/>
+            <pin num="5"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Regulator_Linear" part="LT3014xS5">
+      <description>20mA output, 3V..80Vin, High voltage low-dropout regulator, SOT-23-5</description>
+      <docs>https://www.analog.com/media/en/technical-documentation/data-sheets/3014fd.pdf</docs>
+      <footprints>
+        <fp>SOT?23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LT3014xS5</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-5</field>
+        <field name="Datasheet">https://www.analog.com/media/en/technical-documentation/data-sheets/3014fd.pdf</field>
+        <field name="Description">20mA output, 3V..80Vin, High voltage low-dropout regulator, SOT-23-5</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VIN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="~{SHDN}" type="input"/>
+        <pin num="4" name="ADJ" type="input"/>
+        <pin num="5" name="VOUT" type="power_out"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Regulator_Linear">
+      <uri>${KICAD10_SYMBOL_DIR}/Regulator_Linear.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="unconnected-(U1-ADJ-Pad4)" class="Default">
+      <node ref="U1" pin="4" pinfunction="ADJ_4" pintype="input"/>
+    </net>
+    <net code="2" name="unconnected-(U1-GND-Pad2)" class="Default">
+      <node ref="U1" pin="2" pinfunction="GND_2" pintype="power_in"/>
+    </net>
+    <net code="3" name="unconnected-(U1-VIN-Pad1)" class="Default">
+      <node ref="U1" pin="1" pinfunction="VIN_1" pintype="power_in"/>
+    </net>
+    <net code="4" name="unconnected-(U1-VOUT-Pad5)" class="Default">
+      <node ref="U1" pin="5" pinfunction="VOUT_5" pintype="power_out"/>
+    </net>
+    <net code="5" name="unconnected-(U1-~{SHDN}-Pad3)" class="Default">
+      <node ref="U1" pin="3" pinfunction="~{SHDN}_3" pintype="input"/>
+    </net>
+  </nets>
+</export>

@@ -1,0 +1,46 @@
+* CAN branch resistor-position / fault-location comparison, development only
+.include "${TPS_ADAPTED_MODEL}"
+Vsrc source 0 PWL(0 0 100u 3.232799 60m 3.232799)
+Rsource source shared .05
+Cshared shared 0 96u Rser=10m
+* 100mA imposed other essential load; no LMR51635 control-loop model
+Bother shared 0 I=.1*min(max(V(shared),0)/2.7,1)
+* Imposed GPIO/inverter behavior; actual1G14 dynamics/PVT not modeled
+VstbA stbA 0 PWL(0 3.3 1m 3.3 1.001m 0 35m 0 35.001m 3.3 55m 3.3 55.001m 0 60m 0)
+VstbB stbB 0 PWL(0 3.3 1m 3.3 1.001m 0 60m 0)
+BdriverA invA 0 V=if(V(shared)>1.65,if(V(stbA)<1,max(V(shared)-.1,0),.1),0)
+RdriverA invA yA 1k
+RenA yA enA 1k
+RpdA enA 0 100k
+RbleedA railA 0 10k
+BdriverB invB 0 V=if(V(shared)>1.65,if(V(stbB)<1,max(V(shared)-.1,0),.1),0)
+RdriverB invB yB 1k
+RenB yB enB 1k
+RpdB enB 0 100k
+RbleedB railB 0 10k
+RfeedA shared inA 1m
+CinA inA 0 100n Rser=.05
+VmonA inA tpsinA 0
+XswA tpsinA 0 enA 0 faultA ilimA swA TPS2553-1_TRANS
+RilimA ilimA 0 210k
+RfaultA shared faultA 10k
+RoutA swA railA 1
+CloadA railA 0 1.2u Rser=.02
+BloadA railA 0 I=0.09*min(max(V(railA),0)/2.7,1)
+RfeedB shared inB 1m
+CinB inB 0 100n Rser=.05
+VmonB inB tpsinB 0
+XswB tpsinB 0 enB 0 faultB ilimB swB TPS2553-1_TRANS
+RilimB ilimB 0 210k
+RfaultB shared faultB 10k
+RoutB swB railB 1
+CloadB railB 0 1.2u Rser=.02
+BloadB railB 0 I=0.09*min(max(V(railB),0)/2.7,1)
+Vfault command 0 PWL(0 0 10m 0 10.0001m 1 30m 1 30.0001m 0 60m 0)
+Sfault railA 0 command 0 SHORT
+.model SHORT SW(Ron=.01 Roff=1e12 Vt=.5)
+.temp 25
+.options plotwinsize=0
+.tran 0 60m 0 250n startup
+.save V(shared) V(inA) V(inB) V(railA) V(railB) V(faultA) V(faultB) V(enA) V(enB) V(stbA) V(stbB) I(VmonA) I(VmonB) I(Rsource)
+.end

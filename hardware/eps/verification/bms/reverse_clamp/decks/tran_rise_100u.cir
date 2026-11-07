@@ -1,0 +1,17 @@
+* Isolated clamp transient sensitivity, illustrative capacitances
+.include "${DMN_MODEL}"
+Vport port 0 PWL(0 8.526 1m 8.526 {1m+100u} -8.526 3m -8.526 {3m+100u} 8.526 5m 8.526)
+Bdriver drive 0 V=max(V(port),0)+.4
+Rdriver drive main_gate 5.1k
+Roff main_gate port 10meg
+Cgs main_gate port 2n
+Cgd main_gate raw 100p
+Vraw raw 0 8.526
+Rclamp clamp_gate 0 1k
+Ileak 0 clamp_gate -10u
+Xclamp main_gate clamp_gate port DMN62D2U
+.temp 25
+.options plotwinsize=0
+.tran 0 5m 0 10n
+.save V(port) V(main_gate) V(clamp_gate) I(Bdriver)
+.end

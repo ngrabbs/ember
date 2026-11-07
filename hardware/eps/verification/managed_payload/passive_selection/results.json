@@ -1,0 +1,318 @@
+{
+  "status": "37_PASSIVES_SELECTED_DC_SCREEN_ONLY",
+  "resistors": 23,
+  "capacitors": 14,
+  "all_resistor_DC_screens_within_conditional_derated_power": true,
+  "temperature_screen_C": [
+    -40,
+    85
+  ],
+  "resistor_error_fraction": 0.002625,
+  "stress": [
+    {
+      "reference": "R1400",
+      "applied_voltage_screen_V": 5.5,
+      "power_screen_W": 0.007544680407961446,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.09430850509951808,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Imposed 5.5 V low-voltage pin bound for resistor stress, not pin-operation acceptance"
+    },
+    {
+      "reference": "R1401",
+      "applied_voltage_screen_V": 35.0,
+      "power_screen_W": 0.029811264277466214,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.3726408034683277,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Full imposed 35 V across source-connected resistor, conservative DC bound"
+    },
+    {
+      "reference": "R1402",
+      "applied_voltage_screen_V": 6.864862935046491,
+      "power_screen_W": 0.004725037535227485,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.05906296919034357,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "35 V ideal-source divider, independent initial/TCR corners; no clamp credit"
+    },
+    {
+      "reference": "R1403",
+      "applied_voltage_screen_V": 35.0,
+      "power_screen_W": 0.018035596009274714,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.2254449501159339,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Full imposed 35 V across source-connected resistor, conservative DC bound"
+    },
+    {
+      "reference": "R1404",
+      "applied_voltage_screen_V": 4.501989239871267,
+      "power_screen_W": 0.002032125039821197,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.025401562997764963,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "35 V ideal-source divider, independent initial/TCR corners; no clamp credit"
+    },
+    {
+      "reference": "R1405",
+      "applied_voltage_screen_V": 35.0,
+      "power_screen_W": 0.033649975020044055,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.4206246877505507,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Full imposed 35 V across source-connected resistor, conservative DC bound"
+    },
+    {
+      "reference": "R1406",
+      "applied_voltage_screen_V": 7.557946228699655,
+      "power_screen_W": 0.005727289253882976,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.0715911156735372,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "35 V ideal-source divider, independent initial/TCR corners; no clamp credit"
+    },
+    {
+      "reference": "R1407",
+      "applied_voltage_screen_V": 5.5,
+      "power_screen_W": 0.0016849786244447229,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.021062232805559036,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Imposed 5.5 V low-voltage pin bound for resistor stress, not pin-operation acceptance"
+    },
+    {
+      "reference": "R1408",
+      "applied_voltage_screen_V": 3.6,
+      "power_screen_W": 0.012994109537536033,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.16242636921920042,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Essential/control supply bounded to 3.6 V; no alternate-source injection"
+    },
+    {
+      "reference": "R1409",
+      "applied_voltage_screen_V": 3.6,
+      "power_screen_W": 0.0006497054768768016,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.008121318460960019,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Essential/control supply bounded to 3.6 V; no alternate-source injection"
+    },
+    {
+      "reference": "R1410",
+      "applied_voltage_screen_V": 3.6,
+      "power_screen_W": 0.0012994109537536032,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.016242636921920038,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Essential/control supply bounded to 3.6 V; no alternate-source injection"
+    },
+    {
+      "reference": "R1411",
+      "applied_voltage_screen_V": 3.6,
+      "power_screen_W": 0.0012994109537536032,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.016242636921920038,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Essential/control supply bounded to 3.6 V; no alternate-source injection"
+    },
+    {
+      "reference": "R1412",
+      "applied_voltage_screen_V": 35.0,
+      "power_screen_W": 0.1228224088231608,
+      "allowed_85C_general_curve_W": 0.24000000000000002,
+      "utilization": 0.51176003676317,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.14400000000000002,
+      "premise": "Full imposed 35 V across source-connected resistor, conservative DC bound"
+    },
+    {
+      "reference": "R1420",
+      "applied_voltage_screen_V": 3.6,
+      "power_screen_W": 0.0012994109537536032,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.016242636921920038,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Essential/control supply bounded to 3.6 V; no alternate-source injection"
+    },
+    {
+      "reference": "R1421",
+      "applied_voltage_screen_V": 3.6,
+      "power_screen_W": 0.012994109537536033,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.16242636921920042,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Essential/control supply bounded to 3.6 V; no alternate-source injection"
+    },
+    {
+      "reference": "R1422",
+      "applied_voltage_screen_V": 3.6,
+      "power_screen_W": 0.0012994109537536032,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.016242636921920038,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Essential/control supply bounded to 3.6 V; no alternate-source injection"
+    },
+    {
+      "reference": "R1423",
+      "applied_voltage_screen_V": 3.6,
+      "power_screen_W": 0.012994109537536033,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.16242636921920042,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Essential/control supply bounded to 3.6 V; no alternate-source injection"
+    },
+    {
+      "reference": "R1424",
+      "applied_voltage_screen_V": 3.6,
+      "power_screen_W": 1.2994109537536032e-05,
+      "allowed_85C_general_curve_W": 0.10181818181818182,
+      "utilization": 0.00012762071867222888,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.06109090909090909,
+      "premise": "Essential/control supply bounded to 3.6 V; no alternate-source injection"
+    },
+    {
+      "reference": "R1425",
+      "applied_voltage_screen_V": 3.6,
+      "power_screen_W": 0.0012994109537536032,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.016242636921920038,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Essential/control supply bounded to 3.6 V; no alternate-source injection"
+    },
+    {
+      "reference": "R1426",
+      "applied_voltage_screen_V": 35.0,
+      "power_screen_W": 0.007267598155216615,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.09084497694020768,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Full imposed 35 V across source-connected resistor, conservative DC bound"
+    },
+    {
+      "reference": "R1427",
+      "applied_voltage_screen_V": 1.965021793133571,
+      "power_screen_W": 0.00038714732648100007,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.004839341581012501,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "35 V ideal-source divider, independent initial/TCR corners; no clamp credit"
+    },
+    {
+      "reference": "R1428",
+      "applied_voltage_screen_V": 35.0,
+      "power_screen_W": 0.005434619859431894,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.06793274824289867,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "Full imposed 35 V across source-connected resistor, conservative DC bound"
+    },
+    {
+      "reference": "R1429",
+      "applied_voltage_screen_V": 1.490524905174721,
+      "power_screen_W": 0.0002227511711187979,
+      "allowed_85C_general_curve_W": 0.08,
+      "utilization": 0.002784389638984974,
+      "configured_power_fraction": 0.6,
+      "configured_allowed_W": 0.048,
+      "premise": "35 V ideal-source divider, independent initial/TCR corners; no clamp credit"
+    }
+  ],
+  "land_comparison": [
+    {
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pad_length_mm": 0.8,
+      "pad_width_mm": 0.95,
+      "inner_gap_mm": 0.85,
+      "raw_pad_count": 2,
+      "Vishay_IPC_representative_G_Y_X_mm": [
+        0.7,
+        0.9,
+        1.0
+      ],
+      "exact_match_to_representative_pattern": false
+    },
+    {
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "pad_length_mm": 1.025,
+      "pad_width_mm": 1.4,
+      "inner_gap_mm": 0.8,
+      "raw_pad_count": 2,
+      "Vishay_IPC_representative_G_Y_X_mm": [
+        1.0,
+        0.9,
+        1.45
+      ],
+      "exact_match_to_representative_pattern": false
+    },
+    {
+      "footprint": "Resistor_SMD:R_1210_3225Metric",
+      "pad_length_mm": 1.125,
+      "pad_width_mm": 2.65,
+      "inner_gap_mm": 1.7999999999999998,
+      "raw_pad_count": 2,
+      "Vishay_IPC_representative_G_Y_X_mm": [
+        1.75,
+        1.15,
+        2.65
+      ],
+      "exact_match_to_representative_pattern": false
+    },
+    {
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pad_length_mm": 0.9,
+      "pad_width_mm": 0.95,
+      "inner_gap_mm": 0.6500000000000001,
+      "raw_pad_count": 2,
+      "TDK_product_reflow_ranges_mm": {
+        "PA": [
+          0.6,
+          0.8
+        ],
+        "PB": [
+          0.6,
+          0.8
+        ],
+        "PC": [
+          0.6,
+          0.8
+        ]
+      },
+      "within_all_recommended_ranges": false
+    }
+  ],
+  "prior_native_preserved": 219,
+  "native_mutation": false,
+  "assembly_acceptance": false,
+  "qualification": false,
+  "limits": [
+    "35 V imposed source ceiling; valid 3.6 V control supply assumed",
+    "Thermal board/film behavior and long-term resistance drift not proven",
+    "No resistor open/short single-fault or transient-pulse acceptance",
+    "X7R nominal values do not prove effective capacitance",
+    "TDK project filter footprint is constructed with disposable mask verification; review/assembly and real-board settings remain open",
+    "Ordering availability, lot and assembly process are not confirmed"
+  ]
+}

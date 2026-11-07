@@ -1,0 +1,82 @@
+1
+2
+3 4
+5
+6
+OUT
+FAULT
+ILIM
+EN
+GND
+IN
+PAD
+1
+2
+3 4
+5
+6
+OUT
+FAULT
+ILIM
+EN
+GND
+IN
+5
+TPS2552, TPS2553, TPS2552-1, TPS2553-1
+www.ti.com SLVS841F – NOVEMBER 2008 – REVISED AUGUST 2016
+Product Folder Links: TPS2552 TPS2553 TPS2552-1 TPS2553-1
+Submit Documentation FeedbackCopyright © 2008–2016, Texas Instruments Incorporated
+6 Pin Configuration and Functions
+TPS255x DBV Package
+6-Pin SOT-23
+Top View
+EN = Active Low for the TPS2552
+EN = Active High for the TPS2553
+Add –1 to part number for latch-off version
+TPS255x DRV Package
+6-Pin WSON
+Top View
+EN = Active Low for the TPS2552
+EN = Active High for the TPS2553
+Add –1 to part number for latch-off version
+Pin Functions
+PIN
+I/O DESCRIPTION
+NAME
+TPS2552 TPS2553
+SOT-23 WSON SOT-23 WSON
+EN 3 4 — — I Enable input, logic low turns on power switch
+EN — — 3 4 I Enable input, logic high turns on power switch
+FAULT 4 3 4 3 O
+Active-low open-drain output, asserted during
+overcurrent, overtemperature, or reverse-voltage
+conditions.
+GND 2 5 2 5 — Ground connection; connect externally to PowerPAD
+ILIM 5 2 5 2 O External resistor used to set current-limit threshold;
+recommended 15 kΩ ≤ RILIM ≤ 232 kΩ.
+IN 1 6 1 6 I
+Input voltage; connect a 0.1 µF or greater ceramic
+capacitor from IN to GND as close to the IC as
+possible.
+OUT 6 1 6 1 O Power-switch output
+PowerPAD™ — PAD — PAD —
+Internally connected to GND; used to heat-sink the part
+to the circuit board traces. Connect PowerPAD to GND
+pin externally.
+Add –1 for Latch-Off version
+(1) Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress ratings
+only, which do not imply functional operation of the device at these or any other conditions beyond those indicated under Recommended
+Operating Conditions. Exposure to absolute-maximum-rated conditions for extended periods may affect device reliability.
+(2) Voltages are referenced to GND unless otherwise noted.
+7 Specifications
+7.1 Absolute Maximum Ratings
+over operating free-air temperature range (unless otherwise noted) (1) (2)
+MIN MAX UNIT
+Voltage range on IN, OUT, EN or EN, ILIM, FAULT –0.3 7 V
+Voltage range from IN to OUT –7 7 V
+IO Continuous output current Internally Limited
+Continuous total power dissipation See the Thermal Information
+Continuous FAULT sink current 0 25 mA
+ILIM source current 0 1 mA
+TJ Maximum junction temperature –40 150 °C
+Tstg Storage temperature –65 150 °C

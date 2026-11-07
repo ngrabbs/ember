@@ -1,0 +1,291 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-24T06:15:49",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.0",
+    "sheets": [
+        {
+            "path": "/Controller/",
+            "uuid_path": "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/3887cba2-4b11-469e-838c-d35f1fb4fc5a",
+            "violations": [
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 26 [PD0, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.3208,
+                                "y": 0.9017
+                            },
+                            "uuid": "26b1688d-e5be-4a88-89eb-48ef03152cce"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 28 [PD2, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.3208,
+                                "y": 0.9525
+                            },
+                            "uuid": "760f4fbc-c936-4ccb-9840-e4a8f62fefa4"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 29 [PD3, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.3208,
+                                "y": 0.9779
+                            },
+                            "uuid": "4efc289f-c98a-4913-8e83-16682ac16d4e"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 32 [PB8, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.3208,
+                                "y": 1.2065
+                            },
+                            "uuid": "22364e1d-2cbb-498d-a4f9-c9ea3dbad342"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 17 [PB15, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.3208,
+                                "y": 1.2573
+                            },
+                            "uuid": "a6c7b6a9-a04b-431a-b23e-05be488e4ed4"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 7 [PA0, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.8796,
+                                "y": 0.8509
+                            },
+                            "uuid": "0175470d-3ef5-4da7-8517-723bcf031e26"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 8 [PA1, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.8796,
+                                "y": 0.8763
+                            },
+                            "uuid": "de3e1c2a-6f02-4eb3-ad22-bddad44e4315"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 9 [PA2, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.8796,
+                                "y": 0.9017
+                            },
+                            "uuid": "ac086185-586c-4953-8691-54f2d3a95ea7"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 10 [PA3, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.8796,
+                                "y": 0.9271
+                            },
+                            "uuid": "b8346bfb-c523-48c6-be5b-e115613fed4b"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 11 [PA4, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.8796,
+                                "y": 0.9525
+                            },
+                            "uuid": "bfc384e4-a024-4e82-8cfb-ce421df0cbdb"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 12 [PA5, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.8796,
+                                "y": 0.9779
+                            },
+                            "uuid": "c5b2d439-88e0-4dc0-a0b9-2fb8cabb4922"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 19 [PA9/UCPD1_DBCC1, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.8796,
+                                "y": 1.1049
+                            },
+                            "uuid": "3bbe9889-4e1d-4410-b62f-69f0ea615cdf"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U100 Pin 21 [PA10/UCPD1_DBCC2, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.8796,
+                                "y": 1.1557
+                            },
+                            "uuid": "da0c7b59-8f3d-42cf-9e6c-26cdde3df8d7"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                }
+            ]
+        },
+        {
+            "path": "/CAN interfaces/",
+            "uuid_path": "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/fe5345f2-e583-4a64-a085-08644425dbe8",
+            "violations": []
+        },
+        {
+            "path": "/Essential 3V3/",
+            "uuid_path": "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/f65fe20e-e663-42b7-8f35-60abec560633",
+            "violations": []
+        },
+        {
+            "path": "/Recovery 5V converter/",
+            "uuid_path": "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/db3cadf5-bca6-4a2a-9514-e7323a7f1145",
+            "violations": []
+        },
+        {
+            "path": "/Solar source protection/",
+            "uuid_path": "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/0abe3ad6-2c84-4061-b95b-3f3b9c4a4da7",
+            "violations": []
+        },
+        {
+            "path": "/Recovery rail protection/",
+            "uuid_path": "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/9deb67d0-68a4-4419-931c-74033ea85dd8",
+            "violations": []
+        },
+        {
+            "path": "/Charger PowerPath/",
+            "uuid_path": "/8eba9f22-6f11-42d7-8e4a-b8de8905b113/d51809f7-0479-4c00-95c7-52f01e4ad9dd",
+            "violations": [
+                {
+                    "description": "Pins of type Power output and Power output are connected",
+                    "items": [
+                        {
+                            "description": "Symbol U300 Pin 25 [SW, Power output, Line]",
+                            "pos": {
+                                "x": 2.2098,
+                                "y": 1.2192
+                            },
+                            "uuid": "5249afed-160b-4c65-be22-3522cf464962"
+                        },
+                        {
+                            "description": "Symbol U300 Pin 26 [SW, Power output, Line]",
+                            "pos": {
+                                "x": 2.2098,
+                                "y": 1.2446
+                            },
+                            "uuid": "c88ee194-8eb7-407b-a941-68d1afa38e66"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_to_pin"
+                }
+            ]
+        },
+        {
+            "path": "/",
+            "uuid_path": "/8eba9f22-6f11-42d7-8e4a-b8de8905b113",
+            "violations": []
+        }
+    ],
+    "source": "eps_rev_b.kicad_sch"
+}

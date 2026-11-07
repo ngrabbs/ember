@@ -1,0 +1,42 @@
+{
+  "status": "CONDITIONAL DEVELOPMENT SCREEN; not measured probe or dynamic/PVT qualification",
+  "supersedes": "swd_interface_candidate .49849V omitted-internal-pull calculation; historical files unchanged",
+  "ST_source": "https://www.st.com/resource/en/datasheet/stm32g0b1ke.pdf",
+  "ST_identity": "DS13560 Rev6 tables55 pp93\u201394 and60 pp98\u201399; root inspected primary web text; no local PDF inspection claimed",
+  "assumptions": {
+    "internal_pull_min_ohm": 25000,
+    "internal_pull_max_ohm": 55000,
+    "external_R_tolerance_plus_TCR_fraction": 0.002625,
+    "probe_VOL_max_V": 0.4,
+    "probe_VOH_min_V": 2.4,
+    "digital_load_guard_A": 1e-05,
+    "TMUX_Ron_max_ohm": 4.5,
+    "load_F": 5.6e-11,
+    "reset_C_nominal_F": 1e-07,
+    "internal_pull_state": "worst enabled bounded pull; do not infer actual option/debug reset configuration"
+  },
+  "external_plus_internal_pullup_min_ohm": 7129.454233532292,
+  "external_plus_internal_clock_pulldown_min_ohm": 16304.544418995745,
+  "target_SWDIO_and_NRST_low_guard_V": 0.5347359326649109,
+  "MCU_NRST_VIL_max_guard_V": 0.96984,
+  "clock_probe_high_required_V": 2.378299096393434,
+  "clock_probe_high_requirement_margin_V": 0.02170090360656607,
+  "NRST_discharge_tau_nominal100n_s": 3.20299508356691e-05,
+  "NRST_release_tau_internal55k_s": 0.0008480325253263106,
+  "NRST_release_tau_internal_off_s": 0.001002625,
+  "proposed_assert_hold_s": 0.01,
+  "ST_NRST_not_filtered_pulse_min_s": 3.5e-07,
+  "VTref_loaded_min_V": 3.2268000827171326,
+  "SEL_max_load_A": 0.0003413149517483393,
+  "SEL_high_margin_V": 1.6328000000000003,
+  "SEL_low_margin_V": 0.04999999999999999,
+  "series_RC_10_90_s": 4.126499814690865e-08,
+  "limits": [
+    "25..55k internal pulls are separately included;10uA is an additional imposed leakage/load guard.",
+    "Pull state/configuration and simultaneous whole-product leakage require actual MCU/probe validation.",
+    "Reset RC uses nominal100n only; actual tolerance/effective C and probe open-drain timing remain open.",
+    "TPS maximum collapse assertion delay is not specified; low-VDD .6V valid reset row only1uA load.",
+    "IPOFF2uA applies atVDD=0, not floating/brownout equilibrium.",
+    "Initial100kHz/10ms reset hold do not establish cable or turnaround acceptance."
+  ]
+}

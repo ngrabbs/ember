@@ -1,0 +1,352 @@
+{
+  "component_count": 15,
+  "components": [
+    {
+      "footprint": "Ember_EPS_Power:TI_DDC0006A_SOT23_6_DRAFT",
+      "lib_id": "Ember_EPS_Power:LMR51635XDDCR_DRAFT_v2",
+      "pin_count": 6,
+      "pins": [
+        {
+          "name": "FB",
+          "net": "BUCK33_FB",
+          "number": "1",
+          "x": 110.49,
+          "y": 85.09
+        },
+        {
+          "name": "EN",
+          "net": "SYS_PWR_PERMITTED",
+          "number": "2",
+          "x": 90.17,
+          "y": 80.01
+        },
+        {
+          "name": "VIN",
+          "net": "SYS_PWR_PERMITTED",
+          "number": "3",
+          "x": 90.17,
+          "y": 74.93
+        },
+        {
+          "name": "GND",
+          "net": "GND",
+          "number": "4",
+          "x": 90.17,
+          "y": 85.09
+        },
+        {
+          "name": "SW",
+          "net": "BUCK33_SW",
+          "number": "5",
+          "x": 110.49,
+          "y": 80.01
+        },
+        {
+          "name": "CB",
+          "net": "BUCK33_CB",
+          "number": "6",
+          "x": 110.49,
+          "y": 74.93
+        }
+      ],
+      "reference": "U1",
+      "value": "LMR51635XDDCR"
+    },
+    {
+      "footprint": "",
+      "lib_id": "Device:C",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "",
+          "net": "SYS_PWR_PERMITTED",
+          "number": "1",
+          "x": 40.64,
+          "y": 85.09
+        },
+        {
+          "name": "",
+          "net": "GND",
+          "number": "2",
+          "x": 40.64,
+          "y": 92.71000000000001
+        }
+      ],
+      "reference": "C1",
+      "value": "2.2u / 100V"
+    },
+    {
+      "footprint": "",
+      "lib_id": "Device:C",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "",
+          "net": "SYS_PWR_PERMITTED",
+          "number": "1",
+          "x": 55.88,
+          "y": 85.09
+        },
+        {
+          "name": "",
+          "net": "GND",
+          "number": "2",
+          "x": 55.88,
+          "y": 92.71000000000001
+        }
+      ],
+      "reference": "C2",
+      "value": "2.2u / 100V"
+    },
+    {
+      "footprint": "",
+      "lib_id": "Device:C",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "",
+          "net": "SYS_PWR_PERMITTED",
+          "number": "1",
+          "x": 71.12,
+          "y": 85.09
+        },
+        {
+          "name": "",
+          "net": "GND",
+          "number": "2",
+          "x": 71.12,
+          "y": 92.71000000000001
+        }
+      ],
+      "reference": "C3",
+      "value": "100n / 100V"
+    },
+    {
+      "footprint": "",
+      "lib_id": "Device:C",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "",
+          "net": "BUCK33_CB",
+          "number": "1",
+          "x": 120.65,
+          "y": 66.03999999999999
+        },
+        {
+          "name": "",
+          "net": "BUCK33_SW",
+          "number": "2",
+          "x": 120.65,
+          "y": 73.66
+        }
+      ],
+      "reference": "C4",
+      "value": "100n / 16V"
+    },
+    {
+      "footprint": "",
+      "lib_id": "Device:L",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "1",
+          "net": "BUCK33_SW",
+          "number": "1",
+          "x": 137.16,
+          "y": 80.01
+        },
+        {
+          "name": "2",
+          "net": "+3V3",
+          "number": "2",
+          "x": 144.78,
+          "y": 80.01
+        }
+      ],
+      "reference": "L1",
+      "value": "5.6u"
+    },
+    {
+      "footprint": "",
+      "lib_id": "Device:C",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "",
+          "net": "+3V3",
+          "number": "1",
+          "x": 160.02,
+          "y": 85.09
+        },
+        {
+          "name": "",
+          "net": "GND",
+          "number": "2",
+          "x": 160.02,
+          "y": 92.71000000000001
+        }
+      ],
+      "reference": "C5",
+      "value": ">=47u eff"
+    },
+    {
+      "footprint": "",
+      "lib_id": "Device:C",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "",
+          "net": "+3V3",
+          "number": "1",
+          "x": 179.07,
+          "y": 85.09
+        },
+        {
+          "name": "",
+          "net": "GND",
+          "number": "2",
+          "x": 179.07,
+          "y": 92.71000000000001
+        }
+      ],
+      "reference": "C6",
+      "value": ">=47u eff"
+    },
+    {
+      "footprint": "",
+      "lib_id": "Device:R_US",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "",
+          "net": "+3V3",
+          "number": "1",
+          "x": 203.2,
+          "y": 85.09
+        },
+        {
+          "name": "",
+          "net": "BUCK33_FB",
+          "number": "2",
+          "x": 203.2,
+          "y": 92.71000000000001
+        }
+      ],
+      "reference": "R1",
+      "value": "31.6k / 0.1%"
+    },
+    {
+      "footprint": "",
+      "lib_id": "Device:R_US",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "",
+          "net": "BUCK33_FB",
+          "number": "1",
+          "x": 203.2,
+          "y": 106.67999999999999
+        },
+        {
+          "name": "",
+          "net": "GND",
+          "number": "2",
+          "x": 203.2,
+          "y": 114.3
+        }
+      ],
+      "reference": "R2",
+      "value": "10.2k / 0.1%"
+    },
+    {
+      "footprint": "",
+      "lib_id": "power:PWR_FLAG",
+      "pin_count": 1,
+      "pins": [
+        {
+          "name": "",
+          "net": "SYS_PWR_PERMITTED",
+          "number": "1",
+          "x": 30.48,
+          "y": 74.93
+        }
+      ],
+      "reference": "#FLG01",
+      "value": "PWR_FLAG"
+    },
+    {
+      "footprint": "",
+      "lib_id": "power:PWR_FLAG",
+      "pin_count": 1,
+      "pins": [
+        {
+          "name": "",
+          "net": "GND",
+          "number": "1",
+          "x": 30.48,
+          "y": 105.41
+        }
+      ],
+      "reference": "#FLG02",
+      "value": "PWR_FLAG"
+    },
+    {
+      "footprint": "",
+      "lib_id": "power:GND",
+      "pin_count": 1,
+      "pins": [
+        {
+          "name": "",
+          "net": "GND",
+          "number": "1",
+          "x": 30.48,
+          "y": 105.41
+        }
+      ],
+      "reference": "#PWR001",
+      "value": "GND"
+    },
+    {
+      "footprint": "",
+      "lib_id": "power:GND",
+      "pin_count": 1,
+      "pins": [
+        {
+          "name": "",
+          "net": "GND",
+          "number": "1",
+          "x": 203.2,
+          "y": 114.3
+        }
+      ],
+      "reference": "#PWR002",
+      "value": "GND"
+    },
+    {
+      "footprint": "",
+      "lib_id": "power:+3V3",
+      "pin_count": 1,
+      "pins": [
+        {
+          "name": "",
+          "net": "+3V3",
+          "number": "1",
+          "x": 203.2,
+          "y": 80.01
+        }
+      ],
+      "reference": "#PWR003",
+      "value": "+3V3"
+    }
+  ],
+  "net_count": 6,
+  "nets": [
+    "+3V3",
+    "BUCK33_CB",
+    "BUCK33_FB",
+    "BUCK33_SW",
+    "GND",
+    "SYS_PWR_PERMITTED"
+  ]
+}

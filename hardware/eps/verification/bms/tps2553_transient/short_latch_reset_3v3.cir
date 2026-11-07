@@ -1,0 +1,24 @@
+* External TI TPS2553-1 model; synthetic source and UCC load
+.include "${TPS_ADAPTED_MODEL}"
+Vsrc source 0 PWL(0 0 100u 3.232799 0.06 3.232799)
+Rsource source inp .05
+Cshared inp 0 96u Rser=10m
+Vmon inp tpsin 0
+Ven en 0 PWL(0 0 1m 0 1.001m 3.3 35m 3.3 35.001m 0 55m 0 55.001m 3.3 60m 3.3)
+* MODEL ports IN GND EN PWPD FAULT_B ILIM OUT; not DBV physical order
+Xsw tpsin 0 en 0 fault ilim switched TPS2553-1_TRANS
+Rilim ilim 0 115k
+Rfault inp fault 10k
+Rseries switched reservoir 1
+Cbulk reservoir 0 54.38u Rser=10m
+Rbleed reservoir 0 3.9k
+Bload reservoir 0 I=0.05*min(max(V(reservoir),0)/2.7,1)
+
+Vfault fault_command 0 PWL(0 0 10m 0 10.0001m 1 30m 1 30.0001m 0 60m 0)
+Sfault reservoir 0 fault_command 0 SHORT
+.model SHORT SW(Ron=.01 Roff=1e12 Vt=.5)
+.temp 25
+.tran 0 0.06 0 250n startup
+.options plotwinsize=0
+.save V(inp) V(switched) V(reservoir) V(fault) V(en) I(Vmon) V(xsw:u1_7_5ms)
+.end

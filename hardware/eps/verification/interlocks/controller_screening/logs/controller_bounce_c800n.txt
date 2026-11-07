@@ -1,0 +1,28 @@
+LTspice 26.0.2 for MacOS
+Circuit: ${RUN_DIRECTORY}/bounce_c800n.cir
+Start Time: Fri Oct 23 16:52:10 2026
+Options:plotwinsize=0
+solver = Normal
+Maximum thread count: 10
+tnom = 27
+temp = 27
+method = trap
+Direct Newton iteration failed to find operating point.
+Starting Gmin stepping
+Gmin stepping failed to find operating point. Use".option gminsteps=0" to skip all Gmin stepping.
+Starting source stepping with srcstepmethod=0
+Source stepping succeeded in finding the operating point.
+
+Total elapsed time: 1.330 seconds.
+
+Files loaded:
+${RUN_DIRECTORY}/bounce_c800n.cir
+${LTSPICE_LIBRARY}/cmp/standard.mos
+${LTSPICE_LIBRARY}/sub/LTC4367.sub
+
+output_before_permission: MAX(V(b) )=1.44325804285e-06 FROM 0 TO 0.049
+output_on: V(b) =8.32843589783 at 0.45
+output_off: V(b) =1.42053019334e-08 at 0.7
+peak_vgs: MAX(V(gate,cs))=7.93203163147 FROM 0 TO 0.8
+min_vgs: MIN(V(gate,cs))=-2.28577709198 FROM 0 TO 0.8
+peak_current: MAX(-I(Vsource))=7.40071392059 FROM 0 TO 0.8

@@ -1,0 +1,63 @@
+EMBER LTC4364 source damper_short
+Vvoc voc 0 PWL(0 0 1m 32.164 0.12 32.164 0.120001 32.164 1.2 32.164)
+Bpv 0 raw I=limit((V(voc)-V(raw))/.1,0,1)
+Cpv raw 0 1u Rser=100m
+Rpv raw 0 10meg
+Lfeed raw upstream 1u
+Lsource upstream input 2.5e-06 Rser=10m
+Rbleed input 0 10meg
+Vguard input pin 0
+Rsnub pin snub 1
+Csnub snub 0 2u Rser=20m
+Dguard 0 pin tv60
+.model tv60 D(Bv=73.7 Ibv=1m Rs=3.73 Cjo=500p)
+Rbias pin biasraw 100
+Dbias biasraw vcc dfast
+Cbias vcc 0 4.7u Rser=20m
+Rov pin ov 27.8k
+Rovb ov 0 1k
+Cov ov 0 1n
+Cuv uv 0 10n
+
+Mpass pin gh common common IRLR2908
+Mdiode sense gd common common IRLR2908
+Rg hg gh 4.7k
+Qpull qcollector hg gh pullpnp
+Rpull qcollector common 100
+Dpull hg gh dfast
+.model pullpnp PNP(Is=1.4f Bf=60 Vaf=20 Ikf=.05 Tf=100n Tr=100n)
+.model dfast D(Is=4n Rs=1 Cjo=2p Tt=8n Bv=100)
+Cgate gh cg 1e-09
+Cextra gh common 10n
+Rcg cg 0 2.2k
+Dz1 common gh dz12
+Dz2 common gd dz12
+.model dz12 D(Bv=10.4 Ibv=1m Rs=.15 Cjo=10n)
+Rs sense output 20m
+Rfb output div 25867.725000000002
+Rb div 0 997.375
+Ileak div 0 1e-06
+Bfb fb 0 V=delay(V(div),0)*0.9765625
+Ruv vcc uv 50000
+Ruvb uv 0 10k
+Ct tmr 0 1.75333333333e-08
+Cbulk output 0 3.8e-05 Rser=0.4 Lser=5n
+Ccer output 0 1e-05 Rser=2m Lser=1n
+Bload output 0 I=min(max(V(output),0)/.1,if(time<0.09,0,0))
+Rdamper output damper 2.7
+Cdamper damper 0 318.24u Rser=0.01 Lser=2.5n
+Vshort_cmd short_cmd 0 PWL(0 0 .12 0 .12000001 5)
+Scap_short damper short_r short_cmd 0 cap_sw
+Rcap_short short_r 0 10m
+.model cap_sw SW(Ron=1m Roff=1e12 Vt=2)
+Vlogic logic 0 3.3
+Rflt logic fault 47k
+* ENOUT is intentionally unused; no off-rail pull-up
+X1 output sense gd common hg vcc shdn uv ov 0 fault enout tmr fb LTC4364-2
+.lib "${LTSPICE_LIBRARY}/sub/LTC4364-2.sub"
+.lib "${LTSPICE_LIBRARY}/cmp/standard.mos"
+.temp 85
+.tran 0 1.2 0 2e-06
+.options plotwinsize=0
+.save V(damper) I(Rdamper) V(vcc) V(uv) I(Lsource) V(upstream) V(pin) V(input) V(output) V(common) V(sense) V(gh) V(gd) V(tmr) V(fault) I(Rs) I(Rpull) I(Rbias) Ic(Qpull) Id(Mpass) Id(Mdiode)  I(Dguard)
+.end

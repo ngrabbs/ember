@@ -1,0 +1,40 @@
+* {'Lu': 10, 'Cu': 192, 'damper': True, 'fault': True}; TYPICAL MODELS / IMPOSED PASSIVES, NO CIRCUIT ACCEPTANCE
+.lib "${LTSPICE_LIBRARY}/sub/LTC4368-1.sub"
+.lib "${TI_MODEL}"
+Vgood good 0 PWL(0 0 1m 0 2m 3.324392156862745 .300000 3.324392156862745 .30000001 0 .4 0)
+Vselect select 0 PWL(0 0 .3 0 .30000001 5 .4 5)
+Vnotselect notselect 0 PWL(0 5 .3 5 .30000001 0 .4 0)
+Sgood good vin notselect 0 sw
+Rgood vin 0 10meg
+Sfault high wire select 0 sw
+.model sw SW(Ron=.001 Roff=1e12 Vt=2)
+Bfeed 0 high I=limit((35-V(high))/.1,0,1)
+Cenergy high 0 650u Rser=.005 IC=35
+Lfailed wire vin .5u Rser=.0159
+Rwire wire 0 10meg
+Cpre vin 0 96u Rser=.01
+Lguard vin pin 10u Rser=.02
+Cpin pin 0 100n Rser=.01
+XQ1 pin gate common csd18543q3a
+XQ2 sense gate common csd18543q3a
+Rsense sense out .015
+Rgs gate common 10meg
+Cgate gate gc 100n
+Rgc gc 0 22k
+Rov vin ov 58.8k
+Rovb ov 0 10k
+Ruv vin uv 47.5k
+Ruvb uv 0 10k
+Cretry retry 0 22n
+Rfault vin fault 47k
+Cout out 0 192u Rser=.01
+Rdamp out damp .22
+Cdamp damp 0 470u Rser=.01
+Bload out 0 I=min(max(V(out),0)/.1,if(time<.25,.2,2))
+Xcontroller vin uv ov retry 0 vin fault out sense gate LTC4368-1
+Dclamp 0 pin tv36
+.model tv36 D(Bv=44.2 Ibv=1m Rs=1.35 Cjo=500p)
+.options plotwinsize=0
+.tran 0 .4 0 2u
+.save V(vin) V(pin) V(out) V(common) V(gate) V(retry) V(uv) V(ov) V(fault) V(gc) I(Rsense) I(Lguard) I(XQ1:LDRAIN) I(XQ2:LDRAIN)
+.end

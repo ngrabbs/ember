@@ -1,0 +1,56 @@
+{
+  "get_active_toolsets": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"active_toolsets\":[{\"description\":\"Place, refresh, move, rotate, flip, align, duplicate and repair PCB footprints; inspect pads; inspect and edit a placed footprint's graphics\",\"name\":\"pcb_components\",\"tool_count\":19},{\"description\":\"Add, edit, move, rotate, and delete schematic symbols, and set the page size\",\"name\":\"sch_components\",\"tool_count\":20},{\"description\":\"User preferences, project rules, design rules, fab constraints — call load_user_config at session start\",\"name\":\"config\",\"tool_count\":7},{\"description\":\"Design-to-fab pipeline: export Gerber+BOM+positions package, validate for fab house, estimate cost\",\"name\":\"manufacturing\",\"tool_count\":3},{\"description\":\"Traces, vias, copper pours, net classes, differential pairs, and strict Specctra SES import\",\"name\":\"pcb_routing\",\"tool_count\":15},{\"description\":\"Placement quality and automation: score with named deductions, plan decoupling rows and BGA fanouts, first placement, force-directed refinement\",\"name\":\"placement\",\"tool_count\":5},{\"description\":\"Hierarchical sheets: add/edit/move/delete/duplicate a sheet, hierarchy and page-numbering queries, import/add/edit/delete sheet pins, pin/label sync validation\",\"name\":\"sch_hierarchy\",\"tool_count\":12},{\"description\":\"Board outline, layers, zones, mounting holes, board text, SVG logo import\",\"name\":\"pcb_board\",\"tool_count\":12},{\"description\":\"JLCPCB parts database, local Freerouting MCP routing, datasheet URLs\",\"name\":\"integration\",\"tool_count\":9},{\"description\":\"Bulk add, edit, delete, and move schematic elements in one call\",\"name\":\"sch_batch\",\"tool_count\":12},{\"description\":\"AI-powered design audits: decoupling, connections, power rails, DFM, BOM health\",\"name\":\"design_review\",\"tool_count\":6},{\"description\":\"Gerber, PDF, SVG, 3D model, BOM, Specctra DSN, pick-and-place, DRC, DXF/GenCAD/IPC-2581/ODB++\",\"name\":\"pcb_export\",\"tool_count\":14},{\"description\":\"Export schematic to SVG/PDF/PNG/netlist, run ERC, and synchronize a live PCB\",\"name\":\"sch_export\",\"tool_count\":10},{\"description\":\"Net connectivity, pin queries, trace paths, overlap/orphan detection\",\"name\":\"sch_analysis\",\"tool_count\":15},{\"description\":\"DRC, design rules, layer constraints, clearance checks, KiCAD UI control (ERC is in sch_export)\",\"name\":\"verification\",\"tool_count\":10},{\"description\":\"Buses, bus entries, and fanning a group of pins out onto a bus\",\"name\":\"sch_bus\",\"tool_count\":4},{\"description\":\"Search, register, and author symbol and footprint libraries — create symbols and footprints, edit pads, graphics, metadata and 3D models\",\"name\":\"library\",\"tool_count\":17},{\"description\":\"Create, open, save, rename, snapshot KiCAD projects, and launch the live schematic viewer\",\"name\":\"project\",\"tool_count\":7},{\"description\":\"Reference circuit library: USB-C, LDO, buck converter, STM32, I2C, LED — verified component values\",\"name\":\"templates\",\"tool_count\":4},{\"description\":\"Wires, net labels, power symbols, junctions, no-connects, pin-to-pin connections\",\"name\":\"sch_wiring\",\"tool_count\":20}],\"total_active_tools\":221}"
+      }
+    ],
+    "isError": false
+  },
+  "get_installation_info": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"build\":{\"commit\":\"eadbe451bb50eb51c6e42abcf6e0152f62bc1e13\",\"commit_source\":\"git_head\",\"profile\":\"debug\",\"target_arch\":\"aarch64\",\"target_os\":\"macos\",\"version\":\"0.11.1\",\"working_tree_state\":\"not_recorded\"},\"configuration\":{\"search_policy\":\"first_existing_no_merge\",\"selected_path\":\"/Users/nick/Library/Application Support/konnect/config.toml\",\"skipped_existing_paths\":[],\"source\":\"search_path\"},\"installation\":{\"binary_on_disk\":{\"newer_than_running\":false,\"probe_status\":\"ok\",\"version\":\"0.11.1\"},\"evidence\":\"No verified KiCad PCM manifest was found beside this executable; standalone and source builds are intentionally not guessed from path names.\",\"manifest_path\":null,\"source\":\"unknown\"},\"ipc\":{\"configured\":true,\"endpoint\":\"ipc:///tmp/kicad/api.sock\",\"source\":\"resolved_server_config\"},\"kicad\":{\"cli_path\":\"/opt/homebrew/bin/kicad-cli\",\"probe_status\":\"ok\",\"version\":\"10.0.0\"},\"restart_guidance\":[\"macOS: restart the MCP client that launched Konnect; if KiCad launched it, quit and reopen KiCad after the update.\",\"Call get_installation_info again after restart and verify the serving version, commit, and executable path.\"],\"runtime\":{\"executable_path\":\"/Users/nick/Library/Application Support/konnect/local-repair-20261004/konnect\"}}"
+      }
+    ],
+    "isError": false
+  },
+  "open_project": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"ipc_address\":\"ipc:///tmp/kicad/api.sock\",\"ipc_available\":false,\"kicad_ui_running\":false,\"message\":\"KiCad IPC is not reachable. Start KiCad and enable the IPC API, or work in file-only mode.\",\"open_board_count\":0,\"open_boards\":[],\"open_boards_error\":null,\"requested_board\":null,\"requested_check_error\":null,\"requested_open\":null,\"requested_path\":null}"
+      }
+    ],
+    "isError": false
+  },
+  "load_user_config": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"config\":{\"default_passives\":{\"bulk_cap\":\"10uF X5R 0805\",\"decoupling_cap\":\"100nF X7R 0402\",\"pull_up\":\"10k 0402\"},\"design_rules\":[],\"fab_constraints\":{\"fab_house\":\"JLCPCB\",\"layer_count\":2,\"min_clearance_mm\":0.15,\"min_trace_width_mm\":0.15,\"min_via_drill_mm\":0.3},\"naming_conventions\":{\"net_prefix_ground\":\"GND\",\"net_prefix_power\":\"VCC_\"},\"preferred_distributors\":[\"JLCPCB\",\"LCSC\"],\"preferred_manufacturers\":[],\"schematic_style\":{\"wire_hop_overs\":\"enabled_when_supported\"},\"sourcing\":{\"avl\":[],\"derating\":{\"capacitor\":{\"voltage\":0.8},\"connector\":{\"current\":0.8},\"diode\":{\"if\":0.8,\"vr\":0.8},\"inductor\":{\"current\":0.8},\"led\":{\"if\":0.8},\"mosfet\":{\"id\":0.8,\"vds\":0.8},\"regulator\":{\"current\":0.8,\"power\":0.7},\"resistor\":{\"power\":0.6}}}},\"note\":\"User preferences loaded. Project config may override these values.\",\"path\":\"/Users/nick/Library/Application Support/konnect/config.json\"}"
+      }
+    ],
+    "isError": false
+  },
+  "load_project_config": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"config\":{\"design_rules\":[],\"fab_constraints\":{},\"naming_conventions\":{},\"sourcing\":{}},\"path\":\"/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/.konnect/project.json\",\"project_dir\":\"/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b\"}"
+      }
+    ],
+    "isError": false
+  },
+  "get_effective_config": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"effective_config\":{\"default_passives\":{\"bulk_cap\":\"10uF X5R 0805\",\"decoupling_cap\":\"100nF X7R 0402\",\"pull_up\":\"10k 0402\"},\"design_rules\":[],\"fab_constraints\":{\"fab_house\":\"JLCPCB\",\"layer_count\":2,\"min_clearance_mm\":0.15,\"min_trace_width_mm\":0.15,\"min_via_drill_mm\":0.3},\"naming_conventions\":{\"net_prefix_ground\":\"GND\",\"net_prefix_power\":\"VCC_\"},\"preferred_distributors\":[\"JLCPCB\",\"LCSC\"],\"preferred_manufacturers\":[],\"schematic_style\":{\"wire_hop_overs\":\"enabled_when_supported\"},\"sourcing\":{\"avl\":[],\"derating\":{\"capacitor\":{\"voltage\":0.8},\"connector\":{\"current\":0.8},\"diode\":{\"if\":0.8,\"vr\":0.8},\"inductor\":{\"current\":0.8},\"led\":{\"if\":0.8},\"mosfet\":{\"id\":0.8,\"vds\":0.8},\"regulator\":{\"current\":0.8,\"power\":0.7},\"resistor\":{\"power\":0.6}}}},\"note\":\"Merged user defaults + project overrides. Use these values for all design decisions.\"}"
+      }
+    ],
+    "isError": false
+  }
+}

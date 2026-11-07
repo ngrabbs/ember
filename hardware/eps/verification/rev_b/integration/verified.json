@@ -1,0 +1,77 @@
+{
+  "status": "CONTROLLER_REBUILD_GRAPH_AND_METADATA_PASS; EPS_INCOMPLETE",
+  "physical_parts": 27,
+  "crosswalk_entries": 48,
+  "mapped_nets": 36,
+  "functional_nets": 20,
+  "unfinished_pins": 16,
+  "erc_counts": {
+    "error": 18,
+    "warning": 3
+  },
+  "erc_types": {
+    "pin_not_connected": 16,
+    "power_pin_not_driven": 2,
+    "isolated_pin_label": 3
+  },
+  "geometry": {
+    "controller": {
+      "HV_on_grid_wire_segments": 57,
+      "fourway": 0,
+      "pins_at_branches": 0
+    },
+    "can": {
+      "HV_on_grid_wire_segments": 64,
+      "fourway": 0,
+      "pins_at_branches": 0
+    }
+  },
+  "classes": {
+    "POWER": [
+      "+3V3",
+      "GND"
+    ],
+    "CAN_BUS": [
+      "/CAN interfaces/CAN_H",
+      "/CAN interfaces/CAN_L",
+      "/CAN interfaces/CAN_B_H",
+      "/CAN interfaces/CAN_B_L"
+    ],
+    "CAN_LOGIC": [
+      "EPS_CAN_A_RX",
+      "EPS_CAN_A_TX",
+      "EPS_CAN_A_STB",
+      "EPS_CAN_B_RX",
+      "EPS_CAN_B_TX",
+      "EPS_CAN_B_STB"
+    ],
+    "CLOCK": [
+      "/Controller/EPS_HSE_16M",
+      "/Controller/EPS_OSC_EN"
+    ],
+    "DEBUG": [
+      "/Controller/EPS_SWDIO",
+      "/Controller/EPS_SWCLK",
+      "/Controller/EPS_NRST"
+    ],
+    "CONTROL": [
+      "/Controller/REC5_RESET",
+      "/Controller/REC5_FAULT",
+      "/Controller/SRC_FAULT"
+    ]
+  },
+  "historical_files_hash_unchanged": 18,
+  "unselected_parts": [
+    "J100",
+    "J101",
+    "J102",
+    "R106",
+    "R107"
+  ],
+  "policy_open": [
+    "S03 native severity API unavailable/default ignored",
+    "S08 reused custom-symbol review marker unresolved",
+    "S11 fields saved but required display unsupported",
+    "S04 native root pagination setter absent; root render Id3/3"
+  ]
+}

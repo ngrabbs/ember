@@ -1,0 +1,21 @@
+* Synthetic source and load; no UCC33020 or ISO1540 model
+.include "${LDO_MODEL}"
+Vsource source 0 PWL(0 0 5m 0 6m 4.8 60m 4.8 60.001m 0 80m 0 81m 4.8 120m 4.8)
+Vsense source inp 0
+Cin inp 0 22u Rser=20m
+Vldo inp ldoin 0
+* Model port order OUT ADJ NC GND SHDN NC NC IN; NOT package order
+Xldo out adj 0 0 ldoin 0 0 ldoin LT3014
+Rt out adj 16.9k
+Rb adj 0 10k
+Cout out 0 10u Rser=20m
+Vload_cmd command 0 PWL(0 .0035 20m .0035 20.001m .0085 40m .0085 40.001m .0035 120m .0035)
+* Finite-voltage synthetic sink, deliberately not an ISO1540 startup model
+Bload out 0 I=V(command)*min(max(V(out),0)/3,1)
+.ic V(out)=3.4
+
+.temp 25
+.options plotwinsize=0
+.tran 0 120m 0 2u uic
+.save V(inp) V(out) V(adj) I(Vsense) I(Vldo)
+.end

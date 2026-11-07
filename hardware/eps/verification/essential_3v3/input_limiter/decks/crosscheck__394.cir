@@ -1,0 +1,15 @@
+* Independent solution of imposed envelope case 394; not a vendor model
+Bfeed 0 vin I=limit((35-V(vin))/.053,0,if(time<4.5u,90,4.83))
+Bclamp 0 vin I=max((-.3-V(vin))/.01,0)
+Cin vin 0 5.6925u IC=35
+Lb vin raw 0.5u Rser=.01 IC=0
+Cpre raw 0 96u IC=3.324392156862745
+Lguard raw out 1.232u Rser=.03 IC=0
+Rpost out capnode 0.01125
+Cpost capnode 0 1280u IC=3.324392156862745
+Iload out 0 0
+.ic V(vin)=35 V(raw)=3.324392156862745 V(out)=3.324392156862745 V(capnode)=3.324392156862745
+.options plotwinsize=0 reltol=1e-6 abstol=1e-10 vntol=1e-8
+.tran 0 1.075219342859242e-05 0 .05n uic
+.save V(vin) I(Lb) V(raw) I(Lguard) V(capnode) V(out)
+.end

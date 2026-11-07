@@ -1,0 +1,2161 @@
+TMUX1511 Low-Capacitance, 1:1 (SPST) 4-Channel, Powered-Off Protected Switch 
+with 1.8V Logic
+1 Features
+• Wide Supply Range: 1.5V to 5.5V
+• Low On-Capacitance: 3.3pF
+• Low On-Resistance: 2Ω
+• High Bandwidth: 3GHz
+• -40°C to +125°C Operating Temperature
+• 1.8V Logic Compatible
+• Supports Input Voltage Beyond Supply
+• Integrated Pull Down Resistor on Logic Pins
+• Bidirectional Signal Path
+• Fail-Safe Logic
+• Powered-off protection up to 3.6V
+– Pinout compatible to SN74CBTLV3126
+– Pinout compatible (logic variant) of 
+SN74CBTLV3125
+2 Applications
+• Servers
+• Wired Networking
+• Wireless Infrastructure
+• Data Center Switches & Routers
+• PC/Notebooks
+• Building Automation
+• ePOS
+• Motor Drives
+• Appliances
+• Battery-Powered Equipment
+• JTAG Isolation
+• SPI Isolation
+3 Description
+The TMUX1511 is a complementary metal-oxide 
+semiconductor (CMOS) switch. The TMUX1511 offers 
+1:1 SPST switch configuration with 4 independently 
+controlled channels. Wide operating supply of 
+1.5V to 5.5V allows for use in a broad array 
+of applications from servers and communication 
+equipment to industrial applications. The device 
+supports bidirectional analog and digital signals on the 
+source (Sx) and drain (Dx) pins and can pass signals 
+above supply up to V DD x 2, with a maximum input/
+output voltage of 5.5V.
+Up to 3.6V on the signal path of the TMUX1511 
+provides isolation when the supply voltage is removed 
+(VDD = 0V). Without this protection feature, switches 
+can back-power the supply rail through an internal 
+ESD diode and cause potential damage to the 
+system.
+Fail-Safe Logic  circuitry allows voltages on the logic 
+control pins to be applied before the supply pin, 
+protecting the device from potential damage. All logic 
+control inputs have 1.8V logic compatible  thresholds, 
+ensuring both TTL and CMOS logic compatibility 
+when operating in the valid supply voltage range.
+Package Information
+PART NUMBER PACKAGE (1) BODY SIZE (NOM)
+TMUX1511
+TSSOP (14) 5.00mm × 4.40mm
+QFN (16) 2.60mm x 1.80mm
+X2QFN (12) 1.60mm x 1.60mm
+(1) For all available packages, see the package option 
+addendum at the end of the data sheet.
+S1 
+S2
+S3 
+S4 
+SEL2
+SEL4
+Processor
+GND
+VDD
+VDD VI/O
+1.8V Logic 
+I/OSEL3
+SEL1
+GND
+JTAG, SPI, GPIO 
+Port
+JTAG 
+DEBUG, 
+SPI, GPIO 
+D1
+D2
+D3
+D4
+FLASH
+RAM
+CPU
+Peripherals
+TDI  / MISO / GPIO
+TDO / MOSI / GPIO
+TCK / SCLK / GPIO
+TMS / SS / GPIO
+0.1µF
+Application Example
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications, 
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+Table of Contents
+1 Features............................................................................1
+2 Applications.....................................................................1
+3 Description.......................................................................1
+4 Pin Configuration and Functions...................................3
+Pin Functions.................................................................... 3
+5 Specifications.................................................................. 4
+5.1 Absolute Maximum Ratings........................................ 4
+5.2 ESD Ratings............................................................... 4
+5.3 Recommended Operating Conditions.........................4
+5.4 Thermal Information....................................................4
+5.5 Electrical Characteristics.............................................6
+5.6 Dynamic Characteristics............................................. 7
+5.7 Timing Requirements..................................................7
+5.8 Typical Characteristics................................................8
+6 Parameter Measurement Information..........................13
+6.1 On-Resistance.......................................................... 13
+6.2 Off-Leakage Current................................................. 13
+6.3 On-Leakage Current................................................. 14
+6.4 IPOFF Leakage Current............................................14
+6.5 Transition Time......................................................... 15
+6.6 TON (VDD) and TOFF (VDD) Time...................................15
+6.7 Propagation Delay.................................................... 17
+6.8 Skew......................................................................... 17
+6.9 Charge Injection........................................................18
+6.10 Capacitance............................................................18
+6.11 Off Isolation............................................................. 19
+6.12 Channel-to-Channel Crosstalk................................19
+6.13 Bandwidth............................................................... 20
+7 Detailed Description......................................................21
+7.1 Overview...................................................................21
+7.2 Functional Block Diagram.........................................21
+7.3 Feature Description...................................................21
+7.4 Device Functional Modes..........................................22
+7.5 Truth Tables.............................................................. 22
+8 Application and Implementation..................................23
+8.1 Application Information............................................. 23
+8.2 Typical Application.................................................... 23
+9 Power Supply Recommendations................................26
+10 Layout...........................................................................27
+10.1 Layout Guidelines................................................... 27
+10.2 Layout Example...................................................... 28
+11 Device and Documentation Support..........................29
+11.1 Third-Party Products Disclaimer............................. 29
+11.2 Documentation Support.......................................... 29
+11.3 Receiving Notification of Documentation Updates.. 29
+11.4 Support Resources................................................. 29
+11.5 Trademarks............................................................. 29
+11.6 Electrostatic Discharge Caution.............................. 29
+11.7 Glossary.................................................................. 29
+12 Revision History.......................................................... 30
+13 Mechanical, Packaging, and Orderable 
+Information.................................................................... 30
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+2 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+4 Pin Configuration and Functions
+1SEL1 14  VDD
+2S1 13  SEL4
+3D1 12  S4
+4SEL2 11  D4
+5S2 10  SEL3
+6D2 9  S3
+7GND 8  D3
+Not to scale
+Figure 4-1. PW Package 14-Pin TSSOP Top View
+S1
+D1
+S2
+D2
+S3
+D3
+S4
+D4
+SEL1
+SEL2
+VDD
+GND
+3
+4
+5
+6
+12
+11
+10
+9
+2
+18
+7
+Not to Scale Figure 4-2. RWB Package 12-Pin X2QFN Top View
+1SEL1
+2S1
+3D1
+4SEL2
+5S2
+6D2
+7N.C.
+8GND
+9 D3
+10 S3
+11 SEL3
+12 N.C.
+13 D4
+14 S4
+15 SEL4
+16 VDD
+Not to scale
+Figure 4-3. RSV Package 16-Pin QFN Top View
+Pin Functions
+PIN
+TYPE(1) DESCRIPTION
+NAME TSSOP UQFN X2QFN
+SEL1 1 1 7 I Select pin 1: controls state of switch #1 (logic low = OFF, logic high = ON). Internal 
+6MΩ pull-down to GND.
+S1 2 2 3 I/O Source pin 1. Can be an input or output.
+D1 3 3 4 I/O Drain pin 1. Can be an input or output.
+SEL2 4 4 8 I Select pin 2: controls state of switch #2 (logic low = OFF, logic high = ON). Internal 
+6MΩ pull-down to GND.
+S2 5 5 5 I/O Source pin 2. Can be an input or output.
+D2 6 6 6 I/O Drain pin 2. Can be an input or output.
+N.C. - 7 - Not Connected Not Connected - Can be shorted to GND or left floating
+GND 7 8 1 P Ground (0V) reference
+D3 8 9 11 I/O Drain pin 3. Can be an input or output.
+S3 9 10 12 I/O Source pin 3. Can be an input or output.
+SEL3 10 11 - I Select pin 3: controls state of switch #3 (logic low = OFF, logic high = ON). Internal 
+6MΩ pull-down to GND.
+N.C. - 12 - Not Connected Not Connected - Can be shorted to GND or left floating
+D4 11 13 9 I/O Drain pin 4. Can be an input or output.
+S4 12 14 10 I/O Source pin 4. Can be an input or output.
+SEL4 13 15 - I Select pin 4: controls state of switch #4 (logic low = OFF, logic high = ON). Internal 
+6MΩ pull-down to GND.
+VDD 14 16 2 P
+Positive power supply. This pin is the most positive power-supply potential. For 
+reliable operation, connect a decoupling capacitor ranging from 0.1µF to 10µF 
+between VDD and GND.
+(1) I = input, O = output, I/O = input and output, P = power
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 3
+5 Specifications
+5.1 Absolute Maximum Ratings
+over operating free-air temperature range (unless otherwise noted)(1) (2) (3)
+MIN MAX UNIT
+VDD Supply voltage –0.5 6 V
+VSEL Logic control input pin voltage (SEL1, SEL2, SEL3, SEL4) –0.5 6 V
+ISEL Logic control input pin current (SEL1, SEL2, SEL3, SEL4) –30 30 mA
+VS or VD Source or drain pin voltage –0.5 6 V
+IS or ID (CONT) Source and drain pin continuous current: (S1 to S4, D1 to D4) –25 25 mA
+Tstg Storage temperature –65 150 °C
+TJ Junction temperature 150 °C
+(1) Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress 
+ratings only, which do not imply functional operation of the device at these or any other conditions beyond those indicated under 
+Recommended Operating Conditions. Exposure to absolute-maximum-rated conditions for extended periods may affect device 
+reliability.
+(2) The algebraic convention, whereby the most negative value is a minimum and the most positive value is a maximum.
+(3) All voltages are with respect to ground, unless otherwise specified.
+5.2 ESD Ratings
+VALUE UNIT
+V(ESD) Electrostatic discharge
+Human body model (HBM), per ANSI/ESDA/
+JEDEC JS-001(1) ±2000
+V
+Charged-device model (CDM), per JEDEC 
+specification JESD22-C101(2) ±750
+(1) JEDEC document JEP155 states that 500V HBM allows safe manufacturing with a standard ESD control process.
+(2) JEDEC document JEP157 states that 250V CDM allows safe manufacturing with a standard ESD control process.
+5.3 Recommended Operating Conditions
+MIN MAX UNIT
+VDD Supply voltage 1.5 5.5 V
+VS or VD Signal path input/output voltage (source or drain pin), VDD ≥ 1.5V(1) 0 VDD x 2 V
+VS_off or VD_off Signal path input/output voltage (source or drain pin), VDD < 1.5V(2) 0 3.6 V
+VSEL Logic control input voltage (SELx) 0 5.5 V
+TA Ambient temperature –40 125 °C
+(1) Device input/output can operate up to VDD x 2, with a maximum input/output voltage of 5.5V.
+(2) VS_off and VD_off refers to the voltage at the source or drain pins when supply is less than 1.5V.
+5.4 Thermal Information
+THERMAL METRIC(1)
+DEVICE DEVICE DEVICE
+UNITPW (TSSOP) RSV (UQFN) RWB (X2QFN)
+14 PINS 16 PINS 12 PINS
+RθJA Junction-to-ambient thermal resistance 129.4 141.5 166.1 °C/W
+RθJC(top) Junction-to-case (top) thermal resistance 58.8 77.9 59.5 °C/W
+RθJB Junction-to-board thermal resistance 72.4 67.6 103.6 °C/W
+ΨJT Junction-to-top characterization parameter 11.6 5.1 1.0 °C/W
+ΨJB Junction-to-board characterization parameter 71.9 65.5 103.4 °C/W
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+4 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+THERMAL METRIC(1)
+DEVICE DEVICE DEVICE
+UNITPW (TSSOP) RSV (UQFN) RWB (X2QFN)
+14 PINS 16 PINS 12 PINS
+RθJC(bot) Junction-to-case (bottom) thermal resistance N/A N/A N/A °C/W
+(1) For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application 
+report.
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 5
+5.5 Electrical Characteristics
+VDD = 1.5V to 5.5V, GND = 0V, TA = –40°C to +125°C,
+Typical values are at VDD = 3.3V, TA = 25°C, (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+POWER SUPPLY
+VDD Power supply voltage 1.5 5.5 V
+IDD Supply current VSEL = 0V, 1.4V or VDD
+VS = 0V to 5.5V 37 70 μA
+DC CHARACTERISTICS
+RON On-resistance
+VS = 0V to VDD*2
+VS(max) = 5.5V
+ISD = 8mA
+Refer to ON-State Resistance Figure
+2 4.5 Ω
+ΔRON On-resistance match between channels
+VS = VDD
+ISD = 8mA
+Refer to ON-State Resistance Figure
+0.07 0.28 Ω
+RON (FLAT
+) 
+On-resistance flatness
+VS = 0V to VDD
+ISD = 8mA
+Refer to ON-State Resistance Figure
+1 1.8 Ω
+IPOFF Powered-off I/O pin leakage current
+VDD =  0 V
+VS =  0V to 3V
+VD = 0V
+TA = 25℃
+Refer to Ipoff Leakage Figure
+–10 0.01 10 nA
+IPOFF Powered-off I/O pin leakage current
+VDD =  0V
+VS =  0V to 3.6V
+VD = 0V
+Refer to Ipoff Leakage Figure
+–2 0.01 2 µA
+IS(OFF)
+ID(OFF)
+OFF leakage current
+Switch Off
+VD = 0.8*VDD / 0.2*VDD
+VS = 0.2*VDD / 0.8*VDD
+Refer to Off Leakage Figure
+–100 0.03 100 nA
+ID(ON)
+IS(ON)
+ON leakage current
+Switch On
+VD = 0.8*VDD / 0.2*VDD, S pins floating
+or
+VS = 0.8*VDD / 0.2*VDD, D pins floating
+Refer to On Leakage Figure
+–50 0.01 50 nA
+LOGIC INPUTS
+VIH Input logic high 1.2 5.5 V
+VIL Input logic low 0 0.45 V
+IIH Input high leakage current VSEL = 1.8V, VDD 1 ±2 μA
+IIL Input low leakage current VSEL = 0V 0.2 ±2 μA
+RPD
+Internal pull-down resistor on logic input 
+pins 6 MΩ
+CI Logic input capacitance VSEL = 0V, 1.8V or VDD
+f = 1MHz 3 pF
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+6 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+5.6 Dynamic Characteristics
+VDD = 1.5V to 5.5V, GND = 0V, TA = –40°C to +125°C,
+Typical values are at VDD = 3.3V, TA = 25°C, (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+COFF Source and drain off capacitance
+VS = VDD / 2
+VSEL= 0V
+f = 1MHz
+Refer to Capacitance Figure
+Switch 
+OFF 2.5 4 pF
+CON Source and drain on capacitance
+VS = VDD / 2
+VSEL = VDD
+f = 1MHz
+Refer to Capacitance Figure
+Switch 
+ON 3.3 6 pF
+QC Charge Injection
+VS = VDD / 2
+RS = 0Ω, CL = 100pF
+Refer to Charge Injection Figure
+Switch 
+ON 2 pC
+OISO Off isolation
+RL = 50Ω
+f = 100kHz
+Refer to Off Isolation Figure
+Switch 
+OFF –90 dB
+RL = 50Ω
+f = 1MHz
+Refer to Off Isolation Figure
+Switch 
+OFF –75 dB
+XTALK Channel to Channel crosstalk
+RL = 50Ω
+f = 100kHz
+Refer to Crosstalk Figure
+Switch 
+ON –90 dB
+BW Bandwidth RL = 50Ω
+Refer to Bandwidth Figure
+Switch 
+ON 3 GHz
+ILOSS Insertion loss
+RL = 50Ω
+f = 1MHz
+Refer to Bandwidth Figure
+Switch 
+ON –0.12 dB
+5.7 Timing Requirements
+VDD = 1.5V to 5.5V, GND = 0V, TA = –40°C to +125°C,
+Typical values are at VDD = 3.3V, TA = 25°C, (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+tON(VDD) Device turn on time (VDD to output)
+VS = 3.6V
+VDD rise time = 1us
+RL = 200Ω, CL = 15pF
+Refer to Ton(vdd) & Toff(vdd) Figure
+20 60 µs
+tOFF(VDD) Device turn off time (VDD to output)
+VS = 3.6V
+VDD fall time = 1us
+RL = 200Ω, CL = 15pF
+Refer to Ton(vdd) & Toff(vdd) Figure
+1.2 4 µs
+tTRAN Transition time from control input 
+VDD = 2.5V to 5.5V
+VS = VDD
+RL = 200Ω, CL = 15pF
+Refer to Transition Time Figure
+25 55 ns
+tTRAN Transition time from control input 
+VDD < 2.5V
+VS = VDD
+RL = 200Ω, CL = 15pF
+Refer to Transition Time Figure
+50 80 ns
+tSK(P) Inter - channel skew Refer to Tsk Figure 10 ps
+tPD Propagation delay Refer to Tpd Figure 67 ps
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 7
+5.8 Typical Characteristics
+at TA = 25°C, VDD = 5V (unless otherwise noted)
+Source or Drain Voltage (V)
+On Resistance (:)
+0 1 2 3 4 5 5.5
+0
+1
+2
+3
+4
+5
+VDD = 5.5 V
+VDD = 3.3 V
+VDD = 1.5 V
+D001
+TA = 25°C
+Figure 5-1. On-Resistance vs Source or Drain 
+Voltage
+Source or Drain Voltage (V)
+On Resistance (:)
+0 1 2 3 4 5 5.5
+0
+1
+2
+3
+4
+5
+TA = -40qC TA = 25qC
+TA = 85qC TA = 125qC
+D002
+VDD = 5.5V
+Figure 5-2. On-Resistance vs Source or Drain 
+Voltage
+Source or Drain Voltage (V)
+On Resistance (:)
+0 0.5 1 1.5 2 2.5 3 3.5
+0
+1
+2
+3
+4
+TA = 25qC
+TA = 125qCTA = 85qC
+TA = -40qC
+D003
+VDD = 3.3V
+Figure 5-3. On-Resistance vs Source or Drain 
+Voltage
+Source or Drain Voltage (V)
+On Resistance (:)
+0 0.5 1 1.5
+0
+1
+2
+3
+4
+TA = -40qC TA = 25qC
+TA = 125qCTA = 85qC
+D004
+VDD = 1.5V
+Figure 5-4. On-Resistance vs Source or Drain 
+Voltage
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+8 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Logic Voltage (V)
+Supply Current (PA)
+0 0.5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5
+30
+35
+40
+45
+50
+55
+60
+65
+70
+VDD = 3.3 V
+VDD = 5.5 V
+VDD = 1.5 V
+D005
+TA = 25°C
+Figure 5-5. Supply Current vs Logic Voltage
+Supply Voltage (V)
+Supply Current (PA)
+1.5 2 2.5 3 3.5 4 4.5 5 5.5 6
+30
+35
+40
+45
+50
+55
+60
+TA = 125qC
+TA = 25qC
+TA = 85qC
+TA = -40qC
+D006
+Figure 5-6. Supply Current vs Supply Voltage
+Source or Drain Voltage (V)
+On Leakage (pA)
+0 0.5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5
+-10
+-8
+-6
+-4
+-2
+0
+2
+4
+6
+8
+10
+D007
+VDD = 5.5 V
+VDD = 3.3 V
+VDD = 1.5 V
+TA = 25°C
+Figure 5-7. On-Leakage vs Source or Drain Voltage
+Temperature (qC)
+On Leakage (pA)
+-50 -25 0 25 50 75 100 125 150
+0
+5
+10
+15
+20
+25
+30
+VDD = 5.5 V
+VDD = 3.3 VVDD = 1.5 V
+D008
+Figure 5-8. On-Leakage vs Temperature
+Source or Drain Voltage (V)
+Off Leakage (nA)
+0 1 2 3 4 5
+-0.15
+-0.1
+-0.05
+0
+0.05
+0.1
+D009
+VDD =  5.5 V
+VDD =  3.3 V
+VDD =  1.5 V
+TA = 25°C
+Figure 5-9. Off-Leakage vs Source or Drain Voltage
+Temperature (qC)
+Off Leakage (nA)
+-40 -20 0 20 40 60 80 100 120 140
+-0.1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+D010
+VDD = 5.5 V
+VDD = 3.3 V
+VDD = 1.5 V
+Figure 5-10. Off-Leakage vs Temperature
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 9
+Source or Drain Voltage (V)
+IPOFF (nA)
+0 0.5 1 1.5 2 2.5 3 3.5 4
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+D011
+TA = 25°C
+Figure 5-11. IPOFF Leakage vs Source or Drain 
+Voltage
+Temperature (qC)
+IPOFF Leakage (nA)
+-40 -30 -20 -10 0 10 20 30 40 50 60
+-2
+0
+2
+4
+6
+8
+10
+D012
+VSource = 3V
+Figure 5-12. IPOFF Leakage vs Temperature
+Temperature (qC)
+IPOFF Leakage (nA)
+-40 -20 0 20 40 60 80 100 120 140
+-100
+0
+100
+200
+300
+400
+500
+600
+700
+D013
+VSource = 3.6V
+VDrain = 0V
+Figure 5-13. IPOFF Leakage vs Temperature
+TA = 25°C
+RL= 200Ω
+Figure 5-14. IPOFF Leakage vs Source or Drain 
+Voltage
+Supply Voltage (V)
+Transition Time (nS)
+1.5 2 2.5 3 3.5 4 4.5 5 5.5 6
+10
+15
+20
+25
+30
+35
+40
+45
+50
+D015
+Transiton_Rising
+Transiton_Falling
+TA = 25°C
+Figure 5-15. TTRANSITION vs Supply Voltage
+Temperature (qC)
+Transition Time (nS)
+-40 -20 0 20 40 60 80 100 120 140
+5
+10
+15
+20
+25
+D016
+Transiton_Rising
+Transiton_Falling
+VDD = 5.5V
+Figure 5-16. TTRANSITION vs Temperature
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+10 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+Supply Voltage (V)
+Time (PS)
+1.5 2 2.5 3 3.5 4 4.5 5 5.5 6
+0
+2.5
+5
+7.5
+10
+12.5
+15
+17.5
+20
+22.5
+D017
+TON(VDD)
+TOFF(VDD)
+TA = 25°C
+Figure 5-17. TON (VDD) and TOFF (VDD) vs Supply 
+Voltage
+Supply Voltage (V)
+Time (pS)
+1.5 2 2.5 3 3.5 4 4.5 5 5.5 6
+0
+10
+20
+30
+40
+50
+60
+70
+Propagation Delay
+Skew
+D018
+TA = 25°C
+Figure 5-18. Skew and Propagation Delay vs 
+Supply Voltage
+Source Voltage (V)
+Charge Injection (pC)
+0 1 2 3 4 5 6
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+VDD = 5.5 V
+VDD = 3.3 V
+VDD = 1.5 V
+D019
+TA = 25°C
+Figure 5-19. Charge Injection vs Source or Drain 
+Voltage
+Frequency (Hz)
+Capacitance (pF)
+0
+2
+4
+6
+8
+1M 10M 100M 1G
+D020
+COFF
+CON
+TA = 25°C
+Figure 5-20. Capacitance vs Frequency
+Frequency (Hz)
+Off Isolation (dB)
+-100
+-90
+-80
+-70
+-60
+-50
+-40
+-30
+-20
+-10
+0
+1M 10M 100M 1G
+D021
+TA = 25°C
+Figure 5-21. Off Isolation vs Frequency
+Frequency (Hz)
+Attenuation (dB)
+-6
+-5
+-4
+-3
+-2
+-1
+0
+1M 10M 100M 1G
+D022
+TA = 25°C
+VDD = 1.5V to 5.5V
+Figure 5-22. On-Response vs Frequency
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 11
+5.8.1 Eye Diagrams
+TA = 25°C
+Bias = 1.5V
+50Ω Termination
+Figure 5-23. Eye Pattern: 2.4Gbps
+TA = 25°C
+Bias = 1.5V
+50Ω Termination
+Figure 5-24. Eye Pattern: 2.4Gbps Through Path
+TA = 25°C
+Bias = 1.5V
+50Ω Termination
+Figure 5-25. Eye Pattern: 3Gbps
+TA = 25°C
+Bias = 1.5V
+50Ω Termination
+Figure 5-26. Eye Pattern: 3Gbps Through Path
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+12 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+6 Parameter Measurement Information
+6.1 On-Resistance
+The on-resistance of a device is the ohmic resistance between the source (Sx) and drain (Dx) pins of the 
+device. The on-resistance varies with input voltage and supply voltage. The symbol R ON is used to denote 
+on-resistance. The measurement setup used to measure R ON is shown in Figure 6-1 . Voltage (V) and current 
+(IDS) are measured using this setup, and RON is computed as shown below with RON = V / ISD:
+V
+Dx
+VS
+ISD
+Sx
+Figure 6-1. On-Resistance Measurement Setup
+6.2 Off-Leakage Current
+Source off-leakage current is defined as the leakage current flowing into or out of the source pin when the switch 
+is off. This current is denoted by the symbol IS(OFF).
+Drain off-leakage current is defined as the leakage current flowing into or out of the drain pin when the switch is 
+off. This current is denoted by the symbol ID(OFF).
+The setup used to measure both off-leakage currents is shown in Figure 6-2.
+VDD
+VDD
+S1
+GND
+D1
+VD
+ID (OFF)
+A
+S4 D4
+VD
+ID (OFF)
+A
+VDD
+VDD
+D1
+GND
+S1
+VS
+IS (OFF)
+A
+D4S4
+VS
+IS (OFF)
+A
+VS
+VS
+VD
+VD
+Figure 6-2. Off-Leakage Measurement Setup
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 13
+6.3 On-Leakage Current
+Source on-leakage current is defined as the leakage current flowing into or out of the source pin when the switch 
+is on. This current is denoted by the symbol IS(ON).
+Drain on-leakage current is defined as the leakage current flowing into or out of the drain pin when the switch is 
+on. This current is denoted by the symbol ID(ON).
+Either the source pin or drain pin is left floating during the measurement. Figure 6-3 shows the circuit used for 
+measuring the on-leakage current, denoted by IS(ON) or ID(ON).
+VDD
+VDD
+S1
+GND
+D1
+VD
+ID (ON)
+N.C. A
+S4 D4
+VD
+ID (ON)
+N.C. A
+VDD
+VDD
+D1
+GND
+S1
+VS
+IS (ON)
+N.C.A
+D4S4
+VS
+IS (ON)
+N.C.A
+Figure 6-3. On-Leakage Measurement Setup
+6.4 IPOFF Leakage Current
+IPOFF leakage current is defined as the leakage current flowing into or out of the source pin when the device is 
+powered off. This current is denoted by the symbol IPOFF.
+The setup used to measure both IPOFF leakage current is shown in Figure 6-4.
+VDD
+D1
+GND
+S1
+VS
+IPOFF
+A
+D4S4
+VS
+IPOFF
+A
+VD
+VD
+VDD = 0 V
+Figure 6-4. IPOFF Leakage Measurement Setup
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+14 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+6.5 Transition Time
+Transition time is defined as the time taken by the output of the device to rise or fall 10% after the control 
+select signal has risen or fallen past the logic threshold. The 10% transition measurement is utilized to provide 
+the timing of the device. The time constant from the load resistance and load capacitance can be added to the 
+transition time to calculate system level timing. Figure 6-5  shows the setup used to measure transition time, 
+denoted by the symbol tTRANSITION.
+VIH
+VIL
+tTRANSITION
+10%
+90%
+OUTPUT
+0 V
+ADDRESS          
+DRIVE 
+(VSEL)
+VDD
+tTRANSITION
+VSEL
+0 V
+tr < 5ns tf < 5ns
+GND
+VS
+OUTPUT
+RL CL
+S1 D1
+SEL1 - SEL4
+VS
+OUTPUT
+RL CL
+S4 D4
+VDD
+VDD
+0.1F
+Figure 6-5. Transition-Time Measurement Setup
+6.6 TON (VDD) and TOFF (VDD) Time
+TON (VDD) time is defined as the time taken by the output of the device to rise to 90% after the supply has risen 
+past the supply threshold. The 90% measurement is utilized to provide the timing of the device turning on in the 
+system. The time constant from the load resistance and load capacitance can be added to the turn-on-VDD time 
+to calculate system level timing. Figure 6-6 shows the setup used to measure transition time, denoted by the 
+symbol tON (VDD).
+TOFF (VDD) time is defined as the time taken by the output of the device to fall to 90% after the enable has fallen 
+past the supply threshold. The 90% measurement is utilized to provide the timing of the device turning off in the 
+system. The time constant from the load resistance and load capacitance can be added to the turn-off-VDD time 
+to calculate system level timing. Figure 6-6 shows the setup used to measure transition time, denoted by the 
+symbol tOFF (VDD).
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 15
+GND
+VDD
+0 V
+Supply 
+Ramp 
+(VDD) 1.5 V 1.5 V
+tON (VDD) tOFF (VDD)
+90%90%
+OUTPUT
+0 V
+VDD
+VDD
+0.1F
+VS
+OUTPUT
+RL CL
+S1 D1
+VDD
+SEL1 - SEL4VDD
+VS
+OUTPUT
+RL CL
+S4 D4
+Figure 6-6. Turn-On-VDD and Turn-Off-VDD Time Measurement Setup
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+16 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+6.7 Propagation Delay
+Propagation delay is defined as the time taken by the output of the device to rise or fall 50% after the input signal 
+has risen or fallen past the 50% threshold. Figure 6-7  shows the setup used to measure propagation delay, 
+denoted by the symbol tPD.
+250 mV
+0 V
+tPD 1
+Output
+0 V
+tProp Delay = max ( t PD 1, tPD 2)
+Input
+(VS)
+tPD 2
+50% 50%
+50% 50%
+GND
+VS
+OUTPUTS1 D1
+VS
+OUTPUT
+RL 
+50
+S4 D4
+VDD
+VDD
+0.1F
+RL 
+50
+Figure 6-7. Propagation Delay Measurement Setup
+6.8 Skew
+Skew is defined as the difference between propagation delays of any two outputs of the same device. The skew 
+measurement is taken from the output of one channel rising or falling past 50% to a second channel rising or 
+falling past the 50% threshold when the input signals are switched at the same time. Figure 6-8 shows the setup 
+used to measure skew, denoted by the symbol tSK.
+0 V
+tSK 1
+Output 2
+0 V
+tSKEW = max ( t SK 1, tSK 2)
+Output 1
+tSK 2
+50% 50%
+50% 50%
+GND
+VS
+OUTPUTS1 D1
+VS
+OUTPUT
+RL 
+50
+S4 D4
+VDD
+VDD
+0.1F
+RL 
+50
+Figure 6-8. Skew Measurement Setup
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 17
+6.9 Charge Injection
+The amount of charge injected into the source or drain of the device during the falling or rising edge of the 
+gate signal is known as charge injection, and is denoted by the symbol Q C. Figure 6-9 shows the setup used to 
+measure charge injection from source (Sx) to drain (Dx).
+VOUT
+Output
+VS
+0 V
+VDD
+QC = CL × VOUT
+VSEL GND
+VS
+OUTPUT
+CL
+S1 D1
+SEL1 - SEL4
+VS
+S4 D4
+VDD
+VDD
+0.1F
+VOUT
+OUTPUT
+CL
+VOUT
+VSEL
+Figure 6-9. Charge-Injection Measurement Setup
+6.10 Capacitance
+The parasitic capacitance of the device is captured at the source (Sx), drain (Dx), and select (SELx) pins. The 
+capacitance is measured in both the on and off state and is denoted by the symbol C ON and C OFF. Figure 6-10 
+shows the setup used to measure capacitance.
+VDD
+VDD
+GND
+1 MHz 
+Capacitance 
+Meter
+Capacitance is measured at SX, DX, 
+and SELX pins during ON and OFF 
+conditions
+SEL1
+S1
+D1 
+SEL4
+S4
+D4 
+Figure 6-10. Capacitance Measurement Setup
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+18 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+6.11 Off Isolation
+Off isolation is defined as the ratio of the signal at the drain pin (Dx) of the device when a signal is applied to 
+the source pin (Sx) of an off-channel. The characteristic impedance, Z0, for the measurement is 50Ω. Figure 6-11 
+shows the setup used to measure off isolation. Use off isolation equation to compute off isolation.
+GND
+NETWORK
+ANALYZER
+VOUT
+S
+D
+50
+VSIG
+RL
+50SX/DX
+RL
+50
+VS
+VDD
+0.1µF
+Figure 6-11. Off Isolation Measurement Setup
+OUT
+S
+VOff Isolation 20 Log V
+§ ·   ¨ ¸ 
+© ¹ 
+(1)
+6.12 Channel-to-Channel Crosstalk
+Crosstalk is defined as the ratio of the signal at the drain pin (Dx) of a different channel, when a signal is applied 
+at the source pin (Sx) of an on-channel. The characteristic impedance, Z 0, for the measurement is 50Ω. Figure 
+6-12 shows the setup used to measure, and the equation used to compute crosstalk.
+NETWORK
+ANALYZER
+VDD
+0.1µF
+VDD
+GND
+S1
+VSIG = 200 mVpp
+VBIAS = VDD / 2
+50
+VOUT
+RL
+D1
+50
+S2
+50
+RL
+D2
+VS
+SX / DX
+50
+RL
+50
+RL
+Figure 6-12. Channel-to-Channel Crosstalk Measurement Setup
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 19
+OUT
+S
+VChannel-to-Channel Crosstalk 20 Log V
+§ ·   ¨ ¸ 
+© ¹ 
+(2)
+6.13 Bandwidth
+Bandwidth is defined as the range of frequencies that are attenuated by less than 3dB when the input is applied 
+to the source pin (Sx) of an on-channel, and the output is measured at the drain pin (Dx) of the device. The 
+characteristic impedance, Z 0, for the measurement is 50Ω. Figure 6-13  shows the setup used to measure 
+bandwidth.
+GND
+NETWORK
+ANALYZER
+VOUT
+S
+D
+50
+VSIG
+RL
+50
+VS
+VDD
+0.1µF
+VDD
+Figure 6-13. Bandwidth Measurement Setup
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+20 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+7 Detailed Description
+7.1 Overview
+The TMUX1511 is a high speed 1:1 (SPST) 4-channel switch with powered-off protection up to 3.6V. Wide 
+operating supply of 1.5V to 5.5V allows for use in a broad array of applications from servers and communication 
+equipment to industrial applications. The device supports bidirectional analog and digital signals on the source 
+(Sx) and drain (Dx) pins. The wide bandwidth of this switch allows little or no attenuation of the high-speed 
+signals at the outputs to pass with minimum edge and phase distortion as well as propagation delay.
+The select (SELx) pins are active-high logic pins that control the connection between the source (Sx) and drain 
+(Dx) pins of the device. Each channel of the TMUX1511 can be controlled independently through the associated 
+select pin, or all four select pins can be tied together for simultaneous control of all channels with a single GPIO. 
+Fail-Safe Logic circuitry allows voltages on the logic control pins to be applied before the supply pin, protecting 
+the device from potential damage. All logic control inputs have 1.8V logic compatible thresholds, ensuring both 
+TTL and CMOS logic compatibility when operating in the valid supply voltage range.
+Powered-off protection up to 3.6V on the signal path of the TMUX1511 provides isolation when the supply 
+voltage is removed (V DD = 0V). Without this protection feature, the system can back-power the supply rail 
+through an internal ESD diode and cause potential damage to the system.
+7.2 Functional Block Diagram
+RWB  Package
+SEL1
+S1
+D1   
+S2
+D2   
+SEL2
+S4
+D4   
+S3
+D3   
+*Internal  6M Ω  Pull-Down  on  Logic  Pins
+TMUX1511
+SEL1
+S1
+D1 
+SEL2
+S2
+D2 
+SEL4
+S4
+D4 
+SEL3
+S3
+D3 
+*Internal 6MOPull-Down on Logic Pins
+7.3 Feature Description
+7.3.1 Bidirectional Operation
+The TMUX1511 conducts equally well from source (Sx) to drain (Dx) or from drain (Dx) to source (Sx). Each 
+channel has very similar characteristics in both directions and supports both analog and digital signals.
+7.3.2 Beyond Supply Operation
+When the TMUX1511 is powered from 1.5V to 5.5V, the valid signal path input/output voltage ranges from GND 
+to VDD x 2, with a maximum input/output voltage of 5.5V.
+Example 1: If the TMUX1511 is powered at 1.5V, the signal range is 0V to 3V.
+Example 2: If the TMUX1511 is powered at 3V, the signal range is 0V to 5.5V.
+Example 3: If the TMUX1511 is powered at 5.5V, the signal range is 0V to 5.5V.
+Other voltage levels not mentioned in the examples will support Beyond Supply Operation as long as the supply 
+voltage falls within the recommended operation conditions of 1.5V to 5.5V.
+7.3.3 1.8V Logic Compatible Inputs
+The TMUX1511 has 1.8V logic compatible control inputs. Regardless of the V DD voltage, the control input 
+thresholds remain fixed, allowing a 1.8V processor GPIO to control the TMUX1511 without the need for an 
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 21
+external translator. This saves both space and BOM cost. For more information on 1.8V logic implementations 
+refer to Simplifying Design with 1.8 V logic Muxes and Switches.
+7.3.4 Powered-off Protection
+Powered-off protection up to 3.6V on the signal path of the TMUX1511 provides isolation when the supply 
+voltage is removed (V DD = 0V). When the TMUX1511 is powered-off, the I/Os of the device remain in a high-Z 
+state. Powered-off protection minimizes system complexity by removing the need for power supply sequencing 
+on the signal path. The device performance remains within the leakage performance mentioned in the Electrical 
+Specifications. For more information on powered-off protection refer to Eliminate Power Sequencing with 
+Powered-off Protection Signal Switches
+7.3.5 Fail-Safe Logic
+The TMUX1511 has Fail-Safe Logic on the control input pins (SELx) which allows for operation up to 5.5V, 
+regardless of the state of the supply pin. This feature allows voltages on the control pins to be applied before 
+the supply pin, protecting the device from potential damage. Fail-Safe Logic minimizes system complexity by 
+removing the need for power supply sequencing on the logic control pins. For example, the Fail-Safe Logic 
+feature allows the select pins of the TMUX1511 to be ramped to 5.5V while V DD = 0V. Additionally, the feature 
+enables operation of the TMUX1511 with VDD = 1.5V while allowing the select pins to interface with a logic level 
+of another device up to 5.5V.
+7.3.6 Low Capacitance
+The TMUX1511 has very low capacitance in both the ON and OFF states on the source and drain pins. The low 
+capacitance specification allows the TMUX1511 to be used in applications such as sample & hold circuits, and 
+in the feedback path of an operation amplifier. Low capacitance helps to reduce large overshoots and ringing of 
+an amplifier circuit when the switch is connected to the feedback network. Additionally, low capacitance improves 
+system settling time by reducing the switch time constant formed by the On-resistance and On-capacitance. For 
+more information on the benefits of low capacitance refer to Improve Stability Issues with Low CON Multiplexers.
+7.3.7 Integrated Pull-Down Resistors
+The TMUX1511 has internal weak pull-down resistors (6MΩ) to GND to ensure the logic pins are not left floating. 
+This feature integrates up to four external components and reduces system size and cost.
+7.4 Device Functional Modes
+The select (SELx) pins are active-high logic pins that control the connection between the source (Sx) and drain 
+(Dx) pins of the device. The TMUX1511 has internal weak pull-down resistors (6MΩ) to GND so that it powers-on 
+with the switches disabled. When a given select pin of the TMUX1511 is pulled high, the corresponding switch 
+conducts from the source to drain. When any of the select pins are pulled low, the corresponding switch is in 
+an open state (HI-Z). Each channel of the TMUX1511 can be controlled independently through the associated 
+select pin, or all four select pins can be tied together for simultaneous control of all channels with a single GPIO.
+7.5 Truth Tables
+Table 7-1 shows the truth table for the TMUX1511.
+Table 7-1. TMUX1511 Truth Table
+SELx Sx / Dx: STATE
+0 Hi-Z (OFF)
+1 Conducting (ON)
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+22 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+8 Application and Implementation
+Note
+Information in the following applications sections is not part of the TI component specification, and 
+TI does not warrant its accuracy or completeness. TI’s customers are responsible for determining 
+suitability of components for their purposes. Customers should validate and test their design 
+implementation to confirm system functionality.
+8.1 Application Information
+The TMUX15xx family offers high-speed system performance across a wide operating supply (1.5V to 5.5V) and 
+operating temperature (-40°C to +125°C). The TMUX1511 supports a number of features that improve system 
+performance such as Section 7.3.3, input voltages beyond supply , Fail-Safe Logic . These features make the 
+TMUX15xx a family of protection multiplexers and switches that can reduce system complexity, board size, and 
+overall system cost.
+8.2 Typical Application
+8.2.1 Protocol / Signal Isolation
+One useful application to take advantage of the TMUX1511 features is isolating various protocols from a 
+possessor or MCU such as JTAG, SPI, or standard GPIO signals. The device provides excellent isolation 
+performance when the device is powered. The added benefit of powered-off protection allows a system to 
+minimize complexity by eliminating the need for power sequencing in hot-swap and live insertion applications.
+S1 
+S2
+S3 
+S4 
+SEL2
+SEL4
+Processor
+GND
+VDD
+VDD VI/O
+1.8V Logic 
+I/OSEL3
+SEL1
+GND
+JTAG, SPI, GPIO 
+Port
+JTAG 
+DEBUG, 
+SPI, GPIO 
+D1
+D2
+D3
+D4
+FLASH
+RAM
+CPU
+Peripherals
+TDI  / MISO / GPIO
+TDO / MOSI / GPIO
+TCK / SCLK / GPIO
+TMS / SS / GPIO
+0.1µF
+Figure 8-1. Isolation of JTAG, SPI, and GPIO Signals
+8.2.1.1 Design Requirements
+For this design example, use the parameters listed in Table 2.
+Table 8-1. Design Parameters
+PARAMETERS VALUES
+Supply (VDD) 3.3V
+Input / Output signal range 0V to 3.3V
+Control logic thresholds 1.8V compatible
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 23
+8.2.1.2 Detailed Design Procedure
+The TMUX1511 can be operated without any external components except for the supply decoupling capacitors. 
+The device has internal weak pull-down resistors (6M Ω) to GND so that it powers-on with the switches disabled. 
+All inputs signals passing through the switch must fall within the recommend operating conditions of the 
+TMUX1511 including signal range and continuous current. For this design example, with a supply of 3.3V, the 
+signals can range from 0V to 3.3V when the device is powered. This example can also utilize the feature and the 
+inputs can range from 0V to 3.3V when V DD = 0V. The max continuous current can be 25mA. Due to the voltage 
+range and high speed capability, the TMUX1511example is suitable for use in JTAG and SPI applications beyond 
+the 100MHz maximum in a typical application.
+8.2.1.3 Application Curves
+Two important specifications when using a switch or multiplexer to pass signals are the device propagation delay 
+and skew.
+Supply Voltage (V)
+Time (pS)
+1.5 2 2.5 3 3.5 4 4.5 5 5.5 6
+0
+10
+20
+30
+40
+50
+60
+70
+Propagation Delay
+Skew
+D018
+Figure 8-2. Propagation Delay and Skew Measurement
+8.2.2 Transimpedance Amplifier Feedback Control
+Switches and multiplexers are commonly used in the feedback path of amplifier circuits to provide configurable 
+gain control. By using various resistor values on each switch path the TMUX1511 allows the system to have 
+multiple gain settings. An external resistor, or utilizing 1 channel always being closed, ensures the amplifier isn't 
+operating in an open loop configuration. A transimpedance amplifier (TIA) for photodiodes is a common circuit 
+that requires gain control using a multi-channel switch to convert the output current of the photodiode into a 
+voltage for the MCU or processor. The leakage current, capacitance, and charge injection performance of the 
+TMUX1511 are key specifications to evaluate when selecting a device for gain control.
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+24 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
++
+-
+RF_1
+RF_2
+RF_3
+RF_4
+IPD
+SEL2
+SEL4
+SEL3
+SEL1
+Processor
+VDD VI/O
+1.8V Logic I/O
+ 
+VDD0.1µF
+Gain / Filter 
+Network
+VDD
+Digital Processing
+ADCOP 
+AMP
+VDD
+Figure 8-3. Multiplexing Gain for a TIA Circuit
+8.2.2.1 Design Requirements
+For this design example, use the parameters listed in Table 3.
+Table 8-2. Design Parameters
+PARAMETERS VALUES
+Supply (VDD) 5V
+Input / Output signal range 0µA to 10µA
+Control logic thresholds 1.8V compatible
+8.2.2.2 Detailed Design Procedure
+Photodiodes commonly have a current output that ranges from a few hundred picoamps to tens of microamps 
+based on the amount of light being absorbed. The TMUX1511 has a typical On-leakage current of less than 
+10pA which would lead to an accuracy well within 1% of a full scale 10µA signal. The low ON and OFF 
+capacitance of the TMUX1511 improves system stability by minimizing the total capacitance on the output of the 
+amplifier. Lower capacitance leads to less overshoot and ringing in the system which can cause the amplifier 
+circuit to go unstable if the phase margin is not at least 45°. Refer to Improve Stability Issues with Low C ON 
+Multiplexers for more information on calculating the phase margin vs. percent overshoot.
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 25
+8.2.2.3 Application Curves
+Source or Drain Voltage (V)
+On Leakage (pA)
+0 0.5 1 1.5 2 2.5 3 3.5 4 4.5 5 5.5
+-10
+-8
+-6
+-4
+-2
+0
+2
+4
+6
+8
+10
+D007
+VDD = 5.5 V
+VDD = 3.3 V
+VDD = 1.5 V
+TA = 25°C
+Figure 8-4. On-Leakage vs Source or Drain Voltage
+Frequency (Hz)
+Capacitance (pF)
+0
+2
+4
+6
+8
+1M 10M 100M 1G
+D020
+COFF
+CON TA = 25°C
+Figure 8-5. Capacitance vs Frequency
+9 Power Supply Recommendations
+The TMUX1511 operates across a wide supply range of 1.5V to 5.5V. Do not exceed the absolute maximum 
+ratings because stresses beyond the listed ratings can cause permanent damage to the devices.
+Power-supply bypassing improves noise margin and prevents switching noise propagation from the V DD 
+supply to other components. Good power-supply decoupling is important to achieve optimum performance. 
+For improved supply noise immunity, use a supply decoupling capacitor ranging from 0.1 μF to 10 μF from V DD 
+to ground. Place the bypass capacitors as close to the power supply pins of the device as possible using 
+low-impedance connections. TI recommends using multi-layer ceramic chip capacitors (MLCCs) that offer low 
+equivalent series resistance (ESR) and inductance (ESL) characteristics for power-supply decoupling purposes. 
+For very sensitive systems, or for systems in harsh noise environments, avoiding the use of vias for connecting 
+the capacitors to the device pins may offer superior noise immunity. The use of multiple vias in parallel lowers 
+the overall inductance and is beneficial for connections to ground planes.
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+26 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+10 Layout
+10.1 Layout Guidelines
+When a PCB trace turns a corner at a 90° angle, a reflection can occur. A reflection occurs primarily because of 
+the change of width of the trace. At the apex of the turn, the trace width increases to 1.414 times the width. This 
+increase upsets the transmission-line characteristics, especially the distributed capacitance and self–inductance 
+of the trace which results in the reflection. Not all PCB traces can be straight and therefore some traces must 
+turn corners. Figure 10-1  shows progressively better techniques of rounding corners. Only the last example 
+(BEST) maintains constant trace width and minimizes reflections.
+WORST BETTER BEST
+1W min.
+W
+2W
+Figure 10-1. Trace Example
+Route the high-speed signals using a minimum of vias and corners which reduces signal reflections and 
+impedance changes. When a via must be used, increase the clearance size around it to minimize its 
+capacitance. Each via introduces discontinuities in the signal’s transmission line and increases the chance of 
+picking up interference from the other layers of the board. Be careful when designing test points, through-hole 
+pins are not recommended at high frequencies.
+Do not route high speed signal traces under or near crystals, oscillators, clock signal generators, switching 
+regulators, mounting holes, magnetic devices or ICs that use or duplicate clock signals.
+Avoid stubs on the high-speed signals traces because they cause signal reflections.
+Route all high-speed signal traces over continuous GND planes, with no interruptions.
+Avoid crossing over anti-etch, commonly found with plane splits.
+When working with high frequencies, a printed circuit board with at least four layers is recommended; two signal 
+layers separated by a ground and power layer as shown in Figure 10-2.
+Signal 1
+GND Plane
+Power Plane
+Signal 2
+Figure 10-2. Example Layout
+The majority of signal traces must run on a single layer, preferably Signal 1. Immediately next to this layer 
+must be the GND plane, which is solid with no cuts. Avoid running signal traces across a split in the ground or 
+power plane. When running across split planes is unavoidable, sufficient decoupling must be used. Minimizing 
+the number of signal vias reduces EMI by reducing inductance at high frequencies.
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 27
+Figure 10-3 illustrates an example of a PCB layout with the TMUX1511. Some key considerations are:
+Decouple the VDD pin with a 0.1μF capacitor, placed as close to the pin as possible. Make sure that the capacitor 
+voltage rating is sufficient for the VDD supply.
+High-speed switches require proper layout and design procedures for optimum performance.
+Keep the input lines as short as possible.
+Use a solid ground plane to help reduce electromagnetic interference (EMI) noise pickup.
+Do not run sensitive analog traces in parallel with digital traces. Avoid crossing digital and analog traces if 
+possible, and only make perpendicular crossings when necessary.
+10.2 Layout Example
+SEL1
+S1
+D1
+SEL2
+S2
+D2
+VDD
+SEL4
+S4
+D4
+SEL3
+S3
+GND
+TMUX1511
+C
+D3
+Via to GND plane
+Wide (low inductance) 
+trace for power
+Figure 10-3. Example Layout
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+28 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+11 Device and Documentation Support
+11.1 Third-Party Products Disclaimer
+TI'S PUBLICATION OF INFORMATION REGARDING THIRD-PARTY PRODUCTS OR SERVICES DOES NOT 
+CONSTITUTE AN ENDORSEMENT REGARDING THE SUITABILITY OF SUCH PRODUCTS OR SERVICES 
+OR A WARRANTY, REPRESENTATION OR ENDORSEMENT OF SUCH PRODUCTS OR SERVICES, EITHER 
+ALONE OR IN COMBINATION WITH ANY TI PRODUCT OR SERVICE.
+11.2 Documentation Support
+11.2.1 Related Documentation
+• Texas Instruments, Improve Stability Issues with Low CON Multiplexers
+• Texas Instruments, Simplifying Design with 1.8 V logic Muxes and Switches
+• Texas Instruments, Eliminate Power Sequencing with Powered-off Protection Signal Switches
+• Texas Instruments, High-Speed Interface Layout Guidelines
+• Texas Instruments, High-Speed Layout Guidelines
+• Texas Instruments, QFN/SON PCB Attachment
+• Texas Instruments, Quad Flatpack No-Lead Logic Packages
+11.3 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. In the upper 
+right corner, click on Alert me  to register and receive a weekly digest of any product information that has 
+changed. For change details, review the revision history included in any revised document.
+11.4 Support Resources
+TI E2E ™ support forums  are an engineer's go-to source for fast, verified answers and design help — straight 
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do 
+not necessarily reflect TI's views; see TI's Terms of Use.
+11.5 Trademarks
+TI E2E™ is a trademark of Texas Instruments.
+All trademarks are the property of their respective owners.
+11.6 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled 
+with appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may 
+be more susceptible to damage because very small parametric changes could cause the device not to meet its published 
+specifications.
+11.7 Glossary
+TI Glossary This glossary lists and explains terms, acronyms, and definitions.
+www.ti.com
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+Copyright © 2025 Texas Instruments Incorporated Submit Document Feedback 29
+12 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision A (December 2018) to Revision B (March 2025) Page
+• Added RWB Package.........................................................................................................................................4
+Changes from Revision * (September 2018) to Revision A (December 2018) Page
+• Changed the data sheet status From: Advanced Information To Production data ............................................ 1
+13 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical, packaging, and orderable information. This information is the most 
+current data available for the designated devices. This data is subject to change without notice and revision of 
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+TMUX1511
+SCDS390B – SEPTEMBER 2018 – REVISED MARCH 2025
+ www.ti.com
+30 Submit Document Feedback Copyright © 2025 Texas Instruments Incorporated
+PACKAGE OPTION ADDENDUM
+www.ti.com 14-Oct-2025
+PACKAGING INFORMATION
+Orderable part number Status
+(1)
+Material type
+(2)
+Package | Pins Package qty | Carrier RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C) Part marking
+(6)
+TMUX1511PWR Active Production TSSOP (PW) | 14 2000 | LARGE T&R Yes NIPDAU | SN Level-1-260C-UNLIM -40 to 125 MUX1511
+TMUX1511PWR.A Active Production TSSOP (PW) | 14 2000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 MUX1511
+TMUX1511PWRG4 Active Production TSSOP (PW) | 14 2000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 MUX1511
+TMUX1511PWRG4.A Active Production TSSOP (PW) | 14 2000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 MUX1511
+TMUX1511RSVR Active Production UQFN (RSV) | 16 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 1511
+TMUX1511RSVR.A Active Production UQFN (RSV) | 16 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 1511
+TMUX1511RSVRG4.A Active Production UQFN (RSV) | 16 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 1511
+TMUX1511RWBR Active Production X2QFN (RWB) | 12 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 QZ
+TMUX1511RWBR.A Active Production X2QFN (RWB) | 12 3000 | LARGE T&R Yes NIPDAU Level-1-260C-UNLIM -40 to 125 QZ
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+Addendum-Page 1
+PACKAGE OPTION ADDENDUM
+www.ti.com 14-Oct-2025
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+Addendum-Page 2
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 4-Oct-2026
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0B0K0WDimension designed to accommodate the component lengthDimension designed to accommodate the component thicknessOverall width of the carrier tapePitch between successive cavity centersDimension designed to accommodate the component width
+TAPE DIMENSIONSK0 P1B0WA0Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket QuadrantsSprocket HolesQ1Q1Q2Q2Q3Q3Q4Q4User Direction of Feed
+P1ReelDiameter
+ 
+*All dimensions are nominal
+Device Package
+Type
+Package
+Drawing
+Pins SPQ Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+TMUX1511PWR TSSOP PW 14 2000 330.0 12.4 6.9 5.6 1.6 8.0 12.0 Q1
+TMUX1511PWR TSSOP PW 14 2000 330.0 12.4 6.9 5.6 1.6 8.0 12.0 Q1
+TMUX1511PWRG4 TSSOP PW 14 2000 330.0 12.4 6.9 5.6 1.6 8.0 12.0 Q1
+TMUX1511RSVR UQFN RSV 16 3000 178.0 13.5 2.1 2.9 0.75 4.0 12.0 Q1
+TMUX1511RWBR X2QFN RWB 12 3000 180.0 8.4 1.8 1.8 0.48 4.0 8.0 Q2
+Pack Materials-Page 1
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 4-Oct-2026
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W LH
+ 
+*All dimensions are nominal
+Device Package Type Package Drawing Pins SPQ Length (mm) Width (mm) Height (mm)
+TMUX1511PWR TSSOP PW 14 2000 353.0 353.0 32.0
+TMUX1511PWR TSSOP PW 14 2000 356.0 356.0 35.0
+TMUX1511PWRG4 TSSOP PW 14 2000 353.0 353.0 32.0
+TMUX1511RSVR UQFN RSV 16 3000 189.0 185.0 36.0
+TMUX1511RWBR X2QFN RWB 12 3000 210.0 185.0 35.0
+Pack Materials-Page 2
+www.ti.com
+GENERIC PACKAGE VIEW
+This image is a representation of the package family, actual package may vary.
+Refer to the product data sheet for package details.
+UQFN - 0.55 mm max heightRSV 16
+ULTRA THIN QUAD FLATPACK - NO LEAD1.8 x 2.6, 0.4 mm pitch
+4231225/A
+www.ti.com
+PACKAGE OUTLINE
+C
+1.85
+1.75
+2.65
+2.55
+0.55
+0.45
+0.05
+0.00
+2X 1.2
+12X 0.4
+2X 1.2
+15X 0.45
+0.35
+16X 0.25
+0.15
+0.55
+0.45
+(0.13) TYP
+UQFN - 0.55 mm max heightRSV0016A
+ULTRA THIN QUAD FLATPACK - NO LEAD
+4220314/C   02/2020
+0.05 C
+0.07 C A B
+0.05
+NOTES:
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+PIN 1 INDEX AREA
+SEATING PLANE
+PIN 1 ID
+(45
+° X 0.1)
+SYMM
+℄
+SYMM
+℄
+1
+4
+5 8
+9
+12
+1316
+SCALE  5.000
+AB
+www.ti.com
+EXAMPLE BOARD LAYOUT
+12X (0.4)
+(R0.05) TYP
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+15X (0.6)
+16X (0.2)
+(1.6)
+(2.4)
+(0.7)
+UQFN - 0.55 mm max heightRSV0016A
+ULTRA THIN QUAD FLATPACK - NO LEAD
+4220314/C   02/2020
+NOTES: (continued)
+ 
+3. For more information, see Texas Instruments literature number SLUA271 (www.ti.com/lit/slua271).
+SYMM
+℄
+SYMM
+℄
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 25X
+SEE SOLDER MASK
+DETAIL
+1
+4
+5 8
+9
+12
+1316
+METAL EDGE
+SOLDER MASK
+OPENING
+EXPOSED METAL
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED
+METAL
+NON SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK DEFINED
+SOLDER MASK DETAILS
+www.ti.com
+EXAMPLE STENCIL DESIGN
+15X (0.6)
+16X (0.2)
+12X (0.4)
+(1.6)
+(2.4)
+(R0.05) TYP
+(0.7)
+UQFN - 0.55 mm max heightRSV0016A
+ULTRA THIN QUAD FLATPACK - NO LEAD
+4220314/C   02/2020
+NOTES: (continued)
+ 
+4. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+   design recommendations. 
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 MM THICK STENCIL
+SCALE: 25X
+SYMM
+℄
+SYMM
+℄
+1
+4
+5 8
+9
+12
+1316
+www.ti.com
+PACKAGE OUTLINE
+C0.4 MAX
+2X 1.2
+2X
+0.4
+6X 0.4
+8X 0.4
+0.2
+12X 0.25
+0.15
+4X 0.6
+0.4
+0.05
+0.00
+B 1.65
+1.55
+A
+1.65
+1.55
+(0.13)
+TYP
+X2QFN - 0.4 mm max heightRWB0012A
+PLASTIC QUAD FLATPACK - NO LEAD
+4221631/B   07/2017
+PIN 1 INDEX AREA
+SEATING PLANE
+0.05 C
+1
+2
+3
+12
+0.07 C B A
+0.05 C
+NOTES:
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice.
+6
+7
+8
+9
+SYMM
+SYMM
+SCALE  6.500
+www.ti.com
+EXAMPLE BOARD LAYOUT
+(R0.05) TYP
+0.05 MIN
+ALL AROUND
+0.05 MAX
+ALL AROUND
+12X (0.2)
+8X (0.5)
+(1.3)
+(1.5)2X (0.4)
+4X (0.7)
+6X (0.4)
+X2QFN - 0.4 mm max heightRWB0012A
+PLASTIC QUAD FLATPACK - NO LEAD
+4221631/B   07/2017
+SYMM
+1
+2 7
+12
+SYMM
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE:30X
+9
+3 6
+8
+NOTES: (continued)
+ 
+3. For more information, see Texas Instruments literature number SLUA271 (www.ti.com/lit/slua271).
+ 
+ 
+METAL
+SOLDER MASK
+OPENINGSOLDER MASK DETAILS
+NON SOLDER MASK
+DEFINED
+(PREFERRED)
+EXPOSED METAL
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+DEFINED
+EXPOSED METAL
+www.ti.com
+EXAMPLE STENCIL DESIGN
+12X (0.2)
+8X (0.5)
+4X (0.67)
+2X (0.4) (1.5)
+(1.3)
+6X (0.4)
+(R0.05) TYP
+X2QFN - 0.4 mm max heightRWB0012A
+PLASTIC QUAD FLATPACK - NO LEAD
+4221631/B   07/2017
+NOTES: (continued)
+ 
+4. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+   design recommendations. 
+ 
+SYMM
+SOLDER PASTE EXAMPLE
+BASED ON 0.1 mm THICK STENCIL
+ 
+PADS 1,2,7 & 8
+96% PRINTED SOLDER COVERAGE BY AREA
+SCALE:50X
+1
+2
+3 6
+7
+8
+912
+SYMM
+METAL
+8X
+www.ti.com
+PACKAGE OUTLINE
+C
+12X 0.65
+2X
+3.9
+14X 0.30
+0.17
+6.6
+6.2 TYP
+1.2 MAX
+0.15
+0.05
+0.25
+GAGE PLANE
+0 -8
+4X (0 -12 )
+B 4.5
+4.3
+NOTE 4
+A
+5.1
+4.9
+NOTE 3
+0.75
+0.50
+(0.15) TYP
+TSSOP - 1.2 mm max heightPW0014A
+SMALL OUTLINE PACKAGE
+4220202/B   12/2023
+1
+7
+8
+14
+0.1 C A B
+PIN 1 INDEX AREA
+SEE DETAIL  A
+0.1 C
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.
+5. Reference JEDEC registration MO-153.
+ 
+SEATING
+PLANE
+A  20
+DETAIL A
+TYPICAL
+SCALE  2.500
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+14X (1.5)
+14X (0.45)
+12X (0.65)
+(5.8)
+(R0.05) TYP
+TSSOP - 1.2 mm max heightPW0014A
+SMALL OUTLINE PACKAGE
+4220202/B   12/2023
+NOTES: (continued)
+ 
+6. Publication IPC-7351 may have alternate designs. 
+7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 10X
+SYMM
+SYMM
+1
+7 8
+14
+15.000
+METALSOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED METALEXPOSED METAL
+SOLDER MASK DETAILS
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+www.ti.com
+EXAMPLE STENCIL DESIGN
+14X (1.5)
+14X (0.45)
+12X (0.65)
+(5.8)
+(R0.05) TYP
+TSSOP - 1.2 mm max heightPW0014A
+SMALL OUTLINE PACKAGE
+4220202/B   12/2023
+NOTES: (continued)
+ 
+8. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations.   
+9. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE: 10X
+SYMM
+SYMM
+1
+7 8
+14
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

@@ -1,0 +1,19 @@
+LM4040 clamp only; nominal vendor reference, imposed diode envelope
+Vraw raw 0 PWL(0 8.4 1m 8.4 1.000001m 35 2m 35)
+Rbias raw ref 10k
+Xref ref 0 LM4040_NC2P5 TOL=0
+Rtop raw ovp_in 68.1k
+Cfeed raw ovp_in 0.5p
+Ltop ovp_in ovp 2n Rser=1
+Rbottom ovp 0 10k
+Ipin ovp 0 150n
+Covp ovp 0 5e-12
+Ldiode ovp da 2n Rser=1
+Bdiode da ref I=max(0,(V(da,ref)-0.9)/1)
+Cdiode da ref 2p
+.include "../models/LM4040_NC2P5_TRANS.lib"
+.temp 25
+.options plotwinsize=0 method=gear
+.tran 0 2m 0 5n
+.save V(raw) V(ovp) V(ref) I(Rbias) I(Rtop) I(Bdiode)
+.end

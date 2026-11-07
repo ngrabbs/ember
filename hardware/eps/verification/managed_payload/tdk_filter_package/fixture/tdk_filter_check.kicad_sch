@@ -1,0 +1,316 @@
+(kicad_sch
+	(version 20250610)
+	(generator "konnect")
+	(generator_version "10.0")
+	(uuid "0e03ea40-6971-424c-8bdb-bafefd5e497c")
+	(paper "B")
+	(lib_symbols
+		(symbol "Device:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762)
+						(xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762)
+						(xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+  (text "TDK FILTER CAPACITOR — DISPOSABLE PACKAGE FIXTURE"
+    (at 50.8 38.1 0)
+    (effects (font (size 2 2) (bold yes)) (justify left bottom))
+    (uuid "4c4d7148-fbd6-457b-9264-7bb89595d241")
+  )
+  (text "CUSTOM FOOTPRINT — REVIEW REQUIRED"
+    (at 101.6 76.2 0)
+    (effects (font (size 1.27 1.27) (bold yes) (color 0 255 0 1)) (justify left bottom))
+    (uuid "e6084a05-5664-4c14-bf70-7f516f8f428c")
+  )
+  (text "CGA3E2C0G1H102J080AA"
+    (at 101.6 127 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "497bdeed-20a2-41c3-9aaa-c906b52c2708")
+  )
+  (text "C0G / 5% / 50 V / 0603 — metadata display annotation; native auxiliary fields remain hidden"
+    (at 101.6 134.62 0)
+    (effects (font (size 1 1)) (justify left bottom))
+    (uuid "87bf0d31-30a0-45a7-89c8-1c083f359f94")
+  )
+  (text "Unwired pin/pad fixture, not a functioning circuit. PA=PB=PC=0.70 mm; interchangeable terminals."
+    (at 50.8 160.02 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "73c30e0d-a7d6-47b7-a247-8379d5151f84")
+  )
+	(symbol
+		(lib_id "Device:C")
+		(at 127 101.6 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a260f137-2812-42a7-98c2-2b29859ca21e")
+		(property "Reference" "C1"
+			(at 127.635 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1nF"
+			(at 127.635 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Ember_Charger_BMS_Review:C_0603_TDK_CGA3_PA0.70_PB0.70_PC0.70_REVIEW"
+			(at 127 101.6 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA3E2C0G1H102J080AA"
+			(at 127 101.6 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 127 101.6 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "tdk_filter_check"
+				(path "/0e03ea40-6971-424c-8bdb-bafefd5e497c"
+					(reference "C1")
+					(unit 1)
+				)
+			)
+		)
+	
+		(property "Dielectric" "C0G"
+			(at 127 101.6 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "CGA3E2C0G1H102J080AA"
+			(at 127 101.6 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "TDK"
+			(at 127 101.6 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "0603"
+			(at 127 101.6 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Review" "CUSTOM FOOTPRINT — REVIEW REQUIRED"
+			(at 127 101.6 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" "5%"
+			(at 127 101.6 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage" "50 V"
+			(at 127 101.6 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		))
+)

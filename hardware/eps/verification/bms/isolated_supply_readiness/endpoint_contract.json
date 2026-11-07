@@ -1,0 +1,579 @@
+{
+  "basis": "558a8406cfe277894449140177dfbb91fbecb195",
+  "root_project": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/eps_rev_b.kicad_pro",
+  "root_schematic": "/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/rev_b/eps_rev_b.kicad_sch",
+  "current_parts": 243,
+  "current_nets": 137,
+  "migrate_from_+3V3": [
+    {
+      "ref": "U201",
+      "pin": "8"
+    },
+    {
+      "ref": "R218",
+      "pin": "1"
+    },
+    {
+      "ref": "R219",
+      "pin": "1"
+    },
+    {
+      "ref": "C210",
+      "pin": "1"
+    }
+  ],
+  "new_rail": "3V3_BMS_ISO",
+  "new_gpio_proposal": {
+    "U100.29": "PD3 TPS enable control, open drain; high/released enables",
+    "U100.26": "PD0 active-low TPS fault diagnostic, after UCPD strobe"
+  },
+  "preserve_current_net_sets": {
+    "+3V3": [
+      {
+        "ref": "C100",
+        "pin": "1"
+      },
+      {
+        "ref": "C101",
+        "pin": "1"
+      },
+      {
+        "ref": "C102",
+        "pin": "1"
+      },
+      {
+        "ref": "C103",
+        "pin": "1"
+      },
+      {
+        "ref": "C104",
+        "pin": "1"
+      },
+      {
+        "ref": "C105",
+        "pin": "1"
+      },
+      {
+        "ref": "C106",
+        "pin": "1"
+      },
+      {
+        "ref": "C107",
+        "pin": "1"
+      },
+      {
+        "ref": "C108",
+        "pin": "1"
+      },
+      {
+        "ref": "C109",
+        "pin": "1"
+      },
+      {
+        "ref": "C110",
+        "pin": "1"
+      },
+      {
+        "ref": "C111",
+        "pin": "1"
+      },
+      {
+        "ref": "C209",
+        "pin": "1"
+      },
+      {
+        "ref": "C210",
+        "pin": "1"
+      },
+      {
+        "ref": "C310",
+        "pin": "1"
+      },
+      {
+        "ref": "C404",
+        "pin": "1"
+      },
+      {
+        "ref": "C405",
+        "pin": "1"
+      },
+      {
+        "ref": "C406",
+        "pin": "1"
+      },
+      {
+        "ref": "C407",
+        "pin": "1"
+      },
+      {
+        "ref": "C408",
+        "pin": "1"
+      },
+      {
+        "ref": "C409",
+        "pin": "1"
+      },
+      {
+        "ref": "C410",
+        "pin": "1"
+      },
+      {
+        "ref": "C411",
+        "pin": "1"
+      },
+      {
+        "ref": "C800",
+        "pin": "1"
+      },
+      {
+        "ref": "J100",
+        "pin": "1"
+      },
+      {
+        "ref": "L400",
+        "pin": "2"
+      },
+      {
+        "ref": "R101",
+        "pin": "1"
+      },
+      {
+        "ref": "R102",
+        "pin": "1"
+      },
+      {
+        "ref": "R103",
+        "pin": "1"
+      },
+      {
+        "ref": "R104",
+        "pin": "1"
+      },
+      {
+        "ref": "R105",
+        "pin": "1"
+      },
+      {
+        "ref": "R108",
+        "pin": "1"
+      },
+      {
+        "ref": "R109",
+        "pin": "1"
+      },
+      {
+        "ref": "R110",
+        "pin": "1"
+      },
+      {
+        "ref": "R111",
+        "pin": "1"
+      },
+      {
+        "ref": "R112",
+        "pin": "1"
+      },
+      {
+        "ref": "R218",
+        "pin": "1"
+      },
+      {
+        "ref": "R219",
+        "pin": "1"
+      },
+      {
+        "ref": "R400",
+        "pin": "1"
+      },
+      {
+        "ref": "R507",
+        "pin": "1"
+      },
+      {
+        "ref": "R608",
+        "pin": "1"
+      },
+      {
+        "ref": "R619",
+        "pin": "1"
+      },
+      {
+        "ref": "R804",
+        "pin": "1"
+      },
+      {
+        "ref": "R806",
+        "pin": "1"
+      },
+      {
+        "ref": "U100",
+        "pin": "20"
+      },
+      {
+        "ref": "U100",
+        "pin": "4"
+      },
+      {
+        "ref": "U101",
+        "pin": "3"
+      },
+      {
+        "ref": "U101",
+        "pin": "5"
+      },
+      {
+        "ref": "U102",
+        "pin": "3"
+      },
+      {
+        "ref": "U102",
+        "pin": "5"
+      },
+      {
+        "ref": "U201",
+        "pin": "1"
+      },
+      {
+        "ref": "U201",
+        "pin": "8"
+      },
+      {
+        "ref": "U300",
+        "pin": "15"
+      },
+      {
+        "ref": "U800",
+        "pin": "5"
+      },
+      {
+        "ref": "Y100",
+        "pin": "4"
+      }
+    ],
+    "GND_BMS_RAW": [
+      {
+        "ref": "C201",
+        "pin": "2"
+      },
+      {
+        "ref": "C203",
+        "pin": "2"
+      },
+      {
+        "ref": "C204",
+        "pin": "2"
+      },
+      {
+        "ref": "C210",
+        "pin": "2"
+      },
+      {
+        "ref": "J200",
+        "pin": "1"
+      },
+      {
+        "ref": "J200",
+        "pin": "5"
+      },
+      {
+        "ref": "J200",
+        "pin": "7"
+      },
+      {
+        "ref": "R200",
+        "pin": "1"
+      },
+      {
+        "ref": "R203",
+        "pin": "2"
+      },
+      {
+        "ref": "R215",
+        "pin": "2"
+      },
+      {
+        "ref": "R216",
+        "pin": "2"
+      },
+      {
+        "ref": "R217",
+        "pin": "2"
+      },
+      {
+        "ref": "TP202",
+        "pin": "1"
+      },
+      {
+        "ref": "U200",
+        "pin": "12"
+      },
+      {
+        "ref": "U200",
+        "pin": "13"
+      },
+      {
+        "ref": "U200",
+        "pin": "14"
+      },
+      {
+        "ref": "U200",
+        "pin": "15"
+      },
+      {
+        "ref": "U200",
+        "pin": "16"
+      },
+      {
+        "ref": "U200",
+        "pin": "17"
+      },
+      {
+        "ref": "U200",
+        "pin": "23"
+      },
+      {
+        "ref": "U200",
+        "pin": "24"
+      },
+      {
+        "ref": "U200",
+        "pin": "25"
+      },
+      {
+        "ref": "U200",
+        "pin": "29"
+      },
+      {
+        "ref": "U200",
+        "pin": "33"
+      },
+      {
+        "ref": "U200",
+        "pin": "7"
+      },
+      {
+        "ref": "U200",
+        "pin": "9"
+      },
+      {
+        "ref": "U201",
+        "pin": "5"
+      }
+    ],
+    "/2S pack protection/BMS_SMBC": [
+      {
+        "ref": "R218",
+        "pin": "2"
+      },
+      {
+        "ref": "U200",
+        "pin": "19"
+      },
+      {
+        "ref": "U201",
+        "pin": "6"
+      }
+    ],
+    "/2S pack protection/BMS_SMBD": [
+      {
+        "ref": "R219",
+        "pin": "2"
+      },
+      {
+        "ref": "U200",
+        "pin": "18"
+      },
+      {
+        "ref": "U201",
+        "pin": "7"
+      }
+    ],
+    "EPS_BMS_SCL": [
+      {
+        "ref": "R111",
+        "pin": "2"
+      },
+      {
+        "ref": "U100",
+        "pin": "19"
+      },
+      {
+        "ref": "U201",
+        "pin": "3"
+      }
+    ],
+    "EPS_BMS_SDA": [
+      {
+        "ref": "R112",
+        "pin": "2"
+      },
+      {
+        "ref": "U100",
+        "pin": "21"
+      },
+      {
+        "ref": "U201",
+        "pin": "2"
+      }
+    ],
+    "unconnected-(U100-PD0-Pad26)": [
+      {
+        "ref": "U100",
+        "pin": "26"
+      }
+    ],
+    "unconnected-(U100-PD3-Pad29)": [
+      {
+        "ref": "U100",
+        "pin": "29"
+      }
+    ]
+  },
+  "preserve_components": {
+    "R111": {
+      "value": "3.9k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "uuid": "5a65c12e-cf68-4297-b5ca-6f8eb6806fa9",
+      "fields": {
+        "MFG P/N": "TNPW06033K90BEEA",
+        "Manufacturer": "Vishay",
+        "Tolerance": "0.1%",
+        "Power": "0.110 W general P70",
+        "PackageSize": "0603",
+        "TemperatureCoefficient": "25 ppm/K",
+        "Footprint": "Resistor_SMD:R_0603_1608Metric",
+        "Datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+        "Description": "Resistor"
+      }
+    },
+    "R112": {
+      "value": "3.9k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "uuid": "bf542a49-abd0-4995-8401-c014807789f7",
+      "fields": {
+        "MFG P/N": "TNPW06033K90BEEA",
+        "Manufacturer": "Vishay",
+        "Tolerance": "0.1%",
+        "Power": "0.110 W general P70",
+        "PackageSize": "0603",
+        "TemperatureCoefficient": "25 ppm/K",
+        "Footprint": "Resistor_SMD:R_0603_1608Metric",
+        "Datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+        "Description": "Resistor"
+      }
+    },
+    "U100": {
+      "value": "STM32G0B1KET6N",
+      "footprint": "Ember_EPS_Candidates:ST_LQFP32_7x7mm_P0.8mm_DRAFT",
+      "uuid": "88e3cab9-2325-4cb0-9187-ca7865f88c27",
+      "fields": {
+        "MFG P/N": "STM32G0B1KET6N",
+        "Manufacturer": "STMicroelectronics",
+        "PackageSize": "LQFP32 7x7 mm P0.8",
+        "PinMap": "DS13560 Rev6 Fig3 N suffix; pin20=VDDIO2",
+        "Status": "Development; errata/CubeMX/bench pending",
+        "TemperatureRange": "-40 to +85 C",
+        "Footprint": "Ember_EPS_Candidates:ST_LQFP32_7x7mm_P0.8mm_DRAFT",
+        "Datasheet": "https://www.st.com/resource/en/datasheet/stm32g0b1ke.pdf",
+        "Description": "STMicroelectronics Arm Cortex-M0+ MCU, 512KB flash, 144KB RAM, 64 MHz, 1.7-3.6V, 29 GPIO, LQFP32"
+      }
+    },
+    "C209": {
+      "value": "100nF",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "uuid": "f5b8ff9f-cf7a-459a-9a50-93dc5c7973b5",
+      "fields": {
+        "MFG P/N": "GRM188R72A104KA35D",
+        "Manufacturer": "Murata",
+        "Tolerance": "10%",
+        "PackageSize": "0603",
+        "Voltage": "100 V",
+        "Dielectric": "X7R",
+        "Qualification": "Effective capacitance/bias/temperature qualification open",
+        "Footprint": "Capacitor_SMD:C_0603_1608Metric",
+        "Datasheet": "https://www.murata.com/products/productdetail?partno=GRM188R72A104KA35%23",
+        "Description": "Unpolarized capacitor"
+      }
+    },
+    "C210": {
+      "value": "100nF",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "uuid": "1667b1a7-a346-4b1c-a8fc-10e0eeafc669",
+      "fields": {
+        "MFG P/N": "GRM188R72A104KA35D",
+        "Manufacturer": "Murata",
+        "Tolerance": "10%",
+        "PackageSize": "0603",
+        "Voltage": "100 V",
+        "Dielectric": "X7R",
+        "Qualification": "Effective capacitance/bias/temperature qualification open",
+        "Footprint": "Capacitor_SMD:C_0603_1608Metric",
+        "Datasheet": "https://www.murata.com/products/productdetail?partno=GRM188R72A104KA35%23",
+        "Description": "Unpolarized capacitor"
+      }
+    },
+    "R200": {
+      "value": "2m",
+      "footprint": "Resistor_SMD:R_1206_3216Metric",
+      "uuid": "57a134e0-9a46-4846-8e6b-579c9e8a4406",
+      "fields": {
+        "MFG P/N": "CRF1206-FZ-R002ELF",
+        "Manufacturer": "Bourns",
+        "Tolerance": "1%",
+        "Power": "1 W P70",
+        "PackageSize": "1206",
+        "TemperatureCoefficient": "50 ppm/K",
+        "Qualification": "Kelvin termination geometry, pulse and cold qualification open",
+        "Footprint": "Resistor_SMD:R_1206_3216Metric",
+        "Datasheet": "https://www.bourns.com/docs/product-datasheets/crf.pdf",
+        "Description": "Resistor"
+      }
+    },
+    "R218": {
+      "value": "3.9k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "uuid": "2c2e59d5-58a5-4da2-81d8-6893756e69bd",
+      "fields": {
+        "MFG P/N": "TNPW06033K90BEEA",
+        "Manufacturer": "Vishay",
+        "Tolerance": "0.1%",
+        "Power": "0.110 W general P70",
+        "PackageSize": "0603",
+        "TemperatureCoefficient": "25 ppm/K",
+        "Footprint": "Resistor_SMD:R_0603_1608Metric",
+        "Datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+        "Description": "Resistor"
+      }
+    },
+    "R219": {
+      "value": "3.9k",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "uuid": "fab53151-8804-44cb-bc19-601fd75cb9dd",
+      "fields": {
+        "MFG P/N": "TNPW06033K90BEEA",
+        "Manufacturer": "Vishay",
+        "Tolerance": "0.1%",
+        "Power": "0.110 W general P70",
+        "PackageSize": "0603",
+        "TemperatureCoefficient": "25 ppm/K",
+        "Footprint": "Resistor_SMD:R_0603_1608Metric",
+        "Datasheet": "https://www.vishay.com/docs/28758/tnpw_e3.pdf",
+        "Description": "Resistor"
+      }
+    },
+    "U201": {
+      "value": "ISO1540DR",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "uuid": "b10373b6-4683-4572-bf6c-e02fecf6589e",
+      "fields": {
+        "MFG P/N": "ISO1540DR",
+        "Manufacturer": "Texas Instruments",
+        "PackageSize": "SOIC8 D",
+        "Qualification": "100kbit/s; side1<=40pF, side2<=200pF conditional; power-off/ramp/transient acceptance open",
+        "Footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+        "Datasheet": "https://www.ti.com/lit/ds/symlink/iso1540.pdf",
+        "Description": "I2C Isolator, 2.5 kVrms, Bidirectional clock and data, SOIC-8"
+      }
+    }
+  }
+}

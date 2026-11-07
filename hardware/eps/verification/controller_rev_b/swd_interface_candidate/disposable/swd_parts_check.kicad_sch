@@ -1,0 +1,1561 @@
+(kicad_sch
+	(version 20250610)
+	(generator "konnect")
+	(generator_version "10.0")
+	(uuid "5c65da31-402f-4d9e-8889-5b3aa08244ce")
+	(paper "B")
+	(lib_symbols
+		(symbol "Connector:Conn_ARM_SWD_TagConnect_TC2030-NL"
+			(property "Reference" "J"
+				(at 2.54 11.43 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_ARM_SWD_TagConnect_TC2030-NL"
+				(at 2.54 8.89 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical"
+				(at 0 -17.78 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.tag-connect.com/wp-content/uploads/bsk-pdf-manager/TC2030-CTX_1.pdf"
+				(at 0 -15.24 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Tag-Connect ARM Cortex SWD JTAG connector, 6 pin, no legs"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "Cortex Debug Connector ARM SWD JTAG"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "*TC2030*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(embedded_fonts no)
+			(exclude_from_sim no)
+			(in_bom no)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(symbol "Conn_ARM_SWD_TagConnect_TC2030-NL_0_0"
+				(pin power_in line
+					(at -2.54 10.16 270)
+					(length 2.54)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 7.62 -2.54 180)
+					(length 2.54)
+					(name "SWDIO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(alternate "TMS" bidirectional line)
+				)
+				(pin open_collector line
+					(at 7.62 5.08 180)
+					(length 2.54)
+					(name "~{RESET}"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 7.62 0 180)
+					(length 2.54)
+					(name "SWCLK"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(alternate "TCK" output line)
+				)
+				(pin power_in line
+					(at -2.54 -10.16 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at 7.62 -5.08 180)
+					(length 2.54)
+					(name "SWO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(alternate "TDO" input line)
+				)
+			)
+			(symbol "Conn_ARM_SWD_TagConnect_TC2030-NL_0_1"
+				(rectangle
+					(start -5.08 7.62)
+					(end 5.08 -7.62)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+		)
+		(symbol "Ember_Charger_BMS_Review:TMUX1511PWR_REVIEW"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at 0 10.1600 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TMUX1511PWR"
+				(at 0 -10.1600 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tmux1511.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "TMUX1511PWR_REVIEW_1_1"
+				(rectangle
+					(start -11.4300 -7.6200)
+					(end 11.4300 7.6200)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -15.24 -5.08 0)
+					(length 3.81)
+					(name "SEL1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -15.24 5.08 0)
+					(length 3.81)
+					(name "S1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 5.08 180)
+					(length 3.81)
+					(name "D1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "TMUX1511PWR_REVIEW_2_1"
+				(rectangle
+					(start -11.4300 -7.6200)
+					(end 11.4300 7.6200)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -15.24 -5.08 0)
+					(length 3.81)
+					(name "SEL2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -15.24 5.08 0)
+					(length 3.81)
+					(name "S2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 5.08 180)
+					(length 3.81)
+					(name "D2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "TMUX1511PWR_REVIEW_3_1"
+				(rectangle
+					(start -11.4300 -7.6200)
+					(end 11.4300 7.6200)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -15.24 -5.08 0)
+					(length 3.81)
+					(name "SEL3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -15.24 5.08 0)
+					(length 3.81)
+					(name "S3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 5.08 180)
+					(length 3.81)
+					(name "D3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "TMUX1511PWR_REVIEW_4_1"
+				(rectangle
+					(start -11.4300 -7.6200)
+					(end 11.4300 7.6200)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin input line
+					(at -15.24 -5.08 0)
+					(length 3.81)
+					(name "SEL4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -15.24 5.08 0)
+					(length 3.81)
+					(name "S4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 15.24 5.08 180)
+					(length 3.81)
+					(name "D4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "TMUX1511PWR_REVIEW_5_1"
+				(rectangle
+					(start -15.2400 -6.3500)
+					(end 15.2400 6.3500)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin power_in line
+					(at -12.7 10.16 270)
+					(length 3.81)
+					(name "VDD"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -10.16 90)
+					(length 3.81)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Power_Supervisor:TPS3839DBZ"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at 2.54 8.89 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "TPS3839DBZ"
+				(at 2.54 6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "http://www.ti.com/lit/ds/sbvs193d/sbvs193d.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "150-nA, Ultralow Power, Supply Voltage Monitor, SOT-23"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "supply voltage supervisor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT?23*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "TPS3839DBZ_0_1"
+				(rectangle
+					(start -2.54 5.08)
+					(end 7.62 -5.08)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "TPS3839DBZ_1_1"
+				(pin power_in line
+					(at 0 -7.62 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 10.16 0 180)
+					(length 2.54)
+					(name "~{RESET}"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 7.62 270)
+					(length 2.54)
+					(name "VDD"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "Tag-Connect no-legs SWD — disposable physical-map fixture"
+		(at 25.4 20.32 0)
+		(effects
+			(font
+				(size 1.6 1.6)
+				(bold yes)
+			)
+			(justify left top)
+		)
+		(uuid "bb259a92-f992-4ca5-af06-768482456d1e")
+	)
+	(text "TC2030-CTX-NL external cable; board footprint is a zero-height contact pattern, not a purchased fitted header.\nTop PCB map: 1 VTref, 2 SWDIO, 3 nRESET, 4 SWCLK, 5 GND, 6 SWO (optional)."
+		(at 25.4 30.48 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left top)
+		)
+		(uuid "7237f673-b1e7-405c-b4b5-daaf6a226bcd")
+	)
+	(text "Manufacturer Rev B: 6 copper/mask contacts, NO PASTE, 3 unnumbered NPTH alignment holes.\nActual cable contact face is mirrored relative to PCB top. One alignment hole versus paired holes keys orientation.\nNo tracks/vias in central shaded keepout; no other signal within 0.020 inch (0.508 mm) of any contact.\nStock footprint does not encode those routing rules or full cable mating/access envelope."
+		(at 25.4 130.81 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left top)
+		)
+		(uuid "7198cdc3-9ea9-4287-bb19-ec2dbb28c8d7")
+	)
+	(text "All six fixture terminals intentionally unwired; no fake NC flags or source flags.\nMain EPS and historical package evidence remain frozen. No real SWD protection circuit is implemented here."
+		(at 25.4 157.48 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left top)
+		)
+		(uuid "9aafc8b1-acc3-48d2-b7aa-95820a69f208")
+	)
+	(text "External cable: TC2030-CTX-NL\nNo purchased part fitted to PCB.\nStock pin1 VCC = probe VTref only."
+		(at 152.4 83.82 0)
+		(effects
+			(font
+				(size 1.1 1.1)
+			)
+			(justify left top)
+		)
+		(uuid "229e939f-d8f4-4073-87d4-b6da6626f853")
+	)
+	(text "CUSTOM — REVIEW REQUIRED: U1A–U1E TMUX1511PWR review candidate\nConstruction authorized; bidirectional SPST: SEL HIGH closes S ↔ D; LOW opens. Body color unsupported; green callout alternative."
+		(at 25.4 180.34 0)
+		(effects
+			(font
+				(size 1.2 1.2)
+				(color 0 255 0 1)
+			)
+			(justify left top)
+		)
+		(uuid "bb57c40a-1bae-4561-bf3c-b7712ecdd35b")
+	)
+	(text "U1: TI PW14 top-view pin1 upper-left, CCW; no EP / NC / mechanical lead. 14 raw copper/paste/mask pads.\nStock generic land differs from TI example; reserve >=7.70 x5.90mm for worst flash + clearance. Full mechanical / assembly / circuit qualification OPEN."
+		(at 25.4 238.76 0)
+		(effects
+			(font
+				(size 0.9 0.9)
+			)
+			(justify left top)
+		)
+		(uuid "e752a482-9932-45b3-988e-3d83d567d164")
+	)
+  (text "TI supply-good candidate\nRESET2 independent of MCU NRST.\nThreshold2.857..2.974V;29mVhysTYP.\nRelease120..350ms;assert20usTYP ONLY.\nStockland / fullflash / collapse gates OPEN."
+    (at 300.99 81.28 0)
+    (effects (font (size 0.85 0.85)) (justify left top))
+    (uuid "c8634a96-49b0-4714-9d50-099b45951c20")
+  )
+	(symbol
+		(lib_id "Connector:Conn_ARM_SWD_TagConnect_TC2030-NL")
+		(at 127 88.9 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d04416e7-8c4d-496f-a944-c8ffd31d5190")
+		(property "Reference" "J1"
+			(at 129.54 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SWD"
+			(at 129.54 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical"
+			(at 127 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.tag-connect.com/wp-content/uploads/bsk-pdf-manager/TC2030-CTX_1.pdf"
+			(at 127 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Tag-Connect ARM Cortex SWD JTAG connector, 6 pin, no legs"
+			(at 127 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "TC2030-CTX-NL"
+			(at 127 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Tag-Connect"
+			(at 127 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "6 contact PCB footprint; no fitted header"
+			(at 127 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Population" "PCB contact pattern / DNL; cable is external bench accessory"
+			(at 127 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Development contact-map review; probe clearance, finish, retention and assembly open"
+			(at 127 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "swd_parts_check"
+				(path "/5c65da31-402f-4d9e-8889-5b3aa08244ce"
+					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Ember_Charger_BMS_Review:TMUX1511PWR_REVIEW")
+		(at 60.96 205.74 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e5069994-42e7-4b13-ac48-6c2b2413a656")
+		(property "Reference" "U1"
+			(at 60.96 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TMUX1511PWR"
+			(at 60.96 215.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
+			(at 60.96 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tmux1511.pdf"
+			(at 60.96 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Quad active-high bidirectional SPST; powered-off protected"
+			(at 60.96 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "TMUX1511PWR"
+			(at 60.96 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 60.96 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "PW0014A / TSSOP-14"
+			(at 60.96 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Development package candidate; generic stock land and full-flash reservation7.70x5.90mm; circuit/PVT open"
+			(at 60.96 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Review" "CUSTOM — REVIEW REQUIRED; construction authorized"
+			(at 60.96 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "swd_parts_check"
+				(path "/5c65da31-402f-4d9e-8889-5b3aa08244ce"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Ember_Charger_BMS_Review:TMUX1511PWR_REVIEW")
+		(at 132.08 205.74 0)
+		(unit 2)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1ba0828e-a994-4385-91d8-5a12f6788cad")
+		(property "Reference" "U1"
+			(at 132.08 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TMUX1511PWR"
+			(at 132.08 215.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
+			(at 132.08 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tmux1511.pdf"
+			(at 132.08 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Quad active-high bidirectional SPST; powered-off protected"
+			(at 132.08 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "TMUX1511PWR"
+			(at 132.08 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 132.08 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "PW0014A / TSSOP-14"
+			(at 132.08 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Development package candidate; generic stock land and full-flash reservation7.70x5.90mm; circuit/PVT open"
+			(at 132.08 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Review" "CUSTOM — REVIEW REQUIRED; construction authorized"
+			(at 132.08 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "swd_parts_check"
+				(path "/5c65da31-402f-4d9e-8889-5b3aa08244ce"
+					(reference "U1")
+					(unit 2)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Ember_Charger_BMS_Review:TMUX1511PWR_REVIEW")
+		(at 203.2 205.74 0)
+		(unit 3)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3566f8e3-9f8d-4fd3-8809-f619450d3a14")
+		(property "Reference" "U1"
+			(at 203.2 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TMUX1511PWR"
+			(at 203.2 215.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
+			(at 203.2 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tmux1511.pdf"
+			(at 203.2 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Quad active-high bidirectional SPST; powered-off protected"
+			(at 203.2 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "TMUX1511PWR"
+			(at 203.2 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 203.2 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "PW0014A / TSSOP-14"
+			(at 203.2 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Development package candidate; generic stock land and full-flash reservation7.70x5.90mm; circuit/PVT open"
+			(at 203.2 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Review" "CUSTOM — REVIEW REQUIRED; construction authorized"
+			(at 203.2 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "swd_parts_check"
+				(path "/5c65da31-402f-4d9e-8889-5b3aa08244ce"
+					(reference "U1")
+					(unit 3)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Ember_Charger_BMS_Review:TMUX1511PWR_REVIEW")
+		(at 274.32 205.74 0)
+		(unit 4)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "999923e4-228d-4301-af6a-6ce59e8338db")
+		(property "Reference" "U1"
+			(at 274.32 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TMUX1511PWR"
+			(at 274.32 215.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
+			(at 274.32 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tmux1511.pdf"
+			(at 274.32 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Quad active-high bidirectional SPST; powered-off protected"
+			(at 274.32 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "TMUX1511PWR"
+			(at 274.32 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 274.32 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "PW0014A / TSSOP-14"
+			(at 274.32 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Development package candidate; generic stock land and full-flash reservation7.70x5.90mm; circuit/PVT open"
+			(at 274.32 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Review" "CUSTOM — REVIEW REQUIRED; construction authorized"
+			(at 274.32 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "swd_parts_check"
+				(path "/5c65da31-402f-4d9e-8889-5b3aa08244ce"
+					(reference "U1")
+					(unit 4)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Ember_Charger_BMS_Review:TMUX1511PWR_REVIEW")
+		(at 340.36 205.74 0)
+		(unit 5)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5ecda8ea-5472-4869-aee1-aead91e346b1")
+		(property "Reference" "U1"
+			(at 340.36 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TMUX1511PWR"
+			(at 340.36 215.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
+			(at 340.36 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tmux1511.pdf"
+			(at 340.36 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Quad active-high bidirectional SPST; powered-off protected"
+			(at 340.36 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "TMUX1511PWR"
+			(at 340.36 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 340.36 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "PW0014A / TSSOP-14"
+			(at 340.36 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Development package candidate; generic stock land and full-flash reservation7.70x5.90mm; circuit/PVT open"
+			(at 340.36 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Review" "CUSTOM — REVIEW REQUIRED; construction authorized"
+			(at 340.36 205.74 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "swd_parts_check"
+				(path "/5c65da31-402f-4d9e-8889-5b3aa08244ce"
+					(reference "U1")
+					(unit 5)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Power_Supervisor:TPS3839DBZ")
+		(at 274.32 88.9 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "43d470fb-5b63-4e77-bdf5-08c3b7315874")
+		(property "Reference" "U2"
+			(at 276.86 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TPS3839K33DBZR"
+			(at 276.86 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 274.32 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps3839.pdf"
+			(at 274.32 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "150-nA, Ultralow Power, Supply Voltage Monitor, SOT-23"
+			(at 274.32 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "swd_parts_check"
+				(path "/5c65da31-402f-4d9e-8889-5b3aa08244ce"
+					(reference "U2")
+					(unit 1)
+				)
+			)
+		)
+	
+		(property "MFG P/N" "TPS3839K33DBZR"
+			(at 274.32 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 274.32 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "DBZ0003A / SOT-23-3"
+			(at 274.32 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "Development supply-good candidate; assertion20usTYP only, lowVDD load and rapidcollapse open"
+			(at 274.32 88.9 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		))
+)

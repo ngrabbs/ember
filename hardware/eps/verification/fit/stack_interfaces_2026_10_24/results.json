@@ -1,0 +1,1561 @@
+{
+  "status": "GEOMETRY_RECONCILIATION_NOT_MATING_OR_FLIGHT_ACCEPTANCE",
+  "source_hashes": {
+    "eps_board": {
+      "path": "hardware/eps/kicad/eps.kicad_pcb",
+      "sha256": "93cb63d2ba23fa66b486ff80b554f34a040b8f268cdc1b1a686a5bed5dfaa4f4"
+    },
+    "comms_board": {
+      "path": "hardware/comms/kicad/transceiver.kicad_pcb",
+      "sha256": "e969c80d28f62171bb6eb9b52046d4ef295c5c81170a37aa8faf685d421b0742"
+    },
+    "comms_footprint": {
+      "path": "hardware/comms/kicad/lib/Ember_RF.pretty/Samtec_ESQ-126-39-G-D_2x26_P2.54mm.kicad_mod",
+      "sha256": "d920c2e71c7d5df4fc455b6373751f8dee5c33812226fbf96f792abe57ad4c02"
+    },
+    "canonical_pinmap": {
+      "path": "system/interfaces/cskb_pinmap.md",
+      "sha256": "532a2cf1433af3fb5794c9a84e00110a32a7513891b9c648c33be3dd28006a63"
+    }
+  },
+  "matched_physical_pads": 104,
+  "maximum_coordinate_delta_mm": 2.842170943040401e-14,
+  "centers_board_xy_mm": {
+    "eps": {
+      "H1": {
+        "x": 111.94359999999999,
+        "y": 104.3736
+      },
+      "H2": {
+        "x": 106.86359999999999,
+        "y": 104.3736
+      }
+    },
+    "comms": {
+      "H1": {
+        "x": 111.9436,
+        "y": 104.3736
+      },
+      "H2": {
+        "x": 106.8636,
+        "y": 104.3736
+      }
+    }
+  },
+  "header_center_separation_mm": {
+    "eps": 5.079999999999998,
+    "comms": 5.079999999999998
+  },
+  "pumpkin_reference_separation_mm": 7.620000000000006,
+  "user_decisions": {
+    "date": "2026-10-24",
+    "clear_gap_mm": 16,
+    "retain_ember_header_spacing_mm": 5.08,
+    "mechanical_compatibility_exception_approved": true
+  },
+  "height_hypothesis": {
+    "gap_mm": 16,
+    "upper_pcb_mm": 1.6,
+    "socket_seating_height_mm": 11.05,
+    "upper_total_height_plus_tail_mm": 23.24,
+    "upper_tail_derived_mm": 12.189999999999998,
+    "insertion_mm": 5.639999999999999,
+    "catalog_window_mm": [
+      3.68,
+      6.35
+    ],
+    "independent_tolerance_sensitivity_mm": [
+      4.689999999999999,
+      6.589999999999999
+    ],
+    "same_face_16mm_interpretation_insertion_mm": 7.239999999999998,
+    "nominal_in_catalog_window": true,
+    "sensitivity_in_catalog_window": false
+  },
+  "footprint_reservation": {
+    "individual_courtyards_sum_mm2": 803.845,
+    "pair_courtyard_union_mm2": 745.0765,
+    "courtyard_overlap_width_mm": 0.8700000000000001,
+    "nominal_body_gap_mm": 0.1299999999999999,
+    "body_width_source_status": "Reference dimension, not a guaranteed maximum. No body-clearance acceptance."
+  },
+  "peer_CAN_mismatch": {
+    "actual_comms_H1": {
+      "1": "CAN_A_N",
+      "2": "CAN_B_N",
+      "3": "CAN_A_P",
+      "4": "CAN_B_P",
+      "51": "unconnected-(H1-Pin_51-Pad51)",
+      "52": "unconnected-(H1-Pin_52-Pad52)"
+    },
+    "actual_comms_H2": {
+      "49": "unconnected-(H2-Pin_49-Pad49)",
+      "50": "unconnected-(H2-Pin_50-Pad50)"
+    },
+    "eps_rev_b_required": {
+      "H1.51": "CAN_H",
+      "H1.52": "CAN_L",
+      "H2.49": "CAN_B_H",
+      "H2.50": "CAN_B_L"
+    },
+    "disposition": "Preserve canonical EPS RevB bus pins. COMMS electrical migration/peer verification required; no COMMS native change authorized or made."
+  },
+  "pads": [
+    {
+      "header": "H1",
+      "pin": 1,
+      "eps_xy_mm": [
+        113.2136,
+        136.1236
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        136.1236
+      ],
+      "eps_net": "unconnected-(H1-Pad01)",
+      "comms_net": "CAN_A_N"
+    },
+    {
+      "header": "H1",
+      "pin": 2,
+      "eps_xy_mm": [
+        110.6736,
+        136.1236
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        136.1236
+      ],
+      "eps_net": "unconnected-(H1-Pad02)",
+      "comms_net": "CAN_B_N"
+    },
+    {
+      "header": "H1",
+      "pin": 3,
+      "eps_xy_mm": [
+        113.2136,
+        133.58360000000002
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        133.5836
+      ],
+      "eps_net": "unconnected-(H1-Pad03)",
+      "comms_net": "CAN_A_P"
+    },
+    {
+      "header": "H1",
+      "pin": 4,
+      "eps_xy_mm": [
+        110.6736,
+        133.58360000000002
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        133.5836
+      ],
+      "eps_net": "unconnected-(H1-Pad04)",
+      "comms_net": "CAN_B_P"
+    },
+    {
+      "header": "H1",
+      "pin": 5,
+      "eps_xy_mm": [
+        113.2136,
+        131.0436
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        131.0436
+      ],
+      "eps_net": "unconnected-(H1-Pad05)",
+      "comms_net": "unconnected-(H1-Pin_5-Pad5)"
+    },
+    {
+      "header": "H1",
+      "pin": 6,
+      "eps_xy_mm": [
+        110.6736,
+        131.0436
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        131.0436
+      ],
+      "eps_net": "unconnected-(H1-Pad06)",
+      "comms_net": "unconnected-(H1-Pin_6-Pad6)"
+    },
+    {
+      "header": "H1",
+      "pin": 7,
+      "eps_xy_mm": [
+        113.2136,
+        128.5036
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        128.5036
+      ],
+      "eps_net": "unconnected-(H1-Pad07)",
+      "comms_net": "unconnected-(H1-Pin_7-Pad7)"
+    },
+    {
+      "header": "H1",
+      "pin": 8,
+      "eps_xy_mm": [
+        110.6736,
+        128.5036
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        128.5036
+      ],
+      "eps_net": "unconnected-(H1-Pad08)",
+      "comms_net": "unconnected-(H1-Pin_8-Pad8)"
+    },
+    {
+      "header": "H1",
+      "pin": 9,
+      "eps_xy_mm": [
+        113.2136,
+        125.96360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        125.9636
+      ],
+      "eps_net": "unconnected-(H1-Pad09)",
+      "comms_net": "unconnected-(H1-Pin_9-Pad9)"
+    },
+    {
+      "header": "H1",
+      "pin": 10,
+      "eps_xy_mm": [
+        110.6736,
+        125.96360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        125.9636
+      ],
+      "eps_net": "unconnected-(H1-Pad10)",
+      "comms_net": "unconnected-(H1-Pin_10-Pad10)"
+    },
+    {
+      "header": "H1",
+      "pin": 11,
+      "eps_xy_mm": [
+        113.2136,
+        123.42360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        123.4236
+      ],
+      "eps_net": "unconnected-(H1-Pad11)",
+      "comms_net": "unconnected-(H1-Pin_11-Pad11)"
+    },
+    {
+      "header": "H1",
+      "pin": 12,
+      "eps_xy_mm": [
+        110.6736,
+        123.42360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        123.4236
+      ],
+      "eps_net": "unconnected-(H1-Pad12)",
+      "comms_net": "unconnected-(H1-Pin_12-Pad12)"
+    },
+    {
+      "header": "H1",
+      "pin": 13,
+      "eps_xy_mm": [
+        113.2136,
+        120.88360000000002
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        120.8836
+      ],
+      "eps_net": "unconnected-(H1-Pad13)",
+      "comms_net": "unconnected-(H1-Pin_13-Pad13)"
+    },
+    {
+      "header": "H1",
+      "pin": 14,
+      "eps_xy_mm": [
+        110.6736,
+        120.88360000000002
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        120.8836
+      ],
+      "eps_net": "unconnected-(H1-Pad14)",
+      "comms_net": "unconnected-(H1-Pin_14-Pad14)"
+    },
+    {
+      "header": "H1",
+      "pin": 15,
+      "eps_xy_mm": [
+        113.2136,
+        118.34360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        118.3436
+      ],
+      "eps_net": "unconnected-(H1-Pad15)",
+      "comms_net": "unconnected-(H1-Pin_15-Pad15)"
+    },
+    {
+      "header": "H1",
+      "pin": 16,
+      "eps_xy_mm": [
+        110.6736,
+        118.34360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        118.3436
+      ],
+      "eps_net": "unconnected-(H1-Pad16)",
+      "comms_net": "unconnected-(H1-Pin_16-Pad16)"
+    },
+    {
+      "header": "H1",
+      "pin": 17,
+      "eps_xy_mm": [
+        113.2136,
+        115.80360000000002
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        115.80359999999999
+      ],
+      "eps_net": "unconnected-(H1-Pad17)",
+      "comms_net": "unconnected-(H1-Pin_17-Pad17)"
+    },
+    {
+      "header": "H1",
+      "pin": 18,
+      "eps_xy_mm": [
+        110.6736,
+        115.80360000000002
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        115.80359999999999
+      ],
+      "eps_net": "unconnected-(H1-Pad18)",
+      "comms_net": "unconnected-(H1-Pin_18-Pad18)"
+    },
+    {
+      "header": "H1",
+      "pin": 19,
+      "eps_xy_mm": [
+        113.2136,
+        113.26360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        113.2636
+      ],
+      "eps_net": "unconnected-(H1-Pad19)",
+      "comms_net": "unconnected-(H1-Pin_19-Pad19)"
+    },
+    {
+      "header": "H1",
+      "pin": 20,
+      "eps_xy_mm": [
+        110.6736,
+        113.26360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        113.2636
+      ],
+      "eps_net": "unconnected-(H1-Pad20)",
+      "comms_net": "unconnected-(H1-Pin_20-Pad20)"
+    },
+    {
+      "header": "H1",
+      "pin": 21,
+      "eps_xy_mm": [
+        113.2136,
+        110.7236
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        110.72359999999999
+      ],
+      "eps_net": "unconnected-(H1-Pad21)",
+      "comms_net": "unconnected-(H1-Pin_21-Pad21)"
+    },
+    {
+      "header": "H1",
+      "pin": 22,
+      "eps_xy_mm": [
+        110.6736,
+        110.7236
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        110.72359999999999
+      ],
+      "eps_net": "unconnected-(H1-Pad22)",
+      "comms_net": "unconnected-(H1-Pin_22-Pad22)"
+    },
+    {
+      "header": "H1",
+      "pin": 23,
+      "eps_xy_mm": [
+        113.2136,
+        108.18360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        108.1836
+      ],
+      "eps_net": "unconnected-(H1-Pad23)",
+      "comms_net": "unconnected-(H1-Pin_23-Pad23)"
+    },
+    {
+      "header": "H1",
+      "pin": 24,
+      "eps_xy_mm": [
+        110.6736,
+        108.18360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        108.1836
+      ],
+      "eps_net": "unconnected-(H1-Pad24)",
+      "comms_net": "unconnected-(H1-Pin_24-Pad24)"
+    },
+    {
+      "header": "H1",
+      "pin": 25,
+      "eps_xy_mm": [
+        113.2136,
+        105.6436
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        105.64359999999999
+      ],
+      "eps_net": "unconnected-(H1-Pad25)",
+      "comms_net": "unconnected-(H1-Pin_25-Pad25)"
+    },
+    {
+      "header": "H1",
+      "pin": 26,
+      "eps_xy_mm": [
+        110.6736,
+        105.6436
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        105.64359999999999
+      ],
+      "eps_net": "unconnected-(H1-Pad26)",
+      "comms_net": "unconnected-(H1-Pin_26-Pad26)"
+    },
+    {
+      "header": "H1",
+      "pin": 27,
+      "eps_xy_mm": [
+        113.2136,
+        103.1036
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        103.1036
+      ],
+      "eps_net": "unconnected-(H1-Pad27)",
+      "comms_net": "unconnected-(H1-Pin_27-Pad27)"
+    },
+    {
+      "header": "H1",
+      "pin": 28,
+      "eps_xy_mm": [
+        110.6736,
+        103.1036
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        103.1036
+      ],
+      "eps_net": "unconnected-(H1-Pad28)",
+      "comms_net": "unconnected-(H1-Pin_28-Pad28)"
+    },
+    {
+      "header": "H1",
+      "pin": 29,
+      "eps_xy_mm": [
+        113.2136,
+        100.56360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        100.5636
+      ],
+      "eps_net": "unconnected-(H1-Pad29)",
+      "comms_net": "unconnected-(H1-Pin_29-Pad29)"
+    },
+    {
+      "header": "H1",
+      "pin": 30,
+      "eps_xy_mm": [
+        110.6736,
+        100.56360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        100.5636
+      ],
+      "eps_net": "unconnected-(H1-Pad30)",
+      "comms_net": "unconnected-(H1-Pin_30-Pad30)"
+    },
+    {
+      "header": "H1",
+      "pin": 31,
+      "eps_xy_mm": [
+        113.2136,
+        98.02360000000002
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        98.0236
+      ],
+      "eps_net": "unconnected-(H1-Pad31)",
+      "comms_net": "unconnected-(H1-Pin_31-Pad31)"
+    },
+    {
+      "header": "H1",
+      "pin": 32,
+      "eps_xy_mm": [
+        110.6736,
+        98.02360000000002
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        98.0236
+      ],
+      "eps_net": "unconnected-(H1-Pad32)",
+      "comms_net": "unconnected-(H1-Pin_32-Pad32)"
+    },
+    {
+      "header": "H1",
+      "pin": 33,
+      "eps_xy_mm": [
+        113.2136,
+        95.48360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        95.4836
+      ],
+      "eps_net": "unconnected-(H1-Pad33)",
+      "comms_net": "unconnected-(H1-Pin_33-Pad33)"
+    },
+    {
+      "header": "H1",
+      "pin": 34,
+      "eps_xy_mm": [
+        110.6736,
+        95.48360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        95.4836
+      ],
+      "eps_net": "unconnected-(H1-Pad34)",
+      "comms_net": "unconnected-(H1-Pin_34-Pad34)"
+    },
+    {
+      "header": "H1",
+      "pin": 35,
+      "eps_xy_mm": [
+        113.2136,
+        92.9436
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        92.9436
+      ],
+      "eps_net": "unconnected-(H1-Pad35)",
+      "comms_net": "unconnected-(H1-Pin_35-Pad35)"
+    },
+    {
+      "header": "H1",
+      "pin": 36,
+      "eps_xy_mm": [
+        110.6736,
+        92.9436
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        92.9436
+      ],
+      "eps_net": "unconnected-(H1-Pad36)",
+      "comms_net": "unconnected-(H1-Pin_36-Pad36)"
+    },
+    {
+      "header": "H1",
+      "pin": 37,
+      "eps_xy_mm": [
+        113.2136,
+        90.40360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        90.4036
+      ],
+      "eps_net": "unconnected-(H1-Pad37)",
+      "comms_net": "unconnected-(H1-Pin_37-Pad37)"
+    },
+    {
+      "header": "H1",
+      "pin": 38,
+      "eps_xy_mm": [
+        110.6736,
+        90.40360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        90.4036
+      ],
+      "eps_net": "unconnected-(H1-Pad38)",
+      "comms_net": "unconnected-(H1-Pin_38-Pad38)"
+    },
+    {
+      "header": "H1",
+      "pin": 39,
+      "eps_xy_mm": [
+        113.2136,
+        87.86360000000002
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        87.86359999999999
+      ],
+      "eps_net": "unconnected-(H1-Pad39)",
+      "comms_net": "unconnected-(H1-Pin_39-Pad39)"
+    },
+    {
+      "header": "H1",
+      "pin": 40,
+      "eps_xy_mm": [
+        110.6736,
+        87.86360000000002
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        87.86359999999999
+      ],
+      "eps_net": "unconnected-(H1-Pad40)",
+      "comms_net": "unconnected-(H1-Pin_40-Pad40)"
+    },
+    {
+      "header": "H1",
+      "pin": 41,
+      "eps_xy_mm": [
+        113.2136,
+        85.32360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        85.3236
+      ],
+      "eps_net": "/I2C_SDA",
+      "comms_net": "unconnected-(H1-Pin_41-Pad41)"
+    },
+    {
+      "header": "H1",
+      "pin": 42,
+      "eps_xy_mm": [
+        110.6736,
+        85.32360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        85.3236
+      ],
+      "eps_net": "unconnected-(H1-Pad42)",
+      "comms_net": "unconnected-(H1-Pin_42-Pad42)"
+    },
+    {
+      "header": "H1",
+      "pin": 43,
+      "eps_xy_mm": [
+        113.2136,
+        82.7836
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        82.78359999999999
+      ],
+      "eps_net": "/I2C_SCL",
+      "comms_net": "unconnected-(H1-Pin_43-Pad43)"
+    },
+    {
+      "header": "H1",
+      "pin": 44,
+      "eps_xy_mm": [
+        110.6736,
+        82.7836
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        82.78359999999999
+      ],
+      "eps_net": "unconnected-(H1-Pad44)",
+      "comms_net": "unconnected-(H1-Pin_44-Pad44)"
+    },
+    {
+      "header": "H1",
+      "pin": 45,
+      "eps_xy_mm": [
+        113.2136,
+        80.24360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        80.2436
+      ],
+      "eps_net": "unconnected-(H1-Pad45)",
+      "comms_net": "unconnected-(H1-Pin_45-Pad45)"
+    },
+    {
+      "header": "H1",
+      "pin": 46,
+      "eps_xy_mm": [
+        110.6736,
+        80.24360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        80.2436
+      ],
+      "eps_net": "unconnected-(H1-Pad46)",
+      "comms_net": "unconnected-(H1-Pin_46-Pad46)"
+    },
+    {
+      "header": "H1",
+      "pin": 47,
+      "eps_xy_mm": [
+        113.2136,
+        77.70360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        77.7036
+      ],
+      "eps_net": "unconnected-(H1-Pad47)",
+      "comms_net": "unconnected-(H1-Pin_47-Pad47)"
+    },
+    {
+      "header": "H1",
+      "pin": 48,
+      "eps_xy_mm": [
+        110.6736,
+        77.70360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        77.7036
+      ],
+      "eps_net": "unconnected-(H1-Pad48)",
+      "comms_net": "unconnected-(H1-Pin_48-Pad48)"
+    },
+    {
+      "header": "H1",
+      "pin": 49,
+      "eps_xy_mm": [
+        113.2136,
+        75.1636
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        75.1636
+      ],
+      "eps_net": "unconnected-(H1-Pad49)",
+      "comms_net": "unconnected-(H1-Pin_49-Pad49)"
+    },
+    {
+      "header": "H1",
+      "pin": 50,
+      "eps_xy_mm": [
+        110.6736,
+        75.1636
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        75.1636
+      ],
+      "eps_net": "unconnected-(H1-Pad50)",
+      "comms_net": "unconnected-(H1-Pin_50-Pad50)"
+    },
+    {
+      "header": "H1",
+      "pin": 51,
+      "eps_xy_mm": [
+        113.2136,
+        72.62360000000001
+      ],
+      "comms_xy_mm": [
+        113.2136,
+        72.6236
+      ],
+      "eps_net": "unconnected-(H1-Pad51)",
+      "comms_net": "unconnected-(H1-Pin_51-Pad51)"
+    },
+    {
+      "header": "H1",
+      "pin": 52,
+      "eps_xy_mm": [
+        110.6736,
+        72.62360000000001
+      ],
+      "comms_xy_mm": [
+        110.67360000000001,
+        72.6236
+      ],
+      "eps_net": "unconnected-(H1-Pad52)",
+      "comms_net": "unconnected-(H1-Pin_52-Pad52)"
+    },
+    {
+      "header": "H2",
+      "pin": 1,
+      "eps_xy_mm": [
+        108.1336,
+        136.1236
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        136.1236
+      ],
+      "eps_net": "unconnected-(H2-Pad01)",
+      "comms_net": "unconnected-(H2-Pin_1-Pad1)"
+    },
+    {
+      "header": "H2",
+      "pin": 2,
+      "eps_xy_mm": [
+        105.5936,
+        136.1236
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        136.1236
+      ],
+      "eps_net": "unconnected-(H2-Pad02)",
+      "comms_net": "unconnected-(H2-Pin_2-Pad2)"
+    },
+    {
+      "header": "H2",
+      "pin": 3,
+      "eps_xy_mm": [
+        108.1336,
+        133.58360000000002
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        133.5836
+      ],
+      "eps_net": "unconnected-(H2-Pad03)",
+      "comms_net": "unconnected-(H2-Pin_3-Pad3)"
+    },
+    {
+      "header": "H2",
+      "pin": 4,
+      "eps_xy_mm": [
+        105.5936,
+        133.58360000000002
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        133.5836
+      ],
+      "eps_net": "unconnected-(H2-Pad04)",
+      "comms_net": "unconnected-(H2-Pin_4-Pad4)"
+    },
+    {
+      "header": "H2",
+      "pin": 5,
+      "eps_xy_mm": [
+        108.1336,
+        131.0436
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        131.0436
+      ],
+      "eps_net": "unconnected-(H2-Pad05)",
+      "comms_net": "unconnected-(H2-Pin_5-Pad5)"
+    },
+    {
+      "header": "H2",
+      "pin": 6,
+      "eps_xy_mm": [
+        105.5936,
+        131.0436
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        131.0436
+      ],
+      "eps_net": "unconnected-(H2-Pad06)",
+      "comms_net": "unconnected-(H2-Pin_6-Pad6)"
+    },
+    {
+      "header": "H2",
+      "pin": 7,
+      "eps_xy_mm": [
+        108.1336,
+        128.5036
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        128.5036
+      ],
+      "eps_net": "unconnected-(H2-Pad07)",
+      "comms_net": "unconnected-(H2-Pin_7-Pad7)"
+    },
+    {
+      "header": "H2",
+      "pin": 8,
+      "eps_xy_mm": [
+        105.5936,
+        128.5036
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        128.5036
+      ],
+      "eps_net": "unconnected-(H2-Pad08)",
+      "comms_net": "unconnected-(H2-Pin_8-Pad8)"
+    },
+    {
+      "header": "H2",
+      "pin": 9,
+      "eps_xy_mm": [
+        108.1336,
+        125.96360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        125.9636
+      ],
+      "eps_net": "unconnected-(H2-Pad09)",
+      "comms_net": "unconnected-(H2-Pin_9-Pad9)"
+    },
+    {
+      "header": "H2",
+      "pin": 10,
+      "eps_xy_mm": [
+        105.5936,
+        125.96360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        125.9636
+      ],
+      "eps_net": "unconnected-(H2-Pad10)",
+      "comms_net": "unconnected-(H2-Pin_10-Pad10)"
+    },
+    {
+      "header": "H2",
+      "pin": 11,
+      "eps_xy_mm": [
+        108.1336,
+        123.42360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        123.4236
+      ],
+      "eps_net": "unconnected-(H2-Pad11)",
+      "comms_net": "unconnected-(H2-Pin_11-Pad11)"
+    },
+    {
+      "header": "H2",
+      "pin": 12,
+      "eps_xy_mm": [
+        105.5936,
+        123.42360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        123.4236
+      ],
+      "eps_net": "unconnected-(H2-Pad12)",
+      "comms_net": "unconnected-(H2-Pin_12-Pad12)"
+    },
+    {
+      "header": "H2",
+      "pin": 13,
+      "eps_xy_mm": [
+        108.1336,
+        120.88360000000002
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        120.8836
+      ],
+      "eps_net": "unconnected-(H2-Pad13)",
+      "comms_net": "unconnected-(H2-Pin_13-Pad13)"
+    },
+    {
+      "header": "H2",
+      "pin": 14,
+      "eps_xy_mm": [
+        105.5936,
+        120.88360000000002
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        120.8836
+      ],
+      "eps_net": "unconnected-(H2-Pad14)",
+      "comms_net": "unconnected-(H2-Pin_14-Pad14)"
+    },
+    {
+      "header": "H2",
+      "pin": 15,
+      "eps_xy_mm": [
+        108.1336,
+        118.34360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        118.3436
+      ],
+      "eps_net": "unconnected-(H2-Pad15)",
+      "comms_net": "unconnected-(H2-Pin_15-Pad15)"
+    },
+    {
+      "header": "H2",
+      "pin": 16,
+      "eps_xy_mm": [
+        105.5936,
+        118.34360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        118.3436
+      ],
+      "eps_net": "unconnected-(H2-Pad16)",
+      "comms_net": "unconnected-(H2-Pin_16-Pad16)"
+    },
+    {
+      "header": "H2",
+      "pin": 17,
+      "eps_xy_mm": [
+        108.1336,
+        115.80360000000002
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        115.80359999999999
+      ],
+      "eps_net": "unconnected-(H2-Pad17)",
+      "comms_net": "unconnected-(H2-Pin_17-Pad17)"
+    },
+    {
+      "header": "H2",
+      "pin": 18,
+      "eps_xy_mm": [
+        105.5936,
+        115.80360000000002
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        115.80359999999999
+      ],
+      "eps_net": "unconnected-(H2-Pad18)",
+      "comms_net": "unconnected-(H2-Pin_18-Pad18)"
+    },
+    {
+      "header": "H2",
+      "pin": 19,
+      "eps_xy_mm": [
+        108.1336,
+        113.26360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        113.2636
+      ],
+      "eps_net": "unconnected-(H2-Pad19)",
+      "comms_net": "unconnected-(H2-Pin_19-Pad19)"
+    },
+    {
+      "header": "H2",
+      "pin": 20,
+      "eps_xy_mm": [
+        105.5936,
+        113.26360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        113.2636
+      ],
+      "eps_net": "unconnected-(H2-Pad20)",
+      "comms_net": "unconnected-(H2-Pin_20-Pad20)"
+    },
+    {
+      "header": "H2",
+      "pin": 21,
+      "eps_xy_mm": [
+        108.1336,
+        110.7236
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        110.72359999999999
+      ],
+      "eps_net": "unconnected-(H2-Pad21)",
+      "comms_net": "unconnected-(H2-Pin_21-Pad21)"
+    },
+    {
+      "header": "H2",
+      "pin": 22,
+      "eps_xy_mm": [
+        105.5936,
+        110.7236
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        110.72359999999999
+      ],
+      "eps_net": "unconnected-(H2-Pad22)",
+      "comms_net": "unconnected-(H2-Pin_22-Pad22)"
+    },
+    {
+      "header": "H2",
+      "pin": 23,
+      "eps_xy_mm": [
+        108.1336,
+        108.18360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        108.1836
+      ],
+      "eps_net": "unconnected-(H2-Pad23)",
+      "comms_net": "unconnected-(H2-Pin_23-Pad23)"
+    },
+    {
+      "header": "H2",
+      "pin": 24,
+      "eps_xy_mm": [
+        105.5936,
+        108.18360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        108.1836
+      ],
+      "eps_net": "unconnected-(H2-Pad24)",
+      "comms_net": "unconnected-(H2-Pin_24-Pad24)"
+    },
+    {
+      "header": "H2",
+      "pin": 25,
+      "eps_xy_mm": [
+        108.1336,
+        105.6436
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        105.64359999999999
+      ],
+      "eps_net": "+5V",
+      "comms_net": "+5V_CON"
+    },
+    {
+      "header": "H2",
+      "pin": 26,
+      "eps_xy_mm": [
+        105.5936,
+        105.6436
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        105.64359999999999
+      ],
+      "eps_net": "+5V",
+      "comms_net": "+5V_CON"
+    },
+    {
+      "header": "H2",
+      "pin": 27,
+      "eps_xy_mm": [
+        108.1336,
+        103.1036
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        103.1036
+      ],
+      "eps_net": "+3V3",
+      "comms_net": "+3V3"
+    },
+    {
+      "header": "H2",
+      "pin": 28,
+      "eps_xy_mm": [
+        105.5936,
+        103.1036
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        103.1036
+      ],
+      "eps_net": "+3V3",
+      "comms_net": "+3V3"
+    },
+    {
+      "header": "H2",
+      "pin": 29,
+      "eps_xy_mm": [
+        108.1336,
+        100.56360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        100.5636
+      ],
+      "eps_net": "GND",
+      "comms_net": "GND"
+    },
+    {
+      "header": "H2",
+      "pin": 30,
+      "eps_xy_mm": [
+        105.5936,
+        100.56360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        100.5636
+      ],
+      "eps_net": "GND",
+      "comms_net": "GND"
+    },
+    {
+      "header": "H2",
+      "pin": 31,
+      "eps_xy_mm": [
+        108.1336,
+        98.02360000000002
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        98.0236
+      ],
+      "eps_net": "GND",
+      "comms_net": "GND"
+    },
+    {
+      "header": "H2",
+      "pin": 32,
+      "eps_xy_mm": [
+        105.5936,
+        98.02360000000002
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        98.0236
+      ],
+      "eps_net": "GND",
+      "comms_net": "GND"
+    },
+    {
+      "header": "H2",
+      "pin": 33,
+      "eps_xy_mm": [
+        108.1336,
+        95.48360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        95.4836
+      ],
+      "eps_net": "unconnected-(H2-Pad33)",
+      "comms_net": "unconnected-(H2-Pin_33-Pad33)"
+    },
+    {
+      "header": "H2",
+      "pin": 34,
+      "eps_xy_mm": [
+        105.5936,
+        95.48360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        95.4836
+      ],
+      "eps_net": "unconnected-(H2-Pad34)",
+      "comms_net": "unconnected-(H2-Pin_34-Pad34)"
+    },
+    {
+      "header": "H2",
+      "pin": 35,
+      "eps_xy_mm": [
+        108.1336,
+        92.9436
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        92.9436
+      ],
+      "eps_net": "unconnected-(H2-Pad35)",
+      "comms_net": "unconnected-(H2-Pin_35-Pad35)"
+    },
+    {
+      "header": "H2",
+      "pin": 36,
+      "eps_xy_mm": [
+        105.5936,
+        92.9436
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        92.9436
+      ],
+      "eps_net": "unconnected-(H2-Pad36)",
+      "comms_net": "unconnected-(H2-Pin_36-Pad36)"
+    },
+    {
+      "header": "H2",
+      "pin": 37,
+      "eps_xy_mm": [
+        108.1336,
+        90.40360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        90.4036
+      ],
+      "eps_net": "unconnected-(H2-Pad37)",
+      "comms_net": "unconnected-(H2-Pin_37-Pad37)"
+    },
+    {
+      "header": "H2",
+      "pin": 38,
+      "eps_xy_mm": [
+        105.5936,
+        90.40360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        90.4036
+      ],
+      "eps_net": "unconnected-(H2-Pad38)",
+      "comms_net": "unconnected-(H2-Pin_38-Pad38)"
+    },
+    {
+      "header": "H2",
+      "pin": 39,
+      "eps_xy_mm": [
+        108.1336,
+        87.86360000000002
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        87.86359999999999
+      ],
+      "eps_net": "unconnected-(H2-Pad39)",
+      "comms_net": "unconnected-(H2-Pin_39-Pad39)"
+    },
+    {
+      "header": "H2",
+      "pin": 40,
+      "eps_xy_mm": [
+        105.5936,
+        87.86360000000002
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        87.86359999999999
+      ],
+      "eps_net": "unconnected-(H2-Pad40)",
+      "comms_net": "unconnected-(H2-Pin_40-Pad40)"
+    },
+    {
+      "header": "H2",
+      "pin": 41,
+      "eps_xy_mm": [
+        108.1336,
+        85.32360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        85.3236
+      ],
+      "eps_net": "unconnected-(H2-Pad41)",
+      "comms_net": "unconnected-(H2-Pin_41-Pad41)"
+    },
+    {
+      "header": "H2",
+      "pin": 42,
+      "eps_xy_mm": [
+        105.5936,
+        85.32360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        85.3236
+      ],
+      "eps_net": "unconnected-(H2-Pad42)",
+      "comms_net": "unconnected-(H2-Pin_42-Pad42)"
+    },
+    {
+      "header": "H2",
+      "pin": 43,
+      "eps_xy_mm": [
+        108.1336,
+        82.7836
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        82.78359999999999
+      ],
+      "eps_net": "unconnected-(H2-Pad43)",
+      "comms_net": "unconnected-(H2-Pin_43-Pad43)"
+    },
+    {
+      "header": "H2",
+      "pin": 44,
+      "eps_xy_mm": [
+        105.5936,
+        82.7836
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        82.78359999999999
+      ],
+      "eps_net": "unconnected-(H2-Pad44)",
+      "comms_net": "unconnected-(H2-Pin_44-Pad44)"
+    },
+    {
+      "header": "H2",
+      "pin": 45,
+      "eps_xy_mm": [
+        108.1336,
+        80.24360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        80.2436
+      ],
+      "eps_net": "/BATT_POS",
+      "comms_net": "/Connectors/VBAT"
+    },
+    {
+      "header": "H2",
+      "pin": 46,
+      "eps_xy_mm": [
+        105.5936,
+        80.24360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        80.2436
+      ],
+      "eps_net": "/BATT_POS",
+      "comms_net": "/Connectors/VBAT"
+    },
+    {
+      "header": "H2",
+      "pin": 47,
+      "eps_xy_mm": [
+        108.1336,
+        77.70360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        77.7036
+      ],
+      "eps_net": "unconnected-(H2-Pad47)",
+      "comms_net": "unconnected-(H2-Pin_47-Pad47)"
+    },
+    {
+      "header": "H2",
+      "pin": 48,
+      "eps_xy_mm": [
+        105.5936,
+        77.70360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        77.7036
+      ],
+      "eps_net": "unconnected-(H2-Pad48)",
+      "comms_net": "unconnected-(H2-Pin_48-Pad48)"
+    },
+    {
+      "header": "H2",
+      "pin": 49,
+      "eps_xy_mm": [
+        108.1336,
+        75.1636
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        75.1636
+      ],
+      "eps_net": "unconnected-(H2-Pad49)",
+      "comms_net": "unconnected-(H2-Pin_49-Pad49)"
+    },
+    {
+      "header": "H2",
+      "pin": 50,
+      "eps_xy_mm": [
+        105.5936,
+        75.1636
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        75.1636
+      ],
+      "eps_net": "unconnected-(H2-Pad50)",
+      "comms_net": "unconnected-(H2-Pin_50-Pad50)"
+    },
+    {
+      "header": "H2",
+      "pin": 51,
+      "eps_xy_mm": [
+        108.1336,
+        72.62360000000001
+      ],
+      "comms_xy_mm": [
+        108.1336,
+        72.6236
+      ],
+      "eps_net": "unconnected-(H2-Pad51)",
+      "comms_net": "unconnected-(H2-Pin_51-Pad51)"
+    },
+    {
+      "header": "H2",
+      "pin": 52,
+      "eps_xy_mm": [
+        105.5936,
+        72.62360000000001
+      ],
+      "comms_xy_mm": [
+        105.59360000000001,
+        72.6236
+      ],
+      "eps_net": "unconnected-(H2-Pad52)",
+      "comms_net": "unconnected-(H2-Pin_52-Pad52)"
+    }
+  ]
+}

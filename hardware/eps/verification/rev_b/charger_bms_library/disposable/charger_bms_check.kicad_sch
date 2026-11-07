@@ -1,0 +1,1535 @@
+(kicad_sch
+	(version 20250610)
+	(generator "konnect")
+	(generator_version "10.0")
+	(uuid "806bd329-489c-410d-8546-10e041ff3013")
+	(paper "B")
+	(lib_symbols
+		(symbol
+		  "Ember_Charger_BMS_Review:LTC4162IUFD-LADM_TRPBF"
+		  (pin_names
+		    (offset 1.016)
+		  )
+		  (exclude_from_sim no)
+		  (in_bom yes)
+		  (on_board yes)
+		  (in_pos_files yes)
+		  (duplicate_pin_numbers_are_jumpers no)
+		  (property "Reference" "U"
+		    (at 0 33.0200 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Value" "LTC4162IUFD-LADM#TRPBF"
+		    (at 0 -33.0200 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Footprint" "Ember_Charger_BMS_Review:ADI_UFD-28-1EP_4x5mm_P0.5mm_Manufacturer"
+		    (at 0 0 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (hide yes)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/LTC4162-L.pdf"
+		    (at 0 0 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (hide yes)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (property "Description" ""
+		    (at 0 0 0)
+		    (show_name no)
+		    (do_not_autoplace no)
+		    (hide yes)
+		    (effects
+		      (font
+		        (size 1.27 1.27)
+		      )
+		    )
+		  )
+		  (symbol "LTC4162IUFD-LADM_TRPBF_0_1"
+		    (rectangle
+		      (start -25.4000 -30.4800)
+		      (end 25.4000 30.4800)
+		      (stroke
+		        (width 0.254)
+		        (type default)
+		      )
+		      (fill
+		        (type background)
+		      )
+		    )
+		    (pin power_in line
+		      (at 5.08 35.56 270)
+		      (length 5.08)
+		      (name "BOOST"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "1"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_out line
+		      (at 10.16 35.56 270)
+		      (length 5.08)
+		      (name "INTVCC"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "2"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_in line
+		      (at -15.24 35.56 270)
+		      (length 5.08)
+		      (name "VOUTA"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "3"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -30.48 20.32 0)
+		      (length 5.08)
+		      (name "CLN"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "4"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -30.48 22.86 0)
+		      (length 5.08)
+		      (name "CLP"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "5"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin output line
+		      (at 30.48 22.86 180)
+		      (length 5.08)
+		      (name "INFET"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "6"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_in line
+		      (at -20.32 35.56 270)
+		      (length 5.08)
+		      (name "VIN"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "7"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_out line
+		      (at 15.24 35.56 270)
+		      (length 5.08)
+		      (name "VCC2P5"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "8"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin output line
+		      (at 30.48 12.7 180)
+		      (length 5.08)
+		      (name "NTCBIAS"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "9"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -30.48 10.16 0)
+		      (length 5.08)
+		      (name "NTC"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "10"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -30.48 7.62 0)
+		      (length 5.08)
+		      (name "RT"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "11"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin open_collector line
+		      (at 30.48 10.16 180)
+		      (length 5.08)
+		      (name "SMBALERT"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "12"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -30.48 -2.54 0)
+		      (length 5.08)
+		      (name "SCL"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "13"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin bidirectional line
+		      (at 30.48 7.62 180)
+		      (length 5.08)
+		      (name "SDA"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "14"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_in line
+		      (at 20.32 35.56 270)
+		      (length 5.08)
+		      (name "DVCC"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "15"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -30.48 5.08 0)
+		      (length 5.08)
+		      (name "SYNC"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "16"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -30.48 2.54 0)
+		      (length 5.08)
+		      (name "CELLS0"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "17"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -30.48 0 0)
+		      (length 5.08)
+		      (name "CELLS1"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "18"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -30.48 17.78 0)
+		      (length 5.08)
+		      (name "BATSENS+"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "19"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -30.48 12.7 0)
+		      (length 5.08)
+		      (name "CSN"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "20"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin input line
+		      (at -30.48 15.24 0)
+		      (length 5.08)
+		      (name "CSP"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "21"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin output line
+		      (at 30.48 20.32 180)
+		      (length 5.08)
+		      (name "BATFET"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "22"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_in line
+		      (at -17.78 -35.56 90)
+		      (length 5.08)
+		      (name "PGND"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "23"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_in line
+		      (at -15.24 -35.56 90)
+		      (length 5.08)
+		      (name "PGND"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "24"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_out line
+		      (at 30.48 17.78 180)
+		      (length 5.08)
+		      (name "SW"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "25"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_out line
+		      (at 30.48 15.24 180)
+		      (length 5.08)
+		      (name "SW"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "26"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_in line
+		      (at -10.16 35.56 270)
+		      (length 5.08)
+		      (name "VOUT"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "27"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_in line
+		      (at -5.08 35.56 270)
+		      (length 5.08)
+		      (name "VOUT"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "28"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		    (pin power_in line
+		      (at 17.78 -35.56 90)
+		      (length 5.08)
+		      (name "AGND"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		      (number "29"
+		        (effects
+		          (font
+		            (size 1.27 1.27)
+		          )
+		        )
+		      )
+		    )
+		  )
+		  (embedded_fonts no)
+		)
+		(symbol "Ember_Charger_BMS_Review:BQ40Z50RSMR-R2"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "U"
+				(at 0 33.0200 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "BQ40Z50RSMR-R2"
+				(at 0 -33.0200 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Ember_Charger_BMS_Review:TI_RSM0032A-32-1EP_4x4mm_P0.4mm_Manufacturer"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/bq40z50-r2.pdf"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "BQ40Z50RSMR-R2_0_1"
+				(rectangle
+					(start -20.3200 -30.4800)
+					(end 20.3200 30.4800)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(pin power_in line
+					(at 15.24 35.56 270)
+					(length 5.08)
+					(name "PBI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 22.86 0)
+					(length 5.08)
+					(name "VC4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 20.32 0)
+					(length 5.08)
+					(name "VC3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 17.78 0)
+					(length 5.08)
+					(name "VC2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 15.24 0)
+					(length 5.08)
+					(name "VC1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 10.16 0)
+					(length 5.08)
+					(name "SRN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -25.4 -15.24 0)
+					(length 5.08)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 12.7 0)
+					(length 5.08)
+					(name "SRP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -17.78 -35.56 90)
+					(length 5.08)
+					(name "VSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 7.62 0)
+					(length 5.08)
+					(name "TS1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 5.08 0)
+					(length 5.08)
+					(name "TS2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 2.54 0)
+					(length 5.08)
+					(name "TS3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 0 0)
+					(length 5.08)
+					(name "TS4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -25.4 -17.78 0)
+					(length 5.08)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 25.4 12.7 180)
+					(length 5.08)
+					(name "BTP_INT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "15"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 -10.16 0)
+					(length 5.08)
+					(name "PRES/SHUTDN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "16"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 -12.7 0)
+					(length 5.08)
+					(name "DISP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "17"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 25.4 10.16 180)
+					(length 5.08)
+					(name "SMBD"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "18"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 25.4 7.62 180)
+					(length 5.08)
+					(name "SMBC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "19"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 25.4 5.08 180)
+					(length 5.08)
+					(name "LEDCNTLA"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "20"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 25.4 2.54 180)
+					(length 5.08)
+					(name "LEDCNTLB"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "21"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 25.4 0 180)
+					(length 5.08)
+					(name "LEDCNTLC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "22"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 -5.08 0)
+					(length 5.08)
+					(name "PTC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "23"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 -7.62 0)
+					(length 5.08)
+					(name "PTCEN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "24"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 25.4 15.24 180)
+					(length 5.08)
+					(name "FUSE"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "25"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -10.16 35.56 270)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "26"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -25.4 -2.54 0)
+					(length 5.08)
+					(name "PACK"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "27"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 25.4 20.32 180)
+					(length 5.08)
+					(name "DSG"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "28"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -25.4 -20.32 0)
+					(length 5.08)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "29"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 25.4 17.78 180)
+					(length 5.08)
+					(name "PCHG"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "30"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 25.4 22.86 180)
+					(length 5.08)
+					(name "CHG"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "31"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -15.24 35.56 270)
+					(length 5.08)
+					(name "BAT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "32"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 17.78 -35.56 90)
+					(length 5.08)
+					(name "VSS_EP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "33"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "LTC4162 charger candidate — UFD pin map"
+		(at 60.96 63.5 0)
+		(effects
+			(font
+				(size 2 2)
+				(bold yes)
+				(color 0 255 0 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "4b04905c-c719-476b-b755-911a127a7d89")
+	)
+	(text "BQ40Z50-R2 candidate — RSM pin map"
+		(at 218.44 63.5 0)
+		(effects
+			(font
+				(size 2 2)
+				(bold yes)
+				(color 0 255 0 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "b6496ce7-03d9-4f0d-8bfc-e9f29c0607ed")
+	)
+	(text "CUSTOM — REVIEW REQUIRED"
+		(at 60.96 167.64 0)
+		(effects
+			(font
+				(size 2 2)
+				(bold yes)
+				(color 0 255 0 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "eca4b085-fb1c-4ea4-b5f2-6e5734140a86")
+	)
+	(text "CUSTOM — REVIEW REQUIRED"
+		(at 218.44 167.64 0)
+		(effects
+			(font
+				(size 2 2)
+				(bold yes)
+				(color 0 255 0 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "312aa8b8-851b-47b9-a879-54fba378a28b")
+	)
+  (text "Pin 1 = BOOST; EP29 = AGND\n29 distinct electrical pins/pads; repeated power pins remain separate."
+    (at 60.96 180.34 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "228f0b74-fab8-41ed-a516-d7d222b9b148")
+  )
+  (text "Pin 1 = PBI; EP33 = VSS\nNC7/14/29 are internally unconnected; TI permits VSS ties."
+    (at 218.44 180.34 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "538a301b-5b0c-4ba8-a718-62821f3f7f22")
+  )
+  (text "DISPOSABLE LIBRARY INSPECTION ONLY — not a circuit or accepted EPS stage.\nAll leads intentionally unwired for pin-map inspection. No source flags or ERC masking.\nPhysical-map validation does not qualify copper/stencil/thermal design or component application."
+    (at 60.96 200.66 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "14db8a3d-afd5-4a91-8c4f-270cb7414ded")
+  )
+	(symbol
+		(lib_id "Ember_Charger_BMS_Review:LTC4162IUFD-LADM_TRPBF")
+		(at 111.76 116.84 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3447ec1c-93a8-4e12-b23a-c1361b7c200b")
+		(property "Reference" "U1"
+			(at 111.76 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LTC4162IUFD-LADM#TRPBF"
+			(at 111.76 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Ember_Charger_BMS_Review:ADI_UFD-28-1EP_4x5mm_P0.5mm_Manufacturer"
+			(at 111.76 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.analog.com/media/en/technical-documentation/data-sheets/LTC4162-L.pdf"
+			(at 111.76 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 111.76 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "LTC4162IUFD-LADM#TRPBF"
+			(at 111.76 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Analog Devices"
+			(at 111.76 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "UFD QFN28 4x5mm + EP29"
+			(at 111.76 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Review" "CUSTOM — REVIEW REQUIRED"
+			(at 111.76 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "charger_bms_check"
+				(path "/806bd329-489c-410d-8546-10e041ff3013"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Ember_Charger_BMS_Review:BQ40Z50RSMR-R2")
+		(at 269.24 116.84 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "54295c3e-e603-43f9-81cf-fb7828d6a4d2")
+		(property "Reference" "U2"
+			(at 269.24 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "BQ40Z50RSMR-R2"
+			(at 269.24 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Ember_Charger_BMS_Review:TI_RSM0032A-32-1EP_4x4mm_P0.4mm_Manufacturer"
+			(at 269.24 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/bq40z50-r2.pdf"
+			(at 269.24 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 269.24 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "BQ40Z50RSMR-R2"
+			(at 269.24 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 269.24 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "RSM QFN32 4x4mm + EP33"
+			(at 269.24 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Review" "CUSTOM — REVIEW REQUIRED"
+			(at 269.24 116.84 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "charger_bms_check"
+				(path "/806bd329-489c-410d-8546-10e041ff3013"
+					(reference "U2")
+					(unit 1)
+				)
+			)
+		)
+	)
+)

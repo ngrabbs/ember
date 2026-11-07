@@ -1,0 +1,131 @@
+{
+  "status": "ANALYTICAL_CANDIDATE_ONLY; NO_NATIVE_BUILD_OR_DYNAMIC_ACCEPTANCE",
+  "candidate": "SUD50P08-25L-E3; procurement/package acceptance open",
+  "passive_network_ohm": {
+    "Rgs": 220000,
+    "Rpd": 10000
+  },
+  "resistance_corners_ohm": {
+    "Rgs": [
+      219422.8575,
+      220577.85749999995
+    ],
+    "Rpd": [
+      9835.65,
+      10165.65
+    ]
+  },
+  "unclamped_Vgs_magnitude_V": [
+    {
+      "common_source_V": 4.5,
+      "min_V": 4.300750370747543,
+      "max_V": 4.307908722538761
+    },
+    {
+      "common_source_V": 5,
+      "min_V": 4.778611523052826,
+      "max_V": 4.7865652472652895
+    },
+    {
+      "common_source_V": 8.4,
+      "min_V": 8.028067358728746,
+      "max_V": 8.041429615405686
+    }
+  ],
+  "minimum_common_source_for_4p5V_guaranteed_drive_V": 4.708480672985493,
+  "ideal10V_clamp_sensitivity": [
+    {
+      "source_V": 32.164,
+      "Rpd_max_current_A": 0.002253435207637523,
+      "Rpd_max_power_W": 0.04994513794207806
+    },
+    {
+      "source_V": 35,
+      "Rpd_max_current_A": 0.002541774056620559,
+      "Rpd_max_power_W": 0.06354435141551397
+    },
+    {
+      "source_V": 60,
+      "Rpd_max_current_A": 0.005083548113241118,
+      "Rpd_max_power_W": 0.2541774056620559
+    }
+  ],
+  "initial_Cgs_max_F": 1.265e-07,
+  "Rgs_Cgs_tau_upper_initial_s": 0.027903098973749995,
+  "MOSFET_gate_charge_and_Miller_not_included_in_tau": true,
+  "pair_conduction_sensitivities": [
+    {
+      "current_A": 2,
+      "pair_drop_at25C_V": 0.116,
+      "pair_loss_at25C_W": 0.232,
+      "pair_loss_at_assumed_2x_R_W": 0.464
+    },
+    {
+      "current_A": 4,
+      "pair_drop_at25C_V": 0.232,
+      "pair_loss_at25C_W": 0.928,
+      "pair_loss_at_assumed_2x_R_W": 1.856
+    },
+    {
+      "current_A": 6,
+      "pair_drop_at25C_V": 0.34800000000000003,
+      "pair_loss_at25C_W": 2.088,
+      "pair_loss_at_assumed_2x_R_W": 4.176
+    }
+  ],
+  "initially_uncharged_capacitor_energy_J": [
+    {
+      "capacitance_F": 0.0001026,
+      "voltage_V": 5,
+      "energy_J": 0.0012825
+    },
+    {
+      "capacitance_F": 0.0001026,
+      "voltage_V": 8.4,
+      "energy_J": 0.003619728
+    },
+    {
+      "capacitance_F": 0.0001026,
+      "voltage_V": 32.164,
+      "energy_J": 0.05307102456480001
+    },
+    {
+      "capacitance_F": 0.00015,
+      "voltage_V": 5,
+      "energy_J": 0.0018749999999999997
+    },
+    {
+      "capacitance_F": 0.00015,
+      "voltage_V": 8.4,
+      "energy_J": 0.005292
+    },
+    {
+      "capacitance_F": 0.00015,
+      "voltage_V": 32.164,
+      "energy_J": 0.0775892172
+    },
+    {
+      "capacitance_F": 0.001,
+      "voltage_V": 5,
+      "energy_J": 0.0125
+    },
+    {
+      "capacitance_F": 0.001,
+      "voltage_V": 8.4,
+      "energy_J": 0.035280000000000006
+    },
+    {
+      "capacitance_F": 0.001,
+      "voltage_V": 32.164,
+      "energy_J": 0.5172614480000001
+    }
+  ],
+  "limits": [
+    "common-source voltage differs from cell voltage because all upstream drops matter",
+    "4.5V drive resistance is a25C datasheet condition; doubled resistance is only a sensitivity",
+    "10V clamp is an illustrative assumption, not a selected zener specification",
+    "RC constant is not a guaranteed power-cutoff time or input-inrush bound",
+    "capacitor energies are sizing cases, not actual selected total source banks or SOA proof",
+    "four attempted SPICE runs did not converge and provide no accepted measurements"
+  ]
+}

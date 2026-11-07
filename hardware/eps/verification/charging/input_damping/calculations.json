@@ -1,0 +1,55 @@
+{
+  "scope": "Development component allocation; hot pulse, actual effective capacitance and coupled loop qualification open",
+  "resistor_candidate": "AC05000002708JAC00",
+  "capacitor_candidate": {
+    "part": "EEHZA1H680P",
+    "quantity": 3
+  },
+  "resistance_sensitivity_ohm": [
+    2.551662,
+    2.849742000000001
+  ],
+  "capacitance_initial_F": [
+    0.0001632,
+    0.0002448
+  ],
+  "capacitance_endurance_high_sensitivity_F": 0.00031824,
+  "capacitance_endurance_low_sensitivity_F": 0.00011424,
+  "nominal_time_constant_s": 0.0005508,
+  "ideal_35V_step_peak_W": 480.07925814625924,
+  "ideal_35V_step_energy_J": 0.194922,
+  "constant_1A_short_resistor_W": 2.849742000000001,
+  "rejected_two_5p1ohm_1W_parallel_nominal_short_per_resistor_W": 1.275,
+  "source_capacitance_nominal_F": 9.8e-05,
+  "system_input_capacitance_proposed_nominal_F": 0.0001427,
+  "source_plus_system_plus_new_damper_nominal_F": 0.0004447,
+  "impedance_sensitivity": [
+    {
+      "frequency_Hz": 1000,
+      "damper_alone_abs_ohm": 2.81045676736351,
+      "source_bank_plus_damper_abs_ohm": 1.2587675856467764,
+      "source_bank_plus_damper_real_ohm": 0.5504165023909405,
+      "source_bank_plus_damper_phase_deg": -64.07041722656872,
+      "including_conducting_PowerPath_system_bank_abs_ohm": 0.6066389773873175,
+      "including_conducting_PowerPath_system_bank_real_ohm": 0.12842998759983387
+    },
+    {
+      "frequency_Hz": 3000,
+      "damper_alone_abs_ohm": 2.7124951047824615,
+      "source_bank_plus_damper_abs_ohm": 0.5191178806610537,
+      "source_bank_plus_damper_real_ohm": 0.11232627584911808,
+      "source_bank_plus_damper_phase_deg": -77.5035495375613,
+      "including_conducting_PowerPath_system_bank_abs_ohm": 0.21782854656011488,
+      "including_conducting_PowerPath_system_bank_real_ohm": 0.020464434686484803
+    },
+    {
+      "frequency_Hz": 10000,
+      "damper_alone_abs_ohm": 2.7011269263794686,
+      "source_bank_plus_damper_abs_ohm": 0.1621396613465442,
+      "source_bank_plus_damper_real_ohm": 0.02407991982783103,
+      "source_bank_plus_damper_phase_deg": -81.45921160284284,
+      "including_conducting_PowerPath_system_bank_abs_ohm": 0.06622173045497991,
+      "including_conducting_PowerPath_system_bank_real_ohm": 0.004721629426320944
+    }
+  ]
+}

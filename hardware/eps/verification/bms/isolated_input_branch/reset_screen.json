@@ -1,0 +1,259 @@
+{
+  "status": "conditional planning screen; not an accepted MCU allocation, reset guarantee or integrated circuit",
+  "gpio": {
+    "planning_gpio_leakage_A": 5e-06,
+    "EN_pullup_ohm": 22000,
+    "EN_series_ohm": 1000,
+    "EN_low_with10k_pullup_V": 0.6675816483626766,
+    "EN_low_with22k_pullup_V": 0.5282672698893816,
+    "TPS_EN_VIL_max_V": 0.66,
+    "EN_high_min_V": 3.111481375,
+    "TPS_EN_VIH_min_V": 1.1,
+    "GPIO_low_sink_max_A": 0.00012798246756431285,
+    "FAULT_pullup_ohm": 10000,
+    "FAULT_series_ohm": 1000,
+    "FAULT_input_high_min_V": 3.167628375,
+    "MCU_VIH_conservative_max_V": 2.3270799999999996,
+    "FAULT_input_low_max_V": 0.185013125,
+    "MCU_VIL_conservative_min_V": 0.9698397,
+    "FAULT_sink_max_A": 0.00033831495174833936
+  },
+  "off_hold_scenario_s": 2,
+  "discharge_scenarios": [
+    {
+      "node": "primary",
+      "R_max_ohm": 10026.250000000002,
+      "C_upper_scenario_F": 0.00010264994299999999,
+      "initial_V": 3.3244,
+      "assumed_total_feed_A": 0,
+      "voltage_after2s_V": 0.47617062282802997,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "primary",
+      "R_max_ohm": 10026.250000000002,
+      "C_upper_scenario_F": 0.00010264994299999999,
+      "initial_V": 3.3244,
+      "assumed_total_feed_A": 1e-06,
+      "voltage_after2s_V": 0.4847607623397826,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "primary",
+      "R_max_ohm": 10026.250000000002,
+      "C_upper_scenario_F": 0.00010264994299999999,
+      "initial_V": 3.3244,
+      "assumed_total_feed_A": 1e-05,
+      "voltage_after2s_V": 0.5620720179455564,
+      "below0p5V_scenario": false
+    },
+    {
+      "node": "primary",
+      "R_max_ohm": 10026.250000000002,
+      "C_upper_scenario_F": 0.00010264994299999999,
+      "initial_V": 3.3244,
+      "assumed_total_feed_A": 5e-05,
+      "voltage_after2s_V": 0.905677598415662,
+      "below0p5V_scenario": false
+    },
+    {
+      "node": "primary",
+      "R_max_ohm": 10026.250000000002,
+      "C_upper_scenario_F": 0.00010264994299999999,
+      "initial_V": 3.3244,
+      "assumed_total_feed_A": 0.0001,
+      "voltage_after2s_V": 1.335184574003294,
+      "below0p5V_scenario": false
+    },
+    {
+      "node": "isolated_5V",
+      "R_max_ohm": 4712.337500000001,
+      "C_upper_scenario_F": 3.8584650499999984e-05,
+      "initial_V": 5.2,
+      "assumed_total_feed_A": 0,
+      "voltage_after2s_V": 8.687886993954152e-05,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "isolated_5V",
+      "R_max_ohm": 4712.337500000001,
+      "C_upper_scenario_F": 3.8584650499999984e-05,
+      "initial_V": 5.2,
+      "assumed_total_feed_A": 1e-06,
+      "voltage_after2s_V": 0.004799137638678624,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "isolated_5V",
+      "R_max_ohm": 4712.337500000001,
+      "C_upper_scenario_F": 3.8584650499999984e-05,
+      "initial_V": 5.2,
+      "assumed_total_feed_A": 1e-05,
+      "voltage_after2s_V": 0.04720946655733037,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "isolated_5V",
+      "R_max_ohm": 4712.337500000001,
+      "C_upper_scenario_F": 3.8584650499999984e-05,
+      "initial_V": 5.2,
+      "assumed_total_feed_A": 5e-05,
+      "voltage_after2s_V": 0.23569981730689368,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "isolated_5V",
+      "R_max_ohm": 4712.337500000001,
+      "C_upper_scenario_F": 3.8584650499999984e-05,
+      "initial_V": 5.2,
+      "assumed_total_feed_A": 0.0001,
+      "voltage_after2s_V": 0.4713127557438478,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "LDO_output",
+      "R_max_ohm": 26970.612500000003,
+      "C_upper_scenario_F": 1.2813058499999997e-05,
+      "initial_V": 3.401,
+      "assumed_total_feed_A": 0,
+      "voltage_after2s_V": 0.010426873263526915,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "LDO_output",
+      "R_max_ohm": 26970.612500000003,
+      "C_upper_scenario_F": 1.2813058499999997e-05,
+      "initial_V": 3.401,
+      "assumed_total_feed_A": 1e-06,
+      "voltage_after2s_V": 0.0373147985661211,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "LDO_output",
+      "R_max_ohm": 26970.612500000003,
+      "C_upper_scenario_F": 1.2813058499999997e-05,
+      "initial_V": 3.401,
+      "assumed_total_feed_A": 1e-05,
+      "voltage_after2s_V": 0.2793061262894688,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "LDO_output",
+      "R_max_ohm": 26970.612500000003,
+      "C_upper_scenario_F": 1.2813058499999997e-05,
+      "initial_V": 3.401,
+      "assumed_total_feed_A": 5e-05,
+      "voltage_after2s_V": 1.354823138393236,
+      "below0p5V_scenario": false
+    },
+    {
+      "node": "LDO_output",
+      "R_max_ohm": 26970.612500000003,
+      "C_upper_scenario_F": 1.2813058499999997e-05,
+      "initial_V": 3.401,
+      "assumed_total_feed_A": 0.0001,
+      "voltage_after2s_V": 2.6992194035229455,
+      "below0p5V_scenario": false
+    },
+    {
+      "node": "primary_3k9_candidate",
+      "R_max_ohm": 3910.2375,
+      "C_upper_scenario_F": 0.00010264994299999999,
+      "initial_V": 3.3244,
+      "assumed_total_feed_A": 0,
+      "voltage_after2s_V": 0.022789625206216517,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "primary_3k9_candidate",
+      "R_max_ohm": 3910.2375,
+      "C_upper_scenario_F": 0.00010264994299999999,
+      "initial_V": 3.3244,
+      "assumed_total_feed_A": 1e-06,
+      "voltage_after2s_V": 0.026673057012830556,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "primary_3k9_candidate",
+      "R_max_ohm": 3910.2375,
+      "C_upper_scenario_F": 0.00010264994299999999,
+      "initial_V": 3.3244,
+      "assumed_total_feed_A": 1e-05,
+      "voltage_after2s_V": 0.061623943272356894,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "primary_3k9_candidate",
+      "R_max_ohm": 3910.2375,
+      "C_upper_scenario_F": 0.00010264994299999999,
+      "initial_V": 3.3244,
+      "assumed_total_feed_A": 5e-05,
+      "voltage_after2s_V": 0.21696121553691844,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "primary_3k9_candidate",
+      "R_max_ohm": 3910.2375,
+      "C_upper_scenario_F": 0.00010264994299999999,
+      "initial_V": 3.3244,
+      "assumed_total_feed_A": 0.0001,
+      "voltage_after2s_V": 0.41113280586762035,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "LDO_output_with4k7_bleeder_candidate",
+      "R_max_ohm": 4011.4518591772153,
+      "C_upper_scenario_F": 1.2813058499999997e-05,
+      "initial_V": 3.401,
+      "assumed_total_feed_A": 0,
+      "voltage_after2s_V": 4.29189559091247e-17,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "LDO_output_with4k7_bleeder_candidate",
+      "R_max_ohm": 4011.4518591772153,
+      "C_upper_scenario_F": 1.2813058499999997e-05,
+      "initial_V": 3.401,
+      "assumed_total_feed_A": 1e-06,
+      "voltage_after2s_V": 0.004011451859177257,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "LDO_output_with4k7_bleeder_candidate",
+      "R_max_ohm": 4011.4518591772153,
+      "C_upper_scenario_F": 1.2813058499999997e-05,
+      "initial_V": 3.401,
+      "assumed_total_feed_A": 1e-05,
+      "voltage_after2s_V": 0.040114518591772196,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "LDO_output_with4k7_bleeder_candidate",
+      "R_max_ohm": 4011.4518591772153,
+      "C_upper_scenario_F": 1.2813058499999997e-05,
+      "initial_V": 3.401,
+      "assumed_total_feed_A": 5e-05,
+      "voltage_after2s_V": 0.20057259295886082,
+      "below0p5V_scenario": true
+    },
+    {
+      "node": "LDO_output_with4k7_bleeder_candidate",
+      "R_max_ohm": 4011.4518591772153,
+      "C_upper_scenario_F": 1.2813058499999997e-05,
+      "initial_V": 3.401,
+      "assumed_total_feed_A": 0.0001,
+      "voltage_after2s_V": 0.4011451859177216,
+      "below0p5V_scenario": true
+    }
+  ],
+  "cautions": [
+    "5uA GPIO leakage is a planning guard; exact selected-pad modes/reset restrictions require primary-source reconciliation",
+    "TPS IIN_off is input supply current, not a guaranteed forward OUT leakage bound",
+    "TPS IREV is the opposite direction and its published maximum test is25C; do not substitute it for forward off leakage",
+    "2s is a proposed firmware hold; no all-path maximum feed or fully coupled discharge guarantee exists",
+    "0.5V is a screening target, not a datasheet reset threshold",
+    "The LDO divider drains its output but does not prove the isolated5V node is discharged",
+    "TPS turnoff max3ms has CL1uF/RL100ohm test conditions; do not apply it to this complete reservoir",
+    "GPIO high/low checks assume valid common supply and configured modes; no power-off/backfeed acceptance follows"
+  ]
+}

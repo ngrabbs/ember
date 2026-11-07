@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/verification/managed_payload/control_packages/fixture/control_check.kicad_sch</source>
+    <date>2026-10-24T18:42:21</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>control_check.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="D1">
+      <value>BAS116H,115</value>
+      <footprint>Diode_SMD:D_SOD-123F</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/BAS116H.pdf</datasheet>
+      <description>Low leakage switching diode; cathode1, anode2</description>
+      <fields>
+        <field name="MFG P/N">BAS116H,115</field>
+        <field name="Manufacturer">Nexperia</field>
+        <field name="PackageSize">SOD123F</field>
+        <field name="Review">Stock contact-map fixture; generic lands/assembly and circuit qualification open</field>
+        <field name="Footprint">Diode_SMD:D_SOD-123F</field>
+        <field name="Datasheet">https://assets.nexperia.com/documents/data-sheet/BAS116H.pdf</field>
+        <field name="Description">Low leakage switching diode; cathode1, anode2</field>
+      </fields>
+      <libsource lib="Device" part="D_Small" description="Diode, small symbol"/>
+      <property name="MFG P/N" value="BAS116H,115"/>
+      <property name="Manufacturer" value="Nexperia"/>
+      <property name="PackageSize" value="SOD123F"/>
+      <property name="Review" value="Stock contact-map fixture; generic lands/assembly and circuit qualification open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="control_check.kicad_sch"/>
+      <property name="ki_keywords" value="diode"/>
+      <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8fe1b753-37fd-492f-a96e-4d0c4647098c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U1">
+      <value>TPS26630RGER</value>
+      <footprint>Package_DFN_QFN:Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/tps2663.pdf</datasheet>
+      <description>TPS26630 60V 6A active-limit eFuse; PGOOD actual OD, stock generic output type retained</description>
+      <fields>
+        <field name="MFG P/N">TPS26630RGER</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">RGE0024H / VQFN-24+EP</field>
+        <field name="Review">Stock contact-map fixture; generic lands/assembly and circuit qualification open</field>
+        <field name="Footprint">Package_DFN_QFN:Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tps2663.pdf</field>
+        <field name="Description">TPS26630 60V 6A active-limit eFuse; PGOOD actual OD, stock generic output type retained</field>
+      </fields>
+      <libsource lib="Power_Management" part="TPS26630RGE" description="60V, 6A Power Limiting, Surge Protection Industrial eFuse, Adjustable Overvoltage cut-off, Active Current Limiting, VQFN-24"/>
+      <property name="MFG P/N" value="TPS26630RGER"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="RGE0024H / VQFN-24+EP"/>
+      <property name="Review" value="Stock contact-map fixture; generic lands/assembly and circuit qualification open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="control_check.kicad_sch"/>
+      <property name="ki_keywords" value="efuse protection switch"/>
+      <property name="ki_fp_filters" value="Texas*RGE0024H*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2ffa3f82-d71b-4a1b-b71d-c7f4e9864831</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="12"/>
+            <pin num="11"/>
+            <pin num="19"/>
+            <pin num="20"/>
+            <pin num="21"/>
+            <pin num="5"/>
+            <pin num="25"/>
+            <pin num="8"/>
+            <pin num="22"/>
+            <pin num="23"/>
+            <pin num="24"/>
+            <pin num="17"/>
+            <pin num="18"/>
+            <pin num="15"/>
+            <pin num="14"/>
+            <pin num="16"/>
+            <pin num="13"/>
+            <pin num="10"/>
+            <pin num="9"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U2">
+      <value>SN74HCS08PWR</value>
+      <footprint>Package_SO:TSSOP-14_4.4x5mm_P0.65mm</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/sn74hcs08.pdf</datasheet>
+      <description>Quad AND with Schmitt inputs; HCS device required; LS08 stock functional geometry only</description>
+      <fields>
+        <field name="MFG P/N">SN74HCS08PWR</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">PW0014A / TSSOP-14</field>
+        <field name="Review">Stock contact-map fixture; generic lands/assembly and circuit qualification open</field>
+        <field name="Footprint">Package_SO:TSSOP-14_4.4x5mm_P0.65mm</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/sn74hcs08.pdf</field>
+        <field name="Description">Quad AND with Schmitt inputs; HCS device required; LS08 stock functional geometry only</field>
+      </fields>
+      <libsource lib="74xx" part="74LS08" description="Quad And2"/>
+      <property name="MFG P/N" value="SN74HCS08PWR"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="PW0014A / TSSOP-14"/>
+      <property name="Review" value="Stock contact-map fixture; generic lands/assembly and circuit qualification open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="control_check.kicad_sch"/>
+      <property name="ki_keywords" value="TTL and2"/>
+      <property name="ki_fp_filters" value="DIP*W7.62mm*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>cdb4fec5-6595-4be1-8421-995704924cf4 436e10d3-c4cd-4050-8204-baf66514de31 b9a95042-0518-4c93-ae68-ade43c5ecc31 3103c391-eed3-4ed4-9413-fd99e297dbc4 0bba2b73-ccfb-40af-8eac-9befbd121124</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+        <unit name="B">
+          <pins>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+        <unit name="C">
+          <pins>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="8"/>
+          </pins>
+        </unit>
+        <unit name="D">
+          <pins>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="11"/>
+          </pins>
+        </unit>
+        <unit name="E">
+          <pins>
+            <pin num="14"/>
+            <pin num="7"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U3">
+      <value>74HC74PW,118</value>
+      <footprint>Package_SO:TSSOP-14_4.4x5mm_P0.65mm</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/74HC_HCT74.pdf</datasheet>
+      <description>Dual D flip-flop with asynchronous active-low set/reset; HC, not HCT</description>
+      <fields>
+        <field name="MFG P/N">74HC74PW,118</field>
+        <field name="Manufacturer">Nexperia</field>
+        <field name="PackageSize">SOT402-1 / TSSOP-14</field>
+        <field name="Review">Stock contact-map fixture; generic lands/assembly and circuit qualification open</field>
+        <field name="Footprint">Package_SO:TSSOP-14_4.4x5mm_P0.65mm</field>
+        <field name="Datasheet">https://assets.nexperia.com/documents/data-sheet/74HC_HCT74.pdf</field>
+        <field name="Description">Dual D flip-flop with asynchronous active-low set/reset; HC, not HCT</field>
+      </fields>
+      <libsource lib="74xx" part="74HC74" description="Dual D Flip-flop, Set &amp; Reset"/>
+      <property name="MFG P/N" value="74HC74PW,118"/>
+      <property name="Manufacturer" value="Nexperia"/>
+      <property name="PackageSize" value="SOT402-1 / TSSOP-14"/>
+      <property name="Review" value="Stock contact-map fixture; generic lands/assembly and circuit qualification open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="control_check.kicad_sch"/>
+      <property name="ki_keywords" value="TTL DFF"/>
+      <property name="ki_fp_filters" value="DIP*W7.62mm*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>db906a15-3282-4954-84d8-ac3659b2695e a9ba65f9-9706-4de1-8a51-acc48f1ceb88 18dff519-51bc-40e0-9f53-6b9dc19b039e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="1"/>
+            <pin num="5"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+        <unit name="B">
+          <pins>
+            <pin num="12"/>
+            <pin num="11"/>
+            <pin num="10"/>
+            <pin num="13"/>
+            <pin num="9"/>
+            <pin num="8"/>
+          </pins>
+        </unit>
+        <unit name="C">
+          <pins>
+            <pin num="14"/>
+            <pin num="7"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U4">
+      <value>SN74LVC2G08DCUR</value>
+      <footprint>Package_SO:VSSOP-8_2.3x2mm_P0.5mm</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/sn74lvc2g08.pdf</datasheet>
+      <description>Dual positive AND gate</description>
+      <fields>
+        <field name="MFG P/N">SN74LVC2G08DCUR</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">DCU0008A / VSSOP-8</field>
+        <field name="Review">Stock contact-map fixture; generic lands/assembly and circuit qualification open</field>
+        <field name="Footprint">Package_SO:VSSOP-8_2.3x2mm_P0.5mm</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/sn74lvc2g08.pdf</field>
+        <field name="Description">Dual positive AND gate</field>
+      </fields>
+      <libsource lib="74xGxx" part="74LVC2G08" description="Dual AND Gate, Low-Voltage CMOS"/>
+      <property name="MFG P/N" value="SN74LVC2G08DCUR"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="DCU0008A / VSSOP-8"/>
+      <property name="Review" value="Stock contact-map fixture; generic lands/assembly and circuit qualification open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="control_check.kicad_sch"/>
+      <property name="ki_keywords" value="Dual Gate AND LVC CMOS"/>
+      <property name="ki_fp_filters" value="SSOP* VSSOP*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>17d9794c-b272-489f-a22e-4c85fbf9647d 0f873dcc-3b53-4439-ab67-480b7464e25d 0346b683-d3ea-4bfe-8a7a-db9ac8d7edde</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="7"/>
+          </pins>
+        </unit>
+        <unit name="B">
+          <pins>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+        <unit name="C">
+          <pins>
+            <pin num="8"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U5">
+      <value>SN74LVC1G32DBVR</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23-5_HandSoldering</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/sn74lvc1g32.pdf</datasheet>
+      <description>Single positive OR gate</description>
+      <fields>
+        <field name="MFG P/N">SN74LVC1G32DBVR</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">DBV0005A / SOT-23-5</field>
+        <field name="Review">Stock contact-map fixture; generic lands/assembly and circuit qualification open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-5_HandSoldering</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/sn74lvc1g32.pdf</field>
+        <field name="Description">Single positive OR gate</field>
+      </fields>
+      <libsource lib="74xGxx" part="74LVC1G32" description="Single OR Gate, Low-Voltage CMOS"/>
+      <property name="MFG P/N" value="SN74LVC1G32DBVR"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="DBV0005A / SOT-23-5"/>
+      <property name="Review" value="Stock contact-map fixture; generic lands/assembly and circuit qualification open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="control_check.kicad_sch"/>
+      <property name="ki_keywords" value="Single Gate OR LVC CMOS"/>
+      <property name="ki_fp_filters" value="SOT* SG-*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>27844101-69f2-4cd7-ac8f-6031d328af1e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="5"/>
+            <pin num="3"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="74xGxx" part="74LVC1G32">
+      <description>Single OR Gate, Low-Voltage CMOS</description>
+      <docs>http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf</docs>
+      <footprints>
+        <fp>SOT*</fp>
+        <fp>SG-*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">74LVC1G32</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf</field>
+        <field name="Description">Single OR Gate, Low-Voltage CMOS</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="input"/>
+        <pin num="2" name="" type="input"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="" type="output"/>
+        <pin num="5" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="74xGxx" part="74LVC2G08">
+      <description>Dual AND Gate, Low-Voltage CMOS</description>
+      <docs>http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf</docs>
+      <footprints>
+        <fp>SSOP*</fp>
+        <fp>VSSOP*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">74LVC2G08</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf</field>
+        <field name="Description">Dual AND Gate, Low-Voltage CMOS</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="input"/>
+        <pin num="2" name="" type="input"/>
+        <pin num="3" name="" type="output"/>
+        <pin num="4" name="GND" type="power_in"/>
+        <pin num="5" name="" type="input"/>
+        <pin num="6" name="" type="input"/>
+        <pin num="7" name="" type="output"/>
+        <pin num="8" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="74xx" part="74HC74">
+      <description>Dual D Flip-flop, Set &amp; Reset</description>
+      <docs>74xx/74hc_hct74.pdf</docs>
+      <footprints>
+        <fp>DIP*W7.62mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">74HC74</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">74xx/74hc_hct74.pdf</field>
+        <field name="Description">Dual D Flip-flop, Set &amp; Reset</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~{R}" type="input"/>
+        <pin num="2" name="D" type="input"/>
+        <pin num="3" name="C" type="input"/>
+        <pin num="4" name="~{S}" type="input"/>
+        <pin num="5" name="Q" type="output"/>
+        <pin num="6" name="~{Q}" type="output"/>
+        <pin num="7" name="GND" type="power_in"/>
+        <pin num="8" name="~{Q}" type="output"/>
+        <pin num="9" name="Q" type="output"/>
+        <pin num="10" name="~{S}" type="input"/>
+        <pin num="11" name="C" type="input"/>
+        <pin num="12" name="D" type="input"/>
+        <pin num="13" name="~{R}" type="input"/>
+        <pin num="14" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="74xx" part="74LS08">
+      <description>Quad And2</description>
+      <docs>http://www.ti.com/lit/gpn/sn74LS08</docs>
+      <footprints>
+        <fp>DIP*W7.62mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">74LS08</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">http://www.ti.com/lit/gpn/sn74LS08</field>
+        <field name="Description">Quad And2</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="input"/>
+        <pin num="2" name="" type="input"/>
+        <pin num="3" name="" type="output"/>
+        <pin num="4" name="" type="input"/>
+        <pin num="5" name="" type="input"/>
+        <pin num="6" name="" type="output"/>
+        <pin num="7" name="GND" type="power_in"/>
+        <pin num="8" name="" type="output"/>
+        <pin num="9" name="" type="input"/>
+        <pin num="10" name="" type="input"/>
+        <pin num="11" name="" type="output"/>
+        <pin num="12" name="" type="input"/>
+        <pin num="13" name="" type="input"/>
+        <pin num="14" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="D_Small">
+      <description>Diode, small symbol</description>
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D_Small</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Diode, small symbol</field>
+        <field name="Sim.Device">D</field>
+        <field name="Sim.Pins">1=K 2=A</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Power_Management" part="TPS26630RGE">
+      <description>60V, 6A Power Limiting, Surge Protection Industrial eFuse, Adjustable Overvoltage cut-off, Active Current Limiting, VQFN-24</description>
+      <docs>https://www.ti.com/lit/ds/symlink/tps2663.pdf</docs>
+      <footprints>
+        <fp>Texas*RGE0024H*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TPS26630RGE</field>
+        <field name="Footprint">Package_DFN_QFN:Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm_ThermalVias</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/tps2663.pdf</field>
+        <field name="Description">60V, 6A Power Limiting, Surge Protection Industrial eFuse, Adjustable Overvoltage cut-off, Active Current Limiting, VQFN-24</field>
+      </fields>
+      <pins>
+        <pin num="1" name="IN" type="power_in"/>
+        <pin num="2" name="IN" type="passive"/>
+        <pin num="3" name="B_GATE" type="output"/>
+        <pin num="4" name="DRV" type="output"/>
+        <pin num="5" name="IN_SYS" type="power_in"/>
+        <pin num="6" name="UVLO" type="input"/>
+        <pin num="7" name="OVP" type="input"/>
+        <pin num="8" name="GND" type="power_in"/>
+        <pin num="9" name="dVdT" type="passive"/>
+        <pin num="10" name="ILIM" type="passive"/>
+        <pin num="11" name="MODE" type="input"/>
+        <pin num="12" name="~{SHDN}" type="input"/>
+        <pin num="13" name="IMON" type="output"/>
+        <pin num="14" name="~{FLT}" type="open_collector"/>
+        <pin num="15" name="PGTH" type="input"/>
+        <pin num="16" name="PGOOD" type="output"/>
+        <pin num="17" name="OUT" type="power_out"/>
+        <pin num="18" name="OUT" type="passive"/>
+        <pin num="19" name="NC" type="no_connect"/>
+        <pin num="20" name="NC" type="no_connect"/>
+        <pin num="21" name="NC" type="no_connect"/>
+        <pin num="22" name="NC" type="no_connect"/>
+        <pin num="23" name="NC" type="no_connect"/>
+        <pin num="24" name="NC" type="no_connect"/>
+        <pin num="25" name="GND" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="74xGxx">
+      <uri>${KICAD10_SYMBOL_DIR}/74xGxx.kicad_sym</uri>
+    </library>
+    <library logical="74xx">
+      <uri>${KICAD10_SYMBOL_DIR}/74xx.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>${KICAD10_SYMBOL_DIR}/Device.kicad_sym</uri>
+    </library>
+    <library logical="Power_Management">
+      <uri>${KICAD10_SYMBOL_DIR}/Power_Management.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(U1-GND-Pad25)" class="Default">
+      <node ref="U1" pin="25" pinfunction="GND_25" pintype="passive"/>
+      <node ref="U1" pin="8" pinfunction="GND_8" pintype="power_in"/>
+    </net>
+    <net code="2" name="Net-(U1-IN-Pad1)" class="Default">
+      <node ref="U1" pin="1" pinfunction="IN_1" pintype="power_in"/>
+      <node ref="U1" pin="2" pinfunction="IN_2" pintype="passive"/>
+    </net>
+    <net code="3" name="Net-(U1-OUT-Pad17)" class="Default">
+      <node ref="U1" pin="17" pinfunction="OUT_17" pintype="power_out"/>
+      <node ref="U1" pin="18" pinfunction="OUT_18" pintype="passive"/>
+    </net>
+    <net code="4" name="unconnected-(D1-A-Pad2)" class="Default">
+      <node ref="D1" pin="2" pinfunction="A_2" pintype="passive"/>
+    </net>
+    <net code="5" name="unconnected-(D1-K-Pad1)" class="Default">
+      <node ref="D1" pin="1" pinfunction="K_1" pintype="passive"/>
+    </net>
+    <net code="6" name="unconnected-(U1-B_GATE-Pad3)" class="Default">
+      <node ref="U1" pin="3" pinfunction="B_GATE_3" pintype="output"/>
+    </net>
+    <net code="7" name="unconnected-(U1-DRV-Pad4)" class="Default">
+      <node ref="U1" pin="4" pinfunction="DRV_4" pintype="output"/>
+    </net>
+    <net code="8" name="unconnected-(U1-ILIM-Pad10)" class="Default">
+      <node ref="U1" pin="10" pinfunction="ILIM_10" pintype="passive"/>
+    </net>
+    <net code="9" name="unconnected-(U1-IMON-Pad13)" class="Default">
+      <node ref="U1" pin="13" pinfunction="IMON_13" pintype="output"/>
+    </net>
+    <net code="10" name="unconnected-(U1-IN_SYS-Pad5)" class="Default">
+      <node ref="U1" pin="5" pinfunction="IN_SYS_5" pintype="power_in"/>
+    </net>
+    <net code="11" name="unconnected-(U1-MODE-Pad11)" class="Default">
+      <node ref="U1" pin="11" pinfunction="MODE_11" pintype="input"/>
+    </net>
+    <net code="12" name="unconnected-(U1-NC-Pad19)" class="Default">
+      <node ref="U1" pin="19" pinfunction="NC_19" pintype="no_connect"/>
+    </net>
+    <net code="13" name="unconnected-(U1-NC-Pad20)" class="Default">
+      <node ref="U1" pin="20" pinfunction="NC_20" pintype="no_connect"/>
+    </net>
+    <net code="14" name="unconnected-(U1-NC-Pad21)" class="Default">
+      <node ref="U1" pin="21" pinfunction="NC_21" pintype="no_connect"/>
+    </net>
+    <net code="15" name="unconnected-(U1-NC-Pad22)" class="Default">
+      <node ref="U1" pin="22" pinfunction="NC_22" pintype="no_connect"/>
+    </net>
+    <net code="16" name="unconnected-(U1-NC-Pad23)" class="Default">
+      <node ref="U1" pin="23" pinfunction="NC_23" pintype="no_connect"/>
+    </net>
+    <net code="17" name="unconnected-(U1-NC-Pad24)" class="Default">
+      <node ref="U1" pin="24" pinfunction="NC_24" pintype="no_connect"/>
+    </net>
+    <net code="18" name="unconnected-(U1-OVP-Pad7)" class="Default">
+      <node ref="U1" pin="7" pinfunction="OVP_7" pintype="input"/>
+    </net>
+    <net code="19" name="unconnected-(U1-PGOOD-Pad16)" class="Default">
+      <node ref="U1" pin="16" pinfunction="PGOOD_16" pintype="output"/>
+    </net>
+    <net code="20" name="unconnected-(U1-PGTH-Pad15)" class="Default">
+      <node ref="U1" pin="15" pinfunction="PGTH_15" pintype="input"/>
+    </net>
+    <net code="21" name="unconnected-(U1-UVLO-Pad6)" class="Default">
+      <node ref="U1" pin="6" pinfunction="UVLO_6" pintype="input"/>
+    </net>
+    <net code="22" name="unconnected-(U1-dVdT-Pad9)" class="Default">
+      <node ref="U1" pin="9" pinfunction="dVdT_9" pintype="passive"/>
+    </net>
+    <net code="23" name="unconnected-(U1-~{FLT}-Pad14)" class="Default">
+      <node ref="U1" pin="14" pinfunction="~{FLT}_14" pintype="open_collector"/>
+    </net>
+    <net code="24" name="unconnected-(U1-~{SHDN}-Pad12)" class="Default">
+      <node ref="U1" pin="12" pinfunction="~{SHDN}_12" pintype="input"/>
+    </net>
+    <net code="25" name="unconnected-(U2-Pad1)" class="Default">
+      <node ref="U2" pin="1" pintype="input"/>
+    </net>
+    <net code="26" name="unconnected-(U2-Pad2)" class="Default">
+      <node ref="U2" pin="2" pintype="input"/>
+    </net>
+    <net code="27" name="unconnected-(U2-Pad3)" class="Default">
+      <node ref="U2" pin="3" pintype="output"/>
+    </net>
+    <net code="28" name="unconnected-(U2-Pad4)" class="Default">
+      <node ref="U2" pin="4" pintype="input"/>
+    </net>
+    <net code="29" name="unconnected-(U2-Pad5)" class="Default">
+      <node ref="U2" pin="5" pintype="input"/>
+    </net>
+    <net code="30" name="unconnected-(U2-Pad6)" class="Default">
+      <node ref="U2" pin="6" pintype="output"/>
+    </net>
+    <net code="31" name="unconnected-(U2-Pad8)" class="Default">
+      <node ref="U2" pin="8" pintype="output"/>
+    </net>
+    <net code="32" name="unconnected-(U2-Pad9)" class="Default">
+      <node ref="U2" pin="9" pintype="input"/>
+    </net>
+    <net code="33" name="unconnected-(U2-Pad10)" class="Default">
+      <node ref="U2" pin="10" pintype="input"/>
+    </net>
+    <net code="34" name="unconnected-(U2-Pad11)" class="Default">
+      <node ref="U2" pin="11" pintype="output"/>
+    </net>
+    <net code="35" name="unconnected-(U2-Pad12)" class="Default">
+      <node ref="U2" pin="12" pintype="input"/>
+    </net>
+    <net code="36" name="unconnected-(U2-Pad13)" class="Default">
+      <node ref="U2" pin="13" pintype="input"/>
+    </net>
+    <net code="37" name="unconnected-(U2E-GND-Pad7)" class="Default">
+      <node ref="U2" pin="7" pinfunction="GND_7" pintype="power_in"/>
+    </net>
+    <net code="38" name="unconnected-(U2E-VCC-Pad14)" class="Default">
+      <node ref="U2" pin="14" pinfunction="VCC_14" pintype="power_in"/>
+    </net>
+    <net code="39" name="unconnected-(U3A-C-Pad3)" class="Default">
+      <node ref="U3" pin="3" pinfunction="C_3" pintype="input"/>
+    </net>
+    <net code="40" name="unconnected-(U3A-D-Pad2)" class="Default">
+      <node ref="U3" pin="2" pinfunction="D_2" pintype="input"/>
+    </net>
+    <net code="41" name="unconnected-(U3A-Q-Pad5)" class="Default">
+      <node ref="U3" pin="5" pinfunction="Q_5" pintype="output"/>
+    </net>
+    <net code="42" name="unconnected-(U3A-~{Q}-Pad6)" class="Default">
+      <node ref="U3" pin="6" pinfunction="~{Q}_6" pintype="output"/>
+    </net>
+    <net code="43" name="unconnected-(U3A-~{R}-Pad1)" class="Default">
+      <node ref="U3" pin="1" pinfunction="~{R}_1" pintype="input"/>
+    </net>
+    <net code="44" name="unconnected-(U3A-~{S}-Pad4)" class="Default">
+      <node ref="U3" pin="4" pinfunction="~{S}_4" pintype="input"/>
+    </net>
+    <net code="45" name="unconnected-(U3B-C-Pad11)" class="Default">
+      <node ref="U3" pin="11" pinfunction="C_11" pintype="input"/>
+    </net>
+    <net code="46" name="unconnected-(U3B-D-Pad12)" class="Default">
+      <node ref="U3" pin="12" pinfunction="D_12" pintype="input"/>
+    </net>
+    <net code="47" name="unconnected-(U3B-Q-Pad9)" class="Default">
+      <node ref="U3" pin="9" pinfunction="Q_9" pintype="output"/>
+    </net>
+    <net code="48" name="unconnected-(U3B-~{Q}-Pad8)" class="Default">
+      <node ref="U3" pin="8" pinfunction="~{Q}_8" pintype="output"/>
+    </net>
+    <net code="49" name="unconnected-(U3B-~{R}-Pad13)" class="Default">
+      <node ref="U3" pin="13" pinfunction="~{R}_13" pintype="input"/>
+    </net>
+    <net code="50" name="unconnected-(U3B-~{S}-Pad10)" class="Default">
+      <node ref="U3" pin="10" pinfunction="~{S}_10" pintype="input"/>
+    </net>
+    <net code="51" name="unconnected-(U3C-GND-Pad7)" class="Default">
+      <node ref="U3" pin="7" pinfunction="GND_7" pintype="power_in"/>
+    </net>
+    <net code="52" name="unconnected-(U3C-VCC-Pad14)" class="Default">
+      <node ref="U3" pin="14" pinfunction="VCC_14" pintype="power_in"/>
+    </net>
+    <net code="53" name="unconnected-(U4-Pad1)" class="Default">
+      <node ref="U4" pin="1" pintype="input"/>
+    </net>
+    <net code="54" name="unconnected-(U4-Pad2)" class="Default">
+      <node ref="U4" pin="2" pintype="input"/>
+    </net>
+    <net code="55" name="unconnected-(U4-Pad3)" class="Default">
+      <node ref="U4" pin="3" pintype="output"/>
+    </net>
+    <net code="56" name="unconnected-(U4-Pad5)" class="Default">
+      <node ref="U4" pin="5" pintype="input"/>
+    </net>
+    <net code="57" name="unconnected-(U4-Pad6)" class="Default">
+      <node ref="U4" pin="6" pintype="input"/>
+    </net>
+    <net code="58" name="unconnected-(U4-Pad7)" class="Default">
+      <node ref="U4" pin="7" pintype="output"/>
+    </net>
+    <net code="59" name="unconnected-(U4C-GND-Pad4)" class="Default">
+      <node ref="U4" pin="4" pinfunction="GND_4" pintype="power_in"/>
+    </net>
+    <net code="60" name="unconnected-(U4C-VCC-Pad8)" class="Default">
+      <node ref="U4" pin="8" pinfunction="VCC_8" pintype="power_in"/>
+    </net>
+    <net code="61" name="unconnected-(U5-GND-Pad3)" class="Default">
+      <node ref="U5" pin="3" pinfunction="GND_3" pintype="power_in"/>
+    </net>
+    <net code="62" name="unconnected-(U5-Pad1)" class="Default">
+      <node ref="U5" pin="1" pintype="input"/>
+    </net>
+    <net code="63" name="unconnected-(U5-Pad2)" class="Default">
+      <node ref="U5" pin="2" pintype="input"/>
+    </net>
+    <net code="64" name="unconnected-(U5-Pad4)" class="Default">
+      <node ref="U5" pin="4" pintype="output"/>
+    </net>
+    <net code="65" name="unconnected-(U5-VCC-Pad5)" class="Default">
+      <node ref="U5" pin="5" pinfunction="VCC_5" pintype="power_in"/>
+    </net>
+  </nets>
+</export>

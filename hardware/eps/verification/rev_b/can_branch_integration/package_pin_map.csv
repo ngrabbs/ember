@@ -1,0 +1,23 @@
+reference,pin,name,electrical_type,net,footprint
+U1100,1,IN,power_in,+3V3,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1100,2,GND,power_in,GND,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1100,3,EN,input,/CAN Branch Power/CANA_EN,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1100,4,~{FAULT},open_collector,/CAN Branch Power/CANA_FAULT_N,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1100,5,ILIM,output,/CAN Branch Power/CANA_ILIM,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1100,6,OUT,power_out,3V3_CANA_SW,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1102,1,IN,power_in,+3V3,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1102,2,GND,power_in,GND,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1102,3,EN,input,/CAN Branch Power/CANB_EN,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1102,4,~{FAULT},open_collector,/CAN Branch Power/CANB_FAULT_N,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1102,5,ILIM,output,/CAN Branch Power/CANB_ILIM,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1102,6,OUT,power_out,3V3_CANB_SW,Ember_Charger_BMS_Review:TI_DBV0006A_SOT23_6_TI_Land_REVIEW
+U1101,1,NC,no_connect,unconnected-(U1101-NC-Pad1),Package_TO_SOT_SMD:SOT-23-5_HandSoldering
+U1101,2,,input,EPS_CAN_A_STB,Package_TO_SOT_SMD:SOT-23-5_HandSoldering
+U1101,3,GND,power_in,GND,Package_TO_SOT_SMD:SOT-23-5_HandSoldering
+U1101,4,,output,/CAN Branch Power/CANA_EN_DRV,Package_TO_SOT_SMD:SOT-23-5_HandSoldering
+U1101,5,VCC,power_in,+3V3,Package_TO_SOT_SMD:SOT-23-5_HandSoldering
+U1103,1,NC,no_connect,unconnected-(U1103-NC-Pad1),Package_TO_SOT_SMD:SOT-23-5_HandSoldering
+U1103,2,,input,EPS_CAN_B_STB,Package_TO_SOT_SMD:SOT-23-5_HandSoldering
+U1103,3,GND,power_in,GND,Package_TO_SOT_SMD:SOT-23-5_HandSoldering
+U1103,4,,output,/CAN Branch Power/CANB_EN_DRV,Package_TO_SOT_SMD:SOT-23-5_HandSoldering
+U1103,5,VCC,power_in,+3V3,Package_TO_SOT_SMD:SOT-23-5_HandSoldering

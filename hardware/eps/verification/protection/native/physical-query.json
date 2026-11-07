@@ -1,0 +1,1353 @@
+{
+  "status": "Development map query evidence; no new custom construction or PCB package acceptance",
+  "source_contract": "../native_build_contract.md",
+  "no_pcb_scope": "No disposable board placement/render performed in this build. Stock package fields were queried and matched to contract lead maps; physical fabrication qualification remains open.",
+  "symbols": {
+    "Power_Management:LTC4364HDE": {
+      "lib_id": "Power_Management:LTC4364HDE",
+      "library": "Power_Management",
+      "name": "LTC4364HDE",
+      "pin_count": 15,
+      "pins": [
+        {
+          "name": "OUT",
+          "number": "1",
+          "type": "input",
+          "x": 7.62,
+          "y": 10.16
+        },
+        {
+          "name": "SENSE",
+          "number": "2",
+          "type": "input",
+          "x": 5.08,
+          "y": 10.16
+        },
+        {
+          "name": "DGATE",
+          "number": "3",
+          "type": "output",
+          "x": 0,
+          "y": 10.16
+        },
+        {
+          "name": "SOURCE",
+          "number": "4",
+          "type": "input",
+          "x": -2.54,
+          "y": 10.16
+        },
+        {
+          "name": "GATE",
+          "number": "5",
+          "type": "output",
+          "x": -5.08,
+          "y": 10.16
+        },
+        {
+          "name": "VCC",
+          "number": "6",
+          "type": "power_in",
+          "x": -15.24,
+          "y": 5.08
+        },
+        {
+          "name": "~{SHDN}",
+          "number": "7",
+          "type": "input",
+          "x": -15.24,
+          "y": 0
+        },
+        {
+          "name": "UV",
+          "number": "8",
+          "type": "input",
+          "x": -15.24,
+          "y": -5.08
+        },
+        {
+          "name": "OV",
+          "number": "9",
+          "type": "input",
+          "x": -15.24,
+          "y": -7.62
+        },
+        {
+          "name": "GND",
+          "number": "10",
+          "type": "power_in",
+          "x": 0,
+          "y": -12.7
+        },
+        {
+          "name": "~{FLT}",
+          "number": "11",
+          "type": "open_collector",
+          "x": 15.24,
+          "y": -7.62
+        },
+        {
+          "name": "ENOUT",
+          "number": "12",
+          "type": "open_collector",
+          "x": 15.24,
+          "y": -5.08
+        },
+        {
+          "name": "TMR",
+          "number": "13",
+          "type": "input",
+          "x": -5.08,
+          "y": -12.7
+        },
+        {
+          "name": "FB",
+          "number": "14",
+          "type": "input",
+          "x": 15.24,
+          "y": 0
+        },
+        {
+          "name": "GND",
+          "number": "15",
+          "type": "power_in",
+          "x": 2.54,
+          "y": -12.7
+        }
+      ],
+      "properties": {
+        "Datasheet": "https://www.analog.com/media/en/technical-documentation/data-sheets/436412f.pdf",
+        "Description": "Surge stopper with ideal diode, UV and OV protection -40V to +80V, -40\u00b0C to +125\u00b0C, DFN-14",
+        "Footprint": "Package_DFN_QFN:DFN-14-1EP_3x4mm_P0.5mm_EP1.7x3.3mm",
+        "Reference": "U",
+        "Value": "LTC4364HDE",
+        "ki_fp_filters": "DFN*3x4mm*P0.5mm*",
+        "ki_keywords": "surge overvoltage undervoltage reverse-polarity protection diode ORing MOSFET driver"
+      }
+    },
+    "Transistor_FET:Q_NMOS_GDS": {
+      "lib_id": "Transistor_FET:Q_NMOS_GDS",
+      "library": "Transistor_FET",
+      "name": "Q_NMOS_GDS",
+      "pin_count": 3,
+      "pins": [
+        {
+          "name": "G",
+          "number": "1",
+          "type": "input",
+          "x": -5.08,
+          "y": 0
+        },
+        {
+          "name": "D",
+          "number": "2",
+          "type": "passive",
+          "x": 2.54,
+          "y": 5.08
+        },
+        {
+          "name": "S",
+          "number": "3",
+          "type": "passive",
+          "x": 2.54,
+          "y": -5.08
+        }
+      ],
+      "properties": {
+        "Datasheet": "",
+        "Description": "N-MOSFET transistor, gate/drain/source",
+        "Footprint": "",
+        "Reference": "Q",
+        "Value": "Q_NMOS_GDS",
+        "ki_keywords": "transistor NMOS N-MOS N-MOSFET"
+      }
+    },
+    "Transistor_BJT:MMBT3906": {
+      "lib_id": "Transistor_BJT:MMBT3906",
+      "library": "Transistor_BJT",
+      "name": "MMBT3906",
+      "pin_count": 3,
+      "pins": [
+        {
+          "name": "B",
+          "number": "1",
+          "type": "input",
+          "x": -5.08,
+          "y": 0
+        },
+        {
+          "name": "E",
+          "number": "2",
+          "type": "passive",
+          "x": 2.54,
+          "y": -5.08
+        },
+        {
+          "name": "C",
+          "number": "3",
+          "type": "passive",
+          "x": 2.54,
+          "y": 5.08
+        }
+      ],
+      "properties": {
+        "Datasheet": "https://www.onsemi.com/pdf/datasheet/pzt3906-d.pdf",
+        "Description": "-0.2A Ic, -40V Vce, Small Signal PNP Transistor, SOT-23",
+        "Footprint": "Package_TO_SOT_SMD:SOT-23",
+        "Reference": "Q",
+        "Value": "MMBT3906",
+        "ki_fp_filters": "SOT?23*",
+        "ki_keywords": "PNP Transistor"
+      }
+    },
+    "Transistor_BJT:MMBT3904": {
+      "lib_id": "Transistor_BJT:MMBT3904",
+      "library": "Transistor_BJT",
+      "name": "MMBT3904",
+      "pin_count": 3,
+      "pins": [
+        {
+          "name": "B",
+          "number": "1",
+          "type": "input",
+          "x": -5.08,
+          "y": 0
+        },
+        {
+          "name": "E",
+          "number": "2",
+          "type": "passive",
+          "x": 2.54,
+          "y": -5.08
+        },
+        {
+          "name": "C",
+          "number": "3",
+          "type": "passive",
+          "x": 2.54,
+          "y": 5.08
+        }
+      ],
+      "properties": {
+        "Datasheet": "https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf",
+        "Description": "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23",
+        "Footprint": "Package_TO_SOT_SMD:SOT-23",
+        "Reference": "Q",
+        "Value": "MMBT3904",
+        "ki_fp_filters": "SOT?23*",
+        "ki_keywords": "NPN Transistor"
+      }
+    },
+    "Diode:1N4148W": {
+      "lib_id": "Diode:1N4148W",
+      "library": "Diode",
+      "name": "1N4148W",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "K",
+          "number": "1",
+          "type": "passive",
+          "x": -3.81,
+          "y": 0
+        },
+        {
+          "name": "A",
+          "number": "2",
+          "type": "passive",
+          "x": 3.81,
+          "y": 0
+        }
+      ],
+      "properties": {
+        "Datasheet": "https://www.vishay.com/docs/85748/1n4148w.pdf",
+        "Description": "75V 0.15A Fast Switching Diode, SOD-123",
+        "Footprint": "Diode_SMD:D_SOD-123",
+        "Reference": "D",
+        "Value": "1N4148W",
+        "ki_fp_filters": "D*SOD?123*",
+        "ki_keywords": "diode"
+      }
+    },
+    "Device:D_Zener": {
+      "lib_id": "Device:D_Zener",
+      "library": "Device",
+      "name": "D_Zener",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "K",
+          "number": "1",
+          "type": "passive",
+          "x": -3.81,
+          "y": 0
+        },
+        {
+          "name": "A",
+          "number": "2",
+          "type": "passive",
+          "x": 3.81,
+          "y": 0
+        }
+      ],
+      "properties": {
+        "Datasheet": "",
+        "Description": "Zener diode",
+        "Footprint": "",
+        "Reference": "D",
+        "Value": "D_Zener",
+        "ki_fp_filters": "TO-???* *_Diode_* *SingleDiode* D_*",
+        "ki_keywords": "diode"
+      }
+    },
+    "Device:R": {
+      "lib_id": "Device:R",
+      "library": "Device",
+      "name": "R",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "",
+          "number": "1",
+          "type": "passive",
+          "x": 0,
+          "y": 3.81
+        },
+        {
+          "name": "",
+          "number": "2",
+          "type": "passive",
+          "x": 0,
+          "y": -3.81
+        }
+      ],
+      "properties": {
+        "Datasheet": "",
+        "Description": "Resistor",
+        "Footprint": "",
+        "Reference": "R",
+        "Value": "R",
+        "ki_fp_filters": "R_*",
+        "ki_keywords": "R res resistor"
+      }
+    },
+    "Device:C": {
+      "lib_id": "Device:C",
+      "library": "Device",
+      "name": "C",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "",
+          "number": "1",
+          "type": "passive",
+          "x": 0,
+          "y": 3.81
+        },
+        {
+          "name": "",
+          "number": "2",
+          "type": "passive",
+          "x": 0,
+          "y": -3.81
+        }
+      ],
+      "properties": {
+        "Datasheet": "",
+        "Description": "Unpolarized capacitor",
+        "Footprint": "",
+        "Reference": "C",
+        "Value": "C",
+        "ki_fp_filters": "C_*",
+        "ki_keywords": "cap capacitor"
+      }
+    },
+    "Device:C_Polarized": {
+      "lib_id": "Device:C_Polarized",
+      "library": "Device",
+      "name": "C_Polarized",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "",
+          "number": "1",
+          "type": "passive",
+          "x": 0,
+          "y": 3.81
+        },
+        {
+          "name": "",
+          "number": "2",
+          "type": "passive",
+          "x": 0,
+          "y": -3.81
+        }
+      ],
+      "properties": {
+        "Datasheet": "",
+        "Description": "Polarized capacitor",
+        "Footprint": "",
+        "Reference": "C",
+        "Value": "C_Polarized",
+        "ki_fp_filters": "CP_*",
+        "ki_keywords": "cap capacitor"
+      }
+    },
+    "Device:L": {
+      "lib_id": "Device:L",
+      "library": "Device",
+      "name": "L",
+      "pin_count": 2,
+      "pins": [
+        {
+          "name": "1",
+          "number": "1",
+          "type": "passive",
+          "x": 0,
+          "y": 3.81
+        },
+        {
+          "name": "2",
+          "number": "2",
+          "type": "passive",
+          "x": 0,
+          "y": -3.81
+        }
+      ],
+      "properties": {
+        "Datasheet": "",
+        "Description": "Inductor",
+        "Footprint": "",
+        "Reference": "L",
+        "Value": "L",
+        "ki_fp_filters": "Choke_* *Coil* Inductor_* L_*",
+        "ki_keywords": "inductor choke coil reactor magnetic"
+      }
+    }
+  },
+  "footprints": {
+    "Package_DFN_QFN:DFN-14-1EP_3x4mm_P0.5mm_EP1.7x3.3mm": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "DE Package; 14-Lead Plastic DFN (4mm x 3mm) (see Linear Technology DFN_14_05-08-1708.pdf)",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "DFN-14-1EP_3x4mm_P0.5mm_EP1.7x3.3mm",
+      "pad_count": 23,
+      "pads": [
+        {
+          "drill": [],
+          "height": 0.67,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.685,
+          "x": -0.425,
+          "y": -1.2375
+        },
+        {
+          "drill": [],
+          "height": 0.67,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.685,
+          "x": -0.425,
+          "y": -0.4125
+        },
+        {
+          "drill": [],
+          "height": 0.67,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.685,
+          "x": -0.425,
+          "y": 0.4125
+        },
+        {
+          "drill": [],
+          "height": 0.67,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.685,
+          "x": -0.425,
+          "y": 1.2375
+        },
+        {
+          "drill": [],
+          "height": 0.67,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.685,
+          "x": 0.425,
+          "y": -1.2375
+        },
+        {
+          "drill": [],
+          "height": 0.67,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.685,
+          "x": 0.425,
+          "y": -0.4125
+        },
+        {
+          "drill": [],
+          "height": 0.67,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.685,
+          "x": 0.425,
+          "y": 0.4125
+        },
+        {
+          "drill": [],
+          "height": 0.67,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.685,
+          "x": 0.425,
+          "y": 1.2375
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.45,
+          "y": -1.5
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.45,
+          "y": -1
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "3",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.45,
+          "y": -0.5
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "4",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.45,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "5",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.45,
+          "y": 0.5
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "6",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.45,
+          "y": 1
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "7",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": -1.45,
+          "y": 1.5
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "8",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.45,
+          "y": 1.5
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "9",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.45,
+          "y": 1
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "10",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.45,
+          "y": 0.5
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "11",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.45,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "12",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.45,
+          "y": -0.5
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "13",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.45,
+          "y": -1
+        },
+        {
+          "drill": [],
+          "height": 0.25,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "14",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 0.7,
+          "x": 1.45,
+          "y": -1.5
+        },
+        {
+          "drill": [],
+          "height": 3.3,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "15",
+          "rotation": 0,
+          "roundrect_rratio": null,
+          "shape": "rect",
+          "type": "smd",
+          "width": 1.7,
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_DFN_QFN.pretty/DFN-14-1EP_3x4mm_P0.5mm_EP1.7x3.3mm.kicad_mod"
+    },
+    "Package_TO_SOT_SMD:TO-252-2": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "TO-252/DPAK SMD package, http://www.infineon.com/cms/en/product/packages/PG-TO252/PG-TO252-3-1/",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "TO-252-2",
+      "pad_count": 7,
+      "pads": [
+        {
+          "drill": [],
+          "height": 2.75,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.090909,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 3.05,
+          "x": -0.415,
+          "y": -1.525
+        },
+        {
+          "drill": [],
+          "height": 2.75,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.090909,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 3.05,
+          "x": -0.415,
+          "y": 1.525
+        },
+        {
+          "drill": [],
+          "height": 2.75,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.090909,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 3.05,
+          "x": 2.935,
+          "y": -1.525
+        },
+        {
+          "drill": [],
+          "height": 2.75,
+          "layers": [
+            "F.Paste"
+          ],
+          "number": "",
+          "rotation": 0,
+          "roundrect_rratio": 0.090909,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 3.05,
+          "x": 2.935,
+          "y": 1.525
+        },
+        {
+          "drill": [],
+          "height": 1.2,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.208333,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 2.2,
+          "x": -5.04,
+          "y": -2.28
+        },
+        {
+          "drill": [],
+          "height": 5.8,
+          "layers": [
+            "F.Cu",
+            "F.Mask"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.043103,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 6.4,
+          "x": 1.26,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 1.2,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "3",
+          "rotation": 0,
+          "roundrect_rratio": 0.208333,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 2.2,
+          "x": -5.04,
+          "y": 2.28
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty/TO-252-2.kicad_mod"
+    },
+    "Package_TO_SOT_SMD:SOT-23": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "SOT, 3 Pin (JEDEC TO-236 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=TO-236)",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "SOT-23",
+      "pad_count": 3,
+      "pads": [
+        {
+          "drill": [],
+          "height": 0.6,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.475,
+          "x": -0.9375,
+          "y": -0.95
+        },
+        {
+          "drill": [],
+          "height": 0.6,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.475,
+          "x": -0.9375,
+          "y": 0.95
+        },
+        {
+          "drill": [],
+          "height": 0.6,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "3",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.475,
+          "x": 0.9375,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty/SOT-23.kicad_mod"
+    },
+    "Diode_SMD:D_SOD-123": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "SOD-123",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "D_SOD-123",
+      "pad_count": 2,
+      "pads": [
+        {
+          "drill": [],
+          "height": 1.2,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.9,
+          "x": -1.65,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 1.2,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.25,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 0.9,
+          "x": 1.65,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Diode_SMD.pretty/D_SOD-123.kicad_mod"
+    },
+    "Diode_SMD:D_SOD-123F": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "D_SOD-123F",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "D_SOD-123F",
+      "pad_count": 2,
+      "pads": [
+        {
+          "drill": [],
+          "height": 1.1,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.2272727273,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.1,
+          "x": -1.4,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 1.1,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.2272727273,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 1.1,
+          "x": 1.4,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Diode_SMD.pretty/D_SOD-123F.kicad_mod"
+    },
+    "Diode_SMD:D_SMB": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "Diode SMB (DO-214AA)",
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "D_SMB",
+      "pad_count": 2,
+      "pads": [
+        {
+          "drill": [],
+          "height": 2.3,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.1086956522,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 2.5,
+          "x": -2.15,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 2.3,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.1086956522,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 2.5,
+          "x": 2.15,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Diode_SMD.pretty/D_SMB.kicad_mod"
+    },
+    "Inductor_SMD:L_Coilcraft_XAL1510-472": {
+      "coordinate_system": "footprint_local_mm_y_down",
+      "description": "Inductor, Coilcraft, XAL1510-472, 15.4x16.4x10.0mm, (https://www.coilcraft.com/getmedia/cd1cef27-13f0-4568-8894-f7311475209b/xal1510.pdf)",
+      "graphic_count": 6,
+      "graphics": [
+        {
+          "end": {
+            "x": 7.81,
+            "y": -8.31
+          },
+          "item_id": null,
+          "layer": "F.SilkS",
+          "start": {
+            "x": -7.81,
+            "y": -8.31
+          },
+          "stroke_width_mm": 0.12,
+          "type": "line"
+        },
+        {
+          "end": {
+            "x": -7.81,
+            "y": -8.31
+          },
+          "item_id": null,
+          "layer": "F.SilkS",
+          "start": {
+            "x": -7.81,
+            "y": 8.31
+          },
+          "stroke_width_mm": 0.12,
+          "type": "line"
+        },
+        {
+          "end": {
+            "x": 7.81,
+            "y": 8.31
+          },
+          "item_id": null,
+          "layer": "F.SilkS",
+          "start": {
+            "x": 7.81,
+            "y": -8.31
+          },
+          "stroke_width_mm": 0.12,
+          "type": "line"
+        },
+        {
+          "end": {
+            "x": -7.81,
+            "y": 8.31
+          },
+          "item_id": null,
+          "layer": "F.SilkS",
+          "start": {
+            "x": 7.81,
+            "y": 8.31
+          },
+          "stroke_width_mm": 0.12,
+          "type": "line"
+        },
+        {
+          "end": {
+            "x": 7.95,
+            "y": 8.45
+          },
+          "fill": "none",
+          "item_id": null,
+          "layer": "F.CrtYd",
+          "start": {
+            "x": -7.95,
+            "y": -8.45
+          },
+          "stroke_width_mm": 0.05,
+          "type": "rect"
+        },
+        {
+          "end": {
+            "x": 7.7,
+            "y": 8.2
+          },
+          "fill": "none",
+          "item_id": null,
+          "layer": "F.Fab",
+          "start": {
+            "x": -7.7,
+            "y": -8.2
+          },
+          "stroke_width_mm": 0.1,
+          "type": "rect"
+        }
+      ],
+      "has_3d_model": true,
+      "has_courtyard": true,
+      "name": "L_Coilcraft_XAL1510-472",
+      "pad_count": 2,
+      "pads": [
+        {
+          "drill": [],
+          "height": 13.2,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "1",
+          "rotation": 0,
+          "roundrect_rratio": 0.078616,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 3.18,
+          "x": -5.3,
+          "y": 0
+        },
+        {
+          "drill": [],
+          "height": 13.2,
+          "layers": [
+            "F.Cu",
+            "F.Mask",
+            "F.Paste"
+          ],
+          "number": "2",
+          "rotation": 0,
+          "roundrect_rratio": 0.078616,
+          "shape": "roundrect",
+          "type": "smd",
+          "width": 3.18,
+          "x": 5.3,
+          "y": 0
+        }
+      ],
+      "path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Inductor_SMD.pretty/L_Coilcraft_XAL1510-472.kicad_mod"
+    }
+  },
+  "maps": {
+    "LTC4364HDE": {
+      "mpns": [
+        "LTC4364HDE-2#PBF",
+        "LTC4364HDE-1#PBF"
+      ],
+      "lead_functions": {
+        "1": "OUT",
+        "2": "SENSE",
+        "3": "DGATE",
+        "4": "SOURCE",
+        "5": "HGATE (stock GATE)",
+        "6": "VCC",
+        "7": "SHDN",
+        "8": "UV",
+        "9": "OV",
+        "10": "GND",
+        "11": "FLT",
+        "12": "ENOUT",
+        "13": "TMR",
+        "14": "FB",
+        "15": "EP/GND"
+      },
+      "view": "DE component/top view from native contract",
+      "electrical_pads": 15,
+      "unnum_paste_apertures": 8
+    },
+    "IRLR2908TRPBF": {
+      "lead_functions": {
+        "1": "G",
+        "2": "D including tab",
+        "3": "S"
+      },
+      "view": "DPAK component/top view",
+      "electrical_pads": 3,
+      "unnum_paste_apertures": 4
+    },
+    "MMBT3906LT1G": {
+      "lead_functions": {
+        "1": "B",
+        "2": "E",
+        "3": "C"
+      },
+      "view": "SOT-23 component/top view",
+      "electrical_pads": 3
+    },
+    "MMBT3904LT1G": {
+      "lead_functions": {
+        "1": "B",
+        "2": "E",
+        "3": "C"
+      },
+      "view": "SOT-23 component/top view",
+      "electrical_pads": 3
+    },
+    "1N4148W-7-F": {
+      "lead_functions": {
+        "1": "K",
+        "2": "A"
+      },
+      "view": "SOD123 banded cathode pad1, component view",
+      "electrical_pads": 2
+    },
+    "Littelfuse_SMBJ": {
+      "mpns": [
+        "SMBJ8.5A",
+        "SMBJ36A",
+        "SMBJ60A"
+      ],
+      "lead_functions": {
+        "1": "K",
+        "2": "A"
+      },
+      "view": "SMB banded cathode pad1, component view",
+      "electrical_pads": 2
+    },
+    "XAL1510-472MED": {
+      "pins": {
+        "1": "winding",
+        "2": "winding"
+      },
+      "view": "Component/front view; nonpolarized",
+      "pads": 2,
+      "evidence": "final-inductor-readback.json"
+    }
+  }
+}

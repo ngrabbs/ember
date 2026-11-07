@@ -1,0 +1,23 @@
+* Input-switch function experiment low; UV/OV forced to test state
+.lib "${LTSPICE_LIBRARY}/sub/LTC4231-2.sub"
+.lib "${TI_MODEL}"
+Vsource command 0 PWL(0 0 1m 0 2m 4.5 0.1 4.5)
+Rsource command in .05
+Csource in 0 650u Rser=.005
+Rsense in sense .015
+Vdrain sense drain 0
+Xpass drain mg source csd18543q3a
+Rgate gate mg 10
+Cgate gate 0 1n
+Cinput source 0 5.6925u Rser=.005
+Rstatus in status 100k
+Vuvl uvl 0 2
+Vuvh uvh 0 2
+Vshdn shdn 0 5
+Ctimer timer 0 1n
+Xcontroller sense in shdn uvl uvh 0 gndsw 0 status timer source gate LTC4231-2
+Bload source 0 I=if(V(status)>2,min(max(V(source),0)/.1,7.8235/max(V(source),.1)),0)
+.options plotwinsize=0
+.tran 0 0.1 0 2u
+.save V(in) V(sense) V(source) V(gate) V(mg) V(status) V(timer) I(Rsense) I(Vdrain)
+.end

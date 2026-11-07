@@ -1,0 +1,357 @@
+(kicad_sch
+	(version 20250610)
+	(generator "konnect")
+	(generator_version "10.0")
+	(uuid "bba995b2-b29f-4248-8fb6-47583ab6a0b6")
+	(paper "B")
+	(lib_symbols
+		(symbol "74xGxx:SN74LVC1G14DBV"
+			(property "Reference" "U"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "SN74LVC1G14DBV"
+				(at 0 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+				(at 0 -6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(justify left)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g14.pdf"
+				(at 0 -8.89 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Description" "Single Schmitt NOT Gate, Low-Voltage CMOS, SOT-23"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "Single Gate NOT Schmitt LVC CMOS"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT*23*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(embedded_fonts no)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(symbol "SN74LVC1G14DBV_0_1"
+				(polyline
+					(pts
+						(xy -7.62 6.35)
+						(xy -7.62 -6.35)
+						(xy 5.08 0)
+						(xy -7.62 6.35)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "SN74LVC1G14DBV_1_1"
+				(polyline
+					(pts
+						(xy -3.81 -1.27)
+						(xy -1.27 -1.27)
+						(xy -1.27 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 -1.27)
+						(xy -2.54 1.27)
+						(xy 0 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin no_connect line
+					(at -7.62 5.08 180)
+					(length 5.08)
+					(hide yes)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 0 0)
+					(length 7.62)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -5.08 -10.16 90)
+					(length 5.08)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output inverted
+					(at 12.7 0 180)
+					(length 7.62)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -5.08 10.16 270)
+					(length 5.08)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+	(no_connect
+		(at 92.71 85.09)
+		(uuid "f4a34e72-31b7-4dc2-a173-c8d9e90bb033")
+	)
+  (text "SN74LVC1G14DBVR — STOCK CONTACT-MAP FIXTURE"
+    (at 25.4 25.4 0)
+    (effects (font (size 1.8 1.8) (bold yes)) (justify left top))
+    (uuid "d0aaa701-51ad-434e-bb8b-2d6427e3415f")
+  )
+  (text "Texas Instruments SCES218AA, October2025; DBV0005A top view:1NC,2A,3GND,4Y,5VCC.\nStock symbol and hand-solder footprint; no custom library. Pin1 has no internal connection."
+    (at 25.4 33.02 0)
+    (effects (font (size 1.15 1.15)) (justify left top))
+    (uuid "d5ed90f3-57aa-4aef-804b-b4dcf01f7e56")
+  )
+  (text "DBV / SOT-23-5, hand-solder stock lands.\nPin1 NC flag is datasheet-authorized.\nFour functional pins remain genuinely unwired;\nthis package fixture is not a functioning circuit."
+    (at 135.89 80.01 0)
+    (effects (font (size 1.15 1.15)) (justify left top))
+    (uuid "3b6da4bb-a80f-444c-89cd-ca5b6f2521d8")
+  )
+  (text "GENERIC LAND DEVIATION: pads1.56×0.65mm at X±1.35; TI example1.10×0.60 at±1.30.\nStock courtyardY±1.8 leaves only0.025mm to maximum mold-flash envelope.\nLater layout MUST reserve Yhalf>=2.025mm for full flash plus0.25mm clearance.\nDevelopment contact mapping only; assembly, mask/stencil and circuit qualification remain open."
+    (at 25.4 130.81 0)
+    (effects (font (size 1.15 1.15) (bold yes)) (justify left top))
+    (uuid "91159097-1860-467c-9370-164bd588dd9a")
+  )
+	(symbol
+		(lib_id "74xGxx:SN74LVC1G14DBV")
+		(at 100.33 90.17 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "63525bfa-a2ce-4493-92de-34dc35c23567")
+		(property "Reference" "U1"
+			(at 100.33 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "SN74LVC1G14DBVR"
+			(at 100.33 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5_HandSoldering"
+			(at 100.33 90.17 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g14.pdf"
+			(at 100.33 90.17 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Single Schmitt NOT Gate, Low-Voltage CMOS, SOT-23"
+			(at 100.33 90.17 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFG P/N" "SN74LVC1G14DBVR"
+			(at 100.33 90.17 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 100.33 90.17 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PackageSize" "DBV0005A / SOT-23-5"
+			(at 100.33 90.17 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Qualification" "DEVELOPMENT contact map; generic land / full-flash clearance / assembly qualification open"
+			(at 100.33 90.17 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "can_branch_parts_check"
+				(path "/bba995b2-b29f-4248-8fb6-47583ab6a0b6"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
+)

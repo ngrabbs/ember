@@ -1,0 +1,24 @@
+reference,pin,name,electrical_type,net,footprint
+U1200,1,SEL1,input,/SWD Service/SWD_SUPPLY_OK,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,2,S1,bidirectional,/SWD Service/SWDIO_SW,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,3,D1,bidirectional,/SWD Service/SWD_IO_CONN,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,4,SEL2,input,/SWD Service/SWD_SUPPLY_OK,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,5,S2,bidirectional,/SWD Service/SWCLK_SW,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,6,D2,bidirectional,/SWD Service/SWD_CLK_CONN,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,10,SEL3,input,/SWD Service/SWD_SUPPLY_OK,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,9,S3,bidirectional,/SWD Service/NRST_SW,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,8,D3,bidirectional,/SWD Service/SWD_RESET_CONN,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,13,SEL4,input,/SWD Service/SWD_SUPPLY_OK,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,12,S4,bidirectional,+3V3,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,11,D4,bidirectional,3V3_SWD_VTREF,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,14,VDD,power_in,+3V3,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1200,7,GND,power_in,GND,Package_SO:TSSOP-14_4.4x5mm_P0.65mm
+U1201,1,GND,power_in,GND,Package_TO_SOT_SMD:SOT-23
+U1201,2,~{RESET},output,/SWD Service/SWD_SUPPLY_OK,Package_TO_SOT_SMD:SOT-23
+U1201,3,VDD,power_in,+3V3,Package_TO_SOT_SMD:SOT-23
+J100,1,VCC,power_in,3V3_SWD_VTREF,Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical
+J100,2,SWDIO,bidirectional,/SWD Service/SWD_IO_CONN,Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical
+J100,3,~{RESET},open_collector,/SWD Service/SWD_RESET_CONN,Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical
+J100,4,SWCLK,output,/SWD Service/SWD_CLK_CONN,Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical
+J100,5,GND,power_in,GND,Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical
+J100,6,SWO,input,unconnected-(J100-SWO-Pad6),Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical

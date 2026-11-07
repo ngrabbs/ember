@@ -1,0 +1,112 @@
+[
+  {
+    "description": "Read exact top-level UUIDs and presentation nodes for symbols, wires, labels, junctions, text, no-connects and sheets. Does not mutate.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "schematic": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "schematic"
+      ],
+      "type": "object"
+    },
+    "name": "get_schematic_presentation_items"
+  },
+  {
+    "description": "Read exact placed-symbol, sheet and global-label UUIDs, field values and presentation nodes. Does not mutate.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "schematic": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "schematic"
+      ],
+      "type": "object"
+    },
+    "name": "get_schematic_field_presentation"
+  },
+  {
+    "description": "Atomic batch presentation-only edits targeting existing symbol, sheet or global-label fields by exact item UUID. Coordinates are absolute mm. Disables automatic field placement on edited symbols/sheets/global labels. Preserves values, pins and hierarchy; Missing native Intersheetrefs may be created only with explicit create_missing_intersheet_refs and x/y on a global label; no other missing field is created. Close schematic editor first.",
+    "inputSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "dry_run": {
+          "type": "boolean"
+        },
+        "edits": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "create_missing_intersheet_refs": {
+                "type": "boolean"
+              },
+              "field": {
+                "type": "string"
+              },
+              "font": {
+                "type": "string"
+              },
+              "justify": {
+                "items": {
+                  "enum": [
+                    "left",
+                    "right",
+                    "top",
+                    "bottom",
+                    "mirror"
+                  ]
+                },
+                "type": "array",
+                "uniqueItems": true
+              },
+              "rotation": {
+                "type": "number"
+              },
+              "show_name": {
+                "type": "boolean"
+              },
+              "size": {
+                "exclusiveMinimum": 0,
+                "type": "number"
+              },
+              "uuid": {
+                "type": "string"
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "uuid",
+              "field"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "schematic": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "schematic",
+        "edits"
+      ],
+      "type": "object"
+    },
+    "name": "set_schematic_field_presentation"
+  }
+]

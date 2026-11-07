@@ -1,0 +1,70 @@
+{
+  "board": {
+    "design_settings": {}
+  },
+  "meta": {
+    "filename": "essential_3v3.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {
+    "classes": [
+      {
+        "clearance": 0.2,
+        "name": "POWER",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "SWITCHING",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      },
+      {
+        "clearance": 0.2,
+        "name": "ANALOG",
+        "priority": -1,
+        "track_width": 0.25,
+        "via_diameter": 0.8,
+        "via_drill": 0.4
+      }
+    ],
+    "meta": {
+      "version": 5
+    },
+    "netclass_patterns": [
+      {
+        "netclass": "POWER",
+        "pattern": "SYS_PWR_PERMITTED"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "GND"
+      },
+      {
+        "netclass": "POWER",
+        "pattern": "+3V3"
+      },
+      {
+        "netclass": "SWITCHING",
+        "pattern": "/BUCK33_SW"
+      },
+      {
+        "netclass": "SWITCHING",
+        "pattern": "/BUCK33_CB"
+      },
+      {
+        "netclass": "ANALOG",
+        "pattern": "/BUCK33_FB"
+      }
+    ]
+  },
+  "schematic": {
+    "legacy_lib_dir": "",
+    "legacy_lib_list": []
+  }
+}

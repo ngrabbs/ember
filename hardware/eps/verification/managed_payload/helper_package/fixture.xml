@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/verification/managed_payload/helper_package/fixture/payload_stock_check.kicad_sch</source>
+    <date>2026-10-24T18:11:42</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>payload_stock_check.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="Q1">
+      <value>T2N7002AK,LM</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://toshiba.semicon-storage.com/info/docget.jsp?did=29712&amp;prodName=T2N7002AK</datasheet>
+      <description>60 V N-channel helper; gate1 source2 drain3; ESD protected gate</description>
+      <fields>
+        <field name="MFG P/N">T2N7002AK,LM</field>
+        <field name="Manufacturer">Toshiba</field>
+        <field name="PackageSize">SOT23 / TO-236AB</field>
+        <field name="Review">Stock physical-map fixture; electrical drive/loading qualification open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://toshiba.semicon-storage.com/info/docget.jsp?did=29712&amp;prodName=T2N7002AK</field>
+        <field name="Description">60 V N-channel helper; gate1 source2 drain3; ESD protected gate</field>
+      </fields>
+      <libsource lib="Transistor_FET" part="T2N7002AK" description="60V Vds, 0.2A Id, N-Channel MOSFET, SOT-23"/>
+      <property name="MFG P/N" value="T2N7002AK,LM"/>
+      <property name="Manufacturer" value="Toshiba"/>
+      <property name="PackageSize" value="SOT23 / TO-236AB"/>
+      <property name="Review" value="Stock physical-map fixture; electrical drive/loading qualification open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="payload_stock_check.kicad_sch"/>
+      <property name="ki_keywords" value="N-Channel MOSFET"/>
+      <property name="ki_fp_filters" value="SOT?23*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>53b7a3b9-52fa-4c6d-a567-bc200fb85f2b</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="3"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U1">
+      <value>LM4040CEM3-2.5/NOPB</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23</footprint>
+      <datasheet>https://www.ti.com/lit/ds/symlink/lm4040-n.pdf</datasheet>
+      <description>2.5 V C-grade extended-temperature shunt reference; cathode1 anode2 NC3</description>
+      <fields>
+        <field name="MFG P/N">LM4040CEM3-2.5/NOPB</field>
+        <field name="Manufacturer">Texas Instruments</field>
+        <field name="PackageSize">DBZ / SOT-23</field>
+        <field name="Review">Stock physical-map fixture; clamp dynamics and assembly qualification open</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/lm4040-n.pdf</field>
+        <field name="Description">2.5 V C-grade extended-temperature shunt reference; cathode1 anode2 NC3</field>
+      </fields>
+      <libsource lib="Reference_Voltage" part="LM4040DBZ-2.5" description="2.500V Precision Micropower Shunt Voltage Reference, SOT-23"/>
+      <property name="MFG P/N" value="LM4040CEM3-2.5/NOPB"/>
+      <property name="Manufacturer" value="Texas Instruments"/>
+      <property name="PackageSize" value="DBZ / SOT-23"/>
+      <property name="Review" value="Stock physical-map fixture; clamp dynamics and assembly qualification open"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="payload_stock_check.kicad_sch"/>
+      <property name="ki_keywords" value="diode device voltage reference shunt"/>
+      <property name="ki_fp_filters" value="SOT?23*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7893fdca-6808-4c3d-b64e-fd086833c710</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Reference_Voltage" part="LM4040DBZ-2.5">
+      <description>2.500V Precision Micropower Shunt Voltage Reference, SOT-23</description>
+      <docs>http://www.ti.com/lit/ds/symlink/lm4040-n.pdf</docs>
+      <footprints>
+        <fp>SOT?23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LM4040DBZ-2.5</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">http://www.ti.com/lit/ds/symlink/lm4040-n.pdf</field>
+        <field name="Description">2.500V Precision Micropower Shunt Voltage Reference, SOT-23</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+        <pin num="3" name="NC" type="no_connect"/>
+      </pins>
+    </libpart>
+    <libpart lib="Transistor_FET" part="T2N7002AK">
+      <description>60V Vds, 0.2A Id, N-Channel MOSFET, SOT-23</description>
+      <docs>https://toshiba.semicon-storage.com/info/docget.jsp?did=29712&amp;prodName=T2N7002AK</docs>
+      <footprints>
+        <fp>SOT?23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">T2N7002AK</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23</field>
+        <field name="Datasheet">https://toshiba.semicon-storage.com/info/docget.jsp?did=29712&amp;prodName=T2N7002AK</field>
+        <field name="Description">60V Vds, 0.2A Id, N-Channel MOSFET, SOT-23</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="D" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Reference_Voltage">
+      <uri>${KICAD10_SYMBOL_DIR}/Reference_Voltage.kicad_sym</uri>
+    </library>
+    <library logical="Transistor_FET">
+      <uri>${KICAD10_SYMBOL_DIR}/Transistor_FET.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="unconnected-(Q1-D-Pad3)" class="Default">
+      <node ref="Q1" pin="3" pinfunction="D_3" pintype="passive"/>
+    </net>
+    <net code="2" name="unconnected-(Q1-G-Pad1)" class="Default">
+      <node ref="Q1" pin="1" pinfunction="G_1" pintype="input"/>
+    </net>
+    <net code="3" name="unconnected-(Q1-S-Pad2)" class="Default">
+      <node ref="Q1" pin="2" pinfunction="S_2" pintype="passive"/>
+    </net>
+    <net code="4" name="unconnected-(U1-A-Pad2)" class="Default">
+      <node ref="U1" pin="2" pinfunction="A_2" pintype="passive"/>
+    </net>
+    <net code="5" name="unconnected-(U1-K-Pad1)" class="Default">
+      <node ref="U1" pin="1" pinfunction="K_1" pintype="passive"/>
+    </net>
+    <net code="6" name="unconnected-(U1-NC-Pad3)" class="Default">
+      <node ref="U1" pin="3" pinfunction="NC_3" pintype="no_connect"/>
+    </net>
+  </nets>
+</export>

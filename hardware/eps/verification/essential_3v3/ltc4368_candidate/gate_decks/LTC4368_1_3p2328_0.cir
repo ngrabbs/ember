@@ -1,0 +1,14 @@
+* GATE BIAS ONLY; FORCED VIN=VOUT; NOT A SWITCH CIRCUIT
+.lib "${LTSPICE_LIBRARY}/sub/LTC4368-1.sub"
+Vin vin 0 PWL(0 0 1m 0 2m 3.2328 .08 3.2328)
+Vout out 0 PWL(0 0 1m 0 2m 3.2328 .08 3.2328)
+Vuv uv 0 2.5
+Vshdn shdn 0 2.5
+Rfault vin fault 1meg
+Cgate gate 0 2.2n
+Igate gate out 0
+Xcontroller vin uv 0 0 0 shdn fault out out gate LTC4368-1
+.options plotwinsize=0
+.tran 0 .08 0 5u
+.save V(vin) V(out) V(gate) I(Vin) I(Vout)
+.end

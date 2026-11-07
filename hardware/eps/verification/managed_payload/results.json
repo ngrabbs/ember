@@ -1,0 +1,855 @@
+{
+  "status": "CONDITIONAL_DEVELOPMENT_CANDIDATE_NOT_INTEGRATED",
+  "screening_temperature_C": [
+    -40,
+    85
+  ],
+  "resistor_fractional_error": 0.002625,
+  "thresholds": {
+    "source_UV": {
+      "top_ohm": 169000,
+      "bottom_ohm": 10000,
+      "rising": {
+        "min_V": 7.049142978793556,
+        "max_V": 7.27177533113133
+      },
+      "falling": {
+        "min_V": 6.888839413153361,
+        "max_V": 7.199819497066911
+      }
+    },
+    "source_OV": {
+      "top_ohm": 226000,
+      "bottom_ohm": 10000,
+      "rising": {
+        "min_V": 9.29535651251387,
+        "max_V": 9.585859658243672
+      },
+      "falling": {
+        "min_V": 9.08402156674651,
+        "max_V": 9.490983809139776
+      }
+    },
+    "efuse_UV": {
+      "top_ohm": 41200,
+      "bottom_ohm": 10000,
+      "rising": {
+        "min_V": 5.989585939492892,
+        "max_V": 6.299621022600263
+      },
+      "falling": {
+        "min_V": 5.551121249304638,
+        "max_V": 5.919136189914462
+      }
+    },
+    "efuse_OV_unclamped": {
+      "top_ohm": 68100,
+      "bottom_ohm": 10000,
+      "rising": {
+        "min_V": 9.132436953385097,
+        "max_V": 9.613558049492184
+      },
+      "falling": {
+        "min_V": 8.463843618389463,
+        "max_V": 9.032965401290655
+      }
+    },
+    "efuse_PG": {
+      "top_ohm": 36500,
+      "bottom_ohm": 10000,
+      "rising": {
+        "min_V": 5.44046327163812,
+        "max_V": 5.720606003031787
+      },
+      "falling": {
+        "min_V": 5.042206932029593,
+        "max_V": 5.375084245919367
+      }
+    },
+    "efuse_OV_with_imposed80nA_diode_leak": {
+      "rising": {
+        "min_V": 9.127003254385096,
+        "max_V": 9.619020350492184
+      },
+      "falling": {
+        "min_V": 8.458409919389462,
+        "max_V": 9.038427702290655
+      }
+    }
+  },
+  "current_limit_4020ohm_programming_sensitivity_A": [
+    4.174043136765988,
+    4.82767264068179
+  ],
+  "normal_constant_power_sensitivities": [
+    {
+      "efficiency_assumed": 0.85,
+      "load_margin": 1,
+      "total_feed_resistance_ohm": 0.08108,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.628738277654739,
+      "carrier_input_A": 3.2079567772400326,
+      "margin_to_6V_carrier_floor_V": 0.6287382776547394,
+      "margin_to_programming_min_A": 0.9660863595259555,
+      "efuse_R_loss_W": 0.5454222942859336,
+      "external_FET_loss_W_hot_sensitivity": 0.2889709061046984,
+      "efuse_JEDEC_temperature_rise_K": 17.57465204057831
+    },
+    {
+      "efficiency_assumed": 0.85,
+      "load_margin": 1,
+      "total_feed_resistance_ohm": 0.13,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.460976576643596,
+      "carrier_input_A": 3.291252588536657,
+      "margin_to_6V_carrier_floor_V": 0.4609765766435956,
+      "margin_to_programming_min_A": 0.8827905482293312,
+      "efuse_R_loss_W": 0.5741142108821099,
+      "external_FET_loss_W_hot_sensitivity": 0.30417220833150277,
+      "efuse_JEDEC_temperature_rise_K": 18.47557822169825
+    },
+    {
+      "efficiency_assumed": 0.85,
+      "load_margin": 1,
+      "total_feed_resistance_ohm": 0.2,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.2032393705966395,
+      "carrier_input_A": 3.4280002127836093,
+      "margin_to_6V_carrier_floor_V": 0.20323937059663955,
+      "margin_to_programming_min_A": 0.7460429239823787,
+      "efuse_R_loss_W": 0.6228128293187569,
+      "external_FET_loss_W_hot_sensitivity": 0.32997328768435275,
+      "efuse_JEDEC_temperature_rise_K": 20.004714840608965
+    },
+    {
+      "efficiency_assumed": 0.85,
+      "load_margin": 1.2,
+      "total_feed_resistance_ohm": 0.08108,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.574125170597916,
+      "carrier_input_A": 3.881527411882652,
+      "margin_to_6V_carrier_floor_V": 0.5741251705979158,
+      "margin_to_programming_min_A": 0.2925157248833359,
+      "efuse_R_loss_W": 0.7985115176074113,
+      "external_FET_loss_W_hot_sensitivity": 0.42306044178143604,
+      "efuse_JEDEC_temperature_rise_K": 25.521653652872715
+    },
+    {
+      "efficiency_assumed": 0.85,
+      "load_margin": 1.2,
+      "total_feed_resistance_ohm": 0.13,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.367899310987617,
+      "carrier_input_A": 4.0072315551211055,
+      "margin_to_6V_carrier_floor_V": 0.3678993109876174,
+      "margin_to_programming_min_A": 0.16681158164488252,
+      "efuse_R_loss_W": 0.8510689510269906,
+      "external_FET_loss_W_hot_sensitivity": 0.4509059649969414,
+      "efuse_JEDEC_temperature_rise_K": 27.171957062247504
+    },
+    {
+      "efficiency_assumed": 0.85,
+      "load_margin": 1.2,
+      "total_feed_resistance_ohm": 0.2,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.044515416986027,
+      "carrier_input_A": 4.221619980836674,
+      "margin_to_6V_carrier_floor_V": 0.04451541698602668,
+      "margin_to_programming_min_A": -0.04757684407068563,
+      "efuse_R_loss_W": 0.9445699889177701,
+      "external_FET_loss_W_hot_sensitivity": 0.5004438733737923,
+      "efuse_JEDEC_temperature_rise_K": 30.107889652017978
+    },
+    {
+      "efficiency_assumed": 0.9,
+      "load_margin": 1,
+      "total_feed_resistance_ohm": 0.08108,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.643743142615482,
+      "carrier_input_A": 3.0228943085579627,
+      "margin_to_6V_carrier_floor_V": 0.6437431426154818,
+      "margin_to_programming_min_A": 1.1511488282080253,
+      "efuse_R_loss_W": 0.48430817003774257,
+      "external_FET_loss_W_hot_sensitivity": 0.25659195121999645,
+      "efuse_JEDEC_temperature_rise_K": 15.655668539185116
+    },
+    {
+      "efficiency_assumed": 0.9,
+      "load_margin": 1,
+      "total_feed_resistance_ohm": 0.13,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.4863259808922535,
+      "carrier_input_A": 3.0962571712392855,
+      "margin_to_6V_carrier_floor_V": 0.48632598089225354,
+      "margin_to_programming_min_A": 1.0777859655267026,
+      "efuse_R_loss_W": 0.5081008489338872,
+      "external_FET_loss_W_hot_sensitivity": 0.2691975818502557,
+      "efuse_JEDEC_temperature_rise_K": 16.402758656524057
+    },
+    {
+      "efficiency_assumed": 0.9,
+      "load_margin": 1,
+      "total_feed_resistance_ohm": 0.2,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.245733764012426,
+      "carrier_input_A": 3.2155282457046748,
+      "margin_to_6V_carrier_floor_V": 0.2457337640124262,
+      "margin_to_programming_min_A": 0.9585148910613133,
+      "efuse_R_loss_W": 0.5479999606430029,
+      "external_FET_loss_W_hot_sensitivity": 0.2903365829218023,
+      "efuse_JEDEC_temperature_rise_K": 17.65559076419029
+    },
+    {
+      "efficiency_assumed": 0.9,
+      "load_margin": 1.2,
+      "total_feed_resistance_ohm": 0.08108,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.592434813759902,
+      "carrier_input_A": 3.6557054685922488,
+      "margin_to_6V_carrier_floor_V": 0.592434813759902,
+      "margin_to_programming_min_A": 0.5183376681737393,
+      "efuse_R_loss_W": 0.7083016710740494,
+      "external_FET_loss_W_hot_sensitivity": 0.37526624384451523,
+      "efuse_JEDEC_temperature_rise_K": 22.68906447172515
+    },
+    {
+      "efficiency_assumed": 0.9,
+      "load_margin": 1.2,
+      "total_feed_resistance_ohm": 0.13,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.399250854891891,
+      "carrier_input_A": 3.7660658327805376,
+      "margin_to_6V_carrier_floor_V": 0.39925085489189094,
+      "margin_to_programming_min_A": 0.4079773039854504,
+      "efuse_R_loss_W": 0.7517123484123591,
+      "external_FET_loss_W_hot_sensitivity": 0.39826571213998196,
+      "efuse_JEDEC_temperature_rise_K": 24.052159740148074
+    },
+    {
+      "efficiency_assumed": 0.9,
+      "load_margin": 1.2,
+      "total_feed_resistance_ohm": 0.2,
+      "source_floor_V": 6.888839413153361,
+      "carrier_input_V": 6.0984783184113525,
+      "carrier_input_A": 3.9518054737100425,
+      "margin_to_6V_carrier_floor_V": 0.09847831841135246,
+      "margin_to_programming_min_A": 0.2222376630559455,
+      "efuse_R_loss_W": 0.8276886246083666,
+      "external_FET_loss_W_hot_sensitivity": 0.4385188033774139,
+      "efuse_JEDEC_temperature_rise_K": 26.437814812702708
+    }
+  ],
+  "slew_V_per_s": [
+    396.5255002614193,
+    610.1998839723643
+  ],
+  "startup_sensitivities": [
+    {
+      "imposed_carrier_capacitance_F": 0.001,
+      "total_screened_capacitance_F": 0.0010029095,
+      "capacitive_current_max_sensitivity_A": 0.6119752605347819,
+      "imposed_AON_startup_current_A": 0.2,
+      "margin_to_programming_min_A": 3.362067876231206,
+      "ramp_to8p4V_fast_s": 0.013765980985306828,
+      "ramp_to8p4V_slow_s": 0.021184009589451602,
+      "ideal_linear_charge_energy_J": 0.035382647159999996,
+      "ideal_initial_pass_power_W": 6.820592188492168
+    },
+    {
+      "imposed_carrier_capacitance_F": 0.005,
+      "total_screened_capacitance_F": 0.0050029095,
+      "capacitive_current_max_sensitivity_A": 3.0527747964242393,
+      "imposed_AON_startup_current_A": 0.2,
+      "margin_to_programming_min_A": 0.9212683403417488,
+      "ramp_to8p4V_fast_s": 0.013765980985306828,
+      "ramp_to8p4V_slow_s": 0.021184009589451602,
+      "ideal_linear_charge_energy_J": 0.17650264716000003,
+      "ideal_initial_pass_power_W": 27.323308289963613
+    }
+  ],
+  "SHDN_DC_off_V_20kohm_internal10uA_plus_imposed10uA_driver_leak": 0.4,
+  "OVP_sense_at35V_worst_divider_V": 4.501989239871267,
+  "unclamped_source_max_for_OVP4V_recommended_V": 31.097364418401693,
+  "OVP_35V_rating_pass": false,
+  "proposed_sense_clamp": {
+    "reference_MPN": "LM4040CEM3-2.5/NOPB",
+    "diode_MPN": "BAS116H,115",
+    "bias_resistor_ohm": 10000,
+    "reference_conservative_window_V": [
+      2.4530000000000003,
+      2.5469999999999997
+    ],
+    "reference_min_current_at5V_A": 0.00024465777334496946,
+    "reference_min_operating_current_A": 6.8e-05,
+    "reference_max_current_at35V_including_full_OVP_top_current_A": 0.0037785688165649215,
+    "reference_max_operating_current_A": 0.015,
+    "bias_resistor_max_power_at35V_W": 0.10620952089234238,
+    "bias_resistor_min_rating_W": 0.25,
+    "bias_resistor_selected_MPN": "TNPW121010K0BEEA",
+    "bias_resistor_selected_General_P70_W": 0.33,
+    "bias_resistor_85C_derating_assumption": 0.7272727272727273,
+    "bias_resistor_derated60percent_limit_W": 0.14400000000000002,
+    "reference_bias_source_power_at8p4V_nominal_W": 0.004956,
+    "clamp_voltage_25C_1mA_VF_max_plus_full_ref_window_V": 3.4469999999999996,
+    "clamp_voltage_imposed_cold1p2V_VF_envelope_V": 3.747,
+    "cold_VF_guarantee_and_dynamic_acceptance": false
+  },
+  "helper_DRV_capacitance_screen": {
+    "selected_MPN": "T2N7002AK,LM",
+    "Ciss_test_point_max_pF": 17,
+    "imposed_routing_pF": 10,
+    "test_point_plus_routing_pF": 27,
+    "imposed_2x_Ciss_plus_routing_pF": 44,
+    "TPS_DRV_listed_load_pF": 50,
+    "full_trajectory_and_temperature_acceptance": false
+  },
+  "proposed_OVP_filter_F": 1e-09,
+  "clamp_transient_evidence": "clamp_transient/analysis.json; nominal subcircuit only",
+  "total_R_limit_from_current_at_worst_allocated_power_ohm": 0.18577359900913779,
+  "ideal_state_traces": {
+    "normal_start_stop": [
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": false,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": true,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          false
+        ],
+        "EN": true,
+        "READY": true
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": false,
+        "READY": false
+      }
+    ],
+    "raw_source_cycle_held_request": [
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": true,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          false
+        ],
+        "EN": true,
+        "READY": true
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          true
+        ],
+        "EN": false,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          true
+        ],
+        "EN": false,
+        "READY": false
+      }
+    ],
+    "efuse_fault_clears_without_request_release": [
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": true,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          false
+        ],
+        "EN": true,
+        "READY": true
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          true
+        ],
+        "EN": false,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          true
+        ],
+        "EN": false,
+        "READY": false
+      }
+    ],
+    "output_power_good_lost": [
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": true,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          false
+        ],
+        "EN": true,
+        "READY": true
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          true,
+          true
+        ],
+        "EN": false,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          true
+        ],
+        "EN": false,
+        "READY": false
+      }
+    ],
+    "fresh_request_after_fault": [
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": true,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          false
+        ],
+        "EN": true,
+        "READY": true
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          true,
+          true
+        ],
+        "EN": false,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": false,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": true,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          false
+        ],
+        "EN": true,
+        "READY": true
+      }
+    ],
+    "supply_reset": [
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": true,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          false
+        ],
+        "EN": true,
+        "READY": true
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": false,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": false,
+        "READY": false
+      }
+    ],
+    "startup_fault_never_healthy_is_unarmed": [
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": true,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": true,
+        "READY": false
+      }
+    ],
+    "pre_pg_source_cycle_not_latched": [
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": true,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": false,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": true,
+        "READY": false
+      }
+    ],
+    "fresh_request_with_pg_already_high_arms": [
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          false,
+          false
+        ],
+        "EN": false,
+        "READY": false
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          false
+        ],
+        "EN": true,
+        "READY": true
+      },
+      {
+        "inputs_req_supply_raw_flt_pg": [
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        "state_arm_fault": [
+          true,
+          true
+        ],
+        "EN": false,
+        "READY": false
+      }
+    ]
+  },
+  "ideal_state_transition_rows": 128,
+  "remaining_gates": [
+    "Clamp now has 24 nominal subcircuit cases plus static arithmetic; cold diode/reference/PVT and coupled cutoff/survival remain open.",
+    "T2N7002AK helper full-temperature drive/loading and assembly lands remain conditional.",
+    "TPS3700 construction approval and exact package acceptance remain pending.",
+    "100n C0G cold capacitance bound is open; 30ppm/65K is a sensitivity, not a manufacturer combined guarantee.",
+    "The .13ohm feed budget and 1.8x hot external-FET resistance are imposed sensitivities, not verified harness/hot bounds.",
+    "AON .2A startup bound and downstream capacitance require exact carrier evidence/measurement.",
+    "No encrypted TPS2663 model was executed; slew/energy arithmetic is not thermal/SOA acceptance.",
+    "Initial short current, source inductance, reverse interruption, pin clamps and healthy essential-rail survival remain open.",
+    "Ideal state verification excludes timing races, invalid PRE/CLR overlap, minimum fault pulses and supply collapse.",
+    "A startup that never becomes fully HEALTHY remains unarmed; require a firmware startup deadline and native eFuse latch behavior.",
+    "No quick-discharge path is selected; RBF residual-energy and carrier/alternate-source decay require system closure.",
+    "No hardware permission-expiry timer is implemented; firmware lease plus independent IWDG remains a separate requirement.",
+    "All-source payload inhibition requires USB/bench path treatment; IHU retains PAYLOAD_EN ownership."
+  ]
+}

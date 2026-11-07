@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/nick/Documents/ChatGPT/EMBER/eps-pr-review/hardware/eps/verification/rev_b/uart_integration/parts_disposable/uart_parts_check.kicad_sch</source>
+    <date>2026-10-24T08:43:37</date>
+    <tool>Eeschema 10.0.0</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>uart_parts_check.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="J1">
+      <value>BM03B-GHS-TBT(LF)(SN)</value>
+      <footprint>Connector_JST:JST_GH_BM03B-GHS-TBT_1x03-1MP_P1.25mm_Vertical</footprint>
+      <datasheet>https://www.jst.com/wp-content/uploads/2025/06/eGH.pdf</datasheet>
+      <description>Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <fields>
+        <field name="MFG P/N">BM03B-GHS-TBT(LF)(SN)</field>
+        <field name="Footprint">Connector_JST:JST_GH_BM03B-GHS-TBT_1x03-1MP_P1.25mm_Vertical</field>
+        <field name="Datasheet">https://www.jst.com/wp-content/uploads/2025/06/eGH.pdf</field>
+        <field name="Description">Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <libsource lib="Connector_Generic" part="Conn_01x03" description="Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="MFG P/N" value="BM03B-GHS-TBT(LF)(SN)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="uart_parts_check.kicad_sch"/>
+      <property name="ki_keywords" value="connector"/>
+      <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e435200a-9457-4ec6-8911-aaa0841e4230</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U1">
+      <value>74LVC2G34GW,125</value>
+      <footprint>Package_TO_SOT_SMD:SOT-363_SC-70-6</footprint>
+      <datasheet>https://assets.nexperia.com/documents/data-sheet/74LVC2G34.pdf</datasheet>
+      <description>Dual Buffer, Schmitt Triggered, Low-Voltage CMOS</description>
+      <fields>
+        <field name="MFG P/N">74LVC2G34GW,125</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-363_SC-70-6</field>
+        <field name="Datasheet">https://assets.nexperia.com/documents/data-sheet/74LVC2G34.pdf</field>
+        <field name="Description">Dual Buffer, Schmitt Triggered, Low-Voltage CMOS</field>
+      </fields>
+      <libsource lib="74xGxx" part="74LVC2G34" description="Dual Buffer, Low-Voltage CMOS"/>
+      <property name="MFG P/N" value="74LVC2G34GW,125"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="uart_parts_check.kicad_sch"/>
+      <property name="ki_keywords" value="Dual Buffer LVC CMOS"/>
+      <property name="ki_fp_filters" value="SG-* SOT*"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c05fc4a8-fce7-4e87-a6d5-b7e8556b2494 b1be1546-f921-49c7-b247-729c58192bd7 5ab4b08f-b410-45aa-93d2-ac244919d620</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+        <unit name="B">
+          <pins>
+            <pin num="3"/>
+            <pin num="4"/>
+          </pins>
+        </unit>
+        <unit name="C">
+          <pins>
+            <pin num="5"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="74xGxx" part="74LVC2G34">
+      <description>Dual Buffer, Low-Voltage CMOS</description>
+      <docs>http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf</docs>
+      <footprints>
+        <fp>SG-*</fp>
+        <fp>SOT*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">74LVC2G34</field>
+        <field name="Footprint"/>
+        <field name="Datasheet">http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf</field>
+        <field name="Description">Dual Buffer, Low-Voltage CMOS</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="input"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="" type="input"/>
+        <pin num="4" name="" type="output"/>
+        <pin num="5" name="VCC" type="power_in"/>
+        <pin num="6" name="" type="output"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x03">
+      <description>Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x03</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description">Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="74xGxx">
+      <uri>${KICAD10_SYMBOL_DIR}/74xGxx.kicad_sym</uri>
+    </library>
+    <library logical="Connector_Generic">
+      <uri>${KICAD10_SYMBOL_DIR}/Connector_Generic.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="unconnected-(J1-Pin_1-Pad1)" class="Default">
+      <node ref="J1" pin="1" pinfunction="Pin_1_1" pintype="passive"/>
+    </net>
+    <net code="2" name="unconnected-(J1-Pin_2-Pad2)" class="Default">
+      <node ref="J1" pin="2" pinfunction="Pin_2_2" pintype="passive"/>
+    </net>
+    <net code="3" name="unconnected-(J1-Pin_3-Pad3)" class="Default">
+      <node ref="J1" pin="3" pinfunction="Pin_3_3" pintype="passive"/>
+    </net>
+    <net code="4" name="unconnected-(U1-Pad1)" class="Default">
+      <node ref="U1" pin="1" pintype="input"/>
+    </net>
+    <net code="5" name="unconnected-(U1-Pad3)" class="Default">
+      <node ref="U1" pin="3" pintype="input"/>
+    </net>
+    <net code="6" name="unconnected-(U1-Pad4)" class="Default">
+      <node ref="U1" pin="4" pintype="output"/>
+    </net>
+    <net code="7" name="unconnected-(U1-Pad6)" class="Default">
+      <node ref="U1" pin="6" pintype="output"/>
+    </net>
+    <net code="8" name="unconnected-(U1C-GND-Pad2)" class="Default">
+      <node ref="U1" pin="2" pinfunction="GND_2" pintype="power_in"/>
+    </net>
+    <net code="9" name="unconnected-(U1C-VCC-Pad5)" class="Default">
+      <node ref="U1" pin="5" pinfunction="VCC_5" pintype="power_in"/>
+    </net>
+  </nets>
+</export>

@@ -1,0 +1,106 @@
+[
+  {
+    "sheet": "bms_protection",
+    "check": "wires",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"floating_count\":0,\"floating_endpoints\":[],\"valid\":true}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "sheet": "bms_protection",
+    "check": "pins",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"unconnected_count\":0,\"unconnected_pins\":[],\"valid\":true}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "sheet": "bms_protection",
+    "check": "shorts",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"short_count\":0,\"shorts\":[]}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "sheet": "bms_protection",
+    "check": "orphans",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"orphan_count\":0,\"orphans\":[],\"tolerance\":0.05}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "sheet": "controller",
+    "check": "wires",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"floating_count\":0,\"floating_endpoints\":[],\"valid\":true}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "sheet": "controller",
+    "check": "pins",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"unconnected_count\":11,\"unconnected_pins\":[{\"pin\":\"7\",\"pin_name\":\"PA0\",\"pin_type\":\"bidirectional\",\"reference\":\"U100\",\"value\":\"STM32G0B1KET6N\",\"x\":187.96,\"y\":85.09},{\"pin\":\"8\",\"pin_name\":\"PA1\",\"pin_type\":\"bidirectional\",\"reference\":\"U100\",\"value\":\"STM32G0B1KET6N\",\"x\":187.96,\"y\":87.63},{\"pin\":\"9\",\"pin_name\":\"PA2\",\"pin_type\":\"bidirectional\",\"reference\":\"U100\",\"value\":\"STM32G0B1KET6N\",\"x\":187.96,\"y\":90.17},{\"pin\":\"10\",\"pin_name\":\"PA3\",\"pin_type\":\"bidirectional\",\"reference\":\"U100\",\"value\":\"STM32G0B1KET6N\",\"x\":187.96,\"y\":92.71},{\"pin\":\"11\",\"pin_name\":\"PA4\",\"pin_type\":\"bidirectional\",\"reference\":\"U100\",\"value\":\"STM32G0B1KET6N\",\"x\":187.96,\"y\":95.25},{\"pin\":\"12\",\"pin_name\":\"PA5\",\"pin_type\":\"bidirectional\",\"reference\":\"U100\",\"value\":\"STM32G0B1KET6N\",\"x\":187.96,\"y\":97.78999999999999},{\"pin\":\"17\",\"pin_name\":\"PB15\",\"pin_type\":\"bidirectional\",\"reference\":\"U100\",\"value\":\"STM32G0B1KET6N\",\"x\":132.08,\"y\":125.72999999999999},{\"pin\":\"26\",\"pin_name\":\"PD0\",\"pin_type\":\"bidirectional\",\"reference\":\"U100\",\"value\":\"STM32G0B1KET6N\",\"x\":132.08,\"y\":90.17},{\"pin\":\"28\",\"pin_name\":\"PD2\",\"pin_type\":\"bidirectional\",\"reference\":\"U100\",\"value\":\"STM32G0B1KET6N\",\"x\":132.08,\"y\":95.25},{\"pin\":\"29\",\"pin_name\":\"PD3\",\"pin_type\":\"bidirectional\",\"reference\":\"U100\",\"value\":\"STM32G0B1KET6N\",\"x\":132.08,\"y\":97.78999999999999},{\"pin\":\"32\",\"pin_name\":\"PB8\",\"pin_type\":\"bidirectional\",\"reference\":\"U100\",\"value\":\"STM32G0B1KET6N\",\"x\":132.08,\"y\":120.64999999999999}],\"valid\":false}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "sheet": "controller",
+    "check": "shorts",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"short_count\":0,\"shorts\":[]}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "sheet": "controller",
+    "check": "orphans",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"orphan_count\":11,\"orphans\":[{\"pin\":\"7\",\"pin_name\":\"PA0\",\"reference\":\"U100\",\"type\":\"unconnected_pin\",\"x\":187.96,\"y\":85.09},{\"pin\":\"8\",\"pin_name\":\"PA1\",\"reference\":\"U100\",\"type\":\"unconnected_pin\",\"x\":187.96,\"y\":87.63},{\"pin\":\"9\",\"pin_name\":\"PA2\",\"reference\":\"U100\",\"type\":\"unconnected_pin\",\"x\":187.96,\"y\":90.17},{\"pin\":\"10\",\"pin_name\":\"PA3\",\"reference\":\"U100\",\"type\":\"unconnected_pin\",\"x\":187.96,\"y\":92.71},{\"pin\":\"11\",\"pin_name\":\"PA4\",\"reference\":\"U100\",\"type\":\"unconnected_pin\",\"x\":187.96,\"y\":95.25},{\"pin\":\"12\",\"pin_name\":\"PA5\",\"reference\":\"U100\",\"type\":\"unconnected_pin\",\"x\":187.96,\"y\":97.78999999999999},{\"pin\":\"17\",\"pin_name\":\"PB15\",\"reference\":\"U100\",\"type\":\"unconnected_pin\",\"x\":132.08,\"y\":125.72999999999999},{\"pin\":\"26\",\"pin_name\":\"PD0\",\"reference\":\"U100\",\"type\":\"unconnected_pin\",\"x\":132.08,\"y\":90.17},{\"pin\":\"28\",\"pin_name\":\"PD2\",\"reference\":\"U100\",\"type\":\"unconnected_pin\",\"x\":132.08,\"y\":95.25},{\"pin\":\"29\",\"pin_name\":\"PD3\",\"reference\":\"U100\",\"type\":\"unconnected_pin\",\"x\":132.08,\"y\":97.78999999999999},{\"pin\":\"32\",\"pin_name\":\"PB8\",\"reference\":\"U100\",\"type\":\"unconnected_pin\",\"x\":132.08,\"y\":120.64999999999999}],\"tolerance\":0.05}"
+        }
+      ],
+      "isError": false
+    }
+  }
+]

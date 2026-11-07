@@ -1,0 +1,58 @@
+* Coupled development experiment L0p1_load2
+.lib "${LTSPICE_LIBRARY}/sub/LTC4231-2.sub"
+.lib "${LTSPICE_LIBRARY}/sub/LTC4368-1.sub"
+.lib "${TI_MODEL}"
+Vinput drive 0 PWL(0 0 1m 0 2m 35 .34 35)
+Rfeed drive in .05
+Cfeed in 0 650u Rser=.005
+Rinshunt in insense .015
+Vinmos insense indrain 0
+Xin indrain ingate ips csd18543q3a
+Ringate igate ingate 10
+Cingate igate 0 1n
+Cin ips 0 5.6925u Rser=.005
+Ristat in istatus 100k
+Vuvl uvl 0 2
+Vuvh uvh 0 2
+Vshdn shdn 0 5
+Ctimer timer 0 1n
+Xinput insense in shdn uvl uvh 0 gndsw 0 istatus timer ips igate LTC4231-2
+* Pre-fault converter proxy: intentionally separate power/load equations.
+Bgood good 0 V=min(3.324392156862745,max(V(ips)*.74,0))
+Binput ips 0 I=if(time<.3,if(V(istatus)>2,min(max(V(ips),0)/.1,7.822099192618224/max(V(ips),.1)),0),0)
+Vnormal ncmd 0 PWL(0 5 .3 5 .30000001 0 .34 0)
+Vfailed fcmd 0 PWL(0 0 .3 0 .30000001 5 .34 5)
+Snormal good raw ncmd 0 sw
+Sfailed ips wire fcmd 0 sw
+.model sw SW(Ron=.001 Roff=1e12 Vt=2)
+* Establish the actual pre-fault buck inductor current, removed at fault.
+Bprebias raw wire I=if(time<.3,2,0)
+Lfailed wire raw 0.1u Rser=.0159
+Craw raw 0 96u Rser=.01
+Lguard raw pin 2.2u Rser=.009
+Cpin pin 0 100n Rser=.01
+Vq1 pin d1 0
+Vq2 d2 sense 0
+XQ1 d1 gate common csd18543q3a
+XQ2 d2 gate common csd18543q3a
+Rsense sense out .015
+Rgs gate common 10meg
+Cgate gate gc 100n
+Rgc gc 0 22k
+Rov raw ov 58.8k
+Rovb ov 0 10k
+Ruv raw uv 47.5k
+Ruvb uv 0 10k
+Cretry retry 0 22n
+Rfault raw fault 47k
+Cout out 0 640u Rser=.0225
+Bload out 0 I=min(max(V(out),0)/.1,2)
+Xoutput raw uv ov retry 0 raw fault out sense gate LTC4368-1
+Dclamp 0 pin tv36
+.model tv36 D(Bv=44.2 Ibv=1m Rs=1.35 Cjo=500p)
+Dgate 0 gate gateclamp
+.model gateclamp D(Is=1n N=1.7 Rs=1 Cjo=2p Bv=85 Ibv=.1u)
+.options plotwinsize=0
+.tran 0 .34 0 1u
+.save V(in) V(insense) V(ips) V(igate) V(ingate) V(istatus) V(timer) V(raw) V(pin) V(out) V(common) V(gate) V(sense) I(Rinshunt) I(Lfailed) I(Lguard) I(Vinmos) I(Vq1) I(Vq2)
+.end

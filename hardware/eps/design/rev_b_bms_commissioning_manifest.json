@@ -1,0 +1,135 @@
+{
+  "manifest_version": 1,
+  "status": "DRAFT_REQUIREMENTS_NOT_A_PROGRAMMING_IMAGE",
+  "updated": "2026-10-24",
+  "device": {
+    "order_code": "BQ40Z50RSMR-R2",
+    "expected_device_type": null,
+    "expected_firmware_version": null,
+    "silicon_revision_readback": null
+  },
+  "sources": {
+    "datasheet": "https://www.ti.com/lit/ds/symlink/bq40z50-r2.pdf",
+    "technical_reference": "https://www.ti.com/lit/ug/sluubk0b/sluubk0b.pdf"
+  },
+  "pack": {
+    "series_groups": 2,
+    "parallel_cells_per_group": 2,
+    "cell_candidate": "LG MJ1",
+    "accepted_cell_specification": null,
+    "chemistry_id": null,
+    "design_capacity_mAh": null,
+    "measured_capacity_mAh": null,
+    "qualified_temperature_range_C": null
+  },
+  "hardware": {
+    "shunt_ohm": 0.002,
+    "shunt_order_code": "CRF1206-FZ-R002ELF",
+    "cell_inputs": "VC4/VC3/VC2 joined after top filter; VC1 midpoint",
+    "sensors": {
+      "TS1": "Semitec 103AT-2, lower series group cell",
+      "TS2": "Semitec 103AT-2, upper series group cell",
+      "TS3": "unused, disabled and tied VSS",
+      "TS4": "unused, disabled and tied VSS",
+      "charger": "Separate Semitec 103AT-2 and separate two-wire LTC4162 connector"
+    },
+    "sensor_curve_coefficients": null,
+    "secondary_protector": null,
+    "chemical_fuse": null,
+    "pack_fuse": null,
+    "cell_sense_harness_fault_protection": null,
+    "main_and_sense_return_current_sharing_accepted": false
+  },
+  "required_configuration": {
+    "cell_count": 2,
+    "TS1_cell_mode": true,
+    "TS2_cell_mode": true,
+    "TS3_enabled": false,
+    "TS4_enabled": false,
+    "host_cell_temperature_override_enabled": false,
+    "BTP_INT_used": false,
+    "internal_balancing_development_only": true,
+    "automatic_permanent_failure_actions_reviewed": false
+  },
+  "protection_limits": {
+    "cell_overvoltage_V": null,
+    "cell_overvoltage_delay_s": null,
+    "cell_overvoltage_recovery_V": null,
+    "cell_undervoltage_V": null,
+    "cell_undervoltage_delay_s": null,
+    "cell_undervoltage_recovery_V": null,
+    "charge_overcurrent_A": null,
+    "charge_overcurrent_delay_s": null,
+    "discharge_overcurrent_A": null,
+    "discharge_overcurrent_delay_s": null,
+    "hardware_overload_A": null,
+    "hardware_overload_delay_s": null,
+    "short_charge_A": null,
+    "short_charge_delay_s": null,
+    "short_discharge_A": null,
+    "short_discharge_delay_s": null,
+    "charge_temperature_min_C": null,
+    "charge_temperature_max_C": null,
+    "discharge_temperature_min_C": null,
+    "discharge_temperature_max_C": null,
+    "temperature_hysteresis_C": null,
+    "temperature_fault_delay_s": null,
+    "precharge_timeout_s": null,
+    "normal_charge_timeout_s": null
+  },
+  "charger_coordination": {
+    "charger_order_code": "LTC4162IUFD-LADM#TRPBF",
+    "normal_target_cell_voltage_V": null,
+    "normal_charge_current_A": null,
+    "autonomous_startup_profile_accepted": false,
+    "BMS_recommendations_automatically_executed_by_charger": false,
+    "charger_NTC_limits_accepted": false,
+    "charger_to_pack_35V_fault_contained": false
+  },
+  "commissioning": {
+    "initial_source": "Current-limited 2S simulator; verified PACK+ wake fixture",
+    "cell_connection_and_mating_order": null,
+    "require_identity_readback_before_programming": true,
+    "require_2S_and_sensor_readback_before_real_pack": true,
+    "require_power_cycle_readback": true,
+    "calibration": [
+      "Both group voltages",
+      "Signed current in both directions",
+      "Current zero at multiple bus states",
+      "TS1 and TS2 against reference thermometer"
+    ],
+    "required_fault_tests": [
+      "Each NTC valid/open/short with MCU reset and bus unavailable",
+      "Cold-PCB open-sensor behavior",
+      "Individual group UV/OV and recovery",
+      "Charge/discharge current trips and physical FET current",
+      "Precharge timeout and recovery",
+      "RBF inserted/open-harness/released in both power directions",
+      "Unpowered/partial-power bus and service-adapter paths",
+      "Charger failed-short overvoltage containment",
+      "Cell-sense harness fault protection, return-current sharing and mating order with simulator"
+    ],
+    "permanent_failure_policy": null,
+    "sleep_shutdown_wake_policy": null,
+    "learning_cycle_evidence": null,
+    "programmed_image_sha256": null,
+    "post_power_cycle_readback_sha256": null,
+    "sealing_policy": null
+  },
+  "release_gates": {
+    "numerical_limits_accepted": false,
+    "autonomous_protection_passed": false,
+    "complete_battery_current_measurement_passed": false,
+    "BMS_bus_power_boundary_passed": false,
+    "sensor_assembly_qualified": false,
+    "MOSFET_hot_SOA_passed": false,
+    "RBF_passed": false,
+    "flight_qualified": false
+  },
+  "notes": [
+    "Null values are intentionally unapproved and must not be converted to zero or defaults by a programmer.",
+    "This manifest is documentation and must not be consumed as a programming recipe. No register addresses, bit encodings, credentials or programming image are provided.",
+    "The shared-positive ISO1540 development supply creates a state-dependent shunt measurement error; resolve isolated power before accepting gauging.",
+    "Electronics component screening at -40 to +85 C is not an accepted battery operating range."
+  ]
+}

@@ -1,0 +1,157 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-24T09:36:44",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.0",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/d2f9029f-3def-47b5-b2f4-d0d3ebe6a5de",
+            "violations": [
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin 1 [EN/FLT, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 0.6858
+                            },
+                            "uuid": "4c841262-76c4-4322-8e87-ee19500cd5ff"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin 2 [VINP, Power input, Line]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 0.7366
+                            },
+                            "uuid": "0723b392-bd64-4ea3-a260-03bf764a6760"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin 2 [VINP, Power input, Line]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 0.7366
+                            },
+                            "uuid": "0723b392-bd64-4ea3-a260-03bf764a6760"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin 3 [GNDP, Power input, Line]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 0.7874
+                            },
+                            "uuid": "35e50864-459a-4b79-af02-c9cd0b696bfe"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Input Power pin not driven by any Output Power pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin 9 [GNDS, Power input, Line]",
+                            "pos": {
+                                "x": 1.4478,
+                                "y": 0.8382
+                            },
+                            "uuid": "195290dd-ff9d-4e7a-bcce-f8f6e2d9d866"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "power_pin_not_driven"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin 8 [VCC, Power output, Line]",
+                            "pos": {
+                                "x": 1.4478,
+                                "y": 0.889
+                            },
+                            "uuid": "d1087034-9b4e-4d25-bc6e-9a623624a55a"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Pin not connected",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin 7 [SEL, Input, Line]",
+                            "pos": {
+                                "x": 1.4478,
+                                "y": 0.9398
+                            },
+                            "uuid": "5e9e9fac-25f8-4f15-97f8-f92a759ca840"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_connected"
+                },
+                {
+                    "description": "Input pin not driven by any Output pins",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin 7 [SEL, Input, Line]",
+                            "pos": {
+                                "x": 1.4478,
+                                "y": 0.9398
+                            },
+                            "uuid": "5e9e9fac-25f8-4f15-97f8-f92a759ca840"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_not_driven"
+                }
+            ]
+        }
+    ],
+    "source": "ucc33020_check.kicad_sch"
+}

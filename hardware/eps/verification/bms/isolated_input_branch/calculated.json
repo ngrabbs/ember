@@ -1,0 +1,294 @@
+{
+  "status": "IMPOSED_ANALYTICAL_SENSITIVITY_NOT_DEVICE_OR_SYSTEM_ACCEPTANCE",
+  "source_V": 3.232799,
+  "series_path_ohm": 1.135,
+  "capacitor_ESR_ohm": 0.01,
+  "burst_A": 0.8,
+  "baseline_A": 0.015,
+  "burst_width_s": 8.16e-06,
+  "burst_period_s": 0.00018301714285714284,
+  "average_load_A": 0.05,
+  "assumptions": [
+    "Ideal immediate current clamp; no real TPS response, latch timer, reverse comparator or soft start",
+    "Stiff essential source; source sag, shared reservoir, trace inductance and regulator loop omitted",
+    "Imposed0.8A burst is not a guaranteed UCC maximum; no self-consistent UVLO/restart model",
+    "If input falls below3V, reject the scenario; do not interpret the trace as real undervoltage operation",
+    "1ohm+135mohm series path and10mohm ESR are imposed values; not a complete PVT envelope"
+  ],
+  "periodic_cases": [
+    {
+      "limit_A": 0.11,
+      "effective_C_uF": 10,
+      "periodic_input_min_V": 2.6398873699719525,
+      "periodic_input_max_V": 3.2157722706301346,
+      "margin_to_3V_V": -0.3601126300280475,
+      "within_UCC_recommended_range_for_this_scenario": false
+    },
+    {
+      "limit_A": 0.11,
+      "effective_C_uF": 22,
+      "periodic_input_min_V": 2.9466192269051277,
+      "periodic_input_max_V": 3.215346600732039,
+      "margin_to_3V_V": -0.053380773094872325,
+      "within_UCC_recommended_range_for_this_scenario": false
+    },
+    {
+      "limit_A": 0.11,
+      "effective_C_uF": 33,
+      "periodic_input_min_V": 3.0305208357768767,
+      "periodic_input_max_V": 3.213775343942273,
+      "margin_to_3V_V": 0.030520835776876698,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.11,
+      "effective_C_uF": 47,
+      "periodic_input_min_V": 3.0785574398299387,
+      "periodic_input_max_V": 3.210673592288738,
+      "margin_to_3V_V": 0.07855743982993868,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.11,
+      "effective_C_uF": 54,
+      "periodic_input_min_V": 3.092523919936053,
+      "periodic_input_max_V": 3.2089385748758166,
+      "margin_to_3V_V": 0.09252391993605302,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.11,
+      "effective_C_uF": 68,
+      "periodic_input_min_V": 3.1108579290751446,
+      "periodic_input_max_V": 3.2054928840690358,
+      "margin_to_3V_V": 0.11085792907514458,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.11,
+      "effective_C_uF": 100,
+      "periodic_input_min_V": 3.1318419127352466,
+      "periodic_input_max_V": 3.1992373861030208,
+      "margin_to_3V_V": 0.1318419127352466,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.15,
+      "effective_C_uF": 10,
+      "periodic_input_min_V": 2.666068503177951,
+      "periodic_input_max_V": 3.2157735584730474,
+      "margin_to_3V_V": -0.33393149682204903,
+      "within_UCC_recommended_range_for_this_scenario": false
+    },
+    {
+      "limit_A": 0.15,
+      "effective_C_uF": 22,
+      "periodic_input_min_V": 2.955140219482372,
+      "periodic_input_max_V": 3.2154919136122473,
+      "margin_to_3V_V": -0.04485978051762807,
+      "within_UCC_recommended_range_for_this_scenario": false
+    },
+    {
+      "limit_A": 0.15,
+      "effective_C_uF": 33,
+      "periodic_input_min_V": 3.034299658232047,
+      "periodic_input_max_V": 3.214064516604784,
+      "margin_to_3V_V": 0.03429965823204695,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.15,
+      "effective_C_uF": 47,
+      "periodic_input_min_V": 3.079445879133657,
+      "periodic_input_max_V": 3.210785849215342,
+      "margin_to_3V_V": 0.0794458791336572,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.15,
+      "effective_C_uF": 54,
+      "periodic_input_min_V": 3.092829667132145,
+      "periodic_input_max_V": 3.208964512903346,
+      "margin_to_3V_V": 0.09282966713214513,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.15,
+      "effective_C_uF": 68,
+      "periodic_input_min_V": 3.1108579290751446,
+      "periodic_input_max_V": 3.2054928840690358,
+      "margin_to_3V_V": 0.11085792907514458,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.15,
+      "effective_C_uF": 100,
+      "periodic_input_min_V": 3.1318419127352466,
+      "periodic_input_max_V": 3.1992373861030208,
+      "margin_to_3V_V": 0.1318419127352466,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.2,
+      "effective_C_uF": 10,
+      "periodic_input_min_V": 2.694806527213972,
+      "periodic_input_max_V": 3.2157737951595258,
+      "margin_to_3V_V": -0.30519347278602815,
+      "within_UCC_recommended_range_for_this_scenario": false
+    },
+    {
+      "limit_A": 0.2,
+      "effective_C_uF": 22,
+      "periodic_input_min_V": 2.9616738047574334,
+      "periodic_input_max_V": 3.2155330801167565,
+      "margin_to_3V_V": -0.03832619524256664,
+      "within_UCC_recommended_range_for_this_scenario": false
+    },
+    {
+      "limit_A": 0.2,
+      "effective_C_uF": 33,
+      "periodic_input_min_V": 3.0350864061477054,
+      "periodic_input_max_V": 3.2140834359101618,
+      "margin_to_3V_V": 0.03508640614770542,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.2,
+      "effective_C_uF": 47,
+      "periodic_input_min_V": 3.079445879133657,
+      "periodic_input_max_V": 3.210785849215342,
+      "margin_to_3V_V": 0.0794458791336572,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.2,
+      "effective_C_uF": 54,
+      "periodic_input_min_V": 3.092829667132145,
+      "periodic_input_max_V": 3.208964512903346,
+      "margin_to_3V_V": 0.09282966713214513,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.2,
+      "effective_C_uF": 68,
+      "periodic_input_min_V": 3.1108579290751446,
+      "periodic_input_max_V": 3.2054928840690358,
+      "margin_to_3V_V": 0.11085792907514458,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.2,
+      "effective_C_uF": 100,
+      "periodic_input_min_V": 3.1318419127352466,
+      "periodic_input_max_V": 3.1992373861030208,
+      "margin_to_3V_V": 0.1318419127352466,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.3,
+      "effective_C_uF": 10,
+      "periodic_input_min_V": 2.7375177533498625,
+      "periodic_input_max_V": 3.215773881664162,
+      "margin_to_3V_V": -0.26248224665013753,
+      "within_UCC_recommended_range_for_this_scenario": false
+    },
+    {
+      "limit_A": 0.3,
+      "effective_C_uF": 22,
+      "periodic_input_min_V": 2.9634375044571097,
+      "periodic_input_max_V": 3.2155375668158244,
+      "margin_to_3V_V": -0.03656249554289026,
+      "within_UCC_recommended_range_for_this_scenario": false
+    },
+    {
+      "limit_A": 0.3,
+      "effective_C_uF": 33,
+      "periodic_input_min_V": 3.0350864061477054,
+      "periodic_input_max_V": 3.2140834359101618,
+      "margin_to_3V_V": 0.03508640614770542,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.3,
+      "effective_C_uF": 47,
+      "periodic_input_min_V": 3.079445879133657,
+      "periodic_input_max_V": 3.210785849215342,
+      "margin_to_3V_V": 0.0794458791336572,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.3,
+      "effective_C_uF": 54,
+      "periodic_input_min_V": 3.092829667132145,
+      "periodic_input_max_V": 3.208964512903346,
+      "margin_to_3V_V": 0.09282966713214513,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.3,
+      "effective_C_uF": 68,
+      "periodic_input_min_V": 3.1108579290751446,
+      "periodic_input_max_V": 3.2054928840690358,
+      "margin_to_3V_V": 0.11085792907514458,
+      "within_UCC_recommended_range_for_this_scenario": true
+    },
+    {
+      "limit_A": 0.3,
+      "effective_C_uF": 100,
+      "periodic_input_min_V": 3.1318419127352466,
+      "periodic_input_max_V": 3.1992373861030208,
+      "margin_to_3V_V": 0.1318419127352466,
+      "within_UCC_recommended_range_for_this_scenario": true
+    }
+  ],
+  "startup_charge_sensitivities": [
+    {
+      "nominal_C_uF": 44,
+      "C_upper_tolerance_temperature_sensitivity_uF": 55.660000000000004,
+      "minimum_limit_A": 0.11,
+      "assumed_simultaneous_average_load_A": 0.05,
+      "ideal_charge_time_to_3p3244V_ms": 3.0839350666666663,
+      "note": "Charge-balance sensitivity, not actual switch/UCC startup or timer reset behavior"
+    },
+    {
+      "nominal_C_uF": 44,
+      "C_upper_tolerance_temperature_sensitivity_uF": 55.660000000000004,
+      "minimum_limit_A": 0.2,
+      "assumed_simultaneous_average_load_A": 0.05,
+      "ideal_charge_time_to_3p3244V_ms": 1.2335740266666664,
+      "note": "Charge-balance sensitivity, not actual switch/UCC startup or timer reset behavior"
+    },
+    {
+      "nominal_C_uF": 66,
+      "C_upper_tolerance_temperature_sensitivity_uF": 83.49000000000001,
+      "minimum_limit_A": 0.11,
+      "assumed_simultaneous_average_load_A": 0.05,
+      "ideal_charge_time_to_3p3244V_ms": 4.6259026,
+      "note": "Charge-balance sensitivity, not actual switch/UCC startup or timer reset behavior"
+    },
+    {
+      "nominal_C_uF": 66,
+      "C_upper_tolerance_temperature_sensitivity_uF": 83.49000000000001,
+      "minimum_limit_A": 0.2,
+      "assumed_simultaneous_average_load_A": 0.05,
+      "ideal_charge_time_to_3p3244V_ms": 1.8503610399999997,
+      "note": "Charge-balance sensitivity, not actual switch/UCC startup or timer reset behavior"
+    },
+    {
+      "nominal_C_uF": 88,
+      "C_upper_tolerance_temperature_sensitivity_uF": 111.32000000000001,
+      "minimum_limit_A": 0.11,
+      "assumed_simultaneous_average_load_A": 0.05,
+      "ideal_charge_time_to_3p3244V_ms": 6.167870133333333,
+      "note": "Charge-balance sensitivity, not actual switch/UCC startup or timer reset behavior"
+    },
+    {
+      "nominal_C_uF": 88,
+      "C_upper_tolerance_temperature_sensitivity_uF": 111.32000000000001,
+      "minimum_limit_A": 0.2,
+      "assumed_simultaneous_average_load_A": 0.05,
+      "ideal_charge_time_to_3p3244V_ms": 2.4671480533333328,
+      "note": "Charge-balance sensitivity, not actual switch/UCC startup or timer reset behavior"
+    }
+  ]
+}

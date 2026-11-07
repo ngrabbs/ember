@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-23T10:27:03",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.0",
+    "sheets": [
+        {
+            "path": "/Recovery rail fault containment/",
+            "uuid_path": "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75/3addf3f3-8945-44d9-aa36-00164d1efa41",
+            "violations": [
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "Label 'REC5_RESET'",
+                            "pos": {
+                                "x": 0.381,
+                                "y": 2.1844
+                            },
+                            "uuid": "c705dab1-1764-4671-b652-4b6ede1877c0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                }
+            ]
+        },
+        {
+            "path": "/",
+            "uuid_path": "/4ca93784-5fd4-40da-95d1-e1eb9c75fa75",
+            "violations": []
+        }
+    ],
+    "source": "recovery_protection.kicad_sch"
+}

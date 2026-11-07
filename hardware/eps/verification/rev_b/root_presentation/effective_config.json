@@ -1,0 +1,62 @@
+{
+  "effective_config": {
+    "default_passives": {
+      "bulk_cap": "10uF X5R 0805",
+      "decoupling_cap": "100nF X7R 0402",
+      "pull_up": "10k 0402"
+    },
+    "design_rules": [],
+    "fab_constraints": {
+      "fab_house": "JLCPCB",
+      "layer_count": 2,
+      "min_clearance_mm": 0.15,
+      "min_trace_width_mm": 0.15,
+      "min_via_drill_mm": 0.3
+    },
+    "naming_conventions": {
+      "net_prefix_ground": "GND",
+      "net_prefix_power": "VCC_"
+    },
+    "preferred_distributors": [
+      "JLCPCB",
+      "LCSC"
+    ],
+    "preferred_manufacturers": [],
+    "schematic_style": {
+      "wire_hop_overs": "enabled_when_supported"
+    },
+    "sourcing": {
+      "avl": [],
+      "derating": {
+        "capacitor": {
+          "voltage": 0.8
+        },
+        "connector": {
+          "current": 0.8
+        },
+        "diode": {
+          "if": 0.8,
+          "vr": 0.8
+        },
+        "inductor": {
+          "current": 0.8
+        },
+        "led": {
+          "if": 0.8
+        },
+        "mosfet": {
+          "id": 0.8,
+          "vds": 0.8
+        },
+        "regulator": {
+          "current": 0.8,
+          "power": 0.7
+        },
+        "resistor": {
+          "power": 0.6
+        }
+      }
+    }
+  },
+  "note": "Merged user defaults + project overrides. Use these values for all design decisions."
+}
