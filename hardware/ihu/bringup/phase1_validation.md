@@ -1,5 +1,10 @@
 # Internal Housekeeping Unit Phase 1 Validation Plan
 
+> **Earlier prototype plan.** The new STM32 PCB's verification obligations and
+> unresolved test limits are in the [hardware requirements specification](../design/hardware_requirements.md#10-verification-matrix--no-results-claimed).
+> SPI-to-COMMS tests and healthy-link mode-release thresholds below are historical
+> proposals, not acceptance criteria for the new dual-native-CAN IHU.
+
 ## Scope
 
 Phase 1 validates IHU boot behavior, interface reliability, and basic

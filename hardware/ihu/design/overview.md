@@ -1,5 +1,9 @@
 # Internal Housekeeping Unit Architecture Overview
 
+**PCB design authority:** [Hardware requirements and electrical interface specification](hardware_requirements.md),
+draft 0.1, October 24, 2026. It distinguishes decided direction from proposals and
+open electrical contracts. Existing firmware behavior remains revision-specific.
+
 ## Scope
 
 This document defines the baseline architecture for the internal housekeeping unit board
@@ -14,14 +18,15 @@ that coordinates EPS, communications, and payload behavior.
 
 ## Baseline Hardware Direction
 
-- MCU: RP2040
+- New PCB MCU: STM32G0B1 family with dual native FDCAN controllers; exact MPN/package open
+- GNSS: ATGM336H-5N31 for ground/demo; antenna assembly and flight suitability open
 - Primary board interfaces:
   - I2C for EPS housekeeping telemetry
   - UART for debug and bring-up in the FreeRTOS prototype
   - CAN for the standalone Feather bench packet path
   - SPI remains an older stack signal allocation
 - Intended production interface:
-  - CAN A/B via external controllers/transceivers; redundant operation remains unqualified
+  - CAN A/B via native MCU controllers and separate external transceivers; redundant operation remains unqualified
 
 ## Functional Block View
 
@@ -70,8 +75,8 @@ concept is retained here as history, not an implemented mode.
 - Final pin-map and connector assignment for SPI/I2C/UART/GPIO alerts
 - Watchdog architecture (single-stage vs staged recovery)
 - Safe-mode trigger thresholds and clear-exit conditions
-- Production CAN A/B controller allocation and failover policy; the single-bus
-  Feather bench already uses MCP25625
+- Exact STM32 package/pin and memory fit, CAN PHY selection and failover policy;
+  the single-bus Feather bench uses MCP25625 and is not this PCB architecture
 
 ## Related Documents
 
