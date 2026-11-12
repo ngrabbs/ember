@@ -96,41 +96,98 @@ static bool demo_emit(uint64_t deadline) {
     demo_cw_deadline=deadline;
     return boot_morse(demo_morse_segment);
 }
-static bool demo_decode_continue(void) {
-    return !demo_abort && time_us_64()<demo_decode_deadline &&
-           getchar_timeout_us(0)<0 && demo_radio_poll(false) && !demo_tx_pending;
-}
 static bool demo_rx_healthy(void){
     uint8_t enabled,status;
     return clock_read(3,&enabled) && enabled==0xfd && clock_read(0,&status) && !(status&0xa8);
 }
-/* Hardware-paced ADC samples allow CAN service during capture. Stop the
- * capture immediately for a pending TX; the board is half-duplex. */
+
+/* DMA keeps sampling while the decoder reads its independent snapshot.
+ * Overlap exceeds the ground gateway's modulated uplink length. */
+enum {
+    DEMO_DMA_SAMPLES=16384, DEMO_WINDOW_SAMPLES=32768,
+    DEMO_OVERLAP_SAMPLES=7680,
+    DEMO_WINDOW_STEP=DEMO_WINDOW_SAMPLES-DEMO_OVERLAP_SAMPLES
+};
 static int demo_dma;
+static uint16_t demo_dma_ring[DEMO_DMA_SAMPLES] __attribute__((aligned(32768)));
+static uint16_t demo_history_samples[DEMO_WINDOW_SAMPLES];
+static bool demo_adc_running;
+static uint32_t demo_adc_copied,demo_adc_next;
+static uint64_t demo_adc_epoch_us,demo_adc_start_us,demo_adc_end_us;
 static unsigned demo_rx_window;
-static uint64_t demo_adc_start_us, demo_adc_end_us;
 static unsigned demo_adc_samples;
-static bool demo_capture(void){
-    adc_run(false);adc_fifo_drain();
+static rd_result demo_last_forwarded;
+static unsigned demo_last_forwarded_window;
+
+static void demo_adc_stop(void){
+    if(!demo_adc_running)return;
+    adc_run(false);
+    dma_channel_abort((unsigned)demo_dma);
+    adc_fifo_drain();
+    demo_adc_running=false;
+}
+
+static void demo_adc_start(void){
+    adc_fifo_drain();
+    adc_hw->fcs |= ADC_FCS_OVER_BITS;
     dma_channel_config c=dma_channel_get_default_config((unsigned)demo_dma);
     channel_config_set_transfer_data_size(&c,DMA_SIZE_16);
     channel_config_set_read_increment(&c,false);
     channel_config_set_write_increment(&c,true);
+    channel_config_set_ring(&c,true,15);
     channel_config_set_dreq(&c,DREQ_ADC);
-    dma_channel_configure((unsigned)demo_dma,&c,rx_samples,&adc_hw->fifo,32768,true);
-    demo_adc_start_us=time_us_64();
+    demo_adc_copied=0;
+    demo_adc_next=DEMO_WINDOW_SAMPLES;
+    dma_channel_configure((unsigned)demo_dma,&c,demo_dma_ring,&adc_hw->fifo,UINT32_MAX,true);
+    demo_adc_epoch_us=time_us_64();
+    demo_adc_running=true;
     adc_run(true);
+}
+
+static bool demo_adc_collect(void){
+    uint32_t produced=UINT32_MAX-dma_hw->ch[demo_dma].transfer_count;
+    if(produced-demo_adc_copied>=DEMO_DMA_SAMPLES || (adc_hw->fcs&ADC_FCS_OVER_BITS)){
+        demo_fault="adc_overrun";
+        demo_abort=true;
+        return false;
+    }
+    /* Stop at the snapshot boundary. Remaining samples stay in the DMA ring. */
+    if(produced>demo_adc_next)produced=demo_adc_next;
+    __compiler_memory_barrier();
+    while(demo_adc_copied<produced){
+        uint32_t i=demo_adc_copied++;
+        demo_history_samples[i&(DEMO_WINDOW_SAMPLES-1)]=demo_dma_ring[i&(DEMO_DMA_SAMPLES-1)];
+    }
+    return true;
+}
+
+static bool demo_decode_continue(void){
+    return !demo_abort && time_us_64()<demo_decode_deadline &&
+           getchar_timeout_us(0)<0 && demo_radio_poll(false) &&
+           !demo_tx_pending && demo_adc_collect();
+}
+
+static bool demo_capture(void){
+    demo_adc_samples=0;
+    if(!demo_adc_running)demo_adc_start();
     uint64_t deadline=time_us_64()+4300000;
-    bool ok=true;
-    while(dma_channel_is_busy((unsigned)demo_dma) && !demo_tx_pending){
-        if(time_us_64()>=deadline || getchar_timeout_us(0)>=0 || !demo_radio_poll(false)){ok=false;break;}
+    while(!demo_tx_pending){
+        if(time_us_64()>=deadline || getchar_timeout_us(0)>=0 ||
+           !demo_radio_poll(false) || !demo_adc_collect())return false;
+        if(demo_adc_copied==demo_adc_next)break;
         sleep_us(300);
     }
-    adc_run(false);
-    demo_adc_end_us=time_us_64();
-    demo_adc_samples=32768-dma_hw->ch[demo_dma].transfer_count;
-    dma_channel_abort((unsigned)demo_dma);adc_fifo_drain();
-    return ok;
+    if(demo_tx_pending)return true;
+    uint32_t first=demo_adc_next-DEMO_WINDOW_SAMPLES;
+    unsigned offset=first&(DEMO_WINDOW_SAMPLES-1);
+    unsigned tail=DEMO_WINDOW_SAMPLES-offset;
+    memcpy(rx_samples,demo_history_samples+offset,tail*sizeof(rx_samples[0]));
+    memcpy(rx_samples+tail,demo_history_samples,offset*sizeof(rx_samples[0]));
+    demo_adc_start_us=demo_adc_epoch_us+(uint64_t)first*125;
+    demo_adc_end_us=demo_adc_epoch_us+(uint64_t)demo_adc_next*125;
+    demo_adc_samples=DEMO_WINDOW_SAMPLES;
+    demo_adc_next+=DEMO_WINDOW_STEP;
+    return true;
 }
 /* Report amplitude in ADC counts, with 16 ms peak-to-peak blocks to expose
  * a short burst inside the longer DMA window. Block statistics include noise. */
@@ -228,10 +285,12 @@ static void demo_radio_run(bool can_ok) {
         }
         if(demo_listen){
             if(demo_tx_pending){
+                demo_adc_stop();
                 if(!demo_transmit())goto failed;
                 continue;
             }
             if(!demo_capture() || !demo_rx_healthy())goto failed;
+            if(demo_tx_pending)continue;
             rd_result result={0};
             demo_decode_deadline=time_us_64()+3000000;
             const char *forward="not_attempted";
@@ -244,10 +303,19 @@ static void demo_radio_run(bool can_ok) {
                 if(!demo_link)forward="link_disabled";
                 else if(result.size>BD_PACKET_MAX || demo_uplink_id==UINT32_MAX)
                     forward="skipped";
-                else if(!demo_forward(&result)){
+                else if(demo_last_forwarded_window==demo_rx_window &&
+                        result.sequence==demo_last_forwarded.sequence &&
+                        result.size==demo_last_forwarded.size &&
+                        !memcmp(result.packet,demo_last_forwarded.packet,result.size)){
+                    forward="overlap_duplicate";
+                }else if(!demo_forward(&result)){
                     demo_log_rx(&result,decode_end,"failed");
                     goto failed;
-                }else forward="sent";
+                }else{
+                    forward="sent";
+                    demo_last_forwarded=result;
+                    demo_last_forwarded_window=demo_rx_window+1;
+                }
             }
             if(demo_abort || !demo_radio_poll(false) || !demo_rx_healthy() ||
                !demo_reply(demo_link?BD_LINKED:BD_RX))goto failed;
@@ -255,6 +323,7 @@ static void demo_radio_run(bool can_ok) {
         }else sleep_ms(1);
     }
 failed:
+    demo_adc_stop();
     demo_radio.spent=true;
     bool muted=rx_stop();
     if(can_ok && demo_radio.token)(void)demo_reply(BD_FAILED);
