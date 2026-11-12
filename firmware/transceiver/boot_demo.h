@@ -107,6 +107,9 @@ static bool demo_rx_healthy(void){
 /* Hardware-paced ADC samples allow CAN service during capture. Stop the
  * capture immediately for a pending TX; the board is half-duplex. */
 static int demo_dma;
+static unsigned demo_rx_window;
+static uint64_t demo_adc_start_us, demo_adc_end_us;
+static unsigned demo_adc_samples;
 static bool demo_capture(void){
     adc_run(false);adc_fifo_drain();
     dma_channel_config c=dma_channel_get_default_config((unsigned)demo_dma);
@@ -115,6 +118,7 @@ static bool demo_capture(void){
     channel_config_set_write_increment(&c,true);
     channel_config_set_dreq(&c,DREQ_ADC);
     dma_channel_configure((unsigned)demo_dma,&c,rx_samples,&adc_hw->fifo,32768,true);
+    demo_adc_start_us=time_us_64();
     adc_run(true);
     uint64_t deadline=time_us_64()+4300000;
     bool ok=true;
@@ -122,8 +126,40 @@ static bool demo_capture(void){
         if(time_us_64()>=deadline || getchar_timeout_us(0)>=0 || !demo_radio_poll(false)){ok=false;break;}
         sleep_us(300);
     }
-    adc_run(false);dma_channel_abort((unsigned)demo_dma);adc_fifo_drain();
+    adc_run(false);
+    demo_adc_end_us=time_us_64();
+    demo_adc_samples=32768-dma_hw->ch[demo_dma].transfer_count;
+    dma_channel_abort((unsigned)demo_dma);adc_fifo_drain();
     return ok;
+}
+/* Report amplitude in ADC counts, with 16 ms peak-to-peak blocks to expose
+ * a short burst inside the longer DMA window. Block statistics include noise. */
+static void demo_log_rx(const rd_result *result,uint64_t decode_end,const char *forward){
+    unsigned min=4095,max=0,clipped=0,quiet=4095,peak=0,peak_block=0;
+    for(unsigned start=0;start<demo_adc_samples;start+=128){
+        unsigned lo=4095,hi=0,end=start+128;
+        if(end>demo_adc_samples)end=demo_adc_samples;
+        for(unsigned i=start;i<end;++i){
+            unsigned sample=rx_samples[i];
+            if(sample<lo)lo=sample;
+            if(sample>hi)hi=sample;
+            if(sample==0 || sample>=4095)++clipped;
+        }
+        if(lo<min)min=lo;
+        if(hi>max)max=hi;
+        unsigned span=hi-lo;
+        if(span<quiet)quiet=span;
+        if(span>peak){peak=span;peak_block=start/128;}
+    }
+    printf("[rx_diag] window=%u adc_start_ms=%lu adc_end_ms=%lu samples=%u min=%u max=%u "
+           "clip=%u block_pp_min=%u block_pp_max=%u peak_offset_ms=%u "
+           "decode_end_ms=%lu sync=%u bad_header=%u crc_bad=%u crc_ok=%u "
+           "if_hz=%u seq=%lu can=%s\n",
+           ++demo_rx_window,(unsigned long)(demo_adc_start_us/1000),
+           (unsigned long)(demo_adc_end_us/1000),demo_adc_samples,min,max,clipped,
+           quiet,peak,peak_block*16,(unsigned long)(decode_end/1000),
+           result->sync_hits,result->header_rejects,result->crc_failures,result->crc_passes,
+           result->frequency,(unsigned long)result->sequence,forward);
 }
 static bool demo_forward(const rd_result *decoded){
     static ul_packet p;
@@ -198,13 +234,24 @@ static void demo_radio_run(bool can_ok) {
             if(!demo_capture() || !demo_rx_healthy())goto failed;
             rd_result result={0};
             demo_decode_deadline=time_us_64()+3000000;
-            if(!demo_tx_pending && rd_decode_impl(rx_samples,32768,&result,demo_decode_continue,false)){
+            const char *forward="not_attempted";
+            bool decoded=!demo_tx_pending &&
+                rd_decode_impl(rx_samples,32768,&result,demo_decode_continue,false);
+            uint64_t decode_end=time_us_64();
+            if(decoded){
                 printf("[boot_demo] RX sequence=%lu bytes=%u forward=%u\n",
                        (unsigned long)result.sequence,(unsigned)result.size,demo_link);
-                if(demo_link && !demo_forward(&result))goto failed;
+                if(!demo_link)forward="link_disabled";
+                else if(result.size>BD_PACKET_MAX || demo_uplink_id==UINT32_MAX)
+                    forward="skipped";
+                else if(!demo_forward(&result)){
+                    demo_log_rx(&result,decode_end,"failed");
+                    goto failed;
+                }else forward="sent";
             }
             if(demo_abort || !demo_radio_poll(false) || !demo_rx_healthy() ||
                !demo_reply(demo_link?BD_LINKED:BD_RX))goto failed;
+            demo_log_rx(&result,decode_end,forward);
         }else sleep_ms(1);
     }
 failed:
