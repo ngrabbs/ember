@@ -1,5 +1,7 @@
 # Transceiver firmware
 
+[Changelog](CHANGELOG.md) · [Current bench builds](../README.md#current-bench-builds)
+
 Original Pico only. Source: `firmware/transceiver`. The earlier
 FreeRTOS application was removed and remains available in Git history.
 The CMake target is `transceiver`; the output image is `transceiver.uf2`.

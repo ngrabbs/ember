@@ -1,5 +1,7 @@
 # IHU firmware
 
+[Changelog](CHANGELOG.md) · [Current bench builds](../README.md#current-bench-builds)
+
 Active IHU CAN Feather application, formerly `firmware/can_feather_bench`.
 The earlier FreeRTOS prototype was removed and remains available in Git history.
 This directory builds only the IHU: CMake project/target `ihu`, output `ihu.uf2`.
