@@ -63,6 +63,11 @@ static void complete_reply(void){
     tick(1);assert(startup_demo.tx_pending && output.route==BD_DOWN_ID);
     while(output.active)tick(2);
     cf_frame f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+    if(demo_schedule.report_pending){
+        tick(1);assert(startup_demo.tx_pending && output.route==BD_DOWN_ID);
+        while(output.active)tick(2);
+        f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+    }
 }
 static unsigned queued_message(void){
     ul_reader reader={0};ul_packet packet={0};

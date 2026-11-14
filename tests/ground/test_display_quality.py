@@ -17,7 +17,8 @@ class DisplayQuality(unittest.TestCase):
                 for path in Path(temp).glob('*.opi'):
                     root=ET.parse(path).getroot()
                     for pv in root.findall('.//pv'):
-                        self.assertIn(pv.text.removeprefix('/ember/'),known)
+                        if pv.text!='sim://ramp(0,10,1)':
+                            self.assertIn(pv.text.removeprefix('/ember/'),known)
                     for action in root.findall('.//actions/action'):
                         target=action.findtext('path')
                         if target:self.assertTrue((Path(temp)/target).exists(),target)

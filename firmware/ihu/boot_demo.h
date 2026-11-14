@@ -18,7 +18,7 @@ enum {
     DEMO_PAYLOAD_TIMEOUT_MS=750,
 };
 static struct {
-    bool enabled;
+    bool enabled,report_pending;
     uint16_t listen_seconds,telemetry_seconds;
     uint32_t started;
     uint8_t packet_set;
@@ -189,6 +189,22 @@ static bool demo_ack_setting(const ul_packet *request,uint32_t value){
     ul_p32(reply.payload+37,value);
     return cdh_send(&reply);
 }
+static size_t demo_schedule_packet(uint8_t *packet,uint32_t now){
+    const size_t size=W_PAYLOAD+W_SIZE_UHF_SCHEDULE_STATUS+2;
+    cdh_header(packet,size,NULL,W_KINDS_TELEMETRY,W_ID_UHF_SCHEDULE_STATUS,W_SIZE_UHF_SCHEDULE_STATUS);
+    ul_p32(packet+W_UPTIME_MS,now);
+    uint8_t *fields=packet+W_PAYLOAD;
+    fields[W_UHF_SCHEDULE_STATUS_ENABLED]=demo_schedule.enabled;
+    fields[W_UHF_SCHEDULE_STATUS_TELEMETRY_SET]=demo_schedule.packet_set;
+    ul_p16(fields+W_UHF_SCHEDULE_STATUS_LISTEN_SECONDS,demo_schedule.listen_seconds);
+    ul_p16(fields+W_UHF_SCHEDULE_STATUS_TELEMETRY_SECONDS,demo_schedule.telemetry_seconds);
+    uint32_t cycle=(demo_schedule.listen_seconds+demo_schedule.telemetry_seconds)*1000u;
+    ul_p32(fields+W_UHF_SCHEDULE_STATUS_CYCLE_OFFSET_MS,
+           demo_schedule.enabled?(now-demo_schedule.started)%cycle:0);
+    ul_p16(packet+size-2,ul_crc(packet,size-2));
+    return size;
+}
+
 static void demo_restart_schedule(uint32_t now){
     demo_schedule.started=now;
     demo_schedule.next_packet=0;
@@ -216,6 +232,7 @@ static void demo_set_output(const ul_packet *request,uint32_t now){
     if(demo_ack_setting(request,enabled)){
         if(enabled && !demo_schedule.enabled)demo_restart_schedule(now);
         demo_schedule.enabled=enabled;
+        demo_schedule.report_pending=true;
         if(enabled)startup_demo.heartbeat_enabled=false;
     }
 }
@@ -230,6 +247,7 @@ static void demo_set_schedule(const ul_packet *request,uint32_t now){
        (listen!=demo_schedule.listen_seconds || telem!=demo_schedule.telemetry_seconds)){
         demo_schedule.listen_seconds=listen;
         demo_schedule.telemetry_seconds=telem;
+        demo_schedule.report_pending=true;
         demo_restart_schedule(now);
     }
 }
@@ -241,6 +259,7 @@ static void demo_set_packet_set(const ul_packet *request,uint32_t now){
     }
     if(demo_ack_setting(request,set) && set!=demo_schedule.packet_set){
         demo_schedule.packet_set=set;
+        demo_schedule.report_pending=true;
         demo_restart_schedule(now);
     }
 }
@@ -269,6 +288,7 @@ static void demo_uplink(const cf_frame *f,uint32_t now){
     }
     if(!up_native_ping(p.payload,p.size) && !up_native_status(p.payload,p.size)){++demo_drops;return;}
     ember_command(&uplink_engine,p.payload,p.size,now,demo_command_reply,p.payload);
+    if(id==W_ID_REQUEST_STATUS && demo_response_size)demo_schedule.report_pending=true;
 }
 static bool demo_queue_packet(const uint8_t *p,size_t n,uint32_t now){
     static ul_packet packet;
@@ -471,7 +491,7 @@ static void demo_schedule_pump(uint32_t now){
         demo_restart_schedule(now-elapsed);
     }
     /* Leave time for the admitted burst to finish before the listen phase. */
-    unsigned count=demo_schedule.packet_set==W_UHF_TELEMETRY_SET_FULL?DEMO_FULL_STEPS:2;
+    unsigned count=demo_schedule.packet_set==W_UHF_TELEMETRY_SET_FULL?DEMO_FULL_STEPS+1:3;
     if(elapsed<listen_ms || cycle_ms-elapsed<=BD_TX_TIMEOUT_MS || demo_schedule.next_packet>=count)return;
     if(demo_schedule.next_packet==7){
         if(cycle_ms-elapsed<=BD_TX_TIMEOUT_MS+2500 || sensor_job.active ||
@@ -487,6 +507,11 @@ static void demo_schedule_pump(uint32_t now){
     uint8_t packet[BD_PACKET_MAX];
     size_t size;
     unsigned step=demo_schedule.next_packet++;
+    if(step==count-1){
+        size=demo_schedule_packet(packet,now);
+        if(!demo_queue_packet(packet,size,now))demo_fail("UHF schedule report queue... FAILED");
+        return;
+    }
     switch(step){
     case 0:
         size=status_packet(packet,NULL);
@@ -570,7 +595,12 @@ static void demo_link_pump(uint32_t now){
                 demo_fail("UHF reply queue... FAILED");
             demo_response_size=0;
         }else if(!demo_up.active && !fire_uplink.active && !demo_poll.active && !cdh.active){
-            if(demo_schedule.enabled)demo_schedule_pump(now);
+            if(demo_schedule.report_pending){
+                uint8_t packet[W_PAYLOAD+W_SIZE_UHF_SCHEDULE_STATUS+2];
+                size_t size=demo_schedule_packet(packet,now);
+                demo_schedule.report_pending=false;
+                if(!demo_queue_packet(packet,size,now))demo_fail("UHF schedule report queue... FAILED");
+            }else if(demo_schedule.enabled)demo_schedule_pump(now);
             else if(due){
                 uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2];
                 size_t n=health_packet(p,false,boot,telemetry_sequence++,now,BD_HEARTBEAT_MS,

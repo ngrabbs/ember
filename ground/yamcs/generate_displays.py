@@ -97,7 +97,7 @@ def generate(destination, instance="ember"):
     def script(text,pvs,filename,x,y,w,h=24,size=12):
         e=label(text,x,y,w,h,size,WHITE)
         path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/'+filename,checkConnect='false',sfe='false',seoe='false')
-        for pv in pvs:ET.SubElement(path,'pv',trig='true').text='/ember/'+pv
+        for pv in pvs:ET.SubElement(path,'pv',trig='true').text=pv if pv.startswith('sim://') else '/ember/'+pv
         return e
     def observed(pv,x,y,w=270,size=20):
         return script('No observation',[pv],'boolean-value.js' if pv in ('PAYLOAD_STATUS_ready','PAYLOAD_PING_RESULT_echo_ok','POWER_STATUS_adc_valid','POWER_STATUS_conversion_valid') else 'observed-value.js',x,y,w,32,size)
@@ -163,7 +163,11 @@ def generate(destination, instance="ember"):
         label('The EPS header identifies a ground wrapper session, not an IHU reset or spacecraft UTC.',40,514,914,21,11)
     nav('System raw / history' if instance=='ember' else 'Power raw / quality','System.par' if instance=='ember' else 'EPS.par',22,568)
     if instance=='ember-bench':web('Payload commands','/commanding/send',250,568,210);web('Command history','/commanding/history',478,568,210)
-    else:label('Receive-only radio environment · no command uplink configured',252,573,720,24,11,ORANGE)
+    else:
+        script('UHF schedule · waiting for IHU status',
+               ['UHF_SCHEDULE_STATUS_'+p for p in ('enabled','listen_seconds','telemetry_seconds',
+                    'cycle_offset_ms','source_boot_id')]+['IHU_STATUS_source_boot_id','sim://ramp(0,10,1)'],
+               'uhf-countdown.js',252,568,720,32,15)
     footer('Times are ground reception times. NO OBSERVATION and EXPIRED do not mean a device is healthy or failed.')
     save('Overview.opi')
 

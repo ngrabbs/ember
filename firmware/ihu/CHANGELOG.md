@@ -1,5 +1,9 @@
 # IHU firmware changelog
 
+## 0.28.0
+
+- Report UHF schedule durations and phase for the Yamcs countdown and timeline.
+
 ## 0.27.0
 
 - Report the IHU build identity and restore transceiver, payload, LTE CAN MCU and Walter firmware identities in
