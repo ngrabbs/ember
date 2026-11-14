@@ -31,7 +31,7 @@ results apply to the hardware.
 | Firmware | Version on `main` | Bench identity and purpose |
 |---|---|---|
 | [IHU](ihu/CHANGELOG.md) | 0.14.1 | **Live: 0.26.0 · `af0925a`.** The USB console reported a clean build. This is the startup and UHF demo build for scheduled telemetry, GPS, and coordination of payload fire checks. |
-| [Transceiver](transceiver/CHANGELOG.md) | 0.34.0 | **Running commit unconfirmed.** The November 5 flash record identifies 0.37.2 at `14243dc`, used for the bench UHF link. The November 12 receive experiments share version 0.37.2. The November 14 sweep logs verify restoration of the pre-sweep image without identifying its commit. |
+| [Transceiver](transceiver/CHANGELOG.md) | 0.34.0 | **Running version and commit unconfirmed.** The November 5 flash record identifies 0.37.2 at `14243dc`, used for the bench UHF link. The November 12 receive experiments share version 0.37.2. The November 14 sweep logs verify restoration of the pre-sweep image without identifying its commit. |
 | [Payload](payload/CHANGELOG.md) | 0.2.0 | **Running version unconfirmed.** The October 17 Yamcs identity is 0.1.0 at `c6be5ab`. A later boot reported payload status without a version. The 0.7.0 branch adds capture GPS evidence for the live camera fire-check workflow. |
 
 The IHU identity came from the m75q USB console. Transceiver restore evidence
