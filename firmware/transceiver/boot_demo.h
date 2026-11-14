@@ -1,5 +1,6 @@
 #pragma once
 #include "boot_demo_link.h"
+#include "firmware_info.h"
 #include "boot_morse.h"
 #include "hardware/sync.h"
 #include "hardware/dma.h"
@@ -18,6 +19,22 @@ static bool demo_reply(unsigned id) {
     cf_frame f=bd_frame(id,demo_radio.token,responder_boot);
     return can_send_frame(&f,time_us_64()+50000);
 }
+static void demo_identity(const cf_frame *frame,uint32_t now){
+    static cf_reader reader;
+    ul_packet request;
+    if(!cf_feed(&reader,frame,CF_IHU_ID,now) ||
+       !up_envelope(&reader,&request) || request.version!=1 ||
+       request.sender!=demo_radio.token || request.origin!=demo_radio.token ||
+       request.type!=UL_FIRMWARE_INFO || request.size)return;
+    request.type=UL_FIRMWARE_INFO_ACK;
+    request.sender=responder_boot;
+    request.size=FI_SIZE;
+    fi_payload(request.payload,responder_boot,now);
+    uint8_t wire[UL_WIRE_MAX];
+    size_t size=ul_encode(&request,wire);
+    if(size)(void)hello_send(wire,size,request.request,time_us_64()+50000);
+}
+
 static bool demo_radio_poll(bool keying) {
     if(demo_link && (uint32_t)((uint32_t)(time_us_64()/1000)-demo_keep_ms)>=BD_KEEP_TIMEOUT_MS){
         demo_fault="keepalive_expired";return false;
@@ -41,6 +58,10 @@ static bool demo_radio_poll(bool keying) {
         if(f.id==BD_KEEP && demo_radio.spent && bd_matches(&f,demo_radio.token,responder_boot))
             demo_keep_ms=(uint32_t)(time_us_64()/1000);
         if(keying)continue;
+        if(demo_link && f.id==CF_IHU_ID){
+            demo_identity(&f,(uint32_t)(time_us_64()/1000));
+            continue;
+        }
         if(demo_listen && f.id==BD_LINK && bd_matches(&f,demo_radio.token,responder_boot)){
             if(!demo_link){demo_link=true;demo_keep_ms=(uint32_t)(time_us_64()/1000);}
             if(!demo_reply(BD_LINKED))return false;
@@ -189,11 +210,23 @@ static bool demo_capture(void){
     demo_adc_next+=DEMO_WINDOW_STEP;
     return true;
 }
+/* USB diagnostics share this loop with the two hardware CAN RX buffers. */
+static bool demo_write_log(const char *line, int length) {
+    for(int offset=0;offset<length;offset+=16){
+        if(!demo_radio_poll(false))return false;
+        int count=length-offset;
+        if(count>16)count=16;
+        (void)stdio_put_string(line+offset,count,false,true);
+    }
+    return demo_radio_poll(false);
+}
+
 /* Report amplitude in ADC counts, with 16 ms peak-to-peak blocks to expose
  * a short burst inside the longer DMA window. Block statistics include noise. */
-static void demo_log_rx(const rd_result *result,uint64_t decode_end,const char *forward){
+static bool demo_log_rx(const rd_result *result,uint64_t decode_end,const char *forward){
     unsigned min=4095,max=0,clipped=0,quiet=4095,peak=0,peak_block=0;
     for(unsigned start=0;start<demo_adc_samples;start+=128){
+        if(start%2048==0 && !demo_radio_poll(false))return false;
         unsigned lo=4095,hi=0,end=start+128;
         if(end>demo_adc_samples)end=demo_adc_samples;
         for(unsigned i=start;i<end;++i){
@@ -208,7 +241,8 @@ static void demo_log_rx(const rd_result *result,uint64_t decode_end,const char *
         if(span<quiet)quiet=span;
         if(span>peak){peak=span;peak_block=start/128;}
     }
-    printf("[rx_diag] window=%u adc_start_ms=%lu adc_end_ms=%lu samples=%u min=%u max=%u "
+    char line[352];
+    int length=snprintf(line,sizeof(line),"[rx_diag] window=%u adc_start_ms=%lu adc_end_ms=%lu samples=%u min=%u max=%u "
            "clip=%u block_pp_min=%u block_pp_max=%u peak_offset_ms=%u "
            "decode_end_ms=%lu sync=%u bad_header=%u crc_bad=%u crc_ok=%u "
            "if_hz=%u seq=%lu can=%s\n",
@@ -217,6 +251,7 @@ static void demo_log_rx(const rd_result *result,uint64_t decode_end,const char *
            quiet,peak,peak_block*16,(unsigned long)(decode_end/1000),
            result->sync_hits,result->header_rejects,result->crc_failures,result->crc_passes,
            result->frequency,(unsigned long)result->sequence,forward);
+    return demo_write_log(line,length>=(int)sizeof(line)?(int)sizeof(line)-1:length);
 }
 static bool demo_forward(const rd_result *decoded){
     static ul_packet p;
@@ -261,9 +296,12 @@ static bool demo_transmit(void){
     bool sent=packet_frame_size && clock_window_impl(true,false,demo_bpsk,1,0,demo_tx_permitted);
     bool rx=sent && rx_start(true) && demo_rx_healthy();
     cf_frame report=bd_frame(rx?BD_TX_OK:BD_TX_FAILED,request,responder_boot);
-    printf("[boot_demo] TX request=%lu sent=%u RX_READY=%u ground_ack=0\n",
+    bool reported=can_send_frame(&report,time_us_64()+50000);
+    char line[112];
+    int length=snprintf(line,sizeof(line),"[boot_demo] TX request=%lu sent=%u RX_READY=%u ground_ack=0\n",
            (unsigned long)request,sent,rx);
-    return can_send_frame(&report,time_us_64()+50000) && rx;
+    bool logged=demo_write_log(line,length>=(int)sizeof(line)?(int)sizeof(line)-1:length);
+    return reported && rx && logged;
 }
 static void demo_radio_run(bool can_ok) {
     printf("[boot_demo] CONDUCTED ONLY; generic packet link; ordinary console RF paths disabled\n");
@@ -309,7 +347,7 @@ static void demo_radio_run(bool can_ok) {
                         !memcmp(result.packet,demo_last_forwarded.packet,result.size)){
                     forward="overlap_duplicate";
                 }else if(!demo_forward(&result)){
-                    demo_log_rx(&result,decode_end,"failed");
+                    (void)demo_log_rx(&result,decode_end,"failed");
                     goto failed;
                 }else{
                     forward="sent";
@@ -319,7 +357,7 @@ static void demo_radio_run(bool can_ok) {
             }
             if(demo_abort || !demo_radio_poll(false) || !demo_rx_healthy() ||
                !demo_reply(demo_link?BD_LINKED:BD_RX))goto failed;
-            demo_log_rx(&result,decode_end,forward);
+            if(!demo_log_rx(&result,decode_end,forward))goto failed;
         }else sleep_ms(1);
     }
 failed:

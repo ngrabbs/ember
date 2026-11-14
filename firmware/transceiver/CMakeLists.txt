@@ -26,6 +26,8 @@ target_compile_definitions(transceiver PRIVATE TRANSCEIVER_BOOT_DEMO=$<BOOL:${TR
 target_include_directories(transceiver PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 if(TRANSCEIVER_BOOT_DEMO)
     pico_set_program_name(transceiver "transceiver-startup-demo")
+    # Diagnostics must never wait for host USB CDC buffer space.
+    target_compile_definitions(transceiver PRIVATE PICO_STDIO_USB_STDOUT_TIMEOUT_US=0)
 endif()
 pico_set_program_version(transceiver "${FW_VERSION}")
 target_include_directories(transceiver PRIVATE ../comms_transport)
