@@ -94,6 +94,8 @@ Use `SET_UHF_TELEMETRY_SET` to choose `BASIC` or `FULL`. BASIC sends one
 `IHU_STATUS` and one `POWER_STATUS` per window. FULL adds one
 `DEVICE_STATUS`, one `SYSTEM_STATUS`, one `HEARTBEAT`, and one
 `PAYLOAD_STATUS` when the payload replies over CAN, plus one `GPS_STATUS`.
+The Devices display receives the transceiver, payload, LTE CAN MCU and
+Walter firmware identities when those devices respond during the window.
 The Overview GPS panel shows the fix status, coordinates, MSL altitude,
 and satellites used. `PAYLOAD_STATUS` fills the
 health fields on the Payload display. BASIC is the boot

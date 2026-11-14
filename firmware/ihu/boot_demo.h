@@ -59,61 +59,97 @@ static size_t demo_gps_packet(uint8_t *packet){
 /* The optional poll borrows the CAN request slot until a reply or timeout. */
 static struct {
     bool active,valid;
-    uint8_t target;
+    uint8_t target, request;
     uint32_t peer;
-    uint8_t report[PL_REPORT_SIZE];
-} demo_payload;
+    uint8_t report[FI_SIZE];
+} demo_poll;
 
-static void demo_payload_stop(void){
-    if(!demo_payload.active)return;
-    target_index=demo_payload.target;
-    peer=demo_payload.peer;
+static void demo_poll_stop(void){
+    if(!demo_poll.active)return;
+    target_index=demo_poll.target;
+    peer=demo_poll.peer;
     pending.active=false;
     output.active=false;
-    demo_payload.active=false;
+    demo_poll.active=false;
 }
 
-static void demo_payload_start(void){
+static void demo_poll_start(uint8_t node,uint8_t request){
     if(pending.active || output.active)return;
-    demo_payload.active=true;
-    demo_payload.valid=false;
-    demo_payload.target=target_index;
-    demo_payload.peer=peer;
-    target_index=DR_PAYLOAD_INDEX;
-    peer=0;
+    demo_poll.active=true;
+    demo_poll.valid=false;
+    demo_poll.target=target_index;
+    demo_poll.peer=peer;
+    demo_poll.request=request;
+    target_index=node;
+    peer=node==DR_COMMS_INDEX?startup_demo.radio_boot:0;
     memset(&fragments,0,sizeof(fragments));
-    submit(UL_HELLO,NULL,0);
+    submit(peer?request:UL_HELLO,NULL,0);
 }
 
-static void demo_payload_receive(const ul_packet *reply){
+static void demo_poll_receive(const ul_packet *reply){
     bool hello=pending.packet.type==UL_HELLO;
     uint32_t previous=matched;
     receive(reply);
     if(pending.active)return;
     if(matched!=previous){
         if(hello){
-            submit(PL_STATUS,NULL,0);
+            submit(demo_poll.request,NULL,0);
             if(pending.active)return;
         }else{
-            memcpy(demo_payload.report,reply->payload,PL_REPORT_SIZE);
-            demo_payload.valid=true;
+            memcpy(demo_poll.report,reply->payload,reply->size);
+            demo_poll.valid=true;
         }
     }
-    demo_payload_stop();
+    demo_poll_stop();
 }
 
-static size_t demo_payload_packet(uint8_t *packet){
+static size_t demo_payload_status_packet(uint8_t *packet){
     const size_t size=W_PAYLOAD+W_SIZE_PAYLOAD_STATUS+2;
     _Static_assert(W_PAYLOAD+W_SIZE_PAYLOAD_STATUS+2<=BD_PACKET_MAX,"Payload packet exceeds RF link limit");
     cdh_header(packet,size,NULL,W_KINDS_TELEMETRY,W_ID_PAYLOAD_STATUS,W_SIZE_PAYLOAD_STATUS);
     uint8_t *p=packet+W_PAYLOAD;
-    const uint8_t *report=demo_payload.report;
+    const uint8_t *report=demo_poll.report;
     p[W_PAYLOAD_STATUS_PAYLOAD_VERSION]=report[0];
     p[W_PAYLOAD_STATUS_TRANSPORT]=W_PAYLOAD_TRANSPORT_IHU_NATIVE_RF;
     p[W_PAYLOAD_STATUS_REPORT_KIND]=W_PAYLOAD_REPORT_KIND_STATUS;
     p[W_PAYLOAD_STATUS_NODE]=report[1];
     p[W_PAYLOAD_STATUS_READY]=report[2];
     memcpy(p+W_PAYLOAD_STATUS_REPORTED_BOOT_ID,report+4,PL_REPORT_SIZE-4);
+    ul_p16(packet+size-2,ul_crc(packet,size-2));
+    return size;
+}
+
+/* Reuse the four firmware schemas already installed in Yamcs. */
+static const struct {
+    uint8_t node,request;
+    uint16_t id,size;
+} demo_firmware[]={
+    {DR_COMMS_INDEX,UL_FIRMWARE_INFO,W_ID_COMMS_FIRMWARE,W_SIZE_COMMS_FIRMWARE},
+    {DR_PAYLOAD_INDEX,UL_FIRMWARE_INFO,W_ID_PAYLOAD_FIRMWARE,W_SIZE_PAYLOAD_FIRMWARE},
+    {DR_LTE_INDEX,UL_FIRMWARE_INFO,W_ID_LTE_CAN_FIRMWARE,W_SIZE_LTE_CAN_FIRMWARE},
+    {DR_LTE_INDEX,CF_MODEM_FIRMWARE,W_ID_LTE_MODEM_FIRMWARE,W_SIZE_LTE_MODEM_FIRMWARE},
+};
+enum {DEMO_FIRMWARE_START=9, DEMO_FULL_STEPS=DEMO_FIRMWARE_START+2*sizeof(demo_firmware)/sizeof(demo_firmware[0])};
+
+static size_t demo_firmware_packet(uint8_t *packet,unsigned index){
+    unsigned id=demo_firmware[index].id;
+    size_t payload=demo_firmware[index].size;
+    size_t size=W_PAYLOAD+payload+2;
+    cdh_header(packet,size,NULL,W_KINDS_TELEMETRY,id,payload);
+    uint8_t *fields=packet+W_PAYLOAD;
+    const uint8_t *identity=demo_poll.report;
+    if(id==W_ID_COMMS_FIRMWARE){
+        packet[W_SOURCE]=W_ENDPOINTS_COMMS;
+        ul_p32(packet+W_SOURCE_BOOT_ID,ul_u32(identity+24));
+        ul_p32(packet+W_UPTIME_MS,ul_u32(identity+28));
+        /* Keep the transceiver's existing header and payload layout. */
+        memcpy(fields,identity,W_SIZE_COMMS_FIRMWARE);
+    }else if(id==W_ID_PAYLOAD_FIRMWARE){
+        fields[W_PAYLOAD_FIRMWARE_TRANSPORT]=W_PAYLOAD_TRANSPORT_IHU_NATIVE_RF;
+        memcpy(fields+W_PAYLOAD_FIRMWARE_VERSION_MAJOR,identity,FI_SIZE);
+    }else{
+        memcpy(fields,identity,FI_SIZE);
+    }
     ul_p16(packet+size-2,ul_crc(packet,size-2));
     return size;
 }
@@ -156,7 +192,7 @@ static bool demo_ack_setting(const ul_packet *request,uint32_t value){
 static void demo_restart_schedule(uint32_t now){
     demo_schedule.started=now;
     demo_schedule.next_packet=0;
-    demo_payload.valid=false;
+    demo_poll.valid=false;
     demo_gps.ready=false;
 }
 static void demo_set_output(const ul_packet *request,uint32_t now){
@@ -214,7 +250,7 @@ static void demo_uplink(const cf_frame *f,uint32_t now){
     if(!bd_packet(&demo_up,&p,startup_demo.radio_boot,boot) || p.request<=startup_demo.last_up)return;
     startup_demo.last_up=p.request;++demo_uplinks;
     if(p.size<32 || demo_response_size || fire_uplink.active || cdh.active){++demo_drops;return;}
-    demo_payload_stop();
+    demo_poll_stop();
     unsigned id=ul_u16(p.payload+W_MESSAGE_ID);
     if((id==W_ID_SET_HEARTBEAT || id==W_ID_SET_UHF_TELEMETRY) && up_native_args(p.payload,p.size,1)){
         demo_set_output(&p,now);return;
@@ -267,7 +303,7 @@ static void demo_fail(const char *reason) {
     output.active=false;demo_response_size=0;startup_demo.tx_pending=false;
     pending.active=false;cdh.active=false;demo_schedule.enabled=false;
     if(fire_uplink.active)fire_restore();
-    demo_payload_stop();
+    demo_poll_stop();
     startup_demo.stop_pending=startup_demo.radio_boot!=0;startup_demo.stop_at=now;
     demo_stage(DEMO_FAILED,now);
 }
@@ -278,11 +314,11 @@ static bool demo_send(unsigned id,uint32_t radio_boot) {
 static void demo_receive(const cf_frame *f,uint32_t now) {
     if(startup_demo.stage==DEMO_ACTIVE){
         if(f->id==BD_UP_ID){demo_uplink(f,now);return;}
-        if((fire_uplink.active || demo_payload.active) && pending.active && f->id==CF_PAYLOAD_REPLY_ID){
+        if((fire_uplink.active || demo_poll.active) && pending.active && f->id==RX_ID){
             ul_packet reply;
-            if(cf_feed(&fragments,f,CF_PAYLOAD_REPLY_ID,now) && up_envelope(&fragments,&reply) &&
+            if(cf_feed(&fragments,f,RX_ID,now) && up_envelope(&fragments,&reply) &&
                reply.origin==boot && reply.request==pending.packet.request){
-                if(demo_payload.active)demo_payload_receive(&reply);
+                if(demo_poll.active)demo_poll_receive(&reply);
                 else receive(&reply);
             }
             return;
@@ -435,7 +471,7 @@ static void demo_schedule_pump(uint32_t now){
         demo_restart_schedule(now-elapsed);
     }
     /* Leave time for the admitted burst to finish before the listen phase. */
-    unsigned count=demo_schedule.packet_set==W_UHF_TELEMETRY_SET_FULL?9:2;
+    unsigned count=demo_schedule.packet_set==W_UHF_TELEMETRY_SET_FULL?DEMO_FULL_STEPS:2;
     if(elapsed<listen_ms || cycle_ms-elapsed<=BD_TX_TIMEOUT_MS || demo_schedule.next_packet>=count)return;
     if(demo_schedule.next_packet==7){
         if(cycle_ms-elapsed<=BD_TX_TIMEOUT_MS+2500 || sensor_job.active ||
@@ -450,7 +486,8 @@ static void demo_schedule_pump(uint32_t now){
     _Static_assert(W_PAYLOAD+W_SIZE_DEVICE_STATUS+2<=BD_PACKET_MAX,"Device packet exceeds RF link limit");
     uint8_t packet[BD_PACKET_MAX];
     size_t size;
-    switch(demo_schedule.next_packet++){
+    unsigned step=demo_schedule.next_packet++;
+    switch(step){
     case 0:
         size=status_packet(packet,NULL);
         break;
@@ -471,15 +508,28 @@ static void demo_schedule_pump(uint32_t now){
         break;
     case 5:
         if(cycle_ms-elapsed>BD_TX_TIMEOUT_MS+2*DEMO_PAYLOAD_TIMEOUT_MS)
-            demo_payload_start();
+            demo_poll_start(DR_PAYLOAD_INDEX,PL_STATUS);
         return;
     case 6:
-        if(!demo_payload.valid)return;
-        size=demo_payload_packet(packet);
+        if(!demo_poll.valid)return;
+        size=demo_payload_status_packet(packet);
         break;
-    default:
+    case 8:
         size=demo_gps_packet(packet);
         break;
+    default: {
+        unsigned offset=step-DEMO_FIRMWARE_START;
+        unsigned index=offset/2;
+        if(!(offset%2)){
+            demo_poll.valid=false;
+            if(cycle_ms-elapsed>BD_TX_TIMEOUT_MS+2*DEMO_PAYLOAD_TIMEOUT_MS)
+                demo_poll_start(demo_firmware[index].node,demo_firmware[index].request);
+            return;
+        }
+        if(!demo_poll.valid)return;
+        size=demo_firmware_packet(packet,index);
+        break;
+    }
     }
     if(!demo_queue_packet(packet,size,now))demo_fail("UHF telemetry queue... FAILED");
 }
@@ -500,8 +550,8 @@ static void demo_link_pump(uint32_t now){
         output.active=false;
         fire_unavailable(0);
     }
-    if(demo_payload.active && (!pending.active || now-pending.started>=DEMO_PAYLOAD_TIMEOUT_MS))
-        demo_payload_stop();
+    if(demo_poll.active && (!pending.active || now-pending.started>=DEMO_PAYLOAD_TIMEOUT_MS))
+        demo_poll_stop();
     cdh_pump(now);
     bool due=startup_demo.heartbeat_enabled && (uint32_t)(now-startup_demo.last_heartbeat)>=BD_HEARTBEAT_MS;
     if(due)startup_demo.last_heartbeat=now; /* No catch-up burst. */
@@ -510,7 +560,7 @@ static void demo_link_pump(uint32_t now){
             if(!demo_queue_packet(demo_response,demo_response_size,now))
                 demo_fail("UHF reply queue... FAILED");
             demo_response_size=0;
-        }else if(!demo_up.active && !fire_uplink.active && !demo_payload.active && !cdh.active){
+        }else if(!demo_up.active && !fire_uplink.active && !demo_poll.active && !cdh.active){
             if(demo_schedule.enabled)demo_schedule_pump(now);
             else if(due){
                 uint8_t p[W_PAYLOAD+W_SIZE_HEARTBEAT+2];

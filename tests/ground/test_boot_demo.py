@@ -267,7 +267,7 @@ int main(void){
     }
     tick(1);
     assert(!startup_demo.tx_pending);
-    assert(demo_payload.active && pending.packet.type==UL_HELLO);
+    assert(demo_poll.active && pending.packet.type==UL_HELLO);
     while(output.active)tick(2);
     ack=pending.packet;ack.type=UL_HELLO_ACK;ack.sender=44;
     inject(&ack,CF_PAYLOAD_REPLY_ID);
@@ -277,7 +277,7 @@ int main(void){
     ack.payload[0]=1;ack.payload[1]=4;ack.payload[2]=1;
     ul_p32(ack.payload+4,44);ul_p32(ack.payload+8,1234);
     inject(&ack,CF_PAYLOAD_REPLY_ID);
-    assert(!demo_payload.active && !pending.active);
+    assert(!demo_poll.active && !pending.active);
     tick(1);
     assert(startup_demo.tx_pending && queued_message()==W_ID_PAYLOAD_STATUS);
     memset(&reader,0,sizeof(reader));memset(&reply,0,sizeof(reply));
@@ -299,11 +299,24 @@ int main(void){
     f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
     tick(1);assert(!startup_demo.tx_pending);
 
+    assert(demo_poll.active && pending.packet.type==UL_FIRMWARE_INFO);
+    while(output.active)tick(2);
+    ack=pending.packet;
+    ack.type=UL_FIRMWARE_INFO_ACK;ack.sender=22;ack.size=FI_SIZE;
+    ack.payload[0]=1;ul_p32(ack.payload+24,22);
+    inject(&ack,CF_COMMS_ID);
+
+    tick(1);
+
+    assert(startup_demo.tx_pending && queued_message()==W_ID_COMMS_FIRMWARE);
+    while(output.active)tick(2);
+    f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+
     /* A missing payload reply never creates a telemetry sample. */
     demo_schedule.next_packet=5;
-    tick(1);assert(demo_payload.active);
+    tick(1);assert(demo_poll.active);
     tick(DEMO_PAYLOAD_TIMEOUT_MS);
-    assert(!demo_payload.active && !pending.active && !startup_demo.tx_pending);
+    assert(!demo_poll.active && !pending.active && !startup_demo.tx_pending);
     request(&uplink,W_ID_SET_UHF_TELEMETRY,1,0);
     assert(!demo_schedule.enabled && demo_schedule.listen_seconds==5 && demo_schedule.telemetry_seconds==10);
     complete_reply();

@@ -237,6 +237,12 @@ static void usb_task(void *arg){
         if(!outgoing.size){
             if(xQueueReceive(control_replies,&outgoing,0)!=pdPASS &&
                xQueueReceive(replies,&outgoing,0)!=pdPASS)(void)xQueueReceive(logs,&outgoing,0);
+            /* Queued records end in LF and reserve a byte for NUL. Use that
+             * byte for CRLF on USB, including logs and queue errors. */
+            if(outgoing.size && outgoing.text[outgoing.size-1]=='\n'){
+                outgoing.text[outgoing.size-1]='\r';
+                outgoing.text[outgoing.size++]='\n';
+            }
             sent=0;
         }
         if(outgoing.size){

@@ -84,11 +84,14 @@ either set. The IHU sends one of each listed packet per window.
 | Set | Packets in transmission order |
 | --- | --- |
 | BASIC | `IHU_STATUS`, `POWER_STATUS` |
-| FULL | `IHU_STATUS`, `POWER_STATUS`, `DEVICE_STATUS`, `SYSTEM_STATUS`, `HEARTBEAT`, `PAYLOAD_STATUS`, `GPS_STATUS` |
+| FULL | `IHU_STATUS`, `POWER_STATUS`, `DEVICE_STATUS`, `SYSTEM_STATUS`, `HEARTBEAT`, `PAYLOAD_STATUS`, `GPS_STATUS`, and available firmware identities |
 
 EPS values use the latest valid housekeeping sample. Device status reports the
 cached registry and its observation ages. The IHU polls the payload over CAN
 once per FULL window. It sends `PAYLOAD_STATUS` only after a valid reply.
+FULL polls the transceiver, payload, LTE CAN MCU and Walter for firmware
+identity. Each successful reply produces one identity packet in the same
+window. An absent device or an incomplete observation is skipped.
 GPS is sampled once per FULL window. `GPS_STATUS` reports fix state, latitude,
 longitude, altitude above mean sea level, and satellites used. An unsuccessful
 read still reports its status, with unavailable coordinates. Packets carry zero
@@ -131,3 +134,11 @@ For a first fix, give the patch antenna an unobstructed view of the sky,
 pointing up. STEMMA QT supplies power whenever its rail is on. The command
 controls when the IHU reads the receiver. It leaves receiver power and its
 NMEA settings alone.
+
+
+In IHU 0.26.1, `help` groups the USB commands by purpose. Use `startup`
+to replay the boot gates and `radio` to check the current UHF state.
+`eps status` shows the last housekeeping result and the failed register
+if a read failed. `eps json` requests a fresh, read-only EPS register dump,
+including in SAFE. USB output uses CRLF so raw serial terminals start each
+record at the left margin.

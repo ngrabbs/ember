@@ -347,7 +347,7 @@ static void submit(uint8_t type,const uint8_t *payload,size_t size) {
        type!=PL_STATUS && type!=PL_HEARTBEAT && type!=PL_FIRE_CHECK) {
         ++refused_requests;LOG("REJECT reason=PAYLOAD_READ_ONLY_SERVICES\n");return;
     }
-    if((lte_only && !target_lte) || (type==UL_FIRMWARE_INFO && !target_lte && !target_payload) ||
+    if((lte_only && !target_lte) || (type==UL_FIRMWARE_INFO && !target_lte && !target_payload && !link_reply_sink) ||
        ((type==PL_STATUS || type==PL_HEARTBEAT || type==PL_FIRE_CHECK) && !target_payload) ||
        (uhf_is_request(type) && target_index!=DR_COMMS_INDEX)) {
         ++refused_requests;LOG("REJECT reason=WRONG_TARGET use_hello_transceiver_lte_or_payload\n");return;
@@ -529,7 +529,7 @@ static void policy_command(const char *s){
     if(!strcmp(value,"off"))stop_stream(channel);
     outputs_status();
 }
-static struct {ltc4162_raw_t eps;bool valid,attempted;uint32_t sampled,last;} housekeeping;
+static struct {ltc4162_raw_t eps;bool valid,attempted,seen;uint8_t failed_register;uint32_t sampled,last;} housekeeping;
 /* Solicited snapshot: age is explicit and failed/missing EPS is never healthy. */
 static size_t status_packet(uint8_t *b,const uint8_t *request){
     const size_t n=56;memset(b,0,n);
@@ -632,8 +632,8 @@ static void housekeeping_pump(uint32_t now){
 static void health_result(const ihu_sensor_result *r){
     bool was_valid=housekeeping.valid;
     housekeeping.valid=r->ok;
-    if(r->ok){housekeeping.eps=r->raw;housekeeping.sampled=r->sampled;dr_seen(&devices[DR_EPS_I2C_INDEX],r->sampled,0);}
-    else {devices[DR_EPS_I2C_INDEX].state=DR_FAULT;if(!housekeeping.attempted||was_valid)record_fault(2,now_ms());}
+    if(r->ok){housekeeping.seen=true;housekeeping.eps=r->raw;housekeeping.sampled=r->sampled;dr_seen(&devices[DR_EPS_I2C_INDEX],r->sampled,0);}
+    else {housekeeping.failed_register=r->failed;devices[DR_EPS_I2C_INDEX].state=DR_FAULT;if(!housekeeping.attempted||was_valid)record_fault(2,now_ms());}
     housekeeping.attempted=true;
     if(!stdio_usb_connected())return;
     if(ip_enabled(&policy,IP_CLI_TELEM))ihu_printf(false,"CLI_TELEM mode=%s eps_valid=%u comms=%s lte=%s payload=%s\n",
@@ -741,6 +741,24 @@ static void command_impl(const char *s) {
         (void)request_sensor(SENSOR_GPS,0,false);return;
     }
 #if IHU_BOOT_DEMO
+    if(!strcmp(s,"eps status")){
+        const char *state=!housekeeping.attempted?"NOT_CHECKED":!housekeeping.valid?"READ_FAILED":
+            now_ms()-housekeeping.sampled>6500?"STALE":"OK";
+        LOG("EPS state=%s bus=I2C1 address=0x68\n",state);
+        if(housekeeping.attempted && !housekeeping.valid)
+            LOG("EPS_READ outcome=FAILED register=%02x reason=I2C_OR_PEC\n",housekeeping.failed_register);
+        if(housekeeping.seen)
+            LOG("EPS last_good_age_ms=%" PRIu32 "\n",now_ms()-housekeeping.sampled);
+        return;
+    }
+    if(!strcmp(s,"eps json")){
+        /* Keep the next housekeeping read inside the live EPS deadline. */
+        if(startup_demo.stage!=DEMO_FAILED && now_ms()-housekeeping.last>=4000){
+            LOG("REJECT reason=SENSOR_BUSY\n");return;
+        }
+        (void)request_sensor(SENSOR_JSON,0,false);
+        return;
+    }
     if(!strcmp(s,"startup") || !strcmp(s,"radio")){
         if(!strcmp(s,"startup"))demo_history(true);
         mode_status();
@@ -757,7 +775,9 @@ static void command_impl(const char *s) {
         demo_fail("Operator stop");mode_status();return;
     }
     if(!strcmp(s,"help")){
-        LOG("COMMANDS startup | gps | radio | status | version | mode | outputs | faults | rtos | mode safe | uhf stop\n");return;
+        LOG("COMMANDS startup | status | mode | version | faults | rtos\n");
+        LOG("DIAGNOSTICS eps status | eps json | gps | radio | outputs\n");
+        LOG("CONTROLS mode safe | uhf stop\n");return;
     }
     if(strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"mode") && strcmp(s,"outputs") &&
        strcmp(s,"faults") && strcmp(s,"rtos")){
