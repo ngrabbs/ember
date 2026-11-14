@@ -2,7 +2,7 @@
 
 ## 0.27.0
 
-- Restore transceiver, payload, LTE CAN MCU and Walter firmware identities in
+- Report the IHU build identity and restore transceiver, payload, LTE CAN MCU and Walter firmware identities in
   FULL when the devices respond. BASIC retains its existing packet set.
 - Keep the 0.26.1 USB console fixes and EPS diagnostics.
 

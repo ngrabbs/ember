@@ -129,7 +129,7 @@ static const struct {
     {DR_LTE_INDEX,UL_FIRMWARE_INFO,W_ID_LTE_CAN_FIRMWARE,W_SIZE_LTE_CAN_FIRMWARE},
     {DR_LTE_INDEX,CF_MODEM_FIRMWARE,W_ID_LTE_MODEM_FIRMWARE,W_SIZE_LTE_MODEM_FIRMWARE},
 };
-enum {DEMO_FIRMWARE_START=9, DEMO_FULL_STEPS=DEMO_FIRMWARE_START+2*sizeof(demo_firmware)/sizeof(demo_firmware[0])};
+enum {DEMO_FIRMWARE_START=10, DEMO_FULL_STEPS=DEMO_FIRMWARE_START+2*sizeof(demo_firmware)/sizeof(demo_firmware[0])};
 
 static size_t demo_firmware_packet(uint8_t *packet,unsigned index){
     unsigned id=demo_firmware[index].id;
@@ -517,6 +517,15 @@ static void demo_schedule_pump(uint32_t now){
     case 8:
         size=demo_gps_packet(packet);
         break;
+    case 9: {
+        uint8_t identity[FI_SIZE];
+        fi_payload(identity,boot,now);
+        size=W_PAYLOAD+W_SIZE_IHU_FIRMWARE+2;
+        cdh_header(packet,size,NULL,W_KINDS_TELEMETRY,W_ID_IHU_FIRMWARE,W_SIZE_IHU_FIRMWARE);
+        memcpy(packet+W_PAYLOAD,identity,W_SIZE_IHU_FIRMWARE);
+        ul_p16(packet+size-2,ul_crc(packet,size-2));
+        break;
+    }
     default: {
         unsigned offset=step-DEMO_FIRMWARE_START;
         unsigned index=offset/2;

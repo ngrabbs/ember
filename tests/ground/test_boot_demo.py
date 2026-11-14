@@ -297,8 +297,11 @@ int main(void){
     assert(ul_u32(reply.payload+W_PAYLOAD+W_GPS_STATUS_LATITUDE_DEG)==(uint32_t)INT32_MIN);
     while(output.active)tick(2);
     f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
-    tick(1);assert(!startup_demo.tx_pending);
-
+    tick(1);
+    assert(startup_demo.tx_pending && queued_message()==W_ID_IHU_FIRMWARE);
+    while(output.active)tick(2);
+    f=bd_frame(BD_TX_OK,startup_demo.tx_id,22);demo_receive(&f,fake_now);
+    tick(1);
     assert(demo_poll.active && pending.packet.type==UL_FIRMWARE_INFO);
     while(output.active)tick(2);
     ack=pending.packet;

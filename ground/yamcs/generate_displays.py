@@ -232,8 +232,12 @@ def generate(destination, instance="ember"):
     label('Snapshot states are sampled by IHU; NOT_SEEN can be expected for planned or unconnected devices.',22,392,956,21,10)
     # Single compact fleet identity table replaces three dedicated firmware pages.
     for text,x,w in [('Firmware component',22,230),('Release / build',258,220),('Full source commit',490,488)]:label(text,x,426,w,22,11,BLUE,True)
-    for i,(prefix,title) in enumerate([('COMMS_FIRMWARE','Transceiver MCU'),('LTE_CAN_FIRMWARE','LTE CAN MCU'),('LTE_MODEM_FIRMWARE','Walter MCU'),('PAYLOAD_FIRMWARE','Payload Pi')]):
-        y=456+i*29;label(title,22,y,225,24,11)
+    identity_rows=[('COMMS_FIRMWARE','Transceiver MCU'),('LTE_CAN_FIRMWARE','LTE CAN MCU'),
+                   ('LTE_MODEM_FIRMWARE','Walter MCU'),('PAYLOAD_FIRMWARE','Payload Pi')]
+    if instance=='ember':
+        identity_rows.insert(0,('IHU_FIRMWARE','IHU MCU'))
+    for i,(prefix,title) in enumerate(identity_rows):
+        y=451+i*24;label(title,22,y,225,24,11)
         script('No identity',[prefix+'_'+n for n in ('version_major','version_minor','version_patch','dirty')],'firmware-version.js',258,y,225,24,10)
         script('No identity',[prefix+'_git_sha_'+str(n) for n in range(5)],'firmware-git.js',490,y,488,24,10)
     nav('Discovery raw / boot IDs','Devices.par',22,578,230)
@@ -242,7 +246,7 @@ def generate(destination, instance="ember"):
     save('Devices.opi')
 
     groups={'Payload.par':['PAYLOAD_STATUS','PAYLOAD_PING_RESULT','PAYLOAD_FIRE_RESULT','PAYLOAD_FIRE_TAGGED'], 'Devices.par':['DEVICE_STATUS'],
-            'Firmware.par':['COMMS_FIRMWARE','LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE','PAYLOAD_FIRMWARE'],
+            'Firmware.par':['IHU_FIRMWARE','COMMS_FIRMWARE','LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE','PAYLOAD_FIRMWARE'],
             'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'],
             'LTE-Firmware.par':['LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE'],
             'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}

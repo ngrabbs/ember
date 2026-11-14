@@ -89,7 +89,7 @@ either set. The IHU sends one of each listed packet per window.
 EPS values use the latest valid housekeeping sample. Device status reports the
 cached registry and its observation ages. The IHU polls the payload over CAN
 once per FULL window. It sends `PAYLOAD_STATUS` only after a valid reply.
-FULL polls the transceiver, payload, LTE CAN MCU and Walter for firmware
+FULL sends the IHU build identity and polls the transceiver, payload, LTE CAN MCU and Walter for firmware
 identity. Each successful reply produces one identity packet in the same
 window. An absent device or an incomplete observation is skipped.
 GPS is sampled once per FULL window. `GPS_STATUS` reports fix state, latitude,
