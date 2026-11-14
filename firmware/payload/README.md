@@ -1,5 +1,7 @@
 # Pi payload CAN A responder
 
+[Changelog](CHANGELOG.md) · [Current bench builds](../README.md#current-bench-builds)
+
 Raspberry Pi 4 / LC2502 / Raspberry Pi OS Trixie, CAN A only. CAN enters normal
 mode at 500 kbit/s during boot, independently of Wi-Fi or a USB console. Like
 transceiver idle service, the payload answers addressed requests; it emits no

@@ -21,6 +21,23 @@ The shared LTC4162 register header remains because the active IHU uses it.
 For new telemetry, follow the [developer walkthrough](../docs/architecture/telemetry_data_flow.md).
 See [firmware research](../docs/research/firmware_references.md) for RTOS background.
 
+## Current bench builds
+
+Checked 2026-11-14 against `main` at `f2788aa`. Use the version and source
+commit together when recording a test. The `main` versions are the merged
+source baseline. Use the bench column to identify which features and test
+results apply to the hardware.
+
+| Firmware | Version on `main` | Bench identity and purpose |
+|---|---|---|
+| [IHU](ihu/CHANGELOG.md) | 0.14.1 | **Live: 0.26.0 · `af0925a`.** The USB console reported a clean build. This is the startup and UHF demo build for scheduled telemetry, GPS, and coordination of payload fire checks. |
+| [Transceiver](transceiver/CHANGELOG.md) | 0.34.0 | **Running commit unconfirmed.** The November 5 flash record identifies 0.37.2 at `14243dc`, used for the bench UHF link. The November 12 receive experiments share version 0.37.2. The November 14 sweep logs verify restoration of the pre-sweep image without identifying its commit. |
+| [Payload](payload/CHANGELOG.md) | 0.2.0 | **Running version unconfirmed.** The October 17 Yamcs identity is 0.1.0 at `c6be5ab`. A later boot reported payload status without a version. The 0.7.0 branch adds capture GPS evidence for the live camera fire-check workflow. |
+
+The IHU identity came from the m75q USB console. Transceiver restore evidence
+is on m75q under `~/work/tx-sweep-20261114/`. The documented payload SSH
+address currently reaches the SatNOGS host.
+
 ## Shared dependencies
 
 - [`comms_transport`](comms_transport/README.md): CAN fragmentation, UART framing,
