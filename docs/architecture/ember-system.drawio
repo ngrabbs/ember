@@ -1,0 +1,118 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="ember-current" name="EMBER current architecture">
+    <mxGraphModel dx="1040" dy="535" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1040" pageHeight="535" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bench-title" parent="1" style="text;html=1;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:18px&quot; color=&quot;#213447&quot;&gt;&lt;b&gt;SPACECRAFT ENGINEERING BENCH&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry x="20" y="16" width="1000" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="eps" parent="1" style="rounded=1;html=1;whiteSpace=wrap;arcSize=12;fillColor=#FBEFE9;strokeColor=#A9431E;strokeWidth=1.7;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#A9431E&quot;&gt;&lt;b&gt;Electrical power&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;Solar and battery&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;LTC4162 charger&lt;/font&gt;" vertex="1">
+          <mxGeometry x="22" y="68" width="168" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="ihu" parent="1" style="rounded=1;html=1;whiteSpace=wrap;arcSize=12;fillColor=#E6F3F7;strokeColor=#007FA3;strokeWidth=1.7;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#007FA3&quot;&gt;&lt;b&gt;IHU&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;RP2040 CAN Feather&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;Modes and telemetry&lt;/font&gt;" vertex="1">
+          <mxGeometry x="248" y="68" width="168" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="payload" parent="1" style="rounded=1;html=1;whiteSpace=wrap;arcSize=12;fillColor=#F1F3E6;strokeColor=#657D33;strokeWidth=1.7;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#657D33&quot;&gt;&lt;b&gt;Camera payload&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;3 narrowband cameras&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;Raspberry Pi 4&lt;/font&gt;" vertex="1">
+          <mxGeometry x="435" y="68" width="168" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="transceiver" parent="1" style="rounded=1;html=1;whiteSpace=wrap;arcSize=12;fillColor=#F8EAED;strokeColor=#A0414D;strokeWidth=1.7;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#A0414D&quot;&gt;&lt;b&gt;UHF transceiver&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;Pico · DBPSK&lt;/font&gt;" vertex="1">
+          <mxGeometry x="622" y="312" width="168" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="walter-mcu" parent="1" style="rounded=1;html=1;whiteSpace=wrap;arcSize=12;fillColor=#FDF1E2;strokeColor=#A06020;strokeWidth=1.7;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#A06020&quot;&gt;&lt;b&gt;Walter MCU&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;RP2040 CAN Feather&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;CAN-to-UART bridge&lt;/font&gt;" vertex="1">
+          <mxGeometry x="809" y="68" width="208" height="112" as="geometry" />
+        </mxCell>
+        <mxCell id="i2c-caption" parent="1" style="text;html=1;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:14px&quot; color=&quot;#A9431E&quot;&gt;&lt;b&gt;I²C&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry x="189" y="91" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="i2c" parent="1" edge="1" style="edgeStyle=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#A9431E;strokeWidth=2;startArrow=classic;endArrow=classic;" source="eps" target="ihu">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="power" parent="1" style="rounded=1;html=1;whiteSpace=wrap;arcSize=12;fillColor=#FBEFE9;strokeColor=#A9431E;strokeWidth=1.7;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#A9431E&quot;&gt;&lt;b&gt;Power rails&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;5 V / 3.3 V distribution&lt;/font&gt;" vertex="1">
+          <mxGeometry x="22" y="212" width="168" height="67" as="geometry" />
+        </mxCell>
+        <mxCell id="eps-power" parent="1" edge="1" style="edgeStyle=none;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#A9431E;strokeWidth=2;startArrow=none;endArrow=classic;" source="eps" target="power">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="can-caption" parent="1" style="text;html=1;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#105D82&quot;&gt;&lt;b&gt;CAN A  ·  SHARED 500 kbit/s BUS&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry x="295" y="254" width="390" height="33" as="geometry" />
+        </mxCell>
+        <mxCell id="can-backbone" parent="1" edge="1" style="edgeStyle=none;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#105D82;strokeWidth=8;startArrow=none;endArrow=none;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="296" y="242" as="sourcePoint" />
+            <mxPoint x="947" y="242" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ihu-junction" parent="1" style="rounded=1;arcSize=100;fillColor=#105D82;strokeColor=#105D82;" value="" vertex="1">
+          <mxGeometry x="327" y="237" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="ihu-tap" parent="1" edge="1" style="edgeStyle=none;exitX=0.5;exitY=1;entryX=0.5;entryY=0.5;strokeColor=#105D82;strokeWidth=3;startArrow=none;endArrow=none;" source="ihu" target="ihu-junction">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="payload-junction" parent="1" style="rounded=1;arcSize=100;fillColor=#105D82;strokeColor=#105D82;" value="" vertex="1">
+          <mxGeometry x="514" y="237" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="payload-tap" parent="1" edge="1" style="edgeStyle=none;exitX=0.5;exitY=1;entryX=0.5;entryY=0.5;strokeColor=#105D82;strokeWidth=3;startArrow=none;endArrow=none;" source="payload" target="payload-junction">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="transceiver-junction" parent="1" style="rounded=1;arcSize=100;fillColor=#105D82;strokeColor=#105D82;" value="" vertex="1">
+          <mxGeometry x="701" y="237" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="transceiver-tap" parent="1" edge="1" style="edgeStyle=none;exitX=0.5;exitY=0;entryX=0.5;entryY=0.5;strokeColor=#105D82;strokeWidth=3;startArrow=none;endArrow=none;" source="transceiver" target="transceiver-junction">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="walter-mcu-junction" parent="1" style="rounded=1;arcSize=100;fillColor=#105D82;strokeColor=#105D82;" value="" vertex="1">
+          <mxGeometry x="908" y="237" width="10" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="walter-mcu-tap" parent="1" edge="1" style="edgeStyle=none;exitX=0.5;exitY=1;entryX=0.5;entryY=0.5;strokeColor=#105D82;strokeWidth=3;startArrow=none;endArrow=none;" source="walter-mcu" target="walter-mcu-junction">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="walter" parent="1" style="rounded=1;html=1;whiteSpace=wrap;arcSize=12;fillColor=#FDF1E2;strokeColor=#A06020;strokeWidth=1.7;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#A06020&quot;&gt;&lt;b&gt;Walter&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;ESP32-S3 + Sequans modem&lt;/font&gt;" vertex="1">
+          <mxGeometry x="809" y="312" width="208" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="walter-uart" parent="1" edge="1" style="edgeStyle=none;exitX=0.86;exitY=1;entryX=0.86;entryY=0;strokeColor=#A06020;strokeWidth=2;startArrow=classic;endArrow=classic;" source="walter-mcu" target="walter">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="988" y="198" />
+              <mxPoint x="1027" y="198" />
+              <mxPoint x="1027" y="299" />
+              <mxPoint x="988" y="299" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uart-label" parent="1" style="text;html=1;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:14px&quot; color=&quot;#A06020&quot;&gt;&lt;b&gt;UART&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry x="918" y="279" width="82" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="ground" parent="1" style="rounded=1;html=1;whiteSpace=wrap;arcSize=12;fillColor=#F1EDF8;strokeColor=#73518C;strokeWidth=1.7;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#73518C&quot;&gt;&lt;b&gt;Ground station  ·  Raspberry Pi 5&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#253449&quot;&gt;LibreSDR / UHF and LTE receivers  ·  Yamcs radio and serial bench instances&lt;/font&gt;" vertex="1">
+          <mxGeometry x="248" y="435" width="769" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="ground-uhf" parent="1" edge="1" style="edgeStyle=none;exitX=0.5;exitY=1;entryX=0.5955786736020806;entryY=0;strokeColor=#A0414D;strokeWidth=2;startArrow=classic;endArrow=classic;dashed=1;dashPattern=6 5;" source="transceiver" target="ground">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rf-label" parent="1" style="text;html=1;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:14px&quot; color=&quot;#A0414D&quot;&gt;&lt;b&gt;UHF RF&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry x="620" y="390" width="77" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ground-lte" parent="1" edge="1" style="edgeStyle=none;exitX=0.5;exitY=1;entryX=0.8647594278283485;entryY=0;strokeColor=#A06020;strokeWidth=2;startArrow=none;endArrow=classic;dashed=1;dashPattern=6 5;" source="walter" target="ground">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lte-label" parent="1" style="text;html=1;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:14px&quot; color=&quot;#A06020&quot;&gt;&lt;b&gt;LTE-M&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry x="826" y="390" width="80" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="ground-usb" parent="1" edge="1" style="edgeStyle=none;exitX=0;exitY=0.82;entryX=0;entryY=0.5;strokeColor=#73518C;strokeWidth=2;startArrow=classic;endArrow=classic;" source="ihu" target="ground">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="160" />
+              <mxPoint x="220" y="473" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="usb-label" parent="1" style="text;html=1;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:14px&quot; color=&quot;#73518C&quot;&gt;&lt;b&gt;Direct USB console&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry x="55" y="439" width="151" height="23" as="geometry" />
+        </mxCell>
+        <mxCell id="usb-subtitle" parent="1" style="text;html=1;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:13px&quot; color=&quot;#73518C&quot;&gt;when connected&lt;/font&gt;" vertex="1">
+          <mxGeometry x="55" y="464" width="151" height="21" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
