@@ -3,7 +3,8 @@
 [Download the GROUND_TEST / UHF UF2](ihu-0.29.1-ground-test.uf2) for the EMBER
 CAN Feather (RP2040). The image was built from
 `f4ffe4b9a3a9484f9d18ed8ad5a7f759c0f8c009` with `IHU_UHF_STARTUP=ON`.
-Flash readback passed on IHU `DF641455DB822427` at `ember-ground`.
+The rebased source contains the same firmware and wire dictionary used for
+the bench image. Flash readback passed on IHU `DF641455DB822427` at `ember-ground`.
 
 SHA-256
 `d6fbb47f3a773acbaf042a829a250ae9dcb44aba19a4215f7b317be182c1a882`
@@ -25,6 +26,8 @@ and an invalid PEC checksum. The live overlap run did not produce a stale
 sample or an I²C failure.
 
 ## Yamcs fault history
+
+The flight instance deployment is recorded as [Yamcs 1.7.0](../../../../ground/releases/yamcs-flight-1.7.0.json).
 
 With scheduled telemetry off, a temporary 0.29.0 bench image recorded one
 simulated CAN transmit fault. The USB console and Yamcs displayed the same
