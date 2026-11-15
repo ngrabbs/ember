@@ -165,7 +165,7 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [x] Build a shared bounded COBS/CRC diagnostic envelope with correlated replies;
       install/readback-verify Feather and test BUSY/missing-peer timeout behavior.
 - [x] Install framed Walter peer, verify upload hashes and USB behavior with modem held reset.
-- [x] Run [paired packet/fault checks](../../firmware/comms_transport/README.md) with USB on Feather:
+- [x] Run [paired packet/fault checks](../../firmware/comms_transport/uart_echo_bench.md) with USB on Feather:
       19 exact packet echoes plus HELLO, synthetic heartbeat identity preserved,
       version/type rejection, and recovery immediately after each CRC/overflow/gap fault.
       Echo preserves opaque packets; it is not modem submission or IHU forwarding.
