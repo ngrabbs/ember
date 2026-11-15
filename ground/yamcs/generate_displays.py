@@ -284,7 +284,7 @@ def generate(destination, instance="ember"):
     for name in retired:
         path=destination/name
         if path.exists():path.unlink()
-    print('Generated four EMBER operator displays and native diagnostic tables:',destination)
+    print('Generated EMBER operator displays and native diagnostic tables:',destination)
 
 
 RETIRED_DISPLAYS=('Telemetry.opi','LTE.opi','Comms-Firmware.opi','LTE-CAN-Firmware.opi','LTE-Modem-Firmware.opi',
