@@ -113,6 +113,11 @@ output and the UMB flags govern the wired debug and telemetry streams.
 The UHF and LTE flags gate their corresponding telemetry paths. Turning a
 stream off cancels future submissions on that path.
 
+In the UHF startup profile, a due EPS health poll runs between GPS I²C
+chunks. `eps status` shows sample age, the maximum interval between good EPS
+samples, and the number of EPS polls that ran during GPS reads. EPS diagnostics
+identify `I2C_TIMEOUT`, `PEC_CHECKSUM`, `I2C_ERROR`, and `STALE` separately.
+
 The UHF startup profile console provides `startup`, `status`, `version`, `mode`,
 `outputs`, `faults`, `rtos`, `radio`, `eps status`, `eps json`, and
 `gps`. Its stop commands are `mode safe` and `uhf stop`. Yamcs uses the

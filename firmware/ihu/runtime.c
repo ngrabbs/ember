@@ -142,6 +142,19 @@ static void can_task(void *arg){
         checkin(IHU_CAN);vTaskDelay(pdMS_TO_TICKS(1));
     }
 }
+static void sensor_publish(ihu_sensor_result *result){
+    result->sampled=milliseconds();
+    configASSERT(xQueueSend(sensor_results,result,0)==pdPASS);
+    wake_app();
+}
+
+static void sensor_poll_eps(bool between_gps_chunks){
+    ihu_sensor_result result={.health=true,.between_gps_chunks=between_gps_chunks};
+    result.eps_error=eps_read(&result.raw,&result.failed);
+    result.ok=result.eps_error==EPS_OK;
+    sensor_publish(&result);
+}
+
 /* Read a fresh GGA after draining the receiver's queued NMEA output. */
 static gps_result sensor_read_gps(void){
     const uint32_t started=milliseconds();
@@ -149,6 +162,13 @@ static gps_result sensor_read_gps(void){
     gps_result result={.status=GPS_NO_DATA};
     bool fresh=false;
     while(milliseconds()-started<2500){
+        sensor_call call;
+        if(xQueuePeek(sensor_calls,&call,0)==pdPASS && call.op==IHU_SENSOR_POLL_EPS){
+            (void)xQueueReceive(sensor_calls,&call,0);
+            sensor_poll_eps(true);
+            checkin(IHU_SENSOR);
+            if(milliseconds()-started>=2500)break;
+        }
         uint8_t chunk[32];
         if(i2c_read_timeout_us(i2c1,0x10,chunk,sizeof(chunk),false,10000)!=(int)sizeof(chunk))
             return (gps_result){.status=GPS_BUS_ERROR};
@@ -168,10 +188,17 @@ static void sensor_task(void *arg){
     for(;;){
         sensor_call call;
         if(xQueueReceive(sensor_calls,&call,pdMS_TO_TICKS(100))==pdPASS){
-            ihu_sensor_result r={.enable=call.enable};
-            if(call.op==IHU_SENSOR_READ_GPS)r.gps=sensor_read_gps();
-            else r.ok=call.op==IHU_SENSOR_SET_ADC?eps_force_adc(call.enable,&r.before,&r.after):eps_read(&r.raw,&r.failed);
-            r.sampled=milliseconds();configASSERT(xQueueSend(sensor_results,&r,0)==pdPASS);wake_app();
+            if(call.op==IHU_SENSOR_POLL_EPS)sensor_poll_eps(false);
+            else {
+                ihu_sensor_result r={.enable=call.enable};
+                if(call.op==IHU_SENSOR_READ_GPS)r.gps=sensor_read_gps();
+                else if(call.op==IHU_SENSOR_SET_ADC)r.ok=eps_force_adc(call.enable,&r.before,&r.after);
+                else {
+                    r.eps_error=eps_read(&r.raw,&r.failed);
+                    r.ok=r.eps_error==EPS_OK;
+                }
+                sensor_publish(&r);
+            }
         }
         checkin(IHU_SENSOR);
     }
@@ -275,7 +302,7 @@ void ihu_runtime_start(void){
     stdio_init_all();
     STATIC_QUEUE(can_calls,1,can_call);STATIC_QUEUE(can_replies,1,can_reply);
     STATIC_QUEUE(can_frames,IHU_CAN_RX_QUEUE,cf_frame);
-    STATIC_QUEUE(sensor_calls,1,sensor_call);STATIC_QUEUE(sensor_results,1,ihu_sensor_result);
+    STATIC_QUEUE(sensor_calls,1,sensor_call);STATIC_QUEUE(sensor_results,2,ihu_sensor_result);
     STATIC_QUEUE(commands,IHU_COMMAND_QUEUE,ihu_command);
     STATIC_QUEUE(replies,IHU_REPLY_QUEUE,usb_record);STATIC_QUEUE(control_replies,IHU_CONTROL_REPLY_QUEUE,usb_record);
     STATIC_QUEUE(logs,IHU_LOG_QUEUE,usb_record);

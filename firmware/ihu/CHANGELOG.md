@@ -4,6 +4,7 @@
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-11-15 | 0.29.1 | Prioritizes due EPS polls between GPS reads and reports EPS timeout, checksum, I²C, and stale failures separately. |
 | 2026-11-15 | 0.29.0 | Returns retained IHU fault history on request over UHF. |
 | 2026-11-15 | 0.28.1 | Adds a USB startup banner with the version, startup path, radio behavior and boot defaults. |
 | 2026-11-14 | 0.28.0 · `4e55d05` | Reports UHF schedule timing and phase for the Yamcs countdown. |
