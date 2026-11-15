@@ -1,10 +1,7 @@
 # Commanded payload fire check
 
 **IHU 0.13.0 / bridge 0.4.0:** [quiet-output policy](../../docs/architecture/operations/04-ihu-runtime-policy.md).
-Fire-check command replies remain available with all six streams OFF. Existing
-The 0.13.0 [deployment record](../../system/ground_station/evidence/ihu-0.13.0-20261017/deployment.json)
-is separate from the earlier 0.12.0 OTA evidence below. Compare packet contents
-and output gates in the [transmission matrix](../../docs/user/ihu-can-console.md#transmission-matrix).
+Fire-check command replies remain available with all six streams OFF.
 
 Versions: IHU 0.12.0, payload 0.2.0, COMMS 0.31.0, serial bridge 0.3.0,
 RF command bridge 0.1.0; ground release 1.6.0. This release uses an explicit
@@ -54,8 +51,6 @@ Stop RF/arming services before manually accessing their radio or COMMS port.
 The October17 validation passed four Yamcs bench commands and two independent
 Yamcs RF commands. The two RF result packets are byte-identical at COMMS,
 ground decoding and the flight archive. All returned NO_FIRE/STATIC_STUB.
-The initial failed trials are preserved with the timing/admission fixes in
-[validation evidence](../../system/ground_station/evidence/fire-check-20261017/validation.json).
 Services are enabled and idle after testing; COMMS TX/RX are off, clocks disabled.
 Firmware exports report clean identities; final MCU SHAs and rollback locations
 are retained in that evidence. Both1.6.0 ground manifests pass MATCH.

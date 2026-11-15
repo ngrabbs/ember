@@ -18,7 +18,6 @@ are now applied to schematic and PCB with embedded `LCSC Part #`:
 | U12 | TI TLV73330PDBVR | C882826 | 1,003 | 2 |
 | D12/D13 | Lite-On LTST-C190KGKT | C125094 | 613,210 | 4 |
 
-[Pin/package and RF screening acceptance](../../verification/components/stock_substitutions_2026-10-03.md).
 [Current BOM](stock_substitution_bom_2026-10-03.csv) and
 [stock snapshot with replacements](live_stock_after_substitutions_2026-10-03.json).
 The original C40976557/C507268 shortages and C125113 side-view package question

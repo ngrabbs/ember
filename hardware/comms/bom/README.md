@@ -14,7 +14,6 @@ identity separate from DNP and hand-solder assembly choices.
 [Current field audit and full BOM](evidence/lcsc_property_audit_2026-10-03.md)
 records new selections and verification. L16, D15 and J9 exact ordering fields
 are complete; U9 PSA4-5043+ is retained with October 3 stock evidence.
-[RF prototype acceptance and limits](../verification/components/prototype_parts_2026-10-03.md).
 
 All 55 original codes were checked against live JLCPCB rows October 3. The two
 stock shortages and green LED package question are now resolved by qualified

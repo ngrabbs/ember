@@ -109,9 +109,6 @@ from this application: `telemetry`, `eps telemetry`, `telem on/off/status`,
 `eps enqueue` and `lte queue ...`. Their historical helpers/evidence remain
 for reference, but the runtime has no legacy timer or LTE queue pump.
 
-For exact packet inclusion/exclusion and pacing across links, use the
-[transmission matrix](../../user/ihu-can-console.md#transmission-matrix).
-
 ## Sampling, reporting and fault history
 
 Internal EPS readout is sampled approximately every 5 seconds while transport
@@ -145,8 +142,6 @@ image. Reopen one console owner, confirm SAFE/GROUND_TEST and all outputs OFF,
 then deliberately enable only the wanted channels. Existing RF command and
 live telemetry services still require coordinated radio ownership.
 
-IHU 0.13.0 and bridge 0.4.0 were deployed on m75q on 2026-10-17; see the
-[deployment record](../../../system/ground_station/evidence/ihu-0.13.0-20261017/deployment.json).
 Readback verification, quiet defaults, six switches, telemetry summaries, mode
 reset, solicited EPS/payload replies and reboot defaults passed. All outputs
 were left OFF with the bench bridge active. OFF during active RF work and a

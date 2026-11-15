@@ -1,6 +1,6 @@
 # EPS Rev B pin allocation and circuit fit study
 
-> **2026-10-23 correction:** the allocation below is the **N variant**, not GP. The operator selects **STM32G0B1KET6N**. Earlier rejection of the standard GP map was incorrect; the custom symbol named GP was itself mislabeled. See the [pinout correction](../verification/stm32_gp_candidate_verification.md). Correct symbol identity and fresh package/connectivity verification are required before integration.
+> **2026-10-23 correction:** the allocation below is the **N variant**, not GP. The operator selects **STM32G0B1KET6N**. Earlier rejection of the standard GP map was incorrect; the custom symbol named GP was itself mislabeled. Correct symbol identity and fresh package/connectivity verification are required before integration.
 
 
 Draft dated 2026-10-03. The preferred STM32G0B1KET6N package can accommodate the proposed EPS interfaces. The added circuits appear compatible with a single PCB after layout changes, but this is an area budget, not verified footprint placement or holder clearance. Use BQ40Z50 as the protection reference for the next circuit-design pass; retain BQ28Z610 as the smaller alternative.
@@ -15,7 +15,7 @@ Read-only KiCAD CLI exports of the saved `eps.kicad_pcb` produced a front fabric
 
 The exported Edge.Cuts extrema span approximately 95.98 × 90.18 mm, consistent with the nominal 96 × 90 mm envelope. The SVG page is larger because it also includes drawing extents. These measurements are not a mechanical acceptance. Existing components occupy a central charger/buck region, six upper-edge connectors, left stack headers, and the upper-right XT30 region. Open surface exists to the right and below the conversion circuits, but copper, returns, harness access, and mechanical exclusions must be reworked.
 
-The operator confirms the May STEP export as the intended export. The [geometry inspection](../verification/fit/holder_2026_10_24/README.md) finds that the local file contains the PCB/connectors but omits holder/cells; the assembled Onshape `EPS_with_battery` view shows those parts separately. Source selection is resolved, but quantified underside clearance and assembly tolerances remain open. Do not assume the underside can carry new components.
+The operator confirms the May STEP export as the intended export. Source selection is resolved, but quantified underside clearance and assembly tolerances remain open. Do not assume the underside can carry new components.
 
 ## MCU allocation
 
@@ -87,11 +87,11 @@ Select two TCAN3413DR SOIC-8 devices as the schematic candidates, one per bus. T
 | 7 CANH | H1.51 `CAN_H` | H2.49 `CAN_B_H` |
 | 8 STB | PB9 | PD1 |
 
-This table records functional connections; the later [integrated controller checkpoint](../verification/rev_b/integration/README.md) carries the selected TCAN3413DR package-map evidence. Preserve that accepted SOIC map during branch integration. TCAN3414 is not a drop-in equivalent for pin 5.
+Preserve that accepted SOIC map during branch integration. TCAN3414 is not a drop-in equivalent for pin 5.
 
 The 2026-10-24 development contract retains external 10 kΩ STB/TXD pullups on the essential MCU side of new 1 kΩ signal resistors, adds MCU-side RXD pullups and uses a separate Schmitt inverter per channel to command TPS EN. At reset, HIGH STB disables that channel's supply; LOW powers it for normal operation. This consumes no additional GPIOs. Firmware first configures recessive TX, the clock, filters and receive queues, then enables each channel and qualifies startup. Keep both channels in normal mode after initialization for the initial fallback implementation. A disabled channel has no CAN wake reception. An explicit recovery request can toggle only the failed channel HIGH then LOW; direct switch FAULT is available at bench test points, not MCU pins. EN cycling is not proof of full rail discharge or complete transceiver power cycling.
 
-Place local 100 nF bypass capacitors at both supply pins and suitable local bulk capacitance per channel. Evaluate the essential regulator under both channels' worst-case traffic and bus faults. The current development circuit adds separate latch-off current-limited branches, but does not establish guaranteed healthy-channel survival. In particular the post-switch resistor misses a short directly at TPS OUT, and faults inside a switch or the shared MCU/source remain common causes. Preserve the [coupled comparison](../verification/controller_rev_b/coupled_branch_screen/README.md), conditional static/reset screens and later native graph evidence as separate claims. Include the added branches and inverter mechanical reservations in the complete area inventory.
+Place local 100 nF bypass capacitors at both supply pins and suitable local bulk capacitance per channel. Evaluate the essential regulator under both channels' worst-case traffic and bus faults. The current development circuit adds separate latch-off current-limited branches, but does not establish guaranteed healthy-channel survival. In particular the post-switch resistor misses a short directly at TPS OUT, and faults inside a switch or the shared MCU/source remain common causes. Include the added branches and inverter mechanical reservations in the complete area inventory.
 
 Provide separate, normally unpopulated termination options for A and B. Fit a 120 Ω termination only where EPS is an actual physical bus end; otherwise terminate at the two real ends. Select resistor power from sustained differential fault voltage. Reserve low-capacitance CAN protection and optional filtering footprints near the stack interface, then choose their population from transient and signal-integrity tests. No A/B bus wire, termination midpoint or protection path may unintentionally join the channels.
 

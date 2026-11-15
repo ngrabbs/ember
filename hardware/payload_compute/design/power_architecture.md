@@ -275,7 +275,6 @@ ERC, saved exports, and rendered schematic evidence.
 4. [TPS62933P product specification](https://www.ti.com/product/TPS62933P).
 5. [LMR36506 product specification](https://www.ti.com/product/LMR36506).
 6. [TPS62177 product specification](https://www.ti.com/product/TPS62177).
-7. [Stack pin map](../../../system/interfaces/cskb_pinmap.md) and [inhibit architecture](../../../docs/architecture/inhibit_and_deployment.md).
 8. [Local Orin Nano datasheet](Jetson_Orin_Nano_Series_DS-11105-001_v11.pdf), printed pages 25–27 and 34; exact module design guide governs implementation.
 9. Public JLCPCB listings: [STUSB4500QTR C2678061](https://jlcpcb.com/partdetail/STUSB4500QTR/C2678061), [TPS56637RPAR C841386](https://jlcpcb.com/partdetail/TexasInstruments-TPS56637RPAR/C841386).
 10. [LMR51460-Q1 datasheet](https://www.ti.com/lit/ds/symlink/lmr51460-q1.pdf), SLUSFR3, August 2024; sections 6.3, 6.5, 8.2 and package drawings.

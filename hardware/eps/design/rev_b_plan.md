@@ -2,7 +2,7 @@
 
 Draft dated 2026-10-03. This plan defines a single-board EPS revision with independent battery protection, hardware power isolation, an STM32 supervisor, and CAN A/B access. It records agreed requirements and proposed implementations separately. It is not a schematic, a parts freeze, or flight acceptance.
 
-[EPS documentation](../README.md) · [Stack pin authority](../../../system/interfaces/cskb_pinmap.md) · [Inhibit architecture](../../../docs/architecture/inhibit_and_deployment.md)
+[EPS documentation](../README.md) · [Inhibit architecture](../../../docs/architecture/inhibit_and_deployment.md)
 
 The [provisional BOM and schematic checklist](rev_b_bom_and_schematic_checklist.md) consolidates circuit candidates, power-stage reuse conditions, proposed sheet organization and implementation checks. Use it as the handoff; this plan remains the architecture authority.
 
@@ -24,7 +24,7 @@ The [2026-10-23 5 V recovery design](rev_b_5v_recovery_design.md) evaluates TPS5
 
 The [5 V recovery closure/handoff](rev_b_5v_recovery_closure.md) records the subsequent 6.8 µH correction, selected passive MPNs, expanded tolerance checks and IHU startup requirements. The operator confirms COMMS TX defaults off with no other COMMS power controls, and selects −40 to +85 °C for electronics component screening only; actual electronics/battery operating temperatures remain open.
 
-The [completion ledger](rev_b_completion.md) tracks the remaining integrated design and the separately authorized Rev B PCB stage. The [MCU pinout correction](../verification/stm32_gp_candidate_verification.md) supersedes the earlier GP identity: the selected part is STM32G0B1KET6N.
+The [completion ledger](rev_b_completion.md) tracks the remaining integrated design and the separately authorized Rev B PCB stage.
 
 ## Agreed requirements
 
@@ -45,7 +45,7 @@ The [completion ledger](rev_b_completion.md) tracks the remaining integrated des
 
 Rev A uses LTC4162-L and two TPS62933F bucks, with a 4S solar string per face. The older EPS overview still names TPSM5D1806 and an earlier solar configuration; it is not the next revision's component authority. Reconcile assembled hardware, fabrication BOM, current CAD, and documentation before carrying over reference designators or networks.
 
-The [bench record](../../../ground/history/2026-10-01/eps_bench_setup.md) reports that replacing the faulty input resistor with a wire jumper resolved the measured VIN discrepancy. Charging remained in NTC pause, with no real battery thermistor fitted and no charging observed in the timed experiment. The operator subsequently reports damaged traces around the attempted thermistor repair. The thermistor circuit is the leading charging-blocker hypothesis, not a confirmed sole fault. Buck load, ripple, thermal, and transient qualification also remains incomplete.
+Charging remained in NTC pause, with no real battery thermistor fitted and no charging observed in the timed experiment. The operator subsequently reports damaged traces around the attempted thermistor repair. The thermistor circuit is the leading charging-blocker hypothesis, not a confirmed sole fault. Buck load, ripple, thermal, and transient qualification also remains incomplete.
 
 ## Proposed power architecture
 
@@ -194,7 +194,7 @@ Commands carry source identity, boot/session identity, request identifier, and r
 
 To reach EPS/IHU from the ground with A failed, COMMS also needs B hardware and firmware. The current one-channel Feathers demonstrate transport groundwork but not A/B redundancy. A/B still shares each node's MCU, firmware, supply, connector system, and possibly clocks; it is bus-path redundancy, not full controller redundancy. Verify behavior under bus shorts, stuck transmit signals, partial disconnects, peer resets, asymmetric failures, and traffic saturation.
 
-Keep LTC4162 I2C local to EPS in the proposal. Do not connect a second charger master through the existing stack I2C without an explicit ownership/isolation design. Preserve raw charger diagnostics and telemetry validity semantics from [POWER_STATUS v1](../../../system/protocols/eps_power_status_v1.md); allocate EPS-native provenance and commands before implementation.
+Keep LTC4162 I2C local to EPS in the proposal. Do not connect a second charger master through the existing stack I2C without an explicit ownership/isolation design.
 
 ## Requirements boundary
 

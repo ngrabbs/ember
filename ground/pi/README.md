@@ -28,8 +28,6 @@ addresses work. Radio telemetry ports are loopback-bound; the bench bridge uses 
 3. Allow about a minute for Yamcs to initialize. Select `ember` / `realtime`
    for radio dashboards, or `ember-bench` / `realtime` for IHU serial EPS/payload. The LTE packet listener is already running when
    LibreSDR is present; do not open a second receiver on UDP 51000.
-4. Start the bounded LTE cell and the IHU/Walter RF window using the established
-   [LTE walkthrough](../../docs/user/lte-eps-walkthrough.md).
 
 The receiver accepts native IHU POWER_STATUS, HEARTBEAT and SYSTEM_STATUS packets from Walter
 `172.16.0.2:51001` at UDP 51000 and forwards unchanged bytes to Yamcs UDP 10018.
@@ -124,7 +122,7 @@ Installed and verified on October 8, 2026: the user confirmed hotspot
 authentication, DHCP and Yamcs browser access. Automatic Ethernet fallback
 and return, listener crash recovery, and a full Pi reboot passed. After reboot,
 Yamcs was healthy, the attached-SDR listener was active, and the earlier LTE
-packet remained in the archive. See the [verification record](../../system/ground_station/evidence/pi-readiness-20261008.json).
+packet remained in the archive.
 
 Run `python3 -m unittest discover -s tests/ground -p test_pi_readiness.py -v`
 from the repository. These checks use host loopback sockets, never RF, and
@@ -137,8 +135,6 @@ NetworkManager's [shared IPv4 mode](https://networkmanager.pages.freedesktop.org
 provides hotspot addressing/DHCP; the supervisor controls when that profile runs.
 
 ## Provision a new Pi
-
-The installed Pi and verified settings are in the [lab inventory](../history/2026-10-01/lab_inventory.md).
 
 Flash **Raspberry Pi OS Lite (64-bit)** with Raspberry Pi Imager. The current
 Debian 13 Trixie image supports Pi 4 and Pi 5. Use a Pi 5 with at least 4 GB RAM

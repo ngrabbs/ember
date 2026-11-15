@@ -53,7 +53,6 @@ The footprint's component-view/Y-down numbering is counterclockwise from the upp
 - [ADI ADuM1250/1251 Rev L, September 2025](https://www.analog.com/media/en/technical-documentation/data-sheets/adum1250_1251.pdf), Tables 1, 5, 6 and 10, startup and application guidance, package/order information. The A-grade exact order code covers −40 to +105 °C; this is component screening, not pack qualification.
 - [TI BQ40Z50-R2 SLUSCS4C](https://www.ti.com/lit/ds/symlink/bq40z50-r2.pdf), pin functions and §§7.11–7.12: SMBus levels, internal pulldowns and BTP limits.
 - [ST DS13560 Rev 6](https://www.st.com/resource/en/datasheet/stm32g0b1ke.pdf), Tables 55 and 57: conservative input-low threshold and GPIO output-low limit. PA9/PA10 remain the local pack-manager bus allocation.
-- [Native buck screening](../verification/essential_3v3/native/README.md) for the conditional static supply envelope and unresolved transient behavior.
 
 ## 2026-10-24 update: ISO1540DR selected for development integration
 
@@ -63,7 +62,7 @@ Preserve the boundary above: VCC1/VCC2 and all pull-ups receive the permitted es
 
 [TI SLLSEB6F Rev F](https://www.ti.com/lit/ds/symlink/iso1540.pdf), §§6.3, 6.9–6.12 and 8.2, is the electrical authority. The local primary PDF's actual pin-map, electrical-table, reference-application and land-pattern pages were viewed. The stock footprint is a generic alternative, not TI's exact example land: stock pads are 1.95 × 0.60 mm at X ±2.475 mm, whereas TI's example uses 1.55 × 0.60 mm at X ±2.7 mm. Both use 1.27 mm pitch. Record toe/heel coverage and saved-board inspection in the package acceptance before placement; do not describe the stock pattern as manufacturer-exact.
 
-The [reproducible static screen](../verification/bms/bus_screening/calculate.py) and [results](../verification/bms/bus_screening/calculated.json) retain the earlier rail/shunt/temperature assumptions. They are conditional design calculations, not measured or simulated transient qualification.
+They are conditional design calculations, not measured or simulated transient qualification.
 
 | Check | ISO1540 result |
 |---|---|

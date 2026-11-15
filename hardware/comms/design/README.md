@@ -13,7 +13,5 @@
 | [RF analysis](analysis/README.md) | Reproducible screening and open RF studies |
 | [LTspice workspace](ltspice_simulations/README.md) | Simulation inputs and experiments |
 
-Package audits live in [verification](../verification/README.md), sourcing in
-[BOM](../bom/README.md), and measured work in [bring-up](../bringup/README.md).
 Older VHF/SA612/dual-antenna descriptions are superseded; do not combine them
 with the current design.

@@ -34,9 +34,7 @@ The installation history below describes earlier always-polling bridge versions.
 
 ## Packet inclusion and transmission pacing
 
-The [IHU transmission matrix](../../docs/user/ihu-can-console.md#transmission-matrix)
-compares UHF run/single-send, LTE single-send, RF fire-check, bench EPS and
-bench payload packet inclusion. It also lists excluded packet families,
+It also lists excluded packet families,
 COMMS firmware prefixes, output gates and wired stream formats.
 
 ## IHU-requested UHF telemetry
@@ -142,5 +140,4 @@ against a separate loopback validation server on HTTP8091 with TM11018/11019/
 archives, bad-CRC rejection, flight refusal of serial-only commands, bench completion and
 cross-instance reply isolation. Never inject its synthetic packets into production.
 
-See [deployment evidence](../../system/ground_station/evidence/yamcs-environments-20261017.json).
 Physical RF requalification remains separate from configuration and serial tests.

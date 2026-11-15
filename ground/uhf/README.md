@@ -27,6 +27,4 @@ the separate EMBER COMMS receiver.
    [shared deployment guide](../yamcs/OPERATIONAL.md) for the Yamcs setup.
 
 See the [clock and transport review](CLOCKING.md) for the bounded 614.4 kS/s SDRB
-profile. The [October 3 bench notes](results/2026-10-03/bench-notes.md) retain
-the manual sender examples, isolated archive setup, test sequence, and results.
-[SDRB workstreams](../../system/sdrb/TODO.md)
+profile.

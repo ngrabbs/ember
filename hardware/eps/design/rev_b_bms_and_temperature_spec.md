@@ -2,7 +2,7 @@
 
 Draft dated 2026-10-03. Use BQ40Z50-R2 as the circuit and configuration reference for an autonomous 2S pack protector, with two independent cell-temperature sensors. Retain a third, electrically separate sensor for LTC4162 charge qualification. This document defines implementation requirements and simulator tests; it does not freeze production parts, numerical protection limits or pack acceptance. Rev A charging remains unresolved until the damaged circuit is inspected.
 
-[Architecture plan](rev_b_plan.md) · [Source isolation](rev_b_source_isolation_study.md) · [Rev A bench evidence](../../../ground/history/2026-10-01/eps_bench_setup.md)
+[Architecture plan](rev_b_plan.md) · [Source isolation](rev_b_source_isolation_study.md)
 
 ## Protection circuit allocation
 
@@ -35,7 +35,7 @@ Retain XT30 for main power provisionally. Three cell-sense nodes plus three sepa
 
 Choose a keyed, retained sensing connector and document pack assembly, polarity, mating order and sense-wire fault protection. Verify filters and protection against balancing currents, measurement errors and shorts between adjacent cell nodes. No raw cell-sense pin may power downstream electronics around RBF.
 
-The [2026-10-23 charger analysis](../verification/charging/README.md) adds the leaded Semitec 103AT-2 development candidate and reproducible code/resistance checks. Its 3435 K curve differs from the earlier 3490 K reference; candidate selection requires revised thresholds and separate BMS calibration, not reuse of the ideal-beta table below as manufacturer data.
+Its 3435 K curve differs from the earlier 3490 K reference; candidate selection requires revised thresholds and separate BMS calibration, not reuse of the ideal-beta table below as manufacturer data.
 
 ## LTC4162 thermistor network
 

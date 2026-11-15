@@ -8,7 +8,6 @@ No legacy PCB connectivity was changed by this document.
 
 Use NVIDIA DG-10931-001 v1.5, especially tables 6-1, 9-1 and 10-2, and
 [the saved guide](Jetson_Orin_Design_Guide_DG-10931-001_v1.5.pdf).
-The [system CSKB map](../../../system/interfaces/cskb_pinmap.md) owns H1/H2 numbering.
 Direction names below are from the module's perspective.
 
 ## Module power and control

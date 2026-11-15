@@ -45,8 +45,7 @@ Any retained powered circuitry needs review against the applicable requirements.
 
 Hardware inhibition must not depend solely on a processor reading a switch
 and choosing to shut down. Status signals to the IHU supplement the hardware
-path; they do not replace it. Connection names and stack pins remain subject
-to the [CSKB pin map](../../system/interfaces/cskb_pinmap.md).
+path; they do not replace it.
 
 The removed RBF pin is not a remaining inhibit during launch. Two inputs
 on one shared enable net are not automatically two independent physical

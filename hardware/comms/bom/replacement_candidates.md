@@ -9,7 +9,7 @@ observations, not live stock today. Candidates remain unapplied and unqualified.
 
 Retain U9 PSA4-5043+ / C5240848; live stock is available. D15 is now
 PESD5V0F1BLD,315 / C478204 and L16 is 0805HP-221XGRC / C40877572, saved in
-schematic and PCB. [Current acceptance and limitations](../verification/components/prototype_parts_2026-10-03.md).
+schematic and PCB.
 The following September observations are historical, not current action items.
 
 ## Agreed transmitter scope — 2026-09-09

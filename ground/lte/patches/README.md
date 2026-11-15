@@ -36,8 +36,6 @@ Msg4 retransmission assertion. This is limited bench evidence, not a long
 duration regression or an LTE-M attach. The current minimal build registers
 zero CTest tests; no automated unit-test coverage is claimed.
 
-See [controlled results](../results/2026-10-02-walter-control.md).
-
 ## Msg4 retry candidate
 
 `oai-lte-m-msg4-retry.patch` adds a bounded FDD CE-mode-A Msg4 retry path for
@@ -73,7 +71,6 @@ unit-tested, and exhausted retries were not exercised over RF.
 This remains an experimental candidate: all three radio trials aborted on
 downlink-context exhaustion before Attach Complete. Neither CE-mode-B, TDD,
 multiple repetitions, RV cycling, nor a complete telemetry bearer is validated.
-See [Msg4 and authentication results](../results/2026-10-02-msg4-authentication.md).
 
 ## Single-transmission CE-A RAR release candidate
 
@@ -133,9 +130,6 @@ git apply /path/to/EMBER/ground/lte/patches/oai-lte-m-reject-lifecycle.patch
 cmake --build build-lte --target lte-softmodem -j2
 ```
 
-See [RAR release results](../results/2026-10-02-rar-release.md)
-for live observations and the unresolved simulator regression.
-
 ## Asynchronous first CCCH response candidate
 
 `oai-lte-m-ccch-wait.patch` applies after the four candidates above. If RRC
@@ -182,7 +176,7 @@ packets through GTP-U and SGi after a Service Request restored the bearer.
 Initial context release and later uplink failure still occurred. This is the
 first telemetry demonstration, not a stable-link qualification or proof that
 this patch alone accounts for the improvement. All six patches reverse and
-reapply in order. See [uplink and telemetry results](../results/2026-10-02-uplink-telemetry.md).
+reapply in order.
 
 ## Dedicated BL/CE downlink retry MCS retention candidate
 
@@ -205,7 +199,6 @@ A bounded RF trial still reached SRB2 maximum retransmissions and released its
 context. This is a code correction candidate, not a demonstrated stability fix.
 All seven patches reverse/reapply in order and the 16 affected reconstructed
 files match the Pi source.
-See [repeatability and release trace](../results/2026-10-02-repeatability-release.md).
 
 ## New-bearer PDCP security initialization candidate
 
@@ -230,4 +223,3 @@ unchanged. This is bounded bench evidence; the independent reliability series
 still needs repeating. The three existing MAC/PHY helper tests do not exercise
 PDCP security. Full PHY regression and the separate ULSCH-pool failure remain
 open. Temporary diagnostics are separate from this candidate.
-See [security comparison](../results/2026-10-02-srb2-security.md).

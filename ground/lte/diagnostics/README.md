@@ -42,9 +42,7 @@ cmake --build build-lte --target lte-softmodem -j3
 
 This preserves the selected production candidates, including the eighth security
 candidate when present. Do not discard unrelated
-source changes with `git reset` or `git checkout`. See the
-[recorded results](../results/2026-10-02-rlc-status.md) for tested limits and the
-remaining failure checkpoint.
+source changes with `git reset` or `git checkout`.
 
 ## Dedicated CE scheduler and uplink context trace
 
@@ -72,7 +70,6 @@ logging level. Raw upstream logs remain private.
 
 After the bounded run and confirmed modem OFF, reverse the RLC trace and then
 the CE/context trace, rebuild, and compare the binary with the saved baseline.
-The [context results](../results/2026-10-02-ce-context.md) record this restoration.
 
 ## PDCP security state trace
 

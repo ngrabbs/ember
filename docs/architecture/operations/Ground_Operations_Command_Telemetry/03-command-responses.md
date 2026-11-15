@@ -1,8 +1,7 @@
 # EMBER Command Responses
 
 **Mission design draft:** this page records proposed application behavior.
-For commands available in the current lab, use the [Yamcs operator guide](../../../user/yamcs.md)
-and [bench contract](../../../../system/protocols/ember_bench_v1.md). Draft commands
+For commands available in the current lab, use the [Yamcs operator guide](../../../../ground/yamcs/README.md). Draft commands
 such as SET_MODE and REBOOT_IHU are not exposed by the current Yamcs bench MDB.
 
 **Status:** Draft 0.2

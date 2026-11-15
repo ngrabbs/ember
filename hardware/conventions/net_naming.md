@@ -152,11 +152,6 @@ the pinmap-canonical name.
 | H2.25/26 | `+5V` | System +5 V rail (power port) |
 | H2.27/28 | `+3V3` | System +3.3 V rail (power port) |
 
-The `_SYS` suffix is a flag for the design-reviewer that says: "this
-net leaves my board and is shared with the rest of the stack."
-Pinmap definition lives in
-[`system/interfaces/cskb_pinmap.md`](../../system/interfaces/cskb_pinmap.md).
-
 Inter-board net names must match exactly across every board's
 schematic. If the EPS calls a net `SDA_SYS` and the comms board
 calls it `I2C_SDA`, those are *different nets* as far as system
@@ -280,5 +275,4 @@ FB = ferrite bead.
 ## Related documents
 
 - [`hardware/comms/design/rf_layout_guidelines.md`](../comms/design/rf_layout_guidelines.md) — ground plane, via stitching, stackup rules (also project-relevant despite living under comms/)
-- [`system/interfaces/cskb_pinmap.md`](../../system/interfaces/cskb_pinmap.md) — canonical CSKB pin assignments
 - Each board's `schematic_guide.md` — board-specific applications of this convention

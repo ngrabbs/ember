@@ -2,7 +2,7 @@
 
 Study dated 2026-10-04. The operator selected **preserving regulated 5 V for COMMS recovery down to the currently documented 5 V pack floor**. Carry forward a 3.3 V buck and a 5 V buck-boost stage. The pack floor is a provisional system requirement, not an accepted MJ1/BMS setting. Account for protection, harness and PowerPath drops when defining minimum converter input.
 
-Leading development candidates are **LMR51635XDDCR for 3.3 V** and **LM5177DCPR for 5 V**. Solar OV selection remains open after checking cutoff hysteresis. No KiCad source changed and no complete power stage is accepted. [Voltage envelope](rev_b_source_voltage_and_fault_budget.md) · [BOM handoff](rev_b_bom_and_schematic_checklist.md) · [Calculation evidence](../verification/evidence/2026-10-04_regulator_ov_candidates.json)
+Leading development candidates are **LMR51635XDDCR for 3.3 V** and **LM5177DCPR for 5 V**. Solar OV selection remains open after checking cutoff hysteresis. No KiCad source changed and no complete power stage is accepted. [Voltage envelope](rev_b_source_voltage_and_fault_budget.md) · [BOM handoff](rev_b_bom_and_schematic_checklist.md)
 
 The [subsequent sizing and fit checkpoint](rev_b_power_stage_sizing_and_fit.md) expands complete converter reservations to 1200 mm² and records the operator’s 16 mm top standoff. It checks illustrative 2 A rail cases, identifies inductor and low-gate-voltage constraints, and documents the LM5177 EVM’s 78.7 kΩ RT resistor for 400 kHz development. Complete stages remain unaccepted.
 

@@ -68,9 +68,6 @@ not the latest SIM state.
 
 ## Completed ground-radio bring-up
 
-See [2026-10-01 results](results/2026-10-01-ground-radio.md) for successful
-custom FPGA initialization, USB 3 operation, and the receive-only benchmark.
-
 ## Independent receiver and comparison UE
 
 On M75q, HackRF One (VID/PID 1d50:6089, serial suffix 31805783) is now available
@@ -82,19 +79,16 @@ ending `if01` and `if04`. Neither answered the short AT probe; application/modem
 firmware and SIM state remain unknown. No flashing was performed. Walter's tty
 number changed after reconnect; always use its stable Espressif by-id path.
 
-See [independent RF/access results](results/2026-10-01-hackrf-lte.md) for
-measured synchronization and the OAI LTE-M scheduler failures.
-
 On 2026-10-02, with Thingy powered down, experimental OAI Msg3 cleanup and
 Msg4 retry patches reached Walter RRC Setup Complete, accepted SIM authentication,
 and NAS Security Mode Complete. Additional RAR release and lifecycle candidates
 are applied on the Pi. Walter subsequently completed LTE-M attach and reported
 registration; modem PDP context 1 returned 172.16.0.2. UDP delivery and PHY
 regression remain unresolved. Walter is restored to CFUN 0 after each bounded
-trial. See [latest results](results/2026-10-02-rar-release.md).
+trial.
 
 On 2026-10-02 the user increased Walter–LibreSDR antenna separation to roughly
 six to eight feet. The gain-35, TX-59.75 run did not complete RRC setup. A
 follow-up at TX gain 69.75, with RX still 35, completed attach and bearer setup
 but delivered no UDP packet. All tests were bounded and Walter was restored to
-CFUN 0. See [separation comparison](results/2026-10-02-separated-antennas.md).
+CFUN 0.

@@ -2,7 +2,6 @@
 
 **Scope:** board allocation and provisional targets. The FreeRTOS prototype
 uses 100 kHz I2C0 GP4/GP5; the CAN Feather EPS reader uses 100 kHz I2C1 GP2/GP3.
-Use the [operator guide](../../../docs/user/README.md) for the appropriate application.
 
 ## Scope
 
@@ -76,5 +75,3 @@ See [5 V recovery startup requirements and proposed current/capacitance allocati
 ## Related Documents
 
 - IHU architecture: [`hardware/ihu/design/overview.md`](overview.md)
-- IHU-comms details: [`system/interfaces/comms_to_ihu.md`](../../../system/interfaces/comms_to_ihu.md)
-- Global bus strategy: [`system/interfaces/board_to_board.md`](../../../system/interfaces/board_to_board.md)

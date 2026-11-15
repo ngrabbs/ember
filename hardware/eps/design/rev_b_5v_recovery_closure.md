@@ -4,7 +4,7 @@
 
 The upstream converter bank is now **five EEHZA1H680P 68 µF / 50 V hybrids plus eight CGA5L1X7R1H106K160AC 10 µF / 50 V ceramics**. It replaces the previous 35 V / 25 V bank; C16 remains 100 nF / 50 V. Nominal capacitance is 420 µF, initial high tolerance is 496 µF, and the endurance-plus-tolerance sensitivity is 618.4 µF plus C16. Use a **650 µF upstream development allocation**, with staged charging of the downstream bank; the earlier 500 µF arithmetic is historical. Cold/bias/endurance bounds remain subject to manufacturer data and measurements.
 
-The [current bank analysis and acceptance gaps](../verification/protection/bank/README.md) and [34-part native BOM/render evidence](../verification/protection/bank/native/README.md) supersede the earlier bank-specific BOM and screenshots. Existing endpoint names and the PCB are unchanged. The subsequent [latch and MOSFET follow-up](rev_b_5v_latch_and_mosfet_survival.md) installs the bleeder/timing/feedback correction and source slew limiter. Its 83-part BOM, current renders and screening supersede the original protection timer/divider values below. Guaranteed hot SOA, low-VCC accuracy and physical qualification remain open.
+Existing endpoint names and the PCB are unchanged. The subsequent [latch and MOSFET follow-up](rev_b_5v_latch_and_mosfet_survival.md) installs the bleeder/timing/feedback correction and source slew limiter. Its 83-part BOM, current renders and screening supersede the original protection timer/divider values below. Guaranteed hot SOA, low-VCC accuracy and physical qualification remain open.
 
 
 2026-10-23. Complements the [converter design](rev_b_5v_recovery_design.md); this record separates resolved design choices from integration and physical acceptance. Existing stack interfaces remain unchanged.
@@ -76,7 +76,7 @@ The [Coilcraft XAL7070-682MEC](https://www.coilcraft.com/en-us/products/power/hi
 | Work item | Completion evidence |
 |---|---|
 | Native component identity | Complete for the development baseline: fresh CLI BOM/netlist contains all 28 MPNs, explicit footprint IDs and required fields |
-| Package construction | Approved Panasonic D8/F lands, polarity and maximum-body courtyard checked through query-back, saved-board export and actual renders; see [evidence](../verification/panasonic_bulk_footprints.md). Fabrication text, assembly/stencil acceptance and remaining package maps are still open |
+| Package construction | — |
 | Receiving boards | COMMS direct-load/current/capacitance measurements; IHU local switch and supervisor circuit with no boot dependency |
 | Source and rail faults | Complete autonomous source OV and independent 5 V containment circuits; worst-case trip/reset, delay, SOA, peak voltage and recovery |
 | Dynamic qualification | 4.5 V cold start, 5 V transition region, high VIN, source handover, prebias, branch admission and shorts; actual multibranch loop gain and cold transient measurements |

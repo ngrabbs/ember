@@ -98,7 +98,5 @@ Unmarked directories are preserved. Live ground reception saves no IQ and keeps
 quota shutdown. Export evidence before later starts prune old completed runs.
 
 `RUNNING` means local processes passed readiness, not RF/Yamcs delivery. Check
-decoded packet identities and archive reception times independently. The
-[supervision evidence](results/2026-10-03/supervision) retains successful controls,
-early logout shutdowns and a TX startup fault separately. Short checks do not
+decoded packet identities and archive reception times independently. Short checks do not
 establish endurance, arbitrary restart reliability, SSB quality or flight use.
