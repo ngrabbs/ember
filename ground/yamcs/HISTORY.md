@@ -136,52 +136,12 @@ Use `sudo systemctl stop ember-ground-starter` to stop the whole lab intentional
 Its `active (exited)` state means Compose startup finished; inspect container
 health and run the smoke check to verify the application itself.
 
-## Pi USB transport
+## Retired binary USB lab
 
-The deployed Pi selects USB in ignored `.env`:
-
-```dotenv
-EMBER_HTTP_BIND=192.168.1.251
-EMBER_PACKET_TRANSPORT=usb
-COMPOSE_FILE=compose.yaml:compose.usb.yaml
-```
-
-Install `python3-serial` and `picotool` on the Pi. Create ignored `.usb.env`
-with the actual device identity and Docker bridge gateway:
-
-```dotenv
-EMBER_USB_DEVICE=/dev/serial/by-id/usb-Raspberry_Pi_Pico_E663682593753535-if00
-EMBER_USB_BIND=172.17.0.1
-```
-
-Verify the gateway locally (`docker network inspect bridge`); it can differ
-on another host. `prepare.py` reads the selected transport from `.env` or
-`--transport usb`. Then:
-
-```sh
-python3 prepare.py --transport usb
-docker compose stop ember-simulator
-docker compose up -d
-sudo install -m 0644 ember-usb-bridge.service /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable --now ember-usb-bridge
-python3 ember_smoke.py --url http://192.168.1.251:8090 --transport usb --fault-test
-```
-
-The service assumes the same checkout/user as the starter and `dialout`
-membership. USB override keeps the EMBER simulator inactive and preserves
-`myproject`. TM UDP10016 is published only on host loopback; TC UDP10026 binds
-the Docker host gateway. Loopback UDP10027 is local fault injection for the
-smoke check. The bridge runs on the host; no USB device is mounted into Docker.
-The starter reads `COMPOSE_FILE` at boot and the bridge reconnects the same
-Pico identity after re-enumeration, without queuing commands for replay.
-
-To stop the entire hardware lab, stop `ember-usb-bridge` before
-`ember-ground-starter`. To return to the software reference, stop the bridge,
-remove `COMPOSE_FILE` from `.env`, set `EMBER_PACKET_TRANSPORT=simulator`, run
-`python3 prepare.py --transport simulator` and `docker compose up -d`. Both
-configurations retain the existing archives. Use the matching `--transport`
-for `ember_smoke.py`.
+The original tools and deployment steps are preserved in the
+[pinned USB lab guide](https://github.com/ngrabbs/ember/blob/fa04ac11b03a80036105431331cd1143ddd045d9/ground/yamcs/HISTORY.md#pi-usb-transport).
+For direct IHU USB on the current Pi, see the
+[serial bench setup](OPERATIONAL.md#serial-ownership-and-eps).
 
 ## Historical UHF / SDRB setup
 
