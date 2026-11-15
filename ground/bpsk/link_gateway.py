@@ -48,7 +48,7 @@ def admit_command(wire):
         raise ValueError('Packet too large')
     packet = native_decode(wire)
     h = packet['header']
-    if (packet['name'] not in ('PING', 'REQUEST_STATUS', 'REQUEST_IHU_FAULTS', 'REQUEST_TELEMETRY', 'STATUS_CAPTURE',
+    if (packet['name'] not in ('PING', 'REQUEST_STATUS', 'REQUEST_IHU_FAULTS', 'REQUEST_RADIO_CONFIG', 'REQUEST_TELEMETRY', 'STATUS_CAPTURE',
                               'STATUS_FETCH', 'PAYLOAD_FIRE_CHECK', 'IHU_REBOOT', 'SET_HEARTBEAT',
                               'SET_UHF_TELEMETRY_SCHEDULE', 'SET_UHF_TELEMETRY', 'SET_UHF_TELEMETRY_SET') or h['source'] != 1 or h['target'] != 2 or
             not all(h[k] for k in ('transaction_epoch', 'transaction_id', 'source_boot_id'))):

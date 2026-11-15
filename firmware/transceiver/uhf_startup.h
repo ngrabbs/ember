@@ -1,5 +1,6 @@
 #pragma once
 #include "uhf_startup_link.h"
+#include "radio_config.h"
 #include "firmware_info.h"
 #include "boot_morse.h"
 #include "hardware/sync.h"
@@ -35,6 +36,31 @@ static void uhf_startup_identity(const cf_frame *frame,uint32_t now){
     if(size)(void)hello_send(wire,size,request.request,time_us_64()+50000);
 }
 
+static void uhf_startup_config_reply(uint32_t request){
+    ul_packet report={.version=1,.type=BD_CONFIG,.sender=responder_boot,
+        .origin=uhf_startup_radio.token,.request=request,.size=RADIO_CONFIG_SIZE};
+    uint8_t *data=report.payload;
+    data[0]=RADIO_CONFIG_SCHEMA;
+    data[1]=RADIO_PROFILE_DBPSK_1200_V3;
+    data[2]=RADIO_PROFILE_DBPSK_1200_V3;
+    data[3]=RADIO_PROFILE_DBPSK_1200_V3;
+    data[4]=uhf_startup_link?RADIO_BEHAVIOR_LINK_ACTIVE:RADIO_BEHAVIOR_RX_ONLY;
+    /* Nominal RF targets of the compiled Si5351 RX and TX clock profiles. */
+    radio_config_profile(data+RADIO_CONFIG_DEFAULT,435000000u,437000000u,BPSK_BAUD);
+    memcpy(data+RADIO_CONFIG_ACTIVE,data+RADIO_CONFIG_DEFAULT,
+           RADIO_CONFIG_ACTIVE-RADIO_CONFIG_DEFAULT);
+    ul_p32(data+RADIO_CONFIG_BOOT,responder_boot);
+    uint8_t wire[UL_WIRE_MAX];
+    size_t size=ul_encode(&report,wire);
+    uint64_t deadline=time_us_64()+75000;
+    for(unsigned i=0;i*CF_CHUNK<size;i++){
+        cf_frame f;
+        if(!cf_fragment(wire,size,BD_CONFIG_REPLY,(uint16_t)request,i,&f) ||
+           !can_send_frame(&f,deadline))return;
+        sleep_ms(2);
+    }
+}
+
 static bool uhf_startup_radio_poll(bool keying) {
     if(uhf_startup_link && (uint32_t)((uint32_t)(time_us_64()/1000)-uhf_startup_keep_ms)>=BD_KEEP_TIMEOUT_MS){
         uhf_startup_fault="keepalive_expired";return false;
@@ -58,6 +84,11 @@ static bool uhf_startup_radio_poll(bool keying) {
         if(f.id==BD_KEEP && uhf_startup_radio.spent && bd_matches(&f,uhf_startup_radio.token,responder_boot))
             uhf_startup_keep_ms=(uint32_t)(time_us_64()/1000);
         if(keying)continue;
+        if(uhf_startup_listen && f.id==BD_CONFIG_QUERY && f.size==8 &&
+           ul_u32(f.data)==uhf_startup_radio.token && ul_u32(f.data+4)){
+            uhf_startup_config_reply(ul_u32(f.data+4));
+            continue;
+        }
         if(uhf_startup_link && f.id==CF_IHU_ID){
             uhf_startup_identity(&f,(uint32_t)(time_us_64()/1000));
             continue;

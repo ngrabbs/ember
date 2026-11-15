@@ -240,9 +240,33 @@ def generate(destination, instance="ember"):
     nav('Discovery raw / boot IDs','Devices.par',22,578,230)
     nav('All firmware / timestamps','Firmware.par',270,578,250)
     footer('Firmware rows are last-known reports, not live attestation. Raw table includes each identity’s receive time and boot ID.')
+    if instance=='ember':
+        nav('Radio configuration','Radio-Config.opi',538,578,230)
     save('Devices.opi')
 
     if instance=='ember':
+        new('Radio configuration','Last transceiver readback over UHF')
+        web('Request radio configuration','/commanding/send/ember/REQUEST_RADIO_CONFIG',748,142,230)
+        box(22,140,710,116)
+        for i,(title,key) in enumerate((('Radio boot ID','radio_boot_id'),('Behavior','behavior'),
+                                        ('Supported profiles','supported_profiles'))):
+            x=38+230*i
+            label(title,x,151,215,24)
+            observed('RADIO_CONFIG_'+key,x,177,222,16)
+        stamp('RADIO_CONFIG_radio_boot_id',38,218,410)
+        label('Setting',44,276,330,24,13,WHITE,True)
+        label('Factory default',396,276,270,24,13,WHITE,True)
+        label('Active',694,276,270,24,13,WHITE,True)
+        for i,(title,key) in enumerate((('Profile','profile'),('Nominal RX LO','rx_lo_hz'),
+                                        ('Nominal TX carrier','tx_carrier_hz'),('Symbol rate','symbol_rate'))):
+            y=308+i*54
+            box(22,y,956,48)
+            label(title,44,y+10,335,24)
+            observed('RADIO_CONFIG_default_'+key,396,y+7,270,16)
+            observed('RADIO_CONFIG_active_'+key,694,y+7,270,16)
+        footer('Frequencies are nominal radio settings. The RX LO is distinct from the ground uplink carrier.')
+        save('Radio-Config.opi')
+
         new('IHU Faults','Last fault history received over UHF')
         web('Request fault history','/commanding/send/ember/REQUEST_IHU_FAULTS',784,142,194)
         box(22,140,748,94)

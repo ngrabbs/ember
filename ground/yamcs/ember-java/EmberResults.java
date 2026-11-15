@@ -50,7 +50,7 @@ public final class EmberResults {
             command.parameter = Short.toUnsignedInt(b.getShort(WireProfile.SET_PARAMETER_PARAMETER_ID));
             command.value = Integer.toUnsignedLong(b.getInt(WireProfile.SET_PARAMETER_VALUE));
         }
-        command.deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 11 ? 40 : 5);
+        command.deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 11 || command.command == 12 ? 40 : 5);
         pending.put(key(b), command);
         history.publishAck(id, "Acknowledge_EMBER_Acceptance", TimeEncoding.getWallclockTime(), AckStatus.PENDING);
         history.publishAck(id, CommandHistoryPublisher.CommandComplete_KEY, TimeEncoding.getWallclockTime(), AckStatus.PENDING);
@@ -82,12 +82,17 @@ public final class EmberResults {
             b.get(WireProfile.IHU_FAULTS_PAYLOAD_VERSION) == 1 &&
             Byte.toUnsignedInt(b.get(WireProfile.IHU_FAULTS_COUNT)) ==
                 Math.min(Integer.toUnsignedLong(b.getInt(WireProfile.IHU_FAULTS_TOTAL)), 16);
+        boolean radioConfig = Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
+            Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 65 &&
+            b.get(WireProfile.RADIO_CONFIG_SCHEMA_VERSION) == 1 &&
+            b.getInt(WireProfile.RADIO_CONFIG_RADIO_BOOT_ID) != 0;
         long currentBoot = Integer.toUnsignedLong(b.getInt(WireProfile.SOURCE_BOOT_ID));
         if (boot != 0 && boot != currentBoot) {
             String responseKey = key(b);
             pending.entrySet().removeIf(entry -> {
                 Pending command = entry.getValue();
-                if (faultSnapshot && command.command == 11 && entry.getKey().equals(responseKey)) return false;
+                if (entry.getKey().equals(responseKey) &&
+                    ((faultSnapshot && command.command == 11) || (radioConfig && command.command == 12))) return false;
                 unknown(command, "Unknown outcome: IHU boot identity changed");
                 return true;
             });
@@ -108,6 +113,20 @@ public final class EmberResults {
             if (!fire.accepted) fire.history.publishAck(fire.id, "Acknowledge_EMBER_Acceptance", now,
                 AckStatus.NA, "Correlated payload final result received");
             fire.history.publishAck(fire.id, CommandHistoryPublisher.CommandComplete_KEY, now, AckStatus.OK);
+            pending.remove(key(b));
+            return;
+        }
+        if (radioConfig) {
+            Pending config = pending.get(key(b));
+            if (config == null || config.command != 12) return;
+            long now = TimeEncoding.getWallclockTime();
+            config.history.publish(config.id, "ember-result-boot-id", Long.toString(currentBoot));
+            config.history.publish(config.id, "ember-radio-boot-id",
+                Integer.toUnsignedString(b.getInt(WireProfile.RADIO_CONFIG_RADIO_BOOT_ID)));
+            config.history.publish(config.id, "ember-outcome", "COMPLETED");
+            config.history.publishAck(config.id, "Acknowledge_EMBER_Acceptance", now,
+                AckStatus.NA, "Correlated transceiver configuration received");
+            config.history.publishAck(config.id, CommandHistoryPublisher.CommandComplete_KEY, now, AckStatus.OK);
             pending.remove(key(b));
             return;
         }

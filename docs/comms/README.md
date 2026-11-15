@@ -29,3 +29,5 @@ The embedded EMBER packet has its own CRC-16.
 ```text
 [CCSDS primary header 6] [EMBER secondary header 24] [Payload N] [CRC-16 2]
 ```
+
+[UHF radio configuration and readback schema](radio_config.md)

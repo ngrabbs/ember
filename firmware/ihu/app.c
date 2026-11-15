@@ -799,6 +799,10 @@ static void command_impl(const char *s) {
         if(eps_adc(enabled))housekeeping.force_adc=enabled;
         return;
     }
+    if(!strcmp(s,"radio config")){
+        uhf_radio_config_start(NULL,now_ms());
+        return;
+    }
     if(!strcmp(s,"startup") || !strcmp(s,"radio")){
         if(!strcmp(s,"startup"))uhf_startup_history(true);
         mode_status();
@@ -816,7 +820,7 @@ static void command_impl(const char *s) {
     }
     if(!strcmp(s,"help")){
         LOG("COMMANDS startup | status | mode | version | faults | rtos\n");
-        LOG("DIAGNOSTICS eps status | eps json | gps | radio | outputs\n");
+        LOG("DIAGNOSTICS eps status | eps json | gps | radio | radio config | outputs\n");
         LOG("CONTROLS mode safe | uhf stop | eps adc on/off\n");return;
     }
     if(strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"mode") && strcmp(s,"outputs") &&
