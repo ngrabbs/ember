@@ -7,7 +7,7 @@ from contextlib import nullcontext
 import hashlib,json,multiprocessing as mp,os,queue,signal,socket,sys,threading,time
 from pathlib import Path
 import numpy as np
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'ember'))
+sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'ember'))
 from lte_receiver import validate
 from stream_decoder import WindowBuffer,Decoder
 from packet_radio import BASEBAND_OFFSET

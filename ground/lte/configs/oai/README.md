@@ -27,7 +27,7 @@ UHD TX gain 9.75 dB; Walter's band-13 scan still did not list the test PLMN.
 The tracked starting candidate retains `att_tx=60` for comparison. A MAC-debug
 run confirms repeated SIB1-BR/SI-BR scheduler activity, not a decoded RF signal.
 
-`enb.band13.emtc.tx30.conf.example` preserves the subsequent diagnostic profile
+[`enb.band13.emtc.tx30.conf.example`](../../diagnostics/profiles/enb.band13.emtc.tx30.conf.example) preserves the subsequent diagnostic profile
 with attenuation 30 (logged UHD TX gain 59.75). Independent HackRF PSS/SSS
 detection and controlled Walter OFF/ON access were observed with this profile.
 It remains experimental: OAI aborts on CE Msg4 retransmission and Walter has

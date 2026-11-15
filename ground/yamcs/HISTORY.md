@@ -185,7 +185,7 @@ for `ember_smoke.py`.
 
 ## Historical UHF / SDRB setup
 
-The [optional services](../uhf/SERVICES.md) remain disabled at boot; IHU cadence is armed separately. USB and LTE archives stay separate.
+The [optional services](../bench/sdrb/SERVICES.md) remain disabled at boot; IHU cadence is armed separately. USB and LTE archives stay separate.
 
 Version comparison and deployment checks: [ground release identities](../releases/README.md).
 

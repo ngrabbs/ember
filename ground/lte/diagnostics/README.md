@@ -1,7 +1,14 @@
-# Optional RLC/HARQ metadata trace
+# LTE engineering diagnostics
+
+Use the [LTE-M runbook](../BRINGUP.md#5-bring-up-lte-m) for lab cell setup.
+The optional [OAI profiles](profiles/), [candidate patches](patches/README.md),
+and [instrumentation patches](traces/) reproduce earlier engineering trials.
+Copy selected files into the existing Pi runtime locations when staging a trial.
+
+## Optional RLC/HARQ metadata trace
 
 `oai-rlc-status-trace.patch` is temporary instrumentation relative to the pinned
-OAI revision with the first seven [production candidates](../patches/README.md)
+OAI revision with the first seven [production candidates](patches/README.md)
 applied. It also applies with the eighth security candidate. It records RLC entity/bearer mapping, PDU lengths, retransmission state,
 decoded STATUS fields, and compact CE downlink HARQ feedback. It does not print
 PDU payloads. Normal OAI debug logs can still contain subscriber identities and
@@ -16,7 +23,7 @@ git apply ../oai-rlc-status-trace.patch
 cmake --build build-lte --target lte-softmodem -j3
 ```
 
-Stage the desired config example from `../configs/oai/` in the Pi's runtime
+Stage the desired config example from [profiles](profiles/) in the Pi's runtime
 configs directory, omitting `.example` from its filename. Use the existing
 bounded [bring-up procedure](../BRINGUP.md) with
 `enb.band13.emtc.ce300tx20rlctrace.conf` (RX gain 35) or

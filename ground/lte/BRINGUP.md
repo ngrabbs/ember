@@ -263,7 +263,7 @@ scp ground/lte/scripts/run-radio-check.py ground/lte/scripts/summarize-ra-log.py
   ngrabbs@ember-ground.local:work/ember-lte/
 scp ground/lte/scripts/walter-radio-check.py \
   ngrabbs@ember-ground.local:work/ember-lte/
-scp ground/lte/configs/oai/enb.band13.emtc.tx30.conf.example \
+scp ground/lte/diagnostics/profiles/enb.band13.emtc.tx30.conf.example \
   ngrabbs@ember-ground.local:work/ember-lte/configs/enb.band13.emtc.tx30.conf
 ```
 
@@ -301,7 +301,7 @@ expected manual-selection state from the bench preparation.
 Pi logs are private and UTC-stamped. Use unique run labels to avoid overwriting
 evidence. Existing labels from 2026-10-02 are recorded in the results document.
 An assertion is not a successful timeout. The Msg3-only patch retains the Msg4
-assertion; the newer [Msg4 candidate](patches/README.md#msg4-retry-candidate)
+assertion; the newer [Msg4 candidate](diagnostics/patches/README.md#msg4-retry-candidate)
 replaces that path with bounded retries. Downlink allocation failures remain.
 
 ```sh
@@ -333,7 +333,7 @@ Stage the helpers and selected diagnostic profile from the repository root:
 ```sh
 scp ground/lte/scripts/udp-bench-receiver.py ngrabbs@ember-ground.local:work/ember-lte/
 scp ground/lte/scripts/walter-radio-check.py ngrabbs@ember-ground.local:work/ember-lte/
-scp ground/lte/configs/oai/enb.band13.emtc.ce300tx30diag.conf.example \
+scp ground/lte/diagnostics/profiles/enb.band13.emtc.ce300tx30diag.conf.example \
   ngrabbs@ember-ground.local:work/ember-lte/configs/enb.band13.emtc.ce300tx30diag.conf
 ```
 

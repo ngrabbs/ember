@@ -20,8 +20,8 @@ Apply from an unmodified pinned OAI checkout:
 
 ```sh
 git switch -c ember/lte-m-msg3-cleanup
-git apply --check /path/to/EMBER/ground/lte/patches/oai-lte-m-msg3-cleanup.patch
-git apply /path/to/EMBER/ground/lte/patches/oai-lte-m-msg3-cleanup.patch
+git apply --check /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-msg3-cleanup.patch
+git apply /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-msg3-cleanup.patch
 cmake --build build-lte --target lte-softmodem -j2
 ```
 
@@ -50,8 +50,8 @@ as successful. The new lifecycle helper is called by the production scheduler.
 Apply after the Msg3 cleanup patch, from the OAI checkout:
 
 ```sh
-git apply --check /path/to/EMBER/ground/lte/patches/oai-lte-m-msg4-retry.patch
-git apply /path/to/EMBER/ground/lte/patches/oai-lte-m-msg4-retry.patch
+git apply --check /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-msg4-retry.patch
+git apply /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-msg4-retry.patch
 cmake --build build-lte --target lte-softmodem -j2
 cmake -S openair2/LAYER2/MAC/tests -B build-emtc-tests -GNinja
 cmake --build build-emtc-tests
@@ -86,8 +86,8 @@ outside this candidate's release scope.
 Apply after the two MAC patches:
 
 ```sh
-git apply --check /path/to/EMBER/ground/lte/patches/oai-lte-m-rar-release.patch
-git apply /path/to/EMBER/ground/lte/patches/oai-lte-m-rar-release.patch
+git apply --check /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-rar-release.patch
+git apply /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-rar-release.patch
 cmake --build build-lte --target lte-softmodem -j2
 cmake -S openair1/PHY/LTE_TRANSPORT/tests -B build-emtc-phy-tests -GNinja
 cmake --build build-emtc-phy-tests
@@ -125,8 +125,8 @@ It does not repair the original UE's radio-link failure or implement successful
 reestablishment. No standalone unit test covers this guard.
 
 ```sh
-git apply --check /path/to/EMBER/ground/lte/patches/oai-lte-m-reject-lifecycle.patch
-git apply /path/to/EMBER/ground/lte/patches/oai-lte-m-reject-lifecycle.patch
+git apply --check /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-reject-lifecycle.patch
+git apply /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-reject-lifecycle.patch
 cmake --build build-lte --target lte-softmodem -j2
 ```
 
@@ -141,8 +141,8 @@ MPDCCH opportunities rather than every subframe. No standalone unit test covers
 the asynchronous RRC task or timeout release calls.
 
 ```sh
-git apply --check /path/to/EMBER/ground/lte/patches/oai-lte-m-ccch-wait.patch
-git apply /path/to/EMBER/ground/lte/patches/oai-lte-m-ccch-wait.patch
+git apply --check /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-ccch-wait.patch
+git apply /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-ccch-wait.patch
 cmake --build build-lte --target lte-softmodem -j2
 ```
 
@@ -160,8 +160,8 @@ unknown-UE/Msg3 path. This matches the current single-process implementation;
 it does not implement multiple LTE-M HARQ processes or repetition support.
 
 ```sh
-git apply --check /path/to/EMBER/ground/lte/patches/oai-lte-m-ul-harq.patch
-git apply /path/to/EMBER/ground/lte/patches/oai-lte-m-ul-harq.patch
+git apply --check /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-ul-harq.patch
+git apply /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-ul-harq.patch
 cmake --build build-lte --target lte-softmodem -j3
 cmake -S openair2/LAYER2/MAC/tests -B build-mac-tests -GNinja
 cmake --build build-mac-tests
@@ -188,8 +188,8 @@ then overwrote the saved MCS and changed the PDSCH transport-block length.
 This two-line change preserves the existing payload, NDI, and RV handling.
 
 ```sh
-git apply --check /path/to/EMBER/ground/lte/patches/oai-lte-m-dl-retry-mcs.patch
-git apply /path/to/EMBER/ground/lte/patches/oai-lte-m-dl-retry-mcs.patch
+git apply --check /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-dl-retry-mcs.patch
+git apply /path/to/EMBER/ground/lte/diagnostics/patches/oai-lte-m-dl-retry-mcs.patch
 cmake --build build-lte --target lte-softmodem -j3
 ```
 
@@ -211,8 +211,8 @@ inactive. The patch initializes the new bearers without resetting PDCP sequence
 numbers or disabling security.
 
 ```sh
-git apply --check /path/to/EMBER/ground/lte/patches/oai-new-bearer-security.patch
-git apply /path/to/EMBER/ground/lte/patches/oai-new-bearer-security.patch
+git apply --check /path/to/EMBER/ground/lte/diagnostics/patches/oai-new-bearer-security.patch
+git apply /path/to/EMBER/ground/lte/diagnostics/patches/oai-new-bearer-security.patch
 cmake --build build-lte --target lte-softmodem -j3
 ```
 

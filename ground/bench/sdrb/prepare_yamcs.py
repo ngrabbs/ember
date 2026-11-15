@@ -50,5 +50,5 @@ def prepare(root):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--yamcs-root', type=Path, default=Path(__file__).resolve().parents[1] / 'yamcs')
+    parser.add_argument('--yamcs-root', type=Path, default=Path(__file__).resolve().parents[2] / 'yamcs')
     prepare(parser.parse_args().yamcs_root)

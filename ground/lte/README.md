@@ -10,5 +10,6 @@ ground Pi. The profile has demonstrated bounded bench delivery.
    The walkthrough gives the byte and provenance checks and shutdown sequence.
 
 Use the [engineering runbook](BRINGUP.md) for radio and EPC bring-up,
-[inventory](INVENTORY.md) for the bench configuration, and
+[inventory](INVENTORY.md) for the bench configuration,
+[engineering diagnostics](diagnostics/README.md) for optional OAI profiles and patches, and
 [Walter firmware](../../firmware/walter/README.md) for the modem application.

@@ -6,7 +6,7 @@ No firmware, charger configuration, spacecraft scheduler or RF owner is changed.
 """
 import argparse,hashlib,json,math,re,signal,sys,time
 from pathlib import Path
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'ember'))
+sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'ember'))
 
 ERROR_COUNTERS=('unknown','tx_fail','tx_timeout','rx_bad','rx_overflow','fragments_bad','fragments_timeout','busy_drops')
 

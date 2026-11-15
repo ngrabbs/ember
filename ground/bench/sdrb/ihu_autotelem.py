@@ -2,7 +2,7 @@
 """Arm a finite native IHU telemetry observation; never send USB packet triggers."""
 import argparse,hashlib,json,re,signal,sys,time
 from pathlib import Path
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'ember'))
+sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'ember'))
 from ihu_cadence import check_status
 
 def run(a):
