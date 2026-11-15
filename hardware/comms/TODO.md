@@ -234,7 +234,7 @@ rendered footprint pad coordinates. C191253 is not the SSOP ordering code.
 - [x] **J9:** physical clearance confirmed by user: installed MMCX fits; this
   is the top board with no board above and ample room. Stack uses 16 mm standoffs.
 - [x] **Embedded ordering properties:** all 147 purchasable placements have `LCSC Part #`
-  in schematic and PCB; six bare test pads are `N/A`. [Audit](bom/evidence/lcsc_property_audit_2026-10-03.md).
+  in schematic and PCB; six bare test pads are `N/A`. [Ordering and assembly](bom/README.md#ordering-and-assembly).
 - [ ] **Procurement:** ordering fields are complete and retained U9 stock verified;
   recheck every exact populated part against live JLCPCB stock for the actual build
   quantity plus allowance. Preserve J6/J7/J8 as DNP. [Sourcing](bom/README.md)
@@ -251,7 +251,7 @@ rendered footprint pad coordinates. C191253 is not the SSOP ordering code.
   T/R switching, transmitter leakage, and receiver exposure.
 - [ ] Qualify L15/L16 bypass/isolation and amplifier stability over intended supply
   and temperature conditions; verify C103/C104 effective capacitance and regulator
-  stability. [Capacitor selection record](bom/evidence/remaining_field_completion.md)
+  stability. [Regulator capacitors](bom/README.md#regulator-capacitors)
 
 ## Close the physical and verification record
 

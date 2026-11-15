@@ -1,37 +1,40 @@
 # Comms BOM and sourcing
 
-[Comms home](../README.md) · [Open work](../TODO.md)
+[Comms home](../README.md) · [Open work](../TODO.md) · [Purchased Y24 order](../releases/Y24-order-record.md)
 
-**Sourcing requirement:** use exact parts from JLCPCB with live stock sufficient
-for the intended build and assembly allowance. LCSC-only stock and cached catalogue
-counts are insufficient. Preserve intentional DNP parts.
+## Ordering and assembly
 
-**Canonical embedded property: `LCSC Part #`.** All 147 purchasable placements
-now carry a C-number in schematic and PCB, including DNP headers. Six bare
-copper test pads use `N/A`; mounting holes are board geometry. Keep ordering
-identity separate from DNP and hand-solder assembly choices.
+Use `LCSC Part #` for exact JLCPCB C-numbers in the schematic, PCB, and BOM
+export. Verify live JLCPCB stock for the build quantity plus the selected
+assembly service's allowance.
 
-[Current field audit and full BOM](evidence/lcsc_property_audit_2026-10-03.md)
-records new selections and verification. L16, D15 and J9 exact ordering fields
-are complete; U9 PSA4-5043+ is retained with October 3 stock evidence.
+Keep ordering codes for J6/J7/J8 (DNP) and hand-soldered parts in the full BOM.
+Exclude DNP parts, hand-soldered parts, bare test pads (`N/A`), and mounting
+holes from the assembly upload. Account for the Pico and CAN termination
+shunts separately. Install the shunts only at a bus end.
 
-All 55 original codes were checked against live JLCPCB rows October 3. The two
-stock shortages and green LED package question are now resolved by qualified
-substitutions: C90642 inductors, C882826 regulator, C125094 LEDs. The mixer is retained
-per user decision; its six-piece stock snapshot remains an order-time risk.
-[Current stock and assembly audit](evidence/stock_assembly_audit_2026-10-03.md).
-Verify the selected service's assembly allowance. Confirm the order's assembly service and filter-part selections.
-No purchases or reservations have been made.
+Regenerate the native netlist before exporting a new manufacturing BOM and
+check the filtered BOM and placement files against the vendor preview. Use the
+[Y24 assembly BOM](../releases/review_20261004_1100/assembly/BOM.csv) for the
+exact purchased prototype baseline.
 
-C526972 was resolved in the earlier catalogue audit as **YAGEO CC0402BRNPO9BN9R1**.
-Older model notes calling its identity unknown are superseded; exact RF models and
-live procurement acceptance still need work.
+## Part selections
 
-- [Replacement candidate record](replacement_candidates.md)
-- [Latest ordering-field completion](evidence/remaining_field_completion.md)
-- [Passive-field completion](evidence/passive_field_completion.md)
-- [Connector/IC-field completion](evidence/bom_field_completion.md)
-- [Dated full audit](evidence/jlcpcb_bom_audit.md) and [live-stock snapshot](evidence/jlcpcb_live_audit.md)
+| References | Selected part | Decision |
+|---|---|---|
+| L12/L13/L19–L24 | Murata LQW15AN10NG00D · C90642 | Replaced the Coilcraft 10 nH part. Use the Murata model for filter work and verify measured response. |
+| U12 | TI TLV73330PDBVR · C882826 | Replaced TLV75530PDBVR. |
+| D12/D13 | Lite-On LTST-C190KGKT · C125094 | Top-view green LED in the existing 0603 footprint. |
+| U9 / U10 | Mini-Circuits PSA4-5043+ · C5240848 / ADE-1+ · C2942210 | Retained the exact amplifier and mixer. Recheck both when sourcing. |
+| L16 | Coilcraft 0805HP-221XGRC · C40877572 | Retained 220 nH with the prototype self-resonance exception. Isolation and stability still need bench checks. |
+| D15 | Nexperia PESD5V0F1BLD,315 · C478204 | Selected in the existing SOD882D footprint. |
+| J9 | Molex 734151471 · C588477 | Soldered through-hole MMCX. See the Y24 order record for the finished-hole tolerance and vendor review. |
+| 9.1 pF RF capacitors | YAGEO CC0402BRNPO9BN9R1 · C526972 | Exact part identified. Qualify alternate tuning values against RF models and bench measurements. |
+| Y2 / U5 | SI5351A-B-GTR · C504891 / MCP6022T-I/SN · C57639 | Tape-and-reel ordering variants retain the device and package. |
 
-Regenerate the native netlist before exporting the manufacturing BOM. The audit BOM is not a fabrication release; generate a filtered assembly BOM
-and verify the vendor preview before ordering.
+## Regulator capacitors
+
+C103/C104 use Samsung CL10B105KA8NNNC (C29936), 1 µF, 25 V, X7R, 0603.
+Typical DC-bias, tolerance, and temperature screening estimated about 0.61 µF
+at C103 (5 V) and 0.69 µF at C104 (3 V). Verify effective capacitance and
+regulator stability on the bench.

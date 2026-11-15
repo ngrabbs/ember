@@ -32,5 +32,5 @@ receiver exposure, and D15 voltage/mismatch margin. Verify J9's through-hole lau
 and mechanical fit. Neither earlier DRC results nor package acceptance proves
 RF performance or hot-switching suitability.
 
-- [Capacitor selection evidence](../bom/evidence/remaining_field_completion.md)
+- [Regulator capacitor selection](../bom/README.md#regulator-capacitors)
 - [Prototype qualification worksheet](../bringup/rf_prototype_checklist.md)
