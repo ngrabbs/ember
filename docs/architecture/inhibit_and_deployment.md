@@ -5,7 +5,7 @@ EMBER's proposed flight architecture, and the documented v0.1 bench circuit.
 It is not a verification of the installed hardware or flight compliance.
 
 A separate startup-sequence diagram is not present in this checkout. Use the
-[proposed transition table](operations/02-transition-table.md) for startup
+[proposed transition table](operations/flight-draft.md#transitions-and-reset) for startup
 behavior; diagram creation remains documentation work.
 EMBER has one burn-wire-released UHF antenna and fixed solar panels.
 

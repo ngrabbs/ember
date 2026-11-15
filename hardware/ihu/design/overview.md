@@ -7,7 +7,7 @@ that coordinates EPS, communications, and payload behavior.
 
 ## System Role
 
-- Intended mode behavior: see the [operations draft](../../../docs/architecture/operations/README.md); the full mode manager is not implemented
+- Intended mode behavior: see the [operations draft](../../../docs/architecture/operations/flight-draft.md); the full mode manager is not implemented
 - Serve as command authority for subsystem actions
 - Aggregate housekeeping telemetry for downlink
 - Provide fault supervision and recovery orchestration
@@ -54,7 +54,7 @@ Subsystem Telemetry -> IHU Aggregator -> Downlink Packet Assembly -> Comms TX
 
 ### Legacy high-duty concept
 
-The current [operations draft](../../../docs/architecture/operations/README.md)
+The current [operations draft](../../../docs/architecture/operations/flight-draft.md)
 places scheduled higher-duty activity within NOMINAL. The earlier separate-mode
 concept is retained here as history, not an implemented mode.
 

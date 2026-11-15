@@ -1,17 +1,9 @@
-# Spacecraft operations
+# Operations
 
-[Architecture](../../../README.md#system-at-a-glance)
-
-**Ground runtime:** [IHU modes and output policy](04-ihu-runtime-policy.md) defines
-the implemented0.13.0 ground-test behavior and inactive flight stubs.
-
-**Flight draft 0.1 · September 19, 2026 · For team review.** These three tables describe
-proposed behavior; they are not approved flight requirements.
-
-1. [Modes](01-mode-table.md): what the spacecraft does.
-2. [Transitions](02-transition-table.md): when it changes mode, including after reset.
-3. [Permissions](03-permission-matrix.md): what must be true before an action is allowed.
-
-Read all three before implementing the mode manager. Prototype jumper decisions
-are in [inhibit and deployment](../inhibit_and_deployment.md); flight timer values,
-inhibit arrangements, and the proposed test-mode input remain unresolved.
+| Topic | Start here |
+| --- | --- |
+| Commands available in the lab | [Yamcs command dictionary](yamcs-commands.md) |
+| IHU build profiles, startup, and output flags | [IHU firmware guide](../../../firmware/ihu/README.md) |
+| Ground station, displays, and packet checks | [Ground station](../../../ground/README.md) · [Yamcs guide](../../../ground/yamcs/README.md) · [Demo checklist](../../../ground/DEMO.md) |
+| Packet IDs, fields, and transport | [Wire dictionary](../../../ground/ember/dictionary.json) · [Transport guide](../../../firmware/comms_transport/README.md) |
+| Proposed flight behavior | [Flight operations draft](flight-draft.md) · [Inhibit and deployment design](../inhibit_and_deployment.md) |
