@@ -35,6 +35,7 @@ distribution and finalized subsystem current budgets are still in progress.
 - Electrical and logical interfaces: [`hardware/eps/design/interfaces.md`](design/interfaces.md)
 - Bench bring-up and acceptance criteria: [`hardware/eps/bringup/phase1_validation.md`](bringup/phase1_validation.md)
 - Draft controller symbols and footprints: [candidate library notes](libraries/README.md)
+- [Rev A datasheet source](datasheet/eps_datasheet.md)
 - KiCad source: `hardware/eps/kicad/`
 - Vendor parts and reference assets: `hardware/eps/components/`
 
