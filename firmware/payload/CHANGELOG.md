@@ -4,6 +4,7 @@
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-11-15 | 0.8.0 | Adds selectable JPEG and RAW detector profiles, offline tuning, and profile reporting. |
 | 2026-11-14 | 0.7.1 · `deeac88` | Publishes a new payload identity for the FULL telemetry release. |
 | 2026-11-06 | 0.7.0 · `3e4d0b4` | Saves capture GPS evidence with fire-check results. |
 | 2026-11-05 | 0.6.0–0.6.1 · `2ffff3b`, `c37fd71` | Consolidates fire-check settings, reads camera originals in place, and allows a 10-second fire-check budget. |

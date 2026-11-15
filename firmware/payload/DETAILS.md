@@ -15,25 +15,24 @@ dtoverlay=spi0-1cs
 dtoverlay=mcp2515,spi0-0,oscillator=16000000,interrupt=25
 ```
 
-Use a fresh export directory on both hosts. These commands target the bench
-Pi at `pi@192.168.1.46`. The 0.7.1 installer and base unit default to
+Export from the clean commit you intend to deploy. Use a fresh export
+directory on both hosts. These commands target the bench
+Pi at `pi@192.168.1.46`. The installer and base unit default to
 `ngrabbs`, so adjust the two account references in the exported copy for
 this Pi before installing.
 
 ```sh
 (
 set -e
-test "$(git rev-parse HEAD)" = deeac88c986bbe0f6697bf90183e1b407fe06b34
 test -z "$(git status --porcelain)"
-test "$(cat firmware/payload/VERSION)" = 0.7.1
-python3 firmware/payload/export.py /tmp/ember-payload-0.7.1-export
-sed 's/^id ngrabbs /id pi /' /tmp/ember-payload-0.7.1-export/install.sh \
-  > /tmp/ember-payload-0.7.1-export/install-pi.sh
-unit=/tmp/ember-payload-0.7.1-export/systemd/ember-payload.service
+python3 firmware/payload/export.py /tmp/ember-payload-export
+sed 's/^id ngrabbs /id pi /' /tmp/ember-payload-export/install.sh \
+  > /tmp/ember-payload-export/install-pi.sh
+unit=/tmp/ember-payload-export/systemd/ember-payload.service
 sed 's/^User=ngrabbs$/User=pi/' "$unit" > "$unit.tmp" && mv "$unit.tmp" "$unit"
-ssh pi@192.168.1.46 'test ! -e ~/ember-payload-0.7.1-export'
-scp -r /tmp/ember-payload-0.7.1-export pi@192.168.1.46:~/
-ssh pi@192.168.1.46 'sudo sh ~/ember-payload-0.7.1-export/install-pi.sh'
+ssh pi@192.168.1.46 'test ! -e ~/ember-payload-export'
+scp -r /tmp/ember-payload-export pi@192.168.1.46:~/
+ssh pi@192.168.1.46 'sudo sh ~/ember-payload-export/install-pi.sh'
 )
 ```
 

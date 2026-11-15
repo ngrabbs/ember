@@ -35,8 +35,9 @@ the [IHU command guide](../../firmware/ihu/README.md#ground-station-commands-in-
 covers the UHF command set. All five payload commands are available in
 `ember` with IHU 0.33.0, the updated ground software, and LINK_ACTIVE. In
 `ember-bench`, use direct USB with GROUND_TEST firmware or with UHF startup
-firmware in LINK_ACTIVE. `PAYLOAD_STATUS_QUERY` reports the selected
-detector profile on the **Payload** display.
+firmware in LINK_ACTIVE. With payload 0.8.0, IHU 0.34.0, and the updated
+ground software, `PAYLOAD_STATUS_QUERY` shows the selected detector profile
+on the **Payload** display.
 
 Check acceptance and completion in **Command History**. A timed-out result is
 unknown. For `PAYLOAD_FIRE_CHECK`, check the result, execution mode, and

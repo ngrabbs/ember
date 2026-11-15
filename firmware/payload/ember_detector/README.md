@@ -158,14 +158,14 @@ matching results and downstream decisions can differ across OpenCV builds/CPUs.
 
 The default is `jpeg-guarded`. Each suffix has a `jpeg-` and `raw-` variant.
 
-| Suffix | Default settings |
+| Detector | Default settings |
 | --- | --- |
-| `guarded`, `baseline` | Minimum region and valid coverage are 16 px / 10% for JPEG and 8 px / 0.430% for RAW. Guarded adds a 2 px neighborhood. |
-| `six-sigma` | 770/780 ratio, six standard deviations, positive denominator. Set `min_hits` for a scene decision. |
-| `jacob-p` | 99th-percentile fractional excess with a 4 DN continuum floor. |
-| `jacob-i`, `jacob-i-native` | Background-subtracted brightness. Set `source` and `background` to `[x0,y0,x1,y1]` with exclusive upper bounds. Registered boxes use the 770 nm grid. Native boxes use one rectangle per band in wavelength order. |
-| `jacob-gross` | Whole-frame brightness sums. |
-| `koenig` | Whole-frame brightness sums at or above 16 DN. |
+| [`guarded`](guarded.py), [`baseline`](spectral.py) | Minimum region and valid coverage are 16 px / 10% for JPEG and 8 px / 0.430% for RAW. Guarded adds a 2 px neighborhood. |
+| [`six-sigma`](six_sigma.py) | 770/780 ratio, six standard deviations, positive denominator. Set `min_hits` for a scene decision. |
+| [`jacob-p`](jacob_p.py) | 99th-percentile fractional excess with a 4 DN continuum floor. |
+| [`jacob-i`](jacob_i.py), [`jacob-i-native`](jacob_i_native.py) | Background-subtracted brightness. Set `source` and `background` to `[x0,y0,x1,y1]` with exclusive upper bounds. Registered boxes use the 770 nm grid. Native boxes use one rectangle per band in wavelength order. |
+| [`jacob-gross`](jacob_gross.py) | Whole-frame brightness sums. |
+| [`koenig`](koenig.py) | Whole-frame brightness sums at or above 16 DN. |
 
 Diagnostic profiles use 750/770/780 nm inputs and report scores with UNKNOWN
 until a decision threshold is set. Registered Jacob profiles use phase
