@@ -6,6 +6,7 @@ See the [ground demo checklist](../DEMO.md) for current operations.
 
 | Recorded release | Manifests |
 | --- | --- |
+| Yamcs 1.8.0 · UHF transceiver configuration readback | [Flight `ember`](yamcs-flight-1.8.0.json) |
 | Yamcs 1.7.1 · FULL UHF command defaults with 120 s listen / 60 s transmit | [Flight `ember`](yamcs-flight-1.7.1.json) |
 | Yamcs 1.7.0 · UHF IHU fault history | [Flight `ember`](yamcs-flight-1.7.0.json) |
 | Two-instance Yamcs · live audit, November 15, 2026 | [Flight `ember`](yamcs-flight-20261115.json) · [Serial `ember-bench`](yamcs-bench-20261115.json) |
@@ -20,12 +21,12 @@ See the [ground demo checklist](../DEMO.md) for current operations.
 
 From the repository root, compare the Pi's loaded mission database and display
 assets against a recorded baseline. The serial bench instance uses its November 15
-manifest. The 1.7.1 flight manifest records the live mission database with FULL
-and 120/60 UHF command defaults.
+manifest. The 1.8.0 flight manifest includes the radio configuration command
+and display, along with the FULL 120/60 command defaults.
 
 ```sh
 python3 ground/yamcs/build_identity.py --url http://192.168.1.251:8090 \
-  --instance ember --check ground/releases/yamcs-flight-1.7.1.json
+  --instance ember --check ground/releases/yamcs-flight-1.8.0.json
 python3 ground/yamcs/build_identity.py --url http://192.168.1.251:8090 \
   --instance ember-bench --check ground/releases/yamcs-bench-20261115.json
 ```
