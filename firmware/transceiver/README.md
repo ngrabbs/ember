@@ -148,3 +148,16 @@ pass. CAN B stays in standby. The console prints the build identity and boot ID.
 
 See [default startup and service loop](main.c),
 [default RF service](rf_service.h), and [UHF startup profile startup and loop](uhf_startup.h).
+
+
+### Capture RX_BASEBAND in LINK_ACTIVE
+
+For bench diagnostics, build the UHF startup profile with
+`-DTRANSCEIVER_RX_ADC_CAPTURE=ON`. Open USB CDC for reading and leave its input
+idle. The transceiver emits `ADC_RAW <window> <offset> <hex>` records alongside
+`[rx_diag]`. Each four-digit hex value is one ADC sample. The offset counts
+samples from the start of the 32,768-sample window at 8 kS/s. Match the window
+number to `[rx_diag]` for acquisition and decode timestamps and CRC results.
+
+USB output is best effort. Use only captures with every sample offset present.
+The option defaults to OFF for normal firmware builds.

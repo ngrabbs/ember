@@ -223,6 +223,38 @@ static uint32_t uhf_startup_adc_copied,uhf_startup_adc_next;
 static uint64_t uhf_startup_adc_epoch_us,uhf_startup_adc_start_us,uhf_startup_adc_end_us;
 static unsigned uhf_startup_rx_window;
 static unsigned uhf_startup_adc_samples;
+#if TRANSCEIVER_RX_ADC_CAPTURE
+#include "pico/stdio_usb.h"
+
+static unsigned adc_capture_window, adc_capture_offset;
+static uint64_t adc_capture_next_us;
+
+/* rx_samples is the decoder's immutable snapshot until the next capture copy.
+ * Indexed chunks let the host reject gaps if USB has no buffer space. */
+static void adc_capture_service(void) {
+    if (!adc_capture_window || adc_capture_offset >= UHF_STARTUP_WINDOW_SAMPLES ||
+        !stdio_usb_connected() || time_us_64() < adc_capture_next_us)
+        return;
+    adc_capture_next_us = time_us_64() + 900;
+    static const char hex[] = "0123456789abcdef";
+    /* Keep each record below the SDK USB CDC transmit FIFO size. */
+    enum { samples_per_chunk = 24 };
+    char line[40 + 4 * samples_per_chunk];
+    int length = snprintf(line, sizeof(line), "ADC_RAW %u %u ", adc_capture_window, adc_capture_offset);
+    unsigned end = adc_capture_offset + samples_per_chunk;
+    if (end > UHF_STARTUP_WINDOW_SAMPLES) end = UHF_STARTUP_WINDOW_SAMPLES;
+    while (adc_capture_offset < end) {
+        unsigned sample = rx_samples[adc_capture_offset++];
+        for (int shift = 12; shift >= 0; shift -= 4)
+            line[length++] = hex[(sample >> shift) & 15];
+    }
+    line[length++] = '\n';
+    (void)stdio_put_string(line, length, false, false);
+}
+#else
+static inline void adc_capture_service(void) {}
+#endif
+
 static rd_result uhf_startup_last_forwarded;
 static unsigned uhf_startup_last_forwarded_window;
 
@@ -269,9 +301,12 @@ static bool uhf_startup_adc_collect(void){
 }
 
 static bool uhf_startup_decode_continue(void){
-    return !uhf_startup_abort && time_us_64()<uhf_startup_decode_deadline &&
-           getchar_timeout_us(0)<0 && uhf_startup_radio_poll(false) &&
-           !uhf_startup_tx_pending && uhf_startup_adc_collect();
+    if (uhf_startup_abort || time_us_64() >= uhf_startup_decode_deadline ||
+        getchar_timeout_us(0) >= 0 || !uhf_startup_radio_poll(false) ||
+        uhf_startup_tx_pending || !uhf_startup_adc_collect())
+        return false;
+    adc_capture_service();
+    return true;
 }
 
 static bool uhf_startup_capture(void){
@@ -282,6 +317,7 @@ static bool uhf_startup_capture(void){
         if(time_us_64()>=deadline || getchar_timeout_us(0)>=0 ||
            !uhf_startup_radio_poll(false) || !uhf_startup_adc_collect())return false;
         if(uhf_startup_adc_copied==uhf_startup_adc_next)break;
+        adc_capture_service();
         sleep_us(300);
     }
     if(uhf_startup_tx_pending)return true;
@@ -293,6 +329,10 @@ static bool uhf_startup_capture(void){
     uhf_startup_adc_start_us=uhf_startup_adc_epoch_us+(uint64_t)first*125;
     uhf_startup_adc_end_us=uhf_startup_adc_epoch_us+(uint64_t)uhf_startup_adc_next*125;
     uhf_startup_adc_samples=UHF_STARTUP_WINDOW_SAMPLES;
+#if TRANSCEIVER_RX_ADC_CAPTURE
+    adc_capture_window = uhf_startup_rx_window + 1;
+    adc_capture_offset = 0;
+#endif
     uhf_startup_adc_next+=UHF_STARTUP_WINDOW_STEP;
     return true;
 }

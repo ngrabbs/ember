@@ -1,5 +1,5 @@
 /* Bounded, capture-only DBPSK detector. No dispatch, CAN forwarding or RF output.
- * 8 kS/s real ADC, 1200 baud; integer mixing, eight symbol timing hypotheses.
+ * 8 kS/s real ADC, 1200 baud; integer mixing, 16 symbol timing hypotheses.
  * Search 400..2600 Hz in 25 Hz steps. Returns only the first CRC-valid frame.
  * This is a bench acquisition envelope, not full-band frequency acquisition. */
 #pragma once
@@ -17,7 +17,8 @@ typedef struct {
 } rd_result;
 typedef struct {
  uint32_t sync; unsigned bits, bytes, wanted; uint8_t body[251];
- int32_t re,im,prev_re,prev_im; bool previous, collecting;
+ int64_t integral_re,integral_im;
+ int32_t reference_re,reference_im; bool collecting, prior_negative;
 } rd_lane;
 static uint16_t rd_u16(const uint8_t *p){return (uint16_t)((p[0]<<8)|p[1]);}
 static uint32_t rd_u32(const uint8_t *p){return ((uint32_t)p[0]<<24)|((uint32_t)p[1]<<16)|((uint32_t)p[2]<<8)|p[3];}
@@ -59,16 +60,18 @@ static inline bool rd_bit(rd_lane *s,unsigned bit,rd_result *out){
 }
 /* Optional callback between frequency candidates keeps control/service bounded. */
 typedef bool (*rd_continue)(void);
-/* Start near both measured bench IFs before expanding the search.
+/* Start near the measured bench IF before expanding the search.
  * CRC-valid reception updates the first candidate for the next capture. */
-enum { RD_IF_RECENT_HZ=1675, RD_IF_EARLIER_HZ=1325 };
-static unsigned rd_preferred_hz=RD_IF_RECENT_HZ;
+enum { RD_IF_LINK_HZ=1550, RD_IF_RECENT_HZ=1675, RD_IF_EARLIER_HZ=1325 };
+static unsigned rd_preferred_hz;
 static bool rd_decode_impl(const uint16_t *samples,size_t count,rd_result *out,rd_continue proceed,bool native){
  if(!samples||!out||count!=32768)return false;
  uint32_t sum=0;
  for(size_t i=0;i<count;i++){if(!samples[i]||samples[i]>=4095)return false;sum+=samples[i];}
  int32_t mean=(int32_t)(sum/count);
- const unsigned initial[]={rd_preferred_hz,RD_IF_RECENT_HZ,RD_IF_EARLIER_HZ};
+ unsigned preferred=rd_preferred_hz;
+ if(!preferred)preferred=native?RD_IF_RECENT_HZ:RD_IF_LINK_HZ;
+ const unsigned initial[]={preferred,RD_IF_RECENT_HZ,RD_IF_EARLIER_HZ};
  for(unsigned candidate=0;candidate<=178;candidate++){
   int trial;
   if(candidate<3){
@@ -77,33 +80,50 @@ static bool rd_decode_impl(const uint16_t *samples,size_t count,rd_result *out,r
   }else{
    unsigned step=candidate-2;
    int offset=(int)((step+1)/2)*25;
-   trial=(int)rd_preferred_hz+(step%2 ? -offset : offset);
+   trial=(int)preferred+(step%2 ? -offset : offset);
    if(trial==RD_IF_RECENT_HZ || trial==RD_IF_EARLIER_HZ)continue;
   }
   if(trial<400||trial>2600)continue;
   unsigned hz=(unsigned)trial;
   if(proceed&&!proceed())return false;
-  /* Single diagnostic owner; keep workspace off the Pico stack. */
-  static rd_lane lanes[8];memset(lanes,0,sizeof(lanes));uint32_t phase=0,step=(uint32_t)(((uint64_t)hz<<32)/8000);
+  /* At 8 kS/s, a sample spans 12 ticks and a symbol spans 80.
+   * Evaluate 16 evenly spaced symbol phases using one shared integral. */
+  enum { lanes_count=16, sample_ticks=12, lane_ticks=5 };
+  /* Single decoder owner. Keep lane state off the Pico stack. */
+  static rd_lane lanes[lanes_count];
+  memset(lanes,0,sizeof(lanes));
+  uint32_t phase=0,step=(uint32_t)(((uint64_t)hz<<32)/8000);
+  int64_t integral_re=0,integral_im=0;
+  unsigned boundary=0,next_tick=0;
   for(size_t i=0;i<count;i++,phase+=step){
-   /* The packet link owns CAN during DSP. Two MCP RX buffers cannot
-    * hold a complete IHU transmit envelope while a candidate is searched. */
+   /* Service CAN, ADC DMA and the receive deadline during the search. */
    if(!native && i && !(i&127u) && proceed && !proceed())return false;
    int32_t v=(int32_t)samples[i]-mean;
-   /* Divide mixer output before accumulation to bound differential products. */
-   int32_t re=v*rd_sine[((phase>>24)+64)&255]/256;
-   int32_t im=v*rd_sine[phase>>24]/256;
-   for(unsigned t=0;t<8;t++){
-    rd_lane *s=&lanes[t];unsigned tick=(unsigned)i*6;
-    if(tick<t*5)continue;
-    if(i && (tick-t*5)/40 != (tick-6<t*5?0:(tick-6-t*5)/40)){
-     if(s->previous && rd_bit_impl(s,(int64_t)s->re*s->prev_re+(int64_t)s->im*s->prev_im<0,out,native)){
-      out->frequency=hz;rd_preferred_hz=hz;return true;
-     }
-     s->prev_re=s->re;s->prev_im=s->im;s->previous=true;s->re=s->im=0;
+   /* Keep the mixed samples precise and the symbol dot product in int64_t. */
+   int32_t re=v*rd_sine[((phase>>24)+64)&255]/64;
+   int32_t im=v*rd_sine[phase>>24]/64;
+   unsigned tick=(unsigned)i*sample_ticks;
+   for(;next_tick<tick+sample_ticks;next_tick+=lane_ticks,++boundary){
+    rd_lane *s=&lanes[boundary%lanes_count];
+    int weight=(int)(next_tick-tick);
+    int64_t end_re=integral_re+re*weight,end_im=integral_im+im*weight;
+    /* Each lane integrates between consecutive boundaries of its own phase. */
+    int32_t symbol_re=(int32_t)(end_re-s->integral_re);
+    int32_t symbol_im=(int32_t)(end_im-s->integral_im);
+    s->integral_re=end_re;s->integral_im=end_im;
+    /* Fold each symbol toward its running phase reference before averaging.
+     * Differential bits are sign changes and do not depend on reference polarity. */
+    bool negative=(int64_t)symbol_re*s->reference_re+(int64_t)symbol_im*s->reference_im<0;
+    if(boundary>=2*lanes_count &&
+       rd_bit_impl(s,negative!=s->prior_negative,out,native)){
+     out->frequency=hz;rd_preferred_hz=hz;return true;
     }
-    s->re+=re;s->im+=im;
+    if(negative){symbol_re=-symbol_re;symbol_im=-symbol_im;}
+    s->reference_re+=(symbol_re-s->reference_re)/2;
+    s->reference_im+=(symbol_im-s->reference_im)/2;
+    s->prior_negative=negative;
    }
+   integral_re+=re*sample_ticks;integral_im+=im*sample_ticks;
   }
  }
  return false;
