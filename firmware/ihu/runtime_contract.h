@@ -3,8 +3,8 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
-#ifndef IHU_BOOT_DEMO
-#define IHU_BOOT_DEMO 0
+#ifndef IHU_UHF_STARTUP
+#define IHU_UHF_STARTUP 0
 #endif
 /* Commands are numbered without wrap; overflow fails closed until reset. */
 enum {IHU_COMMAND_SIZE=40,IHU_COMMAND_QUEUE=4,IHU_CAN_RX_QUEUE=64,
@@ -16,7 +16,7 @@ typedef struct {uint32_t sequence[8],next;uint8_t pending;} ihu_controls;
 static inline int ihu_urgent_index(const char *s){
     static const char *const names[]={"cli_debug","cli_telem","umb_debug","umb_telem","uhf_telem","lte_telem"};
     if(!strcmp(s,"uhf stop"))return 6;
-#if IHU_BOOT_DEMO
+#if IHU_UHF_STARTUP
     if(!strcmp(s,"mode safe"))return 7;
 #endif
     char name[16],value[4],extra;
@@ -26,8 +26,8 @@ static inline int ihu_urgent_index(const char *s){
 }
 static inline bool ihu_number_command(ihu_controls *c,ihu_command *command){
     if(c->next==UINT32_MAX){
-        for(unsigned i=0;i<(IHU_BOOT_DEMO?8u:7u);i++)c->sequence[i]=UINT32_MAX;
-        c->pending=IHU_BOOT_DEMO?0xff:0x7f;return false;
+        for(unsigned i=0;i<(IHU_UHF_STARTUP?8u:7u);i++)c->sequence[i]=UINT32_MAX;
+        c->pending=IHU_UHF_STARTUP?0xff:0x7f;return false;
     }
     command->sequence=++c->next;
     int index=ihu_urgent_index(command->line);

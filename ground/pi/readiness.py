@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ethernet-first demo access and USB-presence receiver supervision. No RF TX."""
+"""Ethernet-first ground station access and USB-presence receiver supervision. No RF TX."""
 import argparse
 from pathlib import Path
 import subprocess
@@ -75,7 +75,7 @@ def recover_yamcs():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--ethernet-interface', default='eth0')
-    parser.add_argument('--hotspot-profile', default='ember-demo-hotspot')
+    parser.add_argument('--hotspot-profile', default='ember-ground-hotspot')
     parser.add_argument('--once', action='store_true')
     args = parser.parse_args()
     next_health = time.monotonic() + 60

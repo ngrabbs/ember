@@ -8,7 +8,7 @@ see the [frequency plan](frequency_plan.md).
 
 | Bench profile | Signal or transport | Receiver and setup |
 |---|---|---|
-| EMBER COMMS downlink | 437 MHz test carrier, 1200 baud DBPSK, RF frame v3 | LibreSDR and the [DBPSK receiver](../../ground/bpsk/README.md#live-uhf-demo-receiver) |
+| EMBER COMMS downlink | 437 MHz test carrier, 1200 baud DBPSK, RF frame v3 | LibreSDR and the [DBPSK receiver](../../ground/bpsk/README.md#live-uhf-receiver) |
 
 ## Packet layout on the air
 

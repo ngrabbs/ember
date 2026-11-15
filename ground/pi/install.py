@@ -60,8 +60,11 @@ def install(args):
     env.write_text('\n'.join(lines) + '\n')
     # Do not alter the established static Ethernet profile.
     profiles = subprocess.check_output(['nmcli', '-g', 'NAME', 'connection', 'show'], text=True)
-    profile = 'ember-demo-hotspot'
-    if profile not in profiles.splitlines():
+    profile = 'ember-ground-hotspot'
+    profile_names = profiles.splitlines()
+    if profile not in profile_names and 'ember-demo-hotspot' in profile_names:
+        cmd('nmcli', 'connection', 'modify', 'ember-demo-hotspot', 'connection.id', profile)
+    elif profile not in profile_names:
         cmd('nmcli', 'connection', 'add', 'type', 'wifi', 'ifname', 'wlan0',
             'con-name', profile, 'ssid', 'EMBER-Ground', 'autoconnect', 'no')
     cmd('nmcli', 'connection', 'modify', profile,

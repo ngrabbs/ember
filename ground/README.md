@@ -11,7 +11,7 @@ Use one radio session at a time on the shared LibreSDR.
 
 ### Receive UHF
 
-- [ ] Select **ember / realtime**. Use the running UHF gateway (`ember-fire-uplink`) or follow the [manual DBPSK receiver guide](bpsk/README.md#live-uhf-demo-receiver) after releasing LibreSDR. Check **uhf-tm-in**.
+- [ ] Select **ember / realtime**. Use the running UHF gateway (`ember-fire-uplink`) or follow the [manual DBPSK receiver guide](bpsk/README.md#live-uhf-receiver) after releasing LibreSDR. Check **uhf-tm-in**.
 
 ### Receive LTE
 
@@ -19,7 +19,7 @@ Use one radio session at a time on the shared LibreSDR.
 
 ### Direct USB
 
-- [ ] Plug the registered IHU console directly into the Pi. Select **ember-bench / realtime** and check **ihu-serial-in**. The wired links disable when the console disconnects. The startup demo firmware restricts USB to read-only console commands.
+- [ ] Plug the registered IHU console directly into the Pi. Select **ember-bench / realtime** and check **ihu-serial-in**. The wired links disable when the console disconnects. The UHF startup firmware restricts USB to read-only console commands.
 - [ ] For manual console access only, run `sudo systemctl stop ember-bench-bridge@ttyACM0` on the Pi. Use the [actual tty name](yamcs/OPERATIONAL.md#serial-ownership-and-eps) if it differs.
 
 ## 3. Verify a fresh packet

@@ -655,8 +655,8 @@ static void fire_submit_gps(const gps_result *gps){
     fire_uplink.gps_reading=false;
     submit(PL_FIRE_CHECK,tag,sizeof(tag));
 }
-#if IHU_BOOT_DEMO
-static void demo_gps_complete(const gps_result *gps,uint32_t sampled);
+#if IHU_UHF_STARTUP
+static void uhf_startup_gps_complete(const gps_result *gps,uint32_t sampled);
 #endif
 static bool request_sensor(unsigned kind,unsigned route,bool enable){
     if(sensor_job.active){LOG("REJECT reason=SENSOR_BUSY\n");return false;}
@@ -678,8 +678,8 @@ static void sensor_complete(const ihu_sensor_result *r){
     if(from_run && uhf_run.state==UR_RUNNING && (uint32_t)(now_ms()-uhf_run.started)>=uhf_run.duration)
         ur_stop(&uhf_run,UR_EXPIRED);
     sensor_job.active=false;
-#if IHU_BOOT_DEMO
-    if(kind==SENSOR_GPS_TELEMETRY)demo_gps_complete(&r->gps,r->sampled);
+#if IHU_UHF_STARTUP
+    if(kind==SENSOR_GPS_TELEMETRY)uhf_startup_gps_complete(&r->gps,r->sampled);
     else
 #endif
     if(kind==SENSOR_FIRE_GPS){
@@ -720,27 +720,27 @@ static void sensor_complete(const ihu_sensor_result *r){
     console_reply=saved;
 }
 
-#ifndef IHU_BOOT_DEMO
-#define IHU_BOOT_DEMO 0
+#ifndef IHU_UHF_STARTUP
+#define IHU_UHF_STARTUP 0
 #endif
 #ifndef IHU_BOOT_RX_ONLY
 #define IHU_BOOT_RX_ONLY 0
 #endif
-#if IHU_BOOT_DEMO
-#include "boot_demo.h"
+#if IHU_UHF_STARTUP
+#include "uhf_startup.h"
 #endif
 
 static void command_impl(const char *s) {
     if(!strcmp(s,"gps")){
-#if IHU_BOOT_DEMO
+#if IHU_UHF_STARTUP
         /* Reserve time for the 2.5 s GPS read and the next EPS refresh. */
-        if(startup_demo.stage!=DEMO_FAILED && now_ms()-housekeeping.last>=3500){
+        if(uhf_startup.stage!=UHF_STARTUP_FAILED && now_ms()-housekeeping.last>=3500){
             LOG("REJECT reason=SENSOR_BUSY\n");return;
         }
 #endif
         (void)request_sensor(SENSOR_GPS,0,false);return;
     }
-#if IHU_BOOT_DEMO
+#if IHU_UHF_STARTUP
     if(!strcmp(s,"eps status")){
         const char *state=!housekeeping.attempted?"NOT_CHECKED":!housekeeping.valid?"READ_FAILED":
             now_ms()-housekeeping.sampled>6500?"STALE":"OK";
@@ -753,26 +753,26 @@ static void command_impl(const char *s) {
     }
     if(!strcmp(s,"eps json")){
         /* Keep the next housekeeping read inside the live EPS deadline. */
-        if(startup_demo.stage!=DEMO_FAILED && now_ms()-housekeeping.last>=4000){
+        if(uhf_startup.stage!=UHF_STARTUP_FAILED && now_ms()-housekeeping.last>=4000){
             LOG("REJECT reason=SENSOR_BUSY\n");return;
         }
         (void)request_sensor(SENSOR_JSON,0,false);
         return;
     }
     if(!strcmp(s,"startup") || !strcmp(s,"radio")){
-        if(!strcmp(s,"startup"))demo_history(true);
+        if(!strcmp(s,"startup"))uhf_startup_history(true);
         mode_status();
         LOG("RADIO behavior=%s uplinks=%" PRIu32 " replies=%" PRIu32 " tx_ok=%" PRIu32 " dropped=%" PRIu32 " heartbeat_ms=%u\n",
-            startup_demo.stage==DEMO_ACTIVE?"LINK_ACTIVE":(startup_demo.stage==DEMO_LISTEN || startup_demo.stage==DEMO_ACTIVATE)?"RX_ONLY":
-            startup_demo.stage==DEMO_BEACON?"STARTUP_CW":"MUTED",
-            demo_uplinks,demo_replies,demo_tx_ok,demo_drops,startup_demo.stage==DEMO_ACTIVE && startup_demo.heartbeat_enabled?BD_HEARTBEAT_MS:0);
+            uhf_startup.stage==UHF_STARTUP_ACTIVE?"LINK_ACTIVE":(uhf_startup.stage==UHF_STARTUP_LISTEN || uhf_startup.stage==UHF_STARTUP_ACTIVATE)?"RX_ONLY":
+            uhf_startup.stage==UHF_STARTUP_BEACON?"STARTUP_CW":"MUTED",
+            uhf_startup_uplinks,uhf_startup_replies,uhf_startup_tx_ok,uhf_startup_drops,uhf_startup.stage==UHF_STARTUP_ACTIVE && uhf_startup.heartbeat_enabled?BD_HEARTBEAT_MS:0);
         LOG("UHF_TELEMETRY enabled=%u listen_seconds=%u telemetry_seconds=%u set=%s\n",
-            demo_schedule.enabled,demo_schedule.listen_seconds,demo_schedule.telemetry_seconds,
-            demo_schedule.packet_set==W_UHF_TELEMETRY_SET_FULL?"FULL":"BASIC");
+            uhf_startup_schedule.enabled,uhf_startup_schedule.listen_seconds,uhf_startup_schedule.telemetry_seconds,
+            uhf_startup_schedule.packet_set==W_UHF_TELEMETRY_SET_FULL?"FULL":"BASIC");
         return;
     }
     if(!strcmp(s,"mode safe") || !strcmp(s,"uhf stop")){
-        demo_fail("Operator stop");mode_status();return;
+        uhf_startup_fail("Operator stop");mode_status();return;
     }
     if(!strcmp(s,"help")){
         LOG("COMMANDS startup | status | mode | version | faults | rtos\n");
@@ -781,7 +781,7 @@ static void command_impl(const char *s) {
     }
     if(strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"mode") && strcmp(s,"outputs") &&
        strcmp(s,"faults") && strcmp(s,"rtos")){
-        LOG("REJECT reason=STARTUP_DEMO_READ_ONLY\n");return;
+        LOG("REJECT reason=UHF_STARTUP_READ_ONLY\n");return;
     }
 #endif
     if(!strncmp(s,"output ",7) || !strcmp(s,"outputs") || !strncmp(s,"mode",4) || !strcmp(s,"faults")){
@@ -877,30 +877,30 @@ void ihu_app_init(void) {
     ip_finish_boot(&policy,can.ready,false,false);
     if(!can.ready)record_fault(1,now_ms());
     boot_ready_ms=now_ms();
-#if IHU_BOOT_DEMO
-    link_reply_sink=demo_store_response;
-    demo_schedule.enabled=false;
-    demo_schedule.packet_set=W_UHF_TELEMETRY_SET_BASIC;
-    demo_schedule.listen_seconds=DEMO_LISTEN_DEFAULT_S;
-    demo_schedule.telemetry_seconds=DEMO_TELEMETRY_DEFAULT_S;
-    startup_demo.usb=stdio_usb_connected();
-    demo_stage(DEMO_LOCAL,boot_ready_ms);
+#if IHU_UHF_STARTUP
+    link_reply_sink=uhf_startup_store_response;
+    uhf_startup_schedule.enabled=UHF_STARTUP_TELEMETRY_DEFAULT_ENABLED;
+    uhf_startup_schedule.packet_set=UHF_STARTUP_TELEMETRY_DEFAULT_SET;
+    uhf_startup_schedule.listen_seconds=UHF_STARTUP_LISTEN_DEFAULT_S;
+    uhf_startup_schedule.telemetry_seconds=UHF_STARTUP_TELEMETRY_DEFAULT_S;
+    uhf_startup.usb=stdio_usb_connected();
+    uhf_startup_stage(UHF_STARTUP_LOCAL,boot_ready_ms);
     housekeeping.last=boot_ready_ms-5000;
-    demo_event("BOOT: GROUND_TEST / STARTUP_DEMO (conducted RF only)");
-    demo_event("BOOT -> SAFE: outputs off");
-    demo_event("Checking local CAN controller...");
+    uhf_startup_event("BOOT: GROUND_TEST / UHF");
+    uhf_startup_event("BOOT -> SAFE: outputs off");
+    uhf_startup_event("Checking local CAN controller...");
 #endif
 }
 void ihu_app_command(const char *line){command(line);}
 void ihu_app_step(bool scheduled) {
     ihu_sensor_result result;
     if(ihu_sensor_receive(&result))sensor_complete(&result);
-#if IHU_BOOT_DEMO
-    demo_step();
-    uint32_t demo_now=now_ms();
-    cf_frame demo_frame;
-    for(unsigned i=0;i<16 && ihu_can_receive(&can,&demo_frame);i++)demo_receive(&demo_frame,demo_now);
-    demo_link_pump(now_ms());
+#if IHU_UHF_STARTUP
+    uhf_startup_step();
+    uint32_t uhf_startup_now=now_ms();
+    cf_frame uhf_startup_frame;
+    for(unsigned i=0;i<16 && ihu_can_receive(&can,&uhf_startup_frame);i++)uhf_startup_receive(&uhf_startup_frame,uhf_startup_now);
+    uhf_startup_link_pump(now_ms());
     (void)scheduled;
     return;
 #endif
