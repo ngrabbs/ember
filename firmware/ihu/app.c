@@ -879,8 +879,8 @@ void ihu_app_init(void) {
     boot_ready_ms=now_ms();
 #if IHU_BOOT_DEMO
     link_reply_sink=demo_store_response;
-    demo_schedule.enabled=false;
-    demo_schedule.packet_set=W_UHF_TELEMETRY_SET_BASIC;
+    demo_schedule.enabled=DEMO_TELEMETRY_DEFAULT_ENABLED;
+    demo_schedule.packet_set=DEMO_TELEMETRY_DEFAULT_SET;
     demo_schedule.listen_seconds=DEMO_LISTEN_DEFAULT_S;
     demo_schedule.telemetry_seconds=DEMO_TELEMETRY_DEFAULT_S;
     startup_demo.usb=stdio_usb_connected();

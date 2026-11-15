@@ -6,11 +6,14 @@ static struct {
     enum demo_stage stage;
     uint32_t since,radio_boot,last_send,last_rx,stop_at,last_log,last_heartbeat,tx_at,tx_id,last_up;
     bool heartbeat_enabled,antenna,probe_sent,stop_pending,usb,tx_pending;
+    bool banner_shown;
     unsigned count,shown;
     struct {uint32_t at;const char *line;} events[24];
 } startup_demo;
 
 enum {
+    DEMO_TELEMETRY_DEFAULT_ENABLED=false,
+    DEMO_TELEMETRY_DEFAULT_SET=W_UHF_TELEMETRY_SET_BASIC,
     DEMO_LISTEN_DEFAULT_S=540,
     DEMO_TELEMETRY_DEFAULT_S=60,
     DEMO_TELEMETRY_MIN_S=5,
@@ -391,15 +394,40 @@ static void demo_receive(const cf_frame *f,uint32_t now) {
         dr_seen(&devices[DR_COMMS_INDEX],now,startup_demo.radio_boot);
     }
 }
+static void demo_banner(void) {
+    ihu_printf(false,
+        "\n"
+        "  =============== EMBER IHU | firmware %s ===============\n"
+        "  Spacecraft housekeeping, telemetry, and commanding\n"
+        "  Profile       GROUND_TEST / STARTUP_DEMO (conducted RF only)\n"
+        "  Startup       SAFE -> STARTUP -> COMMISSIONING -> NOMINAL\n"
+        "  Radio         CW boot beacon, then %s after successful startup\n"
+        "  Defaults      All output flags off | UHF heartbeat off\n"
+        "  UHF schedule  %s | %s | %u s listen / %u s telemetry\n"
+        "  Console       help | startup | status | radio | outputs\n"
+        "\n",
+        FW_VERSION, IHU_BOOT_RX_ONLY ? "RX_ONLY" : "LINK_ACTIVE",
+        DEMO_TELEMETRY_DEFAULT_ENABLED ? "ON" : "OFF",
+        DEMO_TELEMETRY_DEFAULT_SET==W_UHF_TELEMETRY_SET_BASIC ? "BASIC" : "FULL",
+        (unsigned)DEMO_LISTEN_DEFAULT_S, (unsigned)DEMO_TELEMETRY_DEFAULT_S);
+}
 static void demo_step(void) {
     uint32_t now=now_ms();
     bool live=stdio_usb_connected();
-    if(live && !startup_demo.usb)startup_demo.shown=0;
-    if(live && startup_demo.shown<startup_demo.count &&
-       (uint32_t)(now-startup_demo.last_log)>=20){
-        unsigned i=startup_demo.shown++;
-        startup_demo.last_log=now;
-        ihu_printf(false,"STARTUP t_ms=%" PRIu32 " %s\n",startup_demo.events[i].at,startup_demo.events[i].line);
+    if(live && !startup_demo.usb){
+        startup_demo.banner_shown=false;
+        startup_demo.shown=0;
+    }
+    if(live && (uint32_t)(now-startup_demo.last_log)>=20){
+        if(!startup_demo.banner_shown){
+            demo_banner();
+            startup_demo.banner_shown=true;
+            startup_demo.last_log=now;
+        }else if(startup_demo.shown<startup_demo.count){
+            unsigned i=startup_demo.shown++;
+            startup_demo.last_log=now;
+            ihu_printf(false,"STARTUP t_ms=%" PRIu32 " %s\n",startup_demo.events[i].at,startup_demo.events[i].line);
+        }
     }
     startup_demo.usb=live;
     ihu_can_poll_tx(&can,now);
