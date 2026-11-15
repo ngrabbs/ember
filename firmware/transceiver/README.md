@@ -6,31 +6,56 @@ Version **0.38.0** runs on the original Raspberry Pi Pico.
 [Changelog](CHANGELOG.md) · [Verified bench builds](../README.md#current-bench-builds) ·
 [Radio guide](../../docs/comms/README.md)
 
-| Build profile | Behavior |
-|---|---|
-| Default | Keeps RF muted at idle. Accepts IHU telemetry on CAN A and sends it in bounded UHF bursts. The USB console provides diagnostics. |
-| Conducted bench demo | Built with `TRANSCEIVER_BOOT_DEMO=ON`. The IHU coordinates startup and runs the LINK_ACTIVE bench link. The transceiver samples RX continuously and answers CAN identity requests for FULL telemetry. This is the profile verified on the bench. |
-
-## Build
-
-From the repository root, with the Pico SDK, ARM GCC, CMake, and Python 3 installed:
+The hardware-verified bench image is the conducted demo build from
+[`819470b`](https://github.com/ngrabbs/ember/commit/819470bbf877fa66f980bf9d0d138c081905af6c).
+To build from that exact source, create a detached worktree and run the build
+commands from its root.
 
 ```sh
-cmake -S firmware/transceiver -B build/transceiver -DPICO_BOARD=pico \
-  -DPICO_SDK_PATH="$PICO_SDK_PATH" \
-  $(python3 firmware/transceiver/source_identity.py --cmake-args)
-cmake --build build/transceiver --target transceiver -j4
-# build/transceiver/transceiver.uf2
+git worktree add --detach ../ember-transceiver-038 819470bbf877fa66f980bf9d0d138c081905af6c
+cd ../ember-transceiver-038
 ```
 
-For the conducted bench demo, use a separate build directory and add
-`-DTRANSCEIVER_BOOT_DEMO=ON`. The option defaults to OFF. For an exported source
-tree, supply `-DEMBER_GIT_REVISION=<full SHA>` and `-DEMBER_GIT_DIRTY=0|1`
-from the original checkout instead of running the identity helper in the export.
+## Build and flash
 
-Back up and verify the existing Pico image before flashing. Power the board
-rails when operating an installed Pico over USB.
-[Exact source of the verified bench build](https://github.com/ngrabbs/ember/commit/819470bbf877fa66f980bf9d0d138c081905af6c)
+Install the Pico SDK, Arm GNU toolchain, CMake, Python 3, and
+[picotool](https://github.com/raspberrypi/picotool). Set `PICO_SDK_PATH` to
+your SDK checkout. Run from the repository root.
+
+```sh
+radio_build=build/transceiver-demo
+cmake -S firmware/transceiver -B "$radio_build" -DPICO_BOARD=pico \
+  -DPICO_SDK_PATH="${PICO_SDK_PATH:?set Pico SDK path}" \
+  -DTRANSCEIVER_BOOT_DEMO=ON \
+  $(python3 firmware/transceiver/source_identity.py --cmake-args)
+cmake --build "$radio_build" --target transceiver -j4
+```
+
+| CMake option | What it controls |
+|---|---|
+| `PICO_BOARD=pico` | Selects the original RP2040 Raspberry Pi Pico required by this target. |
+| `PICO_SDK_PATH` | Points CMake to the Pico SDK. |
+| `TRANSCEIVER_BOOT_DEMO=ON` | Enables IHU-coordinated conducted startup and the LINK_ACTIVE bench link. Pair it with the [IHU demo build](../ihu/README.md#build-and-flash). |
+| `TRANSCEIVER_BOOT_DEMO=OFF` | Default. Keeps RF muted at idle and sends IHU-requested telemetry in bounded bursts. Use a separate build directory such as `build/transceiver`. |
+| `EMBER_GIT_REVISION`, `EMBER_GIT_DIRTY` | Embed the full source SHA and dirty flag. The helper sets both from Git. For a source export, pass both as `-D` options using the original SHA and dirty flag (0 or 1). |
+
+The artifact is `transceiver.uf2` in the chosen build directory. With the
+board rails powered, put the transceiver Pico into BOOTSEL mode. Run
+`picotool info -a` to identify its USB bus and address. Set
+`RADIO_USB_BUS` and `RADIO_USB_ADDRESS` to those values and
+`RADIO_BACKUP` to a new backup path ending in `.uf2`.
+
+```sh
+picotool save -a -v "${RADIO_BACKUP:?set a new backup UF2 path}" \
+  --bus "${RADIO_USB_BUS:?set transceiver USB bus}" \
+  --address "${RADIO_USB_ADDRESS:?set transceiver USB address}" &&
+picotool load -v -x "${radio_build:?set build directory}/transceiver.uf2" \
+  --bus "$RADIO_USB_BUS" --address "$RADIO_USB_ADDRESS"
+```
+
+The first command saves and verifies the existing flash. The second writes
+and verifies the new UF2, then reboots into it. Check the reported version and
+commit using the console instructions below.
 
 ## Commands
 
@@ -60,19 +85,46 @@ receive diagnostics. Input on that port can send the demo into SAFE, so read
 the log without typing. Check the build identity from the startup line or
 from the transceiver identity in FULL telemetry.
 
-## Packets
-
-The on-air frame wraps an EMBER packet. Fields are in transmit order and widths
-are in bytes.
+## How UHF telemetry reaches Yamcs
 
 ```text
-[Preamble 32] [Sync 4] [V3 1] [Seq 4] [Len 2] [EMBER packet N] [CRC-32 4] [Guard 16]
+IHU → CAN A → transceiver Pico → UHF DBPSK v3 → LibreSDR on ground Pi
+    → DBPSK decoder → UDP 127.0.0.1:10019 → Yamcs ember / realtime / uhf-tm-in
 ```
 
-`Len` counts the inner packet, which has its own CRC-16. The outer CRC-32 covers
-version through the inner packet. See the [radio guide](../../docs/comms/README.md)
-for modulation, byte order, and receiver settings. The transceiver's transmitted
-frame and the conducted CAN bridge both limit the inner packet to 128 bytes.
+1. Start the [DBPSK receiver](../../ground/bpsk/README.md#live-uhf-demo-receiver)
+   with forwarding enabled and wait for `BPSK_RX_READY`.
+2. In the default build, request telemetry from the IHU console as described
+   above. In the conducted demo, the IHU controls telemetry in LINK_ACTIVE.
+   See the [IHU Yamcs commands](../ihu/README.md#ground-station-commands-in-yamcs)
+   to enable the schedule and select BASIC or FULL.
+3. The [ground decoder](../../ground/bpsk/live.py) validates the RF frame and
+   native packet, then forwards the original native bytes. Find a fresh packet
+   on `uhf-tm-in` in the [Yamcs archive](../../ground/yamcs/OPERATIONAL.md)
+   and compare it with the receiver's `packets.jsonl`. A transceiver TX result
+   reports local completion. The archive confirms ground delivery.
+
+## Packet layouts
+
+Fields are shown in transmission order. All widths are in bytes.
+
+```text
+CAN A frame data
+[Version/flags 1] [Token 2] [Fragment index 1] [COBS frame slice 1–4]
+
+UHF DBPSK v3 frame
+[Preamble 32] [Sync 4] [Version 1] [Sequence 4] [Length 2] [Native packet N] [CRC-32 4] [Guard 16]
+
+Native EMBER packet (also the UDP payload to Yamcs)
+[CCSDS primary header 6] [EMBER secondary header 24] [Telemetry payload N] [CRC-16 2]
+```
+
+CAN carries slices of the service envelope described in the
+[shared transport guide](../comms_transport/README.md). On UHF, Length counts
+the native packet bytes. The outer CRC-32 covers Version through the native
+packet. The transmitted frame and conducted CAN bridge limit the native
+packet to 128 bytes. See the [radio guide](../../docs/comms/README.md) for
+modulation, byte order, and receiver settings.
 
 | Path | Packets and handling |
 |---|---|
