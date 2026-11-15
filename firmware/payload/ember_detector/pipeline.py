@@ -22,7 +22,10 @@ def bounded(value, low, high, name, integer=False):
 
 
 def load_config(path):
-    config=json.loads(Path(path).read_text())
+    return validate_config(json.loads(Path(path).read_text()))
+
+
+def validate_config(config):
     expected={'schema_version','algorithm','exploratory_jpeg','calibration_sha256','dark_policy',
               'reference_exposure_us','roi_margin_fraction','max_pixels','max_input_bytes','registration','detector'}
     if set(config)!=expected or config['schema_version']!=1:raise ValueError('Unsupported configuration schema/keys')
@@ -92,7 +95,7 @@ def align(source, target, settings):
     return matrix,quality
 
 
-def prepare(fixture, root, config, calibration):
+def prepare(fixture, root, config, calibration, live_inputs=None):
     channels=fixture['channels'];ordered=sorted(channels.values(),key=lambda c:c['wavelength_nm'])
     if len(ordered)!=3 or len({c['port'] for c in ordered})!=3:raise ValueError('TRIPLET_REQUIRED')
     waves=tuple(c['wavelength_nm'] for c in ordered)
@@ -103,12 +106,23 @@ def prepare(fixture, root, config, calibration):
         for channel in ordered:
             path=(root/channel['path']).resolve()
             if not path.is_relative_to(root):raise ValueError('INPUT_PATH_ESCAPE')
-            if path.stat().st_size>config['max_input_bytes']:raise ValueError('INPUT_TOO_LARGE')
-            data=path.read_bytes()
-            if digest(data)!=channel['sha256']:raise ValueError('INPUT_HASH')
+            with path.open('rb') as stream:
+                data=stream.read(config['max_input_bytes']+1)
+            if len(data)>config['max_input_bytes']:raise ValueError('INPUT_TOO_LARGE')
+            sha256=digest(data)
+            if live_inputs is None:
+                if sha256!=channel['sha256']:raise ValueError('INPUT_HASH')
+            else:
+                if len(data)!=channel['bytes']:raise ValueError('IMAGE_SIZE')
+                live_inputs[str(channel['port'])]=dict(channel, sha256=sha256)
             image=cv2.imdecode(np.frombuffer(data,dtype=np.uint8),cv2.IMREAD_GRAYSCALE)
             if image is None:raise ValueError('IMAGE_DECODE')
-            if image.size>config['max_pixels'] or list(image.shape[::-1])!=[channel['width'],channel['height']]:raise ValueError('IMAGE_DIMENSIONS')
+            if image.size>config['max_pixels']:raise ValueError('IMAGE_DIMENSIONS')
+            if live_inputs is None:
+                if list(image.shape[::-1])!=[channel['width'],channel['height']]:raise ValueError('IMAGE_DIMENSIONS')
+            elif channel['rotation']==180:
+                # Gain maps are in sensor coordinates.
+                image=cv2.rotate(image,cv2.ROTATE_180)
             if shape is not None and image.shape!=shape:raise ValueError('CHANNEL_SHAPE')
             shape=image.shape
             exposure=channel.get('exposure_us')
@@ -138,7 +152,7 @@ def prepare(fixture, root, config, calibration):
     return Scene(*registered,common,waves,clipped,int(reference_roi.sum())),dict(registration=fits,overlap_fraction=overlap)
 
 
-def run(manifest_path, fixture_id, config, calibration):
+def run(manifest_path, fixture_id, config, calibration, *, live_image_root=None):
     start=time.monotonic();manifest_path=Path(manifest_path)
     code=digest(b''.join(p.name.encode()+p.read_bytes() for p in sorted(Path(__file__).parent.glob('*.py')) if not p.name.startswith('.')))
     record=dict(schema_version=1,pipeline_version='0.2.0',code_sha256=code,
@@ -153,8 +167,13 @@ def run(manifest_path, fixture_id, config, calibration):
         if len(selected)!=1:raise ValueError('FIXTURE_NOT_UNIQUE_OR_MISSING')
         fixture=selected[0]
         # Labels stay outside the Scene and detector; evaluation joins afterward.
-        record['inputs']={key:dict(path=c['path'],sha256=c['sha256'],exposure_us=c.get('exposure_us')) for key,c in fixture['channels'].items()}
-        scene,quality=prepare(fixture,manifest_path.parent,config,calibration)
+        if live_image_root is None:
+            record['inputs']={key:dict(path=c['path'],sha256=c['sha256'],exposure_us=c.get('exposure_us')) for key,c in fixture['channels'].items()}
+            scene,quality=prepare(fixture,manifest_path.parent,config,calibration)
+        else:
+            record['inputs']={}
+            record['image_root']=str(live_image_root)
+            scene,quality=prepare(fixture,live_image_root,config,calibration,record['inputs'])
         record['preparation_ms']=round((time.monotonic()-start)*1000,3)
         try:
             result=create(config['algorithm']).detect(scene,config['detector'])

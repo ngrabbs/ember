@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Boot-ready Pi payload responder. No camera, power or image operations."""
+"""Boot-ready Pi payload responder with optional camera-daemon capture."""
 import argparse
 from collections import deque
 import fcntl
 import json
 import logging
+import os
 from pathlib import Path
 import secrets
 import signal
@@ -15,17 +16,83 @@ import time
 from protocol import (Packet, Reassembler, CAN_FRAME, REPORT, QUERY_ID, DISCOVERY_ID,
                       REQUEST_ID, REPLY_ID, NODE, HELLO, HELLO_ACK, ECHO, ECHO_ACK,
                       IDENT, IDENT_ACK, STATUS, STATUS_ACK, HEARTBEAT, HEARTBEAT_ACK,
-                      ERROR, FIRE_CHECK, FIRE_RESULT, FIRE_REPORT, discovery, fragments)
+                      ERROR, FIRE_CHECK, FIRE_RESULT, FIRE_REPORT, GPS_TAG,
+                      unavailable_gps, discovery, fragments)
 
 
 class Service:
-    def __init__(self, identity, boot=None, now=time.monotonic):
+    def __init__(self, identity, boot=None, now=time.monotonic, capture=None):
         self.identity = identity
         self.boot = boot or secrets.randbelow(0xffffffff) + 1
         self.now = now; self.started = now()
         self.peer = 0
         self.requests = self.replies = self.rejected = 0
         self.checks = 0
+        self.capture = capture
+        self.pending_capture = None
+
+    def fire_result(self, packet, decision=0, mode=1, gps=None, analysis_error=0):
+        self.checks = (self.checks % 0xffffffff) + 1
+        self.replies += 1
+        uptime = int((self.now() - self.started) * 1000) & 0xffffffff
+        report = FIRE_REPORT.pack(2 if decision == 2 else 1, decision, mode,
+                                  analysis_error, self.boot, uptime, self.checks)
+        if packet.payload:
+            report += gps if gps is not None else unavailable_gps()
+        return Packet(FIRE_RESULT, self.boot, packet.origin, packet.request, report)
+
+    def poll_capture(self):
+        if not self.pending_capture:
+            return None
+        packet, future = self.pending_capture
+        if not future.done():
+            return None
+        self.pending_capture = None
+        try:
+            outcome = future.result()
+        except Exception:
+            logging.exception('CAPTURE_FAILED origin=%u request=%u outcome=UNCERTAIN no_auto_retry=1',
+                              packet.origin, packet.request)
+            self.replies += 1
+            return Packet(ERROR, self.boot, packet.origin, packet.request, b'\x08')
+        if isinstance(outcome, dict) and 'result' in outcome:
+            gps = outcome.pop('_gps_wire', None)
+            quality_unknown = (outcome['result'] == 'UNKNOWN' and outcome.get('reason') in
+                               ('REGISTRATION_LOW_CONTRAST', 'REGISTRATION_WEAK_FIT'))
+            if quality_unknown:
+                response = self.fire_result(packet, 2, 2, gps)
+            elif outcome['result'] not in ('FIRE', 'NO_FIRE') and gps is not None:
+                response = self.fire_result(packet, 2, 2, gps, analysis_error=11)
+            elif outcome['result'] not in ('FIRE', 'NO_FIRE'):
+                self.replies += 1
+                response = Packet(ERROR, self.boot, packet.origin, packet.request, b'\x0b')
+            else:
+                response = self.fire_result(packet, int(outcome['result'] == 'FIRE'),
+                                            1 if outcome.get('execution_mode') == 'STATIC_STUB' else 2, gps)
+            evidence = outcome.get('_evidence_path')
+            if evidence:
+                try:
+                    record = dict(outcome);record.pop('_evidence_path')
+                    record.update(payload_boot_id=self.boot,
+                        payload_check_id=self.checks if response.kind == FIRE_RESULT else None,
+                        reply_type=response.kind, reply_payload_hex=response.payload.hex(),
+                        application_result_bytes=len(response.payload),
+                        reply_evidence='GENERATED_NOT_DELIVERY_CONFIRMED')
+                    path = Path(evidence); temporary = path.with_suffix('.reply.tmp')
+                    temporary.write_text(json.dumps(record,indent=2,allow_nan=False)+'\n')
+                    temporary.replace(path)
+                    capture = path.with_name('capture.json')
+                    if gps is not None and capture.exists():
+                        saved = json.loads(capture.read_text())
+                        saved.update(payload_boot_id=self.boot, payload_check_id=self.checks)
+                        temporary = capture.with_suffix('.tmp')
+                        temporary.write_text(json.dumps(saved, indent=2)+'\n')
+                        temporary.replace(capture)
+                except Exception:
+                    logging.exception('REPLY_EVIDENCE_FAILED origin=%u request=%u',packet.origin,packet.request)
+                    return Packet(ERROR,self.boot,packet.origin,packet.request,b'\x08')
+            return response
+        return self.fire_result(packet)
 
     def handle(self, packet, fragment_errors=0):
         self.requests += 1
@@ -41,7 +108,10 @@ class Service:
             return reject(3)
         if packet.kind not in (HELLO, ECHO, IDENT, STATUS, HEARTBEAT, FIRE_CHECK):
             return reject(2)
-        if (packet.kind == ECHO and not packet.payload) or (packet.kind != ECHO and packet.payload):
+        if packet.kind == FIRE_CHECK:
+            if len(packet.payload) not in (0, GPS_TAG.size):
+                return reject(4)
+        elif (packet.kind == ECHO) != bool(packet.payload):
             return reject(4)
         if packet.kind == HELLO:
             self.peer = packet.sender
@@ -52,9 +122,12 @@ class Service:
             return reply(ECHO_ACK, packet.payload)
         uptime = int((self.now() - self.started) * 1000) & 0xffffffff
         if packet.kind == FIRE_CHECK:
-            # Replace this explicit stub with the algorithm when it is ready.
-            self.checks = (self.checks % 0xffffffff) + 1
-            return reply(FIRE_RESULT, FIRE_REPORT.pack(1, 0, 1, 0, self.boot, uptime, self.checks))
+            if self.capture:
+                if self.pending_capture:
+                    return reject(5)
+                self.pending_capture = (packet, self.capture(packet))
+                return None
+            return self.fire_result(packet)
         if packet.kind == IDENT:
             version = bytes(int(x) for x in self.identity['version'].split('.'))
             data = version + bytes([self.identity['dirty']]) + bytes.fromhex(self.identity['git'])
@@ -80,11 +153,11 @@ def open_can(interface):
         raise
 
 
-def run(interface, identity, lock_path='/run/ember-payload/owner.lock'):
+def run(interface, identity, lock_path='/run/ember-payload/owner.lock', capture=None):
     # Keep one responder/boot identity per physical payload interface.
     with open(lock_path, 'w') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        service = Service(identity)
+        service = Service(identity, capture=capture)
         parser = Reassembler()
         outgoing = deque()
         stopped = False
@@ -94,11 +167,18 @@ def run(interface, identity, lock_path='/run/ember-payload/owner.lock'):
         signal.signal(signal.SIGTERM, stop)
         signal.signal(signal.SIGINT, stop)
         with open_can(interface) as bus:
+            def queue_response(response):
+                start = max(time.monotonic(), outgoing[-1][0] + .002 if outgoing else 0)
+                for index, part in enumerate(fragments(response)):
+                    outgoing.append((start + index * .002, REPLY_ID, part))
             logging.info('CAN_READY interface=%s node=4 boot=%u git=%s version=%s',
                          interface, service.boot, identity['git'], identity['version'])
             while not stopped:
                 now = time.monotonic()
                 parser.expire(now)
+                completed = service.poll_capture()
+                if completed:
+                    queue_response(completed)
                 bus.settimeout(.002 if outgoing else .05)
                 if outgoing and now >= outgoing[0][0]:
                     due, ident, data = outgoing.popleft()
@@ -127,11 +207,11 @@ def run(interface, identity, lock_path='/run/ember-payload/owner.lock'):
                 if packet is None:
                     continue
                 response = service.handle(packet, parser.errors + parser.timeouts)
+                if response is None:
+                    continue
                 logging.info('REQUEST type=%02x origin=%u request=%u reply=%02x',
                              packet.kind, packet.origin, packet.request, response.kind)
-                start = max(now, outgoing[-1][0] + .002 if outgoing else now)
-                for index, part in enumerate(fragments(response)):
-                    outgoing.append((start + index * .002, REPLY_ID, part))
+                queue_response(response)
 
 
 def main():
@@ -139,13 +219,26 @@ def main():
     parser.add_argument('--interface', default='can0')
     parser.add_argument('--identity', type=Path, default=Path(__file__).with_name('build_identity.json'))
     parser.add_argument('--lock', default='/run/ember-payload/owner.lock')
+    parser.add_argument('--capture-url', default=os.environ.get('EMBER_PAYLOAD_CAPTURE_URL'),
+                        help='Opt in to real capture using http://127.0.0.1:8001')
+    parser.add_argument('--fire-check-config', type=Path)
     args = parser.parse_args()
     identity = json.loads(args.identity.read_text())
     if (len(identity['git']) != 40 or len(bytes.fromhex(identity['git'])) != 20
             or identity['dirty'] not in (0, 1) or len(identity['version'].split('.')) != 3):
         raise ValueError('invalid build identity')
     logging.basicConfig(level=logging.INFO, format='%(message)s')
-    run(args.interface, identity, args.lock)
+    if args.fire_check_config:
+        from camera_capture import CameraCapture
+        from fire_check_config import load
+        with CameraCapture.from_config(load(args.fire_check_config)) as camera:
+            run(args.interface, identity, args.lock, capture=camera.submit)
+    elif args.capture_url:
+        from camera_capture import CameraCapture
+        with CameraCapture(args.capture_url) as camera:
+            run(args.interface, identity, args.lock, capture=camera.submit)
+    else:
+        run(args.interface, identity, args.lock)
 
 
 if __name__ == '__main__':
