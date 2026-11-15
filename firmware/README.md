@@ -30,7 +30,7 @@ results apply to the hardware.
 
 | Firmware | Version on `main` | Bench identity and purpose |
 |---|---|---|
-| [IHU](ihu/CHANGELOG.md) | 0.14.1 | **Live: 0.26.0 · `af0925a`.** The USB console reported a clean build. This is the startup and UHF demo build for scheduled telemetry, GPS, and coordination of payload fire checks. |
+| [IHU](ihu/CHANGELOG.md) | 0.28.0 | **Live: 0.28.0 · `4e55d0563c3e681e4443f83aa58db6162eb14d17`.** The November 15 USB query reported a clean build. This bench image adds UHF schedule status for Yamcs and device identities in FULL telemetry. |
 | [Transceiver](transceiver/CHANGELOG.md) | 0.38.0 | **Verified on hardware on November 15: 0.38.0 · `819470bbf877fa66f980bf9d0d138c081905af6c`.** A verified USB flash readback matched the deployment binary byte for byte and agreed with the November 14 Yamcs `COMMS_FIRMWARE` report. That build adds the FULL telemetry identity service. |
 | [Payload](payload/CHANGELOG.md) | 0.7.1 | **Live: 0.7.1 · `deeac88c986bbe0f6697bf90183e1b407fe06b34`.** The active service reported this commit at CAN startup, verified November 15, and the installed build identity marks it clean. This build saves capture GPS evidence for live camera fire checks. |
 
