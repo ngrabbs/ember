@@ -6,6 +6,7 @@ See the [ground demo checklist](../DEMO.md) for current operations.
 
 | Recorded release | Manifests |
 | --- | --- |
+| Yamcs 1.9.1 · 10-second PING result timeout | [Flight `ember`](yamcs-flight-1.9.1.json) |
 | Yamcs 1.9.0 · 1500-baud UHF profile trials, confirmation and rollback readback | [Flight `ember`](yamcs-flight-1.9.0.json) |
 | Yamcs 1.8.0 · UHF transceiver configuration readback | [Flight `ember`](yamcs-flight-1.8.0.json) |
 | Yamcs 1.7.1 · FULL UHF command defaults with 120 s listen / 60 s transmit | [Flight `ember`](yamcs-flight-1.7.1.json) |
@@ -18,16 +19,26 @@ See the [ground demo checklist](../DEMO.md) for current operations.
 | Bounded DBPSK receiver | [2.0.0](receiver-2.0.0.json) · [2.1.0](receiver-2.1.0.json) · [2.2.0](receiver-2.2.0.json) · [2.4.0](receiver-2.4.0.json) |
 | Payload bench evidence | [Live validation record](payload-live-validation.json) |
 
+## Yamcs 1.9.1 changelog
+
+- Increased the Yamcs `PING` result timeout from 5 to 10 seconds.
+- Verified three spaced PINGs with UHF replies decoded at 1500 baud. Yamcs
+  completed transactions 35–37 in 4.327, 4.625, and 5.913 seconds.
+- Documented how to isolate a position-sensitive MMCX connection in the
+  [radio configuration guide](../../docs/comms/radio_config.md#bench-troubleshooting-for-intermittent-uplink).
+- Recorded the live mission database and Payload display changes for
+  selectable detector profiles from PR #107.
+
 ## Verify Yamcs
 
 From the repository root, compare the Pi's loaded mission database and display
 assets against a recorded baseline. The serial bench instance uses its November 15
-manifest. The 1.9.0 flight manifest includes the profile trial and confirmation commands,
-trial state on the Radio Configuration display, and the FULL 120/60 defaults.
+manifest. The flight manifest audits the loaded mission database and display assets.
+The PING timeout is verified by command completion and is outside that fingerprint.
 
 ```sh
 python3 ground/yamcs/build_identity.py --url http://192.168.1.251:8090 \
-  --instance ember --check ground/releases/yamcs-flight-1.9.0.json
+  --instance ember --check ground/releases/yamcs-flight-1.9.1.json
 python3 ground/yamcs/build_identity.py --url http://192.168.1.251:8090 \
   --instance ember-bench --check ground/releases/yamcs-bench-20261115.json
 ```
