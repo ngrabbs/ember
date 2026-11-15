@@ -71,7 +71,13 @@ The LINK_ACTIVE schedule defaults to BASIC with 540 s listening and 60 s
 available to send telemetry. BASIC sends IHU status, valid EPS data, and
 schedule status. FULL adds device and system status, heartbeat, available
 payload status and GPS, and firmware identities when peers respond.
-The LINK_ACTIVE Yamcs commands include:
+### Ground station commands in Yamcs
+
+On the ground station, open Yamcs, select the `ember` instance and its
+`realtime` processor, then choose **Commanding → Send a Command**. The ground
+radio sends these commands over UHF to the transceiver, which passes them to
+the IHU over CAN A while the demo is in LINK_ACTIVE. Use the USB console
+section below for commands typed directly into the IHU.
 
 | Command | Arguments and effect |
 |---|---|
