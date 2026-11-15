@@ -934,12 +934,12 @@ Search Manufacturer Part Search for "ESQ-126-37-G-D" or place a
 generic 2×26 pin socket symbol (0.1″ (2.54 mm) pitch) and assign the
 Samtec MPN in the component properties. **Mechanical note:** exact
 X/Y position of the H1 and H2 footprints on the PCB must match
-Pumpkin's motherboard layout (see [`DS_CSK_MB_710-00484-E.pdf`](../../../system/interfaces/DS_CSK_MB_710-00484-E.pdf) page 5,
+Pumpkin's motherboard layout (see [`DS_CSK_MB_710-00484-E.pdf`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/DS_CSK_MB_710-00484-E.pdf) page 5,
 "Simplified Mechanical Layout") before layout.
 
 #### Pin Assignment (Pumpkin CSKB H1/H2)
 
-> **Canonical reference:** [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md) is the
+> **Canonical reference:** [`system/interfaces/cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md) is the
 > authoritative pin map for the stack. The table below is a
 > board-local view and must match that file. Update the canonical
 > file first if anything here needs to change.
@@ -1337,7 +1337,7 @@ Not in v0.1 — see the open items in
 - [ ] `+3V3` — power entry (from Sheet 2), for R50 pull-up
 - [ ] `GND` — power entry, for jumper return paths
 - [ ] `DEPLOY_ARMED` — internal net label (no off-sheet port — fans out on this sheet)
-- [ ] `COMMS_TX_EN` — output, exits to Sheet 3 CSKB port entries (TBD CSKB pin, not yet allocated — see [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md) open item)
+- [ ] `COMMS_TX_EN` — output, exits to Sheet 3 CSKB port entries (TBD CSKB pin, not yet allocated — see [`system/interfaces/cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md) open item)
 - [ ] `BURN_EN` — output, exits to burn-wire driver (TBD — not on any current sheet)
 
 Note: Sheet 4 has a **cross-sheet tie** to Sheet 2. The `JP_RBF`

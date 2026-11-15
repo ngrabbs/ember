@@ -1,3 +1,3 @@
 # Architecture
 
-[Go to the maintained reference](../README.md#understand-the-system).
+[Go to the maintained reference](../../README.md#system-at-a-glance).

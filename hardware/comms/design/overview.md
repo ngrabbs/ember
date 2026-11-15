@@ -24,12 +24,12 @@ mismatch tolerance need measurement.
 **Prototype parts selected:** L16 0805HP-221XGRC / C40877572, D15
 PESD5V0F1BLD,315 / C478204, J9 Molex 734151471 / C588477. J9 clearance is
 confirmed. Retain the audited PSA4-5043+ at U9; October 3 live stock makes the
-TQP3M9036 replacement unnecessary. [Acceptance and operating limits](../verification/components/prototype_parts_2026-10-03.md)
+TQP3M9036 replacement unnecessary. [Acceptance and operating limits](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/components/prototype_parts_2026-10-03.md)
 retain L16 stability/bias and D15 RF-voltage checks for bench bring-up.
 Filter tuning candidates remain unapplied.
 
 Use the [TX](tx_chain.md), [RX](rx_chain.md), and
 [antenna](single_antenna_integration.md) pages for circuit boundaries, and the
-[canonical CSKB map](../../../system/interfaces/cskb_pinmap.md) for stack pins.
-The [verification index](../verification/README.md) distinguishes earlier check
+[canonical CSKB map](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md) for stack pins.
+The [verification index](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/README.md) distinguishes earlier check
 results from work still needed before release.

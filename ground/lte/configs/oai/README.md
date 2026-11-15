@@ -32,7 +32,7 @@ with attenuation 30 (logged UHD TX gain 59.75). Independent HackRF PSS/SSS
 detection and controlled Walter OFF/ON access were observed with this profile.
 It remains experimental: OAI aborts on CE Msg4 retransmission and Walter has
 not registered. For MAC-only debug, change `mac_log_level` to `"debug"`; leave
-PHY logging at info. See [controlled results](../../results/2026-10-02-walter-control.md)
+PHY logging at info. See [controlled results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-walter-control.md)
 and [experimental cleanup patch](../../patches/README.md).
 
 The `ceonlydiag` and `ce300diag` profiles use attenuation 40, MAC-debug logging,
@@ -40,7 +40,7 @@ and ordinary-LTE PRACH threshold 1000. `ce300diag` also increases CE0 threshold
 from 200 to 300. These are controlled diagnostics to investigate false detection
 and context pressure. They reached Msg4/RRC and accepted SIM authentication,
 but OAI still aborted on downlink allocation before completed attach. See
-[latest results](../../results/2026-10-02-msg4-authentication.md).
+[latest results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-msg4-authentication.md).
 
 With the newer candidates, `ce300tx30diag` changes only `att_tx` from 40 to 30
 relative to `ce300diag`. It recorded completed Walter attach and registration.
@@ -48,7 +48,7 @@ relative to `ce300diag`. It recorded completed Walter attach and registration.
 reducing logged UHD RX gain from 35 to 15. This checks gain sensitivity at the
 six-inch bench separation. Neither profile establishes calibrated RF power.
 Use all five patches in order and keep the profile explicit in every result.
-See [RAR/lifecycle results](../../results/2026-10-02-rar-release.md). A completed
+See [RAR/lifecycle results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-rar-release.md). A completed
 attach alone does not prove telemetry delivery or stability.
 
 At the reported six-to-eight-foot antenna separation, `ce300tx30diag` decoded
@@ -57,17 +57,17 @@ connection requests but did not complete RRC setup in one trial. The follow-up
 RX remains 35). It completed attach and bearer setup, but UDP delivery still
 failed after uplink-failure reporting. This is an experimental comparison,
 not a calibrated-power setting or demonstrated stable telemetry profile.
-See [separated-antenna results](../../results/2026-10-02-separated-antennas.md).
+See [separated-antenna results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-separated-antennas.md).
 
 With all six candidates, the same `ce300tx20diag` profile delivered ten numbered
 UDP payloads after a Service Request restored the bearer. It remains a bench
 profile with unresolved context release and uplink failure. See
-[first telemetry results](../../results/2026-10-02-uplink-telemetry.md).
+[first telemetry results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-uplink-telemetry.md).
 
 `ce300tx20rrcdiag` changes only RLC and RRC logging from info to debug, allowing
 SRB maximum-retransmission and RRC release events to be correlated. The latest
 seven-patch trial still experienced those failures. See
-[release trace](../../results/2026-10-02-repeatability-release.md). Debug logging
+[release trace](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-repeatability-release.md). Debug logging
 adds overhead and this profile is for diagnosis.
 
 `ce300tx20rlctrace` changes only MAC logging from debug to info relative to
@@ -78,4 +78,4 @@ candidates and temporary [metadata tracing](../../diagnostics/README.md).
 The RX25 trial processed three RLC STATUS acknowledgments, then exhausted SRB1
 retries at the RRC Security Mode Command. Neither profile completed modem
 registration or sent UDP in these trials; no gain repair is established.
-See [RLC results](../../results/2026-10-02-rlc-status.md).
+See [RLC results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-rlc-status.md).

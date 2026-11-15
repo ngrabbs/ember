@@ -110,7 +110,7 @@ from this application: `telemetry`, `eps telemetry`, `telem on/off/status`,
 for reference, but the runtime has no legacy timer or LTE queue pump.
 
 For exact packet inclusion/exclusion and pacing across links, use the
-[transmission matrix](../../user/ihu-can-console.md#transmission-matrix).
+[transmission matrix](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/docs/user/ihu-can-console.md#transmission-matrix).
 
 ## Sampling, reporting and fault history
 
@@ -146,7 +146,7 @@ then deliberately enable only the wanted channels. Existing RF command and
 live telemetry services still require coordinated radio ownership.
 
 IHU 0.13.0 and bridge 0.4.0 were deployed on m75q on 2026-10-17; see the
-[deployment record](../../../system/ground_station/evidence/ihu-0.13.0-20261017/deployment.json).
+[deployment record](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/ihu-0.13.0-20261017/deployment.json).
 Readback verification, quiet defaults, six switches, telemetry summaries, mode
 reset, solicited EPS/payload replies and reboot defaults passed. All outputs
 were left OFF with the bench bridge active. OFF during active RF work and a

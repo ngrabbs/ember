@@ -1,6 +1,6 @@
 # Comms open work
 
-**October 5 purchased baseline:** Y24 is paid (5 PCBs / 2 assembled); the exact October 4 source and export hashes were verified during Git reconciliation. See [order record](releases/Y24-order-record.md). JLCPCB rejected the requested J9 hole tolerance; assembly-engineering acceptance of the offered tolerance and final CAM/placement approval remain unresolved. The original [release archive](releases/review_20261004_1100/README.md) and [independent review](verification/review_20261004_final/independent-review.md) remain unchanged.
+**October 5 purchased baseline:** Y24 is paid (5 PCBs / 2 assembled); the exact October 4 source and export hashes were verified during Git reconciliation. See [order record](releases/Y24-order-record.md). JLCPCB rejected the requested J9 hole tolerance; assembly-engineering acceptance of the offered tolerance and final CAM/placement approval remain unresolved. The original [release archive](releases/review_20261004_1100/README.md) and [independent review](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/review_20261004_final/independent-review.md) remain unchanged.
 
 [Comms home](README.md) · [Design overview](design/overview.md)
 
@@ -28,7 +28,7 @@ H1/H2, mounting holes, board outline and user artwork remain fixed.
 - [x] Save the live PCB and archive the current source/local libraries before edits.
   Checkpoint: `~/Desktop/transceiver_before_layer_migration_20261003_1505.zip`.
 - [x] Inventory all zones, power feeds, vias, and bottom-layer analog routes.
-  [Baseline evidence](verification/layer_migration_20261003/before-inventory.json).
+  [Baseline evidence](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/layer_migration_20261003/before-inventory.json).
   Physical layer 3 has +3V3/+5V pours and 56 traces: +3V3 86.91 mm,
   +5V 167.91 mm, +3V0 12.28 mm. Existing layer 2 is already GND.
 - [x] Restore C69 to RX_AMP_IN, synchronize native F8 net changes, and rotate
@@ -141,10 +141,10 @@ No added resistors are required for that stated concern.
 - [x] Add and route U14 hardware TX mute with C115 bypass, controlled by existing
   TX_ACTIVE and R35 pull-down. Native ERC has zero errors; saved DRC remains
   0 errors / 0 unconnected / 11 existing warnings. H1/H2 and holes are unchanged.
-  [Implementation and evidence](verification/tx_startup_inhibit_review.md).
+  [Implementation and evidence](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/tx_startup_inhibit_review.md).
 - [x] Use restored In2.Cu +3V3 plane to remove 193 mm of redundant surface power
   feeds; repair CLK0 width/clearance and power-via spacings.
-  [Current validation](verification/evidence/power_plane_cleanup_2026-10-03.json).
+  [Current validation](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/evidence/power_plane_cleanup_2026-10-03.json).
 - [ ] Finalize startup/TX inhibit firmware, power sequencing and debug access
   before release. Validate 145.667 MHz waveform, disabled RF leakage and
   reset/watchdog behavior during prototype bring-up.
@@ -159,7 +159,7 @@ No added resistors are required for that stated concern.
   standard JLCPCB hole tolerance is wider. Specific export coordinates are in the fabrication notes.
 - [ ] Accept the proposed 50-ohm ±10% fabrication service and exact 7628 stackup
   in the vendor order. J9 clearance confirmed: top board, no board above, installed connector fits.
-  [Detailed review](verification/ground_stitching_rf_review.md).
+  [Detailed review](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/ground_stitching_rf_review.md).
 - [ ] Complete exact parts, mechanics and manufacturing checks below, then export
   a fresh Gerber/drill/BOM/CPL package. A local review candidate now exists at
   [review_20261003_1230](releases/README.md); it is not released for ordering.
@@ -167,7 +167,7 @@ No added resistors are required for that stated concern.
 RF gain, sensitivity, filter tuning and spectrum measurements requiring the
 assembled board belong to prototype bring-up. Before fabrication, close the
 circuit/footprint decisions and ensure access for those measurements and rework.
-[Current evidence and limits](verification/prototype_fabrication_progress.md).
+[Current evidence and limits](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/prototype_fabrication_progress.md).
 
 ## Dual CAN conversion — October 3
 
@@ -239,7 +239,7 @@ rendered footprint pad coordinates. C191253 is not the SSOP ordering code.
 - [x] **Stock substitutions (October 3):** L12/L13/L19–L24 now Murata C90642;
   U12 now TLV73330PDBVR C882826; D12/D13 now top-view C125094.
   Pins/packages and RF screening checked; all 11 properties synchronized to PCB.
-  [Acceptance and validation](verification/components/stock_substitutions_2026-10-03.md).
+  [Acceptance and validation](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/components/stock_substitutions_2026-10-03.md).
 - [ ] **Mixer order check:** retain ADE-1+ C2942210 per user; six displayed,
   two nominal. Verify available quantity plus assembly allowance at order time.
 
@@ -252,13 +252,13 @@ rendered footprint pad coordinates. C191253 is not the SSOP ordering code.
   isolation/stability verification remains open.
 - [x] **D15:** apply PESD5V0F1BLD,315 / C478204 in the existing SOD882D footprint.
   Conditional low-power prototype envelope and pin audit recorded in
-  [parts acceptance](verification/components/prototype_parts_2026-10-03.md).
+  [parts acceptance](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/components/prototype_parts_2026-10-03.md).
 - [x] **J9:** verify nominal hole pattern and lead reach using Molex drawing C5;
   identify exact JLCPCB part C588477 and live availability.
 - [x] **J9:** physical clearance confirmed by user: installed MMCX fits; this
   is the top board with no board above and ample room. Stack uses 16 mm standoffs.
 - [x] **J9:** save Molex 734151471 / C588477 ordering fields; live listing supports wave assembly. Confirm selected service at order time. RF launch return loss remains a prototype measurement.
-  [Review and fabrication requirements](verification/j9_launch_and_fabrication_requirements.md)
+  [Review and fabrication requirements](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/j9_launch_and_fabrication_requirements.md)
 - [x] **Embedded ordering properties:** all 147 purchasable placements have `LCSC Part #`
   in schematic and PCB; six bare test pads are `N/A`. [Audit](bom/evidence/lcsc_property_audit_2026-10-03.md).
 - [ ] **Procurement:** ordering fields are complete and retained U9 stock verified;
@@ -286,7 +286,7 @@ rendered footprint pad coordinates. C191253 is not the SSOP ordering code.
   top-of-stack placement has no board above and ample space. Retain the known
   shorter CD542 3D-model limitation; it is not an enclosure-clearance model.
 - [ ] Correct stale schematic annotations, including baseband filter Q/cutoff and
-  any remaining VHF references. [Baseband/header record](verification/baseband_and_header_review.md)
+  any remaining VHF references. [Baseband/header record](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/baseband_and_header_review.md)
 - [x] Regenerate the native netlist and BOM after ordering-field changes. Rerun
   native ERC, DRC, and net parity after accepted replacements; preserve documented
   exclusions without treating them as RF or mechanical qualification. October 3

@@ -7,7 +7,7 @@ board feels too crowded to keep ground solid.
 
 ---
 
-**October 3 review:** the current [ground-stitching and impedance review](../verification/ground_stitching_rf_review.md)
+**October 3 review:** the current [ground-stitching and impedance review](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/ground_stitching_rf_review.md)
 supersedes historical claims of completed impedance acceptance below. The
 0.358 mm value remains a design target, pending a fresh vendor solver result
 and final fabrication stackup agreement.

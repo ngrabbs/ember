@@ -1,9 +1,9 @@
 # EMBER bench dictionary and codec
 
 For day-to-day commanding, responses, displays and replay, start with the
-[Yamcs operator guide](../../docs/user/yamcs.md).
+[Yamcs operator guide](../yamcs/README.md).
 
-[Contract](../../system/protocols/ember_bench_v1.md) · [Ground checklist](../../system/ground_station/TODO.md)
+[Contract](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/protocols/ember_bench_v1.md) · [Ground checklist](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/TODO.md)
 
 `dictionary.json` is the machine-readable bench subset of Dustin's operation
 IDs. `codec.py` is a Python-standard-library encoder/decoder with no radio,
@@ -48,7 +48,7 @@ The standalone USB Pico application and its C-only USB framing were removed.
 Python `framing.py`, `usb_bridge.py` and `usb_probe.py` remain test/diagnostic tools
 for the historical binary USB protocol; they are not the operational IHU text
 console bridge. Dated hardware results remain in
-[USB validation](../history/2026-10-01/usb_validation.md). Use
+[USB validation](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/history/2026-10-01/usb_validation.md). Use
 [`payload_bridge.py`](payload_bridge.py) for the current sole-owner IHU serial
 bench connection and its payload commands/EPS forwarding.
 
@@ -57,8 +57,8 @@ bench connection and its payload commands/EPS forwarding.
 The shared station uses the single-owner IHU serial bridge. It polls
 `eps json` and forwards POWER_STATUS to the bench instance. See
 [serial ownership and EPS](../yamcs/OPERATIONAL.md#serial-ownership-and-eps)
-and the [packet contract](../../system/protocols/eps_power_status_v1.md).
+and the [packet contract](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/protocols/eps_power_status_v1.md).
 The legacy `eps_bridge.py` and UDP10017 setup are documented in the
-[retired UART adapter record](../history/2026-10-01/eps_yamcs_setup.md).
+[retired UART adapter record](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/history/2026-10-01/eps_yamcs_setup.md).
 
-[Optional SDRB CAN adapter](../../system/interfaces/sdrb_adapter.md) validates native IHU packets without owning RF; [current workstreams](../../system/sdrb/TODO.md).
+[Optional SDRB CAN adapter](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/sdrb_adapter.md) validates native IHU packets without owning RF; [current workstreams](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/sdrb/TODO.md).

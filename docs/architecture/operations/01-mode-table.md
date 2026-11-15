@@ -9,7 +9,7 @@ The [transition table](02-transition-table.md) defines mode changes; the
 
 ## Relationship to existing architecture
 
-The IHU owns system orchestration in the [architecture](../system_overview.md);
+The IHU owns system orchestration in the [architecture](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/docs/architecture/system_overview.md);
 mode-manager ownership still needs team agreement. This draft treats the earlier
 high-duty mode as scheduled work within NOMINAL.
 

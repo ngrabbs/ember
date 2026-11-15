@@ -4,7 +4,7 @@
 
 **Documented design:** J9 is the only antenna connector; 437 MHz TX / 435 MHz RX,
 half duplex. Earlier placement/routing logs are superseded by the
-[recorded RF review](../verification/rf_review_435mhz.md).
+[recorded RF review](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/rf_review_435mhz.md).
 
 J9 / ANT → C102 DC block → U11 common port; RF1 → TX_OUT; RF2 → RX_IN.
 D15 provides shunt bidirectional antenna protection. C94/C55 are the branch filter
@@ -33,7 +33,7 @@ receiver exposure, and D15 voltage/mismatch margin. Verify J9's through-hole lau
 and mechanical fit. Neither earlier DRC results nor package acceptance proves
 RF performance or hot-switching suitability.
 
-- [Switch component audit](../verification/components/rf_switch_pinmap.md)
-- [Antenna protection audit](../verification/components/antenna_esd_pinmap.md)
+- [Switch component audit](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/components/rf_switch_pinmap.md)
+- [Antenna protection audit](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/components/antenna_esd_pinmap.md)
 - [Capacitor selection evidence](../bom/evidence/remaining_field_completion.md)
 - [Prototype qualification worksheet](../bringup/rf_prototype_checklist.md)

@@ -14,7 +14,7 @@ fresh validation of the working board.
 | Open the board | [KiCad project](kicad/README.md) |
 | Resolve exact parts and availability | [BOM and sourcing](bom/README.md) |
 | Run prototype tests | [Bring-up guide](bringup/README.md) |
-| Check package audits or prior verification | [Verification records](verification/README.md) |
+| Check package audits or prior verification | [Verification records](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/README.md) |
 | Reproduce RF screening | [Analysis workspace](design/analysis/README.md) |
 | Find old fabrication outputs | [Release records](releases/README.md) |
 
@@ -29,4 +29,4 @@ Local Konnect state, editor caches, and disposable exports are ignored. Keep
 source projects, libraries, simulation inputs, acceptance evidence, and intentional
 release bundles tracked. Put new disposable analysis output in `design/analysis/output/`.
 
-[System interfaces](../../system/README.md) · [Documentation home](../../docs/README.md)
+[System interfaces](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/README.md) · [Documentation home](../../README.md)

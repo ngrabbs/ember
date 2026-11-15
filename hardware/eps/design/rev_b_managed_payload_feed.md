@@ -6,11 +6,11 @@ Permission`, of `hardware/eps/rev_b/eps_rev_b.kicad_sch`. It preserves the
 345-part ADC checkpoint and all existing physical interfaces. Do not interpret
 the proposed reference map as saved hardware or a completed EPS.
 
-Authority: [EPS plan](rev_b_plan.md), [canonical stack map](../../../system/interfaces/cskb_pinmap.md),
+Authority: [EPS plan](rev_b_plan.md), [canonical stack map](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md),
 [current carrier pin plan](../../payload_compute/design/payload_carrier_pinmap.md),
 [carrier budget](../../payload_compute/design/power_budget.md) and
 [bootstrap/unclean-session contract](../../payload_compute/design/bootstrap_input_contract.md).
-The [calculation packet](../verification/managed_payload/README.md) records
+The [calculation packet](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/managed_payload/README.md) records
 conditions and counterexamples. Read the root AGENTS.md, entire schematic
 policy and net-naming conventions before native work. Konnect only; one owner.
 
@@ -64,7 +64,7 @@ Select the unchanged stock footprint
 without embedded vias. The symbol's default ThermalVias variant has nine0.20mm
 holes below the configured0.30mm drill minimum. Thermal vias must be designed
 separately at PCB layout; omitting them from the footprint is not thermal
-acceptance. The [stock control/protection checkpoint](../verification/managed_payload/control_packages/README.md)
+acceptance. The [stock control/protection checkpoint](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/managed_payload/control_packages/README.md)
 verifies all68 leads across the eFuse, four control ICs and diode. Its generic
 eFuse paste windows cover62.25% of EP area versus TI's78% example. Retain
 stencil/voiding, generic-land and thermal qualification open.
@@ -80,14 +80,14 @@ not prove sink resistance/timing at minimum3V DRV over temperature. Keep
 drive/loading and reverse interruption conditional. Manufacturer delivery
 suffix/MOQ must be confirmed at purchase. The stock glyph simplifies the
 internal gate protection; annotate it explicitly. The
-[helper-drive comparison](../verification/managed_payload/helper_drive/README.md)
+[helper-drive comparison](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/managed_payload/helper_drive/README.md)
 retains T2N provisionally after 26 nominal helper-only cases; SSM3K15AMFV's
 capacitance is only typical and its pulse margin is smaller. A 180 ohm helper
 drain-resistor sensitivity reduces current but slows the imposed gate load;
 it is not selected or added to this 49-part circuit. Coupled CSD18543 attempts
 failed or needed tolerance relaxation, so no main-FET survival or actual DRV
 load/timing acceptance follows from those traces. The
-[disposable fixture](../verification/managed_payload/helper_package/README.md)
+[disposable fixture](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/managed_payload/helper_package/README.md)
 verifies both helper/reference pin-pad maps and saved metadata, with actual
 page/detail and board-layer inspection separate from ERC. Generic land and
 courtyard acceptance remain open; Q1401 needs a full4.0×3.5mm reservation.
@@ -108,10 +108,10 @@ courtyard acceptance remain open; Q1401 needs a full4.0×3.5mm reservation.
 | C1405 | SHDN12 to GND,1nF/50V/5% C0G0603, TDK CGA3E2C0G1H102J080AA |
 | C1406 | OVP7 to GND, same TDK1nF part and approved project footprint as C1405 |
 
-The [37-passive sourcing manifest](../verification/managed_payload/passive_selection/README.md)
+The [37-passive sourcing manifest](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/managed_payload/passive_selection/README.md)
 selects all23 resistor and14 capacitor MPNs. R1424 uses0805 for1MΩ; the
 precision0603 range stops at332kΩ. C1405/C1406 use the approved, separately
-[verified TDK footprint](../verification/managed_payload/tdk_filter_package/README.md),
+[verified TDK footprint](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/managed_payload/tdk_filter_package/README.md),
 with project review/assembly and native S11 field-display limitations retained.
 Resistor electrical screen assumes0.1% initial plus25ppm/°C over65K,
 independent corners. Select and verify exact MPNs, package/power/voltage/TCR
@@ -136,7 +136,7 @@ not detached label-only parts. If a power port is used, its fixed-rail Value
 is `2V5_PAYLOAD_CLAMP`. Do not join it to an essential supply.
 
 The clamp passes the stated DC-current/power arithmetic and a labelled1.2V
-cold-diode sensitivity. A [24-case nominal subcircuit study](../verification/managed_payload/clamp_transient/README.md)
+cold-diode sensitivity. A [24-case nominal subcircuit study](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/managed_payload/clamp_transient/README.md)
 uses TI's unchanged unencrypted reference macro with imposed diode/parasitic
 envelopes. Adding C1406 lowers the maximum simulated OVP from3.90601V to
 3.74600V. Cold cases also show millivolt negative OVP excursions: only12/24

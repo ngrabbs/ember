@@ -76,12 +76,12 @@ Key design decisions:
    an MCU uptime counter, persisted to MRAM at boot, and ground-synced
    over the uplink command channel.
 6. **CSKB pin map adopted verbatim from the Pumpkin CubeSat Kit Bus** —
-   see [`DS_CSK_MB_710-00484-E.pdf`](../../../system/interfaces/DS_CSK_MB_710-00484-E.pdf) (Pumpkin Motherboard Rev. E, doc Rev.
+   see [`DS_CSK_MB_710-00484-E.pdf`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/DS_CSK_MB_710-00484-E.pdf) (Pumpkin Motherboard Rev. E, doc Rev.
    A, March 2012), pages 13–16 for the canonical H1/H2 pin tables. This
    makes the stack mechanically and electrically interoperable
    with Pumpkin and iSpace CSKB-compliant boards if we ever want to swap
    any subsystem for a commercial unit. The canonical pin map lives at
-   [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md).
+   [`system/interfaces/cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md).
 7. **CAN is stubbed only** in v0.1: MAX3051 transceiver footprint with
    slew resistor selecting 500 kbps (matches RT-IHU). The MCP2515 SPI-CAN
    controller and crystal are NOT populated in v0.1 — footprints reserved
@@ -1204,7 +1204,7 @@ up to 24–25 mm between a pair of boards.
 
 **Mechanical note:** exact X/Y position of the H1 and H2 footprints on
 the PCB must match Pumpkin's motherboard layout (see
-[`DS_CSK_MB_710-00484-E.pdf`](../../../system/interfaces/DS_CSK_MB_710-00484-E.pdf) page 5, "Simplified Mechanical Layout")
+[`DS_CSK_MB_710-00484-E.pdf`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/DS_CSK_MB_710-00484-E.pdf) page 5, "Simplified Mechanical Layout")
 before layout, so a future Pumpkin-compatible board can mate without
 rework.
 
@@ -1214,7 +1214,7 @@ Samtec MPN in the component properties.
 
 #### Pin Assignment (Pumpkin CSKB-Compatible)
 
-> **Canonical reference:** [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md) is the
+> **Canonical reference:** [`system/interfaces/cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md) is the
 > authoritative pin map for the entire stack. The table below
 > is a board-local view and must match that file. If there is a
 > conflict, the canonical file wins — update this table, not the
@@ -1602,7 +1602,7 @@ Total board area target: <50 cm² (CSKB / CubeSat Kit footprint is the constrain
 1. **Comms board v0.2 update required.** Add `COMMS_IRQ` to the comms
    board's Digital_Control sheet (pick one Pico GPIO, e.g. GP22) and
    route it to CSKB H1.16 on the Connectors sheet. One-line update
-   to [`system/interfaces/comms_to_ihu.md`](../../../system/interfaces/comms_to_ihu.md) to document the signal.
+   to [`system/interfaces/comms_to_ihu.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/comms_to_ihu.md) to document the signal.
 2. **EPS board v0.2 follow-up.** The EPS LTC4162 SMBALERT_N must route
    to CSKB H1.49 (Pumpkin USER2) so it lands on the IHU's
    `EPS_ALERT_N` net. Verify the EPS schematic reflects this when next
@@ -1614,7 +1614,7 @@ Total board area target: <50 cm² (CSKB / CubeSat Kit footprint is the constrain
    by a Pumpkin MBM2/EPS, no connector change is needed. Stacking
    height is 15 mm v0.1; Samtec SSQ-126-22-G-D can be inserted for
    24–25 mm spacing if a module needs clearance. See
-   [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md) for the canonical part catalog.
+   [`system/interfaces/cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md) for the canonical part catalog.
 4. **CAN controller (Iteration 2).** v0.2 of this schematic will add
    the MCP2515 SPI-CAN controller, its 16 MHz crystal, and route
    GP14/GP15 to it. Plan to populate U4 (MAX3051) and the slew

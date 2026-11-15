@@ -3,7 +3,7 @@
 **Configuration review pending, 2026-10-04.** This older architecture record
 uses a TPSM5D1806 regulation target; the [Rev A bring-up plan](../bringup/phase1_validation.md)
 describes the TPS62933 hardware. Newer EPS Rev B planning is in a separate
-active worktree, listed in the [documentation review](../../../docs/review/README.md). Keep revision-specific
+active worktree, listed in the [documentation review](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/docs/review/README.md). Keep revision-specific
 parts and validation claims separate until reconciled; this page does not
 establish the currently assembled regulator or a completed rail qualification.
 
@@ -95,4 +95,4 @@ Solar Array (SM141K10TF, 3S/3S2P eval)
 
 - Interface definitions: [`hardware/eps/design/interfaces.md`](interfaces.md)
 - Bring-up plan and acceptance criteria: [`hardware/eps/bringup/phase1_validation.md`](../bringup/phase1_validation.md)
-- System power interface context: [`system/interfaces/power_interfaces.md`](../../../system/interfaces/power_interfaces.md)
+- System power interface context: [`system/interfaces/power_interfaces.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/power_interfaces.md)

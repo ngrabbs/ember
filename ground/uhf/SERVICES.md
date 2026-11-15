@@ -99,6 +99,6 @@ quota shutdown. Export evidence before later starts prune old completed runs.
 
 `RUNNING` means local processes passed readiness, not RF/Yamcs delivery. Check
 decoded packet identities and archive reception times independently. The
-[supervision evidence](results/2026-10-03/supervision) retains successful controls,
+[supervision evidence](https://github.com/ngrabbs/ember/tree/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/uhf/results/2026-10-03/supervision) retains successful controls,
 early logout shutdowns and a TX startup fault separately. Short checks do not
 establish endurance, arbitrary restart reliability, SSB quality or flight use.

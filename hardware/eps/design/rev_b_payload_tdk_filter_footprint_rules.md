@@ -1,6 +1,6 @@
 # TDK payload filter footprint construction proposal
 
-2026-10-24. Construction approved by the user: “Approve TDK filter footprint construction”. Completed disposable evidence is in [the package checkpoint](../verification/managed_payload/tdk_filter_package/README.md). The custom review marker remains; assembly/circuit qualification is separate. For C1405/C1406 only, exact
+2026-10-24. Construction approved by the user: “Approve TDK filter footprint construction”. Completed disposable evidence is in [the package checkpoint](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/managed_payload/tdk_filter_package/README.md). The custom review marker remains; assembly/circuit qualification is separate. For C1405/C1406 only, exact
 TDK CGA3E2C0G1H102J080AA, 1 nF/5%/50 V/C0G, 0603. No new symbol is needed:
 retain stock `Device:C`, two interchangeable passive terminals, physical
 pad 1 left/pad 2 right in front view. No polarized behavior or pin key is
@@ -9,7 +9,7 @@ invented. Approval covers construction and disposable verification only.
 Source: [TDK exact product page](https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=CGA3E2C0G1H102J080AA).
 The live product page, second gallery drawing and reflow range table were
 actually inspected. Retained screenshot:
-[manufacturer land diagram](../verification/managed_payload/passive_selection/TDK_lands_browser.png).
+[manufacturer land diagram](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/managed_payload/passive_selection/TDK_lands_browser.png).
 PA is the inner gap, PB horizontal pad length, PC vertical pad width; all
 three reflow recommendations span 0.60..0.80 mm. Choose their 0.70 mm midpoint.
 The queried stock C_0603_1608Metric has 0.90 × 0.95 mm pads and 0.65 mm gap:

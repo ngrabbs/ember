@@ -26,7 +26,7 @@ minutes. The simulator waits for Yamcs readiness before sending packets. Source 
 [upstream quickstart commit 61e9416](https://github.com/yamcs/quickstart/tree/61e94169687f8729832c754e0813bf90271e4800),
 which selects Yamcs 5.13.0. Container tags are fixed here, but image digests have
 not yet been locked. Both images run natively on the ARM64 Pi 5; see the
-[lab inventory](../history/2026-10-01/lab_inventory.md).
+[lab inventory](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/history/2026-10-01/lab_inventory.md).
 
 `prepare.py` generates `ember.xml` and Java field offsets from the JSON
 dictionary, copies the tracked Java link adapters into the ignored source
@@ -186,7 +186,7 @@ for `ember_smoke.py`.
 
 ## Historical UHF / SDRB setup
 
-The [October 3 SDRB bench record](../uhf/results/2026-10-03/bench-notes.md) adds isolated `ember-uhf` / UDP10019 with the existing MDB and EPS display. The [optional services](../uhf/SERVICES.md) remain disabled at boot; IHU cadence is armed separately. USB and LTE archives stay separate.
+The [October 3 SDRB bench record](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/uhf/results/2026-10-03/bench-notes.md) adds isolated `ember-uhf` / UDP10019 with the existing MDB and EPS display. The [optional services](../uhf/SERVICES.md) remain disabled at boot; IHU cadence is armed separately. USB and LTE archives stay separate.
 
 Version comparison and deployment checks: [ground release identities](../releases/README.md).
 

@@ -10,7 +10,7 @@ carrier board's pin assignments** between the Jetson Orin Nano module
 connectors, CSKB stack interface, debug headers, power circuitry).
 
 For stack-side pin assignments (H1/H2 nets crossing module boundaries),
-the authority is [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md). This document covers
+the authority is [`system/interfaces/cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md). This document covers
 **carrier-internal** wiring only.
 
 ## Reference documents
@@ -21,8 +21,8 @@ the authority is [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces
 | Jetson Orin NX/Nano Design Guide | DG-10931-001 v1.1 | [`hardware/payload_compute/design/Jetson_Orin_NX_Series_and_Orin_Nano_Series_Design_Guide_DG-10931-001_v11.pdf`](Jetson_Orin_NX_Series_and_Orin_Nano_Series_Design_Guide_DG-10931-001_v11.pdf) |
 | Jetson Orin NX/Nano Pin Function Names Guide | DA-11434-001 v1.0 | [`hardware/payload_compute/design/Jetson_Orin_NX_Orin_Nano_Pin_Function_Names_Guide_DA-11434-001_v1.0.pdf`](Jetson_Orin_NX_Orin_Nano_Pin_Function_Names_Guide_DA-11434-001_v1.0.pdf) |
 | Jetson Orin Nano Devkit Carrier Spec | SP-11324-001 v1.3 | [`hardware/payload_compute/design/Jetson-Orin-Nano-DevKit-Carrier-Board-Specification_SP-11324-001_v1.3.pdf`](Jetson-Orin-Nano-DevKit-Carrier-Board-Specification_SP-11324-001_v1.3.pdf) |
-| Pumpkin CSKB Datasheet | 710-00484 Rev. E | [`system/interfaces/DS_CSK_MB_710-00484-E.pdf`](../../../system/interfaces/DS_CSK_MB_710-00484-E.pdf) |
-| CSKB pin map | — | [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md) |
+| Pumpkin CSKB Datasheet | 710-00484 Rev. E | [`system/interfaces/DS_CSK_MB_710-00484-E.pdf`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/DS_CSK_MB_710-00484-E.pdf) |
+| CSKB pin map | — | [`system/interfaces/cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md) |
 
 ## Module variant assumption
 
@@ -58,7 +58,7 @@ Stack +5V rail is provisioned at ~2 A (CSKB H2.25/H2.26). Orin Nano peaks
 at ~3 A on VDD_IN in 15 W mode. Carrier therefore takes power from
 **`VBAT`** (CSKB H2.45/H2.46, 6.0–8.4 V nominal) through a local buck
 converter sized for ≥3 A @ 5.0 V output. This requires changing the
-payload column for H2.45/H2.46 in [`cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md) from `M` (monitor)
+payload column for H2.45/H2.46 in [`cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md) from `M` (monitor)
 to `C` (consumer) — flag for EPS conversation.
 
 Decoupling at the SO-DIMM VDD_IN pins per DG-10931 recommended values
@@ -164,7 +164,7 @@ in the schematic.
 
 Channel assignment follows the current filter plan — one on-line channel on the
 potassium doublet and two continuum references outside the O₂ A-band. See
-[`docs/research/k_line_detection.md`](../../../docs/research/k_line_detection.md).
+[`docs/research/k_line_detection.md`](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/docs/research/k_line_detection.md).
 
 #### Camera #0 (750 nm continuum reference)
 
@@ -323,7 +323,7 @@ adapter can connect directly.
 ## 6. CSKB Stack Interface
 
 Signals crossing the CSKB connectors and their mapping to Orin SO-DIMM
-pins. CSKB pin numbers and net names come from [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md)
+pins. CSKB pin numbers and net names come from [`system/interfaces/cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md)
 and MUST match exactly — if there's a conflict, that file wins.
 
 ### 6.1 System I²C — IHU ↔ payload command channel
@@ -334,7 +334,7 @@ target with a defined register map (TBD in firmware spec). Bus runs at
 
 | CSKB pin | CSKB net | SO-DIMM pin | Module net | Notes |
 |---|---|---|---|---|
-| H1.41 | `SDA_SYS` | 187 | `SDA_SYS` (Orin `I2C0_SDA`) | Bus pull-ups already on EPS side (R4/R5, 4.7 kΩ) — do NOT add additional pull-ups on payload. Canonical net name per [`system/interfaces/cskb_pinmap.md`](../../../system/interfaces/cskb_pinmap.md). |
+| H1.41 | `SDA_SYS` | 187 | `SDA_SYS` (Orin `I2C0_SDA`) | Bus pull-ups already on EPS side (R4/R5, 4.7 kΩ) — do NOT add additional pull-ups on payload. Canonical net name per [`system/interfaces/cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md). |
 | H1.43 | `SCL_SYS` | 185 | `SCL_SYS` (Orin `I2C0_SCL`) | |
 
 ### 6.2 Payload enable

@@ -1,6 +1,6 @@
 # Radio guide
 
-[Documentation home](../README.md) · [Board interfaces](../../system/interfaces/README.md)
+[Documentation home](../../README.md) · [Board interfaces](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/README.md)
 
 Choose the receiver for the hardware sending the packet. These settings describe
 the named bench profiles. For spacecraft RF design and coordination status,
@@ -25,7 +25,7 @@ The outer CRC-32 covers version through packet. The DBPSK guard is 16 zero
 bytes. See the [DBPSK modem](../../ground/bpsk/modem.py) and
 
 Inside each RF frame the native
-[EMBER packet](../../system/protocols/ember_bench_v1.md#envelope) has its own CRC:
+[EMBER packet](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/protocols/ember_bench_v1.md#envelope) has its own CRC:
 
 ```text
 [CCSDS primary header 6] [EMBER secondary header 24] [Payload N] [CRC-16 2]

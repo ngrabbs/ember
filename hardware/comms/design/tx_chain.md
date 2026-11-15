@@ -8,13 +8,13 @@ Si5351A CLK0 (~145.67 MHz) → 74LVC1G86 XOR modulation → Q3 tripler →
 TX preselector → U8 ADL5602 → TX output filter → U11 switch → J9.
 
 Both UHF filters use the documented series end capacitors, coupled resonators,
-and tuning values in the [RF review](../verification/rf_review_435mhz.md#filter-and-matching-findings).
+and tuning values in the [RF review](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/rf_review_435mhz.md#filter-and-matching-findings).
 The present 9.1 pF shunt values are baseline; 8.2/7.5 pF are measurement candidates.
 
 - Q3/Q4 use the manufacturer-specific Hottech 2SC3356 mapping in the
-  [component audit](../verification/components/rf_pinmap_audit.md).
+  [component audit](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/components/rf_pinmap_audit.md).
 - U8's RF output is also its bias node. Preserve its DC-block/bias arrangement;
-  use the [package audit](../verification/components/u8_adl5602_pinmap.md).
+  use the [package audit](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/components/u8_adl5602_pinmap.md).
 - Do not treat the amplifier's compression capability or old simulated antenna
   power as a clean-output guarantee. Measure actual output with filter/switch losses.
 - Verify XOR swing at the operating frequency, modulation shaping, tripler spurs,

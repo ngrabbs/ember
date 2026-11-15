@@ -20,7 +20,7 @@ tripler/filter path; verify the mixer's +7 dBm LO requirement under actual loadi
 - The baseband bias repair retains a 1.65 V ideal midpoint and ×11 AC gain.
   The equal-R/equal-C unity-gain filter has ideal Q=0.5, f0≈3.29 kHz and
   −3 dB≈2.12 kHz, not the older Butterworth claim. See the
-  [calculation record](../verification/baseband_and_header_review.md).
+  [calculation record](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/baseband_and_header_review.md).
 
 Older VHF/SA612 descriptions and unqualified system-noise claims are superseded.
 Verify the assembled chain using the [prototype worksheet](../bringup/rf_prototype_checklist.md).

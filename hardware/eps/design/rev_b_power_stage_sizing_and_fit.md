@@ -2,7 +2,7 @@
 
 2026-10-04. Carry forward the LMR51635XDDCR 3.3 V buck and LM5177DCPR 5 V buck-boost for development. **No complete circuit, output-current rating or physical fit is accepted.** The operator reports 16 mm top standoff before the next board. This permits evaluation of taller inductors; subtract upper-board underside protrusions and mechanical tolerances before defining usable component height. The standoff reference faces remain to be confirmed.
 
-[Architecture](rev_b_plan.md) · [Voltage/cutoff candidates](rev_b_regulator_and_ov_candidates.md) · [Calculator](../verification/power_stage_sizing.py) · [Numerical evidence](../verification/evidence/2026-10-04_power_stage_sizing.json)
+[Architecture](rev_b_plan.md) · [Voltage/cutoff candidates](rev_b_regulator_and_ov_candidates.md) · [Calculator](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/power_stage_sizing.py) · [Numerical evidence](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/evidence/2026-10-04_power_stage_sizing.json)
 
 ## Load assumptions
 
@@ -46,7 +46,7 @@ Output capacitance depends strongly on the COMMS current step. For a hypothetica
 
 ## Package and board reservations
 
-[Konnect package readbacks](../verification/evidence/2026-10-04_power_package_readback.json) give a 7.7 × 10.2 mm courtyard for the installed generic HTSSOP-38 reference and 4.1 × 3.4 mm for generic SOT-23-6. Neither is an accepted manufacturer land pattern. In particular, the generic HTSSOP exposed pad is 2.74 × 4.75 mm while TI's DCP0038A example land uses 2.9 × 4.7 mm. Verify lead/pad mapping, thermal-pad geometry, paste and vias before native placement.
+[Konnect package readbacks](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/evidence/2026-10-04_power_package_readback.json) give a 7.7 × 10.2 mm courtyard for the installed generic HTSSOP-38 reference and 4.1 × 3.4 mm for generic SOT-23-6. Neither is an accepted manufacturer land pattern. In particular, the generic HTSSOP exposed pad is 2.74 × 4.75 mm while TI's DCP0038A example land uses 2.9 × 4.7 mm. Verify lead/pad mapping, thermal-pad geometry, paste and vias before native placement.
 
 | Complete stage reservation | Previous | Revised |
 |---|---|---|
@@ -58,4 +58,4 @@ The [revised floorplan](rev_b_floorplan.svg) adds 624 mm² for conversion stages
 
 Next implementation checkpoint: verify the exact buck symbol and land pattern through Konnect, define its full passive/enable network and thermal layout, then export and check the isolated stage. In parallel design work, resolve the buck-boost low-gate-voltage choice, transition model and compensation before freezing its BOM. Solar cutoff trip/reset and source-fault coordination remain separate blocking acceptance items. No Rev A native KiCad file was changed for this checkpoint.
 
-The [essential buck draft](../verification/essential_buck_stage_draft.md) now records the isolated passive/enable circuit and verified six-pin package. It also establishes that 5 V output-fed BIAS does not avoid the LM5177’s high-input linear-bias loss; low-pack gate drive and an independently starting bias alternative remain open.
+The [essential buck draft](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/essential_buck_stage_draft.md) now records the isolated passive/enable circuit and verified six-pin package. It also establishes that 5 V output-fed BIAS does not avoid the LM5177’s high-input linear-bias loss; low-pack gate drive and an independently starting bias alternative remain open.

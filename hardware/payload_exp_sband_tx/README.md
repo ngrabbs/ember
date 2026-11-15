@@ -253,5 +253,5 @@ is an AD9910, not a DAC902.
   deferred architecture
 - [`../comms/design/rx_mixer_trade_study.md`](../comms/design/rx_mixer_trade_study.md)
   — format precedent for the trade study here
-- [`../../docs/comms/modulation.md`](../../docs/comms/modulation.md) — modulation background
-- [`../../docs/architecture/project_scope.md`](../../docs/architecture/project_scope.md) — project scope and positioning
+- [`../../docs/comms/modulation.md`](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/docs/comms/modulation.md) — modulation background
+- [`../../docs/architecture/project_scope.md`](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/docs/architecture/project_scope.md) — project scope and positioning

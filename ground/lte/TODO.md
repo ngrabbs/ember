@@ -8,10 +8,10 @@ series delivered **9/10** byte-exact128-byte packets into Yamcs; **8/10** passed
 all checks. One send lost registration and was rejected; one successful delivery
 had a controller diagnostic reply failure. All ten confirmed Walter OFF; no
 network process crashed. The preceding series delivered6/10. Continuous delivery
-and recovery remain open. [Latest results](results/2026-10-02-eps-security-reliability.md).
+and recovery remain open. [Latest results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-eps-security-reliability.md).
 
 LTE testing paused at the user's request on 2026-10-03. Last hardware proof:
-[controlled outage and recovery](results/2026-10-02-queue-outage.md), three retained
+[controlled outage and recovery](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-queue-outage.md), three retained
 EPS packets recovered byte-exactly into Yamcs after explicit RF stop/reopen.
 The test ended with Walter OFF and FIFO empty/disabled. At pause, no eNodeB/EPC
 was running on the ground station; M75q had no USB serial device for a fresh
@@ -139,7 +139,7 @@ through an SDR eNodeB/EPC. Ordinary LTE attach by SIM7600 is a separate baseline
 
 ## 6. Firmware and EMBER integration
 
-The [COMMS MCU–Walter checklist](../../system/interfaces/comms_walter.md) owns
+The [COMMS MCU–Walter checklist](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/comms_walter.md) owns
 controller/UART integration and the IHU I2C-to-CAN migration. The legacy I2C link
 is status/ping only; the new CAN Feather bench now forwards an IHU heartbeat.
 Full IHU/EPS housekeeping/application migration remains open. LTE reliability remains shelved.
@@ -153,7 +153,7 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       status and LTE qualification follow with USB back on IHU.
 - [x] Investigate Walter GPS/Galileo and IHU-requested GNSS service; record
       radio-sharing constraints, result fields and asynchronous/cache design.
-      [Research and GNSS TODO](../../system/interfaces/walter_gnss.md).
+      [Research and GNSS TODO](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/walter_gnss.md).
 - [ ] Implement and bench-test IHU GNSS requests/results after LTE bring-up.
 - [x] Preserve/verify Walter's ESP32 flash and install a pinned standalone
       COMMS UART diagnostic with its modem held in reset; USB checks passed.
@@ -173,17 +173,17 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
       controller flash images, and prove physical CAN HELLO/echo at 500 kbit/s.
 - [x] Forward ten hardware-IHU heartbeat packets via CAN → COMMS → Walter UART
       echo and back to IHU, with identity/sequence/CRC preserved and no new
-      IHU-side CAN/fragment/timeout errors. [Evidence](../../system/ground_station/evidence/ihu-comms-walter-can-20261002.json).
+      IHU-side CAN/fragment/timeout errors. [Evidence](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/ihu-comms-walter-can-20261002.json).
 - [x] Build the CAN Feather IHU's manual read-only EPS register reader with PEC
       validation and Feather SDA/GPIO2, SCL/GPIO3 I2C1 mapping; eight EPS tests pass.
 - [x] Verify the new IHU's physical EPS connection and complete PEC-valid reads.
       Three complete 19-register readouts passed PEC; CAN HELLO still passes.
-      [Evidence](../../system/ground_station/evidence/ihu-eps-i2c1-20261002.json).
+      [Evidence](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/ihu-eps-i2c1-20261002.json).
 - [x] Obtain ADC-valid voltage/current/temperature readings on the new IHU.
       Battery-only ADC enable changed only CONFIG_BITS bit2, with readback
       verified and three complete ADC-valid reads. Approximately 8.108 V pack,
       8.089 V output and 21.46 °C die. Current sense values remain unverified.
-      [Evidence](../../system/ground_station/evidence/ihu-eps-battery-adc-20261002.json).
+      [Evidence](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/ihu-eps-battery-adc-20261002.json).
 - [x] Build native EPS POWER_STATUS packet encoding and matching CAN/UART services;
       verify fixed-point/raw fields against real EPS captures in the ground codec.
 - [x] Flash/readback-verify matching COMMS v2 update; local loopback, physical
@@ -191,32 +191,32 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [x] Prove real EPS packets through COMMS and Walter echo with USB back on IHU.
       Ten of ten native128-byte POWER_STATUS returns, ADC/conversion-valid1,
       source boot/sequence/raw registers preserved; no additional IHU-side
-      CAN/fragment/timeout errors. [Evidence](../../system/ground_station/evidence/ihu-comms-walter-eps-can-20261002.json).
+      CAN/fragment/timeout errors. [Evidence](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/ihu-comms-walter-eps-can-20261002.json).
 - [x] Prepare isolated Yamcs ember-lte input on loopback UDP10018 and bounded
       native packet receiver for EPC UDP51000. Running, with zero radio packets.
 - [x] Run first bounded native EPS LTE trial; record EPC Attach Complete,
       application REGISTER, zero submissions/receptions and confirmed RF OFF.
-      [Evidence](../../system/ground_station/evidence/native-eps-lte-20261002-01.json).
+      [Evidence](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/native-eps-lte-20261002-01.json).
 - [x] Fix Walter CEREG response spacing and preserve unsolicited registration
       updates, including bytes drained between commands; build and host tests pass.
 - [x] Flash registration fix, verify image hashes and USB startup OFF/window zero.
-      [Evidence](../../system/ground_station/evidence/walter-registration-v2-flash-check-20261002.json).
+      [Evidence](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/walter-registration-v2-flash-check-20261002.json).
 - [x] Retry aligned radio/receiver windows; registration and modem acceptance pass.
-      [First send trial](../../system/ground_station/evidence/native-eps-lte-20261002-02.json).
+      [First send trial](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/native-eps-lte-20261002-02.json).
 - [x] Capture native EPS UDP through LTE/EPC with a 10-second send settle;
       identify exact LF-prefix/last-byte-loss corruption. Receiver rejects it.
-      [Byte comparison](../../system/ground_station/evidence/native-eps-lte-20261002-03.json).
+      [Byte comparison](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/native-eps-lte-20261002-03.json).
 - [x] Build and host-test CR-only AT terminator fix.
 - [x] Flash CR-only AT terminator fix; image hashes and startup OFF verified.
-      [Evidence](../../system/ground_station/evidence/walter-cr-only-flash-check-20261002.json).
+      [Evidence](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/walter-cr-only-flash-check-20261002.json).
 - [x] Verify exact packet bytes over LTE after CR-only terminator fix.
 - [x] Receive real EPS packets over LTE and byte-match them in Yamcs archive/display.
       One packet, sequence15, native IHU provenance, all128 bytes unchanged;
       battery8.060V, output8.042V, die21.894°C. Paused replay verified visually.
-      [Evidence](../../system/ground_station/evidence/native-eps-lte-20261002-05.json).
+      [Evidence](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/native-eps-lte-20261002-05.json).
 - [x] Measure ten independent full-chain attempts with firmware/profile fixed:
       six deliveries, two modem rejections, two accepted without reception;
-      all ten OFF confirmations. [Results](results/2026-10-02-eps-reliability.md).
+      all ten OFF confirmations. [Results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-eps-reliability.md).
 - [x] Build/test cached diagnostics carrying exact numeric/text CME detail,
       registration transitions, send prompt/OK flags and historical socket-open
       acceptance. All34 host tests and all three hardware-target builds pass.
@@ -228,7 +228,7 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [x] Verify96-byte diagnostic return over physical CAN/UART with USB on IHU,
       then run bounded instrumented radio trials. Three accepted EPS packets,
       zero ground receptions; SRB2 SN0 retry exhaustion captured.
-      [Results](results/2026-10-02-eps-diagnostics.md).
+      [Results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-eps-diagnostics.md).
 - [ ] Add separately bounded live socket-state probes if cached evidence is insufficient.
 - [ ] Trace accepted-but-undelivered uplinks/bearer failures in OAI.
 - [ ] Trace SRB2 dedicated downlink allocation/HARQ association and ULSCH context
@@ -236,7 +236,7 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [x] Add and bench-test optional CE/context metadata trace; verify MAC block
       fit and MCS/NDI retention, and capture reestablishment before SRB2 exhaustion.
       One recovered EPS packet byte-matches the ground receiver and Yamcs.
-      [Results](results/2026-10-02-ce-context.md).
+      [Results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-ce-context.md).
 - [ ] Inspect SRB2 activation/security, uplink STATUS scheduling/decoding and
       post-reconfiguration PHY transition; reproduce pool-full with owner dump.
 - [x] Capture baseline SRB2 ADD/MODIFY with security mode255, inactive security
@@ -244,10 +244,10 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [x] Bench-verify new-bearer security initialization: active SRB2 integrity2,
       STATUS ACK_SN1, six exact EPS deliveries/Yamcs matches across two windows.
       Temporary traces removed; normal eight-candidate build retained.
-      [Results](results/2026-10-02-srb2-security.md).
+      [Results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-srb2-security.md).
 - [x] Repeat ten independent reliability attempts with the fixed security build
       and profile unchanged:9/10 exact deliveries,8/10 complete passes, all OFF.
-      [Results](results/2026-10-02-eps-security-reliability.md).
+      [Results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-eps-security-reliability.md).
 - [ ] Trace cached diagnostic UNKNOWN_REMOTE_LINK reason6 after a successful
       send; attempt4 increased IHU unknown-reply counter without losing telemetry.
 - [ ] Define operational CAN startup/recovery after reset; current bench images
@@ -257,15 +257,15 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [x] Implement/test registration-aware Walter admission and an opt-in four-packet
       IHU bench FIFO with bounded pre-submission retry/backoff and held uncertainty.
       Radio-off capacity/retention test passed; deployment/OTA recovery are separate.
-      [Preparation](results/2026-10-02-queue-preparation.md).
+      [Preparation](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-queue-preparation.md).
 - [x] Install Walter admission candidate; verify queued hardware EPS bytes at
       ground and Yamcs after an explicit radio-off wait and bounded RF window:
       3/3 exact FIFO matches, no retries/holds/new CAN errors, queue empty and RF OFF.
-      [Results](results/2026-10-02-queued-eps.md).
+      [Results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-queued-eps.md).
 - [x] Exercise deliberate cell outage after a confirmed baseline; observe real
       registration loss despite READY, retain3 hardware packets with zero attempts,
       and recover all original bytes via an explicit new RF window/Yamcs match.
-      [Results](results/2026-10-02-queue-outage.md).
+      [Results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-queue-outage.md).
 - [ ] Qualify same-window reconnect or autonomous controller RF reopening;
       current outage recovery requires explicit RF stop/reopen.
 - [ ] Add ground application acknowledgments before queue retirement means
