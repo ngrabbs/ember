@@ -1,13 +1,15 @@
 # Transceiver firmware
 
 The transceiver moves EMBER packets between the IHU on CAN A and the UHF radio.
-Version **0.39.0** runs on the original Raspberry Pi Pico.
+Version **0.40.0** runs on the original Raspberry Pi Pico.
 
 [Changelog](CHANGELOG.md) · [Verified bench builds](../README.md#current-bench-builds) ·
 [Radio guide](../../docs/comms/README.md)
 
-The current [verified UHF startup UF2](releases/0.39.0/transceiver-0.39.0-uhf.uf2) supports [configuration readback](../../docs/comms/radio_config.md). The
-previous 0.38.0 bench image was built from
+The [0.40.0 bench record](../ihu/releases/0.32.0/README.md) covers the tuned
+receiver and the [1500-baud downlink trial](../../docs/comms/radio_config.md).
+
+The previous 0.38.0 bench image was built from
 [`819470b`](https://github.com/ngrabbs/ember/commit/819470bbf877fa66f980bf9d0d138c081905af6c).
 To reproduce that image, run the build commands from a detached worktree
 and use the historical flag `-DTRANSCEIVER_BOOT_DEMO=ON`.
@@ -148,3 +150,16 @@ pass. CAN B stays in standby. The console prints the build identity and boot ID.
 
 See [default startup and service loop](main.c),
 [default RF service](rf_service.h), and [UHF startup profile startup and loop](uhf_startup.h).
+
+
+### Capture RX_BASEBAND in LINK_ACTIVE
+
+For bench diagnostics, build the UHF startup profile with
+`-DTRANSCEIVER_RX_ADC_CAPTURE=ON`. Open USB CDC for reading and leave its input
+idle. The transceiver emits `ADC_RAW <window> <offset> <hex>` records alongside
+`[rx_diag]`. Each four-digit hex value is one ADC sample. The offset counts
+samples from the start of the 32,768-sample window at 8 kS/s. Match the window
+number to `[rx_diag]` for acquisition and decode timestamps and CRC results.
+
+USB output is best effort. Use only captures with every sample offset present.
+The option defaults to OFF for normal firmware builds.

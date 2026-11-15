@@ -1,4 +1,4 @@
-"""Version3 1200-baud DBPSK bench decoder; opaque CRC32 frame + native CRC16.
+"""Version 3 DBPSK bench decoder; opaque CRC32 frame + native CRC16.
 
 Offline only. No radio ownership or UDP forwarding on import/run.
 """
@@ -43,11 +43,11 @@ def recover_bits(bits):
         result.append(dict(sequence=sequence,hex=packet.hex(),decoded=native))
     return result
 
-def decode(iq, rate=48000, *, phase_diagnostic=False, single_window=False):
-    if rate%BAUD or rate<4*BAUD:raise ValueError('integer samples/symbol required')
+def decode(iq, rate=48000, *, phase_diagnostic=False, single_window=False, baud=BAUD):
+    if baud<=0 or rate%baud or rate<4*baud:raise ValueError('integer samples/symbol required')
     iq=np.asarray(iq,dtype=np.complex64)
     if iq.ndim!=1 or not np.isfinite(iq).all():raise ValueError('invalid IQ')
-    sps=rate//BAUD
+    sps=rate//baud
     # Four-second windows, one-second stride: cover even a 240-byte native frame
     # (2.02s on air), including preamble, at every window alignment.
     result=[];seen=set()

@@ -264,7 +264,12 @@ def generate(destination, instance="ember"):
             label(title,44,y+10,335,24)
             observed('RADIO_CONFIG_default_'+key,396,y+7,270,16)
             observed('RADIO_CONFIG_active_'+key,694,y+7,270,16)
-        footer('Frequencies are nominal radio settings. The RX LO is distinct from the ground uplink carrier.')
+        for i,(title,key) in enumerate((('Trial state','trial_state'),('Candidate','candidate_profile'),
+                                        ('Confirmation token','confirmation_token'),('Time remaining at report','remaining_ms'))):
+            x=22+240*i
+            label(title,x,539,230,22)
+            observed('RADIO_CONFIG_'+key,x,563,230,15)
+        footer('Confirm only with the token in a fresh TRIAL readback. A token of zero means no confirmation is available.')
         save('Radio-Config.opi')
 
         new('IHU Faults','Last fault history received over UHF')
