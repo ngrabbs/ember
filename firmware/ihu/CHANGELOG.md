@@ -4,6 +4,7 @@
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-11-15 | 0.33.0 | Adds payload ping, identity, status, and heartbeat over UHF and all five payload commands on the startup USB console. |
 | 2026-11-15 | 0.32.0 | Stages and confirms supported radio profiles on Yamcs command and reports trial state over UHF and the CLI. |
 | 2026-11-15 | 0.31.0 | Requests transceiver defaults, active configuration and supported profiles over CAN and reports them to the CLI or Yamcs. |
 | 2026-11-15 | 0.30.0 | Starts FULL UHF telemetry on a 120/60 s cycle after LINK_ACTIVE and enables battery-only EPS ADC measurements by default. |

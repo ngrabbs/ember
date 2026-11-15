@@ -16,6 +16,8 @@ from generate_mdb import generate, NS
 
 ROOT = Path(__file__).resolve().parent
 LEGACY = ('ember-lte', 'ember-uhf', 'ember-payload', 'myproject')
+PAYLOAD_COMMANDS = ('PAYLOAD_PING', 'PAYLOAD_IDENT', 'PAYLOAD_STATUS_QUERY',
+                    'PAYLOAD_HEARTBEAT_QUERY', 'PAYLOAD_FIRE_CHECK')
 UHF_COMMANDS = (
     'PING',
     'REQUEST_STATUS',
@@ -27,7 +29,7 @@ UHF_COMMANDS = (
     'STATUS_CAPTURE',
     'STATUS_FETCH',
     'IHU_REBOOT',
-    'PAYLOAD_FIRE_CHECK',
+    *PAYLOAD_COMMANDS,
     'SET_HEARTBEAT',
     'SET_UHF_TELEMETRY_SCHEDULE',
     'SET_UHF_TELEMETRY',
@@ -79,7 +81,7 @@ def prepare(runtime, legacy_history=()):
     commandPostprocessorArgs:
       resultDomain: spacecraft
 '''
-    bench += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember-bench.xml\n'+tc_tail('/ember/PAYLOAD_(PING|IDENT|STATUS_QUERY|HEARTBEAT_QUERY|FIRE_CHECK)')
+    bench += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember-bench.xml\n'+tc_tail('/ember/(' + '|'.join(PAYLOAD_COMMANDS) + ')')
     bench=bench.replace('displayBucket: ember_displays','displayBucket: ember_bench_displays')
     current = main.read_text()
     # Remove live transport instances and upstream demo from the default server.
@@ -114,7 +116,7 @@ def prepare(runtime, legacy_history=()):
         shutil.copy2(Path(temp)/'WireProfile.java',java/'WireProfile.java')
         for source in (ROOT/'ember-java').glob('*.java'):shutil.copy2(source,java/source.name)
     with tempfile.TemporaryDirectory() as temp:
-        generate(temp, command_filter={'PAYLOAD_PING','PAYLOAD_IDENT','PAYLOAD_STATUS_QUERY','PAYLOAD_HEARTBEAT_QUERY','PAYLOAD_FIRE_CHECK'},
+        generate(temp, command_filter=PAYLOAD_COMMANDS,
                  excluded_telemetry={'IHU_FIRMWARE','UHF_SCHEDULE_STATUS'})
         tree=ET.parse(Path(temp)/'ember.xml')
         rate=tree.find('.//{'+NS+'}SequenceContainer[@name="POWER_STATUS"]/{'+NS+'}DefaultRateInStream')

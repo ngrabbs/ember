@@ -50,7 +50,12 @@ public final class EmberResults {
             command.parameter = Short.toUnsignedInt(b.getShort(WireProfile.SET_PARAMETER_PARAMETER_ID));
             command.value = Integer.toUnsignedLong(b.getInt(WireProfile.SET_PARAMETER_VALUE));
         }
-        command.deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 11 || (command.command >= 12 && command.command <= 14) ? 40 : 5);
+        if (command.command == 1024) {
+            command.parameter = Short.toUnsignedInt(b.getShort(WireProfile.PAYLOAD_PING_BYTES));
+        }
+        boolean payloadCommand = command.command >= 1024 && command.command <= 1028;
+        command.deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(
+            payloadCommand || (command.command >= 11 && command.command <= 14) ? 40 : 5);
         pending.put(key(b), command);
         history.publishAck(id, "Acknowledge_EMBER_Acceptance", TimeEncoding.getWallclockTime(), AckStatus.PENDING);
         history.publishAck(id, CommandHistoryPublisher.CommandComplete_KEY, TimeEncoding.getWallclockTime(), AckStatus.PENDING);
@@ -69,6 +74,40 @@ public final class EmberResults {
             return true;
         });
     }
+    private boolean payloadQueryMatches(Pending command, ByteBuffer b, int message) {
+        if (command == null) return false;
+        switch (command.command) {
+            case 1024: return message == 56 &&
+                b.get(WireProfile.PAYLOAD_PING_RESULT_TRANSPORT) == 2 &&
+                b.getInt(WireProfile.PAYLOAD_PING_RESULT_REPORTED_BOOT_ID) != 0 &&
+                b.get(WireProfile.PAYLOAD_PING_RESULT_ECHO_OK) == 1 &&
+                Short.toUnsignedInt(b.getShort(WireProfile.PAYLOAD_PING_RESULT_BYTES)) == command.parameter;
+            case 1025: return message == 55 &&
+                b.get(WireProfile.PAYLOAD_FIRMWARE_TRANSPORT) == 2 &&
+                b.getInt(WireProfile.PAYLOAD_FIRMWARE_REPORTED_BOOT_ID) != 0 &&
+                Byte.toUnsignedInt(b.get(WireProfile.PAYLOAD_FIRMWARE_DIRTY)) <= 1;
+            case 1026:
+            case 1027: return message == 54 &&
+                b.get(WireProfile.PAYLOAD_STATUS_TRANSPORT) == 2 &&
+                b.get(WireProfile.PAYLOAD_STATUS_PAYLOAD_VERSION) == 1 &&
+                b.get(WireProfile.PAYLOAD_STATUS_NODE) == 4 &&
+                b.get(WireProfile.PAYLOAD_STATUS_READY) == 1 &&
+                b.getInt(WireProfile.PAYLOAD_STATUS_REPORTED_BOOT_ID) != 0 &&
+                b.get(WireProfile.PAYLOAD_STATUS_REPORT_KIND) == (command.command == 1026 ? 1 : 2);
+            default: return false;
+        }
+    }
+
+    private void completePayload(Pending command, String key, long sourceBoot) {
+        long now = TimeEncoding.getWallclockTime();
+        command.history.publish(command.id, "ember-result-boot-id", Long.toString(sourceBoot));
+        command.history.publish(command.id, "ember-outcome", "COMPLETED");
+        if (!command.accepted) command.history.publishAck(command.id, "Acknowledge_EMBER_Acceptance", now,
+            AckStatus.NA, "Correlated payload result received");
+        command.history.publishAck(command.id, CommandHistoryPublisher.CommandComplete_KEY, now, AckStatus.OK);
+        pending.remove(key);
+    }
+
     public synchronized void observe(byte[] bytes) {
         ByteBuffer b = ByteBuffer.wrap(bytes);
         int source = Byte.toUnsignedInt(b.get(WireProfile.SOURCE));
@@ -98,22 +137,31 @@ public final class EmberResults {
             });
         }
         boot = currentBoot;
-        if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
-            Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 57) {
-            Pending fire = pending.get(key(b));
-            if (fire == null || fire.command != 1028 || bytes.length != 52 ||
-                b.get(30) != 1 || (b.get(31) != 1 && b.get(31) != 2) ||
-                Byte.toUnsignedInt(b.get(32)) > 1 || (b.get(33) != 1 && b.get(33) != 2) ||
-                b.getInt(38) == 0 || b.getInt(46) == 0) return;
-            long now = TimeEncoding.getWallclockTime();
-            fire.history.publish(fire.id, "ember-fire-result", b.get(32) == 0 ? "NO_FIRE" : "FIRE");
-            fire.history.publish(fire.id, "ember-fire-mode", b.get(33) == 1 ? "STATIC_STUB" : "ALGORITHM");
-            fire.history.publish(fire.id, "ember-result-boot-id", Long.toString(currentBoot));
-            fire.history.publish(fire.id, "ember-outcome", "COMPLETED");
-            if (!fire.accepted) fire.history.publishAck(fire.id, "Acknowledge_EMBER_Acceptance", now,
-                AckStatus.NA, "Correlated payload final result received");
-            fire.history.publishAck(fire.id, CommandHistoryPublisher.CommandComplete_KEY, now, AckStatus.OK);
-            pending.remove(key(b));
+        if (b.get(WireProfile.KIND) == 1) {
+            String responseKey = key(b);
+            Pending query = pending.get(responseKey);
+            if (payloadQueryMatches(query, b, Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)))) {
+                completePayload(query, responseKey, currentBoot);
+                return;
+            }
+        }
+        int message = Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID));
+        if (b.get(WireProfile.KIND) == 1 && (message == 57 || message == 61)) {
+            String responseKey = key(b);
+            Pending fire = pending.get(responseKey);
+            int version = Byte.toUnsignedInt(b.get(WireProfile.PAYLOAD_FIRE_RESULT_PAYLOAD_VERSION));
+            int result = Byte.toUnsignedInt(b.get(WireProfile.PAYLOAD_FIRE_RESULT_RESULT));
+            int mode = Byte.toUnsignedInt(b.get(WireProfile.PAYLOAD_FIRE_RESULT_EXECUTION_MODE));
+            int transport = Byte.toUnsignedInt(b.get(WireProfile.PAYLOAD_FIRE_RESULT_TRANSPORT));
+            if (fire == null || fire.command != 1028 || (version != 1 && version != 2) ||
+                (transport != 1 && transport != 2) || result > (version == 1 ? 1 : 2) ||
+                (mode != 1 && mode != 2) || (result == 2 && mode != 2) ||
+                b.getInt(WireProfile.PAYLOAD_FIRE_RESULT_REPORTED_BOOT_ID) == 0 ||
+                b.getInt(WireProfile.PAYLOAD_FIRE_RESULT_CHECK_ID) == 0) return;
+            fire.history.publish(fire.id, "ember-fire-result",
+                result == 0 ? "NO_FIRE" : result == 1 ? "FIRE" : "UNKNOWN");
+            fire.history.publish(fire.id, "ember-fire-mode", mode == 1 ? "STATIC_STUB" : "ALGORITHM");
+            completePayload(fire, responseKey, currentBoot);
             return;
         }
         if (radioConfig) {

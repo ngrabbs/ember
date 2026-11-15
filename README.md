@@ -25,7 +25,7 @@ development version is undocumented, the table gives the source version on `main
 |---|---|---|---|
 | [Electrical power system](hardware/eps/README.md) | Rev A prototype · Rev B in design | IHU reads the charger over I²C | Rev B STM32 supervision planned |
 | [Solar panel](hardware/pv_panel/README.md) | Rev D design and release files | — | — |
-| [Housekeeping computer](hardware/ihu/README.md) | RP2040 CAN Feather prototype | [IHU `0.32.0`](firmware/ihu/releases/0.32.0/README.md) | [`main` `0.32.0`](firmware/ihu/VERSION) |
+| [Housekeeping computer](hardware/ihu/README.md) | RP2040 CAN Feather prototype | [IHU `0.32.0`](firmware/ihu/releases/0.32.0/README.md) | [`main` `0.33.0`](firmware/ihu/VERSION) |
 | [UHF transceiver](hardware/comms/README.md) | Y24 prototype with original Pico | [Transceiver `0.41.0`](firmware/transceiver/releases/0.41.0/README.md) | [`main` `0.41.0`](firmware/transceiver/VERSION) |
 | [Camera payload](https://github.com/ngrabbs/koenig_wildfire) | Three-camera prototype on Pi 4 | [Payload `0.7.1`](firmware/payload/README.md) | [`main` `0.7.1`](firmware/payload/VERSION) |
 | [Jetson carrier](hardware/payload_compute/README.md) | Next prototype in design | — | — |

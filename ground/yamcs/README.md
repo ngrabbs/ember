@@ -32,9 +32,9 @@ build. The UHF countdown returns to waiting when its schedule report is stale.
 
 Open **Commanding → Send a Command** in the selected instance. In `ember`,
 the [IHU command guide](../../firmware/ihu/README.md#ground-station-commands-in-yamcs)
-covers the UHF command set. In `ember-bench`, the five payload commands use
-direct USB and require the regular GROUND_TEST build. The UHF startup profile
-restricts USB to read-only console commands.
+covers the UHF command set. All five payload commands are available in
+`ember` with IHU 0.33.0, the updated ground software, and LINK_ACTIVE. In
+`ember-bench`, these commands use direct USB with regular GROUND_TEST firmware.
 
 Check acceptance and completion in **Command History**. A timed-out result is
 unknown. For `PAYLOAD_FIRE_CHECK`, check the result, execution mode, and

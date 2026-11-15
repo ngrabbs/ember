@@ -5,9 +5,10 @@
 Use the [Yamcs operator guide](../../../ground/yamcs/README.md) to select the
 instance and check Command History. `ember` uses UHF. `ember-bench` uses the
 direct IHU USB bridge and requires regular GROUND_TEST firmware for payload
-commands. The UHF startup profile restricts USB to read-only console commands.
+commands over the USB bridge. Payload commands on `ember` require IHU 0.33.0
+and the updated ground software, with the radio in LINK_ACTIVE.
 
-These are the commands exposed by the lab station as of November 15, 2026.
+The table lists commands for the supported station builds.
 Results below describe successful execution. Check the correlated response
 and any listed telemetry. A timeout leaves the outcome unknown.
 
@@ -27,10 +28,10 @@ and any listed telemetry. A timeout leaves the outcome unknown.
 | `ember` | `0x000C` | `REQUEST_RADIO_CONFIG` | None | `RADIO_CONFIG` with the transceiver’s active settings, defaults, and supported profiles. |
 | `ember` | `0x000D` | `SET_RADIO_PROFILE` | `profile`: `DBPSK_1200_V3` or `DBPSK_DL1500_V3` | Stages a timed UHF downlink profile trial and returns `RADIO_CONFIG`. |
 | `ember` | `0x000E` | `CONFIRM_RADIO_PROFILE` | `confirmation_token` from the active trial readback | Confirms the trial profile. An unconfirmed trial rolls back automatically. |
-| `ember-bench` | `0x0400` | `PAYLOAD_PING` | `bytes`: 1–240, default 1 | `PAYLOAD_PING_RESULT` with echo status and round-trip time. |
-| `ember-bench` | `0x0401` | `PAYLOAD_IDENT` | None | `PAYLOAD_FIRMWARE` with build identity. |
-| `ember-bench` | `0x0402` | `PAYLOAD_STATUS_QUERY` | None | `PAYLOAD_STATUS` status report. |
-| `ember-bench` | `0x0403` | `PAYLOAD_HEARTBEAT_QUERY` | None | `PAYLOAD_STATUS` heartbeat report. |
+| `ember`, `ember-bench` | `0x0400` | `PAYLOAD_PING` | `bytes`: 1–240, default 1 | `PAYLOAD_PING_RESULT` with echo status and round-trip time. |
+| `ember`, `ember-bench` | `0x0401` | `PAYLOAD_IDENT` | None | `PAYLOAD_FIRMWARE` with build identity. |
+| `ember`, `ember-bench` | `0x0402` | `PAYLOAD_STATUS_QUERY` | None | `PAYLOAD_STATUS` status report. |
+| `ember`, `ember-bench` | `0x0403` | `PAYLOAD_HEARTBEAT_QUERY` | None | `PAYLOAD_STATUS` heartbeat report. |
 | `ember`, `ember-bench` | `0x0404` | `PAYLOAD_FIRE_CHECK` | None | `PAYLOAD_FIRE_RESULT` with result, execution mode, and check ID. Use the check ID to correlate capture GPS if it arrives. |
 
 Argument defaults above are the values shown in the Yamcs command editor.

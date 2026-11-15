@@ -32,13 +32,13 @@ static void record_fault(uint8_t code,uint32_t at){unsigned i=fault_count++%IHU_
 #include "../shared/ember_protocol/protocol.h"
 static ember_state uplink_engine;
 static cf_reader uplink_fragments;
-static struct {bool active,gps_waiting,gps_reading;ul_packet request;uint8_t target;uint32_t peer,gps_since;} fire_uplink;
+static struct {bool active,local,gps_waiting,gps_reading;ul_packet request;uint8_t target,type;uint16_t echo_size;uint32_t peer,gps_since;} payload_uplink;
 #define FIRE_TRANSACTION_CAPACITY 256
 static struct {uint32_t epoch,id;} fire_keys[FIRE_TRANSACTION_CAPACITY];
 static unsigned fire_keys_used;
 static void submit(uint8_t type,const uint8_t *payload,size_t size);
 static bool (*link_reply_sink)(const uint8_t *,size_t);
-static void fire_restore(void);
+static void payload_restore(void);
 
 #include "power_packet.h"
 #include "health_packet.h"
@@ -125,19 +125,23 @@ static bool uplink_queue(const ul_packet *reply) {
     output.route=UP_REPLY_ID;
     return true;
 }
-static void fire_restore(void){target_index=fire_uplink.target;peer=fire_uplink.peer;fire_uplink.active=false;fire_uplink.gps_waiting=false;fire_uplink.gps_reading=false;}
-static void fire_unavailable(uint8_t payload_reason){
-    if(!fire_uplink.active)return;
+static void payload_restore(void){target_index=payload_uplink.target;peer=payload_uplink.peer;payload_uplink.active=false;payload_uplink.gps_waiting=false;payload_uplink.gps_reading=false;}
+static void payload_unavailable(uint8_t payload_reason){
+    if(!payload_uplink.active)return;
+    if(payload_uplink.local){
+        payload_restore();
+        return;
+    }
     ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,
-        .origin=fire_uplink.request.sender,.request=fire_uplink.request.request,.size=43};
+        .origin=payload_uplink.request.sender,.request=payload_uplink.request.request,.size=43};
     uint8_t *b=reply.payload;memset(b,0,43);
     ul_p16(b,W_TM_IDENTITY);ul_p16(b+2,0xc000|(telemetry_sequence++&0x3fff));ul_p16(b+4,36);
     b[6]=1;b[7]=2;ul_p16(b+8,W_ID_COMMAND_RESPONSE);b[10]=2;b[11]=1;
-    memcpy(b+12,fire_uplink.request.payload+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,11);
-    ul_p16(b+30,W_ID_PAYLOAD_FIRE_CHECK);b[32]=W_STAGE_EXECUTION_FAILED;
+    memcpy(b+12,payload_uplink.request.payload+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,11);
+    ul_p16(b+30,ul_u16(payload_uplink.request.payload+W_MESSAGE_ID));b[32]=W_STAGE_EXECUTION_FAILED;
     ul_p16(b+33,W_REASON_NOT_AVAILABLE);ul_p32(b+37,payload_reason);ul_p16(b+41,ul_crc(b,41));
     (void)uplink_queue(&reply);
-    fire_restore();
+    payload_restore();
 }
 static bool uplink_emit(const uint8_t *p,size_t n,void *context){
     const ul_packet *request=context;
@@ -157,17 +161,27 @@ static bool uplink_emit(const uint8_t *p,size_t n,void *context){
         ul_u32(p+12),ul_u32(p+16));
     for(size_t i=0;i<n;i++){LOG("%02x",p[i]);}LOG("\n");return true;
 }
+static void payload_start(const ul_packet *request,uint8_t type,uint16_t echo_size){
+    payload_uplink.active=true;
+    payload_uplink.local=request==NULL;
+    if(request)payload_uplink.request=*request;
+    payload_uplink.type=type;
+    payload_uplink.echo_size=echo_size;
+    payload_uplink.target=target_index;
+    payload_uplink.peer=peer;
+    discovery.active=false;
+    target_index=DR_PAYLOAD_INDEX;
+    peer=0;
+    memset(&fragments,0,sizeof(fragments));
+    submit(UL_HELLO,NULL,0);
+}
 static void uplink_start_fire(const ul_packet *p){
     uint32_t epoch=ul_u32(p->payload+12),id=ul_u32(p->payload+16);
     for(unsigned i=0;i<fire_keys_used;i++)if(fire_keys[i].epoch==epoch && fire_keys[i].id==id)return;
     if(fire_keys_used==FIRE_TRANSACTION_CAPACITY)return;
     fire_keys[fire_keys_used].epoch=epoch;fire_keys[fire_keys_used++].id=id;
-    /* Addressed commands take precedence over an observational probe. */
-    discovery.active=false;
     LOG("UPLINK_FIRE admitted epoch=%" PRIu32 " transaction=%" PRIu32 "\n",epoch,id);
-    fire_uplink.active=true;fire_uplink.request=*p;fire_uplink.target=target_index;fire_uplink.peer=peer;
-    target_index=DR_PAYLOAD_INDEX;peer=0;memset(&fragments,0,sizeof(fragments));
-    submit(UL_HELLO,NULL,0);
+    payload_start(p,PL_FIRE_CHECK,0);
 }
 static void uplink_receive(const cf_frame *frame,uint32_t now){
     static ul_packet p;
@@ -176,10 +190,10 @@ static void uplink_receive(const cf_frame *frame,uint32_t now){
     if(!ip_test(&policy))return;
     if((sensor_job.active && !up_native_status(p.payload,p.size) && !up_native_cdh(p.payload,p.size)) || output.active||(can.pending&&!discovery.active)){LOG("UPLINK_PING rejected=BUSY\n");return;}
     if(up_native_fire(p.payload,p.size)){
-        if(fire_uplink.active || pending.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING){LOG("UPLINK_FIRE rejected=BUSY\n");return;}
+        if(payload_uplink.active || pending.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING){LOG("UPLINK_FIRE rejected=BUSY\n");return;}
         uplink_start_fire(&p);return;
     }
-    if(fire_uplink.active)return;
+    if(payload_uplink.active)return;
     if(up_native_cdh(p.payload,p.size)){cdh_receive(&p);return;}
     ember_command(&uplink_engine,p.payload,p.size,now,uplink_emit,&p);
 }
@@ -212,6 +226,41 @@ static void send_error(const ul_packet *p,uint8_t reason) {
     ul_packet out={0};out.version=1;out.type=UL_ERROR;out.sender=boot;out.origin=p->origin;out.request=p->request;
     out.size=1;out.payload[0]=reason;if(!queue(&out))++busy_drops;
 }
+static void payload_query_reply(const ul_packet *p,uint32_t elapsed){
+    if(payload_uplink.local)return;
+    unsigned id=0,size=0;
+    ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,
+        .origin=payload_uplink.request.sender,.request=payload_uplink.request.request};
+    uint8_t *b=reply.payload,*fields=b+W_PAYLOAD;
+    if(p->type==UL_ECHO_ACK){
+        id=W_ID_PAYLOAD_PING_RESULT;size=W_SIZE_PAYLOAD_PING_RESULT;
+        fields[W_PAYLOAD_PING_RESULT_TRANSPORT]=W_PAYLOAD_TRANSPORT_IHU_NATIVE_RF;
+        ul_p32(fields+W_PAYLOAD_PING_RESULT_REPORTED_BOOT_ID,p->sender);
+        ul_p16(fields+W_PAYLOAD_PING_RESULT_BYTES,p->size);
+        fields[W_PAYLOAD_PING_RESULT_ECHO_OK]=1;
+        ul_p32(fields+W_PAYLOAD_PING_RESULT_ROUND_TRIP_MS,elapsed);
+    }else if(p->type==UL_FIRMWARE_INFO_ACK){
+        id=W_ID_PAYLOAD_FIRMWARE;size=W_SIZE_PAYLOAD_FIRMWARE;
+        fields[W_PAYLOAD_FIRMWARE_TRANSPORT]=W_PAYLOAD_TRANSPORT_IHU_NATIVE_RF;
+        memcpy(fields+W_PAYLOAD_FIRMWARE_VERSION_MAJOR,p->payload,FI_SIZE);
+    }else{
+        id=W_ID_PAYLOAD_STATUS;size=W_SIZE_PAYLOAD_STATUS;
+        fields[W_PAYLOAD_STATUS_PAYLOAD_VERSION]=p->payload[0];
+        fields[W_PAYLOAD_STATUS_TRANSPORT]=W_PAYLOAD_TRANSPORT_IHU_NATIVE_RF;
+        fields[W_PAYLOAD_STATUS_REPORT_KIND]=p->type==PL_STATUS_ACK?W_PAYLOAD_REPORT_KIND_STATUS:W_PAYLOAD_REPORT_KIND_HEARTBEAT;
+        fields[W_PAYLOAD_STATUS_NODE]=p->payload[1];
+        fields[W_PAYLOAD_STATUS_READY]=p->payload[2];
+        memcpy(fields+W_PAYLOAD_STATUS_REPORTED_BOOT_ID,p->payload+4,PL_REPORT_SIZE-4);
+    }
+    reply.size=(uint16_t)(W_PAYLOAD+size+2);
+    ul_p16(b,W_TM_IDENTITY);ul_p16(b+2,0xc000|(telemetry_sequence++&0x3fff));
+    ul_p16(b+4,reply.size-7);
+    b[6]=1;b[7]=1;ul_p16(b+8,id);b[10]=2;b[11]=1;
+    memcpy(b+12,payload_uplink.request.payload+12,8);
+    ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,size);
+    ul_p16(b+reply.size-2,ul_crc(b,reply.size-2));
+    (void)uplink_queue(&reply);
+}
 static void receive_impl(const ul_packet *p) {
     if(p->type==CF_UHF_ADMITTED || p->type==CF_UHF_RESULT || p->type==CF_UHF_REJECTED) {
         if(!uc_receive(&uhf_client,p))return;
@@ -239,7 +288,7 @@ static void receive_impl(const ul_packet *p) {
         if(p->type==UL_ERROR && p->size==1) {
 
             pending.active=false;
-            if(fire_uplink.active && pending.packet.type==PL_FIRE_CHECK &&
+            if(payload_uplink.active && pending.packet.type==PL_FIRE_CHECK &&
                pending.packet.size==PL_GPS_SIZE && p->payload[0]==4){
                 /* Older payloads reject the extension before starting capture. */
                 submit(PL_FIRE_CHECK,NULL,0);
@@ -249,7 +298,7 @@ static void receive_impl(const ul_packet *p) {
             if(uncertain) {++unknown;peer=0;}
             else ++refused_requests;
             LOG("RESULT request=%" PRIu32 " outcome=%s reason=%u\n",p->request,uncertain?"UNKNOWN_REMOTE_LINK":"PEER_REJECTED",p->payload[0]);
-            if(!uncertain)fire_unavailable(p->payload[0]);
+            if(!uncertain)payload_unavailable(p->payload[0]);
             return;
         }
         bool identity=pending.packet.type==UL_FIRMWARE_INFO || pending.packet.type==CF_MODEM_FIRMWARE;
@@ -295,20 +344,34 @@ static void receive_impl(const ul_packet *p) {
         for(size_t i=0;i<p->size;++i) {LOG("%02x",p->payload[i]);}
         LOG("\n");
         if(fire)LOG("FIRE_CHECK result=%s mode=%s check_id=%" PRIu32 "\n",p->payload[1]==2?"unknown":p->payload[1]?"fire":"no_fire",p->payload[2]==1?"STATIC_STUB":"ALGORITHM",ul_u32(p->payload+12));
-        if(fire_uplink.active){
+        if(payload_uplink.active){
             if(hello){
-                if(link_reply_sink){fire_uplink.gps_waiting=true;fire_uplink.gps_since=now_ms();}
-                else submit(PL_FIRE_CHECK,NULL,0);
+                if(payload_uplink.type==PL_FIRE_CHECK && link_reply_sink && !payload_uplink.local){
+                    payload_uplink.gps_waiting=true;payload_uplink.gps_since=now_ms();
+                }else if(payload_uplink.type==UL_ECHO){
+                    uint8_t echo[240];
+                    for(uint16_t i=0;i<payload_uplink.echo_size;++i)echo[i]=(uint8_t)i;
+                    submit(UL_ECHO,echo,payload_uplink.echo_size);
+                }else submit(payload_uplink.type,NULL,0);
                 return;
             }
-            if(fire){
+            if(payload_uplink.local){
+                payload_restore();
+                return;
+            }
+            if(!fire){
+                payload_query_reply(p,now_ms()-pending.started);
+                payload_restore();
+                return;
+            }
+            {
                 unsigned payload_size=tagged?W_SIZE_PAYLOAD_FIRE_TAGGED:W_SIZE_PAYLOAD_FIRE_RESULT;
-                ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=fire_uplink.request.sender,
-                    .request=fire_uplink.request.request,.size=W_PAYLOAD+payload_size+2};
+                ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=payload_uplink.request.sender,
+                    .request=payload_uplink.request.request,.size=W_PAYLOAD+payload_size+2};
                 uint8_t *b=reply.payload;
                 ul_p16(b,W_TM_IDENTITY);ul_p16(b+2,0xc000|(telemetry_sequence++&0x3fff));ul_p16(b+4,reply.size-7);
                 b[6]=1;b[7]=1;ul_p16(b+8,tagged?W_ID_PAYLOAD_FIRE_TAGGED:W_ID_PAYLOAD_FIRE_RESULT);b[10]=2;b[11]=1;
-                memcpy(b+12,fire_uplink.request.payload+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,payload_size);
+                memcpy(b+12,payload_uplink.request.payload+12,8);ul_p32(b+20,boot);ul_p32(b+24,now_ms());ul_p16(b+28,payload_size);
                 b[30]=p->payload[0];b[31]=2;b[32]=p->payload[1];b[33]=p->payload[2];memcpy(b+38,p->payload+4,12);
                 if(tagged){
                     memcpy(b+W_PAYLOAD+W_PAYLOAD_FIRE_TAGGED_GPS_STATUS,p->payload+PL_FIRE_SIZE,PL_GPS_SIZE);
@@ -316,7 +379,7 @@ static void receive_impl(const ul_packet *p) {
                 }
                 ul_p16(b+reply.size-2,ul_crc(b,reply.size-2));
                 (void)uplink_queue(&reply);
-                fire_restore();
+                payload_restore();
             }
         }
         return;
@@ -509,7 +572,7 @@ static void policy_command(const char *s){
         return;
     }
     if(!strncmp(s,"mode ",5)){
-        if(sensor_job.active || pending.active || output.active || can.pending || uc_count(&uhf_client) || fire_uplink.active){LOG("REJECT reason=BUSY\n");return;}
+        if(sensor_job.active || pending.active || output.active || can.pending || uc_count(&uhf_client) || payload_uplink.active){LOG("REJECT reason=BUSY\n");return;}
         unsigned mode;
         for(mode=1;mode<=IP_NOMINAL;mode++){
             const char *names[]={"boot","startup","commissioning","safe","nominal"};
@@ -632,7 +695,7 @@ static void cdh_pump(uint32_t now){
 }
 static void housekeeping_pump(uint32_t now){
     if((uint32_t)(now-housekeeping.last)<EPS_POLL_MS || pending.active || output.active || can.pending ||
-       discovery.active || uplink_fragments.active || fire_uplink.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING)return;
+       discovery.active || uplink_fragments.active || payload_uplink.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING)return;
     if(sensor_job.active)return;
     housekeeping.last=now;
     (void)request_sensor(SENSOR_HEALTH,0,false);
@@ -690,8 +753,8 @@ static void fire_submit_gps(const gps_result *gps){
     ul_p32(tag+10,fix && gps->altitude_valid?(int32_t)(gps->altitude*1000):INT32_MIN);
     /* Account for one 1 Hz receiver epoch and CAN delivery before capture. */
     ul_p32(tag+14,fix?1100:UINT32_MAX);
-    fire_uplink.gps_waiting=false;
-    fire_uplink.gps_reading=false;
+    payload_uplink.gps_waiting=false;
+    payload_uplink.gps_reading=false;
     submit(PL_FIRE_CHECK,tag,sizeof(tag));
 }
 #if IHU_UHF_STARTUP
@@ -722,7 +785,7 @@ static void sensor_complete(const ihu_sensor_result *r){
     else
 #endif
     if(kind==SENSOR_FIRE_GPS){
-        if(fire_uplink.active && fire_uplink.gps_reading)fire_submit_gps(&r->gps);
+        if(payload_uplink.active && payload_uplink.gps_reading)fire_submit_gps(&r->gps);
     }else if(kind==SENSOR_GPS){
         if(r->gps.status==GPS_FIX)
             LOG("GPS status=FIX latitude_deg=%.6f longitude_deg=%.6f satellites=%u\n",r->gps.latitude,r->gps.longitude,r->gps.satellites);
@@ -767,6 +830,29 @@ static void sensor_complete(const ihu_sensor_result *r){
 #endif
 #if IHU_UHF_STARTUP
 #include "uhf_startup.h"
+#endif
+
+#if IHU_UHF_STARTUP
+static bool startup_payload_console(const char *s){
+    uint8_t type;
+    unsigned long size=0;
+    if(!strcmp(s,"payload ident"))type=UL_FIRMWARE_INFO;
+    else if(!strcmp(s,"payload status"))type=PL_STATUS;
+    else if(!strcmp(s,"payload heartbeat"))type=PL_HEARTBEAT;
+    else if(!strcmp(s,"payload fire-check"))type=PL_FIRE_CHECK;
+    else if(!strncmp(s,"payload ping ",13)){
+        char *end;
+        size=strtoul(s+13,&end,10);
+        if(!size || size>240 || *end){LOG("REJECT reason=SIZE\n");return true;}
+        type=UL_ECHO;
+    }else return false;
+    if(uhf_startup.stage!=UHF_STARTUP_ACTIVE){LOG("REJECT reason=LINK_NOT_ACTIVE\n");return true;}
+    if(payload_uplink.active || pending.active || output.active || can.pending){
+        LOG("REJECT reason=BUSY\n");return true;
+    }
+    payload_start(NULL,type,(uint16_t)size);
+    return true;
+}
 #endif
 
 static void command_impl(const char *s) {
@@ -821,8 +907,10 @@ static void command_impl(const char *s) {
     if(!strcmp(s,"help")){
         LOG("COMMANDS startup | status | mode | version | faults | rtos\n");
         LOG("DIAGNOSTICS eps status | eps json | gps | radio | radio config | outputs\n");
-        LOG("CONTROLS mode safe | uhf stop | eps adc on/off\n");return;
+        LOG("CONTROLS mode safe | uhf stop | eps adc on/off\n");
+        LOG("PAYLOAD payload ping N | payload ident | payload status | payload heartbeat | payload fire-check\n");return;
     }
+    if(startup_payload_console(s))return;
     if(strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"mode") && strcmp(s,"outputs") &&
        strcmp(s,"faults") && strcmp(s,"rtos")){
         LOG("REJECT reason=UHF_STARTUP_READ_ONLY\n");return;
@@ -836,7 +924,7 @@ static void command_impl(const char *s) {
     if(!ip_test(&policy) && strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"help") && strcmp(s,"rtos") && strcmp(s,"devices") && strcmp(s,"eps json")){
         LOG("REJECT reason=FLIGHT_ROUTINE_STUB\n");return;
     }
-    if(fire_uplink.active && strcmp(s,"rtos") && strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"help")){
+    if(payload_uplink.active && strcmp(s,"rtos") && strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"help")){
         LOG("REJECT reason=RF_FIRE_CHECK_ACTIVE\n");return;
     }
     if(uhf_run.state==UR_RUNNING && strcmp(s,"rtos") && strcmp(s,"status") && strcmp(s,"devices") && strcmp(s,"uhf stop")) {
@@ -987,7 +1075,7 @@ void ihu_app_step(bool scheduled) {
                 if(uhf_client.items[i].packet.request==pending.packet.request)uhf_client.items[i].active=false;
             pending.active=false;peer=0;++unknown;
         }
-        if(fire_uplink.active && !pending.active)fire_restore();
+        if(payload_uplink.active && !pending.active)payload_restore();
 
 
     if(scheduled){
