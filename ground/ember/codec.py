@@ -36,6 +36,16 @@ def message_for(kind, message_id):
     raise PacketError("unknown kind/message ID")
 
 
+def payload_fields(message, version):
+    fields = message["fields"]
+    if "payload_versions" in message:
+        extra = message["payload_versions"].get(str(version))
+        if extra is None:
+            raise PacketError("unsupported payload schema version")
+        fields = fields + extra["fields"]
+    return fields
+
+
 def pack_fields(fields, values):
     if set(values) != {field["name"] for field in fields}:
         raise PacketError("missing or unexpected fields")
@@ -70,7 +80,7 @@ def encode(name, *, sequence, source, target, transaction_epoch=0,
         raise PacketError("unknown message name")
     if not isinstance(sequence, int) or not 0 <= sequence < 16384:
         raise PacketError("sequence outside 14-bit range")
-    body = pack_fields(message["fields"], payload)
+    body = pack_fields(payload_fields(message, payload.get("schema_version")), payload)
     header = dict(schema_version=DICTIONARY["schema_version"],
                   kind=DICTIONARY["kinds"][message["kind"]], message_id=message["id"],
                   source=source, target=target, transaction_epoch=transaction_epoch,
@@ -120,10 +130,11 @@ def decode(packet, *, allow_unknown_command=False):
             raise
         return {"name": None, "sequence": sequence & 0x3fff,
                 "header": header, "payload": {}, "raw_payload": body}
-    payload_layout = layout(message["fields"])
+    fields = payload_fields(message, body[0] if body else None)
+    payload_layout = layout(fields)
     if len(body) != header["payload_length"] or len(body) != payload_layout.size:
         raise PacketError("payload length mismatch")
-    payload = dict(zip((f["name"] for f in message["fields"]), payload_layout.unpack(body)))
+    payload = dict(zip((f["name"] for f in fields), payload_layout.unpack(body)))
     return {"name": message["name"], "sequence": sequence & 0x3fff,
             "header": header, "payload": payload}
 
@@ -133,8 +144,11 @@ def validate_arguments(decoded):
     message = message_for(next(k for k, v in DICTIONARY["kinds"].items()
                                if v == decoded["header"]["kind"]),
                           decoded["header"]["message_id"])
-    for field in message["fields"]:
-        if "enum" in field and decoded["payload"][field["name"]] not in DICTIONARY["enums"][field["enum"]].values():
+    version = decoded["payload"].get("schema_version")
+    variant = message.get("payload_versions", {}).get(str(version), {})
+    enums = DICTIONARY["enums"] | variant.get("enums", {})
+    for field in payload_fields(message, version):
+        if "enum" in field and decoded["payload"][field["name"]] not in enums[field["enum"]].values():
             raise PacketError("invalid " + field["name"])
     if decoded["name"] == "SET_PARAMETER":
         parameter = DICTIONARY["parameters"]["TELEMETRY_PERIOD"]

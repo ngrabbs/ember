@@ -6,7 +6,7 @@ import zlib
 from pathlib import Path
 import numpy as np
 from modem import frame,decode,recover_bits,decode_native
-from codec import encode, DICTIONARY
+from codec import encode, payload_fields, DICTIONARY
 from generate_c import generate
 ROOT=Path(__file__).resolve().parents[2]
 
@@ -67,12 +67,18 @@ class ModemTests(unittest.TestCase):
     def test_all_telemetry_boundaries(self):
         for message in DICTIONARY['messages']:
             if message['kind']!='telemetry':continue
-            packet=encode(message['name'],sequence=20,source=2,target=1,source_boot_id=123,
-                uptime_ms=456,payload={f['name']:0 for f in message['fields']})
-            for offset in (0,46000,89000):
-                with self.subTest(message=message['name'],offset=offset):
-                    iq=np.r_[np.zeros(offset),self.iq(raw=frame(packet,20),offset=-8100),np.zeros(48000)]
-                    self.assertEqual([x['hex'] for x in decode(iq)],[packet.hex()])
+            for version in message.get('payload_versions', {None: {}}):
+                version = int(version) if version is not None else None
+                payload = {field['name']: 0 for field in payload_fields(message, version)}
+                if version is not None:
+                    payload['schema_version'] = version
+                packet = encode(message['name'], sequence=20, source=2, target=1,
+                                source_boot_id=123, uptime_ms=456, payload=payload)
+                for offset in (0, 46000, 89000):
+                    with self.subTest(message=message['name'], version=version, offset=offset):
+                        iq = np.r_[np.zeros(offset), self.iq(raw=frame(packet, 20), offset=-8100),
+                                   np.zeros(48000)]
+                        self.assertEqual([x['hex'] for x in decode(iq)], [packet.hex()])
     def test_generated_dictionary_current(self):
         with tempfile.TemporaryDirectory() as td:
             path=Path(td)/'wire.h';generate(path)

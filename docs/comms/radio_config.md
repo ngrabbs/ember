@@ -19,7 +19,16 @@ The only supported profile uses a **435,000,000 Hz RX LO**, a
 match in this release. The bench gateway's **434,994,550 Hz uplink carrier**
 is a ground setting. The LO and carrier values are nominal clock targets.
 
-The reply is a 29-byte big-endian `RADIO_CONFIG` payload (telemetry ID 65).
+Yamcs decodes both big-endian `RADIO_CONFIG` payloads (telemetry ID 65).
+
+| Schema | Payload | Layout |
+| --- | --- | --- |
+| 1 | 29 bytes | Common fields above |
+| 2 | 40 bytes | Common fields → candidate profile (u8) → trial state (u8) → confirmation token (u32) → remaining time in ms (u32) → operation result (u8) |
+
+Both schemas are archived as `/ember/RADIO_CONFIG`. Yamcs extracts the
+five additional fields through the `RADIO_CONFIG_V2` container.
+
 The IHU validates the CAN reply against both boot IDs and the outstanding
 request, then returns it with the Yamcs transaction ID. A missing reply times
 out. This interface reads settings without changing the radio or the schedule.

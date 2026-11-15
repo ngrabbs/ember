@@ -36,6 +36,10 @@ public class EmberPacketPreprocessor extends AbstractPacketPreprocessor {
         int kind = Byte.toUnsignedInt(b.get(WireProfile.KIND));
         int message = Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID));
         int payload = WireProfile.payloadLength(kind, message);
+        if (kind == 1 && message == 65) {
+            payload = bytes.length > WireProfile.PAYLOAD + 2
+                ? WireProfile.radioConfigPayloadLength(Byte.toUnsignedInt(b.get(WireProfile.PAYLOAD))) : -1;
+        }
         int source = Byte.toUnsignedInt(b.get(WireProfile.SOURCE));
         int target = Byte.toUnsignedInt(b.get(WireProfile.TARGET));
         long epoch = Integer.toUnsignedLong(b.getInt(WireProfile.TRANSACTION_EPOCH));

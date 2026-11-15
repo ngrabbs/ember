@@ -2,7 +2,7 @@
 from pathlib import Path
 import sys
 import xml.etree.ElementTree as ET
-from codec import DICTIONARY as D, encode, layout
+from codec import DICTIONARY as D, encode, layout, payload_fields
 
 NS = "http://www.omg.org/spec/XTCE/20180204"
 ET.register_namespace("", NS)
@@ -23,7 +23,7 @@ def generate(destination, command_filter=None, *, uhf_command_description=None, 
     parameters = node(tm, "ParameterSet")
     containers = node(tm, "ContainerSet")
 
-    def parameter(name, field):
+    def parameter(name, field, enum_values=D["enums"]):
         bits = layout([field]).size * 8
         enum = field.get("enum")
         ptype = node(types, "EnumeratedParameterType" if enum else "FloatParameterType" if field.get("scale") else "IntegerParameterType",
@@ -46,7 +46,7 @@ def generate(destination, command_filter=None, *, uhf_command_description=None, 
                      minExclusive=field["unavailable"], maxInclusive=2147483647)
         if enum:
             values = node(ptype, "EnumerationList")
-            for label, value in D["enums"][enum].items():
+            for label, value in enum_values[enum].items():
                 node(values, "Enumeration", value=value, label=label)
         node(parameters, "Parameter", name=name, parameterTypeRef=name + "_type")
 
@@ -68,9 +68,13 @@ def generate(destination, command_filter=None, *, uhf_command_description=None, 
             node(container, "DefaultRateInStream", basis="perSecond",
                  minimumValue=1000 / message["expected_interval_ms"])
         entries = node(container, "EntryList")
+        variants = message.get("payload_versions", {})
+        enum_values = D["enums"].copy()
+        for variant in variants.values():
+            enum_values.update(variant.get("enums", {}))
         for field in message["fields"]:
             name = message["name"] + "_" + field["name"]
-            parameter(name, field)
+            parameter(name, field, enum_values)
             entry = node(entries, "ParameterRefEntry", parameterRef=name)
             if field == message["fields"][0]:
                 node(node(entry, "LocationInContainerInBits", referenceLocation="containerStart"),
@@ -88,6 +92,24 @@ def generate(destination, command_filter=None, *, uhf_command_description=None, 
         for name, value in (("kind", D["kinds"][message["kind"]]),
                             ("message_id", message["id"])):
             node(comparisons, "Comparison", parameterRef=name, value=value)
+
+        # Decode the common fields into the same PVs for both archived schemas.
+        for version, variant in variants.items():
+            if not variant["fields"]:
+                continue
+            extension = node(containers, "SequenceContainer", name=message["name"] + "_V" + version)
+            entries = node(extension, "EntryList")
+            for index, field in enumerate(variant["fields"]):
+                name = message["name"] + "_" + field["name"]
+                parameter(name, field, enum_values)
+                entry = node(entries, "ParameterRefEntry", parameterRef=name)
+                if index == 0:
+                    offset = 30 + layout(message["fields"]).size
+                    node(node(entry, "LocationInContainerInBits", referenceLocation="containerStart"),
+                         "FixedValue").text = str(offset * 8)
+            base_ref = node(extension, "BaseContainer", containerRef=message["name"])
+            node(node(base_ref, "RestrictionCriteria"), "Comparison",
+                 parameterRef=message["name"] + "_schema_version", value=version)
 
     tc = node(root, "CommandMetaData")
     argument_types = node(tc, "ArgumentTypeSet")
@@ -152,6 +174,12 @@ def generate(destination, command_filter=None, *, uhf_command_description=None, 
     for m in D["messages"]:
         if m["kind"] != "command":
             constants.append(f"      case {(D['kinds'][m['kind']] << 16) | m['id']} -> {layout(m['fields']).size};")
+    constants += ["      default -> -1;", "    };", "  }"]
+    radio = next(m for m in D["messages"] if m["name"] == "RADIO_CONFIG")
+    constants += ["  public static int radioConfigPayloadLength(int version) {",
+                  "    return switch (version) {"]
+    for version in radio["payload_versions"]:
+        constants.append(f"      case {version} -> {layout(payload_fields(radio, version)).size};")
     constants += ["      default -> -1;", "    };", "  }", "}"]
     (destination / "WireProfile.java").write_text("\n".join(constants) + "\n")
 

@@ -84,7 +84,7 @@ public final class EmberResults {
                 Math.min(Integer.toUnsignedLong(b.getInt(WireProfile.IHU_FAULTS_TOTAL)), 16);
         boolean radioConfig = Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
             Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 65 &&
-            b.get(WireProfile.RADIO_CONFIG_SCHEMA_VERSION) == 1 &&
+            WireProfile.radioConfigPayloadLength(Byte.toUnsignedInt(b.get(WireProfile.RADIO_CONFIG_SCHEMA_VERSION))) > 0 &&
             b.getInt(WireProfile.RADIO_CONFIG_RADIO_BOOT_ID) != 0;
         long currentBoot = Integer.toUnsignedLong(b.getInt(WireProfile.SOURCE_BOOT_ID));
         if (boot != 0 && boot != currentBoot) {
