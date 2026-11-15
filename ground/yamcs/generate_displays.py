@@ -255,8 +255,11 @@ def generate(destination, instance="ember"):
         obj={'$schema':'https://yamcs.org/schema/parameter-table.schema.json','scroll':filename=='Command-reports.par','bufferSize':40,'parameters':parameters}
         (destination/filename).write_text(json.dumps(obj,indent=2)+'\n')
     scripts=destination/'scripts';scripts.mkdir(exist_ok=True)
-    for p in (ROOT/'display-scripts').glob('*.js'):shutil.copy2(p,scripts/p.name)
-    for name in RETIRED_DISPLAYS:
+    retired = retired_assets(instance)
+    for p in (ROOT/'display-scripts').glob('*.js'):
+        if f'scripts/{p.name}' not in retired:
+            shutil.copy2(p,scripts/p.name)
+    for name in retired:
         path=destination/name
         if path.exists():path.unlink()
     print('Generated four EMBER operator displays and native diagnostic tables:',destination)
@@ -264,5 +267,11 @@ def generate(destination, instance="ember"):
 
 RETIRED_DISPLAYS=('Telemetry.opi','LTE.opi','Comms-Firmware.opi','LTE-CAN-Firmware.opi','LTE-Modem-Firmware.opi',
                   'Payload-Ground-Build.opi','payload-ground-build.json','Comms.par','LTE-Firmware.par')
+
+def retired_assets(instance):
+    if instance == 'ember-bench':
+        return RETIRED_DISPLAYS + ('scripts/gps-summary.js', 'scripts/uhf-countdown.js')
+    return RETIRED_DISPLAYS
+
 
 if __name__=='__main__':generate(sys.argv[1])

@@ -14,7 +14,7 @@ def node(parent, tag, **attrs):
                           for k, v in attrs.items()})
 
 
-def generate(destination, command_filter=None):
+def generate(destination, command_filter=None, *, uhf_command_description=None, excluded_telemetry=()):
     destination = Path(destination)
     destination.mkdir(parents=True, exist_ok=True)
     root = ET.Element("{" + NS + "}SpaceSystem", name="ember")
@@ -59,7 +59,7 @@ def generate(destination, command_filter=None):
         node(entries, "ParameterRefEntry", parameterRef=field["name"])
 
     for message in D["messages"]:
-        if message["kind"] == "command":
+        if message["kind"] == "command" or message["name"] in excluded_telemetry:
             continue
         container = node(containers, "SequenceContainer", name=message["name"])
         ancillary = node(container, "AncillaryDataSet")
@@ -97,8 +97,10 @@ def generate(destination, command_filter=None):
             continue
         if command_filter is not None and message['name'] not in command_filter:
             continue
-        command = node(commands, "MetaCommand", name=message["name"],
-                       shortDescription="EMBER software bench command; no RF endpoint")
+        description = "EMBER software bench command; no RF endpoint"
+        if uhf_command_description is not None:
+            description = message.get("description", uhf_command_description)
+        command = node(commands, "MetaCommand", name=message["name"], shortDescription=description)
         arguments = node(command, "ArgumentList")
         for field in message["fields"]:
             name = message["name"] + "_" + field["name"] + "_type"
