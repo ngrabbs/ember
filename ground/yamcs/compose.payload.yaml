@@ -1,5 +1,7 @@
-# m75q IHU bench bridge -> ground station telemetry. No RF link.
+# Direct IHU bench telemetry on the Pi.
 services:
   yamcs:
+    extra_hosts:
+      - "ember-ground-host:host-gateway"
     ports:
-      - "${EMBER_HTTP_BIND:-127.0.0.1}:10020:10020/udp"
+      - "127.0.0.1:10020:10020/udp"

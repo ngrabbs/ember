@@ -12,7 +12,7 @@ def main():
     p.add_argument('--device',required=True)
     a=p.parse_args()
     with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as sock:
-        sock.bind(('192.168.1.252',10030))
+        sock.bind(('127.0.0.1',10030))
         notify=os.environ.get('NOTIFY_SOCKET')
         if notify:
             with socket.socket(socket.AF_UNIX,socket.SOCK_DGRAM) as ready:
@@ -21,7 +21,7 @@ def main():
         print('READY listening',flush=True)
         while True:
             wire,address=sock.recvfrom(241)
-            if address[0]!='192.168.1.251':continue
+            if address[0]!='127.0.0.1':continue
             try:
                 packet=decode(wire)
                 if packet['name']!='PAYLOAD_FIRE_CHECK' or packet['header']['source']!=1 or packet['header']['target']!=2:continue

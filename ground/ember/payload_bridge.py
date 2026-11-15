@@ -1,10 +1,11 @@
-"""Yamcs LAN bench link -> exclusive IHU USB console -> payload over CAN A.
+"""Ground Pi Yamcs bench link -> exclusive IHU USB console -> payload over CAN A.
 
 Native telemetry is wrapped from validated IHU application replies. This is
 not an RF uplink/downlink. Never sends camera, power, UHF or LTE commands.
 """
 import argparse
 from collections import OrderedDict
+from ipaddress import ip_address, ip_network
 import json
 from pathlib import Path
 import re
@@ -12,10 +13,11 @@ import secrets
 import signal
 import socket
 import time
+from urllib.request import Request, urlopen
 
 from codec import decode, encode, PacketError
 
-VERSION = '0.4.0'
+VERSION = '0.5.0'
 COMMANDS = {'PAYLOAD_PING', 'PAYLOAD_IDENT', 'PAYLOAD_STATUS_QUERY', 'PAYLOAD_HEARTBEAT_QUERY', 'PAYLOAD_FIRE_CHECK'}
 
 
@@ -207,12 +209,33 @@ class EpsMonitor:
         self.emit(self.state.packet(time.monotonic()))
 
 
+def sync_yamcs_links(url, enabled):
+    """Match the bench links to the state of the IHU console."""
+    if not url:
+        return
+    base = url.rstrip('/') + '/api/links/ember-bench'
+    try:
+        with urlopen(base, timeout=1) as response:
+            links = {link['name']: link for link in json.load(response)['links']}
+        names = ('ihu-serial-in', 'ihu-serial-out')
+        action = 'enable' if enabled else 'disable'
+        for name in (names if enabled else reversed(names)):
+            if links[name].get('disabled', False) == enabled:
+                with urlopen(Request(f'{base}/{name}:{action}', data=b'', method='POST'), timeout=1):
+                    pass
+    except (OSError, ValueError, KeyError) as error:
+        print(f'YAMCS_LINK_SYNC {error}', flush=True)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--version',action='version',version=VERSION)
     parser.add_argument('--device',required=True)
-    parser.add_argument('--bind',default='192.168.1.252')
-    parser.add_argument('--ground',default='192.168.1.251')
+    parser.add_argument('--bind',default='127.0.0.1')
+    parser.add_argument('--ground',default='127.0.0.1')
+    parser.add_argument('--command-network', type=ip_network, default='127.0.0.1/32',
+                        help='Only accept commands from this Yamcs network')
+    parser.add_argument('--yamcs-url', help='Enable bench links only while this bridge owns the console')
     parser.add_argument('--poll-eps',action='store_true',help='Check IHU output policy every five seconds; read/forward EPS only while umb_telem is enabled')
     parser.add_argument('--cells',type=int,default=2)
     parser.add_argument('--rsnsb-ohms',type=float,default=.01)
@@ -226,20 +249,27 @@ def main():
     monitor=EpsMonitor(console,bridge.emit,cells=args.cells,rsnsb=args.rsnsb_ohms,rsnsi=args.rsnsi_ohms) if args.poll_eps else None
     incoming.settimeout(.2)
     next_poll=0
+    next_link_sync=0
     def stop(signum,frame):raise KeyboardInterrupt
     signal.signal(signal.SIGTERM,stop)
     try:
         while True:
+            if time.monotonic()>=next_link_sync:
+                sync_yamcs_links(args.yamcs_url, True)
+                next_link_sync=time.monotonic()+5
             if monitor and time.monotonic()>=next_poll:
                 monitor.poll()
                 next_poll=time.monotonic()+5
             try:wire,address=incoming.recvfrom(241)
             except socket.timeout:continue
-            if address[0]!=args.ground:continue
+            if ip_address(address[0]) not in args.command_network:continue
             try:bridge.handle(wire)
             except (PacketError,ValueError) as error:print('INVALID '+str(error),flush=True)
+    except KeyboardInterrupt:
+        pass
     finally:
         console.close()
+        sync_yamcs_links(args.yamcs_url, False)
 
 
 if __name__=='__main__':main()

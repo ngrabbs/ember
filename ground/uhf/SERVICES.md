@@ -9,7 +9,7 @@ This remains a bench integration, not a production spacecraft scheduler.
 
 | Host | Service | Application/config |
 | --- | --- | --- |
-| SDRB, via m75q USB console | `ember-uhf-sdrb.service` | `/home/petalinux/ember-uhf-20261003/sdrb.json` |
+| SDRB (local console) | `ember-uhf-sdrb.service` | `/home/petalinux/ember-uhf-20261003/sdrb.json` |
 | Ground Pi `192.168.1.251` | `ember-uhf-ground.service` | `/home/ngrabbs/work/ember-uhf-20261003/ground.json` |
 
 Unit sources and JSON profiles are in [services](services). They are installed

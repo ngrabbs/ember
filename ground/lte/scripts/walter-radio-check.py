@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run on M75q: bounded Walter radio test, followed by band/radio restoration."""
+"""Run on the Ground Pi with Walter USB passthrough: bounded Walter radio test, followed by band/radio restoration."""
 import argparse
 import json
 from datetime import datetime, timezone

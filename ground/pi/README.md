@@ -18,7 +18,9 @@ The hotspot password is stored privately on the deployed Pi at
 uses the existing authorized keys. The hotspot supplies DHCP and works
 without Internet. The radio country is US; installation elsewhere must set
 the appropriate country. Yamcs binds HTTP to all Pi IPv4 interfaces so both
-addresses work. Radio telemetry ports are loopback-bound; the bench bridge uses LAN UDP10020.
+addresses work. Yamcs telemetry ports UDP10018–10020 are bound to Pi loopback. The direct IHU
+USB bridge starts only for the registered console. See the
+[serial setup](../yamcs/OPERATIONAL.md#serial-ownership-and-eps).
 
 ## Power up and use it
 

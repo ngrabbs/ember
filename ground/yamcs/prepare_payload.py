@@ -32,7 +32,7 @@ dataLinks:
   - name: payload-ihu-bench-out
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_realtime
-    host: 192.168.1.252
+    host: ember-ground-host
     port: 10028
     commandPostprocessorClassName: com.example.emberpayload.EmberCommandPostprocessor
 '''

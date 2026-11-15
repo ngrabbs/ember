@@ -8,12 +8,11 @@ command history and display buckets are independent.
 | Instance | Purpose | Links | Displays |
 |---|---|---|---|
 | `ember` | Radio reception and bounded fire-check command | `lte-tm-in` UDP10018; `uhf-tm-in` UDP10019; fire-check TC UDP10029 | `ember_displays` |
-| `ember-bench` | One physical IHU serial connection | `ihu-serial-in` UDP10020; `ihu-serial-out` to m75q UDP10028 | `ember_bench_displays` |
+| `ember-bench` | One physical IHU serial connection | `ihu-serial-in` UDP10020; `ihu-serial-out` to the Pi host on UDP10028 | `ember_bench_displays` |
 
-The bench input/output pair represents the two directions of one serial path,
-not two connected devices. The IHU is currently attached by its USB serial
-console to m75q (.252), which bridges it to Yamcs on the ground Pi (.251).
-The old spare-Pico USB and separate EPS UART services are disabled.
+The bench input/output pair uses one physical IHU USB connection to the ground
+Pi. Both UDP directions stay on the Pi. The old spare-Pico USB and separate
+EPS UART services are disabled.
 
 Open [flight overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
 or [bench overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember-bench__realtime).
@@ -51,24 +50,25 @@ receive/reply service remains a separate path.
 
 ## Serial ownership and EPS
 
-`ember-bench-bridge.service` on m75q exclusively owns the physical IHU console.
-It polls observational `eps json` every five seconds between payload command
-transactions and sends POWER_STATUS to the bench instance. It does not change
-charger configuration, ADC mode or thermistor protection. Ground wrappers retain
-provenance 1 and a bridge-session boot identity. Their currents use provisional
-10 mΩ sense values; `sense_values_verified` remains false.
+Plug the IHU console directly into the Pi. A udev rule matches the registered
+USB serial number and starts `ember-bench-bridge@ttyACM0.service` (use the
+actual tty name). It owns the console, enables the two Yamcs bench links, and
+polls `eps json` every five seconds when `umb_telem` is enabled. Ground wrappers
+retain provenance 1 and a bridge-session boot identity. Current readings use
+provisional 10 mΩ sense values and report `sense_values_verified=false`.
 
-For manual console access, on m75q:
+Unplugging the console stops the service and disables both bench links. To
+use the console manually on the Pi, stop the service first, close the manual
+serial program when finished, then start the service again.
 
 ```sh
-# Release the IHU console; periodic EPS telemetry and payload commands stop.
-sudo systemctl stop ember-bench-bridge
-# After closing your manual serial program, resume the shared owner.
-sudo systemctl start ember-bench-bridge
-journalctl -u ember-bench-bridge -n 30 --no-pager
+sudo systemctl stop ember-bench-bridge@ttyACM0
+sudo systemctl start ember-bench-bridge@ttyACM0
+journalctl -u ember-bench-bridge@ttyACM0 -n 30 --no-pager
 ```
 
-Payload commands traverse IHU → CAN A → payload Pi. Consult [PAYLOAD.md](PAYLOAD.md)
+With the regular GROUND_TEST firmware, payload commands traverse IHU → CAN A
+→ payload Pi. The conducted startup demo restricts USB to read-only commands. Consult [PAYLOAD.md](PAYLOAD.md)
 for command outcomes. A busy/failed route never falls back to another endpoint.
 Bench traffic is not forwarded into flight automatically.
 
@@ -93,22 +93,28 @@ remains `/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs/.runtime/quickstart`.
    sources privately under `.unified-backups/TIMESTAMP`; this is not a data backup.
 3. Append `ground/yamcs/compose.operational.yaml` last in `COMPOSE_FILE`, retaining
    the existing boot/radio overlays and Ethernet/hotspot HTTP binding. It publishes
-   only radio UDP10018/10019 on loopback and bench UDP10020 on the station interface.
-   Reference simulators stay behind an explicit profile.
-4. Stop and disable the Pi's old `ember-usb-bridge` and `ember-eps-bridge`. On m75q,
-   install the complete `ground/ember` directory under `/opt/ember-bench/ember`
-   and install `ember-bench-bridge.service`. Stop/disable the old
-   `ember-payload-bridge` before enabling the new service; never run two serial owners.
-5. Start the normal `ember-ground-starter` service, then resume readiness supervision.
-   `/api/instances` must show `ember` and `ember-bench` RUNNING, each with two links.
-   Verify flight has one fire-check command definition and bench has five.
+   radio and bench telemetry ports UDP10018–10020 on loopback. The bench
+   command link resolves `ember-ground-host` through Docker's host gateway.
+4. Keep the Pi's old `ember-usb-bridge` and `ember-eps-bridge` disabled.
+   Start Yamcs with `ember-ground-starter`, then resume readiness supervision.
+5. On the Pi, install pyserial if needed and register the serial number from
+   `udevadm info -q property -n /dev/ttyACM0` (`ID_SERIAL_SHORT`).
+
+   ```sh
+   sudo sh ground/pi/install_bench_bridge.sh IHU_USB_SERIAL
+   ```
+
+   The installer uses Docker's default bridge gateway and the Yamcs Compose
+   network. Pass the network name as the second argument if it differs from
+   `ember-ground-starter_default`. Rerun it if the network changes. Verify both
+   instances are running and the two bench links follow the USB connection.
 6. Run `python3 ground/yamcs/install_displays.py --url http://PI:8090` to install
    both buckets. It backs up replaced objects and verifies uploaded bytes; named old
    duplicate pages are retired only after backup. See [display cleanup](DISPLAYS.md).
    Audit each separately with `build_identity.py --instance ember` and
    `--instance ember-bench`, using explicit new release/output/publish arguments.
 
-Yamcs and the serial bench service are enabled at boot. Existing Ethernet-first
+Yamcs starts at boot. The serial bench service starts when the registered IHU is present. Existing Ethernet-first
 hotspot and LibreSDR listener supervision remain in place. This change does not
 transmit automatically at boot; only an explicit flight fire-check command starts a bounded RF transaction.
 
@@ -126,7 +132,7 @@ historical instances without hardware links. Run preparation without those
 options to return to the normal two-instance UI. Old replay URLs require the
 corresponding historical instance/processor.
 
-To roll back, pause readiness, stop Yamcs and the new bench bridge, restore the
+To roll back, pause readiness, stop Yamcs and the active bench bridge unit, restore the
 saved runtime/Compose environment and previous bridge service, then restart.
 Keep the live data volume to retain new records. Restore old data backups to
 separate recovery volumes rather than overwriting post-migration history.

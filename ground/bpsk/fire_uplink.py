@@ -50,8 +50,8 @@ def execute(wire,output,images):
     blocks=[];started=False
     try:
         with socket.socket(socket.AF_INET,socket.SOCK_DGRAM) as arm:
-            arm.settimeout(4);arm.sendto(wire,('192.168.1.252',10030));answer,address=arm.recvfrom(512)
-            if address[0]!='192.168.1.252' or answer!=b'ARMED'+wire:raise RuntimeError('COMMS not armed')
+            arm.settimeout(4);arm.sendto(wire,('127.0.0.1',10030));answer,address=arm.recvfrom(512)
+            if address[0]!='127.0.0.1' or answer!=b'ARMED'+wire:raise RuntimeError('COMMS not armed')
         # The COMMS ADC capture starts one second after clock setup.
         # Match the previously qualified OTA orchestration timing.
         time.sleep(1.8)

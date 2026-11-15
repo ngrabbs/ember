@@ -1,0 +1,19 @@
+[Unit]
+Description=EMBER IHU serial bridge on %I
+After=docker.service dev-%i.device
+Requires=docker.service
+BindsTo=dev-%i.device
+StartLimitIntervalSec=0
+
+[Service]
+User=ngrabbs
+SupplementaryGroups=dialout
+EnvironmentFile=/etc/ember-bench-bridge.conf
+ExecCondition=/usr/bin/test /dev/%I -ef ${BENCH_DEVICE}
+ExecStart=/usr/bin/python3 -u /opt/ember-bench/ember/payload_bridge.py --device /dev/%I --bind ${BENCH_BIND} --command-network ${BENCH_COMMAND_NETWORK} --yamcs-url http://127.0.0.1:8090 --poll-eps --cells 2 --rsnsb-ohms 0.01 --rsnsi-ohms 0.01
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes

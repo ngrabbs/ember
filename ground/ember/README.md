@@ -47,7 +47,7 @@ Python `framing.py`, `usb_bridge.py` and `usb_probe.py` remain test/diagnostic t
 for the historical binary USB protocol; they are not the operational IHU text
 console bridge. Use
 [`payload_bridge.py`](payload_bridge.py) for the current sole-owner IHU serial
-bench connection and its payload commands/EPS forwarding. See [serial ownership and EPS](../yamcs/OPERATIONAL.md#serial-ownership-and-eps).
+bench connection on the ground Pi and its payload commands/EPS forwarding. See [serial ownership and EPS](../yamcs/OPERATIONAL.md#serial-ownership-and-eps).
 
 ## Real IHU EPS observations
 
