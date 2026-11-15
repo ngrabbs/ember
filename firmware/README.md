@@ -31,8 +31,8 @@ results apply to the hardware.
 | Firmware | Version on `main` | Bench identity and purpose |
 |---|---|---|
 | [IHU](ihu/CHANGELOG.md) | 0.14.1 | **Live: 0.26.0 · `af0925a`.** The USB console reported a clean build. This is the startup and UHF demo build for scheduled telemetry, GPS, and coordination of payload fire checks. |
-| [Transceiver](transceiver/CHANGELOG.md) | 0.34.0 | **Running version and commit unconfirmed.** The November 5 flash record identifies 0.37.2 at `14243dc`, used for the bench UHF link. The November 12 receive experiments share version 0.37.2. The November 14 sweep logs verify restoration of the pre-sweep image without identifying its commit. |
-| [Payload](payload/CHANGELOG.md) | 0.2.0 | **Live: 0.7.0 · `3e4d0b40866ee0f76402db0cfb236c17e5229c8f`.** The running service reported this commit at CAN startup, and the installed build identity marks it clean. This build saves capture GPS evidence for live camera fire checks. |
+| [Transceiver](transceiver/CHANGELOG.md) | 0.34.0 | **Current boot unconfirmed.** The last live Yamcs `COMMS_FIRMWARE` packet reported 0.38.0 at `819470bbf877fa66f980bf9d0d138c081905af6c` on November 14 at 8:16 p.m. CST. That build adds the FULL telemetry identity service. |
+| [Payload](payload/CHANGELOG.md) | 0.2.0 | **Live: 0.7.1 · `deeac88c986bbe0f6697bf90183e1b407fe06b34`.** The active service reported this commit at CAN startup, verified November 15, and the installed build identity marks it clean. This build saves capture GPS evidence for live camera fire checks. |
 
 The IHU identity came from the m75q USB console. Transceiver restore evidence
 is on m75q under `~/work/tx-sweep-20261114/`. The payload identity came from the active `ember-payload` service on
