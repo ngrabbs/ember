@@ -58,9 +58,8 @@ Disposable symbol U2 was queried/rendered; footprint U2 was placed
 at (20,20) with 0° rotation on F.Cu after the user closed KiCad.
 All six placed pad coordinates were read back through Konnect's file fallback
 and match local positions plus that origin.
-[Package render](payload_permission_acceptance-package-detail.png) and
-[full SVG](payload_permission_acceptance-package.svg) were inspected against
-the manufacturer drawings. The scratch PCB contains that package only and
+The [package render](payload_permission_acceptance-package-detail.png) was
+inspected against the manufacturer drawings. The scratch PCB contains that package only and
 has no routed circuit or manufacturing-readiness claim.
 
 Protected sources were mutated only by Konnect; successful atomic
