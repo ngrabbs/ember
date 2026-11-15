@@ -102,15 +102,21 @@ def generate(destination, command_filter=None):
         arguments = node(command, "ArgumentList")
         for field in message["fields"]:
             name = message["name"] + "_" + field["name"] + "_type"
-            atype = node(argument_types, "IntegerArgumentType", name=name, signed="false")
+            argument_enum = field.get("argument_enum")
+            atype = node(argument_types, "EnumeratedArgumentType" if argument_enum else "IntegerArgumentType",
+                         name=name, **({} if argument_enum else {"signed": False}))
             units = node(atype, "UnitSet")
             if field.get("unit"):
                 node(units, "Unit").text = field["unit"]
             node(atype, "IntegerDataEncoding", sizeInBits=layout([field]).size * 8, encoding="unsigned")
-            # Full integer domain permits a deliberate endpoint rejection test.
+            if argument_enum:
+                enumeration = node(atype, "EnumerationList")
+                for label, value in D["enums"][field["enum"]].items():
+                    node(enumeration, "Enumeration", value=value, label=label)
+            # Integer arguments retain their full domain for endpoint rejection tests.
             node(arguments, "Argument", name=field["name"], argumentTypeRef=name,
                  initialValue=D["parameters"]["TELEMETRY_PERIOD"]["default"]
-                 if field["name"] == "value" else 1)
+                 if field["name"] == "value" else field.get("default", 1))
         entries = node(node(command, "CommandContainer", name=message["name"]), "EntryList")
         placeholder = encode(message["name"], sequence=0, source=D["endpoints"]["ground"],
                              target=D["endpoints"]["ihu"], transaction_epoch=1,

@@ -98,10 +98,13 @@ def prepare(runtime, legacy_history=()):
     with tempfile.TemporaryDirectory() as temp:
         generate(temp, command_filter=UHF_COMMANDS)
         tree=ET.parse(Path(temp)/'ember.xml')
-        # Shared sparse-radio freshness policy; sample timestamps stay visible.
-        rates=tree.findall('.//{'+NS+'}SequenceContainer[@name="POWER_STATUS"]/{'+NS+'}DefaultRateInStream')
-        if len(rates)!=1:raise ValueError('Missing POWER_STATUS rate')
-        rates[0].set('minimumValue',str(1/30))
+        # The UHF listen window can exceed the usual telemetry intervals.
+        for name in ('COMMS_FIRMWARE', 'LTE_CAN_FIRMWARE', 'LTE_MODEM_FIRMWARE',
+                     'PAYLOAD_FIRMWARE', 'PAYLOAD_STATUS', 'POWER_STATUS'):
+            rate = tree.find(f'.//{{{NS}}}SequenceContainer[@name="{name}"]/{{{NS}}}DefaultRateInStream')
+            if rate is None:
+                raise ValueError(f'Missing {name} rate')
+            rate.set('minimumValue', str(1 / 360))
         tree.write(mdb,encoding='utf-8',xml_declaration=True)
         shutil.copy2(Path(temp)/'WireProfile.java',java/'WireProfile.java')
         for source in (ROOT/'ember-java').glob('*.java'):shutil.copy2(source,java/source.name)
