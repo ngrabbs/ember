@@ -5,7 +5,7 @@ from collections import OrderedDict
 from datetime import datetime,timezone
 import json,os,queue,signal,subprocess,sys,threading,time
 from pathlib import Path
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'ember'))
+sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'ember'))
 from lte_receiver import validate
 from radio_control import request as radio_request
 

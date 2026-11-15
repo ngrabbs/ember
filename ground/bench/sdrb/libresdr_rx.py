@@ -11,7 +11,7 @@ import sys
 import time
 import numpy as np
 from packet_radio import BASEBAND_OFFSET, decode_iq, decode_iq_coherent
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'ember'))
+sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'ember'))
 from lte_receiver import validate
 
 

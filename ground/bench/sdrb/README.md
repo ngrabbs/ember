@@ -1,7 +1,7 @@
 # AMSAT SDRB FSK receiver
 
 Use this guide for the optional SDRB binary FSK bench profile. The
-[radio guide](../../docs/comms/README.md) gives the frame layout and identifies
+[radio guide](../../../docs/comms/README.md) gives the frame layout and identifies
 the separate EMBER COMMS receiver.
 
 ## Receive SDRB telemetry
@@ -13,7 +13,7 @@ the separate EMBER COMMS receiver.
    manual receive session from the repository root:
 
    ```sh
-   python3 ground/uhf/libresdr_live_rx.py --seconds 60 --channel 0 --gain 40 \
+   python3 ground/bench/sdrb/libresdr_live_rx.py --seconds 60 --channel 0 --gain 40 \
      --frequency 434200000 --forward --output /path/to/new-run
    ```
 
@@ -24,7 +24,7 @@ the separate EMBER COMMS receiver.
 4. On the shared deployment, look for a fresh Yamcs packet in `ember` /
    `realtime` on `uhf-tm-in` (UDP 10019). Compare the decoded and archived
    bytes to the original packet. Use the
-   [shared deployment guide](../yamcs/OPERATIONAL.md) for the Yamcs setup.
+   [shared deployment guide](../../yamcs/OPERATIONAL.md) for the Yamcs setup.
 
 See the [clock and transport review](CLOCKING.md) for the bounded 614.4 kS/s SDRB
 profile.

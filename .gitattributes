@@ -1,9 +1,9 @@
 # Preserve exact archived bytes/terminal spacing and collapse generated evidence in GitHub review.
-ground/uhf/results/** -text -whitespace linguist-generated=true
+ground/bench/sdrb/results/** -text -whitespace linguist-generated=true
 
 # Unified patches use single-space empty context lines, including at the end of a hunk.
-ground/lte/patches/*.patch whitespace=-blank-at-eol,-blank-at-eof
-ground/lte/diagnostics/*.patch whitespace=-blank-at-eol,-blank-at-eof
+ground/lte/diagnostics/patches/*.patch whitespace=-blank-at-eol,-blank-at-eof
+ground/lte/diagnostics/traces/*.patch whitespace=-blank-at-eol,-blank-at-eof
 
 # Retain imported srsRAN template formatting.
 ground/lte/configs/srsran-4g/*.conf whitespace=-blank-at-eol,-blank-at-eof

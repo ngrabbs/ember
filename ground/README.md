@@ -78,3 +78,7 @@ IHU and disables the wired links when it disconnects. See
 [Pi provisioning and recovery](pi/README.md) ·
 [Yamcs deployment](yamcs/OPERATIONAL.md) ·
 [Release records](releases/README.md)
+
+## Optional bench work
+
+[SDRB FSK](bench/sdrb/README.md) · [LTE engineering diagnostics](lte/diagnostics/README.md)
