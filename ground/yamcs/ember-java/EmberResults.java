@@ -77,10 +77,20 @@ public final class EmberResults {
         // It is telemetry provenance, never evidence that the physical IHU reset.
         if (Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 0x10 &&
             Byte.toUnsignedInt(b.get(WireProfile.POWER_STATUS_PROVENANCE)) != 2) return;
+        boolean faultSnapshot = Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
+            Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 64 &&
+            b.get(WireProfile.IHU_FAULTS_PAYLOAD_VERSION) == 1 &&
+            Byte.toUnsignedInt(b.get(WireProfile.IHU_FAULTS_COUNT)) ==
+                Math.min(Integer.toUnsignedLong(b.getInt(WireProfile.IHU_FAULTS_TOTAL)), 16);
         long currentBoot = Integer.toUnsignedLong(b.getInt(WireProfile.SOURCE_BOOT_ID));
         if (boot != 0 && boot != currentBoot) {
-            pending.values().forEach(command -> unknown(command, "Unknown outcome: IHU boot identity changed"));
-            pending.clear();
+            String responseKey = key(b);
+            pending.entrySet().removeIf(entry -> {
+                Pending command = entry.getValue();
+                if (faultSnapshot && command.command == 11 && entry.getKey().equals(responseKey)) return false;
+                unknown(command, "Unknown outcome: IHU boot identity changed");
+                return true;
+            });
         }
         boot = currentBoot;
         if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
@@ -101,14 +111,10 @@ public final class EmberResults {
             pending.remove(key(b));
             return;
         }
-        if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
-            Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 64) {
+        if (faultSnapshot) {
             Pending faults = pending.get(key(b));
-            if (faults == null || faults.command != 11 ||
-                b.get(WireProfile.IHU_FAULTS_PAYLOAD_VERSION) != 1) return;
+            if (faults == null || faults.command != 11) return;
             int count = Byte.toUnsignedInt(b.get(WireProfile.IHU_FAULTS_COUNT));
-            long total = Integer.toUnsignedLong(b.getInt(WireProfile.IHU_FAULTS_TOTAL));
-            if (count != Math.min(total, 16)) return;
             long now = TimeEncoding.getWallclockTime();
             faults.history.publish(faults.id, "ember-result-boot-id", Long.toString(currentBoot));
             faults.history.publish(faults.id, "ember-retained-faults", count);
