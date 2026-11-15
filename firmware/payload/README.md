@@ -2,15 +2,11 @@
 
 [Changelog](CHANGELOG.md) · [Current bench builds](../README.md#current-bench-builds)
 
-Raspberry Pi 4 / LC2502 / Raspberry Pi OS Trixie, CAN A only. CAN enters normal
-mode at 500 kbit/s during boot, independently of Wi-Fi or a USB console. Like
-transceiver idle service, the payload answers addressed requests; it emits no
-unsolicited boot message or periodic heartbeat. Fire check is a commanded static stub returning NO_FIRE; execution_mode=STATIC_STUB
-explicitly distinguishes it from a real detector. Cameras, images and power commands remain outside this version.
-
-The current IHU application is `firmware/ihu` (v0.12.0 adds fire check; v0.11.0 added the
-payload target). The older FreeRTOS prototype was removed. Current
-transceiver idle startup is implemented in `firmware/transceiver`.
+Version 0.7.1 runs as a Python service on the payload Pi. On CAN A at
+500 kbit/s it responds to addressed IHU requests for identity, status, and fire
+checks. The deployed live camera configuration captures a triplet, runs the
+spectral detector, and attaches GPS evidence to the fire-check result when
+available. See [live fire-check configuration](#live-fire-check-configuration-060).
 
 ## Addressing
 
@@ -139,11 +135,24 @@ Hardware evidence and remaining deployment limits are in `validation.json`.
 
 ## Fire check 0.2.0
 
+Version 0.4.0 can run the existing replaceable detector on real captures. Enable
+`EMBER_PAYLOAD_DETECTOR_CONFIG` as described in the [user guide](../../docs/user/payload.md#real-capture-and-detection-version-040).
+Valid binary decisions return ALGORITHM mode; UNKNOWN returns ERROR 11 and a
+persistent evidence record, so unusable images never become a false NO_FIRE.
+
+Version 0.3.0 adds an opt-in real-camera capture before this static detector
+result. Set `EMBER_PAYLOAD_CAPTURE_URL=http://127.0.0.1:8001` and permit AF_INET
+in the systemd service. See the [user guide](../../docs/user/payload.md#real-capture-before-the-fire-check-reply)
+for setup, logging, deadlines and failure handling. Capture uses a worker so
+CAN discovery and heartbeat remain responsive. With the adapter enabled, a
+successful reply confirms that all three image files have been saved; the
+NO_FIRE/STATIC_STUB fields still describe a stub detector.
+
 IHU0.12.0 `hello payload` then `payload fire-check` commands one check. The
 payload returns version1, result0=NO_FIRE/1=FIRE, mode1=STATIC_STUB/2=ALGORITHM,
 reserved0, boot32, uptime_ms32, check_id32 (all integers big endian).
-This release always returns NO_FIRE/STATIC_STUB and increments check_id.
-No camera or detector is invoked. An absent, corrupt or uncorrelated reply is
+Version 0.2.0 always returns NO_FIRE/STATIC_STUB and increments check_id.
+No camera or detector is invoked in that version. An absent, corrupt or uncorrelated reply is
 UNKNOWN, never NO_FIRE. Session HELLO, envelope CRC and request correlation apply.
 The future detector replaces the explicit stub and reports ALGORITHM.
 
@@ -152,3 +161,34 @@ flight uses the real finite RF path documented in ground/yamcs/FIRE_CHECK.md.
 
 Fire-check deployment and the two byte-matched Yamcs RF results are recorded in
 [`validation.json`](../../system/ground_station/evidence/fire-check-20261017/validation.json).
+
+## Live fire-check configuration (0.6.0)
+
+On a Pi with the Koenig camera daemon, install the supplied optional systemd
+drop-ins for both `ember-payload.service` and `payload-daemon.service`. Install
+`config/fire-check.json` as `/etc/ember-payload/fire-check.json` on first setup.
+Preserve the installed JSON on upgrades. Retire the old `camera-capture.conf`
+and `detector.conf` settings when enabling this profile. Restart both services
+after editing the JSON so both processes use the same configuration.
+
+This file selects the camera directory, evidence directory, camera request
+budget, total fire-check deadline, worker startup timeout, calibration, and
+detector profile. The profile selects a registered algorithm and holds its
+thresholds and registration settings. The default 10-second total budget
+includes capture and detection and leaves room for the IHU's 12-second
+CAN reply window. Camera settings used for each exposure are read from the
+camera daemon and recorded with the result.
+
+The daemon owns the original JPEGs. The detector reads them in place and
+undoes camera rotation in memory. The evidence directory stores JSON only,
+including the image names, sizes, and hashes for inputs the worker read.
+Keep the originals if the run must be reproducible. Choose an evidence
+directory under the service's writable state directory or explicitly grant
+write access when changing that root. The responder needs read access to
+the camera image directory. The drop-in exposes the default camera directory
+read-only. Update that sandbox permission when moving the camera store outside
+the allowed directory.
+
+A future uplink could stage a validated profile and activate it by version
+or hash, using algorithms already installed on the payload. Adding a new
+algorithm would require a separate software update.

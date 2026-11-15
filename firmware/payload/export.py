@@ -18,9 +18,12 @@ def main():
     if args.destination.exists():
         raise SystemExit('Export destination already exists')
     args.destination.mkdir(parents=True)
-    for filename in ('protocol.py', 'payload.py', 'can_setup.py', 'install.sh', 'client.py', 'VERSION'):
+    for filename in ('protocol.py', 'payload.py', 'camera_capture.py', 'fire_check_config.py', 'live_analysis.py', 'detect.py', 'can_setup.py', 'install.sh', 'client.py', 'VERSION'):
         shutil.copy2(source / filename, args.destination / filename)
     shutil.copytree(source / 'systemd', args.destination / 'systemd')
+    shutil.copytree(source / 'ember_detector', args.destination / 'ember_detector',
+                    ignore=shutil.ignore_patterns('__pycache__'))
+    shutil.copytree(source / 'config', args.destination / 'config')
     (args.destination / 'build_identity.json').write_text(json.dumps({
         'git': git, 'dirty': int(dirty), 'version': (source / 'VERSION').read_text().strip()
     }, indent=2) + '\n')

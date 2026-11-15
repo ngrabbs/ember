@@ -1,7 +1,9 @@
 # Replaceable stored-image detectors (pipeline 0.2.0)
 
-This is an **offline development pipeline**. The CAN responder remains payload
-0.2.0 with its static stub. This module never opens CAN, camera, mux, or RF devices.
+This is a replaceable development pipeline with an offline CLI. The optional
+payload 0.4.0 live-image adapter also invokes it after real camera capture; see
+the [user guide](../../../docs/user/payload.md#real-capture-and-detection-version-040).
+This module itself never opens CAN, camera, mux, or RF devices.
 
 ```mermaid
 flowchart LR
@@ -152,15 +154,21 @@ UNKNOWNs, is retained in the report. The report also records the base profile,
 implementation/tuner hashes and dependency versions. Run on the target Pi:
 matching results and downstream decisions can differ across OpenCV builds/CPUs.
 
-## Remaining command integration
+## Command integration
 
-Keep image processing out of the CAN receive loop. A bounded worker, explicit
-busy admission, an analysis deadline, persistent run/check correlation, and a
-versioned fixture/UNKNOWN result contract are still required before enabling
-commanded image analysis. The current 16-byte result cannot distinguish fixture
-analysis from current camera observation. Update IHU/bench/RF/Yamcs consumers
-together, and preserve old result decoding. Do not repurpose the existing stub
-or mark it ALGORITHM while the live path still returns a fixed answer.
+Payload 0.4.0 implements an opt-in, bounded live-image worker with persistent
+per-request evidence. Valid binary results use the existing ALGORITHM report;
+UNKNOWN uses ERROR 11 with detailed JSON evidence, preserving old binary
+decoders. A richer UNKNOWN telemetry report still requires coordinated changes
+across IHU/bench/RF/Yamcs. No fixture result is sent as a live observation.
+
+Keep image processing out of the CAN receive loop. The live adapter supplies
+bounded admission, an enforced deadline and persistent run/request correlation.
+The current 16-byte result cannot distinguish fixture analysis from current
+camera observation, so fixture selection remains outside the CAN command. A
+richer fixture/UNKNOWN report needs IHU/bench/RF/Yamcs consumer updates together
+with preserved old decoding. ALGORITHM mode is used only for valid binary
+decisions produced from the live captured triplet.
 
 ## Prepared Pi development environment
 
