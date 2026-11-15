@@ -4,21 +4,22 @@ Each environment has four operator pages, with the same navigation:
 
 | Page | Purpose |
 |---|---|
-| `Overview.opi` | Flight: last heartbeat producer, IHU system report and power summary. Bench: serial EPS readout, payload reply and power summary. |
+| `Overview.opi` | Flight: UHF schedule estimate, last GPS sample, IHU status and power. Bench: serial EPS readout, payload reply and power summary. |
 | `EPS.opi` (Power) | Voltages, provisional currents, charger die temperature, readout/ADC quality, raw charger state and JEITA region. |
-| `Payload.opi` | Last payload status/heartbeat and ping result; bench-only command/history navigation. |
-| `Devices.opi` (Devices & firmware) | IHU discovery snapshot and one fleet firmware table: COMMS, LTE CAN MCU, Walter MCU and payload Pi. |
+| `Payload.opi` | Payload status, ping and fire-check results. Flight adds capture GPS with its check ID. |
+| `Devices.opi` (Devices & firmware) | IHU discovery snapshot and one fleet firmware table: transceiver, LTE CAN MCU, Walter MCU and payload Pi. Flight adds IHU identity. |
 
 `Ground-Build.opi` is a separate dated deployment audit, not another operational
 dashboard. Native parameter tables keep the detailed diagnostics and plotting
 fields: `System.par`, `EPS.par`, `Payload.par`, `Devices.par`, `Firmware.par`,
-`Comms.par`, `LTE-Firmware.par` and `Command-reports.par`.
+and `Command-reports.par`.
 
 The flight bucket is `ember_displays`; the bench bucket is
 `ember_bench_displays`. Navigation retains the selected instance. Both use
 `/ember` packet parameters, but current values and archives are independent.
-Flight pages have no command actions. The bench Send payload command button
-opens the four-command editor; navigation never issues a command itself.
+Command buttons open the selected instance’s command editor. Navigation never
+issues a command itself. The UHF countdown is an estimate from the last IHU
+schedule report and returns to a waiting state when that report is stale.
 
 ## What a value means
 

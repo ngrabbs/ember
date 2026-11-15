@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
-from generate_displays import generate, RETIRED_DISPLAYS
+from generate_displays import generate, retired_assets
 
 ROOT = Path(__file__).resolve().parent
 BUCKET = 'ember_displays'
@@ -54,7 +54,7 @@ def install_instance(url, instance):
         print('Installed:',name)
     # Retire only the named generated pages, after verifying replacement uploads.
     # Unknown/user-authored files and all telemetry archives remain untouched.
-    for name in RETIRED_DISPLAYS:
+    for name in retired_assets(instance):
         path='/api/storage/buckets/'+bucket+'/objects/'+quote(name,safe='/')
         try:previous=request(path)
         except HTTPError as error:
