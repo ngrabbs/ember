@@ -10,44 +10,12 @@ command history and display buckets are independent.
 | `ember` | Radio reception and UHF commands | `lte-tm-in` UDP10018; `uhf-tm-in` UDP10019; UHF TC UDP10029 | `ember_displays` |
 | `ember-bench` | One physical IHU serial connection | `ihu-serial-in` UDP10020; `ihu-serial-out` to the Pi host on UDP10028 | `ember_bench_displays` |
 
-The bench input/output pair uses one physical IHU USB connection to the ground
-Pi. Both UDP directions stay on the Pi. The old spare-Pico USB and separate
-EPS UART services are disabled.
-
-Open [flight overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
-or [bench overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember-bench__realtime).
-Flight Overview summarizes heartbeat/system/power; bench Overview summarizes
-serial EPS/payload/power. Both use Overview, Power, Payload and Devices & firmware.
-The radio instance exposes IHU commands for status, heartbeat, and telemetry
-scheduling, plus `IHU_REBOOT` and `PAYLOAD_FIRE_CHECK`. Bench exposes
-PAYLOAD_PING, PAYLOAD_IDENT, PAYLOAD_STATUS_QUERY, PAYLOAD_HEARTBEAT_QUERY and
-PAYLOAD_FIRE_CHECK through serial/CAN. See [fire-check operation](FIRE_CHECK.md).
-
-## IHU 0.13.0 quiet-output policy
-
-With bench bridge 0.4.0, all IHU streams start OFF. The bridge checks `outputs`
-and forwards periodic EPS only when `output umb_telem on` has been deliberately
-selected. Disabling it stops new forwarding; old ground values expire. This
-policy is separate from explicit PAYLOAD_* command replies and the bounded RF
-command session. See the [mode/output matrix](../../docs/architecture/operations/04-ihu-runtime-policy.md).
-The installation history below describes earlier always-polling bridge versions.
-
-## Packet inclusion and transmission pacing
-
-It also lists excluded packet families,
-COMMS firmware prefixes, output gates and wired stream formats.
+See the [operator guide](README.md) for displays and commands.
 
 ## IHU-requested UHF telemetry
 
-COMMS 0.33.0 accepts validated UHF telemetry over healthy CAN without opening
-its USB console window. In the sole IHU console, enable `output uhf_telem on`,
-obtain `hello comms`, wait for confirmation, then issue `uhf heartbeat` or
-`uhf run 60 10`. COMMS transmits bounded bursts and returns to muted idle. Its firmware identity
-is automatically included once per COMMS boot on the first telemetry request;
-IHU 0.14.0 `uhf comms firmware` requests it again.
-The flight receiver must independently own the ground radio and be running;
-local RF completion does not establish ground reception. The fire-check
-receive/reply service remains a separate path.
+Follow the instructions for the installed [transceiver build](../../firmware/transceiver/README.md#commands).
+Verify a fresh `uhf-tm-in` packet using the [demo checklist](../README.md#3-verify-a-fresh-packet).
 
 ## Serial ownership and EPS
 
@@ -68,17 +36,13 @@ sudo systemctl start ember-bench-bridge@ttyACM0
 journalctl -u ember-bench-bridge@ttyACM0 -n 30 --no-pager
 ```
 
-With the regular GROUND_TEST firmware, payload commands traverse IHU → CAN A
-→ payload Pi. The UHF startup profile restricts USB to read-only commands. Consult [PAYLOAD.md](PAYLOAD.md)
-for command outcomes. A busy/failed route never falls back to another endpoint.
-Bench traffic is not forwarded into flight automatically.
+Enable `output umb_telem on` on the IHU when you want periodic EPS forwarding.
+For payload results, see the [operator guide](README.md#commands-and-results).
 
 Within each instance, exact CRC-valid duplicates are suppressed for 120 seconds,
 with a 4096-entry bound. Flight LTE/UHF copies therefore share one archive entry;
 the same bytes may independently appear in the bench archive. Suppression resets
-with Yamcs. Link counters still count arrivals. POWER_STATUS expiry is 57 seconds
-in flight and 9.5 seconds in bench, using Yamcs's default 1.9 tolerance. Inspect
-receive times and readout validity; cached values alone do not establish liveness.
+with Yamcs. Link counters still count arrivals. Use packet receive times and readout validity to check liveness.
 
 ## Deployment and startup
 
@@ -117,7 +81,9 @@ remains `/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs/.runtime/quickstart`.
    instances are running and the two bench links follow the USB connection.
 6. Run `python3 ground/yamcs/install_displays.py --url http://PI:8090` to install
    both buckets. It backs up replaced objects and verifies uploaded bytes; named old
-   duplicate pages are retired only after backup. See [display cleanup](DISPLAYS.md).
+   duplicate pages are retired only after backup. To restore a display, upload
+   its saved object to the original bucket and path. Backups live under
+   `ground/yamcs/.runtime/display-backups/TIMESTAMP/INSTANCE/`.
    Audit each separately with `build_identity.py --instance ember` and
    `--instance ember-bench`, using explicit new release/output/publish arguments.
 

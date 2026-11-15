@@ -22,20 +22,8 @@ addresses work. Yamcs telemetry ports UDP10018–10020 are bound to Pi loopback.
 USB bridge starts only for the registered console. See the
 [serial setup](../yamcs/OPERATIONAL.md#serial-ownership-and-eps).
 
-## Power up and use it
-
-1. Connect the Pi's normal power supply and LibreSDR USB cable.
-2. With connected Ethernet, browse the existing lab address. Without connected
-   Ethernet, join `EMBER-Ground` and browse the hotspot address above.
-3. Allow about a minute for Yamcs to initialize. Select `ember` / `realtime`
-   for radio dashboards, or `ember-bench` / `realtime` for IHU serial EPS/payload. The LTE packet listener is already running when
-   LibreSDR is present; do not open a second receiver on UDP 51000.
-
-The receiver accepts native IHU POWER_STATUS, HEARTBEAT and SYSTEM_STATUS packets from Walter
-`172.16.0.2:51001` at UDP 51000 and forwards unchanged bytes to Yamcs UDP 10018.
-It does not configure LibreSDR, start EPC/eNodeB, register Walter or transmit RF.
-Those actions retain their separate bounded trial controls. A plugged-in SDR
-therefore means **ready to receive**, not an active LTE link.
+Use the [demo checklist](../README.md) to connect, select a receiver, and
+verify a packet.
 
 ## What runs automatically
 
@@ -85,7 +73,7 @@ the persistent listener while you own UDP 51000:
 # PI SHELL: temporarily hand UDP 51000 to the manual trial receiver.
 sudo systemctl stop ember-ground-readiness ember-lte-listener
 
-# Run the bounded receiver and trial from the LTE walkthrough, then restore:
+# Run the bounded receiver and LTE trial, then restore supervision:
 sudo systemctl start ember-ground-readiness
 ```
 
@@ -118,23 +106,9 @@ Yamcs `.env` backup, remove the starter's `readiness.conf` drop-in, run
 `sudo systemctl daemon-reload`, and restart `ember-ground-starter`.
 Do not restore old network profiles over newer unrelated network changes.
 
-## Verification
-
-Installed and verified on October 8, 2026: the user confirmed hotspot
-authentication, DHCP and Yamcs browser access. Automatic Ethernet fallback
-and return, listener crash recovery, and a full Pi reboot passed. After reboot,
-Yamcs was healthy, the attached-SDR listener was active, and the earlier LTE
-packet remained in the archive.
-
-Run `python3 -m unittest discover -s tests/ground -p test_pi_readiness.py -v`
-from the repository. These checks use host loopback sockets, never RF, and
-verify continued delivery, exact bytes, peer/CRC filtering and duplicates.
-On the deployed Pi also verify hotspot AP/DHCP, client access, Ethernet return,
-listener crash recovery, and a full reboot. Physical USB unplug/replug and a
-cold boot with Ethernet absent are useful final bench checks.
-
-NetworkManager's [shared IPv4 mode](https://networkmanager.pages.freedesktop.org/NetworkManager/NetworkManager/nm-settings-nmcli.html)
-provides hotspot addressing/DHCP; the supervisor controls when that profile runs.
+After changes, follow the [ground demo checklist](../README.md) to verify
+Ethernet or hotspot access, Yamcs links, and a fresh packet. Verify cold boot
+and USB reconnect when changing startup supervision.
 
 ## Provision a new Pi
 
