@@ -4,9 +4,7 @@
 
 [Comms home](README.md) · [Design overview](design/overview.md)
 
-**Updated October 3, 2026, evening:** layer migration and protected-input routing are complete. Current candidate is `releases/review_20261003_1952`; vendor preview/CAM and bench qualification remain. Earlier
-Gerber ZIPs and the JLCPCB preview are historical candidates, not the release for
-this new routing plan. Preserve the latest logos and schematic cleanup.
+Layer migration and protected-input routing are complete. Bench qualification remains.
 
 ## Active layout migration — analog top, two inner ground planes
 
@@ -99,7 +97,7 @@ H1/H2, mounting holes, board outline and user artwork remain fixed.
   errors/unconnected, only reviewed fixed mechanical/silk exclusions, editor ERC,
   native full-netlist parity, visual review of every copper layer, power-drop and
   analog-return checks. Existing DRC alone does not validate the new architecture.
-- [x] Regenerate Gerber/drill, corrected BOM/CPL and bare friend-review ZIP. Fresh JLC draft matches/selects all144 placements;15 prior rotation corrections reapplied. Quote: $322.24 before shipping/taxes. See `releases/review_20261003_1952/README.md`.
+- [x] Regenerate the Gerber, drill, BOM, and placement files. See the [purchased Y24 order record](releases/Y24-order-record.md) for the exact manufacturing files.
 - [ ] Obtain vendor engineering approval of U15 RPW0010A package/pin1/paste, remaining LED placeholder orientations, J9 soldered precision holes/assembly process, and50ohm±10% stackup before ordering.
 
 RTS feedback resolved: MCP25625 SSOP pins 23/6/7 are input-only with internal
