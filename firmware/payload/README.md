@@ -1,67 +1,18 @@
-# Pi payload CAN A responder
+# Payload firmware
 
-[Changelog](CHANGELOG.md) · [Current bench builds](../README.md#current-bench-builds)
+[Changelog](CHANGELOG.md) · [Verified bench builds](../README.md#current-bench-builds)
 
-Version 0.7.1 runs as a Python service on the payload Pi. On CAN A at
-500 kbit/s it responds to addressed IHU requests for identity, status, and fire
-checks. The deployed live camera configuration captures a triplet, runs the
-spectral detector, and attaches GPS evidence to the fire-check result when
-available. See [live fire-check configuration](#live-fire-check-configuration-060).
+Payload 0.7.1 is a Python service on the payload Pi. It answers the IHU over
+CAN A and can capture three camera images, run spectral fire detection, and
+save result and GPS evidence. The verified deployment reports
+[`deeac88`](https://github.com/ngrabbs/ember/commit/deeac88c986bbe0f6697bf90183e1b407fe06b34).
 
-## Addressing
+## Install and run 0.7.1
 
-| Purpose | Standard 11-bit CAN ID |
-|---|---|
-| Existing discovery query, target node 4 | `0x700` |
-| Existing payload discovery reply | `0x704` |
-| New IHU-to-payload application route | `0x740` |
-| New payload-to-IHU application route | `0x741` |
-
-transceiver `0x710/0x711`, LTE `0x720/0x721`, and deployed RF uplink
-`0x730/0x731` remain unchanged. Payload uses `0x740/0x741` specifically
-to avoid the RF uplink allocation, which is newer than main. The candidate
-preserves the installed IHU uplink implementation from `08b36205d8e324ae31fb3ea5c2cdc3b32c38ce62`. Source of truth:
-[`device_registry.h`](../comms_transport/device_registry.h) and
-[`can_fragment.h`](../comms_transport/can_fragment.h). These development IDs
-are correlation mechanisms, not authentication or flight addressing.
-
-## Wire contract
-
-`protocol.py` interoperates with the C COBS/CRC-16/CCITT-FALSE envelope and
-four-byte CAN fragmentation. Multibyte fields are big endian. Every reply
-retains requester boot/request IDs and carries the payload's nonzero daemon
-boot/session ID. Fragment token equals request ID's low16 bits. Reassembly
-is bounded to263 bytes with a500 ms interfragment timeout. Wrong routes,
-EFF/RTR/error frames, CRC errors, duplicate starts, out-of-order fragments and
-oversize transfers are discarded. Discovery does not establish an app session.
-
-| Service | Request / final reply | Data |
-|---|---|---|
-| HELLO | `0x01 / 0x02` | Empty; establishes requester session |
-| Ping/ECHO | `0x70 / 0x71` | 1–240 bytes echoed unchanged |
-| Identification | `0x18 / 0x19` | Empty request; existing32-byte identity |
-| Status | `0x94 / 0x95` | Empty request;28-byte report |
-| Heartbeat | `0x96 / 0x97` | Empty request; fresh28-byte liveness report |
-| Fire check | `0x98 / 0x99` | Empty request;16-byte result |
-| Rejection | `0x7F` | Reason: version1, type2, session3, payload4 |
-
-Identity: version major/minor/patch (3 bytes), dirty (1), full source SHA (20),
-daemon boot ID (4), daemon uptime milliseconds (4). Status/heartbeat:
-version=1, node=4, ready=1, reserved=0 (one byte each), then six uint32 fields:
-daemon boot ID, daemon uptime_ms, requests handled, replies queued before
-this report, rejected requests, fragment errors plus timeouts. Counters wrap.
-Ready means this responder is running, not camera or external device health.
-SocketCAN link statistics remain separate (`ip -s -d link show can0`).
-
-These immediate read-only services return a final response directly. Separate
-admission/completion replies belong to future long operations. Silence means
-UNKNOWN, never success; there is no automatic application retry. Only the
-current HELLO requester session may query; a new HELLO replaces it. No
-cryptographic authentication is claimed.
-
-## Installation and startup
-
-The Pi boot configuration must already include in `[all]`:
+Use a clean checkout of the payload source above to reproduce the deployed
+source identity. The Pi needs Python 3, `iproute2`, and the LC2502 CAN A
+overlay. On Raspberry Pi OS Trixie, check these lines under `[all]` in
+`/boot/firmware/config.txt` before booting:
 
 ```ini
 dtparam=spi=on
@@ -69,126 +20,164 @@ dtoverlay=spi0-1cs
 dtoverlay=mcp2515,spi0-0,oscillator=16000000,interrupt=25
 ```
 
-Leave CAN B/SPI1 and conflicting UART D overlays disabled. The installer does
-not rewrite boot settings. Python3 and iproute2 are the runtime dependencies;
-can-utils is useful for diagnosis. The service account is `ngrabbs`.
+Use a fresh export directory on both hosts. These commands target the bench
+Pi at `pi@192.168.1.46`. The 0.7.1 installer and base unit default to
+`ngrabbs`, so adjust the two account references in the exported copy for
+this Pi before installing.
 
 ```sh
-python3 firmware/payload/export.py /tmp/payload-export
-scp -r /tmp/payload-export ngrabbs@192.168.1.253:~/payload-export
-ssh ngrabbs@192.168.1.253 'sudo sh ~/payload-export/install.sh'
+(
+set -e
+test "$(cat firmware/payload/VERSION)" = 0.7.1
+python3 firmware/payload/export.py /tmp/ember-payload-0.7.1-export
+sed 's/^id ngrabbs /id pi /' /tmp/ember-payload-0.7.1-export/install.sh \
+  > /tmp/ember-payload-0.7.1-export/install-pi.sh
+unit=/tmp/ember-payload-0.7.1-export/systemd/ember-payload.service
+sed 's/^User=ngrabbs$/User=pi/' "$unit" > "$unit.tmp" && mv "$unit.tmp" "$unit"
+ssh pi@192.168.1.46 'test ! -e ~/ember-payload-0.7.1-export' &&
+  scp -r /tmp/ember-payload-0.7.1-export pi@192.168.1.46:~/
+ssh pi@192.168.1.46 'sudo sh ~/ember-payload-0.7.1-export/install-pi.sh'
+)
 ```
 
-Export destination must be new. Export records the source checkout SHA and
-dirty flag, not the Pi's Git state. Runtime goes to `/opt/ember-payload`; no
-secrets or Wi-Fi credentials are exported. Read installed identity from
-`/opt/ember-payload/build_identity.json`.
-
-`ember-payload-can.service` retries the known boot-time SPI probe failure at
-most20 times, then sets `can0` normal/500kbit/s, loopback off. Exhaustion fails
-startup visibly. It changes no other interface and does not auto-restart
-bus-off. Inspect wiring before deliberately restarting this unit. Linux's
-mcp251x driver here lacks one-shot support: hardware retransmission is
-distinct from an application retry.
-
-`ember-payload.service` starts after CAN readiness and runs without root. It
-uses a single-owner lock and bounded reply queue. systemd bounds repeated
-restarts. Each daemon restart changes its boot ID, requiring another HELLO.
-Wi-Fi is not part of either service's startup ordering.
+The installer copies the runtime to `/opt/ember-payload`, enables and restarts
+the CAN and responder services, and starts the responder. The CAN unit brings
+up `can0` at 500 kbit/s. Check the running identity and CAN state on the Pi:
 
 ```sh
-systemctl status ember-payload-can ember-payload
-journalctl -u ember-payload-can -u ember-payload -b
+systemctl status ember-payload-can ember-payload --no-pager
+journalctl -b -u ember-payload --grep=CAN_READY -n 1 --no-pager
+cat /opt/ember-payload/build_identity.json
 ip -details -statistics link show can0
 ```
 
-## IHU console
+`CAN_READY` reports the firmware version, source commit, and responder boot
+ID. After a responder restart, establish a new HELLO session before issuing
+direct CAN requests.
 
-```text
-devices
-hello payload
-ping 32
-payload ident
-payload status
-payload heartbeat
-hello transceiver
+### Live camera fire checks
+
+The base responder runs a static fire-check stub when no capture options are
+configured. The live profile uses the Koenig camera daemon, NumPy and OpenCV
+for the service's `/usr/bin/python3`, and the calibration file whose hash is
+specified in the profile. Install the two supplied systemd drop-ins on a Pi
+with the camera daemon already installed. Run these commands from the export
+directory on the Pi:
+
+```sh
+sudo install -d /etc/ember-payload
+if ! sudo test -f /etc/ember-payload/fire-check.json; then
+  sudo install -m 644 config/fire-check.json /etc/ember-payload/fire-check.json
+fi
+sudo install -D -m 644 systemd/ember-payload.service.d/fire-check.conf \
+  /etc/systemd/system/ember-payload.service.d/fire-check.conf
+sudo install -D -m 644 systemd/payload-daemon.service.d/fire-check.conf \
+  /etc/systemd/system/payload-daemon.service.d/fire-check.conf
+sudo systemctl daemon-reload
+sudo systemctl restart payload-daemon ember-payload
 ```
 
-Wait for each correlated RESULT before the next command. Background discovery
-can make target selection BUSY; retry after it finishes. Validated replies
-refresh registry liveness. Payload identity does not overwrite LTE/Walter
-identity caches. UHF/LTE operations are rejected on the payload route.
-Target switches are blocked during a running UHF session.
+Before restarting, check the camera directory, evidence directory, calibration
+file and hash in `/etc/ember-payload/fire-check.json`. The shipped drop-in gives
+the responder read-only access to `/home/pi/payload_images` and writable state
+under `/var/lib/ember-payload`. Match the bind path and service permissions to
+any site-specific directory changes. On upgrades, preserve the installed JSON
+and calibration. When migrating from the older split configuration, retire
+the legacy `camera-capture.conf` and `detector.conf` drop-ins.
 
-Existing IHU images already discover node4; the application commands require
-v0.11.0. A bench client can independently test the responder with
-`python3 firmware/payload/client.py --interface can0 status`. Its HELLO replaces
-the IHU session, so reselect `hello payload` afterward.
+A fire check requests one triplet while the camera daemon is idle, with its
+timer off and burst count set to one. The 10-second payload deadline includes
+capture and analysis. The camera daemon keeps the original JPEGs. The
+responder writes evidence JSON with image names, sizes, hashes, and results.
 
-## Validation
+## Ground station commands in Yamcs
 
-Run `python3 -m unittest discover -s tests/ground`. Payload tests compare Python
-packets/fragments against the real C codec and check CRC, sequence and timeout
-recovery, discovery correlation and session gating. Actual IHU handler tests
-cover route isolation, report validation and preservation of LTE identity.
-Hardware evidence and remaining deployment limits are in `validation.json`.
+On the ground station, open **Commanding → Send a Command** in the
+`realtime` processor. Choose the instance that matches the route.
 
-## Fire check 0.2.0
+| Yamcs instance | Route | Commands |
+|---|---|---|
+| `ember` | Ground radio → UHF → transceiver → IHU → CAN A → payload | `PAYLOAD_FIRE_CHECK` |
+| `ember-bench` | Ground bridge → IHU USB → CAN A → payload | `PAYLOAD_PING` (1–240 bytes), `PAYLOAD_IDENT`, `PAYLOAD_STATUS_QUERY`, `PAYLOAD_HEARTBEAT_QUERY`, `PAYLOAD_FIRE_CHECK` |
 
-Version 0.4.0 can run the existing replaceable detector on real captures. Enable
-`EMBER_PAYLOAD_DETECTOR_CONFIG` as described in the [user guide](../../docs/user/payload.md#real-capture-and-detection-version-040).
-Valid binary decisions return ALGORITHM mode; UNKNOWN returns ERROR 11 and a
-persistent evidence record, so unusable images never become a false NO_FIRE.
+Use **Command History** to check the correlated result. A timeout leaves the
+outcome unknown. In a regular GROUND_TEST IHU console session, select
+`hello payload` before using `payload ident`, `payload status`,
+`payload heartbeat`, `payload fire-check`, or `ping N`.
+The startup demo uses the Yamcs RF path for fire checks. See the
+[IHU console guide](../ihu/README.md#usb-console).
 
-Version 0.3.0 adds an opt-in real-camera capture before this static detector
-result. Set `EMBER_PAYLOAD_CAPTURE_URL=http://127.0.0.1:8001` and permit AF_INET
-in the systemd service. See the [user guide](../../docs/user/payload.md#real-capture-before-the-fire-check-reply)
-for setup, logging, deadlines and failure handling. Capture uses a worker so
-CAN discovery and heartbeat remain responsive. With the adapter enabled, a
-successful reply confirms that all three image files have been saved; the
-NO_FIRE/STATIC_STUB fields still describe a stub detector.
+## Fire detection algorithms
 
-IHU0.12.0 `hello payload` then `payload fire-check` commands one check. The
-payload returns version1, result0=NO_FIRE/1=FIRE, mode1=STATIC_STUB/2=ALGORITHM,
-reserved0, boot32, uptime_ms32, check_id32 (all integers big endian).
-Version 0.2.0 always returns NO_FIRE/STATIC_STUB and increments check_id.
-No camera or detector is invoked in that version. An absent, corrupt or uncorrelated reply is
-UNKNOWN, never NO_FIRE. Session HELLO, envelope CRC and request correlation apply.
-The future detector replaces the explicit stub and reports ALGORITHM.
+Both registered detectors compare the on-band image with a continuum
+interpolated from the two reference bands. Calibration, registration and
+validity masking happen before either detector runs.
 
-Yamcs PAYLOAD_FIRE_CHECK is available in both instances. Bench uses serial/CAN;
-flight uses the real finite RF path documented in ground/yamcs/FIRE_CHECK.md.
+| Algorithm | Behavior |
+|---|---|
+| `spectral_excess_v1` | Measures absolute and fractional on-band excess, then checks the size of connected candidate regions. |
+| `spectral_guarded_v1` | Uses the local maximum in each reference band before interpolating. This suppresses false candidates along slightly misaligned edges at the cost of sensitivity to small or weak sources. |
 
-Fire-check deployment and the two byte-matched Yamcs RF results are recorded in
-[`validation.json`](../../system/ground_station/evidence/fire-check-20261017/validation.json).
+The live bench profile uses `spectral_guarded_v1` with normalized ORB
+homography registration. Registration uses contrast-normalized copies to
+match features. The detector measures intensities from the original
+decoded images after calibration. A failed registration quality gate
+reports UNKNOWN. Select the algorithm with `detector_profile.algorithm` and
+supply its settings in `detector_profile.detector`. See the
+[detector registry](ember_detector/registry.py) and
+[offline analysis guide](ember_detector/README.md#run-from-the-repository-root).
 
-## Live fire-check configuration (0.6.0)
+## Packet layouts
 
-On a Pi with the Koenig camera daemon, install the supplied optional systemd
-drop-ins for both `ember-payload.service` and `payload-daemon.service`. Install
-`config/fire-check.json` as `/etc/ember-payload/fire-check.json` on first setup.
-Preserve the installed JSON on upgrades. Retire the old `camera-capture.conf`
-and `detector.conf` settings when enabling this profile. Restart both services
-after editing the JSON so both processes use the same configuration.
+Lengths are in bytes and fields read left to right. The payload is CAN node 4.
+Discovery uses `0x700 → 0x704` and application requests use `0x740 → 0x741`.
+HELLO establishes the requester session. Replies retain the request ID and
+origin boot ID and add the responder's boot ID.
 
-This file selects the camera directory, evidence directory, camera request
-budget, total fire-check deadline, worker startup timeout, calibration, and
-detector profile. The profile selects a registered algorithm and holds its
-thresholds and registration settings. The default 10-second total budget
-includes capture and detection and leaves room for the IHU's 12-second
-CAN reply window. Camera settings used for each exposure are read from the
-camera daemon and recorded with the result.
+```text
+Classic CAN data field
+[Version/flags 1] [Token 2] [Index 1] [COBS envelope slice 1–4]
 
-The daemon owns the original JPEGs. The detector reads them in place and
-undoes camera rotation in memory. The evidence directory stores JSON only,
-including the image names, sizes, and hashes for inputs the worker read.
-Keep the originals if the run must be reproducible. Choose an evidence
-directory under the service's writable state directory or explicitly grant
-write access when changing that root. The responder needs read access to
-the camera image directory. The drop-in exposes the default camera directory
-read-only. Update that sandbox permission when moving the camera store outside
-the allowed directory.
+Reassembled envelope, after removing the zero terminator and decoding COBS
+[Magic 2] [Version 1] [Type 1] [Sender boot 4] [Origin boot 4] [Request ID 4] [Len 2] [Payload N] [CRC-16 2]
 
-A future uplink could stage a validated profile and activate it by version
-or hash, using algorithms already installed on the payload. Adding a new
-algorithm would require a separate software update.
+CAN fire-check request payload
+[Optional GPS tag 18]
+
+CAN fire-check result payload
+[Report version 1] [Decision 1] [Mode 1] [Analysis error 1] [Payload boot 4] [Uptime ms 4] [Check ID 4] [Optional GPS tag 18]
+
+GPS tag
+[Status 1] [Satellites 1] [Latitude E7 4] [Longitude E7 4] [MSL altitude mm 4] [Age ms 4]
+
+CAN identity reply payload
+[Major 1] [Minor 1] [Patch 1] [Dirty 1] [Git SHA 20] [Payload boot 4] [Uptime ms 4]
+
+CAN status / heartbeat reply payload
+[Version 1] [Node 1] [Ready 1] [Reserved 1] [Payload boot 4] [Uptime ms 4] [Requests 4] [Replies 4] [Rejected 4] [Fragment errors 4]
+
+Native EMBER packet sent to Yamcs
+[CCSDS primary header 6] [EMBER secondary header 24] [Telemetry payload N] [CRC-16 2]
+
+Yamcs PAYLOAD_FIRE_TAGGED telemetry payload
+[Version 1] [Transport 1] [Decision 1] [Mode 1] [Bridge session 4] [Payload boot 4] [Uptime ms 4] [Check ID 4] [GPS tag 18] [Analysis error 1]
+```
+
+| CAN service | Request → reply | Reply payload |
+|---|---|---|
+| HELLO | `0x01 → 0x02` | Empty |
+| ECHO | `0x70 → 0x71` | 1–240 bytes echoed |
+| Identity | `0x18 → 0x19` | 32 bytes |
+| Status | `0x94 → 0x95` | 28 bytes |
+| Heartbeat | `0x96 → 0x97` | 28 bytes |
+| Fire check | `0x98 → 0x99` | 16 bytes, or 34 with GPS |
+| Error | `0x7F` reply | 1 reason byte |
+
+The CAN envelope uses big-endian fields and CRC-16/CCITT-FALSE. Fire results
+use decision values 0 for NO_FIRE, 1 for FIRE and 2 for UNKNOWN. An UNKNOWN
+detector result uses report version 2. See the [CAN codec](protocol.py),
+[Yamcs packet dictionary](../../ground/ember/dictionary.json), and
+[radio framing guide](../../docs/comms/README.md).
+
+Earlier release and bench notes are in the [changelog](CHANGELOG.md) and
+[previous guide](https://github.com/ngrabbs/ember/blob/10cf329/firmware/payload/README.md).
