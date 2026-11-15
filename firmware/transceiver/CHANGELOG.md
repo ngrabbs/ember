@@ -4,7 +4,7 @@
 
 | Date | Version | Change |
 |---|---|---|
-| 2026-11-15 | 0.40.0 | Supports a 1500 baud downlink trial with automatic rollback to the last confirmed profile. |
+| 2026-11-15 | 0.40.0 | Adds a 1500-baud downlink trial with automatic rollback, tunes DBPSK symbol timing and phase acquisition, and adds optional ADC snapshot streaming. |
 | 2026-11-15 | 0.39.0 | Reports the active and factory UHF profile over CAN. |
 | 2026-11-14 | 0.38.0 · `819470b` | Services CAN during receive diagnostics and answers LINK_ACTIVE firmware identity requests for FULL telemetry. |
 | 2026-11-14 | Sweep build · `32db8e1` | Adds a temporary transmit sweep and tinySA capture. The bench run logged restoration and verification of the prior image. |

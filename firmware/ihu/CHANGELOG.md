@@ -4,7 +4,7 @@
 
 | Date | Version | Change |
 |---|---|---|
-| 2026-11-15 | 0.32.0 | Relays Yamcs radio profile trial and confirmation commands. |
+| 2026-11-15 | 0.32.0 | Stages and confirms supported radio profiles on Yamcs command and reports trial state over UHF and the CLI. |
 | 2026-11-15 | 0.31.0 | Requests transceiver defaults, active configuration and supported profiles over CAN and reports them to the CLI or Yamcs. |
 | 2026-11-15 | 0.30.0 | Starts FULL UHF telemetry on a 120/60 s cycle after LINK_ACTIVE and enables battery-only EPS ADC measurements by default. |
 | 2026-11-15 | 0.29.2 | Exposes the EPS battery-only ADC override on the UHF startup USB console. |

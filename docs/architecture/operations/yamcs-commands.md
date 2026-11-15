@@ -25,6 +25,8 @@ and any listed telemetry. A timeout leaves the outcome unknown.
 | `ember` | `0x000A` | `SET_UHF_TELEMETRY_SET` | `telemetry_set`: `BASIC` or `FULL` (default) | Completion reports the selected telemetry set. |
 | `ember` | `0x000B` | `REQUEST_IHU_FAULTS` | None | `IHU_FAULTS` with the latest 16 retained entries and this boot’s fault total. |
 | `ember` | `0x000C` | `REQUEST_RADIO_CONFIG` | None | `RADIO_CONFIG` with the transceiver’s active settings, defaults, and supported profiles. |
+| `ember` | `0x000D` | `SET_RADIO_PROFILE` | `profile`: `DBPSK_1200_V3` or `DBPSK_DL1500_V3` | Stages a timed UHF downlink profile trial and returns `RADIO_CONFIG`. |
+| `ember` | `0x000E` | `CONFIRM_RADIO_PROFILE` | `confirmation_token` from the active trial readback | Confirms the trial profile. An unconfirmed trial rolls back automatically. |
 | `ember-bench` | `0x0400` | `PAYLOAD_PING` | `bytes`: 1–240, default 1 | `PAYLOAD_PING_RESULT` with echo status and round-trip time. |
 | `ember-bench` | `0x0401` | `PAYLOAD_IDENT` | None | `PAYLOAD_FIRMWARE` with build identity. |
 | `ember-bench` | `0x0402` | `PAYLOAD_STATUS_QUERY` | None | `PAYLOAD_STATUS` status report. |
