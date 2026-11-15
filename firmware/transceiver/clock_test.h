@@ -41,15 +41,16 @@ static int64_t clock_deadline_callback(alarm_id_t id, void *user) {
     clock_deadline_fired = true;
     return 0;
 }
-static bool clock_window_drive(bool transmit, bool integer_comparison,
-                             bool (*payload)(uint64_t), unsigned drive) {
+static bool clock_window_impl(bool transmit, bool integer_comparison,
+                             bool (*payload)(uint64_t), unsigned drive, unsigned keyed_ms, bool (*can_permit)(void)) {
     alarm_id_t deadline_alarm = 0;
     clock_deadline_fired = false;
     gpio_put(10, false); gpio_put(11, false); gpio_put(16, false);
-    gpio_put(2, true); gpio_put(3, true);
+    if(!can_permit)gpio_put(2, true);
+    gpio_put(3, true);
     bool ok = false;
     uint8_t status = 0xff;
-    if (drive > 3) goto cleanup;
+    if (drive > 3 || (keyed_ms && (!transmit || !payload))) goto cleanup;
     if (!disable_clocks()) goto cleanup;
     if (!clock_read(0, &status) || (status & 0x88)) goto cleanup;
     /* Unused CLK1/CLK2 powered down. CLK0 remains disabled until lock check. */
@@ -80,8 +81,13 @@ static bool clock_window_drive(bool transmit, bool integer_comparison,
     }
     if (!locked) goto cleanup;
     if (payload) {
-        deadline_alarm = add_alarm_in_ms(2000, clock_deadline_callback, NULL, false);
+        deadline_alarm = add_alarm_in_ms(keyed_ms?keyed_ms:2000, clock_deadline_callback, NULL, false);
         if (deadline_alarm <= 0) goto cleanup;
+    }
+    if(can_permit && !can_permit())goto cleanup;
+    if(keyed_ms){
+        ok=payload(time_us_64()+(uint64_t)keyed_ms*1000) && !clock_deadline_fired;
+        goto cleanup;
     }
     if (transmit) {
         /* Select TX with CLK0 still disabled, then allow switch settling. */
@@ -118,6 +124,9 @@ cleanup:
       return ok && stopped; }
 }
 
+static bool clock_window_drive(bool transmit,bool comparison,bool (*payload)(uint64_t),unsigned drive) {
+    return clock_window_impl(transmit,comparison,payload,drive,0,NULL);
+}
 static bool clock_window_run(bool transmit, bool integer_comparison,
                              bool (*payload)(uint64_t)) {
     return clock_window_drive(transmit, integer_comparison, payload, 0);

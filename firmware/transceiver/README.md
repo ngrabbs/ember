@@ -2,11 +2,18 @@
 
 [Changelog](CHANGELOG.md) · [Current bench builds](../README.md#current-bench-builds)
 
+The verified bench image uses `-DTRANSCEIVER_BOOT_DEMO=ON` and source
+[`819470b`](https://github.com/ngrabbs/ember/commit/819470bbf877fa66f980bf9d0d138c081905af6c).
+This conducted profile supports the IHU LINK_ACTIVE bench link, continuous
+ADC sampling, and CAN identity requests for FULL telemetry. It defaults off.
+See the [firmware index](../README.md#current-bench-builds) for bench evidence.
+
 Original Pico only. Source: `firmware/transceiver`. The earlier
 FreeRTOS application was removed and remains available in Git history.
 The CMake target is `transceiver`; the output image is `transceiver.uf2`.
 Configure a fresh build directory after moving from the old source path.
-Current release: **0.34.0**. After startup checks, CAN A stays available and RF
+Current release: **0.38.0** in both build profiles. The behavior below describes
+the default profile. After startup checks, CAN A stays available and RF
 stays muted while idle. Healthy transceiver accepts validated IHU UHF telemetry at
 any time; no transceiver console `a`/`g` enable is required. IHU 0.14.0 controls
 telemetry permission through `output uhf_telem on` and starts work with a
