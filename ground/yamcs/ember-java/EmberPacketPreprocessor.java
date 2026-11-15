@@ -36,6 +36,9 @@ public class EmberPacketPreprocessor extends AbstractPacketPreprocessor {
         int kind = Byte.toUnsignedInt(b.get(WireProfile.KIND));
         int message = Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID));
         int payload = WireProfile.payloadLength(kind, message);
+        int reportedLength = Short.toUnsignedInt(b.getShort(WireProfile.PAYLOAD_LENGTH));
+        // Legacy PAYLOAD_STATUS ends before the optional detector profile.
+        if (kind == 1 && message == 54 && reportedLength == payload - 1) payload = reportedLength;
         int source = Byte.toUnsignedInt(b.get(WireProfile.SOURCE));
         int target = Byte.toUnsignedInt(b.get(WireProfile.TARGET));
         long epoch = Integer.toUnsignedLong(b.getInt(WireProfile.TRANSACTION_EPOCH));
@@ -44,7 +47,7 @@ public class EmberPacketPreprocessor extends AbstractPacketPreprocessor {
         if (identity != WireProfile.DOWNLINK_IDENTITY || seq >>> 14 != 3 ||
             Short.toUnsignedInt(b.getShort(4)) + 7 != bytes.length ||
             Byte.toUnsignedInt(b.get(WireProfile.SCHEMA_VERSION)) != WireProfile.SCHEMA ||
-            payload < 0 || payload != Short.toUnsignedInt(b.getShort(WireProfile.PAYLOAD_LENGTH)) ||
+            payload < 0 || payload != reportedLength ||
             WireProfile.PAYLOAD + payload + 2 != bytes.length ||
             source < 2 || source > 4 || target != 1 || boot == 0 ||
             (epoch == 0) != (transaction == 0) ||

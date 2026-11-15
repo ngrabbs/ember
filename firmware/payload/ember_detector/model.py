@@ -20,6 +20,10 @@ class Scene:
     wavelengths: tuple[float, float, float]
     saturated_fraction: float = 0.0
     evaluation_pixels: int | None = None
+    aligned_signals: tuple[np.ndarray, ...] = ()
+    native_signals: tuple[np.ndarray, ...] = ()
+    native_clipped: bool = False
+    native_valid: tuple[np.ndarray, ...] = ()
 
 
 @dataclass

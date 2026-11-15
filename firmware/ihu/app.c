@@ -250,6 +250,7 @@ static void payload_query_reply(const ul_packet *p,uint32_t elapsed){
         fields[W_PAYLOAD_STATUS_REPORT_KIND]=p->type==PL_STATUS_ACK?W_PAYLOAD_REPORT_KIND_STATUS:W_PAYLOAD_REPORT_KIND_HEARTBEAT;
         fields[W_PAYLOAD_STATUS_NODE]=p->payload[1];
         fields[W_PAYLOAD_STATUS_READY]=p->payload[2];
+        fields[W_PAYLOAD_STATUS_DETECTOR_PROFILE_ID]=p->payload[PL_REPORT_PROFILE_OFFSET];
         memcpy(fields+W_PAYLOAD_STATUS_REPORTED_BOOT_ID,p->payload+4,PL_REPORT_SIZE-4);
     }
     reply.size=(uint16_t)(W_PAYLOAD+size+2);

@@ -71,6 +71,18 @@ def generate(destination, command_filter=None, *, uhf_command_description=None, 
         for field in message["fields"]:
             name = message["name"] + "_" + field["name"]
             parameter(name, field)
+            if name == "PAYLOAD_STATUS_detector_profile_id":
+                # The byte is absent in legacy frames, where CRC starts at this offset.
+                extended = node(containers, "SequenceContainer", name="PAYLOAD_STATUS_WITH_PROFILE")
+                extended_entries = node(extended, "EntryList")
+                entry = node(extended_entries, "ParameterRefEntry", parameterRef=name)
+                payload_size = layout(message["fields"]).size
+                node(node(entry, "LocationInContainerInBits", referenceLocation="containerStart"),
+                     "FixedValue").text = str((30 + payload_size - 1) * 8)
+                extended_base = node(extended, "BaseContainer", containerRef=message["name"])
+                criteria = node(node(extended_base, "RestrictionCriteria"), "ComparisonList")
+                node(criteria, "Comparison", parameterRef="payload_length", value=payload_size)
+                continue
             entry = node(entries, "ParameterRefEntry", parameterRef=name)
             if field == message["fields"][0]:
                 node(node(entry, "LocationInContainerInBits", referenceLocation="containerStart"),

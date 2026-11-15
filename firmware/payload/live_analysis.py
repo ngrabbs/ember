@@ -79,6 +79,14 @@ def analyze(captures, settings, packet, config, deadline, worker, metadata=None)
         record = dict(result='UNKNOWN', reason='ANALYSIS_DEADLINE' if isinstance(error, (TimeoutError, subprocess.TimeoutExpired)) else type(error).__name__+':'+str(error),
                       input_source='LIVE_CAMERA', camera_capture_performed=True,
                       origin=packet.origin, request=packet.request)
+        from ember_detector.profiles import profile_name
+        from hashlib import sha256
+        profile = config['detector_profile']
+        encoded = json.dumps(profile, sort_keys=True, separators=(',', ':'), allow_nan=False)
+        record.update(profile=profile_name(profile), algorithm=profile['algorithm'],
+                      input_format=profile.get('input_format', 'jpeg'),
+                      config_sha256=sha256(encoded.encode()).hexdigest(),
+                      calibration_sha256=profile['calibration_sha256'])
         (case/'result.json').write_text(json.dumps(record, indent=2)+'\n')
     logging.info('ANALYSIS_RESULT origin=%u request=%u result=%s reason=%s monotonic_ns=%u evidence=%s',
                  packet.origin, packet.request, record['result'], record['reason'],
@@ -102,21 +110,24 @@ def process(case):
         config = dict(detector_profile=load_config(config), calibration=job['calibration'],
                       camera_image_directory=str(case.resolve()))
     channels = {}
+    raw = config['detector_profile'].get('input_format') == 'raw_dng'
     for capture in job['captures']:
         port = str(capture['port'])
         controls = dict(settings['shared'], **settings['per_camera'].get(port, {}))
         if controls.get('AeEnable') is not False:
             raise ValueError('MANUAL_EXPOSURE_REQUIRED')
-        name = capture['id']
+        name = capture['raw_id' if raw else 'id']
         if Path(name).name != name or name in ('', '.', '..'):
             raise ValueError('IMAGE_PATH')
         rotation = settings['rotations'].get(port, 0)
         if rotation not in (0, 180):
             raise ValueError('ROTATION')
-        channels[port] = dict(path=name, port=int(port), bytes=capture['bytes'],
+        channels[port] = dict(path=name, port=int(port), bytes=capture['raw_bytes' if raw else 'bytes'],
                               wavelength_nm=settings['wavelengths'][port],
                               exposure_us=controls['ExposureTime'], rotation=rotation,
                               configured_controls=controls)
+        if raw and config['detector_profile'].get('raw_matching') == 'paired_jpeg':
+            channels[port]['matching_jpeg'] = dict(path=capture['id'], bytes=capture['bytes'])
     manifest = dict(fixtures=[dict(fixture_id='live', channels=channels)])
     path = case/'manifest.json'
     path.write_text(json.dumps(manifest, indent=2)+'\n')
@@ -124,7 +135,8 @@ def process(case):
                     live_image_root=config['camera_image_directory'])
     record.update(input_source='LIVE_CAMERA', camera_capture_performed=True,
                   origin=job['origin'], request=job['request'])
-    record['warnings'].append('EXPOSURE_AND_GAIN_FROM_SETTINGS_NOT_SENSOR_METADATA')
+    record['warnings'].append('GAIN_FROM_SETTINGS_NOT_SENSOR_METADATA' if raw
+                              else 'EXPOSURE_AND_GAIN_FROM_SETTINGS_NOT_SENSOR_METADATA')
     (case/'result.json').write_text(json.dumps(record, indent=2, allow_nan=False)+'\n')
 
 

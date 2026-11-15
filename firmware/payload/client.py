@@ -68,6 +68,12 @@ def main():
         kind = {'ping': ECHO, 'ident': IDENT, 'status': STATUS, 'heartbeat': HEARTBEAT, 'fire-check': FIRE_CHECK}[args.command]
         response = client.ask(kind, b'EMBER' if kind == ECHO else b'')
         print(f'{args.command}: boot={response.sender} request={response.request} payload={response.payload.hex()}')
+        if kind in (STATUS, HEARTBEAT):
+            from protocol import REPORT
+            from ember_detector.profiles import PROFILE_IDS
+            profile_id = REPORT.unpack(response.payload)[3]
+            profile = next((name for name, code in PROFILE_IDS.items() if code == profile_id), 'unreported')
+            print(f'detector_profile_id={profile_id} detector_profile={profile}')
         if kind == ECHO and response.payload != b'EMBER':
             raise RuntimeError('Echo mismatch')
     finally:

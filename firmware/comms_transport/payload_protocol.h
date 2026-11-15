@@ -22,10 +22,11 @@ static inline bool pl_fire_valid(const uint8_t *p,size_t n,uint32_t boot) {
         boot && ul_u32(p+4)==boot && ul_u32(p+12);
 }
 #define PL_REPORT_SIZE 28u
-/* Big endian: version8, node8, ready8, reserved8, then uint32 boot,
+#define PL_REPORT_PROFILE_OFFSET 3u
+/* Big endian: version8, node8, ready8, detector profile ID8 (0=unreported), then uint32 boot,
  * daemon uptime_ms, requests, replies queued, rejections, fragment errors.
  * A heartbeat is requested, never emitted unsolicited. */
 static inline bool pl_report_valid(const uint8_t *p,size_t n,uint32_t boot) {
-    return n==PL_REPORT_SIZE && p[0]==1 && p[1]==4 && p[2]==1 && !p[3] &&
+    return n==PL_REPORT_SIZE && p[0]==1 && p[1]==4 && p[2]==1 &&
         boot && ul_u32(p+4)==boot;
 }

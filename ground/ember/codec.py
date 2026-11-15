@@ -70,6 +70,8 @@ def encode(name, *, sequence, source, target, transaction_epoch=0,
         raise PacketError("unknown message name")
     if not isinstance(sequence, int) or not 0 <= sequence < 16384:
         raise PacketError("sequence outside 14-bit range")
+    if name == "PAYLOAD_STATUS" and "detector_profile_id" not in payload:
+        payload = dict(payload, detector_profile_id=0)
     body = pack_fields(message["fields"], payload)
     header = dict(schema_version=DICTIONARY["schema_version"],
                   kind=DICTIONARY["kinds"][message["kind"]], message_id=message["id"],
@@ -121,7 +123,9 @@ def decode(packet, *, allow_unknown_command=False):
         return {"name": None, "sequence": sequence & 0x3fff,
                 "header": header, "payload": {}, "raw_payload": body}
     payload_layout = layout(message["fields"])
-    if len(body) != header["payload_length"] or len(body) != payload_layout.size:
+    if message["name"] == "PAYLOAD_STATUS" and len(body) == payload_layout.size - 1:
+        body += b"\0"
+    elif len(body) != payload_layout.size:
         raise PacketError("payload length mismatch")
     payload = dict(zip((f["name"] for f in message["fields"]), payload_layout.unpack(body)))
     return {"name": message["name"], "sequence": sequence & 0x3fff,

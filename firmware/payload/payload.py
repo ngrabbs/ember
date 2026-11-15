@@ -21,7 +21,7 @@ from protocol import (Packet, Reassembler, CAN_FRAME, REPORT, QUERY_ID, DISCOVER
 
 
 class Service:
-    def __init__(self, identity, boot=None, now=time.monotonic, capture=None):
+    def __init__(self, identity, boot=None, now=time.monotonic, capture=None, detector_profile_id=0):
         self.identity = identity
         self.boot = boot or secrets.randbelow(0xffffffff) + 1
         self.now = now; self.started = now()
@@ -29,6 +29,7 @@ class Service:
         self.requests = self.replies = self.rejected = 0
         self.checks = 0
         self.capture = capture
+        self.detector_profile_id = detector_profile_id
         self.pending_capture = None
 
     def fire_result(self, packet, decision=0, mode=1, gps=None, analysis_error=0):
@@ -57,8 +58,12 @@ class Service:
             return Packet(ERROR, self.boot, packet.origin, packet.request, b'\x08')
         if isinstance(outcome, dict) and 'result' in outcome:
             gps = outcome.pop('_gps_wire', None)
-            quality_unknown = (outcome['result'] == 'UNKNOWN' and outcome.get('reason') in
-                               ('REGISTRATION_LOW_CONTRAST', 'REGISTRATION_WEAK_FIT'))
+            reason = outcome.get('reason', '')
+            quality_unknown = (outcome['result'] == 'UNKNOWN' and
+                               (reason.startswith('REGISTRATION_') or reason in
+                                ('DIAGNOSTIC_SCORE_ONLY', 'INSUFFICIENT_SCORE_SUPPORT',
+                                 'INSUFFICIENT_OVERLAP', 'INSUFFICIENT_VALID_SIGNAL',
+                                 'EXCESSIVE_CLIPPING')))
             if quality_unknown:
                 response = self.fire_result(packet, 2, 2, gps)
             elif outcome['result'] not in ('FIRE', 'NO_FIRE') and gps is not None:
@@ -132,7 +137,7 @@ class Service:
             version = bytes(int(x) for x in self.identity['version'].split('.'))
             data = version + bytes([self.identity['dirty']]) + bytes.fromhex(self.identity['git'])
             return reply(IDENT_ACK, data + struct.pack('>II', self.boot, uptime))
-        report = REPORT.pack(1, NODE, 1, 0, self.boot, uptime, self.requests & 0xffffffff,
+        report = REPORT.pack(1, NODE, 1, self.detector_profile_id, self.boot, uptime, self.requests & 0xffffffff,
                              self.replies & 0xffffffff, self.rejected & 0xffffffff,
                              fragment_errors & 0xffffffff)
         return reply(STATUS_ACK if packet.kind == STATUS else HEARTBEAT_ACK, report)
@@ -153,11 +158,11 @@ def open_can(interface):
         raise
 
 
-def run(interface, identity, lock_path='/run/ember-payload/owner.lock', capture=None):
+def run(interface, identity, lock_path='/run/ember-payload/owner.lock', capture=None, detector_profile_id=0):
     # Keep one responder/boot identity per physical payload interface.
     with open(lock_path, 'w') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        service = Service(identity, capture=capture)
+        service = Service(identity, capture=capture, detector_profile_id=detector_profile_id)
         parser = Reassembler()
         outgoing = deque()
         stopped = False
@@ -231,8 +236,10 @@ def main():
     if args.fire_check_config:
         from camera_capture import CameraCapture
         from fire_check_config import load
+        from ember_detector.profiles import PROFILE_IDS, profile_name
         with CameraCapture.from_config(load(args.fire_check_config)) as camera:
-            run(args.interface, identity, args.lock, capture=camera.submit)
+            profile_id = PROFILE_IDS.get(profile_name(camera.config['detector_profile']), 0)
+            run(args.interface, identity, args.lock, capture=camera.submit, detector_profile_id=profile_id)
     elif args.capture_url:
         from camera_capture import CameraCapture
         with CameraCapture(args.capture_url) as camera:

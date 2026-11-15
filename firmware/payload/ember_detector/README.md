@@ -38,7 +38,7 @@ Treat prepared arrays as read-only. If an algorithm loads external model
 weights, include their hash/version in its evidence as well as its algorithm ID.
 The registry is explicit; configuration does not execute arbitrary imports.
 
-Two implementations exercise this seam:
+The two EGSE implementations use this seam:
 
 - `spectral_excess_v1`: interpolated continuum, absolute/fractional excess,
   connected candidate regions and coverage/clipping gates.
@@ -153,6 +153,39 @@ hide weak or small flames. Every tested setting, including false alarms and
 UNKNOWNs, is retained in the report. The report also records the base profile,
 implementation/tuner hashes and dependency versions. Run on the target Pi:
 matching results and downstream decisions can differ across OpenCV builds/CPUs.
+
+## Select and tune development profiles
+
+The default is `jpeg-guarded`. Each suffix has a `jpeg-` and `raw-` variant.
+
+| Detector | Default settings |
+| --- | --- |
+| [`guarded`](guarded.py), [`baseline`](spectral.py) | Minimum region and valid coverage are 16 px / 10% for JPEG and 8 px / 0.430% for RAW. Guarded adds a 2 px neighborhood. |
+| [`six-sigma`](six_sigma.py) | 770/780 ratio, six standard deviations, positive denominator. Set `min_hits` for a scene decision. |
+| [`jacob-p`](jacob_p.py) | 99th-percentile fractional excess with a 4 DN continuum floor. |
+| [`jacob-i`](jacob_i.py), [`jacob-i-native`](jacob_i_native.py) | Background-subtracted brightness. Set `source` and `background` to `[x0,y0,x1,y1]` with exclusive upper bounds. Registered boxes use the 770 nm grid. Native boxes use one rectangle per band in wavelength order. |
+| [`jacob-gross`](jacob_gross.py) | Whole-frame brightness sums. |
+| [`koenig`](koenig.py) | Whole-frame brightness sums at or above 16 DN. |
+
+Diagnostic profiles use 750/770/780 nm inputs and report scores with UNKNOWN
+until a decision threshold is set. Registered Jacob profiles use phase
+translation. Native profiles skip registration.
+
+Install `requirements-raw.txt` for monochrome Pi DNGs. The decoder uses the
+tagged black level and exposure. Use DNG paths and hashes in the manifest.
+For registration on companion JPEGs, set `raw_matching` to `paired_jpeg`
+and add a `matching_jpeg` object with `path` and `sha256` to each stored channel.
+
+```sh
+PYTHONPATH=firmware/payload python3 -m ember_detector.profiles raw-guarded > raw-guarded.json
+python3 firmware/payload/tune_detector.py --config raw-guarded.json --manifest manifest.json --calibration correction.npz --output sweep.json --area 8 16 --coverage 0.0043 0.005
+```
+
+Set the calibration hash in the exported profile before running the sweep.
+Use `--profile` for built-in settings and `--config` for edited copies.
+The tuner accepts any detector parameter via `--sweep 'key=[value1,value2]'`.
+Copy a trial's `settings` into the profile's `detector` object and validate
+decision thresholds on separate labeled scenes.
 
 ## Command integration
 

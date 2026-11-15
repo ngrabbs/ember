@@ -44,6 +44,9 @@ class CameraCapture:
     def from_config(cls, config):
         from ember_detector.pipeline import validate_config
         from live_analysis import AnalysisWorker
+        from ember_detector.profiles import named_profile
+        if isinstance(config['detector_profile'], str):
+            config = dict(config, detector_profile=named_profile(config['detector_profile']))
         validate_config(config['detector_profile'])
         camera = cls(config['camera_url'], config)
         camera.analysis_worker = AnalysisWorker(config['worker_startup_timeout_s'])
@@ -82,6 +85,9 @@ class CameraCapture:
         if (not health.get('ok') or health.get('timer_active') or
                 health.get('focus_port') is not None or settings.get('burst_count') != 1):
             raise RuntimeError('camera daemon must be idle with timer off and burst_count=1')
+        if (self.config['detector_profile'].get('input_format') == 'raw_dng'
+                and not health.get('raw_recording')):
+            raise RuntimeError('RAW profile requires camera daemon RAW recording')
         capture_start = time.monotonic_ns()
         captures = request('/capture', post=True)['captures']
         if (len(captures) != 3 or {c['port'] for c in captures} != {0, 1, 2} or

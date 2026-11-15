@@ -192,7 +192,7 @@ def generate(destination, instance="ember"):
     for x in (22,510):box(x,140,468,330)
     label('LAST STATUS / HEARTBEAT',40,154,430,22,12,BLUE,True)
     fresh('PAYLOAD_STATUS_ready',40,184,430)
-    for title,pv,y in [('Ready at reply','ready',222),('Payload boot ID','reported_boot_id',276),('Payload uptime (ms)','reported_uptime_ms',330),('Fragment errors','fragment_errors',384)]:
+    for title,pv,y in [('Ready at reply','ready',215),('Payload boot ID','reported_boot_id',256),('Payload uptime (ms)','reported_uptime_ms',297),('Fragment errors','fragment_errors',338),('Detector profile','detector_profile_id',379)]:
         label(title,40,y,240,22,11);observed('PAYLOAD_STATUS_'+pv,290,y-3,170,17)
     stamp('PAYLOAD_STATUS_ready',40,435,430)
     label('LAST VERIFIED PING',528,154,430,22,12,BLUE,True)
