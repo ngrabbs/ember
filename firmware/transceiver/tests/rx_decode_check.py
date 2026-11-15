@@ -11,7 +11,7 @@ with tempfile.TemporaryDirectory() as d:
     def run(samples):
         raw.write_bytes(struct.pack('<32768H',*samples))
         return subprocess.check_output([str(exe),str(raw)],text=True).strip()
-    evidence=ROOT/'system/ground_station/evidence/rx-bringup-20261017'
+    evidence=Path(__file__).resolve().parent/'fixtures'/'rx-bringup-20261017'
     proofs=json.loads((evidence/'libre-packet-40db-proof.json').read_text())
     for proof in proofs:
         text=(evidence/(proof['name']+'-console.txt')).read_text()
