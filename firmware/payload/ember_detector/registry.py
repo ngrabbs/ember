@@ -1,8 +1,12 @@
 """Explicit registry. Add a detector here; acquisition and CAN stay unchanged."""
 from .spectral import SpectralExcess
 from .guarded import GuardedSpectral
+from .diagnostics import SixSigma, JacobP, JacobI, JacobINative, JacobGross, Koenig
 
 _FACTORIES = {'spectral_excess_v1': SpectralExcess, 'spectral_guarded_v1': GuardedSpectral}
+
+for detector in (SixSigma, JacobP, JacobI, JacobINative, JacobGross, Koenig):
+    _FACTORIES[detector.algorithm_id] = detector
 
 
 def register(name, factory):

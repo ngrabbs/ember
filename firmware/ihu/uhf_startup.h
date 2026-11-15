@@ -118,6 +118,7 @@ static size_t uhf_startup_payload_status_packet(uint8_t *packet){
     p[W_PAYLOAD_STATUS_REPORT_KIND]=W_PAYLOAD_REPORT_KIND_STATUS;
     p[W_PAYLOAD_STATUS_NODE]=report[1];
     p[W_PAYLOAD_STATUS_READY]=report[2];
+    p[W_PAYLOAD_STATUS_DETECTOR_PROFILE_ID]=report[PL_REPORT_PROFILE_OFFSET];
     memcpy(p+W_PAYLOAD_STATUS_REPORTED_BOOT_ID,report+4,PL_REPORT_SIZE-4);
     ul_p16(packet+size-2,ul_crc(packet,size-2));
     return size;

@@ -9,6 +9,7 @@ import cv2
 import numpy as np
 from .model import Decision, Result, Scene
 from .registry import create
+from .profiles import named_profile, profile_name
 
 
 def digest(data):return hashlib.sha256(data).hexdigest()
@@ -21,23 +22,30 @@ def bounded(value, low, high, name, integer=False):
     if integer and not isinstance(value,int):raise ValueError('Integer required: '+name)
 
 
-def load_config(path):
-    return validate_config(json.loads(Path(path).read_text()))
+def load_config(path=None, *, profile=None):
+    config = json.loads(Path(path).read_text()) if path else named_profile(profile or 'jpeg-guarded')
+    return validate_config(config)
 
 
 def validate_config(config):
     expected={'schema_version','algorithm','exploratory_jpeg','calibration_sha256','dark_policy',
               'reference_exposure_us','roi_margin_fraction','max_pixels','max_input_bytes','registration','detector'}
+    expected |= config.keys() & {'input_format', 'raw_matching'}
     if set(config)!=expected or config['schema_version']!=1:raise ValueError('Unsupported configuration schema/keys')
-    if config['exploratory_jpeg'] is not True or config['dark_policy']!='none':
-        raise ValueError('This input adapter requires explicit exploratory JPEG / no dark subtraction')
+    fmt = config.get('input_format', 'jpeg')
+    expected_policy = {'jpeg': (True, 'none'), 'raw_dng': (False, 'dng_black_level')}
+    if (fmt not in expected_policy or type(config['exploratory_jpeg']) is not bool
+            or (config['exploratory_jpeg'], config['dark_policy']) != expected_policy[fmt]):
+        raise ValueError('Unsupported input format or black-level policy')
+    if 'raw_matching' in config and (fmt != 'raw_dng' or config['raw_matching'] not in ('raw', 'paired_jpeg')):
+        raise ValueError('Invalid RAW matching source')
     if len(bytes.fromhex(config['calibration_sha256']))!=32:raise ValueError('Calibration hash')
     bounded(config['reference_exposure_us'],1,1000000,'reference exposure')
     bounded(config['roi_margin_fraction'],.1,.45,'ROI margin')
     for key in ('max_pixels','max_input_bytes'):bounded(config[key],1,20000000,key,True)
     reg=config['registration']
     reg_keys={'mode','max_features','min_inliers','min_inlier_fraction','max_error_px','min_overlap_fraction'}
-    if reg.get('mode')=='normalized_orb_homography':
+    if reg.get('mode') in ('normalized_orb_homography', 'phase_translation'):
         reg_keys|={'contrast_percentiles','min_contrast_dn'}
         percentiles=reg.get('contrast_percentiles')
         if not isinstance(percentiles,list) or len(percentiles)!=2:raise ValueError('Contrast percentiles')
@@ -45,7 +53,7 @@ def validate_config(config):
         if percentiles[0]>=percentiles[1]:raise ValueError('Contrast percentile order')
         bounded(reg.get('min_contrast_dn'),1,255,'minimum matching contrast')
     if set(reg)!=reg_keys:raise ValueError('Registration keys')
-    if reg['mode'] not in ('prealigned','orb_homography','normalized_orb_homography'):raise ValueError('Registration mode')
+    if reg['mode'] not in ('prealigned','orb_homography','normalized_orb_homography','phase_translation'):raise ValueError('Registration mode')
     for key in ('max_features','min_inliers'):bounded(reg[key],4,10000,key,True)
     for key in ('min_inlier_fraction','min_overlap_fraction'):bounded(reg[key],.01,1,key)
     bounded(reg['max_error_px'],.01,10,'registration error')
@@ -64,6 +72,8 @@ def matching_image(image, settings):
 
 def align(source, target, settings):
     if settings['mode']=='prealigned':return np.eye(3),{'mode':'prealigned_asserted_by_profile'}
+    if settings['mode'] == 'phase_translation':
+        return phase_align(source, target, settings)
     # Contrast enhancement affects matching only, never the measured signals.
     contrast={}
     if settings['mode']=='normalized_orb_homography':
@@ -95,12 +105,45 @@ def align(source, target, settings):
     return matrix,quality
 
 
+def phase_align(source, target, settings):
+    """Fit a translation on contrast-normalized matching copies."""
+    clahe = cv2.createCLAHE(clipLimit=2, tileGridSize=(8, 8))
+    a, b = [clahe.apply(matching_image(image, settings)[0]).astype(np.float32)
+            for image in (source, target)]
+    size = source.shape[::-1]
+    window = cv2.createHanningWindow(size, cv2.CV_32F)
+    (x, y), response = cv2.phaseCorrelate(a.copy(), b.copy(), window)
+    if not np.isfinite([x, y, response]).all():
+        raise ValueError('REGISTRATION_PHASE_NONFINITE')
+    matrix = np.array([[1., 0., x], [0., 1., y], [0., 0., 1.]])
+    support = cv2.warpPerspective(np.ones_like(a), matrix, size) >= .999
+    if support.mean() < settings['min_overlap_fraction']:
+        raise ValueError('REGISTRATION_PHASE_OVERLAP')
+    a = cv2.warpPerspective(a, matrix, size)[support]
+    b = b[support]
+    ncc = float(np.corrcoef(a, b)[0, 1]) if a.std() > 0 and b.std() > 0 else 0.
+    if not np.isfinite(ncc) or ncc < .5:
+        raise ValueError('REGISTRATION_PHASE_CORRELATION')
+    return matrix, dict(mode='phase_translation', ncc=ncc, response=float(response),
+                        source_to_reference=matrix.tolist())
+
+
 def prepare(fixture, root, config, calibration, live_inputs=None):
     channels=fixture['channels'];ordered=sorted(channels.values(),key=lambda c:c['wavelength_nm'])
     if len(ordered)!=3 or len({c['port'] for c in ordered})!=3:raise ValueError('TRIPLET_REQUIRED')
     waves=tuple(c['wavelength_nm'] for c in ordered)
     if not all(isinstance(w,(int,float)) and math.isfinite(w) and w>0 for w in waves) or not waves[0]<waves[1]<waves[2]:raise ValueError('WAVELENGTH_ORDER')
-    raw=[];corrected=[];masks=[];saturated=[];shape=None;root=Path(root).resolve()
+    detector = create(config['algorithm'])
+    native_only = getattr(detector, 'requires_native', False)
+    use_raw = config.get('input_format') == 'raw_dng'
+    raw = []; corrected = []; masks = []; saturated = []; native = []
+    matching_images = []
+    orientations = []
+    native_masks = []
+    shape = None
+    root = Path(root).resolve()
+    if config['algorithm'].startswith(('six_sigma_', 'jacob_', 'koenig_')) and waves != (750, 770, 780):
+        raise ValueError('PROFILE_WAVELENGTHS_REQUIRE_750_770_780')
     if digest(Path(calibration).read_bytes())!=config['calibration_sha256']:raise ValueError('CALIBRATION_HASH')
     with np.load(calibration,allow_pickle=False) as maps:
         for channel in ordered:
@@ -115,30 +158,94 @@ def prepare(fixture, root, config, calibration, live_inputs=None):
             else:
                 if len(data)!=channel['bytes']:raise ValueError('IMAGE_SIZE')
                 live_inputs[str(channel['port'])]=dict(channel, sha256=sha256)
-            image=cv2.imdecode(np.frombuffer(data,dtype=np.uint8),cv2.IMREAD_GRAYSCALE)
-            if image is None:raise ValueError('IMAGE_DECODE')
-            if image.size>config['max_pixels']:raise ValueError('IMAGE_DIMENSIONS')
-            if live_inputs is None:
-                if list(image.shape[::-1])!=[channel['width'],channel['height']]:raise ValueError('IMAGE_DIMENSIONS')
-            elif channel['rotation']==180:
-                # Gain maps are in sensor coordinates.
-                image=cv2.rotate(image,cv2.ROTATE_180)
-            if shape is not None and image.shape!=shape:raise ValueError('CHANNEL_SHAPE')
-            shape=image.shape
-            exposure=channel.get('exposure_us')
-            bounded(exposure,1,1000000,'exposure')
+            exposure = channel.get('exposure_us')
+            if use_raw:
+                from .raw import decode_dng
+                image, sat, exposure = decode_dng(data, config['max_pixels'])
+                if live_inputs is not None:
+                    live_inputs[str(channel['port'])]['sensor_exposure_us'] = exposure
+            else:
+                image = cv2.imdecode(np.frombuffer(data, dtype=np.uint8), cv2.IMREAD_GRAYSCALE)
+                if image is None:
+                    raise ValueError('IMAGE_DECODE')
+                sat = image >= 250
+            if image.size > config['max_pixels']:
+                raise ValueError('IMAGE_DIMENSIONS')
+            if live_inputs is None and list(image.shape[::-1]) != [channel['width'], channel['height']]:
+                raise ValueError('IMAGE_DIMENSIONS')
+            native.append(image)
+            native_masks.append(~sat)
+            rotation = channel.get('rotation', 0) if use_raw or live_inputs is not None else 0
+            if rotation not in (0, 180):
+                raise ValueError('ROTATION')
+            if rotation == 180:
+                image, sat = image[::-1, ::-1], sat[::-1, ::-1]
+            if shape is not None and image.shape != shape:
+                raise ValueError('CHANNEL_SHAPE')
+            shape = image.shape
+            bounded(exposure, 1, 1000000, 'exposure')
+            if native_only:
+                continue
             gain=maps['gain_'+str(channel['port'])]
             if gain.shape!=shape or not np.isfinite(gain).all() or (gain<=0).any():raise ValueError('CALIBRATION_MAP')
             value=image.astype(np.float32)*gain*(config['reference_exposure_us']/exposure)
             valid=np.ones(shape,dtype=bool);margin=config['roi_margin_fraction'];h,w=shape
             valid[:math.ceil(h*margin)]=False;valid[h-math.ceil(h*margin):]=False
             valid[:,:math.ceil(w*margin)]=False;valid[:,w-math.ceil(w*margin):]=False
-            sat=image>=250
+            matching = native[-1] if config['registration']['mode'] == 'phase_translation' else image
+            if config.get('raw_matching') == 'paired_jpeg' and config['registration']['mode'] != 'prealigned':
+                pair = channel['matching_jpeg']
+                pair_path = (root / pair['path']).resolve()
+                if not pair_path.is_relative_to(root):
+                    raise ValueError('INPUT_PATH_ESCAPE')
+                with pair_path.open('rb') as stream:
+                    pixels = stream.read(config['max_input_bytes'] + 1)
+                if len(pixels) > config['max_input_bytes']:
+                    raise ValueError('MATCHING_JPEG_TOO_LARGE')
+                fingerprint = digest(pixels)
+                if live_inputs is None:
+                    if fingerprint != pair['sha256']:
+                        raise ValueError('MATCHING_JPEG_HASH')
+                elif len(pixels) != pair['bytes']:
+                    raise ValueError('MATCHING_JPEG_SIZE')
+                else:
+                    live_inputs[str(channel['port'])]['matching_jpeg'] = dict(pair, sha256=fingerprint)
+                matching = cv2.imdecode(np.frombuffer(pixels, np.uint8), cv2.IMREAD_GRAYSCALE)
+                if matching is None or matching.shape != shape:
+                    raise ValueError('MATCHING_JPEG_DIMENSIONS')
+                if rotation == 180 and config['registration']['mode'] != 'phase_translation':
+                    matching = matching[::-1, ::-1]
+            matching_images.append(matching)
+            orientations.append(np.array([[-1,0,w-1],[0,-1,h-1],[0,0,1]])
+                                if rotation == 180 else np.eye(3))
             raw.append(image);corrected.append(value);masks.append(valid & ~sat);saturated.append(sat & valid)
+    native_clipped = any(not mask.all() for mask in native_masks)
+    if native_only:
+        return Scene(*native, np.ones(shape, bool), waves, native_signals=tuple(native),
+                     native_clipped=native_clipped, native_valid=tuple(native_masks)), {}
     h,w=shape;registered=[];support=[];satmaps=[];fits=[]
+    spectral = []
+    matching = matching_images
+    if use_raw and config['registration']['mode'] == 'orb_homography' and config.get('raw_matching') != 'paired_jpeg':
+        matching = [np.clip(a / 4, 0, 255).astype(np.uint8) for a in raw]
     for i in range(3):
-        matrix,quality=(np.eye(3),{'mode':'reference'}) if i==1 else align(raw[i],raw[1],config['registration'])
+        if i == 1:
+            fits.append({'mode': 'reference'})
+            registered.append(corrected[i])
+            support.append(masks[i])
+            satmaps.append(saturated[i])
+            if hasattr(detector, 'requires_native'):
+                spectral.append(raw[i].astype(np.float32, copy=False))
+            continue
+        matrix, quality = align(matching[i], matching[1], config['registration'])
+        if config['registration']['mode'] == 'phase_translation':
+            # Phase correlation observes saved orientation. Warp sensor-coordinate
+            # signals by composing with the per-camera orientation transforms.
+            matrix = orientations[1] @ matrix @ orientations[i]
+            quality['source_to_reference'] = matrix.tolist()
         fits.append(quality)
+        if hasattr(detector, "requires_native"):
+            spectral.append(cv2.warpPerspective(raw[i].astype(np.float32),matrix,(w,h)))
         registered.append(cv2.warpPerspective(corrected[i],matrix,(w,h),flags=cv2.INTER_LINEAR))
         # Linear-resampled validity requires every contributing pixel valid.
         support.append(cv2.warpPerspective(masks[i].astype('float32'),matrix,(w,h),flags=cv2.INTER_LINEAR)>=.999)
@@ -149,7 +256,7 @@ def prepare(fixture, root, config, calibration, live_inputs=None):
     overlap=float(common.sum()/max(1,reference_roi.sum()))
     if overlap<config['registration']['min_overlap_fraction']:raise ValueError('INSUFFICIENT_OVERLAP')
     clipped=float((np.logical_or.reduce(satmaps)&reference_roi).sum()/max(1,reference_roi.sum()))
-    return Scene(*registered,common,waves,clipped,int(reference_roi.sum())),dict(registration=fits,overlap_fraction=overlap)
+    return Scene(*registered,common,waves,clipped,int(reference_roi.sum()),tuple(spectral)),dict(registration=fits,overlap_fraction=overlap)
 
 
 def run(manifest_path, fixture_id, config, calibration, *, live_image_root=None):
@@ -160,6 +267,9 @@ def run(manifest_path, fixture_id, config, calibration, *, live_image_root=None)
                 algorithm=config['algorithm'],config_sha256=digest(canonical(config)),
                 calibration_sha256=config['calibration_sha256'],analysis_unix_ms=time.time_ns()//1000000,
                 warnings=['EXPLORATORY_JPEG_LINEARITY_UNVERIFIED','OPTICAL_COMPATIBILITY_UNVERIFIED','GAIN_UNKNOWN','DARK_NOT_SUBTRACTED'])
+    record.update(profile=profile_name(config), input_format=config.get('input_format', 'jpeg'))
+    if record['input_format'] == 'raw_dng':
+        record['warnings'] = ['RAW_DNG_TAGGED_BLACK_LEVEL', 'RAW_FLAT_FIELD_COMPATIBILITY_UNVERIFIED']
     maps={}
     try:
         manifest=json.loads(manifest_path.read_text());record['manifest_sha256']=digest(manifest_path.read_bytes())

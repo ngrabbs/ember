@@ -30,6 +30,7 @@ class Console:
         import serial
         self.port = serial.Serial(device, 115200, timeout=.02, write_timeout=.5, exclusive=True)
         self.boot = self.uptime = 0
+        self.uhf_startup = False
         self.sampled = time.monotonic()
 
     def command(self, text, outcome=None, on_submit=lambda: None, timeout=3):
@@ -44,6 +45,8 @@ class Console:
             print(json.dumps({'console_command':text, 'line':line}), flush=True)
             if line.startswith('FIRMWARE role=IHU_MCU '):
                 self.boot = int(re.search(r' boot=(\d+)', line)[1])
+            if line.startswith('MODE configuration='):
+                self.uhf_startup = ' reason=UHF_STARTUP_' in line
             if line.startswith('STATUS role=IHU_MCU '):
                 self.uptime = int(re.search(r' uptime_ms=(\d+)', line)[1]); self.sampled=time.monotonic()
                 if text == 'status':
@@ -54,11 +57,15 @@ class Console:
                 return line
             if text == 'eps json' and line.startswith('{"profile":"ltc4162-l-readout-v1",'):
                 return line
-            match = re.search(r'^SUBMITTED request=(\d+) ', line)
+            match = re.search(r'^SUBMITTED request=(\d+) type=(\d+) ', line)
             if match and outcome is not None:
-                request = int(match[1]); on_submit()
+                request = int(match[1])
+                if match[2] != '1' or outcome == 'CAN_HELLO_CONFIRMED':
+                    on_submit()
             match = re.search(r'^RESULT request=(\d+) outcome=(\w+)', line)
             if match and request == int(match[1]):
+                if match[2] == 'CAN_HELLO_CONFIRMED' and outcome != match[2]:
+                    continue
                 if match[2] != outcome:
                     if match[2].startswith('UNKNOWN'):
                         raise UnknownOutcome(line)
@@ -71,7 +78,7 @@ class Console:
     def execute(self, name, size, on_submit):
         self.command('status')
         deadline = time.monotonic() + 3
-        while True:
+        while not self.uhf_startup:
             try:
                 self.command('hello payload', 'CAN_HELLO_CONFIRMED')
                 break
@@ -83,13 +90,15 @@ class Console:
                 if str(error) != 'REJECT reason=BUSY_TARGET_SWITCH' or time.monotonic() >= deadline:
                     raise
                 time.sleep(.1)
-        text = {'PAYLOAD_PING':f'ping {size}', 'PAYLOAD_IDENT':'payload ident',
+        ping = f'payload ping {size}' if self.uhf_startup else f'ping {size}'
+        text = {'PAYLOAD_PING':ping, 'PAYLOAD_IDENT':'payload ident',
                 'PAYLOAD_STATUS_QUERY':'payload status', 'PAYLOAD_HEARTBEAT_QUERY':'payload heartbeat', 'PAYLOAD_FIRE_CHECK':'payload fire-check'}[name]
         expected = {'PAYLOAD_PING':'CAN_ECHO_MATCHED', 'PAYLOAD_IDENT':'FIRMWARE_IDENTITY',
                     'PAYLOAD_STATUS_QUERY':'PAYLOAD_STATUS', 'PAYLOAD_HEARTBEAT_QUERY':'PAYLOAD_HEARTBEAT', 'PAYLOAD_FIRE_CHECK':'PAYLOAD_FIRE_RESULT'}[name]
         started=time.monotonic()
-        result=self.command(text, expected, on_submit)
-        matches=re.findall(r'^RESULT request=\d+ outcome=\w+ peer=(\d+) bytes=(\d+) hex=([0-9a-f]+)$',result,re.M)
+        timeout = 13 if name == 'PAYLOAD_FIRE_CHECK' else 3
+        result=self.command(text, expected, on_submit, timeout=timeout)
+        matches=re.findall(rf'^RESULT request=\d+ outcome={expected} peer=(\d+) bytes=(\d+) hex=([0-9a-f]+)$',result,re.M)
         if len(matches)!=1:
             raise UnknownOutcome('Missing unique validated payload result')
         peer,length,hexadecimal=matches[0]; raw=bytes.fromhex(hexadecimal)
@@ -99,7 +108,9 @@ class Console:
 
     def close(self):
         # Restore the usual target when the bridge deliberately releases ownership.
-        try:self.command('hello comms','CAN_HELLO_CONFIRMED')
+        try:
+            if not self.uhf_startup:
+                self.command('hello comms','CAN_HELLO_CONFIRMED')
         except Exception:pass
         self.port.close()
 
@@ -107,10 +118,11 @@ class Console:
 def observed(name, raw, peer, elapsed, bridge):
     common={'transport':1,'bridge_session_id':bridge,'reported_boot_id':peer}
     if name=='PAYLOAD_FIRE_CHECK':
-        if (len(raw)!=16 or raw[0]!=1 or raw[1]>1 or raw[2] not in (1,2) or raw[3] or
+        if (len(raw)!=16 or raw[0] not in (1,2) or raw[1] > (1 if raw[0] == 1 else 2) or
+                raw[2] not in (1,2) or (raw[1] == 2 and raw[2] != 2) or raw[3] or
                 int.from_bytes(raw[4:8],'big')!=peer or not int.from_bytes(raw[12:16],'big')):
             raise UnknownOutcome('Fire check result invalid')
-        return 'PAYLOAD_FIRE_RESULT',dict(common,payload_version=1,result=raw[1],execution_mode=raw[2],
+        return 'PAYLOAD_FIRE_RESULT',dict(common,payload_version=raw[0],result=raw[1],execution_mode=raw[2],
             reported_uptime_ms=int.from_bytes(raw[8:12],'big'),check_id=int.from_bytes(raw[12:16],'big'))
     if name=='PAYLOAD_PING':
         if not 1<=len(raw)<=240 or raw!=bytes(range(len(raw))):
@@ -123,9 +135,9 @@ def observed(name, raw, peer, elapsed, bridge):
                     reported_uptime_ms=int.from_bytes(raw[28:32],'big'),observation_age_ms=0)
         fields.update({'git_sha_'+str(i):int.from_bytes(raw[4+i*4:8+i*4],'big') for i in range(5)})
         return 'PAYLOAD_FIRMWARE',fields
-    if len(raw)!=28 or raw[:4]!=bytes([1,4,1,0]) or int.from_bytes(raw[4:8],'big')!=peer:
+    if len(raw)!=28 or raw[:3]!=bytes([1,4,1]) or int.from_bytes(raw[4:8],'big')!=peer:
         raise UnknownOutcome('Payload report invalid')
-    fields=dict(common,payload_version=1,report_kind=1 if name=='PAYLOAD_STATUS_QUERY' else 2,node=4,ready=1)
+    fields=dict(common,payload_version=1,report_kind=1 if name=='PAYLOAD_STATUS_QUERY' else 2,node=4,ready=1,detector_profile_id=raw[3])
     fields.update({key:int.from_bytes(raw[offset:offset+4],'big') for key,offset in
                    [('reported_uptime_ms',8),('requests',12),('replies',16),('rejected',20),('fragment_errors',24)]})
     return 'PAYLOAD_STATUS',fields
@@ -179,7 +191,9 @@ class Bridge:
         except UnknownOutcome as error:
             print(json.dumps({'outcome':'UNKNOWN','reason':str(error)}),flush=True)
             # Yamcs times out; retain cache entry so duplicates do not execute again.
-        except (RuntimeError,OSError) as error:
+        # Let device I/O errors exit the process so systemd reopens the USB
+        # device after reconnect. An interrupted command remains uncertain.
+        except RuntimeError as error:
             print(json.dumps({'outcome':'FAILED','reason':str(error)}),flush=True)
             if not accepted and self.console.boot:stage(1,5)
             # After dispatch, a transport failure remains UNKNOWN.

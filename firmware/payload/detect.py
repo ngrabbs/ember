@@ -8,17 +8,18 @@ from pathlib import Path
 import cv2
 import numpy as np
 from ember_detector.pipeline import load_config,run
+from ember_detector.profiles import add_profile_arguments
 
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--manifest',required=True,type=Path)
-    parser.add_argument('--config',required=True,type=Path)
+    add_profile_arguments(parser)
     parser.add_argument('--calibration',required=True,type=Path)
     parser.add_argument('--output',required=True,type=Path,help='New output directory')
     parser.add_argument('--fixture',help='One fixture ID; omit to evaluate all')
     parser.add_argument('--maps',action='store_true',help='Save numerical maps and candidate mask')
-    args=parser.parse_args();config=load_config(args.config)
+    args=parser.parse_args();config=load_config(args.config,profile=args.profile)
     manifest=json.loads(args.manifest.read_text())
     ids=[args.fixture] if args.fixture else [f['fixture_id'] for f in manifest['fixtures']]
     if not ids or len(set(ids))!=len(ids) or any(not isinstance(name,str) or not re.fullmatch(r'[A-Za-z0-9_-]+',name) for name in ids):
@@ -35,7 +36,7 @@ def main():
             if 'candidates' in maps:cv2.imwrite(str(case/'candidates.png'),maps['candidates'].astype('uint8')*255)
         results.append(dict(fixture_id=fixture,label=labels.get(fixture,'UNKNOWN'),result=result['result'],reason=result['reason'],elapsed_ms=result['elapsed_ms']))
         print(json.dumps(results[-1]),flush=True)
-    summary=dict(input_source='STORED_FIXTURE',algorithm=config['algorithm'],development_only=True,
+    summary=dict(input_source='STORED_FIXTURE',algorithm=config['algorithm'],profile=result['profile'],input_format=result['input_format'],development_only=True,
                  results=results,counts=dict(Counter(r['result'] for r in results)),
                  confusion=dict(Counter(r['label']+'->'+r['result'] for r in results)),
                  config_sha256=result['config_sha256'],manifest_sha256=result.get('manifest_sha256'),

@@ -31,5 +31,9 @@ def load(path):
 
 if __name__ == '__main__':
     config = load(sys.argv[1])
+    detector = config['detector_profile']
+    if ((isinstance(detector, str) and detector.startswith('raw-'))
+            or (isinstance(detector, dict) and detector.get('input_format') == 'raw_dng')):
+        os.environ['PAYLOAD_RECORD_RAW'] = '1'
     os.environ['PAYLOAD_STORE'] = config['camera_image_directory']
     os.execv(sys.executable, [sys.executable, '-m', 'pi.daemon.main'])
