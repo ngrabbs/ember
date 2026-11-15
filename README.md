@@ -10,20 +10,32 @@ signature of flaming vegetation.
 ```mermaid
 flowchart LR
     subgraph Bench["Spacecraft engineering bench"]
-        EPS["EPS"] -->|Power| Stack["Bench electronics"]
-        EPS -->|Charger readings over I²C| IHU["IHU"]
-        Payload["Camera payload"] <-->|CAN A| IHU
-        IHU <-->|CAN A| Radio["UHF transceiver"]
+        Payload["<b>Payload</b><br/>Three narrowband cameras<br/>Pi detection processing"]
+        EPS["<b>Electrical power</b><br/>Solar input, charging<br/>and power distribution"]
+        IHU["<b>Command & data handling</b><br/>IHU coordinates fire checks<br/>and collects telemetry"]
+        COMMS["<b>Communications</b><br/>Half-duplex UHF transceiver"]
+        Payload <-->|CAN A| IHU
+        EPS -->|Charger status over I²C| IHU
+        IHU <-->|CAN A| COMMS
     end
-    subgraph Ground["Ground station"]
-        SDR["LibreSDR"] <--> Yamcs["Yamcs on ground Pi"]
-    end
-    Radio <-->|UHF| SDR
+    Ground["<b>Command & telemetry</b><br/>LibreSDR and Yamcs<br/>Command, display, and record"]
+    COMMS <-->|UHF commands and telemetry| Ground
+
+    classDef power fill:#fff1e7,stroke:#a04e24,color:#602b11
+    classDef control fill:#e9f4f8,stroke:#287397,color:#174a63
+    classDef payload fill:#eff5e4,stroke:#657d33,color:#3f5020
+    classDef radio fill:#f8e9ed,stroke:#842e48,color:#601e33
+    classDef ground fill:#f2ecf7,stroke:#73518c,color:#4b3261
+    class EPS power
+    class IHU control
+    class Payload payload
+    class COMMS radio
+    class Ground ground
 ```
 
-The IHU coordinates camera fire checks and collects housekeeping telemetry.
-The transceiver links the bench to Yamcs. Walter LTE-M is a separate telemetry
-bench path.
+The camera payload processes images locally. The IHU passes fire-check results
+and housekeeping telemetry to Yamcs over the UHF link. The EPS supplies power
+to the bench electronics. Walter LTE-M is a separate telemetry bench path.
 
 ## Hardware and firmware
 
