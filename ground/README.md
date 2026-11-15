@@ -29,6 +29,15 @@ For wired bench commands, plug the IHU USB console into the Pi and select
 IHU and disables the wired links when it disconnects. See
 [console ownership and setup](yamcs/OPERATIONAL.md#serial-ownership-and-eps).
 
+To release the IHU console for manual use, run on the ground Pi:
+
+```sh
+sudo systemctl stop ember-bench-bridge@ttyACM0
+```
+
+Use the actual tty name if it differs. After closing the manual console,
+run the same command with `start` to restore the bridge.
+
 ## Receive UHF
 
 1. On the ground Pi, check `systemctl status ember-fire-uplink`. If it is

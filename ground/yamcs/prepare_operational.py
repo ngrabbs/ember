@@ -96,7 +96,8 @@ def prepare(runtime, legacy_history=()):
     if java.exists():shutil.copytree(java, backup/'java')
     java.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory() as temp:
-        generate(temp, command_filter=UHF_COMMANDS)
+        generate(temp, command_filter=UHF_COMMANDS,
+                 uhf_command_description='EMBER UHF command via LibreSDR, COMMS and IHU; correlated RF reply')
         tree=ET.parse(Path(temp)/'ember.xml')
         # The UHF listen window can exceed the usual telemetry intervals.
         for name in ('COMMS_FIRMWARE', 'LTE_CAN_FIRMWARE', 'LTE_MODEM_FIRMWARE',
@@ -109,7 +110,8 @@ def prepare(runtime, legacy_history=()):
         shutil.copy2(Path(temp)/'WireProfile.java',java/'WireProfile.java')
         for source in (ROOT/'ember-java').glob('*.java'):shutil.copy2(source,java/source.name)
     with tempfile.TemporaryDirectory() as temp:
-        generate(temp, command_filter={'PAYLOAD_PING','PAYLOAD_IDENT','PAYLOAD_STATUS_QUERY','PAYLOAD_HEARTBEAT_QUERY','PAYLOAD_FIRE_CHECK'})
+        generate(temp, command_filter={'PAYLOAD_PING','PAYLOAD_IDENT','PAYLOAD_STATUS_QUERY','PAYLOAD_HEARTBEAT_QUERY','PAYLOAD_FIRE_CHECK'},
+                 excluded_telemetry={'IHU_FIRMWARE','UHF_SCHEDULE_STATUS'})
         tree=ET.parse(Path(temp)/'ember.xml')
         rate=tree.find('.//{'+NS+'}SequenceContainer[@name="POWER_STATUS"]/{'+NS+'}DefaultRateInStream')
         rate.set('minimumValue',str(1/5))
