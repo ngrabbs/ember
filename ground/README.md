@@ -10,23 +10,30 @@ Power on `ember-ground` and connect LibreSDR. Open Yamcs on
 flowchart LR
     UHF["Transceiver · UHF"] --> DBPSK
     LTE["Walter · LTE-M"] --> Cell
-    IHU["IHU USB console"] --> Bridge["Serial bridge on m75q"]
+    IHU["IHU USB console"] -->|Direct USB| Bridge
     subgraph Pi["Ground Pi"]
         DBPSK["LibreSDR · DBPSK receiver"] -->|uhf-tm-in · UDP 10019| Radio["Yamcs · ember"]
         Cell["LibreSDR · eNodeB and EPC"] -->|UDP 51000| Listener["LTE packet listener"]
         Listener -->|lte-tm-in · UDP 10018| Radio
-        Bench["Yamcs · ember-bench"]
+        Bridge["USB-activated serial bridge"] -->|ihu-serial-in · UDP 10020| Bench["Yamcs · ember-bench"]
+        Bench -->|ihu-serial-out · UDP 10028| Bridge
     end
-    Bridge -->|ihu-serial-in · UDP 10020| Bench
 ```
 
 Yamcs and readiness supervision start at boot. Readiness starts the LTE
 packet listener when it detects LibreSDR. Start the UHF receiver or the LTE
 cell when needed. Use one radio session at a time on the shared LibreSDR.
 
+For wired bench commands, plug the IHU USB console into the Pi and select
+**ember-bench / realtime**. The Pi starts the serial bridge for the registered
+IHU and disables the wired links when it disconnects. See
+[console ownership and setup](yamcs/OPERATIONAL.md#serial-ownership-and-eps).
+
 ## Receive UHF
 
-1. On the ground Pi, confirm LibreSDR is free and set up for the
+1. On the ground Pi, check `systemctl status ember-fire-uplink`. If it is
+   running the continuous UHF gateway, use its `uhf-tm-in` feed. For a manual
+   capture, release LibreSDR first, then use the
    [EMBER DBPSK profile](bpsk/README.md#live-uhf-demo-receiver).
 2. From the repository root on the Pi, run this example for the 437 MHz bench
    carrier. Use a new output directory for each run.

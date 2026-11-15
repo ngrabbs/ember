@@ -1,7 +1,7 @@
 # LTE bench bring-up runbook
 
-The procedures
-below record the original engineering bring-up and isolated Yamcs setup.
+For a normal bench run, see the [ground quick start](../README.md#receive-lte).
+The procedures below cover lab cell setup and older engineering diagnostics.
 
 Status: OAI and srsEPC are built on the Pi; S1 setup works. Walter completed
 LTE-M attach and reported registration, with IP 172.16.0.2 and bearer setup.
@@ -13,7 +13,6 @@ remain unresolved.
 
 ```sh
 ssh ngrabbs@ember-ground.local        # Pi / LibreSDR
-ssh ngrabbs@192.168.1.252             # M75q / Walter
 ssh dng@192.168.1.37                 # previous srsRAN / private SIM database
 ```
 
@@ -118,8 +117,8 @@ Pi deployment needs an aarch64 build; the existing x1c binaries are x86_64.
 
 ## 4. Inspect Walter without changing radio configuration
 
-On the M75q, pyserial is already installed. Ensure no other process owns the
-port. Open its stable by-id path at 115200 baud and query:
+For these diagnostics, connect the Walter USB passthrough to the ground Pi.
+Install pyserial and ensure no other process owns the Walter port. Open its stable by-id path at 115200 baud and query:
 
 ```text
 AT
@@ -218,7 +217,7 @@ The latest experiments
 reached LTE synchronization and exercised LTE-M random access, then encountered
 OAI scheduler/resource assertions. A completed attach is still outstanding.
 
-On M75q, with the eNodeB already running and its readiness confirmed:
+On a host with a separate HackRF attached, after the eNodeB is ready:
 
 ```sh
 mkdir -p /media/ngrabbs/BACKUP-A/ember-lte/captures
@@ -230,7 +229,7 @@ hackrf_transfer -r /media/ngrabbs/BACKUP-A/ember-lte/captures/lte-on.cs8 \
 This is two seconds of receive-only I/Q. Capture another sample after the cell
 stops, at identical receiver settings. Remove DC before comparing spectra and
 check ADC rail clipping. Keep raw I/Q outside Git. Use the large external drive
-rather than M75q's nearly full root filesystem.
+to hold raw captures.
 
 On the Pi, `scripts/check-tx-rx.py --transmit` runs a bounded tone self-check;
 `--tx-gain 49.75 --duration 5` reproduces the longer test. It transmits at
@@ -263,7 +262,7 @@ From the EMBER repository root on the Mac:
 scp ground/lte/scripts/run-radio-check.py ground/lte/scripts/summarize-ra-log.py \
   ngrabbs@ember-ground.local:work/ember-lte/
 scp ground/lte/scripts/walter-radio-check.py \
-  ngrabbs@192.168.1.252:work/ember-lte/
+  ngrabbs@ember-ground.local:work/ember-lte/
 scp ground/lte/configs/oai/enb.band13.emtc.tx30.conf.example \
   ngrabbs@ember-ground.local:work/ember-lte/configs/enb.band13.emtc.tx30.conf
 ```
@@ -272,7 +271,7 @@ Confirm no prior eNodeB/EPC or serial client is running. First prepare Walter
 OFF and wait for `CFUN 0 confirmed`, then run the baseline:
 
 ```sh
-ssh ngrabbs@192.168.1.252 'python3 ~/work/ember-lte/walter-radio-check.py'
+ssh ngrabbs@ember-ground.local 'python3 ~/work/ember-lte/walter-radio-check.py'
 ssh ngrabbs@ember-ground.local \
   'python3 ~/work/ember-lte/run-radio-check.py control-off --seconds 40'
 ```
@@ -288,7 +287,7 @@ ssh ngrabbs@ember-ground.local \
 
 ```sh
 # Terminal 2
-ssh ngrabbs@192.168.1.252 \
+ssh ngrabbs@ember-ground.local \
   'python3 ~/work/ember-lte/walter-radio-check.py --enable-seconds 35'
 ```
 
@@ -324,8 +323,8 @@ diagnostic profiles, not validated defaults.
 This uses Walter's existing serial passthrough and modem socket commands; no
 firmware flashing is needed. The commands follow the pinned vendor
 [Walter socket implementation](https://github.com/QuickSpot/walter-arduino/blob/c30b707f8d64b49daec80de6bccfc80c04e42d58/src/proto/WalterSocket.cpp).
-Only the modem sends to the EPC gateway; the M75q does not send test datagrams
-to the ground receiver. Payloads are JSON with run ID, sequence, and M75q UTC
+Only the modem sends test datagrams to the EPC gateway. Payloads are JSON
+with run ID, sequence, and host UTC
 send timestamp, padded to 128 bytes. Host clocks have not been validated for
 one-way latency.
 
@@ -333,7 +332,7 @@ Stage the helpers and selected diagnostic profile from the repository root:
 
 ```sh
 scp ground/lte/scripts/udp-bench-receiver.py ngrabbs@ember-ground.local:work/ember-lte/
-scp ground/lte/scripts/walter-radio-check.py ngrabbs@192.168.1.252:work/ember-lte/
+scp ground/lte/scripts/walter-radio-check.py ngrabbs@ember-ground.local:work/ember-lte/
 scp ground/lte/configs/oai/enb.band13.emtc.ce300tx30diag.conf.example \
   ngrabbs@ember-ground.local:work/ember-lte/configs/enb.band13.emtc.ce300tx30diag.conf
 ```
@@ -347,7 +346,7 @@ ssh ngrabbs@ember-ground.local \
   'python3 ~/work/ember-lte/udp-bench-receiver.py udp-example --count 10 --seconds 150'
 ssh ngrabbs@ember-ground.local \
   'python3 ~/work/ember-lte/run-radio-check.py udp-example --seconds 140 --config enb.band13.emtc.ce300tx30diag.conf'
-ssh ngrabbs@192.168.1.252 \
+ssh ngrabbs@ember-ground.local \
   'python3 ~/work/ember-lte/walter-radio-check.py --enable-seconds 100 --udp-count 10 --run-id udp-example'
 ```
 

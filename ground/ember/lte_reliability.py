@@ -1,7 +1,9 @@
 """Ten isolated, bounded native EPS LTE trials using existing bench images.
 
-Run on the operator computer with SSH access to both hosts. Full radio logs and
-pcaps stay private on the ground host; evidence contains only packet/status data.
+Run from the operator computer with SSH access to the ground Pi. Stage
+eps_lte_trial.py under the Pi's ~/work/ember-lte/host-tests and release the
+Pi serial bridge and LTE listener for this manual trial. Full radio logs and
+pcaps stay private on the Pi; evidence contains only packet/status data.
 """
 import argparse
 import base64
@@ -15,9 +17,8 @@ import time
 from urllib.request import urlopen
 
 GROUND = 'ngrabbs@ember-ground.local'
-IHU_HOST = 'ngrabbs@192.168.1.252'
 PORT = '/dev/serial/by-id/usb-Raspberry_Pi_Pico_DF641455DB822427-if00'
-REMOTE = '/media/ngrabbs/BACKUP-A/ember-walter-bridge'
+REMOTE = '/home/ngrabbs/work/ember-lte'
 API = 'http://192.168.1.251:8090/api/'
 PROFILE = 'enb.band13.emtc.ce300tx20diag.conf'
 
@@ -106,13 +107,13 @@ def run(args):
                 time.sleep(1)
             if not ready:
                 raise RuntimeError('Ground cell did not reach steady state; no modem window started')
-            host_proc = launch(IHU_HOST,
+            host_proc = launch(GROUND,
                 f'cd {REMOTE}/host-tests && python3 -u eps_lte_trial.py '
                 f'--seconds 120 --count 1 --settle 15 --port {PORT} '
                 + ('--diagnostics ' if args.diagnostics else '') +
                 f'--output {REMOTE}/{label}', 'host')
             record['host_exit'] = host_proc.wait(timeout=145)
-            host = remote_json(IHU_HOST, f'{REMOTE}/{label}/trial.json')
+            host = remote_json(GROUND, f'{REMOTE}/{label}/trial.json')
             record['host'] = host
             record['off_confirmed'] = compare(host,{}, {})['off_confirmed']
             # Finish all bounded network processes before the next independent cell.

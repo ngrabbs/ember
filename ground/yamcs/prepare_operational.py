@@ -28,11 +28,12 @@ def prepare(runtime, legacy_history=()):
     def tc_tail(pattern):
         return re.sub(r'\n  tc:.*?(?=\n\S|\Z)', '\n  tc:\n    - name: tc_realtime\n      processor: realtime\n      tcPatterns: ["'+pattern+'"]\n\n', tail, flags=re.S)
 
-    def tm(name,port):
+    def tm(name,port,enabled=True):
         return f'''  - name: {name}
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_realtime
     port: {port}
+    enabledAtStartup: {str(enabled).lower()}
     packetPreprocessorClassName: com.example.ember.EmberPacketPreprocessor
     packetPreprocessorArgs:
       deduplicate: true
@@ -49,10 +50,11 @@ def prepare(runtime, legacy_history=()):
       resultDomain: spacecraft
 """
     flight += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember.xml\n'+tc_tail('/ember/PAYLOAD_FIRE_CHECK')
-    bench = services+'\ndataLinks:\n'+tm('ihu-serial-in',10020)+'''  - name: ihu-serial-out
+    bench = services+'\ndataLinks:\n'+tm('ihu-serial-in',10020,enabled=False)+'''  - name: ihu-serial-out
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_realtime
-    host: 192.168.1.252
+    enabledAtStartup: false
+    host: ember-ground-host
     port: 10028
     commandPostprocessorClassName: com.example.ember.EmberCommandPostprocessor
     commandPostprocessorArgs:

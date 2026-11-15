@@ -98,13 +98,14 @@ On the ground station, open **Commanding → Send a Command** in the
 | Yamcs instance | Route | Commands |
 |---|---|---|
 | `ember` | Ground radio → UHF → transceiver → IHU → CAN A → payload | `PAYLOAD_FIRE_CHECK` |
-| `ember-bench` | Ground bridge → IHU USB → CAN A → payload | `PAYLOAD_PING` (1–240 bytes), `PAYLOAD_IDENT`, `PAYLOAD_STATUS_QUERY`, `PAYLOAD_HEARTBEAT_QUERY`, `PAYLOAD_FIRE_CHECK` |
+| `ember-bench` | Ground Pi USB bridge → IHU → CAN A → payload | `PAYLOAD_PING` (1–240 bytes), `PAYLOAD_IDENT`, `PAYLOAD_STATUS_QUERY`, `PAYLOAD_HEARTBEAT_QUERY`, `PAYLOAD_FIRE_CHECK` |
 
 Use **Command History** to check the correlated result. A timeout leaves the
 outcome unknown. In a regular GROUND_TEST IHU console session, select
 `hello payload` before using `payload ident`, `payload status`,
 `payload heartbeat`, `payload fire-check`, or `ping N`.
-The startup demo uses the Yamcs RF path for fire checks. See the
+The startup demo restricts the IHU console to read-only commands. Use Yamcs
+RF for fire checks with that build. See the
 [IHU console guide](../ihu/README.md#usb-console).
 
 ## Fire detection algorithms

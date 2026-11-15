@@ -19,6 +19,16 @@ def api(path,body=None):
     req=Request(BASE+'/api'+path,data=None if body is None else json.dumps(body).encode(),headers={'Content-Type':'application/json'})
     with urlopen(req,timeout=10) as r:return json.load(r)
 def check():
+    disabled = [link['name'] for link in api('/links/ember-bench')['links'] if link['disabled']]
+    try:
+        for name in disabled:
+            api('/links/ember-bench/'+name+':enable', {})
+        return check_links()
+    finally:
+        for name in reversed(disabled):
+            api('/links/ember-bench/'+name+':disable', {})
+
+def check_links():
     assert {x['name'] for x in api('/instances')['instances']}=={'ember','ember-bench'}
     expected={'ember':{'lte-tm-in','uhf-tm-in','uhf-command-out'},'ember-bench':{'ihu-serial-in','ihu-serial-out'}}
     for instance,names in expected.items():assert {x['name'] for x in api('/links/'+instance)['links']}==names

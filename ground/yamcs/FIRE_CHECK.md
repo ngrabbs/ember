@@ -14,7 +14,7 @@ No response or invalid data means UNKNOWN, never NO_FIRE. Results remain
 historical observations; their timestamps matter. Both FIRE and NO_FIRE are
 valid wire results, with explicit stub versus algorithm provenance.
 
-Bench: Yamcs ember-bench → UDP10028 → m75q single-owner IHU console →
+Bench: ground Pi Yamcs ember-bench → local USB bridge → IHU console →
 CAN0x740/0x741 → payload. Admission and final result are correlated separately.
 
 Flight: Yamcs ember → UDP10029 on ground Pi → LibreSDR DBPSK uplink →
@@ -26,7 +26,7 @@ it carries neither the fire command nor its result. This is a bench-controlled
 RF transaction, not an autonomous always-listening flight receiver.
 
 The ground Pi's ember-fire-uplink service owns LibreSDR only during a command.
-Do not run another radio owner concurrently. m75q ember-fire-arm owns only the
+Do not run another radio owner concurrently. In the legacy bounded RF profile, the Pi-local ember-fire-arm service owns only the
 COMMS USB port during the finite window. ember-bench-bridge remains the sole
 IHU serial owner. Services transmit nothing at boot. Each command permits one
 burst at the previously measured OTA settings (434.99455MHz uplink,437MHz
@@ -40,8 +40,8 @@ Before deployment preserve source, active service files, firmware flash backups,
 Yamcs runtime/config/environment and the stopped archive volume. Use a clean
 committed source identity for firmware exports. Rebuild IHU and COMMS separately;
 never confuse the LTE Feather's historical filename with COMMS. Install the
-payload runtime on .253, ground/ember plus fire-arm on .252, and ground/ember,
-ground/bpsk plus fire-uplink on .251. Run prepare_operational.py against the
+payload runtime on .253, ground/ember, ground/bpsk, and both legacy RF units on the ground Pi.
+The arm service uses the transceiver USB port, separate from the IHU console. Run prepare_operational.py against the
 existing runtime, rebuild Java, install both display buckets and audit each
 instance as release 1.6.0. Preserve archive volumes and the previous manifests.
 Stop RF/arming services before manually accessing their radio or COMMS port.

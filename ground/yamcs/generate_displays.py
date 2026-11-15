@@ -187,7 +187,7 @@ def generate(destination, instance="ember"):
     observed('PAYLOAD_FIRE_RESULT_execution_mode',395,479,200,17)
     stamp('PAYLOAD_FIRE_RESULT_result',610,481,360)
     label('STATIC_STUB returns NO_FIRE without running the detector. Missing replies remain UNKNOWN.',22,513,956,24,11,ORANGE)
-    label('Bench path: Yamcs → m75q → IHU serial → CAN A → payload Pi.' if instance=='ember-bench' else 'Flight command path: Yamcs → LibreSDR RF → transceiver → IHU → CAN A → payload; result returns over RF.',22,541,956,20,10)
+    label('Bench path: Ground Pi Yamcs → local USB → IHU → CAN A → payload Pi.' if instance=='ember-bench' else 'Flight command path: Yamcs → LibreSDR RF → transceiver → IHU → CAN A → payload; result returns over RF.',22,541,956,20,10)
     nav('Payload raw / history','Payload.par',22,568)
     web('Send payload command','/commanding/send',250,568,235);web('Command history','/commanding/history',503,568,210)
     footer('Payload firmware identity and source commit are consolidated on Devices & firmware.')
