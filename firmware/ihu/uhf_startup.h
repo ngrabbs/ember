@@ -183,6 +183,30 @@ static bool uhf_startup_command_reply(const uint8_t *p,size_t n,void *unused){
     if(stage==W_STAGE_ACCEPTED || (status_request && stage==W_STAGE_COMPLETED))return true;
     return uhf_startup_store_response(p,n);
 }
+static void uhf_startup_send_faults(const ul_packet *request) {
+    const size_t size = W_PAYLOAD + W_SIZE_IHU_FAULTS + 2;
+    _Static_assert(W_PAYLOAD + W_SIZE_IHU_FAULTS + 2 <= BD_PACKET_MAX,
+                   "IHU fault history exceeds RF link limit");
+    const unsigned stride = W_IHU_FAULTS_FAULT2_CODE - W_IHU_FAULTS_FAULT1_CODE;
+    _Static_assert(W_SIZE_IHU_FAULTS == W_IHU_FAULTS_FAULT1_CODE +
+                   IHU_FAULT_CAPACITY * (1 + sizeof(uint32_t)),
+                   "IHU fault history layout does not match the ring");
+    uint8_t *packet = uhf_startup_response;
+    cdh_header(packet, size, request, W_KINDS_TELEMETRY, W_ID_IHU_FAULTS, W_SIZE_IHU_FAULTS);
+    uint8_t *fields = packet + W_PAYLOAD;
+    unsigned count = fault_count < IHU_FAULT_CAPACITY ? fault_count : IHU_FAULT_CAPACITY;
+    fields[W_IHU_FAULTS_PAYLOAD_VERSION] = 1;
+    fields[W_IHU_FAULTS_COUNT] = count;
+    ul_p32(fields + W_IHU_FAULTS_TOTAL, fault_count);
+    for (unsigned i = 0; i < count; ++i) {
+        unsigned slot = (fault_count - count + i) % IHU_FAULT_CAPACITY;
+        fields[W_IHU_FAULTS_FAULT1_CODE + i * stride] = faults[slot].code;
+        ul_p32(fields + W_IHU_FAULTS_FAULT1_UPTIME_MS + i * stride, faults[slot].at);
+    }
+    ul_p16(packet + size - 2, ul_crc(packet, size - 2));
+    uhf_startup_response_size = size;
+    ++uhf_startup_replies;
+}
 static bool uhf_startup_ack_setting(const ul_packet *request,uint32_t value){
     ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,
         .request=request->request,.size=43};
@@ -282,6 +306,10 @@ static void uhf_startup_uplink(const cf_frame *f,uint32_t now){
     }
     if(id==W_ID_SET_UHF_TELEMETRY_SET && up_native_args(p.payload,p.size,1)){
         uhf_startup_set_packet_set(&p,now);return;
+    }
+    if (id == W_ID_REQUEST_IHU_FAULTS && up_native_args(p.payload, p.size, 0)) {
+        uhf_startup_send_faults(&p);
+        return;
     }
     if(up_native_cdh(p.payload,p.size)){cdh_receive(&p);return;}
     if(up_native_fire(p.payload,p.size)){
@@ -433,10 +461,18 @@ static void uhf_startup_step(void) {
     ihu_can_poll_tx(&can,now);
     bool local_ok=can.ready && !(ihu_can_register(0x0e)&0xe0) && !ihu_can_register(0x2d);
     if(uhf_startup.stage!=UHF_STARTUP_FAILED && !local_ok)uhf_startup_fail("Checking local CAN controller... FAILED");
-    if(uhf_startup.stage!=UHF_STARTUP_FAILED && uhf_startup.stage!=UHF_STARTUP_LOCAL &&
-       ((housekeeping.attempted && !housekeeping.valid) ||
-        (housekeeping.valid && (uint32_t)(now-housekeeping.sampled)>6500)))
-        uhf_startup_fail("Checking EPS telemetry... FAILED (invalid or stale)");
+    if(uhf_startup.stage!=UHF_STARTUP_FAILED && uhf_startup.stage!=UHF_STARTUP_LOCAL){
+        if(housekeeping.attempted && !housekeeping.valid){
+            const char *reason="EPS health check FAILED (I2C_ERROR)";
+            if(housekeeping.error==EPS_TIMEOUT)reason="EPS health check FAILED (I2C_TIMEOUT)";
+            if(housekeeping.error==EPS_CHECKSUM)reason="EPS health check FAILED (PEC_CHECKSUM)";
+            uhf_startup_fail(reason);
+        }else if(housekeeping.valid && (uint32_t)(now-housekeeping.sampled)>EPS_STALE_MS){
+            ihu_printf(false,"EPS_READ outcome=FAILED reason=STALE age_ms=%" PRIu32 " limit_ms=%u\n",
+                       now-housekeeping.sampled,(unsigned)EPS_STALE_MS);
+            uhf_startup_fail("EPS health check FAILED (STALE)");
+        }
+    }
     uint32_t elapsed=now-uhf_startup.since;
     switch(uhf_startup.stage){
     case UHF_STARTUP_LOCAL:
@@ -504,9 +540,11 @@ static void uhf_startup_step(void) {
             uhf_startup.stop_pending=false;
         break;
     }
-    if(uhf_startup.stage!=UHF_STARTUP_FAILED && !sensor_job.active && (uint32_t)(now-housekeeping.last)>=5000){
+    if(uhf_startup.stage!=UHF_STARTUP_FAILED && !housekeeping.poll_pending &&
+       (uint32_t)(now-housekeeping.last)>=EPS_POLL_MS &&
+       ihu_sensor_submit(IHU_SENSOR_POLL_EPS,false)){
         housekeeping.last=now;
-        (void)request_sensor(SENSOR_HEALTH,0,false);
+        housekeeping.poll_pending=true;
     }
 }
 static void uhf_startup_schedule_pump(uint32_t now){
@@ -523,7 +561,7 @@ static void uhf_startup_schedule_pump(uint32_t now){
     if(elapsed<listen_ms || cycle_ms-elapsed<=BD_TX_TIMEOUT_MS || uhf_startup_schedule.next_packet>=count)return;
     if(uhf_startup_schedule.next_packet==7){
         if(cycle_ms-elapsed<=BD_TX_TIMEOUT_MS+2500 || sensor_job.active ||
-           now-housekeeping.last>=3500)return;
+           housekeeping.poll_pending)return;
         uhf_startup_gps.cycle=uhf_startup_schedule.started;
         ++uhf_startup_schedule.next_packet;
         if(!request_sensor(SENSOR_GPS_TELEMETRY,0,false))--uhf_startup_schedule.next_packet;
@@ -601,7 +639,7 @@ static void uhf_startup_link_pump(uint32_t now){
     cf_expire(&fragments,now);
     if(fire_uplink.gps_waiting && !fire_uplink.gps_reading){
         if(now-fire_uplink.gps_since>=2000)fire_submit_gps(NULL);
-        else if(!sensor_job.active && now-housekeeping.last<3500){
+        else if(!sensor_job.active && !housekeeping.poll_pending){
             fire_uplink.gps_reading=true;
             if(!request_sensor(SENSOR_FIRE_GPS,0,false))fire_submit_gps(NULL);
         }

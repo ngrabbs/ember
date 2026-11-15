@@ -3,12 +3,14 @@
 #include <stdio.h>
 #include "mcp25625.h"
 #include "gps.h"
+#include "eps_diagnostics.h"
 #include "../shared/ltc4162_registers.h"
-enum ihu_sensor_op {IHU_SENSOR_READ_EPS, IHU_SENSOR_SET_ADC, IHU_SENSOR_READ_GPS};
+enum ihu_sensor_op {IHU_SENSOR_READ_EPS, IHU_SENSOR_SET_ADC, IHU_SENSOR_READ_GPS, IHU_SENSOR_POLL_EPS};
 typedef struct {
     ltc4162_raw_t raw;
     gps_result gps;
-    bool ok,enable;
+    bool ok,enable,health,between_gps_chunks;
+    enum eps_error eps_error;
     uint8_t failed;
     uint16_t before,after;
     uint32_t sampled;
@@ -27,7 +29,12 @@ static bool host_sensor_ready,host_sensor_defer;
 static inline bool ihu_sensor_submit(enum ihu_sensor_op op,bool enable){
     memset(&host_sensor,0,sizeof(host_sensor));host_sensor.enable=enable;
     if(op==IHU_SENSOR_READ_GPS)host_sensor.gps.status=GPS_NO_DATA;
-    else host_sensor.ok=op==IHU_SENSOR_SET_ADC?eps_force_adc(enable,&host_sensor.before,&host_sensor.after):eps_read(&host_sensor.raw,&host_sensor.failed);
+    else if(op==IHU_SENSOR_SET_ADC)host_sensor.ok=eps_force_adc(enable,&host_sensor.before,&host_sensor.after);
+    else {
+        host_sensor.health=op==IHU_SENSOR_POLL_EPS;
+        host_sensor.eps_error=eps_read(&host_sensor.raw,&host_sensor.failed);
+        host_sensor.ok=host_sensor.eps_error==EPS_OK;
+    }
     host_sensor.sampled=to_ms_since_boot(get_absolute_time());host_sensor_ready=true;return true;
 }
 static inline bool ihu_sensor_receive(ihu_sensor_result *r){

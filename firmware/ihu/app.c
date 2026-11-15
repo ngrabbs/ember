@@ -23,9 +23,10 @@ static uc_state uhf_client;
 #endif
 static ip_state policy;
 static bool console_reply;
-static struct {uint32_t at;uint8_t code;} faults[16];
+enum { IHU_FAULT_CAPACITY = 16 };
+static struct {uint32_t at;uint8_t code;} faults[IHU_FAULT_CAPACITY];
 static unsigned fault_count;
-static void record_fault(uint8_t code,uint32_t at){unsigned i=fault_count++%16;faults[i].at=at;faults[i].code=code;}
+static void record_fault(uint8_t code,uint32_t at){unsigned i=fault_count++%IHU_FAULT_CAPACITY;faults[i].at=at;faults[i].code=code;}
 
 #include "uplink_ping.h"
 #include "../shared/ember_protocol/protocol.h"
@@ -186,7 +187,7 @@ static void pump_tx(uint32_t now) {
     static uint32_t observed_errors;ihu_can_poll_tx(&can,now);
     uint32_t errors=can.tx_fail+can.tx_timeout;
     if(errors!=observed_errors) {
-        observed_errors=errors;record_fault(3,now);
+        observed_errors=errors;record_fault(W_IHU_FAULT_CODE_CAN_TX_ERROR,now);
         output.active=false;LOG("CAN_TX outcome=UNKNOWN reason=FRAME_TX_FAILED\n");
         // Pending application request times out; a CAN hardware outcome is not an app result.
         return;
@@ -495,16 +496,16 @@ static void stop_stream(unsigned channel){
      * packets may finish; no new periodic submission may follow an OFF. */
     if(pending.active && ((channel==IP_UHF_TELEM&&uhf_is_request(pending.packet.type))||
        (channel==IP_LTE_TELEM&&pending.packet.type==CF_SEND_PACKET))){
-        output.active=false;pending.active=false;record_fault(4,now_ms());
+        output.active=false;pending.active=false;record_fault(W_IHU_FAULT_CODE_TELEMETRY_TIMEOUT_OR_CANCELLED,now_ms());
     }
 }
 static void policy_command(const char *s){
     if(!strcmp(s,"outputs")){outputs_status();return;}
     if(!strcmp(s,"mode")){mode_status();return;}
     if(!strcmp(s,"faults")){
-        unsigned n=fault_count<16?fault_count:16;
+        unsigned n=fault_count<IHU_FAULT_CAPACITY?fault_count:IHU_FAULT_CAPACITY;
         LOG("FAULTS total=%u retained=%u persistent=0\n",fault_count,n);
-        for(unsigned j=0;j<n;j++){unsigned i=(fault_count-n+j)%16;LOG("FAULT code=%u uptime_ms=%" PRIu32 "\n",faults[i].code,faults[i].at);}
+        for(unsigned j=0;j<n;j++){unsigned i=(fault_count-n+j)%IHU_FAULT_CAPACITY;LOG("FAULT code=%u uptime_ms=%" PRIu32 "\n",faults[i].code,faults[i].at);}
         return;
     }
     if(!strncmp(s,"mode ",5)){
@@ -529,7 +530,14 @@ static void policy_command(const char *s){
     if(!strcmp(value,"off"))stop_stream(channel);
     outputs_status();
 }
-static struct {ltc4162_raw_t eps;bool valid,attempted,seen;uint8_t failed_register;uint32_t sampled,last;} housekeeping;
+enum { EPS_POLL_MS=5000, EPS_STALE_MS=6500 };
+static struct {
+    ltc4162_raw_t eps;
+    bool valid,attempted,seen,poll_pending;
+    uint8_t failed_register;
+    enum eps_error error;
+    uint32_t sampled,last,polls_during_gps,max_good_gap_ms;
+} housekeeping;
 /* Solicited snapshot: age is explicit and failed/missing EPS is never healthy. */
 static size_t status_packet(uint8_t *b,const uint8_t *request){
     const size_t n=56;memset(b,0,n);
@@ -623,17 +631,43 @@ static void cdh_pump(uint32_t now){
  cdh.last=now;if(++cdh.count==5){cdh.active=false;cdh.valid=true;cdh_records(&cdh.request);}
 }
 static void housekeeping_pump(uint32_t now){
-    if((uint32_t)(now-housekeeping.last)<5000 || pending.active || output.active || can.pending ||
+    if((uint32_t)(now-housekeeping.last)<EPS_POLL_MS || pending.active || output.active || can.pending ||
        discovery.active || uplink_fragments.active || fire_uplink.active || uc_count(&uhf_client) || uhf_run.state==UR_RUNNING)return;
     if(sensor_job.active)return;
     housekeeping.last=now;
     (void)request_sensor(SENSOR_HEALTH,0,false);
 }
+static const char *eps_error_name(enum eps_error error){
+    switch(error){
+    case EPS_TIMEOUT: return "I2C_TIMEOUT";
+    case EPS_CHECKSUM: return "PEC_CHECKSUM";
+    case EPS_I2C_ERROR: return "I2C_ERROR";
+    default: return "OK";
+    }
+}
 static void health_result(const ihu_sensor_result *r){
     bool was_valid=housekeeping.valid;
     housekeeping.valid=r->ok;
-    if(r->ok){housekeeping.seen=true;housekeeping.eps=r->raw;housekeeping.sampled=r->sampled;dr_seen(&devices[DR_EPS_I2C_INDEX],r->sampled,0);}
-    else {housekeeping.failed_register=r->failed;devices[DR_EPS_I2C_INDEX].state=DR_FAULT;if(!housekeeping.attempted||was_valid)record_fault(2,now_ms());}
+    housekeeping.error=r->eps_error;
+    if(r->between_gps_chunks)++housekeeping.polls_during_gps;
+    if(r->ok){
+        if(housekeeping.seen){
+            uint32_t gap=r->sampled-housekeeping.sampled;
+            if(gap>housekeeping.max_good_gap_ms)housekeeping.max_good_gap_ms=gap;
+        }
+        housekeeping.seen=true;
+        housekeeping.eps=r->raw;
+        housekeeping.sampled=r->sampled;
+        dr_seen(&devices[DR_EPS_I2C_INDEX],r->sampled,0);
+    }else{
+        housekeeping.failed_register=r->failed;
+        devices[DR_EPS_I2C_INDEX].state=DR_FAULT;
+        if(!housekeeping.attempted||was_valid){
+            record_fault(W_IHU_FAULT_CODE_EPS_READ_FAILED,now_ms());
+            ihu_printf(false,"EPS_READ outcome=FAILED register=%02x reason=%s\n",
+                       r->failed,eps_error_name(r->eps_error));
+        }
+    }
     housekeeping.attempted=true;
     if(!stdio_usb_connected())return;
     if(ip_enabled(&policy,IP_CLI_TELEM))ihu_printf(false,"CLI_TELEM mode=%s eps_valid=%u comms=%s lte=%s payload=%s\n",
@@ -659,7 +693,7 @@ static void fire_submit_gps(const gps_result *gps){
 static void uhf_startup_gps_complete(const gps_result *gps,uint32_t sampled);
 #endif
 static bool request_sensor(unsigned kind,unsigned route,bool enable){
-    if(sensor_job.active){LOG("REJECT reason=SENSOR_BUSY\n");return false;}
+    if(sensor_job.active || housekeeping.poll_pending){LOG("REJECT reason=SENSOR_BUSY\n");return false;}
     sensor_job.active=true;sensor_job.kind=kind;sensor_job.route=route;sensor_job.console=console_reply;
     sensor_job.from_run=kind==SENSOR_TELEMETRY && route==2 && uhf_run.state==UR_RUNNING;
     sensor_job.generation=output_generation[route==2?IP_UHF_TELEM:IP_LTE_TELEM];sensor_job.run=run_generation;
@@ -692,7 +726,7 @@ static void sensor_complete(const ihu_sensor_result *r){
     }else if(kind==SENSOR_HEALTH)health_result(r);
     else if(kind==SENSOR_ADC)LOG("EPS_ADC outcome=%s requested=%d config_before=%04x config_after=%04x\n",r->ok?"VERIFIED":"UNKNOWN",r->enable,r->before,r->after);
     else if(!r->ok){
-        LOG("EPS_READ outcome=FAILED register=%02x reason=I2C_OR_PEC\n",r->failed);
+        LOG("EPS_READ outcome=FAILED register=%02x reason=%s\n",r->failed,eps_error_name(r->eps_error));
         if(from_run && uhf_run.state==UR_RUNNING && sensor_job.run==run_generation){
             ur_stop(&uhf_run,UR_FAULT);LOG("UHF_RUN FAULT producer_or_submission\n");
         }
@@ -732,23 +766,19 @@ static void sensor_complete(const ihu_sensor_result *r){
 
 static void command_impl(const char *s) {
     if(!strcmp(s,"gps")){
-#if IHU_UHF_STARTUP
-        /* Reserve time for the 2.5 s GPS read and the next EPS refresh. */
-        if(uhf_startup.stage!=UHF_STARTUP_FAILED && now_ms()-housekeeping.last>=3500){
-            LOG("REJECT reason=SENSOR_BUSY\n");return;
-        }
-#endif
         (void)request_sensor(SENSOR_GPS,0,false);return;
     }
 #if IHU_UHF_STARTUP
     if(!strcmp(s,"eps status")){
         const char *state=!housekeeping.attempted?"NOT_CHECKED":!housekeeping.valid?"READ_FAILED":
-            now_ms()-housekeeping.sampled>6500?"STALE":"OK";
+            now_ms()-housekeeping.sampled>EPS_STALE_MS?"STALE":"OK";
         LOG("EPS state=%s bus=I2C1 address=0x68\n",state);
         if(housekeeping.attempted && !housekeeping.valid)
-            LOG("EPS_READ outcome=FAILED register=%02x reason=I2C_OR_PEC\n",housekeeping.failed_register);
+            LOG("EPS_READ outcome=FAILED register=%02x reason=%s\n",housekeeping.failed_register,eps_error_name(housekeeping.error));
         if(housekeeping.seen)
-            LOG("EPS last_good_age_ms=%" PRIu32 "\n",now_ms()-housekeeping.sampled);
+            LOG("EPS last_good_age_ms=%" PRIu32 " stale_limit_ms=%u max_good_gap_ms=%" PRIu32
+                " polls_during_gps=%" PRIu32 "\n",now_ms()-housekeeping.sampled,
+                (unsigned)EPS_STALE_MS,housekeeping.max_good_gap_ms,housekeeping.polls_during_gps);
         return;
     }
     if(!strcmp(s,"eps json")){
@@ -875,7 +905,7 @@ void ihu_app_init(void) {
     ip_init(&policy,IHU_FLIGHT_CONFIGURATION?IP_FLIGHT:IP_GROUND_TEST);
     ember_init(&uplink_engine,boot);
     ip_finish_boot(&policy,can.ready,false,false);
-    if(!can.ready)record_fault(1,now_ms());
+    if(!can.ready)record_fault(W_IHU_FAULT_CODE_CAN_BOOT_CHECK,now_ms());
     boot_ready_ms=now_ms();
 #if IHU_UHF_STARTUP
     link_reply_sink=uhf_startup_store_response;
@@ -885,7 +915,7 @@ void ihu_app_init(void) {
     uhf_startup_schedule.telemetry_seconds=UHF_STARTUP_TELEMETRY_DEFAULT_S;
     uhf_startup.usb=stdio_usb_connected();
     uhf_startup_stage(UHF_STARTUP_LOCAL,boot_ready_ms);
-    housekeeping.last=boot_ready_ms-5000;
+    housekeeping.last=boot_ready_ms-EPS_POLL_MS;
     uhf_startup_event("BOOT: GROUND_TEST / UHF");
     uhf_startup_event("BOOT -> SAFE: outputs off");
     uhf_startup_event("Checking local CAN controller...");
@@ -894,7 +924,12 @@ void ihu_app_init(void) {
 void ihu_app_command(const char *line){command(line);}
 void ihu_app_step(bool scheduled) {
     ihu_sensor_result result;
-    if(ihu_sensor_receive(&result))sensor_complete(&result);
+    while(ihu_sensor_receive(&result)){
+        if(result.health){
+            housekeeping.poll_pending=false;
+            health_result(&result);
+        }else sensor_complete(&result);
+    }
 #if IHU_UHF_STARTUP
     uhf_startup_step();
     uint32_t uhf_startup_now=now_ms();
@@ -922,7 +957,7 @@ void ihu_app_step(bool scheduled) {
         for(unsigned i=0;i<UC_CAPACITY;i++) {
             uc_item *x=&uhf_client.items[i];
             if(x->active && (uint32_t)(now-x->started)>=UC_RESULT_MS) {
-                record_fault(4,now);bool previous=console_reply;
+                record_fault(W_IHU_FAULT_CODE_TELEMETRY_TIMEOUT_OR_CANCELLED,now);bool previous=console_reply;
                 console_reply=uhf_console_requests[i]==x->packet.request;uhf_console_requests[i]=0;
                 LOG("UHF request=%" PRIu32 " outcome=UNKNOWN reason=RESULT_TIMEOUT ground_ack=0\n",x->packet.request);x->active=false;++unknown;
                 console_reply=previous;
@@ -931,7 +966,7 @@ void ihu_app_step(bool scheduled) {
         }
         if(pending.active && (uint32_t)(now-pending.started)>=request_timeout_ms(pending.packet.type)) {
 
-            record_fault(4,now);bool previous=console_reply;console_reply=pending.console;
+            record_fault(W_IHU_FAULT_CODE_TELEMETRY_TIMEOUT_OR_CANCELLED,now);bool previous=console_reply;console_reply=pending.console;
             LOG("RESULT request=%" PRIu32 " outcome=UNKNOWN reason=TIMEOUT\n",pending.packet.request);
             console_reply=previous;
             if(uhf_is_request(pending.packet.type))for(unsigned i=0;i<UC_CAPACITY;i++)

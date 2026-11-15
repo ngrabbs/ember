@@ -89,6 +89,7 @@ section below for commands typed directly into the IHU.
 | `SET_UHF_TELEMETRY` | `enabled=0` or `enabled=1` stops or starts the schedule. |
 | `SET_UHF_TELEMETRY_SCHEDULE` | Listening 1–3600 s and telemetry 5–3600 s. |
 | `SET_UHF_TELEMETRY_SET` | BASIC or FULL. |
+| `REQUEST_IHU_FAULTS` | Gets the latest 16 retained fault entries and the total for this boot. View the decoded names, boot ID, and uptimes on the Yamcs **IHU Faults** page. Works with scheduled telemetry off in LINK_ACTIVE. |
 | `REQUEST_STATUS` | Requests IHU status and queues a schedule status report. |
 
 ## USB console
@@ -111,6 +112,11 @@ The six output flags are `cli_debug`, `cli_telem`, `umb_debug`,
 output and the UMB flags govern the wired debug and telemetry streams.
 The UHF and LTE flags gate their corresponding telemetry paths. Turning a
 stream off cancels future submissions on that path.
+
+In the UHF startup profile, a due EPS health poll runs between GPS I²C
+chunks. `eps status` shows sample age, the maximum interval between good EPS
+samples, and the number of EPS polls that ran during GPS reads. EPS diagnostics
+identify `I2C_TIMEOUT`, `PEC_CHECKSUM`, `I2C_ERROR`, and `STALE` separately.
 
 The UHF startup profile console provides `startup`, `status`, `version`, `mode`,
 `outputs`, `faults`, `rtos`, `radio`, `eps status`, `eps json`, and

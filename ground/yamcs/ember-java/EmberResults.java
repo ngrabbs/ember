@@ -50,7 +50,7 @@ public final class EmberResults {
             command.parameter = Short.toUnsignedInt(b.getShort(WireProfile.SET_PARAMETER_PARAMETER_ID));
             command.value = Integer.toUnsignedLong(b.getInt(WireProfile.SET_PARAMETER_VALUE));
         }
-        command.deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(command.command == 1028 ? 40 : 5);
+        command.deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(command.command == 1028 || command.command == 11 ? 40 : 5);
         pending.put(key(b), command);
         history.publishAck(id, "Acknowledge_EMBER_Acceptance", TimeEncoding.getWallclockTime(), AckStatus.PENDING);
         history.publishAck(id, CommandHistoryPublisher.CommandComplete_KEY, TimeEncoding.getWallclockTime(), AckStatus.PENDING);
@@ -77,10 +77,20 @@ public final class EmberResults {
         // It is telemetry provenance, never evidence that the physical IHU reset.
         if (Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 0x10 &&
             Byte.toUnsignedInt(b.get(WireProfile.POWER_STATUS_PROVENANCE)) != 2) return;
+        boolean faultSnapshot = Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
+            Short.toUnsignedInt(b.getShort(WireProfile.MESSAGE_ID)) == 64 &&
+            b.get(WireProfile.IHU_FAULTS_PAYLOAD_VERSION) == 1 &&
+            Byte.toUnsignedInt(b.get(WireProfile.IHU_FAULTS_COUNT)) ==
+                Math.min(Integer.toUnsignedLong(b.getInt(WireProfile.IHU_FAULTS_TOTAL)), 16);
         long currentBoot = Integer.toUnsignedLong(b.getInt(WireProfile.SOURCE_BOOT_ID));
         if (boot != 0 && boot != currentBoot) {
-            pending.values().forEach(command -> unknown(command, "Unknown outcome: IHU boot identity changed"));
-            pending.clear();
+            String responseKey = key(b);
+            pending.entrySet().removeIf(entry -> {
+                Pending command = entry.getValue();
+                if (faultSnapshot && command.command == 11 && entry.getKey().equals(responseKey)) return false;
+                unknown(command, "Unknown outcome: IHU boot identity changed");
+                return true;
+            });
         }
         boot = currentBoot;
         if (Byte.toUnsignedInt(b.get(WireProfile.KIND)) == 1 &&
@@ -98,6 +108,20 @@ public final class EmberResults {
             if (!fire.accepted) fire.history.publishAck(fire.id, "Acknowledge_EMBER_Acceptance", now,
                 AckStatus.NA, "Correlated payload final result received");
             fire.history.publishAck(fire.id, CommandHistoryPublisher.CommandComplete_KEY, now, AckStatus.OK);
+            pending.remove(key(b));
+            return;
+        }
+        if (faultSnapshot) {
+            Pending faults = pending.get(key(b));
+            if (faults == null || faults.command != 11) return;
+            int count = Byte.toUnsignedInt(b.get(WireProfile.IHU_FAULTS_COUNT));
+            long now = TimeEncoding.getWallclockTime();
+            faults.history.publish(faults.id, "ember-result-boot-id", Long.toString(currentBoot));
+            faults.history.publish(faults.id, "ember-retained-faults", count);
+            faults.history.publish(faults.id, "ember-outcome", "COMPLETED");
+            if (!faults.accepted) faults.history.publishAck(faults.id, "Acknowledge_EMBER_Acceptance", now,
+                AckStatus.NA, "Correlated IHU fault history received");
+            faults.history.publishAck(faults.id, CommandHistoryPublisher.CommandComplete_KEY, now, AckStatus.OK);
             pending.remove(key(b));
             return;
         }
