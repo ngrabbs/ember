@@ -63,8 +63,7 @@ and match local positions plus that origin.
 the manufacturer drawings. The scratch PCB contains that package only and
 has no routed circuit or manufacturing-readiness claim.
 
-Earlier unwired draft exports are historical evidence superseded by the final
-files above. Protected sources were mutated only by Konnect; successful atomic
+Protected sources were mutated only by Konnect; successful atomic
 mutations plus readback/export establish saved file state. The live save
 command cannot run while KiCad is closed; there are no pending live changes.
 
