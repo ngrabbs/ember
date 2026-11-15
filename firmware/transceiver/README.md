@@ -1,12 +1,13 @@
 # Transceiver firmware
 
 The transceiver moves EMBER packets between the IHU on CAN A and the UHF radio.
-Version **0.40.0** runs on the original Raspberry Pi Pico.
+Version **0.41.0** runs on the original Raspberry Pi Pico.
 
 [Changelog](CHANGELOG.md) · [Verified bench builds](../README.md#current-bench-builds) ·
 [Radio guide](../../docs/comms/README.md)
 
-The [0.40.0 bench record](../ihu/releases/0.32.0/README.md) covers the tuned
+The [0.41.0 bench record](releases/0.41.0/README.md) covers saved profiles and
+reboot behavior. The [0.40.0 bench record](../ihu/releases/0.32.0/README.md) covers the tuned
 receiver and the [1500-baud downlink trial](../../docs/comms/radio_config.md).
 
 The previous 0.38.0 bench image was built from

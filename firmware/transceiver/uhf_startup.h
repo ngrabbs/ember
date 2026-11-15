@@ -36,6 +36,8 @@ static void uhf_startup_identity(const cf_frame *frame,uint32_t now){
     if(size)(void)hello_send(wire,size,request.request,time_us_64()+50000);
 }
 
+#include "radio_profile_store.h"
+
 static struct {
     uint8_t active,confirmed,candidate,phase;
     uint32_t deadline,token;
@@ -61,7 +63,7 @@ static void uhf_startup_config_reply(unsigned operation,uint32_t request,uint32_
     unsigned result=RADIO_CONFIG_READBACK;
     if(operation==BD_PROFILE_SET){
         unsigned profile=request>>24;
-        if((profile!=RADIO_PROFILE_DBPSK_1200_V3 && profile!=RADIO_PROFILE_DBPSK_DL1500_V3) ||
+        if(!radio_profile_valid(profile) ||
            profile==radio_trial.active || radio_trial.candidate || !uhf_startup_link)
             result=RADIO_CONFIG_REJECTED;
         else {
@@ -71,7 +73,8 @@ static void uhf_startup_config_reply(unsigned operation,uint32_t request,uint32_
             result=RADIO_CONFIG_APPLIED;
         }
     }else if(operation==BD_PROFILE_CONFIRM){
-        if(radio_trial.phase!=RADIO_TRIAL_ACTIVE || (int32_t)(now-radio_trial.deadline)>=0 || request!=radio_trial.token)
+        if(radio_trial.phase!=RADIO_TRIAL_ACTIVE || (int32_t)(now-radio_trial.deadline)>=0 || request!=radio_trial.token ||
+           !radio_profile_save(radio_trial.active))
             result=RADIO_CONFIG_REJECTED;
         else{
             radio_trial.confirmed=radio_trial.active;
@@ -434,6 +437,12 @@ static bool uhf_startup_transmit(void){
 static void uhf_startup_radio_run(bool can_ok) {
     printf("[uhf_startup] CONDUCTED ONLY; generic packet link; ordinary console RF paths disabled\n");
     if(!can_ok || !rx_stop())goto failed;
+    int saved = radio_profile_latest();
+    if (saved >= 0) {
+        radio_trial.active = (uint8_t)ul_u32(radio_profile_slot((unsigned)saved) + 8);
+        radio_trial.confirmed = radio_trial.active;
+        radio_trial.phase = RADIO_TRIAL_CONFIRMED;
+    }
     uhf_startup_dma=dma_claim_unused_channel(false);
     if(uhf_startup_dma<0)goto failed;
     adc_fifo_setup(true,true,1,true,false);
