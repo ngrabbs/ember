@@ -75,18 +75,17 @@ def generate(destination, instance="ember"):
         macros=ET.SubElement(a,'macros'); prop(macros,'include_parent_macros',True)
         prop(a,'path',path); prop(a,'mode',0); prop(a,'description',text)
 
-    # Four operator pages; raw packet details stay in native parameter tables.
     def new(title, subtitle):
         nonlocal display
         for child in list(display.findall('widget')):display.remove(child)
         prop(display,'name',title)
         label('EMBER  /  '+title.upper(),22,16,950,36,24,WHITE,True)
         label(('FLIGHT · UHF / LTE' if instance=='ember' else 'BENCH · IHU SERIAL')+'   /   '+subtitle,22,56,950,22,11,BLUE)
-        for i,(text,path) in enumerate([('Overview','Overview.opi'),('Power','EPS.opi'),('Payload','Payload.opi'),('Devices & firmware','Devices.opi')]):
-            button(text,path,22+i*196,186)
+        for i,(text,path) in enumerate([('Overview','Overview.opi'),('Power','EPS.opi'),('Payload','Payload.opi'),('Devices & firmware','Devices.opi'),('IHU Faults','IHU-Faults.opi')]):
+            button(text,path,22+i*160,150)
             prop(display.findall('widget')[-1],'y',90)
             prop(display.findall('widget')[-1],'height',32)
-        web('Links','/links',806,90,172)
+        web('Links','/links',822,90,156)
     def web(text,path,x,y,w):
         e=widget('ActionButton',text,x,y,w,32);prop(e,'text',text)
         color(e,'background_color','#30445e');color(e,'foreground_color',WHITE);font(e,11,True)
@@ -236,6 +235,29 @@ def generate(destination, instance="ember"):
     nav('All firmware / timestamps','Firmware.par',270,578,250)
     footer('Firmware rows are last-known reports, not live attestation. Raw table includes each identity’s receive time and boot ID.')
     save('Devices.opi')
+
+    new('IHU Faults','Last fault history received over UHF')
+    web('Request fault history','/commanding/send/ember/REQUEST_IHU_FAULTS',784,142,194)
+    box(22,140,748,94)
+    for index, (caption, pv) in enumerate([
+        ('IHU boot ID','source_boot_id'), ('Snapshot uptime','uptime_ms'),
+        ('Retained faults','count'), ('Faults this boot','total'),
+    ]):
+        x=38+index*182
+        label(caption,x,150,170,22)
+        observed('IHU_FAULTS_'+pv,x,175,170,17)
+    stamp('IHU_FAULTS_count',38,204,410)
+    label('Fault',64,248,510,23,13,WHITE,True)
+    label('Fault uptime (ms)',714,248,250,23,13,WHITE,True)
+    for row in range(1,17):
+        y=274+(row-1)*19
+        if row % 2: box(22,y,956,19)
+        script('',[f'IHU_FAULTS_fault{row}_code'],'ihu-fault-value.js',64,y,620,19,11)
+        script('',[f'IHU_FAULTS_fault{row}_code',f'IHU_FAULTS_fault{row}_uptime_ms'],
+               'ihu-fault-value.js',714,y,250,19,11)
+    footer('Fault history is retained in IHU RAM for the current boot. Entries are oldest first.')
+    save('IHU-Faults.opi')
+
 
     groups={'Payload.par':['PAYLOAD_STATUS','PAYLOAD_PING_RESULT','PAYLOAD_FIRE_RESULT'], 'Devices.par':['DEVICE_STATUS'],
             'Firmware.par':['COMMS_FIRMWARE','LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE','PAYLOAD_FIRMWARE'],

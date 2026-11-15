@@ -23,9 +23,10 @@ static uc_state uhf_client;
 #endif
 static ip_state policy;
 static bool console_reply;
-static struct {uint32_t at;uint8_t code;} faults[16];
+enum { IHU_FAULT_CAPACITY = 16 };
+static struct {uint32_t at;uint8_t code;} faults[IHU_FAULT_CAPACITY];
 static unsigned fault_count;
-static void record_fault(uint8_t code,uint32_t at){unsigned i=fault_count++%16;faults[i].at=at;faults[i].code=code;}
+static void record_fault(uint8_t code,uint32_t at){unsigned i=fault_count++%IHU_FAULT_CAPACITY;faults[i].at=at;faults[i].code=code;}
 
 #include "uplink_ping.h"
 #include "../shared/ember_protocol/protocol.h"
@@ -186,7 +187,7 @@ static void pump_tx(uint32_t now) {
     static uint32_t observed_errors;ihu_can_poll_tx(&can,now);
     uint32_t errors=can.tx_fail+can.tx_timeout;
     if(errors!=observed_errors) {
-        observed_errors=errors;record_fault(3,now);
+        observed_errors=errors;record_fault(W_IHU_FAULT_CODE_CAN_TX_ERROR,now);
         output.active=false;LOG("CAN_TX outcome=UNKNOWN reason=FRAME_TX_FAILED\n");
         // Pending application request times out; a CAN hardware outcome is not an app result.
         return;
@@ -495,16 +496,16 @@ static void stop_stream(unsigned channel){
      * packets may finish; no new periodic submission may follow an OFF. */
     if(pending.active && ((channel==IP_UHF_TELEM&&uhf_is_request(pending.packet.type))||
        (channel==IP_LTE_TELEM&&pending.packet.type==CF_SEND_PACKET))){
-        output.active=false;pending.active=false;record_fault(4,now_ms());
+        output.active=false;pending.active=false;record_fault(W_IHU_FAULT_CODE_TELEMETRY_TIMEOUT_OR_CANCELLED,now_ms());
     }
 }
 static void policy_command(const char *s){
     if(!strcmp(s,"outputs")){outputs_status();return;}
     if(!strcmp(s,"mode")){mode_status();return;}
     if(!strcmp(s,"faults")){
-        unsigned n=fault_count<16?fault_count:16;
+        unsigned n=fault_count<IHU_FAULT_CAPACITY?fault_count:IHU_FAULT_CAPACITY;
         LOG("FAULTS total=%u retained=%u persistent=0\n",fault_count,n);
-        for(unsigned j=0;j<n;j++){unsigned i=(fault_count-n+j)%16;LOG("FAULT code=%u uptime_ms=%" PRIu32 "\n",faults[i].code,faults[i].at);}
+        for(unsigned j=0;j<n;j++){unsigned i=(fault_count-n+j)%IHU_FAULT_CAPACITY;LOG("FAULT code=%u uptime_ms=%" PRIu32 "\n",faults[i].code,faults[i].at);}
         return;
     }
     if(!strncmp(s,"mode ",5)){
@@ -633,7 +634,7 @@ static void health_result(const ihu_sensor_result *r){
     bool was_valid=housekeeping.valid;
     housekeeping.valid=r->ok;
     if(r->ok){housekeeping.seen=true;housekeeping.eps=r->raw;housekeeping.sampled=r->sampled;dr_seen(&devices[DR_EPS_I2C_INDEX],r->sampled,0);}
-    else {housekeeping.failed_register=r->failed;devices[DR_EPS_I2C_INDEX].state=DR_FAULT;if(!housekeeping.attempted||was_valid)record_fault(2,now_ms());}
+    else {housekeeping.failed_register=r->failed;devices[DR_EPS_I2C_INDEX].state=DR_FAULT;if(!housekeeping.attempted||was_valid)record_fault(W_IHU_FAULT_CODE_EPS_READ_FAILED,now_ms());}
     housekeeping.attempted=true;
     if(!stdio_usb_connected())return;
     if(ip_enabled(&policy,IP_CLI_TELEM))ihu_printf(false,"CLI_TELEM mode=%s eps_valid=%u comms=%s lte=%s payload=%s\n",
@@ -875,7 +876,7 @@ void ihu_app_init(void) {
     ip_init(&policy,IHU_FLIGHT_CONFIGURATION?IP_FLIGHT:IP_GROUND_TEST);
     ember_init(&uplink_engine,boot);
     ip_finish_boot(&policy,can.ready,false,false);
-    if(!can.ready)record_fault(1,now_ms());
+    if(!can.ready)record_fault(W_IHU_FAULT_CODE_CAN_BOOT_CHECK,now_ms());
     boot_ready_ms=now_ms();
 #if IHU_UHF_STARTUP
     link_reply_sink=uhf_startup_store_response;
@@ -922,7 +923,7 @@ void ihu_app_step(bool scheduled) {
         for(unsigned i=0;i<UC_CAPACITY;i++) {
             uc_item *x=&uhf_client.items[i];
             if(x->active && (uint32_t)(now-x->started)>=UC_RESULT_MS) {
-                record_fault(4,now);bool previous=console_reply;
+                record_fault(W_IHU_FAULT_CODE_TELEMETRY_TIMEOUT_OR_CANCELLED,now);bool previous=console_reply;
                 console_reply=uhf_console_requests[i]==x->packet.request;uhf_console_requests[i]=0;
                 LOG("UHF request=%" PRIu32 " outcome=UNKNOWN reason=RESULT_TIMEOUT ground_ack=0\n",x->packet.request);x->active=false;++unknown;
                 console_reply=previous;
@@ -931,7 +932,7 @@ void ihu_app_step(bool scheduled) {
         }
         if(pending.active && (uint32_t)(now-pending.started)>=request_timeout_ms(pending.packet.type)) {
 
-            record_fault(4,now);bool previous=console_reply;console_reply=pending.console;
+            record_fault(W_IHU_FAULT_CODE_TELEMETRY_TIMEOUT_OR_CANCELLED,now);bool previous=console_reply;console_reply=pending.console;
             LOG("RESULT request=%" PRIu32 " outcome=UNKNOWN reason=TIMEOUT\n",pending.packet.request);
             console_reply=previous;
             if(uhf_is_request(pending.packet.type))for(unsigned i=0;i<UC_CAPACITY;i++)

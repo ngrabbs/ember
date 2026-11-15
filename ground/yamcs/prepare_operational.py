@@ -19,6 +19,7 @@ LEGACY = ('ember-lte', 'ember-uhf', 'ember-payload', 'myproject')
 UHF_COMMANDS = (
     'PING',
     'REQUEST_STATUS',
+    'REQUEST_IHU_FAULTS',
     'REQUEST_TELEMETRY',
     'STATUS_CAPTURE',
     'STATUS_FETCH',

@@ -183,6 +183,30 @@ static bool uhf_startup_command_reply(const uint8_t *p,size_t n,void *unused){
     if(stage==W_STAGE_ACCEPTED || (status_request && stage==W_STAGE_COMPLETED))return true;
     return uhf_startup_store_response(p,n);
 }
+static void uhf_startup_send_faults(const ul_packet *request) {
+    const size_t size = W_PAYLOAD + W_SIZE_IHU_FAULTS + 2;
+    _Static_assert(W_PAYLOAD + W_SIZE_IHU_FAULTS + 2 <= BD_PACKET_MAX,
+                   "IHU fault history exceeds RF link limit");
+    const unsigned stride = W_IHU_FAULTS_FAULT2_CODE - W_IHU_FAULTS_FAULT1_CODE;
+    _Static_assert(W_SIZE_IHU_FAULTS == W_IHU_FAULTS_FAULT1_CODE +
+                   IHU_FAULT_CAPACITY * (1 + sizeof(uint32_t)),
+                   "IHU fault history layout does not match the ring");
+    uint8_t *packet = uhf_startup_response;
+    cdh_header(packet, size, request, W_KINDS_TELEMETRY, W_ID_IHU_FAULTS, W_SIZE_IHU_FAULTS);
+    uint8_t *fields = packet + W_PAYLOAD;
+    unsigned count = fault_count < IHU_FAULT_CAPACITY ? fault_count : IHU_FAULT_CAPACITY;
+    fields[W_IHU_FAULTS_PAYLOAD_VERSION] = 1;
+    fields[W_IHU_FAULTS_COUNT] = count;
+    ul_p32(fields + W_IHU_FAULTS_TOTAL, fault_count);
+    for (unsigned i = 0; i < count; ++i) {
+        unsigned slot = (fault_count - count + i) % IHU_FAULT_CAPACITY;
+        fields[W_IHU_FAULTS_FAULT1_CODE + i * stride] = faults[slot].code;
+        ul_p32(fields + W_IHU_FAULTS_FAULT1_UPTIME_MS + i * stride, faults[slot].at);
+    }
+    ul_p16(packet + size - 2, ul_crc(packet, size - 2));
+    uhf_startup_response_size = size;
+    ++uhf_startup_replies;
+}
 static bool uhf_startup_ack_setting(const ul_packet *request,uint32_t value){
     ul_packet reply={.version=1,.type=UP_RESULT,.sender=boot,.origin=request->sender,
         .request=request->request,.size=43};
@@ -282,6 +306,10 @@ static void uhf_startup_uplink(const cf_frame *f,uint32_t now){
     }
     if(id==W_ID_SET_UHF_TELEMETRY_SET && up_native_args(p.payload,p.size,1)){
         uhf_startup_set_packet_set(&p,now);return;
+    }
+    if (id == W_ID_REQUEST_IHU_FAULTS && up_native_args(p.payload, p.size, 0)) {
+        uhf_startup_send_faults(&p);
+        return;
     }
     if(up_native_cdh(p.payload,p.size)){cdh_receive(&p);return;}
     if(up_native_fire(p.payload,p.size)){
