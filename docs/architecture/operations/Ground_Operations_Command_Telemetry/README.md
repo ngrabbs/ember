@@ -1,8 +1,7 @@
 # EMBER Ground Operations & Test
 
 **Mission design draft:** this page records proposed application behavior.
-For commands available in the current lab, use the [Yamcs operator guide](../../../../ground/yamcs/README.md)
-and [bench contract](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/protocols/ember_bench_v1.md). Draft commands
+For commands available in the current lab, use the [Yamcs operator guide](../../../../ground/yamcs/README.md). Draft commands
 such as SET_MODE and REBOOT_IHU are not exposed by the current Yamcs bench MDB.
 
 **Status:** Draft 0.2
@@ -15,9 +14,7 @@ Ground communications are shared with Flight Communications, and the exact divis
 
 ## Shared team reading
 
-[Telemetry: from a subsystem to the ground](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/docs/architecture/telemetry_data_flow.md) explains
-the implemented bench data path, definition files, Yamcs decoding, and the workflow
-for adding subsystem telemetry. Read it alongside the application dictionaries below.
+Read it alongside the application dictionaries below.
 
 ## Design Documents
 

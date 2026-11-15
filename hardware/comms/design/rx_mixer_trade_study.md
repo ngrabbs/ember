@@ -11,7 +11,6 @@ amplifier afterward. That makes LO drive, conversion loss, receiver noise, and
 mixer input headroom joint design constraints. Earlier VHF filter comparisons and
 noise estimates are not acceptance results for the present receiver.
 
-- [ADE-1+ physical package audit](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/components/u10_ade1_pinmap.md)
 - [Mixer headroom with the proposed U9 replacement](analysis/u9_mixer_headroom.md)
 - [RX qualification plan](../bringup/rx_test_plan.md)
 

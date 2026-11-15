@@ -72,8 +72,7 @@ All 30 ground tests passed, including seven new session tests for pagination,
 repeated tokens, corruption before playback, timing, quality preservation,
 metadata/dictionary/time mismatches, and refusing command packets.
 
-[Evidence summary](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/telemetry-session-20261002.json) records counts and
-dictionary/session hashes. The local raw session is
+The local raw session is
 `ground/yamcs/.runtime/sessions/housekeeping-20261002.json`; decoded replay is
 `housekeeping-20261002-replay.jsonl` alongside it. Existing bridge services and
 Yamcs were left running; no firmware, charger configuration, or RF operation
@@ -97,9 +96,7 @@ narrow ADC-control change. That change was not part of session recording.
 
 The second session and replay are saved alongside the first as
 `housekeeping-powered-20261002.json` and
-`housekeeping-powered-20261002-replay.jsonl`. Its
-[powered-session evidence](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/telemetry-session-powered-20261002.json)
-records fresh-readout quality and ADC state. Both sessions retain the original
+`housekeeping-powered-20261002-replay.jsonl`. Both sessions retain the original
 quality flags, making the stale-to-current UART transition reproducible offline.
 
 Export uses the documented

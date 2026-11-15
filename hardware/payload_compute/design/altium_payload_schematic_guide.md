@@ -81,10 +81,7 @@ Use these global net names consistently across all sheets per
 net labels) for supply rails so they are global automatically. Stack
 rails entering on the CSKB use their canonical names (`+3V3`, `+5V`,
 `VBAT`); board-local derived rails carry a scope suffix
-(`+5V_ORIN`, `+3V3_M2`, `+1V8_MOD`). Inter-board signals use the
-canonical CSKB net names from [`system/interfaces/cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md)
-(`SCL_SYS`, `SDA_SYS`, `PAYLOAD_EN`, `PAYLOAD_FAULT_N`,
-`PAYLOAD_SLEEP_REQ_N`).
+(`+5V_ORIN`, `+3V3_M2`, `+1V8_MOD`).
 
 | Net Name | Type | Description |
 |---|---|---|
@@ -445,10 +442,6 @@ footprint, same pinout. Pick by build context:
 For the current build, **`74LVC2G07GW,125`** is the default
 BOM line. Reserve the `-Q100H` upgrade for the flight-cut variant.
 
-**Pull-up note for PAYLOAD_FAULT_N:** the IHU side supplies the
-pull-up on H2.47 per [`cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md) Rule 3, so do NOT add a
-pull-up on the payload side.
-
 **Pull-up note for MUX_RST_N_3V3:** R34 is on the **payload** side
 because the mux RESET# input has no other PU source.
 
@@ -667,7 +660,7 @@ The carrier uses **stack-through** parts (signals pass through), not
 endpoint parts. Place J20 and J21 on the right edge of the sheet so
 their right-edge pins (going off-sheet) become the off-sheet ports.
 
-Pin-by-pin assignments per [`cskb_pinmap.md`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md). Critical payload-facing
+Critical payload-facing
 pins for this sheet:
 
 | H-pin | CSKB net | Direction | Connect to |

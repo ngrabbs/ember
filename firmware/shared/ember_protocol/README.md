@@ -11,8 +11,6 @@ PING route. IHU's RF allowlist and admission gates remain in
 enable its other command handlers or periodic telemetry on a live interface.
 Payload fire-check handling remains separate.
 
-[`tests/ground/test_firmware.py`](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/tests/ground/test_firmware.py) compiles
-the engine with a host C compiler, then checks generated replies and transaction
-caching with the independent Python codec. IHU parser/route tests also link it.
+IHU parser/route tests also link it.
 The old standalone USB `main.c`, CMake application and USB-only C framing are
 removed; Python framing tests remain with the ground tools.

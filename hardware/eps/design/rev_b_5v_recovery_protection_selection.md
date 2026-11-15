@@ -4,7 +4,7 @@
 
 The upstream converter bank is now **five EEHZA1H680P 68 µF / 50 V hybrids plus eight CGA5L1X7R1H106K160AC 10 µF / 50 V ceramics**. It replaces the previous 35 V / 25 V bank; C16 remains 100 nF / 50 V. Nominal capacitance is 420 µF, initial high tolerance is 496 µF, and the endurance-plus-tolerance sensitivity is 618.4 µF plus C16. Use a **650 µF upstream development allocation**, with staged charging of the downstream bank; the earlier 500 µF arithmetic is historical. Cold/bias/endurance bounds remain subject to manufacturer data and measurements.
 
-The [current bank analysis and acceptance gaps](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/protection/bank/README.md) and [34-part native BOM/render evidence](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/protection/bank/native/README.md) supersede the earlier bank-specific BOM and screenshots. Existing endpoint names and the PCB are unchanged. The subsequent [latch and MOSFET follow-up](rev_b_5v_latch_and_mosfet_survival.md) installs the bleeder/timing/feedback correction and source slew limiter. Its 83-part BOM, current renders and screening supersede the original protection timer/divider values below. Guaranteed hot SOA, low-VCC accuracy and physical qualification remain open.
+Existing endpoint names and the PCB are unchanged. The subsequent [latch and MOSFET follow-up](rev_b_5v_latch_and_mosfet_survival.md) installs the bleeder/timing/feedback correction and source slew limiter. Its 83-part BOM, current renders and screening supersede the original protection timer/divider values below. Guaranteed hot SOA, low-VCC accuracy and physical qualification remain open.
 
 
 2026-10-23. Complete **development circuits** selected and built as an isolated
@@ -20,10 +20,6 @@ reset input from independently powered EPS control. Both have common-source
 back-to-back N-channel MOSFETs, analog output clamping, current limiting and a
 stress timer. Their operation does not require firmware.
 
-The selected hardware values, complete pin maps, capacitor populations and
-native-build boundary are in the [circuit contract](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/protection/native_build_contract.md).
-The [executable circuit generator](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/protection/run_protection.py)
-includes those hardware networks plus clearly separated simulation fixtures.
 Fixture voltage sources, leakage/reference injections, parasitic lumping and
 ideal loads are not schematic components.
 
@@ -115,8 +111,7 @@ The 16 mm top standoff accommodates the nominal inductor height, but complete
 
 ## Transient and survival checks
 
-Saved results and reproduction instructions are in the
-[verification record](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/protection/README.md). They use LTspice
+They use LTspice
 26.0.2 with installed ADI models, explicit capacitor ESR/ESL, low-input startup,
 slow OV, converter LC faults, a low-impedance input/output bridge, output and
 input shorts, prebias, deliberate reset, cold/hot sensitivities and persistent

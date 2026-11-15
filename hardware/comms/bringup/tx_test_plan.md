@@ -19,5 +19,4 @@ The selected design retains ADL5602; older simulation power estimates and
 compression ratings are not guaranteed antenna-output limits.
 
 Save raw measurements with the board revision and settings. Recheck native
-connectivity and design rules after hardware changes. Historical clock/tripler
-bench methods are available under [history](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/bringup/history/README.md).
+connectivity and design rules after hardware changes.

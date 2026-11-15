@@ -189,4 +189,3 @@ using measured session energy and EPS reserve constraints.
 6. [TI TPS62933F specification](https://www.ti.com/product/TPS62933F) and [legacy schematic guide](altium_payload_schematic_guide.md).
 7. [Adafruit 4288 product specification](https://www.adafruit.com/product/4288).
 8. [STUSB4500 controller specification](https://www.st.com/en/interfaces-and-transceivers/stusb4500.html).
-9. [Canonical stack power and CAN allocation](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md).

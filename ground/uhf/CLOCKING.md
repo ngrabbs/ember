@@ -3,11 +3,7 @@
 The operating profile leaves master-clock selection to UHD, requests **614400
 complex samples/second**, and verifies the clock and rate after both directions
 configure the shared AD9361. A correct clock alone did not eliminate streaming
-loss: packet overhead, GNU Radio startup and telemetry preparation also mattered.
-See the [bench evidence](https://github.com/ngrabbs/ember/tree/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/uhf/results/2026-10-03/clock-review) for separate stream and
-RF-delivery results. The [final verification](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/uhf/results/2026-10-03/clock-review/result.json)
-records a93.24second integrated transponder run with zero reported U/O or UDP
-errors and6/6 fresh IHU packets matching through Yamcs. These changes belong to
+loss: packet overhead, GNU Radio startup and telemetry preparation also mattered. These changes belong to
 the optional application; the AMSAT
 FPGA, UHD/MPM libraries, boot image and existing transponder examples are unchanged.
 
@@ -128,9 +124,7 @@ that clock-profile trial.
 
 ## Conducted-uplink follow-up
 
-The [subsequent evidence](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/uhf/results/2026-10-03/conducted-proof/result.json) adds a
-hardware-time sanity check:614400.00347Hz TX/RX/clock readback,1.00174seconds of
-hardware time during1.00317seconds of wall time. It does not support a gross
+It does not support a gross
 timekeeper-rate mismatch as the cause of the diagnostic late-command errors.
 
 Receive-only conducted RX1 captures detect the two uplink tones at approximately
@@ -153,9 +147,7 @@ scale16 is the measured conducted setting, with manual input/headroom checks.
 Strong-input level control and longer operation remain open. Clock selection,
 RFIC rate, FPGA and published AMSAT sources were not changed by this follow-up.
 
-The [subsequent headroom check](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/uhf/results/2026-10-03/headroom/result.json) replaces
-Add with one optional compiled native mixer, avoiding extra stream stages and
-Python work callbacks. With the same automatic 614.4 kS/s clock profile and 250 ms
+With the same automatic 614.4 kS/s clock profile and 250 ms
 priming, a 60.58-second conducted stress run reported zero RX/TX/UDP errors and
 delivered 3/3 byte-identical fresh packets through Yamcs. Forwarded input reached
 1.417 full scale; the mixer bounded it to 0.25 and the sum to 0.37 at packet

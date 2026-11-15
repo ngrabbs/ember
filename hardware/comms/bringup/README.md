@@ -9,6 +9,5 @@ board configuration, instruments, calibration, and agreed limits before testing.
 2. [RX qualification plan](rx_test_plan.md)
 3. [Measurement table](rf_prototype_measurements.csv) — blank cells remain unmeasured
 
-The [earlier bench records](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/bringup/history/README.md) preserve measured results and Rev-A
-failure analysis. They include older VHF/SA612/tripler configurations and must not
+They include older VHF/SA612/tripler configurations and must not
 be used as the present board's acceptance procedure.

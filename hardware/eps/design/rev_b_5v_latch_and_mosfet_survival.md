@@ -32,7 +32,7 @@ The independent hard **input** short is different from loss of solar input or an
 
 ## Current numerical evidence
 
-[Fixtures, scripts, numerical evidence and native review](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/protection/latch/README.md) record **22 rail cases and 16 source cases**. Eight source cases are comparisons without L2; eight implement the installed source topology. The unguarded hard input short is expected to fail two numerical checks. Expected failure is not circuit acceptance.
+Eight source cases are comparisons without L2; eight implement the installed source topology. The unguarded hard input short is expected to fail two numerical checks. Expected failure is not circuit acceptance.
 
 - Cold/hot single load-release cases avoid latch-off; maximum timer voltage stays below 1.22 V, and the long-hold cases require final timer voltage below 0.1 V against the cited minimum warning threshold. Their protected peaks stay below the provisional 5.5 V ceiling.
 - Finite-current cold/hot startup, high protected capacitance, shunt drift, deliberate reset, output short, input loss, finite-reservoir and shunt-bypass faults, added gate charge/weak gate-pull sensitivity and one-device-per-function cases are recorded.
@@ -52,7 +52,7 @@ A 2 ms UV reset requests restart but **does not bypass the LTC4364-1 cooldown**.
 
 ## MOSFET survival verdict
 
-The [independent extraction](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/protection/latch/evidence/survival.json) checks drain/gate voltage and a single device's 150 A pulse-current bound against **total bank current**, without assuming equal sharing. The installed-topology fixtures pass these electrical screens. The unguarded hard input short fails internal VGS. No avalanche-energy credit is taken; an energy number alone cannot establish linear SOA.
+The installed-topology fixtures pass these electrical screens. The unguarded hard input short fails internal VGS. No avalanche-energy credit is taken; an energy number alone cannot establish linear SOA.
 
 The thermal calculation assigns **all parallel-bank power to one device**, uses interval endpoint maximum power, and an elevated four-term Foster sensitivity totaling 1.3 K/W. The historical convolution was a rough approximation; the new response is higher at the visually read single-pulse anchor points. It is not a manufacturer-fitted die/package or local-hotspot model, and the convolution is not coupled back into the electrical MOSFET model as self-heating. The worst new rail rise is approximately **41 K**: about 126 °C from an assumed 85 °C case, or 166 °C from a 125 °C case. This is below the 175 °C absolute junction limit in that model but leaves little margin at the hotter case. Establish a **≤100 °C initial case-temperature development requirement**, a 150 °C engineering junction target and verify both the actual transient response and repeated-fault cooling. An 85 °C electronics screening range does not prove an 85 °C MOSFET case.
 

@@ -27,8 +27,7 @@ For the bounded fire-check uplink, see the [Yamcs service guide](../yamcs/FIRE_C
 The receiver writes about 92 MB of raw IQ per minute. Ctrl-C ends reception and
 saves results. Check receiver and IHU status when closing a bench run.
 
-The [October 17 run](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/ground_station/evidence/uhf-flight-20261017/result.json)
-matched 13 packets in Yamcs over a bounded 30-second transmission. Earlier
+Earlier
 capture, firmware-specific commands, and test results are in the
 [DBPSK bench history](HISTORY.md). See [release identities](../releases/README.md)
 when comparing deployed versions.

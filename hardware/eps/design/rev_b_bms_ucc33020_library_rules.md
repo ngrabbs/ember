@@ -6,7 +6,7 @@
 
 Texas Instruments **UCC33020RAQR**, SLUSFK4A Rev A, May 2025, [manufacturer datasheet](https://www.ti.com/lit/ds/symlink/ucc33020.pdf). The downloaded document contains the 7-Nov-2025 package addendum: Active/Production, VSON-FCRLF RAQ, 12 logical pins, 3000 large tape-and-reel, −40 to +125°C, marking U33020. This is an ordering-table observation, not a procurement or qualification result.
 
-Actual source figures inspected: physical pin functions p4; electrical tables pp6–8; typical application p23; package **RAQ0012C**, 4230399/A, 01/2024, pp34–36. Source hashes, page images and stock TLV767 querybacks are in [candidate evidence](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/bms/ucc33020_candidate/README.md). Parent symbol search returned no UCC33020; independent configured footprint searches `RAQ`, `VSON-12`, `UCC33` each returned zero. Recheck configured KiCadLib and official libraries immediately before any approved authoring.
+Actual source figures inspected: physical pin functions p4; electrical tables pp6–8; typical application p23; package **RAQ0012C**, 4230399/A, 01/2024, pp34–36. Parent symbol search returned no UCC33020; independent configured footprint searches `RAQ`, `VSON-12`, `UCC33` each returned zero. Recheck configured KiCadLib and official libraries immediately before any approved authoring.
 
 ## Proposed symbol
 

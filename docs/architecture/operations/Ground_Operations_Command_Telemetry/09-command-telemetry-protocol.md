@@ -1,8 +1,7 @@
 # EMBER Command / Telemetry Protocol
 
 **Mission design draft:** this page records proposed application behavior.
-For commands available in the current lab, use the [Yamcs operator guide](../../../../ground/yamcs/README.md)
-and [bench contract](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/protocols/ember_bench_v1.md). Draft commands
+For commands available in the current lab, use the [Yamcs operator guide](../../../../ground/yamcs/README.md). Draft commands
 such as SET_MODE and REBOOT_IHU are not exposed by the current Yamcs bench MDB.
 
 **Status:** Draft 0.2

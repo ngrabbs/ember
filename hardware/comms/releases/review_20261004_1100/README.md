@@ -18,7 +18,6 @@ Source hashes are in `evidence/source-hashes.json`. Board SHA256: `e969c80d28f62
 
 - Native editor ERC: **0 errors**, two intentional MCP25625 library-copy warnings, four ignored tests explicitly listed in `evidence/native-erc.rpt`.
 - Direct saved-board DRC: **0 errors, 0 unconnected**, one known fixed-H1/H2 silk warning. Konnect manufacturing validator reports READY only within its limited DRC/DFM scope.
-- Independent eight-sheet review: [report](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/comms/verification/review_20261004_final/independent-review.md). CLI ERC is unreliable for this hierarchy and is not used as release authority.
 - Exact pin identity has one discrepancy: R39 terminals were reversed during schematic redraw. Both designs have the same nonpolar 100k resistor between the same nodes. Explicitly interchanging only R39.1/.2 produces **zero electrical connectivity mismatches**. This is documented equivalence, not an exact parity pass. Reconcile before future schematic-to-PCB synchronization.
 - All analog/RF/clock traces remain on top; 1,020 track segments comprise 836 top and 184 bottom, none on inner layers. Inner Gerber fill regions are GND only. Rendered planes remain broad beneath the RF area with normal via/pad antipads, no signal-routing splits. This is geometric inspection, not EM qualification.
 

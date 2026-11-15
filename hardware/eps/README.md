@@ -4,8 +4,7 @@
 
 **Configuration review pending, 2026-10-04.** This older architecture record
 uses a TPSM5D1806 regulation target; the [Rev A bring-up plan](bringup/phase1_validation.md)
-describes the TPS62933 hardware. Newer EPS Rev B planning is in a separate
-active worktree, listed in the [documentation review](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/docs/review/README.md). Keep revision-specific
+describes the TPS62933 hardware. Keep revision-specific
 parts and validation claims separate until reconciled; this page does not
 establish the currently assembled regulator or a completed rail qualification.
 
@@ -35,7 +34,6 @@ distribution and finalized subsystem current budgets are still in progress.
 - Architecture and rationale: [`hardware/eps/design/overview.md`](design/overview.md)
 - Electrical and logical interfaces: [`hardware/eps/design/interfaces.md`](design/interfaces.md)
 - Bench bring-up and acceptance criteria: [`hardware/eps/bringup/phase1_validation.md`](bringup/phase1_validation.md)
-- Verification checkpoint and previews: [verification index](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/README.md)
 - Draft controller symbols and footprints: [candidate library notes](libraries/README.md)
 - KiCad source: `hardware/eps/kicad/`
 - Vendor parts and reference assets: `hardware/eps/components/`

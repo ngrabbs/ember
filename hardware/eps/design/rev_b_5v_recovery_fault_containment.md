@@ -29,7 +29,7 @@ The [TPS3760-Q1 Rev B](https://www.ti.com/lit/ds/symlink/tps3760-q1.pdf), tables
 | Minimum reconnect margin above typical cold Voc | 0.371 V |
 | Margin from latest static trip to 35 V | 0.686 V |
 
-The [script](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/recovery_5v_fault_analysis.py) includes independent 0.1% resistor error, 25 ppm/K across 65 K, ±100 nA sense-current sensitivity, reference error and hysteresis error. Use a conservative signed leakage interval. This resolves the earlier *static* hysteresis-window rejection for this candidate. It does not turn typical 32.164 V cold Voc into a guaranteed array maximum. An accepted normal source above 32.535 V would invalidate worst-case reconnect with this divider.
+Use a conservative signed leakage interval. This resolves the earlier *static* hysteresis-window rejection for this candidate. It does not turn typical 32.164 V cold Voc into a guaranteed array maximum. An accepted normal source above 32.535 V would invalidate worst-case reconnect with this divider.
 
 Do not use the monitor alone as a source protector. Its 17 µs maximum detect figure applies at **20% threshold overdrive**, not a small excursion near 35 V. The driver, MOSFET discharge, harness ringing and hot-plug behavior consume additional margin. The startup output also requires explicit fail-off circuitry; an open-drain pull-up is not by itself proof of safe startup.
 
@@ -83,4 +83,4 @@ Recommend latched 5 V OV containment with bounded, deliberate reset from an inde
 4. Build through Konnect, then verify connectivity/ERC and actual rendered sheets separately. No native protection circuit, ERC result or protection render is claimed by this checkpoint.
 5. Test limited-energy hot plug, cold open-circuit startup, absent/depleted battery, handover, slow/fast OV, converter feedback failure, actual switch-short paths, prebias, input/output shorts and reset repetition. Measure voltage at charger and receiving-board pins, gate waveforms, current and FET temperature; include high-temperature initial SOA. Do not perform these tests on the lithium pack as a substitute for a controlled source fixture.
 
-The [saved calculation results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/evidence/2026-10-23_recovery_5v_fault_analysis.json) reproduce the stated static feasibility cases; the calculation assertions pass. Dynamic containment, component selection and physical tests remain open. This record neither closes the 5 V recovery design nor authorizes fabrication.
+Dynamic containment, component selection and physical tests remain open. This record neither closes the 5 V recovery design nor authorizes fabrication.

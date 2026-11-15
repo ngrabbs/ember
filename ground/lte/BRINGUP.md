@@ -1,14 +1,13 @@
 # LTE bench bring-up runbook
 
-For a bounded EPS session on the shared station, use the
-[operator walkthrough](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/docs/user/lte-eps-walkthrough.md). The procedures
+The procedures
 below record the original engineering bring-up and isolated Yamcs setup.
 
 Status: OAI and srsEPC are built on the Pi; S1 setup works. Walter completed
 LTE-M attach and reported registration, with IP 172.16.0.2 and bearer setup.
 Experimental RAR release avoids the observed downlink-pool failure in bounded
 runs. Reestablishment stability, PHY simulator regression, and UDP delivery
-remain unresolved. See [latest results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-rar-release.md).
+remain unresolved.
 
 ## 1. Access and inventory
 
@@ -215,7 +214,7 @@ not verify full-duplex operation or eNodeB real-time performance.
 
 ## Independent RF diagnostics
 
-See [HackRF results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-01-hackrf-lte.md). The latest experiments
+The latest experiments
 reached LTE synchronization and exercised LTE-M random access, then encountered
 OAI scheduler/resource assertions. A completed attach is still outstanding.
 
@@ -318,8 +317,7 @@ helper. Keep the runtime profile and source patch state explicit in results.
 The tracked `ceonlydiag` and `ce300diag` example profiles preserve subsequent
 tests with TX attenuation 40, MAC-debug logging, and increased PRACH detection
 thresholds. Stage without `.example` and select with `--config`. They are
-diagnostic profiles, not validated defaults. The [latest results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-msg4-authentication.md)
-list their exact differences and authentication milestones.
+diagnostic profiles, not validated defaults.
 
 ## Numbered UDP bench trial
 
@@ -370,9 +368,7 @@ are unobserved. Sender failures and unsent packets must not be presented as
 measured packet loss. This initial test does not measure RTT, downlink telemetry,
 or one-way latency. Keep complete logs private and save sanitized counts here.
 
-For the first demonstrated telemetry configuration, apply all six patches in
-order and select `enb.band13.emtc.ce300tx20diag.conf`; see the
-[first UDP results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-uplink-telemetry.md). This is not yet a
+This is not yet a
 repeatable or stable-link acceptance result.
 
 Add `--socket-diagnostics` to the Walter command for optional `SQNSS?` queries
@@ -401,13 +397,11 @@ with a two-second wait and at most three additional attempts. Payload submission
 generic errors, and pending responses are never automatically retried. The
 settling wait is capped by the remaining enable deadline and does not prove
 that the modem queue drained. These controls do not fix the network's observed
-signaling-bearer failures. See [repeat results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-repeatability-release.md).
+signaling-bearer failures.
 
 The current Pi has eight candidates, including downlink retry MCS retention and
 new-bearer PDCP security initialization. The normal binary SHA-256 is
 `5c5de8e17db509b35823f401b99c7fdbe28144307da0be24fbc777c569768e11`.
-See the [security comparison](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-srb2-security.md) for six EPS
-deliveries across two windows; repeat reliability before qualifying this build.
 For release tracing, select `enb.band13.emtc.ce300tx20rrcdiag.conf`; it adds
 RLC/RRC debug logging to the same RF settings. Keep the selected patch set and
 profile explicit in every result. Run sender retry checks locally with:
@@ -421,5 +415,3 @@ For optional per-bearer STATUS and compact CE HARQ tracing, use the separate
 volume and optionally reduce RX gain by 10 dB. Apply the temporary trace only
 after the selected candidate set, and reverse it/rebuild when finished. The ordinary
 RA summarizer's debug-only DTX count is unavailable with these MAC-info profiles.
-See [RLC trace results](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/ground/lte/results/2026-10-02-rlc-status.md) for the observed failure
-at the RRC Security Mode Command.

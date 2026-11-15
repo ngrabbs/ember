@@ -2,7 +2,7 @@
 
 Study dated 2026-10-04. **Recommend retaining 4S solar strings, replacing the 30 V buck stages with higher-voltage stages, and adding autonomous solar overvoltage isolation inside the hardware interlock boundary.** This is an architecture recommendation, not a selected protection circuit or accepted flight envelope. No KiCad source was changed. The current controller draft still has no regulator implementation.
 
-[Source isolation](rev_b_source_isolation_study.md) · [Implementation checklist](rev_b_bom_and_schematic_checklist.md) · [Calculation and capacitor membership evidence](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/evidence/2026-10-04_source_envelope.json) · [CAN TVS study](https://github.com/ngrabbs/ember/blob/891a5f3a97321a99885282c22653ebe9b4b820b2/hardware/eps/verification/can_tvs_candidate_verification.md)
+[Source isolation](rev_b_source_isolation_study.md) · [Implementation checklist](rev_b_bom_and_schematic_checklist.md)
 
 ## Source evidence and temperature calculation
 

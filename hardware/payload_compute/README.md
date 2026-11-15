@@ -189,13 +189,6 @@ Student-lab power/access baseline:
   triple Jetson acquisition and Jetson trigger driver support remain validation
   gates. Detailed contracts and open hardware gates are in the baseline above.
 
-References: [Koenig hardware setup](https://github.com/ngrabbs/koenig_wildfire/blob/main/docs/hardware_setup.md),
-[STM32G0B1 datasheet](https://www.st.com/resource/en/datasheet/stm32g0b1ve.pdf),
-[STUSB4500 product information](https://www.st.com/en/interfaces-and-transceivers/stusb4500.html),
-[Adafruit 4288 battery bank](https://www.adafruit.com/product/4288),
-[NVIDIA fan connector correction](https://forums.developer.nvidia.com/t/clarification-on-developer-kit-fan-connector-type/313320),
-and the [stack pin map](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/interfaces/cskb_pinmap.md).
-
 `kicad/cubesat_orin_nano_carrier` is the converted Jetson Orin Nano carrier:
 87 footprints, a flat 4-page schematic (root + `Cameras`, `M2_USB_UART`,
 `SODIMM_Power`), 650 track segments — mostly the PCIe escape from J1. Board

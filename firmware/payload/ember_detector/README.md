@@ -131,7 +131,7 @@ same images. It retains K=0.5, absolute excess=7.5, area=16 and guard=2: lower
 thresholds and wider guards did not improve the zero-observed-false-alarm choice
 on the Pi. The gain comes from matching normalization and 4000 features. This
 is not a recommended deployment threshold. Retain the original basic, guarded
-and conservative profiles for comparison. See the [second-pass evidence](https://github.com/ngrabbs/ember/blob/00c493c3344f1c66f5e8fb56dac0c8d98a314ffb/system/payload/evidence/stored-detector-pass2-20261017/README.md).
+and conservative profiles for comparison.
 
 ```sh
 python3 firmware/payload/tune_detector.py \
