@@ -1,6 +1,6 @@
 # Walter LTE-M operator runbook
 
-Use this with the [ground demo checklist](../README.md#receive-lte). Run one
+Use this with the [ground demo checklist](../DEMO.md#receive-lte). Run one
 radio session at a time on the shared LibreSDR. On the Pi, check
 `systemctl status ember-lte-listener`; the listener owns UDP 51000 and forwards
 valid packets to Yamcs.

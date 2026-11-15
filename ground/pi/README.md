@@ -22,7 +22,7 @@ addresses work. Yamcs telemetry ports UDP10018–10020 are bound to Pi loopback.
 USB bridge starts only for the registered console. See the
 [serial setup](../yamcs/OPERATIONAL.md#serial-ownership-and-eps).
 
-Use the [demo checklist](../README.md) to connect, select a receiver, and
+Use the [demo checklist](../DEMO.md) to connect, select a receiver, and
 verify a packet.
 
 ## What runs automatically
@@ -106,7 +106,7 @@ Yamcs `.env` backup, remove the starter's `readiness.conf` drop-in, run
 `sudo systemctl daemon-reload`, and restart `ember-ground-starter`.
 Do not restore old network profiles over newer unrelated network changes.
 
-After changes, follow the [ground demo checklist](../README.md) to verify
+After changes, follow the [ground demo checklist](../DEMO.md) to verify
 Ethernet or hotspot access, Yamcs links, and a fresh packet. Verify cold boot
 and USB reconnect when changing startup supervision.
 

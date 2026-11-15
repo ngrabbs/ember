@@ -1,0 +1,121 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="ember-ground" name="EMBER ground station">
+    <mxGraphModel page="1" pageScale="1" pageWidth="1200" pageHeight="408">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="background" parent="1" vertex="1" style="rounded=0;fillColor=#FFFFFF;strokeColor=none;" value="">
+          <mxGeometry x="0" y="0" width="1200" height="408" as="geometry" />
+        </mxCell>
+        <mxCell id="pi" parent="1" vertex="1" style="rounded=1;arcSize=8;fillColor=#F5F8FB;strokeColor=#BFCBD6;strokeWidth=2;" value="">
+          <mxGeometry x="309" y="18" width="686" height="372" as="geometry" />
+        </mxCell>
+        <mxCell id="edge0" parent="1" edge="1" style="endArrow=block;endFill=1;strokeColor=#536578;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" source="box0-0" target="box1-0">
+          <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+        </mxCell>
+        <mxCell id="edge1" parent="1" edge="1" style="endArrow=block;endFill=1;strokeColor=#536578;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" source="box0-1" target="box1-1">
+          <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+        </mxCell>
+        <mxCell id="edge2" parent="1" edge="1" style="endArrow=block;endFill=1;strokeColor=#536578;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" source="box0-2" target="box1-2">
+          <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+        </mxCell>
+        <mxCell id="edge3" parent="1" edge="1" style="endArrow=block;endFill=1;strokeColor=#536578;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.265625;" source="box1-0" target="box2-0">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="708" y="120" />
+              <mxPoint x="708" y="144" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge4" parent="1" edge="1" style="endArrow=block;endFill=1;strokeColor=#536578;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.734375;" source="box1-1" target="box2-0">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="708" y="215" />
+              <mxPoint x="708" y="174" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge5" parent="1" edge="1" style="endArrow=block;endFill=1;strokeColor=#536578;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" source="box1-2" target="box2-1">
+          <mxGeometry relative="1" as="geometry">
+            </mxGeometry>
+        </mxCell>
+        <mxCell id="edge6" parent="1" edge="1" style="endArrow=block;endFill=1;strokeColor=#536578;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.28125;" source="box2-0" target="box2-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1007" y="159" />
+              <mxPoint x="1007" y="225" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge7" parent="1" edge="1" style="endArrow=block;endFill=1;strokeColor=#536578;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.703125;" source="box2-1" target="box2-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1007" y="327" />
+              <mxPoint x="1007" y="252" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="box0-0" parent="1" vertex="1" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#E6F3F7;strokeColor=#12647D;strokeWidth=2;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#12647D&quot;&gt;&lt;b&gt;Transceiver&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#12647D&quot;&gt;DBPSK radio&lt;/font&gt;">
+          <mxGeometry x="24" y="88" width="176" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="box0-1" parent="1" vertex="1" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#E6F3F7;strokeColor=#12647D;strokeWidth=2;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#12647D&quot;&gt;&lt;b&gt;Walter&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#12647D&quot;&gt;LTE-M modem&lt;/font&gt;">
+          <mxGeometry x="24" y="183" width="176" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="box0-2" parent="1" vertex="1" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#E6F3F7;strokeColor=#12647D;strokeWidth=2;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#12647D&quot;&gt;&lt;b&gt;IHU&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#12647D&quot;&gt;Wired bench console&lt;/font&gt;">
+          <mxGeometry x="24" y="295" width="176" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="box1-0" parent="1" vertex="1" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#F1F3E6;strokeColor=#536B30;strokeWidth=2;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#536B30&quot;&gt;&lt;b&gt;UHF gateway&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#536B30&quot;&gt;LibreSDR · DBPSK decoder&lt;/font&gt;">
+          <mxGeometry x="333" y="88" width="230" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="box1-1" parent="1" vertex="1" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#F1F3E6;strokeColor=#536B30;strokeWidth=2;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#536B30&quot;&gt;&lt;b&gt;LTE-M cell&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#536B30&quot;&gt;LibreSDR · EPC · UDP listener&lt;/font&gt;">
+          <mxGeometry x="333" y="183" width="230" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="box1-2" parent="1" vertex="1" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#F1F3E6;strokeColor=#536B30;strokeWidth=2;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#536B30&quot;&gt;&lt;b&gt;Serial bridge&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#536B30&quot;&gt;Starts on IHU connection&lt;/font&gt;">
+          <mxGeometry x="333" y="295" width="230" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="box2-0" parent="1" vertex="1" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#F0EDF7;strokeColor=#624985;strokeWidth=2;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#624985&quot;&gt;&lt;b&gt;Yamcs · ember&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#624985&quot;&gt;Radio telemetry&lt;/font&gt;">
+          <mxGeometry x="758" y="127" width="215" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="box2-1" parent="1" vertex="1" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#F0EDF7;strokeColor=#624985;strokeWidth=2;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#624985&quot;&gt;&lt;b&gt;Yamcs · ember-bench&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:16px&quot; color=&quot;#624985&quot;&gt;Wired telemetry&lt;/font&gt;">
+          <mxGeometry x="758" y="295" width="215" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="box2-2" parent="1" vertex="1" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#F0EDF7;strokeColor=#624985;strokeWidth=2;align=center;verticalAlign=middle;" value="&lt;font style=&quot;font-size:19px&quot; color=&quot;#624985&quot;&gt;&lt;b&gt;Browser&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px&quot; color=&quot;#624985&quot;&gt;Ethernet or hotspot&lt;/font&gt;">
+          <mxGeometry x="1030" y="207" width="146" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="label0" parent="1" vertex="1" style="text;html=0;fontSize=15;fontColor=#536578;align=left;fontStyle=1;spacing=0;" value="EMBER">
+          <mxGeometry x="24" y="27" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label1" parent="1" vertex="1" style="text;html=0;fontSize=15;fontColor=#536578;align=left;fontStyle=1;spacing=0;" value="GROUND PI">
+          <mxGeometry x="333" y="27" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label2" parent="1" vertex="1" style="text;html=0;fontSize=15;fontColor=#536578;align=left;fontStyle=1;spacing=0;" value="OPERATOR">
+          <mxGeometry x="1030" y="27" width="146" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label3" parent="1" vertex="1" style="text;html=0;fontSize=15;fontColor=#536578;align=center;fontStyle=0;spacing=0;" value="UHF">
+          <mxGeometry x="204" y="92" width="124" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label4" parent="1" vertex="1" style="text;html=0;fontSize=15;fontColor=#536578;align=center;fontStyle=0;spacing=0;" value="LTE-M">
+          <mxGeometry x="204" y="187" width="124" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label5" parent="1" vertex="1" style="text;html=0;fontSize=15;fontColor=#536578;align=center;fontStyle=0;spacing=0;" value="Direct USB">
+          <mxGeometry x="204" y="299" width="124" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label6" parent="1" vertex="1" style="text;html=0;fontSize=15;fontColor=#536578;align=center;fontStyle=0;spacing=0;" value="uhf-tm-in">
+          <mxGeometry x="569" y="92" width="124" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label7" parent="1" vertex="1" style="text;html=0;fontSize=15;fontColor=#536578;align=center;fontStyle=0;spacing=0;" value="lte-tm-in">
+          <mxGeometry x="569" y="187" width="124" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label8" parent="1" vertex="1" style="text;html=0;fontSize=15;fontColor=#536578;align=center;fontStyle=0;spacing=0;" value="ihu-serial-in">
+          <mxGeometry x="585" y="299" width="124" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label9" parent="1" vertex="1" style="text;html=0;fontSize=15;fontColor=#536578;align=left;fontStyle=0;spacing=0;" value="One shared LibreSDR · one radio session at a time">
+          <mxGeometry x="333" y="258" width="400" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
