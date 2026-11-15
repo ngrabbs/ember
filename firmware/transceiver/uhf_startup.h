@@ -36,20 +36,71 @@ static void uhf_startup_identity(const cf_frame *frame,uint32_t now){
     if(size)(void)hello_send(wire,size,request.request,time_us_64()+50000);
 }
 
-static void uhf_startup_config_reply(uint32_t request){
+static struct {
+    uint8_t active,confirmed,candidate,phase;
+    uint32_t deadline,token;
+} radio_trial={.active=RADIO_PROFILE_DBPSK_1200_V3,.confirmed=RADIO_PROFILE_DBPSK_1200_V3};
+
+static void radio_trial_tick(uint32_t now){
+    if((radio_trial.phase!=RADIO_TRIAL_STAGED && radio_trial.phase!=RADIO_TRIAL_ACTIVE) ||
+       (int32_t)(now-radio_trial.deadline)<0)return;
+    if(radio_trial.phase==RADIO_TRIAL_STAGED){
+        radio_trial.active=radio_trial.candidate;
+        radio_trial.phase=RADIO_TRIAL_ACTIVE;
+        radio_trial.deadline=now+RADIO_PROFILE_TRIAL_MS;
+        do {radio_trial.token=get_rand_32();} while(!(uint16_t)radio_trial.token);
+    }else{
+        radio_trial.active=radio_trial.confirmed;
+        radio_trial.candidate=0;
+        radio_trial.token=0;
+        radio_trial.phase=RADIO_TRIAL_ROLLED_BACK;
+    }
+}
+
+static void uhf_startup_config_reply(unsigned operation,uint32_t request,uint32_t now){
+    unsigned result=RADIO_CONFIG_READBACK;
+    if(operation==BD_PROFILE_SET){
+        unsigned profile=request>>24;
+        if((profile!=RADIO_PROFILE_DBPSK_1200_V3 && profile!=RADIO_PROFILE_DBPSK_DL1500_V3) ||
+           profile==radio_trial.active || radio_trial.candidate || !uhf_startup_link)
+            result=RADIO_CONFIG_REJECTED;
+        else {
+            radio_trial.candidate=profile;
+            radio_trial.phase=RADIO_TRIAL_STAGED;
+            radio_trial.deadline=now+RADIO_PROFILE_SWITCH_MS;
+            result=RADIO_CONFIG_APPLIED;
+        }
+    }else if(operation==BD_PROFILE_CONFIRM){
+        if(radio_trial.phase!=RADIO_TRIAL_ACTIVE || (int32_t)(now-radio_trial.deadline)>=0 || request!=radio_trial.token)
+            result=RADIO_CONFIG_REJECTED;
+        else{
+            radio_trial.confirmed=radio_trial.active;
+            radio_trial.candidate=0;
+            radio_trial.token=0;
+            radio_trial.phase=RADIO_TRIAL_CONFIRMED;
+            result=RADIO_CONFIG_CONFIRMED;
+        }
+    }
     ul_packet report={.version=1,.type=BD_CONFIG,.sender=responder_boot,
         .origin=uhf_startup_radio.token,.request=request,.size=RADIO_CONFIG_SIZE};
     uint8_t *data=report.payload;
     data[0]=RADIO_CONFIG_SCHEMA;
-    data[1]=RADIO_PROFILE_DBPSK_1200_V3;
+    data[1]=RADIO_CONFIG_SUPPORTED;
     data[2]=RADIO_PROFILE_DBPSK_1200_V3;
-    data[3]=RADIO_PROFILE_DBPSK_1200_V3;
+    data[3]=radio_trial.active;
     data[4]=uhf_startup_link?RADIO_BEHAVIOR_LINK_ACTIVE:RADIO_BEHAVIOR_RX_ONLY;
-    /* Nominal RF targets of the compiled Si5351 RX and TX clock profiles. */
     radio_config_profile(data+RADIO_CONFIG_DEFAULT,435000000u,437000000u,BPSK_BAUD);
-    memcpy(data+RADIO_CONFIG_ACTIVE,data+RADIO_CONFIG_DEFAULT,
-           RADIO_CONFIG_ACTIVE-RADIO_CONFIG_DEFAULT);
+    radio_config_profile(data+RADIO_CONFIG_ACTIVE,435000000u,437000000u,
+                         radio_profile_baud(radio_trial.active));
     ul_p32(data+RADIO_CONFIG_BOOT,responder_boot);
+    data[RADIO_CONFIG_CANDIDATE]=radio_trial.candidate;
+    data[RADIO_CONFIG_TRIAL_STATE]=radio_trial.phase;
+    /* Only a readback after the trial switch exposes the confirmation token. */
+    if(operation==BD_CONFIG_QUERY && radio_trial.phase==RADIO_TRIAL_ACTIVE)
+        ul_p32(data+RADIO_CONFIG_TOKEN,radio_trial.token);
+    if(radio_trial.candidate && (int32_t)(now-radio_trial.deadline)<0)
+        ul_p32(data+RADIO_CONFIG_REMAINING,radio_trial.deadline-now);
+    data[RADIO_CONFIG_RESULT]=result;
     uint8_t wire[UL_WIRE_MAX];
     size_t size=ul_encode(&report,wire);
     uint64_t deadline=time_us_64()+75000;
@@ -62,6 +113,8 @@ static void uhf_startup_config_reply(uint32_t request){
 }
 
 static bool uhf_startup_radio_poll(bool keying) {
+    uint32_t poll_now=(uint32_t)(time_us_64()/1000);
+    if(!keying && !uhf_startup_tx_pending)radio_trial_tick(poll_now);
     if(uhf_startup_link && (uint32_t)((uint32_t)(time_us_64()/1000)-uhf_startup_keep_ms)>=BD_KEEP_TIMEOUT_MS){
         uhf_startup_fault="keepalive_expired";return false;
     }
@@ -84,9 +137,11 @@ static bool uhf_startup_radio_poll(bool keying) {
         if(f.id==BD_KEEP && uhf_startup_radio.spent && bd_matches(&f,uhf_startup_radio.token,responder_boot))
             uhf_startup_keep_ms=(uint32_t)(time_us_64()/1000);
         if(keying)continue;
-        if(uhf_startup_listen && f.id==BD_CONFIG_QUERY && f.size==8 &&
+        if(uhf_startup_listen && (f.id==BD_CONFIG_QUERY || f.id==BD_PROFILE_SET || f.id==BD_PROFILE_CONFIRM) && f.size==8 &&
            ul_u32(f.data)==uhf_startup_radio.token && ul_u32(f.data+4)){
-            uhf_startup_config_reply(ul_u32(f.data+4));
+            uint32_t now=(uint32_t)(time_us_64()/1000);
+            if(!uhf_startup_tx_pending)radio_trial_tick(now);
+            uhf_startup_config_reply(f.id,ul_u32(f.data+4),now);
             continue;
         }
         if(uhf_startup_link && f.id==CF_IHU_ID){
@@ -306,8 +361,9 @@ static bool uhf_startup_forward(const rd_result *decoded){
 static bool uhf_startup_bpsk(uint64_t deadline){
     uint64_t start=time_us_64();
     bool phase=false;
+    unsigned baud=radio_profile_baud(radio_trial.active);
     for(unsigned i=0;i<packet_frame_size*8u;i++){
-        uint64_t due=start+(uint64_t)i*1000000/BPSK_BAUD;
+        uint64_t due=start+(uint64_t)i*1000000/baud;
         while(time_us_64()<due)if(clock_deadline_fired)return false;
         uint64_t now=time_us_64();
         if(now>due+150 || now>=deadline || clock_deadline_fired || getchar_timeout_us(0)>=0)return false;
@@ -315,7 +371,7 @@ static bool uhf_startup_bpsk(uint64_t deadline){
         gpio_put(16,phase);
         if(!uhf_startup_radio_poll(true))return false;
     }
-    uint64_t end=start+(uint64_t)packet_frame_size*8u*1000000/BPSK_BAUD;
+    uint64_t end=start+(uint64_t)packet_frame_size*8u*1000000/baud;
     while(time_us_64()<end)if(clock_deadline_fired)return false;
     return time_us_64()<deadline && !clock_deadline_fired;
 }
@@ -323,6 +379,7 @@ static bool uhf_startup_tx_permitted(void){return uhf_startup_radio_poll(true);}
 static bool uhf_startup_transmit(void){
     uint32_t request=uhf_startup_tx.request;
     uhf_startup_tx_pending=false;
+    radio_trial_tick((uint32_t)(time_us_64()/1000));
     packet_frame_size=bridge_frame(packet_frame,uhf_startup_tx.payload,uhf_startup_tx.size,request);
     bool sent=packet_frame_size && clock_window_impl(true,false,uhf_startup_bpsk,1,0,uhf_startup_tx_permitted);
     bool rx=sent && rx_start(true) && uhf_startup_rx_healthy();

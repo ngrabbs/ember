@@ -48,7 +48,8 @@ def admit_command(wire):
         raise ValueError('Packet too large')
     packet = native_decode(wire)
     h = packet['header']
-    if (packet['name'] not in ('PING', 'REQUEST_STATUS', 'REQUEST_IHU_FAULTS', 'REQUEST_RADIO_CONFIG', 'REQUEST_TELEMETRY', 'STATUS_CAPTURE',
+    if (packet['name'] not in ('PING', 'REQUEST_STATUS', 'REQUEST_IHU_FAULTS', 'REQUEST_RADIO_CONFIG', 'SET_RADIO_PROFILE',
+                              'CONFIRM_RADIO_PROFILE', 'REQUEST_TELEMETRY', 'STATUS_CAPTURE',
                               'STATUS_FETCH', 'PAYLOAD_FIRE_CHECK', 'IHU_REBOOT', 'SET_HEARTBEAT',
                               'SET_UHF_TELEMETRY_SCHEDULE', 'SET_UHF_TELEMETRY', 'SET_UHF_TELEMETRY_SET') or h['source'] != 1 or h['target'] != 2 or
             not all(h[k] for k in ('transaction_epoch', 'transaction_id', 'source_boot_id'))):
@@ -69,15 +70,17 @@ def waveform(wire, sequence):
 
 def forward_window(raw, sock, seen):
     count = 0
-    for packet in decode(downsample(raw), single_window=True):
-        wire = bytes.fromhex(packet['hex'])
-        if not seen.admit(wire, time.monotonic()):
-            continue
-        sock.sendto(wire, DOWNLINK)
-        count += 1
-        h = packet['decoded']['header']
-        print(f"RF_RX name={packet['decoded']['name']} source={h['source']} "
-              f"epoch={h['transaction_epoch']} transaction={h['transaction_id']}", flush=True)
+    samples = downsample(raw)
+    for baud in (1200, 1500):
+        for packet in decode(samples, single_window=True, baud=baud):
+            wire = bytes.fromhex(packet['hex'])
+            if not seen.admit(wire, time.monotonic()):
+                continue
+            sock.sendto(wire, DOWNLINK)
+            count += 1
+            h = packet['decoded']['header']
+            print(f"RF_RX name={packet['decoded']['name']} source={h['source']} "
+                  f"epoch={h['transaction_epoch']} transaction={h['transaction_id']} baud={baud}", flush=True)
     return count
 
 
