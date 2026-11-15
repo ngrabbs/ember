@@ -168,7 +168,7 @@ pass full magic/length/CRC/identity validation. Token alone is not a session
 identity: the full envelope carries origin/sender boot IDs and 32-bit request ID.
 There are no fragment retransmissions or automatic application retries.
 
-The [shared UART envelope](../comms_transport/README.md) supplies HELLO and opaque
+The [shared UART envelope](../comms_transport/uart_echo_bench.md) supplies HELLO and opaque
 ECHO semantics. CAN adds diagnostic CHAIN `0x72` and CHAIN_ACK `0x73`; those IDs
 are not Walter UART message types. transceiver maps CHAIN onto a separately correlated
 Walter HELLO/ECHO exchange. Error reasons add BUSY=5, remote-link-unknown=6,
