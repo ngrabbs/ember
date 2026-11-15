@@ -4,9 +4,9 @@ import pathlib
 import subprocess
 import tempfile
 
-src = pathlib.Path(__file__).resolve().parents[1]
-repo = src.parents[1]
-pads = json.loads((repo / 'hardware/comms/verification/review_20261004_final/pads-all.json').read_text())
+tests = pathlib.Path(__file__).resolve().parent
+src = tests.parent
+pads = json.loads((tests / 'fixtures' / 'pads-all.json').read_text())
 expected = {'J6': {4:'CAN_A_STBY',5:'CAN_B_STBY',6:'CAN_SPI_MISO',9:'CAN_SPI_SCK',10:'CAN_SPI_MOSI',11:'CAN_A_RESETn',12:'CAN_B_RESETn',14:'TX_ACTIVE',15:'RX_ACTIVE',16:'3V3_IND',19:'CAN_A_CSn',20:'CAN_B_CSn'}, 'J7': {9:'RX_BASEBAND',14:'I2C_SCL',15:'I2C_SDA',16:'CAN_B_INTn',17:'CAN_A_INTn',20:'BPSK_DATA'}}
 for ref, mapping in expected.items():
     actual = {int(p['number']): p['net'].split('/')[-1] for p in pads[ref]['pads']}
