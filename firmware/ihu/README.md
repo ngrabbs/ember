@@ -118,6 +118,12 @@ chunks. `eps status` shows sample age, the maximum interval between good EPS
 samples, and the number of EPS polls that ran during GPS reads. EPS diagnostics
 identify `I2C_TIMEOUT`, `PEC_CHECKSUM`, `I2C_ERROR`, and `STALE` separately.
 
+On a battery-only bench, `eps adc on` enables the LTC4162 telemetry ADC via
+its `force_telemetry_on` bit. `eps adc off` restores the charger's automatic
+behavior. The command changes only that bit. It leaves the measurement rate
+and charge settings alone. Check `eps json` for the readback and
+`telemetry_status` before using the voltage readings.
+
 The UHF startup profile console provides `startup`, `status`, `version`, `mode`,
 `outputs`, `faults`, `rtos`, `radio`, `eps status`, `eps json`, and
 `gps`. Its stop commands are `mode safe` and `uhf stop`. Yamcs uses the

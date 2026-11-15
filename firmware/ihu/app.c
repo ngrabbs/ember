@@ -789,6 +789,10 @@ static void command_impl(const char *s) {
         (void)request_sensor(SENSOR_JSON,0,false);
         return;
     }
+    if(!strcmp(s,"eps adc on") || !strcmp(s,"eps adc off")){
+        eps_adc(!strcmp(s,"eps adc on"));
+        return;
+    }
     if(!strcmp(s,"startup") || !strcmp(s,"radio")){
         if(!strcmp(s,"startup"))uhf_startup_history(true);
         mode_status();
@@ -807,7 +811,7 @@ static void command_impl(const char *s) {
     if(!strcmp(s,"help")){
         LOG("COMMANDS startup | status | mode | version | faults | rtos\n");
         LOG("DIAGNOSTICS eps status | eps json | gps | radio | outputs\n");
-        LOG("CONTROLS mode safe | uhf stop\n");return;
+        LOG("CONTROLS mode safe | uhf stop | eps adc on/off\n");return;
     }
     if(strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"mode") && strcmp(s,"outputs") &&
        strcmp(s,"faults") && strcmp(s,"rtos")){
