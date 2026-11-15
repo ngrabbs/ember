@@ -91,10 +91,16 @@ remains `/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs/.runtime/quickstart`.
 2. Run `python3 ground/yamcs/prepare_operational.py --runtime /path/to/quickstart`
    from the clean source. The helper also saves configs, both MDBs and Java
    sources privately under `.unified-backups/TIMESTAMP`; this is not a data backup.
-3. Append `ground/yamcs/compose.operational.yaml` last in `COMPOSE_FILE`, retaining
-   the existing boot/radio overlays and Ethernet/hotspot HTTP binding. It publishes
-   radio and bench telemetry ports UDP10018–10020 on loopback. The bench
-   command link resolves `ember-ground-host` through Docker's host gateway.
+3. Set `COMPOSE_FILE` in the Pi's Yamcs `.env` to the base file, boot
+   overlay, and operational overlay, in that order. The deployed Pi uses:
+
+   ```dotenv
+   COMPOSE_FILE=compose.yaml:/opt/ember-ground/compose.boot.yaml:/home/ngrabbs/work/ember-environments-20261017/ground/yamcs/compose.operational.yaml
+   ```
+
+   The operational overlay keeps HTTP on Ethernet and the hotspot and
+   publishes telemetry UDP10018–10020 on loopback. The serial command link
+   resolves `ember-ground-host` through Docker's host gateway.
 4. Keep the Pi's old `ember-usb-bridge` and `ember-eps-bridge` disabled.
    Start Yamcs with `ember-ground-starter`, then resume readiness supervision.
 5. On the Pi, install pyserial if needed and register the serial number from
