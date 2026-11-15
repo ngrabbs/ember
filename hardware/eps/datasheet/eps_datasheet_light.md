@@ -61,7 +61,7 @@ title: ""
   - **3.8–30 V** input range, up to **3 A** continuous
   - Per-rail EN/UVLO programmable via resistor divider
   - 200 kHz – 2.2 MHz programmable switching
-- Solar 4S Voc is 27.64 V at 25°C; typical temperature calculation gives 32.164 V at −40°C. Cold/AM0 maximum and transients remain unqualified; see the [Rev B voltage study](../design/rev_b_source_voltage_and_fault_budget.md). Existing PDF exports predate this correction.
+- Solar 4S Voc is 27.64 V at 25°C; typical temperature calculation gives 32.164 V at −40°C. Cold/AM0 maximum and transients remain unqualified; see the [Rev B voltage study](../design/rev_b_source_voltage_and_fault_budget.md).
 - Schottky-OR'd solar inputs (per-panel STPS1L30MF blocking + per-cell-array bypass)
 
 ### SWaP
