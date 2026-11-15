@@ -6,10 +6,10 @@ Version **0.38.0** runs on the original Raspberry Pi Pico.
 [Changelog](CHANGELOG.md) · [Verified bench builds](../README.md#current-bench-builds) ·
 [Radio guide](../../docs/comms/README.md)
 
-The hardware-verified bench image is the conducted demo build from
+The hardware-verified bench image is the UHF startup profile build from
 [`819470b`](https://github.com/ngrabbs/ember/commit/819470bbf877fa66f980bf9d0d138c081905af6c).
-To build from that exact source, create a detached worktree and run the build
-commands from its root.
+To reproduce that image, run the build commands from a detached worktree
+and use the historical flag `-DTRANSCEIVER_BOOT_DEMO=ON`.
 
 ```sh
 git worktree add --detach ../ember-transceiver-038 819470bbf877fa66f980bf9d0d138c081905af6c
@@ -23,10 +23,10 @@ Install the Pico SDK, Arm GNU toolchain, CMake, Python 3, and
 your SDK checkout. Run from the repository root.
 
 ```sh
-radio_build=build/transceiver-demo
+radio_build=build/transceiver-uhf-startup
 cmake -S firmware/transceiver -B "$radio_build" -DPICO_BOARD=pico \
   -DPICO_SDK_PATH="${PICO_SDK_PATH:?set Pico SDK path}" \
-  -DTRANSCEIVER_BOOT_DEMO=ON \
+  -DTRANSCEIVER_UHF_STARTUP=ON \
   $(python3 firmware/transceiver/source_identity.py --cmake-args)
 cmake --build "$radio_build" --target transceiver -j4
 ```
@@ -35,8 +35,8 @@ cmake --build "$radio_build" --target transceiver -j4
 |---|---|
 | `PICO_BOARD=pico` | Selects the original RP2040 Raspberry Pi Pico required by this target. |
 | `PICO_SDK_PATH` | Points CMake to the Pico SDK. |
-| `TRANSCEIVER_BOOT_DEMO=ON` | Enables IHU-coordinated conducted startup and the LINK_ACTIVE bench link. Pair it with the [IHU demo build](../ihu/README.md#build-and-flash). |
-| `TRANSCEIVER_BOOT_DEMO=OFF` | Default. Keeps RF muted at idle and sends IHU-requested telemetry in bounded bursts. Use a separate build directory such as `build/transceiver`. |
+| `TRANSCEIVER_UHF_STARTUP=ON` | Enables IHU-coordinated conducted startup and the LINK_ACTIVE bench link. Pair it with the [IHU UHF startup build](../ihu/README.md#build-and-flash). |
+| `TRANSCEIVER_UHF_STARTUP=OFF` | Default. Keeps RF muted at idle and sends IHU-requested telemetry in bounded bursts. Use a separate build directory such as `build/transceiver`. |
 | `EMBER_GIT_REVISION`, `EMBER_GIT_DIRTY` | Embed the full source SHA and dirty flag. The helper sets both from Git. For a source export, pass both as `-D` options using the original SHA and dirty flag (0 or 1). |
 
 The artifact is `transceiver.uf2` in the chosen build directory. With the
@@ -79,9 +79,9 @@ and HELLO are healthy. Enable `output uhf_telem on`, then use
 The transceiver accepts requests while idle. Check the radio guide for receiver
 setup and confirm a fresh packet at the ground station.
 
-In the **conducted demo profile**, use `startup` or `radio` on the **IHU**
+In the **UHF startup profile profile**, use `startup` or `radio` on the **IHU**
 console to inspect the link. The transceiver USB console prints startup and
-receive diagnostics. Input on that port can send the demo into SAFE, so read
+receive diagnostics. Input on that port can send the radio into SAFE, so read
 the log without typing. Check the build identity from the startup line or
 from the transceiver identity in FULL telemetry.
 
@@ -92,10 +92,10 @@ IHU → CAN A → transceiver Pico → UHF DBPSK v3 → LibreSDR on ground Pi
     → DBPSK decoder → UDP 127.0.0.1:10019 → Yamcs ember / realtime / uhf-tm-in
 ```
 
-1. Start the [DBPSK receiver](../../ground/bpsk/README.md#live-uhf-demo-receiver)
+1. Start the [DBPSK receiver](../../ground/bpsk/README.md#live-uhf-receiver)
    with forwarding enabled and wait for `BPSK_RX_READY`.
 2. In the default build, request telemetry from the IHU console as described
-   above. In the conducted demo, the IHU controls telemetry in LINK_ACTIVE.
+   above. In the UHF startup profile, the IHU controls telemetry in LINK_ACTIVE.
    See the [IHU Yamcs commands](../ihu/README.md#ground-station-commands-in-yamcs)
    to enable the schedule and select BASIC or FULL.
 3. The [ground decoder](../../ground/bpsk/live.py) validates the RF frame and
@@ -131,7 +131,7 @@ modulation, byte order, and receiver settings.
 | Default CAN A | IHU requests on `0x710`, transceiver replies on `0x711`. `CF_UHF_SEND` carries a native packet, and `CF_UHF_FIRMWARE` requests a fresh identity. Admission, rejection, and transmit results are correlated to the request. [CAN framing](../comms_transport/can_fragment.h) · [UHF request and result definitions](../comms_transport/uhf_link.h) |
 | Default UHF downlink | Relays validated IHU telemetry. `COMMS_FIRMWARE` (message ID 50) carries major, minor, patch, dirty flag, and the 20-byte source SHA. The first admitted telemetry request after boot triggers the identity before the telemetry burst. The firmware also accepts explicit identity requests. Local TX completion reports the radio result. Confirm ground delivery separately in the receiver or Yamcs. [Packet dictionary](../../ground/ember/dictionary.json) |
 | Default UHF uplink diagnostic | The bounded PING path passes validated requests to the IHU on `0x730` and reads the correlated reply on `0x731`. The IHU owns command execution. [PING envelope](../comms_transport/uplink_ping.h) |
-| Conducted LINK_ACTIVE | Validates the RF and CAN envelopes and passes native packets between radio and IHU. The IHU handles application commands and decides what to include in FULL. Transceiver CAN identity replies carry version, SHA, boot ID, and uptime. [Demo CAN definitions](../comms_transport/boot_demo_link.h) · [CAN identity format](../comms_transport/firmware_info.h) |
+| Conducted LINK_ACTIVE | Validates the RF and CAN envelopes and passes native packets between radio and IHU. The IHU handles application commands and decides what to include in FULL. Transceiver CAN identity replies carry version, SHA, boot ID, and uptime. [UHF startup CAN definitions](../comms_transport/uhf_startup_link.h) · [CAN identity format](../comms_transport/firmware_info.h) |
 
 ## Startup and state transitions
 
@@ -143,7 +143,7 @@ pass. CAN B stays in standby. The console prints the build identity and boot ID.
 | Profile | Normal progression | Fault behavior |
 |---|---|---|
 | Default | **Muted idle → bounded transmit → muted idle.** CAN A polls for requests at idle. The radio quiesces CAN for the RF burst and reopens it afterward. | A startup, CAN, or clock shutdown failure can latch the affected service unavailable until reboot. Inspect `[startup]`, `[selftest]`, `[can]`, and `Si5351_disable` in the USB log. |
-| Conducted demo | **Wait for IHU → startup CW → RX-only → LINK_ACTIVE.** The IHU's CAN handshake gates the one-shot startup beacon and then enables packet forwarding. Receive windows continue between admitted transmissions. | Stop, missing IHU keepalive while linked, CAN or radio failure, or a console byte leads to SAFE. The demo stops ADC capture and attempts to mute the RF clocks. Inspect `[boot_demo] SAFE` and `clock_shutdown_verified`. The demo calls for both boards to be reset before a new run. |
+| UHF startup profile | **Wait for IHU → startup CW → RX-only → LINK_ACTIVE.** The IHU's CAN handshake gates the one-shot startup beacon and then enables packet forwarding. Receive windows continue between admitted transmissions. | Stop, missing IHU keepalive while linked, CAN or radio failure, or a console byte leads to SAFE. The startup profile stops ADC capture and attempts to mute the RF clocks. Inspect `[uhf_startup] SAFE` and `clock_shutdown_verified`. Reset both boards before a new run. |
 
 See [default startup and service loop](main.c),
-[default RF service](rf_service.h), and [conducted demo startup and loop](boot_demo.h).
+[default RF service](rf_service.h), and [UHF startup profile startup and loop](uhf_startup.h).

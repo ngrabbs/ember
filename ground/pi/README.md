@@ -5,7 +5,7 @@ Current operation: one container with **`ember`** for LTE/UHF reception and
 **`ember-bench`** for the IHU serial EPS/payload path. Use the
 [environment guide](../yamcs/OPERATIONAL.md) for active setup; older reference procedures below may describe retired services.
 The provisioned Pi 5 (`ember-ground`) starts Yamcs without a laptop terminal.
-It prefers connected Ethernet and supplies a fallback demo Wi-Fi access point.
+It prefers connected Ethernet and supplies a fallback Wi-Fi access point.
 This layer preserves the installed Yamcs runtime, MDB and archive volumes.
 
 | Connection | Open Yamcs | SSH |
@@ -44,7 +44,7 @@ therefore means **ready to receive**, not an active LTE link.
   existing dependency cache. This requires the lab to be provisioned first.
 - `ember-ground-readiness`: reconciles every five seconds. If `eth0` has carrier
   and NetworkManager reports connected, it keeps the hotspot off. Otherwise
-  it activates `ember-demo-hotspot`. This checks the physical/local connection,
+  it activates `ember-ground-hotspot`. This checks the physical/local connection,
   not Internet reachability. Connecting Ethernet again turns the hotspot off.
 - The same supervisor starts `ember-lte-listener` when USB `2500:0020` is present
   (LibreSDR's current B210 identity), stops it when absent and retries failures.
@@ -113,7 +113,7 @@ It leaves the existing static Ethernet profile and authorized SSH keys intact.
 It enables Wi-Fi and sets its regulatory country. It does not flash boards.
 
 For rollback, stop/disable `ember-ground-readiness`, stop `ember-lte-listener`,
-bring `ember-demo-hotspot` down and delete that profile. Restore the **pre-install**
+bring `ember-ground-hotspot` down and delete that profile. Restore the **pre-install**
 Yamcs `.env` backup, remove the starter's `readiness.conf` drop-in, run
 `sudo systemctl daemon-reload`, and restart `ember-ground-starter`.
 Do not restore old network profiles over newer unrelated network changes.
@@ -131,7 +131,7 @@ from the repository. These checks use host loopback sockets, never RF, and
 verify continued delivery, exact bytes, peer/CRC filtering and duplicates.
 On the deployed Pi also verify hotspot AP/DHCP, client access, Ethernet return,
 listener crash recovery, and a full reboot. Physical USB unplug/replug and a
-cold boot with Ethernet absent are useful final demo checks.
+cold boot with Ethernet absent are useful final bench checks.
 
 NetworkManager's [shared IPv4 mode](https://networkmanager.pages.freedesktop.org/NetworkManager/NetworkManager/nm-settings-nmcli.html)
 provides hotspot addressing/DHCP; the supervisor controls when that profile runs.

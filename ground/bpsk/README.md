@@ -4,7 +4,7 @@ Use this receiver for EMBER COMMS v3 downlink. The
 [radio guide](../../docs/comms/README.md) gives the RF profile and frame layout.
 For the bounded fire-check uplink, see the [Yamcs service guide](../yamcs/FIRE_CHECK.md).
 
-## Live UHF demo receiver
+## Live UHF receiver
 
 1. On the ground Pi, confirm LibreSDR is free and uses the existing custom FPGA
    image. Confirm the receive port matches the physical setup. The example uses

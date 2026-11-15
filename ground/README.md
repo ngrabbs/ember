@@ -34,7 +34,7 @@ IHU and disables the wired links when it disconnects. See
 1. On the ground Pi, check `systemctl status ember-fire-uplink`. If it is
    running the continuous UHF gateway, use its `uhf-tm-in` feed. For a manual
    capture, release LibreSDR first, then use the
-   [EMBER DBPSK profile](bpsk/README.md#live-uhf-demo-receiver).
+   [EMBER DBPSK profile](bpsk/README.md#live-uhf-receiver).
 2. From the repository root on the Pi, run this example for the 437 MHz bench
    carrier. Use a new output directory for each run.
 

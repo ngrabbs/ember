@@ -8,10 +8,14 @@ include(${PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 project(ihu C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 option(IHU_FLIGHT_CONFIGURATION "Latch FLIGHT configuration (inactive routine stubs) at boot" OFF)
-option(IHU_BOOT_DEMO "Enable automatic conducted startup demo in GROUND_TEST" OFF)
+# Accept existing build presets while exposing the new profile name.
+if(DEFINED IHU_BOOT_DEMO AND NOT DEFINED IHU_UHF_STARTUP)
+    set(IHU_UHF_STARTUP "${IHU_BOOT_DEMO}" CACHE BOOL "Enable UHF startup")
+endif()
+option(IHU_UHF_STARTUP "Enable automatic UHF startup in GROUND_TEST" OFF)
 option(IHU_BOOT_RX_ONLY "Stay RX_ONLY after the startup beacon instead of LINK_ACTIVE" OFF)
-if(IHU_BOOT_DEMO AND IHU_FLIGHT_CONFIGURATION)
-    message(FATAL_ERROR "IHU_BOOT_DEMO is GROUND_TEST only")
+if(IHU_UHF_STARTUP AND IHU_FLIGHT_CONFIGURATION)
+    message(FATAL_ERROR "IHU_UHF_STARTUP is GROUND_TEST only")
 endif()
 include(../shared/pico_can/configure.cmake)
 # FreeRTOS V11.2.0; exact archive hash makes exported builds reproducible.
@@ -31,7 +35,7 @@ add_executable(ihu main.c runtime.c app.c ../comms_transport/mcp25625.c)
 target_include_directories(ihu PRIVATE
     ../comms_transport ${CMAKE_CURRENT_BINARY_DIR}/generated ${CMAKE_CURRENT_BINARY_DIR})
 target_compile_definitions(ihu PRIVATE IHU_FLIGHT_CONFIGURATION=$<BOOL:${IHU_FLIGHT_CONFIGURATION}>
-    IHU_BOOT_DEMO=$<BOOL:${IHU_BOOT_DEMO}> IHU_BOOT_RX_ONLY=$<BOOL:${IHU_BOOT_RX_ONLY}>)
+    IHU_UHF_STARTUP=$<BOOL:${IHU_UHF_STARTUP}> IHU_BOOT_RX_ONLY=$<BOOL:${IHU_BOOT_RX_ONLY}>)
 target_sources(ihu PRIVATE ../shared/ember_protocol/protocol.c)
 target_compile_options(ihu PRIVATE -Wall -Wextra -Werror)
 target_link_libraries(ihu pico_stdlib pico_unique_id pico_rand hardware_spi hardware_i2c hardware_watchdog FreeRTOS-Kernel-Static)
@@ -41,8 +45,8 @@ target_compile_definitions(ihu PRIVATE
     PICO_STDIO_USB_STDOUT_TIMEOUT_US=1000
     PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS=0
     PICO_STDIO_USB_ENABLE_RESET_VIA_BAUD_RATE=0)
-if(IHU_BOOT_DEMO)
-    pico_set_program_name(ihu "ihu-startup-demo")
+if(IHU_UHF_STARTUP)
+    pico_set_program_name(ihu "ihu-uhf-startup")
 else()
     pico_set_program_name(ihu "ihu")
 endif()

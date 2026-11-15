@@ -69,7 +69,7 @@ journalctl -u ember-bench-bridge@ttyACM0 -n 30 --no-pager
 ```
 
 With the regular GROUND_TEST firmware, payload commands traverse IHU → CAN A
-→ payload Pi. The conducted startup demo restricts USB to read-only commands. Consult [PAYLOAD.md](PAYLOAD.md)
+→ payload Pi. The UHF startup profile restricts USB to read-only commands. Consult [PAYLOAD.md](PAYLOAD.md)
 for command outcomes. A busy/failed route never falls back to another endpoint.
 Bench traffic is not forwarded into flight automatically.
 

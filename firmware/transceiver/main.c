@@ -375,11 +375,11 @@ static bool wait_can_ready(unsigned *attempts, uint8_t last[4]) {
     return false;
 }
 
-#ifndef TRANSCEIVER_BOOT_DEMO
-#define TRANSCEIVER_BOOT_DEMO 0
+#ifndef TRANSCEIVER_UHF_STARTUP
+#define TRANSCEIVER_UHF_STARTUP 0
 #endif
-#if TRANSCEIVER_BOOT_DEMO
-#include "boot_demo.h"
+#if TRANSCEIVER_UHF_STARTUP
+#include "uhf_startup.h"
 #endif
 
 int main(void) {
@@ -428,8 +428,8 @@ int main(void) {
     if (bfailed) gpio_put(9, false);
     if(!afailed && !rf_bus_open())afailed=true;
     printf("[firmware] version=%s git=%s dirty=%u boot=%lu\n",FW_VERSION,FW_GIT,FW_DIRTY,(unsigned long)responder_boot);
-#if TRANSCEIVER_BOOT_DEMO
-    demo_radio_run(!afailed);
+#if TRANSCEIVER_UHF_STARTUP
+    uhf_startup_radio_run(!afailed);
 #endif
     while (true) {
         int command = getchar_timeout_us(0);

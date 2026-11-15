@@ -5,7 +5,7 @@
 The Internal Housekeeping Unit runs on the EMBER RP2040 CAN Feather. It
 reads EPS and GPS, manages spacecraft modes, and exchanges commands and
 telemetry with the transceiver, payload, and Walter MCU. The verified IHU
-0.28.0 bench image uses the conducted startup demo profile from
+0.28.0 bench image uses the UHF startup profile from
 [`4e55d05`](https://github.com/ngrabbs/ember/commit/4e55d0563c3e681e4443f83aa58db6162eb14d17).
 
 ## Build and flash
@@ -15,22 +15,22 @@ and Pico SDK 2.1.1. The first configure fetches the pinned FreeRTOS 11.2.0
 kernel unless its source is already available.
 
 ```sh
-ihu_build=build/ihu-demo
+ihu_build=build/ihu-uhf-startup
 cmake -S firmware/ihu -B "$ihu_build" \
-  -DPICO_SDK_PATH="$PICO_SDK_PATH" -DIHU_BOOT_DEMO=ON \
+  -DPICO_SDK_PATH="$PICO_SDK_PATH" -DIHU_UHF_STARTUP=ON \
   $(python3 firmware/transceiver/source_identity.py --cmake-args)
 cmake --build "$ihu_build" --target ihu -j4
 ```
 
-The command above selects the verified bench profile. For regular GROUND_TEST,
-set `ihu_build=build/ihu` and omit `-DIHU_BOOT_DEMO=ON`. All three profile flags
+The command above selects the bench UHF profile. For regular GROUND_TEST,
+set `ihu_build=build/ihu` and omit `-DIHU_UHF_STARTUP=ON`. All three profile flags
 default to `OFF`. Use a separate build directory for each profile.
 
 | Flag | When enabled |
 |---|---|
-| `IHU_BOOT_DEMO` | Runs the conducted startup sequence in GROUND_TEST. Requires the matching [transceiver demo build](../transceiver/README.md). |
-| `IHU_BOOT_RX_ONLY` | With the startup demo enabled, stays in RX_ONLY after the startup beacon instead of entering LINK_ACTIVE. |
-| `IHU_FLIGHT_CONFIGURATION` | Selects FLIGHT with inactive flight routines. CMake rejects combining this with the startup demo. |
+| `IHU_UHF_STARTUP` | Runs the conducted startup sequence in GROUND_TEST. Requires the matching [transceiver UHF startup build](../transceiver/README.md). |
+| `IHU_BOOT_RX_ONLY` | With the UHF startup profile enabled, stays in RX_ONLY after the startup beacon instead of entering LINK_ACTIVE. |
+| `IHU_FLIGHT_CONFIGURATION` | Selects FLIGHT with inactive flight routines. CMake rejects combining this with the UHF startup profile. |
 
 The artifact is `ihu.uf2` in the chosen build directory. Put the IHU in
 BOOTSEL mode and check its current USB bus and address with `picotool info -a`.
@@ -55,17 +55,17 @@ idle. Reset re-enters BOOT. FLIGHT enters SAFE with
 `HISTORY_UNAVAILABLE` if the local CAN check succeeds and exposes the
 inactive flight profile.
 
-The conducted demo drives the transitions automatically. Its release
+The UHF startup profile drives the transitions automatically. Its release
 switches and antenna deployment are simulated. The CW beacon is a real
 transceiver operation on the conducted bench.
 
-| Mode | Conducted startup demo |
+| Mode | UHF startup profile |
 |---|---|
 | BOOT → SAFE | Start local services, check CAN and EPS, and wait for the transceiver to report ready. |
 | STARTUP | Start the simulated antenna timer and radio silence timer when the transceiver is ready. The timers are 10 s and 15 s, respectively. |
 | COMMISSIONING | Request one CW startup beacon and wait for transceiver receive readiness. |
 | NOMINAL | Enter RX_ONLY with `IHU_BOOT_RX_ONLY=ON`, otherwise confirm LINK_ACTIVE with the transceiver. Heartbeat and scheduled telemetry start disabled. |
-| SAFE | A startup fault, link failure, or operator stop shuts down the demo and clears the outputs. Restart both demo boards to run startup again. |
+| SAFE | A startup fault, link failure, or operator stop shuts down the UHF link and clears the outputs. Restart both boards to run startup again. |
 
 The LINK_ACTIVE schedule defaults to BASIC with 540 s listening and 60 s
 available to send telemetry. BASIC sends IHU status, valid EPS data, and
@@ -76,7 +76,7 @@ payload status and GPS, and firmware identities when peers respond.
 On the ground station, open Yamcs, select the `ember` instance and its
 `realtime` processor, then choose **Commanding → Send a Command**. The ground
 radio sends these commands over UHF to the transceiver, which passes them to
-the IHU over CAN A while the demo is in LINK_ACTIVE. Use the USB console
+the IHU over CAN A while the radio is in LINK_ACTIVE. Use the USB console
 section below for commands typed directly into the IHU.
 
 | Command | Arguments and effect |
@@ -108,7 +108,7 @@ output and the UMB flags govern the wired debug and telemetry streams.
 The UHF and LTE flags gate their corresponding telemetry paths. Turning a
 stream off cancels future submissions on that path.
 
-The startup demo console provides `startup`, `status`, `version`, `mode`,
+The UHF startup profile console provides `startup`, `status`, `version`, `mode`,
 `outputs`, `faults`, `rtos`, `radio`, `eps status`, `eps json`, and
 `gps`. Its stop commands are `mode safe` and `uhf stop`. Yamcs uses the
 LINK_ACTIVE radio path for command and schedule control.
