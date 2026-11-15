@@ -54,8 +54,13 @@ public final class EmberResults {
             command.parameter = Short.toUnsignedInt(b.getShort(WireProfile.PAYLOAD_PING_BYTES));
         }
         boolean payloadCommand = command.command >= 1024 && command.command <= 1028;
-        command.deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(
-            payloadCommand || (command.command >= 11 && command.command <= 14) ? 40 : 5);
+        int resultTimeoutSeconds = 5;
+        if (command.command == 1) {
+            resultTimeoutSeconds = 10;
+        } else if (payloadCommand || (command.command >= 11 && command.command <= 14)) {
+            resultTimeoutSeconds = 40;
+        }
+        command.deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(resultTimeoutSeconds);
         pending.put(key(b), command);
         history.publishAck(id, "Acknowledge_EMBER_Acceptance", TimeEncoding.getWallclockTime(), AckStatus.PENDING);
         history.publishAck(id, CommandHistoryPublisher.CommandComplete_KEY, TimeEncoding.getWallclockTime(), AckStatus.PENDING);

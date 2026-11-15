@@ -46,3 +46,25 @@ The `RADIO_CONFIG` reply is a 40-byte big-endian payload, telemetry ID 65.
 The IHU validates the CAN reply against both boot IDs and the outstanding
 request. Yamcs correlates each command with its response. The schedule
 continues with the selected profile and keeps its configured durations.
+
+## Bench troubleshooting for intermittent uplink
+
+If spaced Yamcs PINGs time out during a listen window and the transceiver
+reports no sync or only CRC failures, compare what the nearby tinySA sees
+with the transceiver's receive diagnostics. The tinySA measures RF on its
+own antenna. A strong burst there can coexist with a weak signal at the
+transceiver's decoder.
+
+On the 0.41.0 bench, moving the transceiver's MMCX connection changed the
+result from four no-sync timeouts to three valid replies at 1500 baud with
+the same firmware and radio settings. During earlier failures the tinySA
+saw uplink bursts around −50 dBm, while raw `RX_BASEBAND` replay measured
+0.34–0.82 ADC counts of coherent burst amplitude versus 1.30 counts on an
+earlier passing capture. Those ADC amplitudes are relative measurements at
+the decoder input. The working position after the move was verified by
+PING and CRC, with no raw ADC capture for that position.
+
+For a quick check, send a few spaced PINGs during a listen window and
+check the transceiver log for sync, valid CRC, and CAN forwarding. If
+repositioning the MMCX changes the result, check the connector, pigtail,
+and strain relief before tuning the decoder or changing the radio profile.

@@ -30,7 +30,7 @@ development version is undocumented, the table gives the source version on `main
 | [Camera payload](https://github.com/ngrabbs/koenig_wildfire) | Three-camera prototype on Pi 4 | [Payload `0.7.1`](firmware/payload/README.md) | [`main` `0.8.0`](firmware/payload/VERSION) |
 | [Jetson carrier](hardware/payload_compute/README.md) | Next prototype in design | — | — |
 | [Walter LTE-M bench](ground/lte/README.md) | CAN Feather and Walter modem | Last recorded `0.8.0` Feather · `0.3.0` Walter | `main` `0.14.1` Walter MCU · `0.3.0` Walter |
-| [Ground station](ground/README.md) | Pi 5 and LibreSDR bench | [EMBER ground `1.9.0`](ground/releases/yamcs-flight-1.9.0.json) | [Ground releases](ground/releases/README.md) |
+| [Ground station](ground/README.md) | Pi 5 and LibreSDR bench | [EMBER ground `1.9.1`](ground/releases/yamcs-flight-1.9.1.json) | [Ground releases](ground/releases/README.md) |
 | [S-band transmitter](hardware/payload_exp_sband_tx/README.md) | Experimental FPGA bench | FPGA test designs | [FPGA work](hardware/payload_exp_sband_tx/fpga/README.md) |
 
 [Hardware directory](hardware/README.md) · [Firmware guides](firmware/README.md) ·
