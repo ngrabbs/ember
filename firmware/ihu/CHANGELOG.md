@@ -13,3 +13,6 @@
 | 2026-11-01 | 0.16.0 · `4dc34c7` | Adds bounded UHF command validation, frozen status records, and controlled reboot. |
 | 2026-10-17 | 0.14.1 · `446db58` | Renames COMMS to transceiver in the active firmware layout. |
 | 2026-10-17 | 0.14.0 · `80eac2c` | Adds an explicit UHF request for transceiver identity. |
+| 2026-10-17 | 0.13.0 · `0891505` | Adds explicit modes and six output flags that default off. |
+| 2026-10-17 | 0.12.0 · `c35262e` | Adds payload fire checks over the bench and RF command paths. |
+| 2026-10-17 | 0.11.0 · `17d4f68` | Adds the payload CAN target, identity, status, and heartbeat requests. |
