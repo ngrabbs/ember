@@ -2,15 +2,18 @@
 
 [Changelog](CHANGELOG.md) · [Current bench builds](../README.md#current-bench-builds)
 
+The verified 0.28.0 bench image uses FreeRTOS and `-DIHU_BOOT_DEMO=ON`.
+The conducted demo adds the LINK_ACTIVE UHF path, scheduled telemetry,
+GPS, and FULL device identities. The demo option defaults off.
+
 Active IHU CAN Feather application, formerly `firmware/can_feather_bench`.
-The earlier FreeRTOS prototype was removed and remains available in Git history.
+CMake fetches the pinned FreeRTOS 11.2.0 kernel on first configure.
 This directory builds only the IHU: CMake project/target `ihu`, output `ihu.uf2`.
 The LTE CAN Feather has its own [Walter MCU application](../walter_mcu/README.md),
 project/target/output `walter_mcu`. Walter ESP32-S3 firmware remains in
 [`firmware/walter`](../walter/README.md); the original-Pico UHF application is
 [transceiver](../transceiver/README.md). Configure fresh build directories.
-Each application owns its source and VERSION file; the split retains version
-0.14.1 and does not flash hardware. Shared board/build configuration lives in
+The `VERSION` file declares the IHU build version. Shared board and build configuration lives in
 [`shared/pico_can`](../shared/pico_can/README.md).
 
 ```sh
