@@ -2,7 +2,7 @@
 
 This is a replaceable development pipeline with an offline CLI. The optional
 payload 0.4.0 live-image adapter also invokes it after real camera capture; see
-the [user guide](../README.md#live-camera-fire-checks).
+the [payload deployment guide](../DETAILS.md#live-camera-fire-checks).
 This module itself never opens CAN, camera, mux, or RF devices.
 
 ```mermaid
