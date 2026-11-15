@@ -72,11 +72,16 @@ static bool rd_decode_impl(const uint16_t *samples,size_t count,rd_result *out,r
  unsigned preferred=rd_preferred_hz;
  if(!preferred)preferred=native?RD_IF_RECENT_HZ:RD_IF_LINK_HZ;
  const unsigned initial[]={preferred,RD_IF_RECENT_HZ,RD_IF_EARLIER_HZ};
- for(unsigned candidate=0;candidate<=178;candidate++){
+ /* LINK_ACTIVE gets one low-frequency noise rejection pass at its preferred
+  * IF. Keep the original pass first and use the same receive deadline. */
+ for(int candidate=native?0:-1;candidate<=178;candidate++){
+  bool reject_low_frequency=candidate==0 && !native;
   int trial;
-  if(candidate<3){
+  if(candidate<=0){
+   trial=(int)preferred;
+  }else if(candidate<3){
    trial=(int)initial[candidate];
-   if(candidate && initial[candidate]==initial[0])continue;
+   if(initial[candidate]==initial[0])continue;
   }else{
    unsigned step=candidate-2;
    int offset=(int)((step+1)/2)*25;
@@ -99,6 +104,7 @@ static bool rd_decode_impl(const uint16_t *samples,size_t count,rd_result *out,r
    /* Service CAN, ADC DMA and the receive deadline during the search. */
    if(!native && i && !(i&127u) && proceed && !proceed())return false;
    int32_t v=(int32_t)samples[i]-mean;
+   if(reject_low_frequency)v=i?(int32_t)samples[i]-samples[i-1]:0;
    /* Keep the mixed samples precise and the symbol dot product in int64_t. */
    int32_t re=v*rd_sine[((phase>>24)+64)&255]/64;
    int32_t im=v*rd_sine[phase>>24]/64;

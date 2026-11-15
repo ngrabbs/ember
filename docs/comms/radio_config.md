@@ -21,8 +21,12 @@ downlink rate. The factory profile is `DBPSK_1200_V3`.
 3. Send `CONFIRM_RADIO_PROFILE` with the token from that UHF response
    within the 45-second trial. An unconfirmed trial returns to the last
    confirmed profile, including when the ground receiver is offline.
-   Confirmed choices are held in radio RAM. A radio reboot loads the factory
-   profile.
+   Starting with transceiver 0.41.0, confirmation saves the profile in flash.
+   Reboot restores the last valid saved profile. With no valid record the
+   radio starts at the factory profile, `DBPSK_1200_V3`. Rebooting during
+   an unconfirmed trial restores the saved profile. The Pico build reserves
+   its last two flash sectors for alternating, CRC-checked records. Erasing
+   those sectors clears the saved profile.
 
 | Schema v2 field | Type | Meaning |
 | --- | --- | --- |

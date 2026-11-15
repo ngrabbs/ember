@@ -4,6 +4,7 @@
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-11-15 | 0.41.0 | Persists confirmed UHF profiles across reboot and adds a bounded low-frequency noise rejection pass for LINK_ACTIVE acquisition. |
 | 2026-11-15 | 0.40.0 | Adds a 1500-baud downlink trial with automatic rollback, tunes DBPSK symbol timing and phase acquisition, and adds optional ADC snapshot streaming. |
 | 2026-11-15 | 0.39.0 | Reports the active and factory UHF profile over CAN. |
 | 2026-11-14 | 0.38.0 · `819470b` | Services CAN during receive diagnostics and answers LINK_ACTIVE firmware identity requests for FULL telemetry. |
