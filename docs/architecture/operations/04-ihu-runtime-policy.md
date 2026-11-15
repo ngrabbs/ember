@@ -2,26 +2,12 @@
 
 Implementation: IHU CAN Feather **0.14.0**, serial bench bridge **0.4.0**.
 This is the approved ground-test cleanup. Flight operations remain inactive
-stubs; the flight requirements in the other three tables remain a draft.
+stubs; flight requirements remain a draft.
 This policy applies to the active application in `firmware/ihu`.
 
-## Configuration and entry matrix
-
-Configuration is selected at build and latched on reset. The default is
-GROUND_TEST. `-DIHU_FLIGHT_CONFIGURATION=ON` builds FLIGHT; no physical
-configuration-jumper pin has been assigned. IHU JP1 remains a watchdog jumper.
-
-| Configuration | Mode | Runs automatically | Payload / deployment | Entry gate |
-|---|---|---|---|---|
-| Both | BOOT | Hardware initialization; safe output defaults; CAN readiness check | No automatic operation | Power-on or reset |
-| GROUND_TEST | SAFE | Essential health sampling, addressed command handling, volatile fault recording | Explicit bench checks only; no automatic deployment | Default after BOOT, with boot-check result reported |
-| GROUND_TEST | STARTUP | Simulation stub only | No real deployment | Explicit `mode startup` while application transport is idle |
-| GROUND_TEST | COMMISSIONING | Checkout stub only | Individual commanded checks | Explicit `mode commissioning` while idle |
-| GROUND_TEST | NOMINAL | Scheduler stub only; no automatic mission routine | Explicit bench checks only | Explicit `mode nominal` while idle |
-| FLIGHT | STARTUP | Inactive release/wait routine stub | No actuator implementation | Intended: essential checks, validated history, first startup incomplete |
-| FLIGHT | COMMISSIONING | Inactive checkout stub | No automatic operation | Intended: required waits complete and deployment verified |
-| FLIGHT | SAFE | Read-only health sampling and diagnosis | No payload/deployment commands | Invalid/unavailable history, failed essential checks, or established-flight reboot |
-| FLIGHT | NOMINAL | Inactive mission scheduler stub | No automatic operation | Intended: checkout passed, healthy resources and ground approval |
+For current build choices, boot behavior, and available outputs, see the
+[IHU user guide profile matrix](../../../firmware/ihu/README.md#profiles-at-a-glance).
+The policy and validation below describe the 0.14.0 baseline.
 
 The runtime currently has no qualified persistent flight-history provider.
 Therefore a FLIGHT build boots to SAFE with HISTORY_UNAVAILABLE (or a failed

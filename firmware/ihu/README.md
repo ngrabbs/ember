@@ -22,15 +22,7 @@ cmake -S firmware/ihu -B "$ihu_build" \
 cmake --build "$ihu_build" --target ihu -j4
 ```
 
-The command above selects the bench UHF profile. For regular GROUND_TEST,
-set `ihu_build=build/ihu` and omit `-DIHU_UHF_STARTUP=ON`. All three profile flags
-default to `OFF`. Use a separate build directory for each profile.
-
-| Flag | When enabled |
-|---|---|
-| `IHU_UHF_STARTUP` | Runs the conducted startup sequence in GROUND_TEST. Requires the matching [transceiver UHF startup build](../transceiver/README.md). |
-| `IHU_BOOT_RX_ONLY` | With the UHF startup profile enabled, stays in RX_ONLY after the startup beacon instead of entering LINK_ACTIVE. |
-| `IHU_FLIGHT_CONFIGURATION` | Selects FLIGHT with inactive flight routines. CMake rejects combining this with the UHF startup profile. |
+The command above selects the bench UHF profile. See the [profile matrix](#profiles-at-a-glance) for the other builds. Use a separate build directory for each profile.
 
 The artifact is `ihu.uf2` in the chosen build directory. Put the IHU in
 BOOTSEL mode and check its current USB bus and address with `picotool info -a`.
@@ -45,15 +37,27 @@ picotool load -v -x "$ihu_build/ihu.uf2" --bus "${IHU_USB_BUS:?set IHU USB bus}"
 console at 115200 baud with exclusive access and send `version` and `status`
 to check the reported role, version, commit, and mode.
 
+## Profiles at a glance
+
+The build flags select the profile at reset. All three flags default to `OFF`
+in a fresh build directory.
+
+| Profile | CMake flags to enable | What happens at boot | Available outputs and links |
+|---|---|---|---|
+| Regular `GROUND_TEST` | None | Checks local CAN, then enters `SAFE` with all six output flags off. | Enable CLI debug or telemetry, wired USB/umbilical debug or telemetry, UHF telemetry, and LTE telemetry individually from the console. |
+| `GROUND_TEST / UHF` | `IHU_UHF_STARTUP` | Runs the startup checks and sends one CW beacon, then enters `NOMINAL / LINK_ACTIVE`. | USB startup log and diagnostics, plus Yamcs commands and replies over UHF. Heartbeat and scheduled BASIC or FULL UHF telemetry start off and can be enabled from Yamcs. |
+| `GROUND_TEST / UHF` with RX_ONLY | `IHU_UHF_STARTUP` and `IHU_BOOT_RX_ONLY` | Runs the same startup checks and CW beacon, then enters `NOMINAL / RX_ONLY`. | USB startup log and diagnostics. UHF receive is active after the beacon. Command replies and scheduled UHF telemetry require LINK_ACTIVE. |
+| `FLIGHT` | `IHU_FLIGHT_CONFIGURATION` | Enters `SAFE` with `HISTORY_UNAVAILABLE` if the CAN check passes. Flight routines are stubs. | USB diagnostics. All six optional outputs stay off. |
+
+LTE is a [bench telemetry route](#usb-console) in regular GROUND_TEST.
+The two UHF startup variants require the matching
+[transceiver UHF startup build](../transceiver/README.md). CMake rejects
+combining UHF startup with FLIGHT.
+
 ## Startup and modes
 
-Configuration is selected at build time. The normal GROUND_TEST profile
-initializes the CAN and sensor workers, enters BOOT, checks the local CAN
-controller, and settles in SAFE with all output flags off. The console can
-select STARTUP, COMMISSIONING, SAFE, or NOMINAL while the application is
-idle. Reset re-enters BOOT. FLIGHT enters SAFE with
-`HISTORY_UNAVAILABLE` if the local CAN check succeeds and exposes the
-inactive flight profile.
+In regular GROUND_TEST, the console can select STARTUP, COMMISSIONING, SAFE,
+or NOMINAL while the application is idle. Reset re-enters BOOT.
 
 The UHF startup profile drives the transitions automatically. Its release
 switches and antenna deployment are simulated. The CW beacon is a real
@@ -64,7 +68,7 @@ transceiver operation on the conducted bench.
 | BOOT → SAFE | Start local services, check CAN and EPS, and wait for the transceiver to report ready. |
 | STARTUP | Start the simulated antenna timer and radio silence timer when the transceiver is ready. The timers are 10 s and 15 s, respectively. |
 | COMMISSIONING | Request one CW startup beacon and wait for transceiver receive readiness. |
-| NOMINAL | Enter RX_ONLY with `IHU_BOOT_RX_ONLY=ON`, otherwise confirm LINK_ACTIVE with the transceiver. Heartbeat and scheduled telemetry start disabled. |
+| NOMINAL | Confirm the radio state for the selected UHF profile. |
 | SAFE | A startup fault, link failure, or operator stop shuts down the UHF link and clears the outputs. Restart both boards to run startup again. |
 
 The LINK_ACTIVE schedule defaults to BASIC with 540 s listening and 60 s
