@@ -11,34 +11,39 @@ static bool rx_stop(void) {
     bool down2 = clock_write(18, 0x80, true);
     return disabled && down0 && down1 && down2;
 }
-static bool rx_window(bool lo, bool (*capture)(void)) {
-    bool ok = false;
+static bool rx_start(bool lo) {
     uint8_t status = 0xff;
-    if (!rx_stop()) goto cleanup;
+    if (!rx_stop()) return false;
     if (lo) {
-        if (!clock_read(0, &status) || (status & 0x88)) goto cleanup;
+        if (!clock_read(0, &status) || (status & 0x88)) return false;
         for (unsigned reg=16; reg<=23; ++reg)
-            if (!clock_write(reg, 0x80, true)) goto cleanup;
+            if (!clock_write(reg, 0x80, true)) return false;
         if (!clock_modify(15, 0x0c, 0) || !clock_modify(149, 0x80, 0) ||
             !clock_modify(22, 0x40, 0) || !clock_modify(24, 0x0c, 0) ||
-            !clock_write(166, 0, true)) goto cleanup;
+            !clock_write(166, 0, true)) return false;
         /* P1=3942, P2=2, P3=5; MS1 P1=256, P2=0, P3=1. */
         const uint8_t pll[] = {0,5,0,0x0f,0x66,0,0,2};
         const uint8_t ms[] = {0,1,0,1,0,0,0,0};
         for (unsigned i=0; i<8; ++i)
             if (!clock_write(26+i, pll[i], true) ||
-                !clock_write(50+i, ms[i], true)) goto cleanup;
+                !clock_write(50+i, ms[i], true)) return false;
         /* CLK1 only, PLLA, integer /6, 4mA initial bench setting. */
-        if (!clock_write(17, 0x4d, true) || !clock_write(177, 0x20, false)) goto cleanup;
+        if (!clock_write(17, 0x4d, true) || !clock_write(177, 0x20, false)) return false;
         bool locked = false;
         for (unsigned i=0; i<100; ++i) {
             sleep_ms(1);
-            if (!clock_read(0, &status)) goto cleanup;
+            if (!clock_read(0, &status)) return false;
             if (!(status & 0xa8)) {locked = true; break;}
         }
-        if (!locked || !clock_write(3, 0xfd, true)) goto cleanup;
+        if (!locked || !clock_write(3, 0xfd, true)) return false;
         gpio_put(11, true);
     }
+    return true;
+}
+static bool rx_window(bool lo, bool (*capture)(void)) {
+    bool ok=false;
+    uint8_t status=0xff;
+    if(!rx_start(lo))goto cleanup;
     uint64_t start = time_us_64(), end = start + 10000000;
     bool captured = false;
     ok = true;

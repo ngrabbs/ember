@@ -18,8 +18,8 @@ int main(void){
  for(unsigned offset=12;offset<=20;offset+=4){uint32_t old=rd_u32(p+offset);bp32(p+offset,0);finish(p);expect(&c,p,"REJECT_IDENTITY");bp32(p+offset,old);}
  finish(p);p[31]^=1;expect(&c,p,"REJECT_FRAME");finish(p);
  assert(!strcmp(rp_check(&c,p,31),"REJECT_SIZE"));
- for(unsigned i=2;i<=16;i++){bp32(p+16,i);finish(p);expect(&c,p,"PING_ACCEPTED");}
- bp32(p+16,17);finish(p);expect(&c,p,"REJECT_CACHE_FULL");assert(c.used==16);
+ for(unsigned i=2;i<=RP_TRANSACTION_CAPACITY;i++){bp32(p+16,i);finish(p);expect(&c,p,"PING_ACCEPTED");}
+ bp32(p+16,RP_TRANSACTION_CAPACITY+1);finish(p);expect(&c,p,"REJECT_CACHE_FULL");assert(c.used==RP_TRANSACTION_CAPACITY);
  bp32(p+16,1);finish(p);expect(&c,p,"PING_DUPLICATE");
  puts("PASS: PING route, shape, identity, CRC, duplicate, conflict, full-cache fail closed");
 }

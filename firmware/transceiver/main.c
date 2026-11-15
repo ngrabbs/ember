@@ -36,7 +36,8 @@ static bool disable_clocks(void) {
 #include "rx_ping.h"
 static rp_cache rx_ping_cache;
 static bool uplink_pending;
-static uint8_t uplink_ping[32];
+static uint8_t uplink_ping[36];
+static unsigned uplink_size;
 #include "bpsk_emit.h"
 #include "rf_bridge.h"
 static void bpsk_test(unsigned drive) {
@@ -110,7 +111,7 @@ static void rx_test(bool lo, bool packet_capture) {
         printf("\n");
         if(found && result.packet[W_KIND]==W_KINDS_COMMAND) {
             const char *status=rp_check(&rx_ping_cache,result.packet,result.size);
-            if(!strcmp(status,"PING_ACCEPTED")){memcpy(uplink_ping,result.packet,32);uplink_pending=true;}
+            if(!strcmp(status,"PING_ACCEPTED")){memcpy(uplink_ping,result.packet,result.size);uplink_size=result.size;uplink_pending=true;}
             printf("[rx_ping] outcome=%s epoch=%lu transaction=%lu ingress_only=1 forwarded=0 rf_reply=0\n",
                    status,(unsigned long)rd_u32(result.packet+W_TRANSACTION_EPOCH),
                    (unsigned long)rd_u32(result.packet+W_TRANSACTION_ID));
@@ -374,6 +375,13 @@ static bool wait_can_ready(unsigned *attempts, uint8_t last[4]) {
     return false;
 }
 
+#ifndef TRANSCEIVER_BOOT_DEMO
+#define TRANSCEIVER_BOOT_DEMO 0
+#endif
+#if TRANSCEIVER_BOOT_DEMO
+#include "boot_demo.h"
+#endif
+
 int main(void) {
     output(10, false); /* TX_ACTIVE: hardware mute asserted. */
     output(11, false); /* RX_ACTIVE */
@@ -420,6 +428,9 @@ int main(void) {
     if (bfailed) gpio_put(9, false);
     if(!afailed && !rf_bus_open())afailed=true;
     printf("[firmware] version=%s git=%s dirty=%u boot=%lu\n",FW_VERSION,FW_GIT,FW_DIRTY,(unsigned long)responder_boot);
+#if TRANSCEIVER_BOOT_DEMO
+    demo_radio_run(!afailed);
+#endif
     while (true) {
         int command = getchar_timeout_us(0);
         if(command>=0 && command!='s' && command!='v' && !afailed && !rf_bus_close())afailed=true;
