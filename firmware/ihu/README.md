@@ -5,7 +5,7 @@
 The Internal Housekeeping Unit runs on the EMBER RP2040 CAN Feather. It
 reads EPS and GPS, manages spacecraft modes, and exchanges commands and
 telemetry with the transceiver, payload, and Walter MCU. The current
-bench build is [IHU 0.30.0](https://github.com/ngrabbs/ember/pull/91) with the UHF startup profile.
+bench build is [IHU 0.31.0](releases/0.31.0/README.md) with the UHF startup profile.
 [IHU 0.29.1 bench build and UF2](releases/0.29.1/README.md) remains available.
 
 ## Build and flash
@@ -88,6 +88,7 @@ section below for commands typed directly into the IHU.
 | `SET_UHF_TELEMETRY` | `enabled=0` or `enabled=1` stops or starts the schedule. |
 | `SET_UHF_TELEMETRY_SCHEDULE` | Listening 1–3600 s and telemetry 5–3600 s. |
 | `SET_UHF_TELEMETRY_SET` | BASIC or FULL. |
+| `REQUEST_RADIO_CONFIG` | Reads the transceiver defaults, active settings, and supported profiles over CAN. See the [radio configuration schema](../../docs/comms/radio_config.md). |
 | `REQUEST_IHU_FAULTS` | Gets the latest 16 retained fault entries and the total for this boot. View the decoded names, boot ID, and uptimes on the Yamcs **IHU Faults** page. Works with scheduled telemetry off in LINK_ACTIVE. |
 | `REQUEST_STATUS` | Requests IHU status and queues a schedule status report. |
 
@@ -125,7 +126,7 @@ and charge settings alone. Check `eps json` for `config_bits` and
 `telemetry_status` before using the voltage readings.
 
 The UHF startup profile console provides `startup`, `status`, `version`, `mode`,
-`outputs`, `faults`, `rtos`, `radio`, `eps status`, `eps json`, and
+`outputs`, `faults`, `rtos`, `radio`, `radio config`, `eps status`, `eps json`, and
 `gps`. Its stop commands are `mode safe` and `uhf stop`. Yamcs uses the
 LINK_ACTIVE radio path for command and schedule control.
 

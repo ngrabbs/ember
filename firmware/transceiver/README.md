@@ -1,12 +1,13 @@
 # Transceiver firmware
 
 The transceiver moves EMBER packets between the IHU on CAN A and the UHF radio.
-Version **0.38.0** runs on the original Raspberry Pi Pico.
+Version **0.39.0** runs on the original Raspberry Pi Pico.
 
 [Changelog](CHANGELOG.md) · [Verified bench builds](../README.md#current-bench-builds) ·
 [Radio guide](../../docs/comms/README.md)
 
-The hardware-verified bench image is the UHF startup profile build from
+The current [verified UHF startup UF2](releases/0.39.0/transceiver-0.39.0-uhf.uf2) supports [configuration readback](../../docs/comms/radio_config.md). The
+previous 0.38.0 bench image was built from
 [`819470b`](https://github.com/ngrabbs/ember/commit/819470bbf877fa66f980bf9d0d138c081905af6c).
 To reproduce that image, run the build commands from a detached worktree
 and use the historical flag `-DTRANSCEIVER_BOOT_DEMO=ON`.

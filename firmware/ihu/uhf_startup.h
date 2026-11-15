@@ -1,5 +1,6 @@
 #pragma once
 #include "uhf_startup_link.h"
+#include "radio_config.h"
 
 enum uhf_startup_stage { UHF_STARTUP_LOCAL, UHF_STARTUP_EPS, UHF_STARTUP_PROBE, UHF_STARTUP_WAIT, UHF_STARTUP_BEACON, UHF_STARTUP_ACTIVATE, UHF_STARTUP_ACTIVE, UHF_STARTUP_LISTEN, UHF_STARTUP_FAILED };
 static struct {
@@ -170,6 +171,80 @@ static bool uhf_startup_store_response(const uint8_t *p,size_t n){
     return true;
 }
 
+static struct {
+    bool active,sent,console;
+    uint32_t sequence,started;
+    cf_reader fragments;
+    ul_packet request;
+} uhf_radio_config;
+
+static void uhf_radio_config_start(const ul_packet *request,uint32_t now){
+    if(uhf_radio_config.active ||
+       (uhf_startup.stage!=UHF_STARTUP_ACTIVE && uhf_startup.stage!=UHF_STARTUP_LISTEN)){
+        if(request)cdh_error(request,W_STAGE_REJECTED,W_REASON_NOT_AVAILABLE);
+        else ihu_printf(true,"RADIO_CONFIG outcome=UNAVAILABLE\n");
+        return;
+    }
+    uhf_radio_config.active=true;
+    uhf_radio_config.sent=false;
+    uhf_radio_config.console=request==NULL;
+    uhf_radio_config.started=now;
+    if(!(uint16_t)++uhf_radio_config.sequence)++uhf_radio_config.sequence;
+    uhf_radio_config.fragments=(cf_reader){0};
+    if(request)uhf_radio_config.request=*request;
+}
+
+static void uhf_radio_config_receive(const cf_frame *frame,uint32_t now){
+    ul_packet reply;
+    if(!uhf_radio_config.active || !uhf_radio_config.sent ||
+       !cf_feed(&uhf_radio_config.fragments,frame,BD_CONFIG_REPLY,now) ||
+       !bd_envelope(&uhf_radio_config.fragments,&reply,uhf_startup.radio_boot,boot,BD_CONFIG) ||
+       reply.request!=uhf_radio_config.sequence || reply.size!=RADIO_CONFIG_SIZE)return;
+    const uint8_t *data=reply.payload;
+    if(data[0]!=RADIO_CONFIG_SCHEMA || data[1]!=RADIO_PROFILE_DBPSK_1200_V3 ||
+       data[2]!=RADIO_PROFILE_DBPSK_1200_V3 || data[3]!=RADIO_PROFILE_DBPSK_1200_V3 ||
+       (data[4]!=RADIO_BEHAVIOR_RX_ONLY && data[4]!=RADIO_BEHAVIOR_LINK_ACTIVE) ||
+       ul_u32(data+RADIO_CONFIG_BOOT)!=reply.sender)return;
+    uhf_radio_config.active=false;
+    if(uhf_radio_config.console){
+        ihu_printf(true,"RADIO_CONFIG schema=%u radio_boot=%" PRIu32 " behavior=%s supported_profiles=DBPSK_1200_V3\n",
+                   data[0],reply.sender,data[4]==RADIO_BEHAVIOR_LINK_ACTIVE?"LINK_ACTIVE":"RX_ONLY");
+        for(unsigned i=0;i<2;i++){
+            const uint8_t *profile=data+(i?RADIO_CONFIG_ACTIVE:RADIO_CONFIG_DEFAULT);
+            ihu_printf(true,"RADIO_CONFIG %s profile=DBPSK_1200_V3 rx_lo_hz=%" PRIu32
+                       " tx_carrier_hz=%" PRIu32 " symbol_rate_baud=%u\n",i?"active":"default",
+                       ul_u32(profile+RADIO_CONFIG_RX_LO),ul_u32(profile+RADIO_CONFIG_TX_CARRIER),
+                       ul_u16(profile+RADIO_CONFIG_SYMBOL_RATE));
+        }
+    }else{
+        _Static_assert(W_SIZE_RADIO_CONFIG==RADIO_CONFIG_SIZE &&
+                       W_RADIO_CONFIG_DEFAULT_RX_LO_HZ==RADIO_CONFIG_DEFAULT &&
+                       W_RADIO_CONFIG_ACTIVE_RX_LO_HZ==RADIO_CONFIG_ACTIVE &&
+                       W_RADIO_CONFIG_RADIO_BOOT_ID==RADIO_CONFIG_BOOT,
+                       "RADIO_CONFIG wire layout mismatch");
+        uint8_t packet[W_PAYLOAD+W_SIZE_RADIO_CONFIG+2];
+        cdh_header(packet,sizeof(packet),&uhf_radio_config.request,W_KINDS_TELEMETRY,
+                   W_ID_RADIO_CONFIG,W_SIZE_RADIO_CONFIG);
+        memcpy(packet+W_PAYLOAD,data,RADIO_CONFIG_SIZE);
+        ul_p16(packet+sizeof(packet)-2,ul_crc(packet,sizeof(packet)-2));
+        (void)uhf_startup_store_response(packet,sizeof(packet));
+    }
+}
+
+static void uhf_radio_config_pump(uint32_t now){
+    if(!uhf_radio_config.active)return;
+    if((uint32_t)(now-uhf_radio_config.started)>=1500){
+        uhf_radio_config.active=false;
+        if(uhf_radio_config.console)ihu_printf(true,"RADIO_CONFIG outcome=TIMEOUT\n");
+        else cdh_error(&uhf_radio_config.request,W_STAGE_EXECUTION_FAILED,W_REASON_NOT_AVAILABLE);
+        return;
+    }
+    if(!uhf_radio_config.sent && !can.pending && !uhf_startup.tx_pending && !output.active){
+        cf_frame query=bd_frame(BD_CONFIG_QUERY,boot,uhf_radio_config.sequence);
+        uhf_radio_config.sent=ihu_can_send(&can,&query);
+    }
+}
+
 static bool uhf_startup_command_reply(const uint8_t *p,size_t n,void *unused){
     const uint8_t *request=unused;
     bool status_request=ul_u16(request+8)==W_ID_REQUEST_STATUS;
@@ -295,7 +370,7 @@ static void uhf_startup_uplink(const cf_frame *f,uint32_t now){
     if(!cf_feed(&uhf_startup_up,f,BD_UP_ID,now))return;
     if(!bd_packet(&uhf_startup_up,&p,uhf_startup.radio_boot,boot) || p.request<=uhf_startup.last_up)return;
     uhf_startup.last_up=p.request;++uhf_startup_uplinks;
-    if(p.size<32 || uhf_startup_response_size || fire_uplink.active || cdh.active){++uhf_startup_drops;return;}
+    if(p.size<32 || uhf_startup_response_size || uhf_radio_config.active || fire_uplink.active || cdh.active){++uhf_startup_drops;return;}
     uhf_startup_poll_stop();
     unsigned id=ul_u16(p.payload+W_MESSAGE_ID);
     if((id==W_ID_SET_HEARTBEAT || id==W_ID_SET_UHF_TELEMETRY) && up_native_args(p.payload,p.size,1)){
@@ -306,6 +381,10 @@ static void uhf_startup_uplink(const cf_frame *f,uint32_t now){
     }
     if(id==W_ID_SET_UHF_TELEMETRY_SET && up_native_args(p.payload,p.size,1)){
         uhf_startup_set_packet_set(&p,now);return;
+    }
+    if(id==W_ID_REQUEST_RADIO_CONFIG && up_native_args(p.payload,p.size,0)){
+        uhf_radio_config_start(&p,now);
+        return;
     }
     if (id == W_ID_REQUEST_IHU_FAULTS && up_native_args(p.payload, p.size, 0)) {
         uhf_startup_send_faults(&p);
@@ -351,6 +430,7 @@ static void uhf_startup_fail(const char *reason) {
     uhf_startup_event(reason);
     uhf_startup_event("SAFE: outputs off; no automatic retry");
     policy.mode=IP_SAFE;policy.reason=reason;policy.outputs=0;
+    uhf_radio_config.active=false;
     output.active=false;uhf_startup_response_size=0;uhf_startup.tx_pending=false;
     pending.active=false;cdh.active=false;uhf_startup_schedule.enabled=false;
     if(fire_uplink.active)fire_restore();
@@ -363,6 +443,7 @@ static bool uhf_startup_send(unsigned id,uint32_t radio_boot) {
     return ihu_can_send(&can,&f);
 }
 static void uhf_startup_receive(const cf_frame *f,uint32_t now) {
+    if(f->id==BD_CONFIG_REPLY){uhf_radio_config_receive(f,now);return;}
     if(uhf_startup.stage==UHF_STARTUP_ACTIVE){
         if(f->id==BD_UP_ID){uhf_startup_uplink(f,now);return;}
         if((fire_uplink.active || uhf_startup_poll.active) && pending.active && f->id==RX_ID){
@@ -637,6 +718,7 @@ static void uhf_startup_schedule_pump(uint32_t now){
     if(!uhf_startup_queue_packet(packet,size,now))uhf_startup_fail("UHF telemetry queue... FAILED");
 }
 static void uhf_startup_link_pump(uint32_t now){
+    uhf_radio_config_pump(now);
     if(uhf_startup.stage!=UHF_STARTUP_ACTIVE)return;
     cf_expire(&uhf_startup_up,now);
     cf_expire(&fragments,now);
@@ -663,7 +745,7 @@ static void uhf_startup_link_pump(uint32_t now){
             if(!uhf_startup_queue_packet(uhf_startup_response,uhf_startup_response_size,now))
                 uhf_startup_fail("UHF reply queue... FAILED");
             uhf_startup_response_size=0;
-        }else if(!uhf_startup_up.active && !fire_uplink.active && !uhf_startup_poll.active && !cdh.active){
+        }else if(!uhf_startup_up.active && !uhf_radio_config.active && !fire_uplink.active && !uhf_startup_poll.active && !cdh.active){
             if(uhf_startup_schedule.report_pending){
                 uint8_t packet[W_PAYLOAD+W_SIZE_UHF_SCHEDULE_STATUS+2];
                 size_t size=uhf_startup_schedule_packet(packet,now);

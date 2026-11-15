@@ -4,6 +4,7 @@
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-11-15 | 0.39.0 | Reports the active and factory UHF profile over CAN. |
 | 2026-11-14 | 0.38.0 · `819470b` | Services CAN during receive diagnostics and answers LINK_ACTIVE firmware identity requests for FULL telemetry. |
 | 2026-11-14 | Sweep build · `32db8e1` | Adds a temporary transmit sweep and tinySA capture. The bench run logged restoration and verification of the prior image. |
 | 2026-11-12 | 0.37.2 · `fc3616c`, `815faf4` | Adds passive RX and CAN diagnostics, then keeps ADC capture running through overlapping decode windows. The commits share the earlier version number. |
