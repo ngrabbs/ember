@@ -42,12 +42,9 @@ uses its diagnostic RF PING handler; `tests/ground/test_firmware.py` compiles
 the engine on the host and independently decodes results with the Python codec.
 The active RF command allowlist is narrower than the generic engine's handlers.
 
-The standalone USB Pico application and its C-only USB framing were removed.
-Python `framing.py`, `usb_bridge.py` and `usb_probe.py` remain test/diagnostic tools
-for the historical binary USB protocol; they are not the operational IHU text
-console bridge. Use
-[`payload_bridge.py`](payload_bridge.py) for the current sole-owner IHU serial
-bench connection on the ground Pi and its payload commands/EPS forwarding. See [serial ownership and EPS](../yamcs/OPERATIONAL.md#serial-ownership-and-eps).
+The [retired binary USB tools](https://github.com/ngrabbs/ember/tree/fa04ac11b03a80036105431331cd1143ddd045d9/ground/ember)
+are preserved in Git history. Use [`payload_bridge.py`](payload_bridge.py)
+for the direct IHU USB console and its payload commands and EPS forwarding.
 
 ## Real IHU EPS observations
 
