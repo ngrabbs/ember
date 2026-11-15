@@ -74,7 +74,7 @@ static void test_task(void *arg){
     if(stall_sensor){for(;;)vTaskDelay(pdMS_TO_TICKS(100));}
     enter("output uhf_telem off");
     uint32_t start=milliseconds();
-    while(!strstr(capture,"uhf_telem=0 lte_telem=0\n") || sensor_started==0){assert(milliseconds()-start<100);vTaskDelay(1);}
+    while(!strstr(capture,"uhf_telem=0 lte_telem=0\r\n") || sensor_started==0){assert(milliseconds()-start<100);vTaskDelay(1);}
     assert(sensor_working); /* OFF does not wait for I2C completion. */
     vTaskDelay(pdMS_TO_TICKS(200));
     assert(frames_while_sampling>20 && can_drops==0);
