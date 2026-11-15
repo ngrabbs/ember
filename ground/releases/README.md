@@ -2,7 +2,7 @@
 
 These dated records identify the files and Yamcs assets audited
 for each release. Use a manifest from the release you intend to verify.
-See the [ground quick start](../README.md) for current operations.
+See the [ground demo checklist](../DEMO.md) for current operations.
 
 | Recorded release | Manifests |
 | --- | --- |

@@ -15,7 +15,7 @@ See the [operator guide](README.md) for displays and commands.
 ## IHU-requested UHF telemetry
 
 Follow the instructions for the installed [transceiver build](../../firmware/transceiver/README.md#commands).
-Verify a fresh `uhf-tm-in` packet using the [demo checklist](../README.md#3-verify-a-fresh-packet).
+Verify a fresh `uhf-tm-in` packet using the [demo checklist](../DEMO.md#3-verify-a-fresh-packet).
 
 ## Serial ownership and EPS
 

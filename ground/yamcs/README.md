@@ -1,6 +1,6 @@
 # Yamcs operator guide
 
-Open Yamcs from the [demo checklist](../README.md#1-connect) and select
+Open Yamcs from the [demo checklist](../DEMO.md#1-connect) and select
 `realtime` in the instance that matches your connection.
 
 | Instance | Path | Receive links |
