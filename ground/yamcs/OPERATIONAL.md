@@ -7,7 +7,7 @@ command history and display buckets are independent.
 
 | Instance | Purpose | Links | Displays |
 |---|---|---|---|
-| `ember` | Radio reception and bounded fire-check command | `lte-tm-in` UDP10018; `uhf-tm-in` UDP10019; fire-check TC UDP10029 | `ember_displays` |
+| `ember` | Radio reception and UHF commands | `lte-tm-in` UDP10018; `uhf-tm-in` UDP10019; UHF TC UDP10029 | `ember_displays` |
 | `ember-bench` | One physical IHU serial connection | `ihu-serial-in` UDP10020; `ihu-serial-out` to the Pi host on UDP10028 | `ember_bench_displays` |
 
 The bench input/output pair uses one physical IHU USB connection to the ground
@@ -18,7 +18,8 @@ Open [flight overview](http://192.168.1.251:8090/telemetry/displays/files/Overvi
 or [bench overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember-bench__realtime).
 Flight Overview summarizes heartbeat/system/power; bench Overview summarizes
 serial EPS/payload/power. Both use Overview, Power, Payload and Devices & firmware.
-Flight exposes PAYLOAD_FIRE_CHECK through the bounded real RF path. Bench exposes
+The radio instance exposes IHU commands for status, heartbeat, and telemetry
+scheduling, plus `IHU_REBOOT` and `PAYLOAD_FIRE_CHECK`. Bench exposes
 PAYLOAD_PING, PAYLOAD_IDENT, PAYLOAD_STATUS_QUERY, PAYLOAD_HEARTBEAT_QUERY and
 PAYLOAD_FIRE_CHECK through serial/CAN. See [fire-check operation](FIRE_CHECK.md).
 

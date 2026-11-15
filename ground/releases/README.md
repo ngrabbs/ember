@@ -1,11 +1,12 @@
 # Ground release manifests
 
-These October 17, 2026 records identify the files and Yamcs assets audited
+These dated records identify the files and Yamcs assets audited
 for each release. Use a manifest from the release you intend to verify.
 See the [ground quick start](../README.md) for current operations.
 
 | Recorded release | Manifests |
 | --- | --- |
+| Two-instance Yamcs · live audit, November 15, 2026 | [Flight `ember`](yamcs-flight-20261115.json) · [Serial `ember-bench`](yamcs-bench-20261115.json) |
 | Two-instance Yamcs · fire-check 1.6.0 | [Flight `ember`](yamcs-flight-1.6.0.json) · [Serial `ember-bench`](yamcs-bench-1.6.0.json) |
 | Two-instance Yamcs · dashboard cleanup | [Flight](yamcs-flight-dashboards-20261017.json) · [Bench](yamcs-bench-dashboards-20261017.json) |
 | Two-instance Yamcs · initial split | [Flight](yamcs-flight-20261017.json) · [Bench](yamcs-bench-20261017.json) |
@@ -16,13 +17,13 @@ See the [ground quick start](../README.md) for current operations.
 ## Verify Yamcs
 
 From the repository root, compare the Pi's loaded mission database and display
-assets against a recorded baseline. These examples use the 1.6.0 manifests.
+assets against a recorded baseline. These examples use the November 15 manifests.
 
 ```sh
 python3 ground/yamcs/build_identity.py --url http://192.168.1.251:8090 \
-  --instance ember --check ground/releases/yamcs-flight-1.6.0.json
+  --instance ember --check ground/releases/yamcs-flight-20261115.json
 python3 ground/yamcs/build_identity.py --url http://192.168.1.251:8090 \
-  --instance ember-bench --check ground/releases/yamcs-bench-1.6.0.json
+  --instance ember-bench --check ground/releases/yamcs-bench-20261115.json
 ```
 
 `MATCH` confirms the audited fingerprint. `DRIFT` means the deployed assets

@@ -16,6 +16,20 @@ from generate_mdb import generate, NS
 
 ROOT = Path(__file__).resolve().parent
 LEGACY = ('ember-lte', 'ember-uhf', 'ember-payload', 'myproject')
+UHF_COMMANDS = (
+    'PING',
+    'REQUEST_STATUS',
+    'REQUEST_TELEMETRY',
+    'STATUS_CAPTURE',
+    'STATUS_FETCH',
+    'IHU_REBOOT',
+    'PAYLOAD_FIRE_CHECK',
+    'SET_HEARTBEAT',
+    'SET_UHF_TELEMETRY_SCHEDULE',
+    'SET_UHF_TELEMETRY',
+    'SET_UHF_TELEMETRY_SET',
+)
+
 
 
 def prepare(runtime, legacy_history=()):
@@ -49,7 +63,8 @@ def prepare(runtime, legacy_history=()):
     commandPostprocessorArgs:
       resultDomain: spacecraft
 """
-    flight += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember.xml\n'+tc_tail('/ember/PAYLOAD_FIRE_CHECK')
+    uhf_pattern = '/ember/(' + '|'.join(UHF_COMMANDS) + ')'
+    flight += '\nmdb:\n  - type: xtce\n    args:\n      file: mdb/ember.xml\n'+tc_tail(uhf_pattern)
     bench = services+'\ndataLinks:\n'+tm('ihu-serial-in',10020,enabled=False)+'''  - name: ihu-serial-out
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_realtime
@@ -81,7 +96,7 @@ def prepare(runtime, legacy_history=()):
     if java.exists():shutil.copytree(java, backup/'java')
     java.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory() as temp:
-        generate(temp, command_filter={'PAYLOAD_FIRE_CHECK'})
+        generate(temp, command_filter=UHF_COMMANDS)
         tree=ET.parse(Path(temp)/'ember.xml')
         # Shared sparse-radio freshness policy; sample timestamps stay visible.
         rates=tree.findall('.//{'+NS+'}SequenceContainer[@name="POWER_STATUS"]/{'+NS+'}DefaultRateInStream')
