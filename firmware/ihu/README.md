@@ -88,6 +88,8 @@ section below for commands typed directly into the IHU.
 | `SET_UHF_TELEMETRY` | `enabled=0` or `enabled=1` stops or starts the schedule. |
 | `SET_UHF_TELEMETRY_SCHEDULE` | Listening 1–3600 s and telemetry 5–3600 s. |
 | `SET_UHF_TELEMETRY_SET` | BASIC or FULL. |
+| `SET_RADIO_PROFILE` | Stages a supported UHF downlink profile for a timed trial. |
+| `CONFIRM_RADIO_PROFILE` | Confirms the active trial with the token received in the UHF readback. |
 | `REQUEST_RADIO_CONFIG` | Reads the transceiver defaults, active settings, and supported profiles over CAN. See the [radio configuration schema](../../docs/comms/radio_config.md). |
 | `REQUEST_IHU_FAULTS` | Gets the latest 16 retained fault entries and the total for this boot. View the decoded names, boot ID, and uptimes on the Yamcs **IHU Faults** page. Works with scheduled telemetry off in LINK_ACTIVE. |
 | `REQUEST_STATUS` | Requests IHU status and queues a schedule status report. |
