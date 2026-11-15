@@ -1,147 +1,84 @@
-# Walter LTE-M firmware
+# Walter LTE firmware
 
-This application runs on Walter's ESP32-S3. Its CAN Feather controller is the
-separate [`walter_mcu`](../walter_mcu/README.md) application. The IHU talks CAN to
-that Feather, which controls Walter over framed UART.
+This directory builds the **ESP32-S3 app on the Walter module**. It accepts
+requests from the [Walter MCU](../walter_mcu/README.md), controls the onboard
+Sequans modem with AT commands, and sends native EMBER telemetry over LTE-M
+as UDP. The Sequans modem runs its own firmware. The ESP32-S3 app in this
+checkout is version [0.3.0](VERSION).
 
-Active source: `firmware/walter`, formerly `firmware/walter_lte_bench`.
-PlatformIO environment: `walter`; output `.pio/build/walter/firmware.bin`.
-The source move and environment rename do not change runtime behavior or the
-application version. Use a fresh build directory after moving from the old path.
+## Build and flash
 
-**Evidence update:** hardware upload and later native EPS LTE delivery are
-recorded in the [LTE status and evidence index](../../ground/lte/README.md). The
-initial radio-off qualification statement below describes the first upload;
-continuous reliability and production integration remain open.
-
-Standalone application using pinned PlatformIO 6.1.18, espressif32 6.10.0 /
-Arduino 2.0.17. The earlier UART-only responder was removed. Uses local
-nonblocking AT orchestration, not the WalterModem library. Generated wire offsets
-come from `ground/ember/dictionary.json`; preserve the repository directory layout.
-Build passed; hardware upload hashes were verified on 2026-10-02. USB status
-reported boot2026087229, stateOFF, radio window0 and zero modem-accepted packets.
-[Radio-off USB check](../../system/ground_station/evidence/walter-lte-usb-off-20261002.json).
-CAN/UART application status and modem/LTE delivery qualification remain pending.
-Application SHA-256 `851ef9b67618c3cbf33e7a2af56d2637e30ed1c8ca04246d1869162bbe493669`.
-
-[GNSS research and proposed IHU service](../../system/interfaces/walter_gnss.md)
-is separate from this application; GPS/Galileo acquisition is not implemented here.
-
-COMMS UART0: Walter RX44/TX43, 115200 8N1. Modem UART1: RX14/TX48,
-CTS47/RTS21, hardware flow control. GPIO45 active-low reset holds the modem off
-at startup and at each RF-window deadline/error. An explicit framed request is
-required to release reset. Pin functions checked against the
-[pinned QuickSpot example](https://github.com/QuickSpot/walter-arduino/blob/c30b707f8d64b49daec80de6bccfc80c04e42d58/examples/passthrough/passthrough.ino)
-and installed Arduino HardwareSerial API; vendor source is not incorporated.
-
-This is a lab Band 13 / `srsapn` application using the modem's existing operator
-selection and LTE-M configuration. It does not infer SIM identity or switch RAT.
-Socket1 UDP destination `172.16.0.1:51000`, local port51001. AT commands follow
-the previously exercised Sequans UE8.2.1.0 bench helper. Band/APN configuration
-is written on each start; reset-off ends RF but does not restore those settings.
-Earlier flash preservation and UART recovery instructions remain in
-[Git history](https://github.com/ngrabbs/ember/blob/ae5fc3d2fa53ee071c4b79e2851cbe8c079365d1/firmware/walter_uart_bench/README.md).
-
-One admitted RF window, maximum120 seconds; repeated enable while active is
-rejected and does not extend the deadline. Startup waits12 seconds, then configures
-the modem, polls registration every3 seconds and opens the UDP socket. AT responses
-are bounded2048 bytes. AT setup timeout6 seconds, socket/send timeout15 seconds.
-Any timeout/overflow/setup error asserts modem reset; a pending packet outcome is
-UNKNOWN. A send needs at least16 seconds remaining. One packet at a time; there is
-no retransmission after rejection, timeout or uncertain outcome.
-
-UART service types in `../comms_transport/lte_link.h`:
-
-| Request / reply | Meaning |
-|---|---|
-| `0x10` / `0x11` | Four-byte big-endian RF-window seconds (0 stops); ACK is admission, not registration |
-| `0x12` / `0x13` | Complete native telemetry packet; reply preserves exact bytes after modem final OK |
-| `0x14` / `0x15` | Empty status query; 16-byte modem status |
-
-HELLO establishes COMMS boot identity. Requests require matching sender, origin,
-version and nonzero request ID. Native telemetry validates EMBER header, length,
-source/target and CRC independently. Diagnostic ECHO remains available with the
-radio off. `MODEM_ACCEPTED` means prompt, payload write and final OK; it never
-means received by the ground station. The receiver and Yamcs archive supply that
-proof separately. No uplink/flight-command service is implemented.
-
-Status bytes: state, configuration step, last error, registered; then u32 RF
-milliseconds remaining, modem-accepted count, rejection count, all big endian.
-States0–7: OFF, BOOT_WAIT, CONFIGURE, REGISTER, SOCKET_CONFIG, SOCKET_OPEN,
-READY, SEND (READY=6, SEND=7).
-Errors0none/1modem rejection/2window deadline/3response overflow/4AT timeout.
-Registration reflects observed CEREG replies/URCs, not continuous radio health.
-The admission candidate drains pending URCs and requires current registration
-before send; READY without registration triggers bounded CEREG polling.
-[Candidate and deployment record](../../ground/lte/results/2026-10-02-queue-preparation.md).
-USB accepts `status` and `off`; raw modem responses/SIM details are not printed.
-
-The host mock tests prompt/payload/final-OK correlation, BUSY, bounded windows,
-setup timeout, packet timeout and NOT_READY. These do not qualify the modem or RF.
-
-## Build
-
-Run from the repository root with the pinned PlatformIO tool available as
-`pio`. This captures the actual checkout's source revision and dirty state
-before invoking the build:
+Install PlatformIO Core 6.1.18 and run these commands from the repository root.
+The `walter` environment in [platformio.ini](platformio.ini) sets the board,
+framework and USB options. The build records the source commit and dirty state.
 
 ```sh
-python3 - <<'BUILD'
-import json, os, subprocess
-identity = json.loads(subprocess.check_output(
-    ['python3', 'firmware/transceiver/source_identity.py'], text=True))
-subprocess.run(['pio', 'run', '-d', 'firmware/walter', '-e', 'walter'],
-    env={**os.environ, 'EMBER_GIT_REVISION': identity['git_sha'],
-         'EMBER_GIT_DIRTY': str(identity['dirty'])}, check=True)
-BUILD
+export EMBER_GIT_REVISION="$(git rev-parse HEAD)"
+if [ -n "$(git status --porcelain --untracked-files=all)" ]; then
+  export EMBER_GIT_DIRTY=1
+else
+  export EMBER_GIT_DIRTY=0
+fi
+
+pio run -d firmware/walter -e walter
+pio run -d firmware/walter -e walter -t upload --upload-port "${WALTER_USB_PORT:?set Walter USB port}"
+pio device monitor --port "$WALTER_USB_PORT" --baud 115200
 ```
 
-For a source export without Git metadata, capture those two identity values
-from the original checkout and pass them explicitly in the build environment.
-The pre-build script rejects missing or malformed identities. No upload occurs
-unless explicitly requested. Build output is
-`firmware/walter/.pio/build/walter/firmware.bin`.
+Set `WALTER_USB_PORT` to the Walter USB serial device before uploading.
+The build produces `firmware/walter/.pio/build/walter/firmware.bin`.
+Enter `version` over USB to verify the reported version, Git commit and
+dirty flag. Use `status` to inspect the app and modem state, and `off` to
+close the radio window.
 
-Upload with `-t upload --upload-port` and Walter's verified serial-by-id path
-when its USB cable is connected. Do not target a Feather serial device.
+## How LTE telemetry reaches Yamcs
 
-## Versioned identity —0.3.0 migration candidate
+```text
+IHU → CAN → Walter MCU (RP2040) → UART → Walter (ESP32-S3)
+    → Sequans modem → LTE-M eNodeB / EPC → ground Pi UDP listener
+    → Yamcs ember / realtime / lte-tm-in
+```
 
-`version` and `status` print this Walter application's release, source SHA,
-dirty flag and boot ID. The Sequans modem's own vendor firmware is separate.
-Set `EMBER_GIT_REVISION` and `EMBER_GIT_DIRTY` in the build environment; the
-PlatformIO pre-build script rejects missing identity. Version is read from
-VERSION. `UL_FIRMWARE_INFO` is read-only and leaves an OFF modem in reset.
-The LTE Feather can relay the identity to IHU; see the
-[CAN migration contract](../../system/interfaces/device_registry.md).
+1. The IHU opens a radio window through the Walter MCU. Walter starts with
+   the modem held in reset. On an open request it boots the modem, configures
+   Band 13 and APN `srsapn`, registers, and opens a UDP socket. A window lasts
+   up to 120 seconds. Closing it or reaching its deadline returns Walter to
+   the off state.
+2. The IHU sends a native packet such as `POWER_STATUS`, `HEARTBEAT` or
+   `SYSTEM_STATUS`. The Walter MCU forwards the request over UART. Walter
+   passes the native packet to the modem as one UDP payload, from port
+   `51001` to the ground endpoint at `172.16.0.1:51000`.
+3. The [ground Pi listener](../../ground/pi/lte_listener.py) checks the peer
+   and packet, drops duplicates, and forwards the original bytes to
+   `127.0.0.1:10018`. Find the received packet in the Yamcs archive under
+   the `ember` instance and `realtime` processor on `lte-tm-in`.
+   `MODEM_ACCEPTED` confirms that the modem accepted the send. The archive
+   confirms ground delivery.
 
-This retains the shared native telemetry allowlist from pending LTE PR #20,
-including SYSTEM_STATUS, so migration does not remove that deployed capability.
+For a bench check, use the [LTE runbook](../../ground/lte/BRINGUP.md) to prepare
+the lab cell and ground endpoint, and check the [Yamcs link](../../ground/yamcs/OPERATIONAL.md).
+On the IHU USB console in the normal ground-test build, send `hello lte`,
+`output lte_telem on` and `lte 120`. Use `lte status` until it reports
+registered and READY (state 6) with at least 16 seconds left, then send `eps lte`.
+Check the archive for `POWER_STATUS`, then close the window with `lte 0`
+and turn off the output with `output lte_telem off`.
 
-## Consolidated historical vendor research
+## Packet layouts
 
-The following pinned references were recorded on 2026-10-01, before the active
-LTE sender. They are research context, not a current installed-image claim.
+Bytes are shown in transmission order. The UDP payload is one complete native
+EMBER packet. CAN and UART framing are described in the
+[Walter MCU guide](../walter_mcu/README.md#packet-layouts).
 
-## Vendor sources checked 2026-10-01
+```text
+LTE datagram
+[UDP header 8 B] [Native EMBER packet, variable]
 
-Organization: [QuickSpot](https://github.com/QuickSpot).
+Native EMBER packet (UDP payload)
+[CCSDS primary header 6 B] [EMBER secondary header 24 B] [Telemetry payload N B] [CRC-16 2 B]
+```
 
-- [Arduino modem library](https://github.com/QuickSpot/walter-arduino), inspected
-  commit `c30b707f8d64b49daec80de6bccfc80c04e42d58`.
-  Its [passthrough example](https://github.com/QuickSpot/walter-arduino/blob/c30b707f8d64b49daec80de6bccfc80c04e42d58/examples/passthrough/passthrough.ino)
-  bridges USB serial to modem UART at 115200 and hardware-resets the modem in
-  setup. This is consistent with the observed reset behavior, but does not
-  identify the exact binary currently flashed on our board.
-- [Arduino UDP example](https://github.com/QuickSpot/walter-arduino/blob/c30b707f8d64b49daec80de6bccfc80c04e42d58/examples/udp/udp.ino)
-  supplies a registration, PDP context, and UDP starting point. Its default
-  destination is QuickSpot's demo server; adapt to our local ground receiver
-  and APN `srsapn` when developing EMBER telemetry.
-- [ESP-IDF modem library](https://github.com/QuickSpot/walter-esp-idf), inspected
-  tree commit `d99e5783c28d66e67457794de95464d3c67cd0e6`; includes a UDP example.
-- [Documentation](https://github.com/QuickSpot/walter-documentation), inspected
-  commit `5e16b81f0aaa2f0a455feb6573bb94a46786dd7e`; includes
-  [SIM/network API reference](https://github.com/QuickSpot/walter-documentation/blob/5e16b81f0aaa2f0a455feb6573bb94a46786dd7e/walter-modem/arduino_esp-idf/reference/sim_and_network.md)
-  and [GM02S AT command manual](https://github.com/QuickSpot/walter-documentation/blob/5e16b81f0aaa2f0a455feb6573bb94a46786dd7e/file/gm02s_at_commands.pdf).
-  The manual's applicability to installed UE8.2.1.0 still needs checking before
-  relying on firmware-specific commands.
+See the [IHU packet guide](../ihu/README.md) and
+[ground dictionary](../../ground/ember/dictionary.json) for telemetry fields.
+
+For earlier bench results and flash recovery notes, see the
+[previous Walter guide](https://github.com/ngrabbs/ember/blob/a237f01e8fd64fa45ac621644caaa3f1656ca779/firmware/walter/README.md).
