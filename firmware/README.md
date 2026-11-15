@@ -13,8 +13,7 @@ Build and operating instructions live with each application.
 ## Current bench builds
 
 The [root hardware and firmware table](../README.md#hardware-and-firmware)
-tracks bench and development versions. For the November 15 source commits and
-verification details, see the [dated bench record](https://github.com/ngrabbs/ember/blob/a237f01e8fd64fa45ac621644caaa3f1656ca779/firmware/README.md#current-bench-builds).
+tracks bench and development versions.
 
 ## Walter LTE bench
 

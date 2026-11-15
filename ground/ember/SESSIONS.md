@@ -86,8 +86,7 @@ remained unavailable. A zero detected cell count uses the configured two-cell
 fallback in this decoder; it is not alone the reason for invalid conversions.
 No charger or ADC setting was changed. The user confirmed VIN/solar is off
 and the EPS is running on battery only. CONFIG_BITS is zero, so forced
-telemetry is off; this matches the normal read-only firmware's
-[previously recorded battery-only state](https://github.com/ngrabbs/ember/blob/cd1f66191945ec81914fe077163701630e1410a1/system/ground_station/eps_bench_setup.md#normal-firmware-restored).
+telemetry is off.
 Analog Devices describes battery-only ADC operation as requiring forced
 telemetry; see its
 [LTC4162-L explanation](https://ez.analog.com/power/f/q-a/537074/ltc4162-l-reading-vbat-as-0).

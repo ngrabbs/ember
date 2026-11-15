@@ -151,7 +151,6 @@ Full IHU/EPS housekeeping/application migration remains open. LTE reliability re
 - [ ] Implement and bench-test IHU GNSS requests/results after LTE bring-up.
 - [x] Preserve/verify Walter's ESP32 flash and install a pinned standalone
       COMMS UART diagnostic with its modem held in reset; USB checks passed.
-      See [responder procedure](https://github.com/ngrabbs/ember/blob/ae5fc3d2fa53ee071c4b79e2851cbe8c079365d1/firmware/walter_uart_bench/README.md).
 - [x] Demonstrate COMMS Feather ↔ Walter physical UART round trip: ten of ten
       exact diagnostic PING/PONG replies; no additional RX bytes over five seconds idle.
       Production telemetry service and LTE packet firmware remain open; later CAN
