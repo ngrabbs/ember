@@ -55,7 +55,7 @@ IHU → CAN → Walter MCU (RP2040) → UART → Walter (ESP32-S3)
    `MODEM_ACCEPTED` confirms that the modem accepted the send. The archive
    confirms ground delivery.
 
-For a bench check, use the [LTE runbook](../../ground/lte/BRINGUP.md) to prepare
+For a bench check, use the [LTE runbook](../../ground/lte/README.md) to prepare
 the lab cell and ground endpoint, and check the [Yamcs link](../../ground/yamcs/OPERATIONAL.md).
 On the IHU USB console in the normal ground-test build, send `hello lte`,
 `output lte_telem on` and `lte 120`. Use `lte status` until it reports

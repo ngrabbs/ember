@@ -2,7 +2,7 @@
 
 Use this receiver for EMBER COMMS v3 downlink. The
 [radio guide](../../docs/comms/README.md) gives the RF profile and frame layout.
-For the bounded fire-check uplink, see the [Yamcs service guide](../yamcs/FIRE_CHECK.md).
+For the bounded fire-check uplink, see the [Yamcs service guide](../yamcs/README.md#commands-and-results).
 
 ## Live UHF receiver
 

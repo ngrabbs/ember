@@ -15,7 +15,7 @@ Use one radio session at a time on the shared LibreSDR.
 
 ### Receive LTE
 
-- [ ] Select **ember / realtime**. Check `systemctl status ember-lte-listener` on the Pi, then follow the [LTE cell runbook](lte/BRINGUP.md#5-bring-up-lte-m) and [Walter bench check](../firmware/walter/README.md#how-lte-telemetry-reaches-yamcs). Check **lte-tm-in**.
+- [ ] Select **ember / realtime**. Check `systemctl status ember-lte-listener` on the Pi, then follow the [LTE cell runbook](lte/README.md#start-the-cell) and [Walter bench check](../firmware/walter/README.md#how-lte-telemetry-reaches-yamcs). Check **lte-tm-in**.
 
 ### Direct USB
 

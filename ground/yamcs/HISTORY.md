@@ -65,7 +65,7 @@ published; both UDP directions remain inside the isolated Docker network.
 
 [The operator overview](http://192.168.1.251:8090/telemetry/displays/files/Overview.opi?c=ember__realtime)
 shows received state, counters, heartbeat time and latest command report.
-[Display setup and interpretation](DISPLAYS.md) covers installation, native
+[Display setup and interpretation](README.md#displays) covers installation, native
 detail tables and the distinction between cached values and live connectivity.
 
 ## Shared station smoke check recorded at publication
@@ -149,4 +149,6 @@ The [optional services](../bench/sdrb/SERVICES.md) remain disabled at boot; IHU 
 
 Version comparison and deployment checks: [ground release identities](../releases/README.md).
 
-Payload displays and commands through the IHU: [deployment and validation](PAYLOAD.md).
+October payload and fire-check validation:
+[payload bench deployment](https://github.com/ngrabbs/ember/blob/c2be58ed9124c405872d6643fe1c12ee173a5309/ground/yamcs/PAYLOAD.md#validation) ·
+[bounded RF fire check](https://github.com/ngrabbs/ember/blob/c2be58ed9124c405872d6643fe1c12ee173a5309/ground/yamcs/FIRE_CHECK.md#verified-deployment).

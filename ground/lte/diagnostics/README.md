@@ -1,6 +1,6 @@
 # LTE engineering diagnostics
 
-Use the [LTE-M runbook](../BRINGUP.md#5-bring-up-lte-m) for lab cell setup.
+Use the [LTE-M runbook](../README.md#start-the-cell) for lab cell setup.
 The optional [OAI profiles](profiles/), [candidate patches](patches/README.md),
 and [instrumentation patches](traces/) reproduce earlier engineering trials.
 Copy selected files into the existing Pi runtime locations when staging a trial.
@@ -25,7 +25,7 @@ cmake --build build-lte --target lte-softmodem -j3
 
 Stage the desired config example from [profiles](profiles/) in the Pi's runtime
 configs directory, omitting `.example` from its filename. Use the existing
-bounded [bring-up procedure](../BRINGUP.md) with
+bounded [bring-up procedure](BRINGUP.md) with
 `enb.band13.emtc.ce300tx20rlctrace.conf` (RX gain 35) or
 `enb.band13.emtc.ce300tx20rx25rlctrace.conf` (RX gain 25). Both use TX gain 69.75,
 MAC info logging, and RLC/RRC debug logging. These are diagnostic profiles;

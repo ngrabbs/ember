@@ -1,6 +1,6 @@
-# LTE bench bring-up runbook
+# LTE engineering bring-up and diagnostic trials
 
-For a normal bench run, see the [ground quick start](../README.md#receive-lte).
+For a normal bench run, see the [LTE operator runbook](../README.md).
 The procedures below cover lab cell setup and older engineering diagnostics.
 
 Status: OAI and srsEPC are built on the Pi; S1 setup works. Walter completed
@@ -62,7 +62,7 @@ uhd_find_devices
 uhd_usrp_probe --args "type=b200,fpga=$HOME/work/ember-lte/images/usrp_b210_fpga.bin"
 ```
 
-Expected image hash is in [INVENTORY.md](INVENTORY.md). Record UHD version and
+Expected image hash is in [INVENTORY.md](../INVENTORY.md). Record UHD version and
 probe output. A probe may load volatile firmware/FPGA into the radio; it does
 not start an LTE cell. If firmware is missing or image compatibility fails,
 resolve that specific error and record any images added. Do not silently fall
@@ -142,7 +142,7 @@ Do not publish the subscriber credentials.
 
 ## 5. Bring up LTE-M
 
-Build both applications using [BUILD.md](configs/oai/BUILD.md). Stage the OAI
+Build both applications using [BUILD.md](../configs/oai/BUILD.md). Stage the OAI
 example as `~/work/ember-lte/configs/enb.band13.emtc.conf`, alongside `epc.conf`
 and the private HSS database. Run `scripts/smoke-s1.py` first: this uses simulated
 radio, does not transmit, and validates S1 setup only.
@@ -301,7 +301,7 @@ expected manual-selection state from the bench preparation.
 Pi logs are private and UTC-stamped. Use unique run labels to avoid overwriting
 evidence. Existing labels from 2026-10-02 are recorded in the results document.
 An assertion is not a successful timeout. The Msg3-only patch retains the Msg4
-assertion; the newer [Msg4 candidate](diagnostics/patches/README.md#msg4-retry-candidate)
+assertion; the newer [Msg4 candidate](patches/README.md#msg4-retry-candidate)
 replaces that path with bounded retries. Downlink allocation failures remain.
 
 ```sh
@@ -410,7 +410,7 @@ python3 -m unittest discover -s ground/lte/scripts/tests -v
 ```
 
 For optional per-bearer STATUS and compact CE HARQ tracing, use the separate
-[diagnostic procedure](diagnostics/README.md). Its two profiles lower MAC log
+[diagnostic procedure](README.md). Its two profiles lower MAC log
 volume and optionally reduce RX gain by 10 dB. Apply the temporary trace only
 after the selected candidate set, and reverse it/rebuild when finished. The ordinary
 RA summarizer's debug-only DTX count is unavailable with these MAC-info profiles.
