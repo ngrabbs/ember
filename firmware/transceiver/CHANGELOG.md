@@ -12,3 +12,16 @@
 | 2026-11-05 | 0.36.0 · `0035364` | Adds the conducted startup demo and one-shot CW profile. |
 | 2026-11-01 | 0.35.0 · `4dc34c7` | Supports the bounded UHF command path used for command validation and status records. |
 | 2026-10-17 | 0.34.0 · `446db58` | Renames the COMMS application and UF2 to transceiver. |
+
+## Earlier milestones
+
+| Version | Change |
+|---|---|
+| 0.32–0.33 | Made IHU telemetry on demand and added an explicit identity request alongside the first-send announcement. |
+| 0.25–0.30 | Added RX ADC characterization, captured DBPSK decoding, and bounded PING forwarding and reply diagnostics. |
+| 0.22–0.23 | Added build identity reporting and LTE identity observation forwarding. |
+| v17–v20 | Brought up IHU packet bridging, CAN admission and transmit results, and bounded batch and timed services. |
+| v7–v16 | Brought up the clock, conducted tone, DBPSK, and phase/drive diagnostics. |
+| v3–v6 | Added independent CAN checks, loopback, receive windows, HELLO, and startup readiness. |
+
+[Original bring-up notes and procedures](https://github.com/ngrabbs/ember/blob/3abe7869ffde130f5d2f4f2186fd9a2d1f572ce6/firmware/transceiver/README.md)
