@@ -5,8 +5,8 @@
 The Internal Housekeeping Unit runs on the EMBER RP2040 CAN Feather. It
 reads EPS and GPS, manages spacecraft modes, and exchanges commands and
 telemetry with the transceiver, payload, and Walter MCU. The current
-[verified bench image](releases/0.29.1/README.md) uses the UHF startup
-profile.
+bench build is [IHU 0.30.0](https://github.com/ngrabbs/ember/pull/91) with the UHF startup profile.
+[IHU 0.29.1 bench build and UF2](releases/0.29.1/README.md) remains available.
 
 ## Build and flash
 
