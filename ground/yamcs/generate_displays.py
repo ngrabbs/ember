@@ -97,7 +97,7 @@ def generate(destination, instance="ember"):
     def script(text,pvs,filename,x,y,w,h=24,size=12):
         e=label(text,x,y,w,h,size,WHITE)
         path=ET.SubElement(e.find('scripts'),'path',pathString='scripts/'+filename,checkConnect='false',sfe='false',seoe='false')
-        for pv in pvs:ET.SubElement(path,'pv',trig='true').text='/ember/'+pv
+        for pv in pvs:ET.SubElement(path,'pv',trig='true').text=pv if pv.startswith('sim://') else '/ember/'+pv
         return e
     def observed(pv,x,y,w=270,size=20):
         return script('No observation',[pv],'boolean-value.js' if pv in ('PAYLOAD_STATUS_ready','PAYLOAD_PING_RESULT_echo_ok','POWER_STATUS_adc_valid','POWER_STATUS_conversion_valid') else 'observed-value.js',x,y,w,32,size)
@@ -146,12 +146,25 @@ def generate(destination, instance="ember"):
     for title,pv,y in [('Charger input','input_mv',217),('Battery pack','battery_mv',281),('Power-path output','output_mv',345)]:
         label(title,692,y,260,20,11);eps(pv,692,y+21,260,20)
     box(22,450,956,105)
-    label('WHAT THESE VALUES MEAN',40,461,900,22,11,BLUE,True)
-    label('Heartbeat may come from IHU or transceiver; boot ID belongs to that packet’s producer.' if instance=='ember' else 'EPS is polled every five seconds through one serial owner; payload replies are requested.',40,488,914,21,11)
-    label('Heartbeat/system values do not expire; check timestamps. SAFE / GROUND_TEST are bench labels.' if instance=='ember' else 'The EPS header identifies a ground wrapper session, not an IHU reset or spacecraft UTC.',40,514,914,21,11)
-    nav('System raw / history' if instance=='ember' else 'Power raw / quality','System.par' if instance=='ember' else 'EPS.par',22,568)
-    if instance=='ember-bench':web('Payload commands','/commanding/send',250,568,210);web('Command history','/commanding/history',478,568,210)
-    else:label('Receive-only radio environment · no command uplink configured',252,573,720,24,11,ORANGE)
+    if instance == 'ember':
+        script('UHF schedule · waiting for current IHU status', [
+            'UHF_SCHEDULE_STATUS_enabled', 'UHF_SCHEDULE_STATUS_listen_seconds',
+            'UHF_SCHEDULE_STATUS_telemetry_seconds', 'UHF_SCHEDULE_STATUS_cycle_offset_ms',
+            'UHF_SCHEDULE_STATUS_source_boot_id', 'IHU_STATUS_source_boot_id', 'sim://ramp(0,10,1)',
+        ], 'uhf-countdown.js', 40, 460, 920, 24, 13)
+        label('LAST UHF GPS SAMPLE',40,489,350,20,11,BLUE,True)
+        stamp('GPS_STATUS_status',572,489,370)
+        script('No GPS observation', ['GPS_STATUS_'+field for field in
+            ('status','latitude_deg','longitude_deg','altitude_msl_m','satellites')],
+            'gps-summary.js',40,514,920,24,12)
+        nav('System raw / history','System.par',22,568)
+        web('UHF commands','/commanding/send',250,568,210)
+    else:
+        label('EPS is polled through the IHU USB bridge. Payload replies are requested.',40,475,914,21,11)
+        label('EPS packet times reflect ground reception.',40,508,914,21,11)
+        nav('Power raw / quality','EPS.par',22,568)
+        web('Payload commands','/commanding/send',250,568,210)
+    web('Command history','/commanding/history',478,568,210)
     footer('Times are ground reception times. NO OBSERVATION and EXPIRED do not mean a device is healthy or failed.')
     save('Overview.opi')
 
@@ -187,7 +200,13 @@ def generate(destination, instance="ember"):
     observed('PAYLOAD_FIRE_RESULT_execution_mode',395,479,200,17)
     stamp('PAYLOAD_FIRE_RESULT_result',610,481,360)
     label('STATIC_STUB returns NO_FIRE without running the detector. Missing replies remain UNKNOWN.',22,513,956,24,11,ORANGE)
-    label('Bench path: Ground Pi Yamcs → local USB → IHU → CAN A → payload Pi.' if instance=='ember-bench' else 'Flight command path: Yamcs → LibreSDR RF → transceiver → IHU → CAN A → payload; result returns over RF.',22,541,956,20,10)
+    if instance == 'ember':
+        label('CAPTURE GPS',22,540,140,20,11,BLUE,True)
+        script('No GPS observation', ['PAYLOAD_FIRE_TAGGED_'+field for field in
+            ('gps_status','latitude_deg','longitude_deg','altitude_msl_m','satellites','check_id')],
+            'gps-summary.js',165,538,813,23,11)
+    else:
+        label('Bench path: Ground Pi Yamcs → local USB → IHU → CAN A → payload Pi.',22,541,956,20,10)
     nav('Payload raw / history','Payload.par',22,568)
     web('Send payload command','/commanding/send',250,568,235);web('Command history','/commanding/history',503,568,210)
     footer('Payload firmware identity and source commit are consolidated on Devices & firmware.')
@@ -205,8 +224,12 @@ def generate(destination, instance="ember"):
     label('Snapshot states are sampled by IHU; NOT_SEEN can be expected for planned or unconnected devices.',22,392,956,21,10)
     # Single compact fleet identity table replaces three dedicated firmware pages.
     for text,x,w in [('Firmware component',22,230),('Release / build',258,220),('Full source commit',490,488)]:label(text,x,426,w,22,11,BLUE,True)
-    for i,(prefix,title) in enumerate([('COMMS_FIRMWARE','Transceiver MCU'),('LTE_CAN_FIRMWARE','LTE CAN MCU'),('LTE_MODEM_FIRMWARE','Walter MCU'),('PAYLOAD_FIRMWARE','Payload Pi')]):
-        y=456+i*29;label(title,22,y,225,24,11)
+    identities = [('COMMS_FIRMWARE','Transceiver MCU'),('LTE_CAN_FIRMWARE','LTE CAN MCU'),
+                  ('LTE_MODEM_FIRMWARE','Walter MCU'),('PAYLOAD_FIRMWARE','Payload Pi')]
+    if instance == 'ember':
+        identities.insert(0, ('IHU_FIRMWARE','IHU MCU'))
+    for i,(prefix,title) in enumerate(identities):
+        y=450+i*24;label(title,22,y,225,24,11)
         script('No identity',[prefix+'_'+n for n in ('version_major','version_minor','version_patch','dirty')],'firmware-version.js',258,y,225,24,10)
         script('No identity',[prefix+'_git_sha_'+str(n) for n in range(5)],'firmware-git.js',490,y,488,24,10)
     nav('Discovery raw / boot IDs','Devices.par',22,578,230)
@@ -216,9 +239,12 @@ def generate(destination, instance="ember"):
 
     groups={'Payload.par':['PAYLOAD_STATUS','PAYLOAD_PING_RESULT','PAYLOAD_FIRE_RESULT'], 'Devices.par':['DEVICE_STATUS'],
             'Firmware.par':['COMMS_FIRMWARE','LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE','PAYLOAD_FIRMWARE'],
-            'System.par':['HEARTBEAT','SYSTEM_STATUS'], 'Comms.par':['COMM_STATUS','COMMS_FIRMWARE'],
-            'LTE-Firmware.par':['LTE_CAN_FIRMWARE','LTE_MODEM_FIRMWARE'],
+            'System.par':['HEARTBEAT','SYSTEM_STATUS','COMM_STATUS'],
             'Command-reports.par':['COMMAND_RESPONSE'], 'EPS.par':['POWER_STATUS']}
+    if instance == 'ember':
+        groups['Payload.par'].append('PAYLOAD_FIRE_TAGGED')
+        groups['Firmware.par'].insert(0, 'IHU_FIRMWARE')
+        groups['System.par'] += ['GPS_STATUS','UHF_SCHEDULE_STATUS']
     for filename,names in groups.items():
         parameters=[]
         for m in D['messages']:
@@ -237,6 +263,6 @@ def generate(destination, instance="ember"):
 
 
 RETIRED_DISPLAYS=('Telemetry.opi','LTE.opi','Comms-Firmware.opi','LTE-CAN-Firmware.opi','LTE-Modem-Firmware.opi',
-                  'Payload-Ground-Build.opi','payload-ground-build.json')
+                  'Payload-Ground-Build.opi','payload-ground-build.json','Comms.par','LTE-Firmware.par')
 
 if __name__=='__main__':generate(sys.argv[1])
