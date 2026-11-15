@@ -14,7 +14,7 @@ and any listed telemetry. A timeout leaves the outcome unknown.
 
 | Instance | Wire ID | Command | Arguments | Expected result |
 |---|---|---|---|---|
-| `ember` | `0x0001` | `PING` | None | Correlated `COMMAND_RESPONSE` confirms the command path. |
+| `ember` | `0x0001` | `PING` | None | A correlated `COMMAND_RESPONSE` confirms the command path. Yamcs waits up to 10 s for the result. |
 | `ember` | `0x0002` | `REQUEST_STATUS` | None | `SYSTEM_STATUS`; the IHU also queues `UHF_SCHEDULE_STATUS`. |
 | `ember` | `0x0003` | `REQUEST_TELEMETRY` | `data_group`: `1` (SYSTEM, default) or `48` (COMMS) | Requested `SYSTEM_STATUS` or `COMM_STATUS`. |
 | `ember` | `0x0004` | `STATUS_CAPTURE` | None | Freezes five 1 Hz status records in RAM and returns a capture ID. |
