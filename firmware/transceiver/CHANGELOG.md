@@ -23,5 +23,3 @@
 | v17–v20 | Brought up IHU packet bridging, CAN admission and transmit results, and bounded batch and timed services. |
 | v7–v16 | Brought up the clock, conducted tone, DBPSK, and phase/drive diagnostics. |
 | v3–v6 | Added independent CAN checks, loopback, receive windows, HELLO, and startup readiness. |
-
-[Original bring-up notes and procedures](https://github.com/ngrabbs/ember/blob/3abe7869ffde130f5d2f4f2186fd9a2d1f572ce6/firmware/transceiver/README.md)

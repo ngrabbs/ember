@@ -147,6 +147,3 @@ The [packet dictionary](../../ground/ember/dictionary.json) lists individual
 native fields and their widths. See the [shared transport guide](../comms_transport/README.md)
 for CAN framing and the [radio guide](../../docs/comms/README.md) for the
 downlink format.
-
-Earlier bench procedures and qualification records are available in the
-[previous IHU guide](https://github.com/ngrabbs/ember/blob/4427c4359042dc44a06202f881fd67f099c3c363/firmware/ihu/README.md).

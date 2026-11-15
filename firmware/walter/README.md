@@ -79,6 +79,3 @@ Native EMBER packet (UDP payload)
 
 See the [IHU packet guide](../ihu/README.md) and
 [ground dictionary](../../ground/ember/dictionary.json) for telemetry fields.
-
-For earlier bench results and flash recovery notes, see the
-[previous Walter guide](https://github.com/ngrabbs/ember/blob/a237f01e8fd64fa45ac621644caaa3f1656ca779/firmware/walter/README.md).

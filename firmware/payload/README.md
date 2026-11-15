@@ -179,5 +179,4 @@ detector result uses report version 2. See the [CAN codec](protocol.py),
 [Yamcs packet dictionary](../../ground/ember/dictionary.json), and
 [radio framing guide](../../docs/comms/README.md).
 
-Earlier release and bench notes are in the [changelog](CHANGELOG.md) and
-[previous guide](https://github.com/ngrabbs/ember/blob/10cf329/firmware/payload/README.md).
+Earlier release and bench notes are in the [changelog](CHANGELOG.md).
