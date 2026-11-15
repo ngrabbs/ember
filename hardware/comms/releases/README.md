@@ -16,8 +16,6 @@ or measured RF performance.
 
 ## Historical exports
 
-The October 3 preview directories are superseded candidates and must not be
-substituted for Y24. Some earlier preview artifacts remain only in local archives.
 The [legacy Rev-A bundle](legacy-rev-a/README.md) is the older design and is not
 the current all-UHF prototype.
 
