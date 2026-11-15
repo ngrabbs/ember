@@ -7,13 +7,14 @@ signature of flaming vegetation.
 
 ## System at a glance
 
-![EMBER system diagram. The IHU, payload, UHF transceiver, and Walter MCU share CAN A. EPS charger status reaches the IHU over I²C. UHF, LTE-M, and the optional direct USB console connect to the ground Pi.](docs/architecture/ember-system.svg)
+![EMBER system diagram. A shared CAN A backbone connects the IHU, camera payload, UHF transceiver, and optional Walter MCU. Separate EPS power connections feed the onboard loads. The ground station uses its own supply.](docs/architecture/ember-system.svg)
 
 [Editable diagrams.net source](docs/architecture/ember-system.drawio)
 
 The camera payload processes images locally. The IHU passes fire-check results
-and housekeeping telemetry to Yamcs over the UHF link. The EPS supplies power
-to the bench electronics. Walter LTE-M is a separate telemetry bench path.
+and housekeeping telemetry to Yamcs over the UHF link. The EPS supplies the onboard electronics over
+a separate power bus. The optional Walter path carries LTE-M telemetry, and
+the direct IHU USB link supports wired bench operation.
 
 ## Hardware and firmware
 

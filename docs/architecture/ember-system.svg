@@ -1,64 +1,184 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="535" viewBox="0 0 1040 535" font-family="Helvetica, Arial, sans-serif">
-<rect width="1040" height="535" fill="#FFFFFF"/>
-<text x="520.0" y="39.6" font-size="18" text-anchor="middle" fill="#213447" font-weight="bold">SPACECRAFT ENGINEERING BENCH</text>
-<rect x="22.0" y="68.0" width="168.0" height="112.0" rx="12" fill="#FBEFE9" stroke="#A9431E" stroke-width="1.7"/>
-<text x="106.0" y="113.5" font-size="19" text-anchor="middle" fill="#A9431E" font-weight="bold">Electrical power</text>
-<text x="106.0" y="138.6" font-size="14" text-anchor="middle" fill="#253449">Solar and battery</text>
-<text x="106.0" y="157.1" font-size="14" text-anchor="middle" fill="#253449">LTC4162 charger</text>
-<rect x="248.0" y="68.0" width="168.0" height="112.0" rx="12" fill="#E6F3F7" stroke="#007FA3" stroke-width="1.7"/>
-<text x="332.0" y="113.5" font-size="19" text-anchor="middle" fill="#007FA3" font-weight="bold">IHU</text>
-<text x="332.0" y="138.6" font-size="14" text-anchor="middle" fill="#253449">RP2040 CAN Feather</text>
-<text x="332.0" y="157.1" font-size="14" text-anchor="middle" fill="#253449">Modes and telemetry</text>
-<rect x="435.0" y="68.0" width="168.0" height="112.0" rx="12" fill="#F1F3E6" stroke="#657D33" stroke-width="1.7"/>
-<text x="519.0" y="113.5" font-size="19" text-anchor="middle" fill="#657D33" font-weight="bold">Camera payload</text>
-<text x="519.0" y="138.6" font-size="14" text-anchor="middle" fill="#253449">3 narrowband cameras</text>
-<text x="519.0" y="157.1" font-size="14" text-anchor="middle" fill="#253449">Raspberry Pi 4</text>
-<rect x="622.0" y="312.0" width="168.0" height="62.0" rx="12" fill="#F8EAED" stroke="#A0414D" stroke-width="1.7"/>
-<text x="706.0" y="341.8" font-size="19" text-anchor="middle" fill="#A0414D" font-weight="bold">UHF transceiver</text>
-<text x="706.0" y="366.9" font-size="14" text-anchor="middle" fill="#253449">Pico · DBPSK</text>
-<rect x="809.0" y="68.0" width="208.0" height="112.0" rx="12" fill="#FDF1E2" stroke="#A06020" stroke-width="1.7"/>
-<text x="913.0" y="113.5" font-size="19" text-anchor="middle" fill="#A06020" font-weight="bold">Walter MCU</text>
-<text x="913.0" y="138.6" font-size="14" text-anchor="middle" fill="#253449">RP2040 CAN Feather</text>
-<text x="913.0" y="157.1" font-size="14" text-anchor="middle" fill="#253449">CAN-to-UART bridge</text>
-<text x="219.0" y="108.9" font-size="14" text-anchor="middle" fill="#A9431E" font-weight="bold">I²C</text>
-<rect x="22.0" y="212.0" width="168.0" height="67.0" rx="12" fill="#FBEFE9" stroke="#A9431E" stroke-width="1.7"/>
-<text x="106.0" y="244.3" font-size="19" text-anchor="middle" fill="#A9431E" font-weight="bold">Power rails</text>
-<text x="106.0" y="269.4" font-size="14" text-anchor="middle" fill="#253449">5 V / 3.3 V distribution</text>
-<text x="490.0" y="278.5" font-size="19" text-anchor="middle" fill="#105D82" font-weight="bold">CAN A  ·  SHARED 500 kbit/s BUS</text>
-<rect x="327.0" y="237.0" width="10.0" height="10.0" rx="5" fill="#105D82" stroke="#105D82" stroke-width="1"/>
-<rect x="514.0" y="237.0" width="10.0" height="10.0" rx="5" fill="#105D82" stroke="#105D82" stroke-width="1"/>
-<rect x="701.0" y="237.0" width="10.0" height="10.0" rx="5" fill="#105D82" stroke="#105D82" stroke-width="1"/>
-<rect x="908.0" y="237.0" width="10.0" height="10.0" rx="5" fill="#105D82" stroke="#105D82" stroke-width="1"/>
-<rect x="809.0" y="312.0" width="208.0" height="62.0" rx="12" fill="#FDF1E2" stroke="#A06020" stroke-width="1.7"/>
-<text x="913.0" y="341.8" font-size="19" text-anchor="middle" fill="#A06020" font-weight="bold">Walter</text>
-<text x="913.0" y="366.9" font-size="14" text-anchor="middle" fill="#253449">ESP32-S3 + Sequans modem</text>
-<text x="959.0" y="296.4" font-size="14" text-anchor="middle" fill="#A06020" font-weight="bold">UART</text>
-<rect x="248.0" y="435.0" width="769.0" height="76.0" rx="12" fill="#F1EDF8" stroke="#73518C" stroke-width="1.7"/>
-<text x="632.5" y="471.8" font-size="19" text-anchor="middle" fill="#73518C" font-weight="bold">Ground station  ·  Raspberry Pi 5</text>
-<text x="632.5" y="496.9" font-size="14" text-anchor="middle" fill="#253449">LibreSDR / UHF and LTE receivers  ·  Yamcs radio and serial bench instances</text>
-<text x="658.5" y="408.4" font-size="14" text-anchor="middle" fill="#A0414D" font-weight="bold">UHF RF</text>
-<text x="866.0" y="407.9" font-size="14" text-anchor="middle" fill="#A06020" font-weight="bold">LTE-M</text>
-<text x="130.5" y="456.4" font-size="14" text-anchor="middle" fill="#73518C" font-weight="bold">Direct USB console</text>
-<text x="130.5" y="480.0" font-size="13" text-anchor="middle" fill="#73518C">when connected</text>
-<path d="M190.0,124.0 L248.0,124.0" fill="none" stroke="#A9431E" stroke-width="2"/>
-<polygon points="248.0,124.0 240.3,127.0 240.3,121.0" fill="#A9431E"/>
-<polygon points="190.0,124.0 197.7,121.0 197.7,127.0" fill="#A9431E"/>
-<path d="M106.0,180.0 L106.0,212.0" fill="none" stroke="#A9431E" stroke-width="2"/>
-<polygon points="106.0,212.0 103.0,204.3 109.0,204.3" fill="#A9431E"/>
-<path d="M296.0,242.0 L947.0,242.0" fill="none" stroke="#105D82" stroke-width="8"/>
-<path d="M332.0,180.0 L332.0,242.0" fill="none" stroke="#105D82" stroke-width="3"/>
-<path d="M519.0,180.0 L519.0,242.0" fill="none" stroke="#105D82" stroke-width="3"/>
-<path d="M706.0,312.0 L706.0,242.0" fill="none" stroke="#105D82" stroke-width="3"/>
-<path d="M913.0,180.0 L913.0,242.0" fill="none" stroke="#105D82" stroke-width="3"/>
-<path d="M987.9,180.0 L988.0,198.0 L1027.0,198.0 L1027.0,299.0 L988.0,299.0 L987.9,312.0" fill="none" stroke="#A06020" stroke-width="2"/>
-<polygon points="987.9,312.0 985.0,304.3 990.9,304.3" fill="#A06020"/>
-<polygon points="987.9,180.0 990.9,187.7 985.0,187.7" fill="#A06020"/>
-<path d="M706.0,374.0 L706.0,435.0" fill="none" stroke="#A0414D" stroke-width="2" stroke-dasharray="6 5"/>
-<polygon points="706.0,435.0 703.0,427.3 709.0,427.3" fill="#A0414D"/>
-<polygon points="706.0,374.0 709.0,381.7 703.0,381.7" fill="#A0414D"/>
-<path d="M913.0,374.0 L913.0,435.0" fill="none" stroke="#A06020" stroke-width="2" stroke-dasharray="6 5"/>
-<polygon points="913.0,435.0 910.0,427.3 916.0,427.3" fill="#A06020"/>
-<path d="M248.0,159.8 L220.0,160.0 L220.0,473.0 L248.0,473.0" fill="none" stroke="#73518C" stroke-width="2"/>
-<polygon points="248.0,473.0 240.3,476.0 240.3,470.0" fill="#73518C"/>
-<polygon points="248.0,159.8 240.3,162.9 240.3,156.9" fill="#73518C"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1670" height="858" viewBox="0 0 1670 858" font-family="Helvetica, Arial, sans-serif">
+<rect width="1670" height="858" fill="#FFFFFF"/>
+<rect x="24.0" y="72.0" width="180.0" height="64.0" rx="12" fill="#FBEFE9" stroke="#9C491F" stroke-width="2"/>
+<text x="114.0" y="101.5" font-size="19" text-anchor="middle" fill="#9C491F" font-weight="bold">Solar array</text>
+<text x="114.0" y="126.5" font-size="16" text-anchor="middle" fill="#9C491F">SM141K10TF</text>
+<rect x="224.0" y="72.0" width="184.0" height="64.0" rx="12" fill="#FBEFE9" stroke="#9C491F" stroke-width="2"/>
+<text x="316.0" y="101.5" font-size="19" text-anchor="middle" fill="#9C491F" font-weight="bold">MPPT charger</text>
+<text x="316.0" y="126.5" font-size="16" text-anchor="middle" fill="#9C491F">LTC4162-L</text>
+<rect x="24.0" y="166.0" width="180.0" height="64.0" rx="12" fill="#FBEFE9" stroke="#9C491F" stroke-width="2"/>
+<text x="114.0" y="195.5" font-size="19" text-anchor="middle" fill="#9C491F" font-weight="bold">Li-ion battery</text>
+<text x="114.0" y="220.5" font-size="16" text-anchor="middle" fill="#9C491F">2S2P · protection</text>
+<rect x="224.0" y="166.0" width="184.0" height="64.0" rx="12" fill="#FBEFE9" stroke="#9C491F" stroke-width="2"/>
+<text x="316.0" y="195.5" font-size="19" text-anchor="middle" fill="#9C491F" font-weight="bold">Rail regulation</text>
+<text x="316.0" y="220.5" font-size="16" text-anchor="middle" fill="#9C491F">3.3 V and 5 V</text>
+<rect x="466.0" y="72.0" width="240.0" height="64.0" rx="12" fill="#E6F3F7" stroke="#12647D" stroke-width="2"/>
+<text x="586.0" y="101.5" font-size="19" text-anchor="middle" fill="#12647D" font-weight="bold">RP2040 IHU</text>
+<text x="586.0" y="126.5" font-size="16" text-anchor="middle" fill="#12647D">Mode and command handling</text>
+<rect x="466.0" y="166.0" width="240.0" height="64.0" rx="12" fill="#E6F3F7" stroke="#12647D" stroke-width="2"/>
+<text x="586.0" y="195.5" font-size="19" text-anchor="middle" fill="#12647D" font-weight="bold">Telemetry records</text>
+<text x="586.0" y="220.5" font-size="16" text-anchor="middle" fill="#12647D">Status and downlink queue</text>
+<rect x="801.0" y="72.0" width="187.0" height="64.0" rx="12" fill="#F1F3E6" stroke="#536B30" stroke-width="2"/>
+<text x="894.5" y="101.5" font-size="19" text-anchor="middle" fill="#536B30" font-weight="bold">750 nm camera</text>
+<text x="894.5" y="126.5" font-size="16" text-anchor="middle" fill="#536B30">Off-line reference</text>
+<rect x="1009.0" y="72.0" width="187.0" height="64.0" rx="12" fill="#F1F3E6" stroke="#536B30" stroke-width="2"/>
+<text x="1102.5" y="101.5" font-size="19" text-anchor="middle" fill="#536B30" font-weight="bold">770 nm camera</text>
+<text x="1102.5" y="126.5" font-size="16" text-anchor="middle" fill="#536B30">Potassium channel</text>
+<rect x="1217.0" y="72.0" width="187.0" height="64.0" rx="12" fill="#F1F3E6" stroke="#536B30" stroke-width="2"/>
+<text x="1310.5" y="101.5" font-size="19" text-anchor="middle" fill="#536B30" font-weight="bold">780 nm camera</text>
+<text x="1310.5" y="126.5" font-size="16" text-anchor="middle" fill="#536B30">Potassium channel</text>
+<rect x="801.0" y="166.0" width="187.0" height="64.0" rx="12" fill="#F1F3E6" stroke="#536B30" stroke-width="2"/>
+<text x="894.5" y="195.5" font-size="19" text-anchor="middle" fill="#536B30" font-weight="bold">CSI multiplexer</text>
+<text x="894.5" y="220.5" font-size="16" text-anchor="middle" fill="#536B30">Sequential capture</text>
+<rect x="1009.0" y="166.0" width="187.0" height="64.0" rx="12" fill="#F1F3E6" stroke="#536B30" stroke-width="2"/>
+<text x="1102.5" y="195.5" font-size="19" text-anchor="middle" fill="#536B30" font-weight="bold">Raspberry Pi 4</text>
+<text x="1102.5" y="220.5" font-size="16" text-anchor="middle" fill="#536B30">Current bench processor</text>
+<rect x="1217.0" y="166.0" width="187.0" height="64.0" rx="12" fill="#F1F3E6" stroke="#536B30" stroke-width="2"/>
+<text x="1310.5" y="195.5" font-size="19" text-anchor="middle" fill="#536B30" font-weight="bold">Detection pipeline</text>
+<text x="1310.5" y="220.5" font-size="16" text-anchor="middle" fill="#536B30">Line excess and results</text>
+<rect x="466.0" y="468.0" width="240.0" height="65.0" rx="12" fill="#F8EAED" stroke="#963C50" stroke-width="2"/>
+<text x="586.0" y="498.0" font-size="19" text-anchor="middle" fill="#963C50" font-weight="bold">RP2040 radio baseband</text>
+<text x="586.0" y="523.0" font-size="16" text-anchor="middle" fill="#963C50">Framing, CRC and DBPSK</text>
+<rect x="740.0" y="432.0" width="211.0" height="63.0" rx="12" fill="#F8EAED" stroke="#963C50" stroke-width="2"/>
+<text x="845.5" y="461.0" font-size="19" text-anchor="middle" fill="#963C50" font-weight="bold">Transmit path</text>
+<text x="845.5" y="486.0" font-size="16" text-anchor="middle" fill="#963C50">Modulation, filters, PA</text>
+<rect x="740.0" y="510.0" width="211.0" height="63.0" rx="12" fill="#F8EAED" stroke="#963C50" stroke-width="2"/>
+<text x="845.5" y="539.0" font-size="19" text-anchor="middle" fill="#963C50" font-weight="bold">Receive path</text>
+<text x="845.5" y="564.0" font-size="16" text-anchor="middle" fill="#963C50">LNA, mixer and ADC</text>
+<rect x="990.0" y="468.0" width="212.0" height="65.0" rx="12" fill="#F8EAED" stroke="#963C50" stroke-width="2"/>
+<text x="1096.0" y="498.0" font-size="19" text-anchor="middle" fill="#963C50" font-weight="bold">T/R switch and filter</text>
+<text x="1096.0" y="523.0" font-size="16" text-anchor="middle" fill="#963C50">Shared antenna</text>
+<rect x="466.0" y="569.0" width="240.0" height="59.0" rx="12" fill="#F8EAED" stroke="#963C50" stroke-width="2"/>
+<text x="586.0" y="596.0" font-size="19" text-anchor="middle" fill="#963C50" font-weight="bold">Si5351A synthesizer</text>
+<text x="586.0" y="621.0" font-size="16" text-anchor="middle" fill="#963C50">Carrier and receive LO</text>
+<rect x="1228.0" y="468.0" width="176.0" height="65.0" rx="12" fill="#F8EAED" stroke="#963C50" stroke-width="2"/>
+<text x="1316.0" y="498.0" font-size="19" text-anchor="middle" fill="#963C50" font-weight="bold">UHF RF</text>
+<text x="1316.0" y="523.0" font-size="16" text-anchor="middle" fill="#963C50">Half duplex</text>
+<rect x="24.0" y="716.0" width="179.0" height="64.0" rx="12" fill="#F1EDF8" stroke="#694B84" stroke-width="2"/>
+<text x="113.5" y="745.5" font-size="19" text-anchor="middle" fill="#694B84" font-weight="bold">Ground antenna</text>
+<text x="113.5" y="770.5" font-size="16" text-anchor="middle" fill="#694B84">UHF bench path</text>
+<rect x="224.0" y="716.0" width="184.0" height="64.0" rx="12" fill="#F1EDF8" stroke="#694B84" stroke-width="2"/>
+<text x="316.0" y="745.5" font-size="19" text-anchor="middle" fill="#694B84" font-weight="bold">LibreSDR</text>
+<text x="316.0" y="770.5" font-size="16" text-anchor="middle" fill="#694B84">Transmit and receive</text>
+<rect x="466.0" y="716.0" width="240.0" height="64.0" rx="12" fill="#F1EDF8" stroke="#694B84" stroke-width="2"/>
+<text x="586.0" y="745.5" font-size="19" text-anchor="middle" fill="#694B84" font-weight="bold">Raspberry Pi 5</text>
+<text x="586.0" y="770.5" font-size="16" text-anchor="middle" fill="#694B84">DBPSK modem and gateway</text>
+<rect x="740.0" y="716.0" width="211.0" height="64.0" rx="12" fill="#F1EDF8" stroke="#694B84" stroke-width="2"/>
+<text x="845.5" y="745.5" font-size="19" text-anchor="middle" fill="#694B84" font-weight="bold">Yamcs</text>
+<text x="845.5" y="770.5" font-size="16" text-anchor="middle" fill="#694B84">Commands and telemetry</text>
+<rect x="990.0" y="716.0" width="212.0" height="64.0" rx="12" fill="#F1EDF8" stroke="#694B84" stroke-width="2"/>
+<text x="1096.0" y="745.5" font-size="19" text-anchor="middle" fill="#694B84" font-weight="bold">Operator browser</text>
+<text x="1096.0" y="770.5" font-size="16" text-anchor="middle" fill="#694B84">Displays and archive</text>
+<rect x="24.0" y="20.0" width="382.0" height="34.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="215.0" y="45.0" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">ELECTRICAL POWER SYSTEM</text>
+<rect x="466.0" y="20.0" width="240.0" height="34.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="586.0" y="45.0" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">COMMAND &amp; DATA HANDLING</text>
+<rect x="801.0" y="20.0" width="603.0" height="34.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="1102.5" y="45.0" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">THREE-BAND OPTICAL PAYLOAD</text>
+<rect x="728.0" y="297.0" width="360.0" height="37.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="908.0" y="323.5" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">CAN A · Shared 500 kbit/s data bus</text>
+<rect x="691.0" y="354.0" width="490.0" height="37.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="936.0" y="380.5" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">POWER BUS · EPS distribution to onboard loads</text>
+<rect x="403.0" y="73.0" width="65.0" height="24.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="435.5" y="93.0" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">I²C</text>
+<rect x="574.0" y="401.0" width="235.0" height="33.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="691.5" y="425.5" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">UHF TRANSCEIVER</text>
+<rect x="1012.0" y="624.0" width="293.0" height="32.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="1158.5" y="648.0" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">UHF commands and telemetry</text>
+<rect x="24.0" y="636.0" width="385.0" height="35.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="216.5" y="661.5" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">GROUND STATION · Independent power</text>
+<rect x="16.0" y="259.0" width="299.0" height="36.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="165.5" y="285.0" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">Charger readout stays on I²C</text>
+<rect x="737.0" y="240.0" width="350.0" height="35.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="912.0" y="265.5" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">Compact result returns over CAN A</text>
+<rect x="1405.0" y="90.0" width="245.0" height="36.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="1527.5" y="116.0" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">OPTIONAL BENCH LINKS</text>
+<rect x="1442.0" y="198.0" width="186.0" height="62.0" rx="12" fill="#E6F3F7" stroke="#12647D" stroke-width="2"/>
+<text x="1535.0" y="226.5" font-size="19" text-anchor="middle" fill="#12647D" font-weight="bold">Walter MCU</text>
+<text x="1535.0" y="251.5" font-size="16" text-anchor="middle" fill="#12647D">CAN-to-UART bridge</text>
+<rect x="1442.0" y="397.0" width="186.0" height="69.0" rx="12" fill="#FBEFE9" stroke="#9C491F" stroke-width="2"/>
+<text x="1535.0" y="429.0" font-size="19" text-anchor="middle" fill="#9C491F" font-weight="bold">Walter</text>
+<text x="1535.0" y="454.0" font-size="16" text-anchor="middle" fill="#9C491F">ESP32-S3 + modem</text>
+<rect x="1480.0" y="352.0" width="104.0" height="26.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="1532.0" y="373.0" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">UART</text>
+<rect x="1380.0" y="538.0" width="148.0" height="38.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="1454.0" y="565.0" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">LTE-M telemetry</text>
+<rect x="1408.0" y="804.0" width="220.0" height="28.0" rx="12" fill="none" stroke="none" stroke-width="2"/>
+<text x="1518.0" y="826.0" font-size="19" text-anchor="middle" fill="#263C53" font-weight="bold">Direct IHU USB</text>
+<path d="M204.0,104.0 L224.0,104.0" fill="none" stroke="#9C491F" stroke-width="2.4"/>
+<polygon points="224.0,104.0 216.3,107.0 216.3,101.0" fill="#9C491F"/>
+<path d="M204.0,188.0 L214.0,188.0 L214.0,117.0 L224.0,117.0" fill="none" stroke="#9C491F" stroke-width="2.4"/>
+<polygon points="224.0,117.0 216.3,120.0 216.3,114.0" fill="#9C491F"/>
+<polygon points="204.0,188.0 211.7,185.0 211.7,191.0" fill="#9C491F"/>
+<path d="M315.0,136.0 L315.0,166.0" fill="none" stroke="#9C491F" stroke-width="2.4"/>
+<polygon points="315.0,166.0 312.0,158.3 318.0,158.3" fill="#9C491F"/>
+<path d="M408.0,104.0 L466.0,104.0" fill="none" stroke="#9C491F" stroke-width="2.4"/>
+<polygon points="466.0,104.0 458.3,107.0 458.3,101.0" fill="#9C491F"/>
+<polygon points="408.0,104.0 415.7,101.0 415.7,107.0" fill="#9C491F"/>
+<path d="M586.0,136.0 L586.0,166.0" fill="none" stroke="#12647D" stroke-width="2.4"/>
+<polygon points="586.0,166.0 583.0,158.3 589.0,158.3" fill="#12647D"/>
+<polygon points="586.0,136.0 589.0,143.7 583.0,143.7" fill="#12647D"/>
+<path d="M988.0,198.0 L1009.0,198.0" fill="none" stroke="#536B30" stroke-width="2.4"/>
+<polygon points="1009.0,198.0 1001.3,201.0 1001.3,195.0" fill="#536B30"/>
+<path d="M1196.0,198.0 L1217.0,198.0" fill="none" stroke="#536B30" stroke-width="2.4"/>
+<polygon points="1217.0,198.0 1209.3,201.0 1209.3,195.0" fill="#536B30"/>
+<path d="M894.0,136.0 L894.0,166.0" fill="none" stroke="#536B30" stroke-width="2.4"/>
+<polygon points="894.0,166.0 891.0,158.3 897.0,158.3" fill="#536B30"/>
+<path d="M1102.0,136.0 L1102.0,146.0 L920.0,146.0 L920.0,166.0" fill="none" stroke="#536B30" stroke-width="2.4"/>
+<polygon points="920.0,166.0 917.0,158.3 923.0,158.3" fill="#536B30"/>
+<path d="M1310.0,136.0 L1310.0,154.0 L945.0,154.0 L945.0,166.0" fill="none" stroke="#536B30" stroke-width="2.4"/>
+<polygon points="945.0,166.0 942.0,158.3 948.0,158.3" fill="#536B30"/>
+<path d="M466.0,121.0 L447.0,121.0 L447.0,291.0 L481.0,291.0" fill="none" stroke="#12647D" stroke-width="2.4"/>
+<path d="M1122.0,230.0 L1122.0,291.0" fill="none" stroke="#12647D" stroke-width="2.4"/>
+<path d="M462.0,291.0 L1360.0,291.0" fill="none" stroke="#12647D" stroke-width="7"/>
+<path d="M540.0,291.0 L540.0,339.0" fill="none" stroke="#12647D" stroke-width="2.4"/>
+<path d="M540.0,354.0 L540.0,468.0" fill="none" stroke="#12647D" stroke-width="2.4"/>
+<path d="M320.0,230.0 L320.0,346.0" fill="none" stroke="#9C491F" stroke-width="2.4"/>
+<path d="M310.0,346.0 L1360.0,346.0" fill="none" stroke="#9C491F" stroke-width="7"/>
+<path d="M722.0,346.0 L722.0,298.0" fill="none" stroke="#9C491F" stroke-width="2.4"/>
+<path d="M722.0,284.0 L722.0,104.0 L706.0,104.0" fill="none" stroke="#9C491F" stroke-width="2.4"/>
+<polygon points="706.0,104.0 713.7,101.0 713.7,107.0" fill="#9C491F"/>
+<path d="M1166.0,346.0 L1166.0,298.0" fill="none" stroke="#9C491F" stroke-width="2.4"/>
+<path d="M1166.0,284.0 L1166.0,231.0" fill="none" stroke="#9C491F" stroke-width="2.4"/>
+<polygon points="1166.0,231.0 1169.0,238.7 1163.0,238.7" fill="#9C491F"/>
+<path d="M322.0,346.0 L322.0,500.0 L466.0,500.0" fill="none" stroke="#9C491F" stroke-width="2.4"/>
+<polygon points="466.0,500.0 458.3,503.0 458.3,497.0" fill="#9C491F"/>
+<path d="M706.0,485.0 L722.0,485.0 L722.0,463.0 L740.0,463.0" fill="none" stroke="#963C50" stroke-width="2.4"/>
+<polygon points="740.0,463.0 732.3,466.0 732.3,460.0" fill="#963C50"/>
+<path d="M951.0,463.0 L970.0,463.0 L970.0,485.0 L990.0,485.0" fill="none" stroke="#963C50" stroke-width="2.4"/>
+<polygon points="990.0,485.0 982.3,488.0 982.3,482.0" fill="#963C50"/>
+<path d="M990.0,515.0 L970.0,515.0 L970.0,541.0 L951.0,541.0" fill="none" stroke="#963C50" stroke-width="2.4"/>
+<polygon points="951.0,541.0 958.7,538.0 958.7,544.0" fill="#963C50"/>
+<path d="M740.0,541.0 L722.0,541.0 L722.0,515.0 L706.0,515.0" fill="none" stroke="#963C50" stroke-width="2.4"/>
+<polygon points="706.0,515.0 713.7,512.0 713.7,518.0" fill="#963C50"/>
+<path d="M585.0,569.0 L585.0,533.0" fill="none" stroke="#963C50" stroke-width="2.4"/>
+<polygon points="585.0,533.0 588.0,540.7 582.0,540.7" fill="#963C50"/>
+<path d="M1202.0,500.0 L1228.0,500.0" fill="none" stroke="#963C50" stroke-width="2.4"/>
+<polygon points="1228.0,500.0 1220.3,503.0 1220.3,497.0" fill="#963C50"/>
+<polygon points="1202.0,500.0 1209.7,497.0 1209.7,503.0" fill="#963C50"/>
+<path d="M1312.0,533.0 L1312.0,684.0 L111.0,684.0 L111.0,716.0" fill="none" stroke="#963C50" stroke-width="2.4"/>
+<polygon points="111.0,716.0 108.0,708.3 114.0,708.3" fill="#963C50"/>
+<polygon points="1312.0,533.0 1315.0,540.7 1309.0,540.7" fill="#963C50"/>
+<path d="M203.0,748.0 L224.0,748.0" fill="none" stroke="#694B84" stroke-width="2.4"/>
+<polygon points="224.0,748.0 216.3,751.0 216.3,745.0" fill="#694B84"/>
+<polygon points="203.0,748.0 210.7,745.0 210.7,751.0" fill="#694B84"/>
+<path d="M408.0,748.0 L466.0,748.0" fill="none" stroke="#694B84" stroke-width="2.4"/>
+<polygon points="466.0,748.0 458.3,751.0 458.3,745.0" fill="#694B84"/>
+<polygon points="408.0,748.0 415.7,745.0 415.7,751.0" fill="#694B84"/>
+<path d="M706.0,748.0 L740.0,748.0" fill="none" stroke="#694B84" stroke-width="2.4"/>
+<polygon points="740.0,748.0 732.3,751.0 732.3,745.0" fill="#694B84"/>
+<polygon points="706.0,748.0 713.7,745.0 713.7,751.0" fill="#694B84"/>
+<path d="M951.0,748.0 L990.0,748.0" fill="none" stroke="#694B84" stroke-width="2.4"/>
+<polygon points="990.0,748.0 982.3,751.0 982.3,745.0" fill="#694B84"/>
+<polygon points="951.0,748.0 958.7,745.0 958.7,751.0" fill="#694B84"/>
+<path d="M1357.0,291.0 L1535.0,291.0" fill="none" stroke="#12647D" stroke-width="7"/>
+<path d="M1535.0,291.0 L1535.0,260.0" fill="none" stroke="#12647D" stroke-width="3"/>
+<path d="M1628.0,237.0 L1640.0,237.0 L1640.0,370.0 L1611.0,370.0" fill="none" stroke="#9C491F" stroke-width="2"/>
+<path d="M1611.0,370.0 L1611.0,397.0" fill="none" stroke="#9C491F" stroke-width="2.4"/>
+<polygon points="1611.0,397.0 1608.0,389.3 1614.0,389.3" fill="#9C491F"/>
+<path d="M1535.0,466.0 L1535.0,668.0 L398.0,668.0 L398.0,676.0" fill="none" stroke="#9C491F" stroke-width="2.4" stroke-dasharray="7 5"/>
+<path d="M706.0,88.0 L746.0,88.0 L746.0,8.0 L1651.0,8.0 L1651.0,838.0 L645.0,838.0 L645.0,780.0" fill="none" stroke="#694B84" stroke-width="2.3" stroke-dasharray="7 5"/>
+<polygon points="645.0,780.0 648.0,787.7 642.0,787.7" fill="#694B84"/>
+<path d="M398.0,692.0 L398.0,716.0" fill="none" stroke="#9C491F" stroke-width="2.4" stroke-dasharray="7 5"/>
+<polygon points="398.0,716.0 395.0,708.3 401.0,708.3" fill="#9C491F"/>
 </svg>
