@@ -50,7 +50,8 @@ def admit_command(wire):
     h = packet['header']
     if (packet['name'] not in ('PING', 'REQUEST_STATUS', 'REQUEST_IHU_FAULTS', 'REQUEST_RADIO_CONFIG', 'SET_RADIO_PROFILE',
                               'CONFIRM_RADIO_PROFILE', 'REQUEST_TELEMETRY', 'STATUS_CAPTURE',
-                              'STATUS_FETCH', 'PAYLOAD_FIRE_CHECK', 'IHU_REBOOT', 'SET_HEARTBEAT',
+                              'STATUS_FETCH', 'PAYLOAD_FIRE_CHECK', 'PAYLOAD_PING', 'PAYLOAD_IDENT',
+                              'PAYLOAD_STATUS_QUERY', 'PAYLOAD_HEARTBEAT_QUERY', 'IHU_REBOOT', 'SET_HEARTBEAT',
                               'SET_UHF_TELEMETRY_SCHEDULE', 'SET_UHF_TELEMETRY', 'SET_UHF_TELEMETRY_SET') or h['source'] != 1 or h['target'] != 2 or
             not all(h[k] for k in ('transaction_epoch', 'transaction_id', 'source_boot_id'))):
         raise ValueError('Command is unsupported or missing EMBER addressing/correlation')

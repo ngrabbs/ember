@@ -50,15 +50,17 @@ responder restart.
 
 | Yamcs instance | Route | Payload commands |
 |---|---|---|
-| `ember` | UHF through the transceiver and IHU | `PAYLOAD_FIRE_CHECK` |
-| `ember-bench` | IHU USB bridge in regular GROUND_TEST | `PAYLOAD_FIRE_CHECK`, `PAYLOAD_IDENT`, `PAYLOAD_PING`, `PAYLOAD_STATUS_QUERY`, `PAYLOAD_HEARTBEAT_QUERY` |
+| `ember` | UHF through the transceiver and IHU in LINK_ACTIVE | All five with IHU 0.33.0 and updated ground software |
+| `ember-bench` | IHU USB bridge in regular GROUND_TEST | All five |
 
 In the regular GROUND_TEST USB console, send `hello payload` before
 `payload ident`, `payload status`, `payload heartbeat`, `payload fire-check`,
-or `ping N`. The UHF startup profile accepts fire checks through Yamcs over
-UHF. See the [IHU console guide](../ihu/README.md#usb-console).
+or `ping N`. In LINK_ACTIVE on IHU 0.33.0, use `payload ping N` or one of the
+four named payload commands. The console establishes HELLO automatically. See the [IHU console guide](../ihu/README.md#usb-console).
 
-Check Command History and the reported execution mode. Use the check ID to
+The commands are `PAYLOAD_PING`, `PAYLOAD_IDENT`, `PAYLOAD_STATUS_QUERY`,
+`PAYLOAD_HEARTBEAT_QUERY`, and `PAYLOAD_FIRE_CHECK`. Check Command History
+and the reported execution mode for fire checks. Use the check ID to
 correlate GPS telemetry when available. See the
 [Yamcs command dictionary](../../docs/architecture/operations/yamcs-commands.md).
 

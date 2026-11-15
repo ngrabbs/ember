@@ -115,8 +115,8 @@ separate recovery volumes rather than overwriting post-migration history.
 The ground unit suite covers both MDBs, idempotent preparation, command routing,
 shared serial polling and disconnect recovery. `operational_check.py` runs only
 against a separate loopback validation server on HTTP8091 with TM11018/11019/
-11020 and mock TC11028. It verifies radio deduplication, independent bench
-archives, bad-CRC rejection, flight refusal of serial-only commands, bench completion and
-cross-instance reply isolation. Never inject its synthetic packets into production.
+11020 and mock TC11028/11029. It verifies radio deduplication, independent bench
+archives, bad-CRC rejection, payload status completion over both command routes,
+and cross-instance reply isolation. Never inject its synthetic packets into production.
 
 Physical RF requalification remains separate from configuration and serial tests.

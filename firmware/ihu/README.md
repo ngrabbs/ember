@@ -93,11 +93,17 @@ section below for commands typed directly into the IHU.
 | `REQUEST_RADIO_CONFIG` | Reads the transceiver defaults, active settings, and supported profiles over CAN. See the [radio configuration schema](../../docs/comms/radio_config.md). |
 | `REQUEST_IHU_FAULTS` | Gets the latest 16 retained fault entries and the total for this boot. View the decoded names, boot ID, and uptimes on the Yamcs **IHU Faults** page. Works with scheduled telemetry off in LINK_ACTIVE. |
 | `REQUEST_STATUS` | Requests IHU status and queues a schedule status report. |
+| [Payload commands](../payload/README.md#commands) | IHU 0.33.0 and updated ground software expose all five commands over UHF. |
 
 ## USB console
 
 Send one case-sensitive command per line. `help` lists commands for the
-installed profile. The regular GROUND_TEST commands are grouped below.
+installed profile. In LINK_ACTIVE on IHU 0.33.0, use `payload ping N`
+(1–240 bytes), `payload ident`, `payload status`, `payload heartbeat`, or
+`payload fire-check`. The IHU establishes HELLO automatically and prints
+the result on USB.
+
+The regular GROUND_TEST commands are grouped below.
 
 | Task | Commands |
 |---|---|

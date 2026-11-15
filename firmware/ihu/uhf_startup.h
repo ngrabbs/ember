@@ -388,7 +388,7 @@ static void uhf_startup_uplink(const cf_frame *f,uint32_t now){
     if(!cf_feed(&uhf_startup_up,f,BD_UP_ID,now))return;
     if(!bd_packet(&uhf_startup_up,&p,uhf_startup.radio_boot,boot) || p.request<=uhf_startup.last_up)return;
     uhf_startup.last_up=p.request;++uhf_startup_uplinks;
-    if(p.size<32 || uhf_startup_response_size || uhf_radio_config.active || fire_uplink.active || cdh.active){++uhf_startup_drops;return;}
+    if(p.size<32 || uhf_startup_response_size || uhf_radio_config.active || payload_uplink.active || cdh.active){++uhf_startup_drops;return;}
     uhf_startup_poll_stop();
     unsigned id=ul_u16(p.payload+W_MESSAGE_ID);
     if((id==W_ID_SET_HEARTBEAT || id==W_ID_SET_UHF_TELEMETRY) && up_native_args(p.payload,p.size,1)){
@@ -415,6 +415,24 @@ static void uhf_startup_uplink(const cf_frame *f,uint32_t now){
         return;
     }
     if(up_native_cdh(p.payload,p.size)){cdh_receive(&p);return;}
+    uint8_t payload_type=0;
+    switch(id){
+        case W_ID_PAYLOAD_PING: payload_type=UL_ECHO; break;
+        case W_ID_PAYLOAD_IDENT: payload_type=UL_FIRMWARE_INFO; break;
+        case W_ID_PAYLOAD_STATUS_QUERY: payload_type=PL_STATUS; break;
+        case W_ID_PAYLOAD_HEARTBEAT_QUERY: payload_type=PL_HEARTBEAT; break;
+    }
+    if(payload_type){
+        unsigned args=id==W_ID_PAYLOAD_PING?W_SIZE_PAYLOAD_PING:0;
+        if(!up_native_args(p.payload,p.size,args)){++uhf_startup_drops;return;}
+        unsigned size=args?ul_u16(p.payload+W_PAYLOAD):0;
+        if(args && (!size || size>240)){
+            cdh_error(&p,W_STAGE_REJECTED,W_REASON_INVALID_PARAMETER);return;
+        }
+        if(output.active || pending.active){cdh_error(&p,W_STAGE_REJECTED,W_REASON_BUSY);return;}
+        payload_start(&p,payload_type,(uint16_t)size);
+        return;
+    }
     if(up_native_fire(p.payload,p.size)){
         if(output.active || pending.active){cdh_error(&p,W_STAGE_REJECTED,W_REASON_BUSY);return;}
         uplink_start_fire(&p);
@@ -457,7 +475,7 @@ static void uhf_startup_fail(const char *reason) {
     uhf_radio_config.active=false;
     output.active=false;uhf_startup_response_size=0;uhf_startup.tx_pending=false;
     pending.active=false;cdh.active=false;uhf_startup_schedule.enabled=false;
-    if(fire_uplink.active)fire_restore();
+    if(payload_uplink.active)payload_restore();
     uhf_startup_poll_stop();
     uhf_startup.stop_pending=uhf_startup.radio_boot!=0;uhf_startup.stop_at=now;
     uhf_startup_stage(UHF_STARTUP_FAILED,now);
@@ -470,7 +488,7 @@ static void uhf_startup_receive(const cf_frame *f,uint32_t now) {
     if(f->id==BD_CONFIG_REPLY){uhf_radio_config_receive(f,now);return;}
     if(uhf_startup.stage==UHF_STARTUP_ACTIVE){
         if(f->id==BD_UP_ID){uhf_startup_uplink(f,now);return;}
-        if((fire_uplink.active || uhf_startup_poll.active) && pending.active && f->id==RX_ID){
+        if((payload_uplink.active || uhf_startup_poll.active) && pending.active && f->id==RX_ID){
             ul_packet reply;
             if(cf_feed(&fragments,f,RX_ID,now) && up_envelope(&fragments,&reply) &&
                reply.origin==boot && reply.request==pending.packet.request){
@@ -746,18 +764,24 @@ static void uhf_startup_link_pump(uint32_t now){
     if(uhf_startup.stage!=UHF_STARTUP_ACTIVE)return;
     cf_expire(&uhf_startup_up,now);
     cf_expire(&fragments,now);
-    if(fire_uplink.gps_waiting && !fire_uplink.gps_reading){
-        if(now-fire_uplink.gps_since>=2000)fire_submit_gps(NULL);
+    if(payload_uplink.gps_waiting && !payload_uplink.gps_reading){
+        if(now-payload_uplink.gps_since>=2000)fire_submit_gps(NULL);
         else if(!sensor_job.active && !housekeeping.poll_pending){
-            fire_uplink.gps_reading=true;
+            payload_uplink.gps_reading=true;
             if(!request_sensor(SENSOR_FIRE_GPS,0,false))fire_submit_gps(NULL);
         }
     }
     now=now_ms();
-    if(fire_uplink.active && !fire_uplink.gps_waiting && (!pending.active || (uint32_t)(now-pending.started)>=request_timeout_ms(pending.packet.type))){
+    if(payload_uplink.active && !payload_uplink.gps_waiting && (!pending.active || (uint32_t)(now-pending.started)>=request_timeout_ms(pending.packet.type))){
         pending.active=false;
         output.active=false;
-        fire_unavailable(0);
+        if(payload_uplink.local){
+            bool previous=console_reply;
+            console_reply=true;
+            LOG("RESULT outcome=UNKNOWN reason=PAYLOAD_TIMEOUT\n");
+            console_reply=previous;
+        }
+        payload_unavailable(0);
     }
     if(uhf_startup_poll.active && (!pending.active || now-pending.started>=UHF_STARTUP_PAYLOAD_TIMEOUT_MS))
         uhf_startup_poll_stop();
@@ -769,7 +793,7 @@ static void uhf_startup_link_pump(uint32_t now){
             if(!uhf_startup_queue_packet(uhf_startup_response,uhf_startup_response_size,now))
                 uhf_startup_fail("UHF reply queue... FAILED");
             uhf_startup_response_size=0;
-        }else if(!uhf_startup_up.active && !uhf_radio_config.active && !fire_uplink.active && !uhf_startup_poll.active && !cdh.active){
+        }else if(!uhf_startup_up.active && !uhf_radio_config.active && !payload_uplink.active && !uhf_startup_poll.active && !cdh.active){
             if(uhf_startup_schedule.report_pending){
                 uint8_t packet[W_PAYLOAD+W_SIZE_UHF_SCHEDULE_STATUS+2];
                 size_t size=uhf_startup_schedule_packet(packet,now);

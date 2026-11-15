@@ -19,7 +19,7 @@ Use one radio session at a time on the shared LibreSDR.
 
 ### Direct USB
 
-- [ ] Plug the registered IHU console directly into the Pi. Select **ember-bench / realtime** and check **ihu-serial-in**. The wired links disable when the console disconnects. The UHF startup firmware restricts USB to read-only console commands.
+- [ ] Plug the registered IHU console directly into the Pi. Select **ember-bench / realtime** and check **ihu-serial-in**. The wired links disable when the console disconnects. Use regular GROUND_TEST firmware for the wired bridge.
 - [ ] For manual console access only, run `sudo systemctl stop ember-bench-bridge@ttyACM0` on the Pi. Use the [actual tty name](yamcs/OPERATIONAL.md#serial-ownership-and-eps) if it differs.
 
 ## 3. Verify a fresh packet
