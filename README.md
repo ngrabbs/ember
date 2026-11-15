@@ -54,7 +54,7 @@ development version is undocumented, the table gives the source version on `main
 | [Ground station](ground/README.md) | Pi 5 and LibreSDR bench | Yamcs and EMBER ground software | [Ground releases](ground/releases/README.md) |
 | [S-band transmitter](hardware/payload_exp_sband_tx/README.md) | Experimental FPGA bench | FPGA test designs | [FPGA work](hardware/payload_exp_sband_tx/fpga/README.md) |
 
-[Hardware directory](hardware/README.md) · [Firmware builds and commit IDs](firmware/README.md#current-bench-builds) ·
+[Hardware directory](hardware/README.md) · [Firmware guides](firmware/README.md) ·
 [Radio guide](docs/comms/README.md) · [System architecture](docs/architecture/README.md)
 
 ## Team
