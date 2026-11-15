@@ -12,9 +12,9 @@ static struct {
 } uhf_startup;
 
 enum {
-    UHF_STARTUP_TELEMETRY_DEFAULT_ENABLED=false,
-    UHF_STARTUP_TELEMETRY_DEFAULT_SET=W_UHF_TELEMETRY_SET_BASIC,
-    UHF_STARTUP_LISTEN_DEFAULT_S=540,
+    UHF_STARTUP_TELEMETRY_DEFAULT_ENABLED=!IHU_BOOT_RX_ONLY,
+    UHF_STARTUP_TELEMETRY_DEFAULT_SET=W_UHF_TELEMETRY_SET_FULL,
+    UHF_STARTUP_LISTEN_DEFAULT_S=120,
     UHF_STARTUP_TELEMETRY_DEFAULT_S=60,
     UHF_STARTUP_TELEMETRY_MIN_S=5,
     UHF_STARTUP_PHASE_MAX_S=3600,
@@ -414,6 +414,8 @@ static void uhf_startup_receive(const cf_frame *f,uint32_t now) {
         policy.mode=IP_NOMINAL;policy.reason="UHF_STARTUP_LINK_ACTIVE";policy.outputs=0;
         uhf_startup_event("COMMISSIONING -> NOMINAL: UHF LINK_ACTIVE");
         uhf_startup_stage(UHF_STARTUP_ACTIVE,now);
+        uhf_startup_schedule.enabled=UHF_STARTUP_TELEMETRY_DEFAULT_ENABLED;
+        uhf_startup_restart_schedule(now);
         uhf_startup.last_heartbeat=now;
     }
     if((f->id==BD_LINKED && uhf_startup.stage==UHF_STARTUP_ACTIVE) ||
@@ -432,6 +434,7 @@ static void boot_banner(void) {
         "  Radio         CW boot beacon, then %s after successful startup\n"
         "  Defaults      All output flags off | UHF heartbeat off\n"
         "  UHF schedule  %s | %s | %u s listen / %u s telemetry\n"
+        "  EPS ADC       Enabled on battery power | eps adc on/off\n"
         "  Console       help | startup | status | radio | outputs\n"
         "\n",
         FW_VERSION, IHU_BOOT_RX_ONLY ? "RX_ONLY" : "LINK_ACTIVE",
@@ -542,7 +545,7 @@ static void uhf_startup_step(void) {
     }
     if(uhf_startup.stage!=UHF_STARTUP_FAILED && !housekeeping.poll_pending &&
        (uint32_t)(now-housekeeping.last)>=EPS_POLL_MS &&
-       ihu_sensor_submit(IHU_SENSOR_POLL_EPS,false)){
+       ihu_sensor_submit(IHU_SENSOR_POLL_EPS,housekeeping.force_adc)){
         housekeeping.last=now;
         housekeeping.poll_pending=true;
     }

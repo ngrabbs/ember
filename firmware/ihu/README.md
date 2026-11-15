@@ -5,8 +5,8 @@
 The Internal Housekeeping Unit runs on the EMBER RP2040 CAN Feather. It
 reads EPS and GPS, manages spacecraft modes, and exchanges commands and
 telemetry with the transceiver, payload, and Walter MCU. The current
-[verified bench image](releases/0.29.1/README.md) uses the UHF startup
-profile.
+bench build is [IHU 0.30.0](https://github.com/ngrabbs/ember/pull/91) with the UHF startup profile.
+[IHU 0.29.1 bench build and UF2](releases/0.29.1/README.md) remains available.
 
 ## Build and flash
 
@@ -45,7 +45,7 @@ in a fresh build directory.
 | Profile | CMake flags to enable | What happens at boot | Available outputs and links |
 |---|---|---|---|
 | Regular `GROUND_TEST` | None | Checks local CAN, then enters `SAFE` with all six output flags off. | Enable CLI debug or telemetry, wired USB/umbilical debug or telemetry, UHF telemetry, and LTE telemetry individually from the console. |
-| `GROUND_TEST / UHF` | `IHU_UHF_STARTUP` | Runs the startup checks and sends one CW beacon, then enters `NOMINAL / LINK_ACTIVE`. | USB startup log and diagnostics, plus Yamcs commands and replies over UHF. Heartbeat and scheduled BASIC or FULL UHF telemetry start off and can be enabled from Yamcs. |
+| `GROUND_TEST / UHF` | `IHU_UHF_STARTUP` | Runs the startup checks and sends one CW beacon, then enters `NOMINAL / LINK_ACTIVE`. | USB startup log and diagnostics, plus Yamcs commands and replies over UHF. FULL telemetry starts enabled on a 120 s listen / 60 s transmit cycle. The independent heartbeat starts off. Yamcs can disable or adjust the schedule. |
 | `GROUND_TEST / UHF` with RX_ONLY | `IHU_UHF_STARTUP` and `IHU_BOOT_RX_ONLY` | Runs the same startup checks and CW beacon, then enters `NOMINAL / RX_ONLY`. | USB startup log and diagnostics. UHF receive is active after the beacon. Command replies and scheduled UHF telemetry require LINK_ACTIVE. |
 | `FLIGHT` | `IHU_FLIGHT_CONFIGURATION` | Enters `SAFE` with `HISTORY_UNAVAILABLE` if the CAN check passes. Flight routines are stubs. | USB diagnostics. All six optional outputs stay off. |
 
@@ -71,8 +71,7 @@ transceiver operation on the conducted bench.
 | NOMINAL | Confirm the radio state for the selected UHF profile. |
 | SAFE | A startup fault, link failure, or operator stop shuts down the UHF link and clears the outputs. Restart both boards to run startup again. |
 
-The LINK_ACTIVE schedule defaults to BASIC with 540 s listening and 60 s
-available to send telemetry. BASIC sends IHU status, valid EPS data, and
+The LINK_ACTIVE schedule begins with its listen phase. BASIC sends IHU status, valid EPS data, and
 schedule status. FULL adds device and system status, heartbeat, available
 payload status and GPS, and firmware identities when peers respond.
 ### Ground station commands in Yamcs
@@ -117,6 +116,13 @@ In the UHF startup profile, a due EPS health poll runs between GPS I²C
 chunks. `eps status` shows sample age, the maximum interval between good EPS
 samples, and the number of EPS polls that ran during GPS reads. EPS diagnostics
 identify `I2C_TIMEOUT`, `PEC_CHECKSUM`, `I2C_ERROR`, and `STALE` separately.
+
+The UHF startup profile enables the LTC4162 telemetry ADC on battery power
+by default. Use `eps adc off` to restore automatic charger ADC behavior until
+the next IHU reboot, or `eps adc on` to resume battery-only measurements.
+The override changes only `force_telemetry_on` and leaves the measurement rate
+and charge settings alone. Check `eps json` for `config_bits` and
+`telemetry_status` before using the voltage readings.
 
 The UHF startup profile console provides `startup`, `status`, `version`, `mode`,
 `outputs`, `faults`, `rtos`, `radio`, `eps status`, `eps json`, and

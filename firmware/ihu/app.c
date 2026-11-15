@@ -372,9 +372,9 @@ static void eps_json(void) {
     if(pending.active || output.active || can.pending) {LOG("REJECT reason=BUSY\n");return;}
     (void)request_sensor(SENSOR_JSON,0,false);
 }
-static void eps_adc(bool enable) {
-    if(pending.active || output.active || can.pending) {LOG("REJECT reason=BUSY\n");return;}
-    (void)request_sensor(SENSOR_ADC,0,enable);
+static bool eps_adc(bool enable) {
+    if(pending.active || output.active || can.pending) {LOG("REJECT reason=BUSY\n");return false;}
+    return request_sensor(SENSOR_ADC,0,enable);
 }
 static bool eps_telemetry(unsigned lte) {
     if((lte==2&&!ip_enabled(&policy,IP_UHF_TELEM)) || (lte==1&&!ip_enabled(&policy,IP_LTE_TELEM))){
@@ -533,7 +533,7 @@ static void policy_command(const char *s){
 enum { EPS_POLL_MS=5000, EPS_STALE_MS=6500 };
 static struct {
     ltc4162_raw_t eps;
-    bool valid,attempted,seen,poll_pending;
+    bool valid,attempted,seen,poll_pending,force_adc,adc_override_failed;
     uint8_t failed_register;
     enum eps_error error;
     uint32_t sampled,last,polls_during_gps,max_good_gap_ms;
@@ -650,6 +650,11 @@ static void health_result(const ihu_sensor_result *r){
     housekeeping.valid=r->ok;
     housekeeping.error=r->eps_error;
     if(r->between_gps_chunks)++housekeeping.polls_during_gps;
+    if(r->health && r->ok){
+        if(r->adc_override_failed && !housekeeping.adc_override_failed)
+            ihu_printf(false,"EPS_ADC outcome=UNVERIFIED source=HEALTH_POLL\n");
+        housekeeping.adc_override_failed=r->adc_override_failed;
+    }
     if(r->ok){
         if(housekeeping.seen){
             uint32_t gap=r->sampled-housekeeping.sampled;
@@ -789,6 +794,11 @@ static void command_impl(const char *s) {
         (void)request_sensor(SENSOR_JSON,0,false);
         return;
     }
+    if(!strcmp(s,"eps adc on") || !strcmp(s,"eps adc off")){
+        bool enabled=!strcmp(s,"eps adc on");
+        if(eps_adc(enabled))housekeeping.force_adc=enabled;
+        return;
+    }
     if(!strcmp(s,"startup") || !strcmp(s,"radio")){
         if(!strcmp(s,"startup"))uhf_startup_history(true);
         mode_status();
@@ -807,7 +817,7 @@ static void command_impl(const char *s) {
     if(!strcmp(s,"help")){
         LOG("COMMANDS startup | status | mode | version | faults | rtos\n");
         LOG("DIAGNOSTICS eps status | eps json | gps | radio | outputs\n");
-        LOG("CONTROLS mode safe | uhf stop\n");return;
+        LOG("CONTROLS mode safe | uhf stop | eps adc on/off\n");return;
     }
     if(strcmp(s,"status") && strcmp(s,"version") && strcmp(s,"mode") && strcmp(s,"outputs") &&
        strcmp(s,"faults") && strcmp(s,"rtos")){
@@ -909,7 +919,7 @@ void ihu_app_init(void) {
     boot_ready_ms=now_ms();
 #if IHU_UHF_STARTUP
     link_reply_sink=uhf_startup_store_response;
-    uhf_startup_schedule.enabled=UHF_STARTUP_TELEMETRY_DEFAULT_ENABLED;
+    housekeeping.force_adc=true;
     uhf_startup_schedule.packet_set=UHF_STARTUP_TELEMETRY_DEFAULT_SET;
     uhf_startup_schedule.listen_seconds=UHF_STARTUP_LISTEN_DEFAULT_S;
     uhf_startup_schedule.telemetry_seconds=UHF_STARTUP_TELEMETRY_DEFAULT_S;

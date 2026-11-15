@@ -9,7 +9,7 @@ enum ihu_sensor_op {IHU_SENSOR_READ_EPS, IHU_SENSOR_SET_ADC, IHU_SENSOR_READ_GPS
 typedef struct {
     ltc4162_raw_t raw;
     gps_result gps;
-    bool ok,enable,health,between_gps_chunks;
+    bool ok,enable,health,between_gps_chunks,adc_override_failed;
     enum eps_error eps_error;
     uint8_t failed;
     uint16_t before,after;
@@ -34,6 +34,8 @@ static inline bool ihu_sensor_submit(enum ihu_sensor_op op,bool enable){
         host_sensor.health=op==IHU_SENSOR_POLL_EPS;
         host_sensor.eps_error=eps_read(&host_sensor.raw,&host_sensor.failed);
         host_sensor.ok=host_sensor.eps_error==EPS_OK;
+        if(host_sensor.health && host_sensor.ok && eps_adc_forced(host_sensor.raw.config_bits)!=enable)
+            host_sensor.adc_override_failed=!eps_force_adc(enable,&host_sensor.before,&host_sensor.after);
     }
     host_sensor.sampled=to_ms_since_boot(get_absolute_time());host_sensor_ready=true;return true;
 }

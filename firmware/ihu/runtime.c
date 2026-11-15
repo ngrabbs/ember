@@ -148,10 +148,12 @@ static void sensor_publish(ihu_sensor_result *result){
     wake_app();
 }
 
-static void sensor_poll_eps(bool between_gps_chunks){
+static void sensor_poll_eps(bool between_gps_chunks,bool force_adc){
     ihu_sensor_result result={.health=true,.between_gps_chunks=between_gps_chunks};
     result.eps_error=eps_read(&result.raw,&result.failed);
     result.ok=result.eps_error==EPS_OK;
+    if(result.ok && eps_adc_forced(result.raw.config_bits)!=force_adc)
+        result.adc_override_failed=!eps_force_adc(force_adc,&result.before,&result.after);
     sensor_publish(&result);
 }
 
@@ -165,7 +167,7 @@ static gps_result sensor_read_gps(void){
         sensor_call call;
         if(xQueuePeek(sensor_calls,&call,0)==pdPASS && call.op==IHU_SENSOR_POLL_EPS){
             (void)xQueueReceive(sensor_calls,&call,0);
-            sensor_poll_eps(true);
+            sensor_poll_eps(true,call.enable);
             checkin(IHU_SENSOR);
             if(milliseconds()-started>=2500)break;
         }
@@ -188,7 +190,7 @@ static void sensor_task(void *arg){
     for(;;){
         sensor_call call;
         if(xQueueReceive(sensor_calls,&call,pdMS_TO_TICKS(100))==pdPASS){
-            if(call.op==IHU_SENSOR_POLL_EPS)sensor_poll_eps(false);
+            if(call.op==IHU_SENSOR_POLL_EPS)sensor_poll_eps(false,call.enable);
             else {
                 ihu_sensor_result r={.enable=call.enable};
                 if(call.op==IHU_SENSOR_READ_GPS)r.gps=sensor_read_gps();

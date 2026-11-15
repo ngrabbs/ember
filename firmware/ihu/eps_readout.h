@@ -35,9 +35,13 @@ static enum eps_error eps_read(ltc4162_raw_t *out,uint8_t *failed_register) {
 #undef READ
     *out=next;return EPS_OK;
 }
+enum { EPS_FORCE_ADC_BIT = 1u << 2 };
+static inline bool eps_adc_forced(uint16_t config){
+    return (config & EPS_FORCE_ADC_BIT)!=0;
+}
 static bool eps_force_adc(bool enable,uint16_t *before,uint16_t *after) {
     if(eps_word(LTC4162_REG_config_bits,before)!=EPS_OK)return false;
-    uint16_t wanted=enable?(*before|4u):(*before&~4u);
+    uint16_t wanted=enable?(*before|EPS_FORCE_ADC_BIT):(*before&~EPS_FORCE_ADC_BIT);
     if(wanted!=*before) {
         uint8_t data[3]={LTC4162_REG_config_bits,(uint8_t)wanted,(uint8_t)(wanted>>8)};
         if(i2c_write_timeout_us(i2c1,0x68,data,3,false,10000)!=3)return false;
