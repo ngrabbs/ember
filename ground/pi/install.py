@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+from check_http_port import check as check_http_port
 
 
 def cmd(*args):
@@ -15,6 +16,7 @@ def cmd(*args):
 def install(args):
     if os.geteuid() != 0:
         raise SystemExit('Run with sudo; prepare a private password file first.')
+    check_http_port()
     password = args.hotspot_password_file.read_text().strip()
     if not 8 <= len(password) <= 63 or not password.isascii():
         raise SystemExit('Hotspot password must be 8..63 ASCII characters.')
@@ -30,7 +32,7 @@ def install(args):
     shutil.copytree(nm, backup / 'network-connections')
     target = Path('/opt/ember-ground')
     (target / 'ember').mkdir(parents=True, exist_ok=True)
-    for name in ('readiness.py', 'lte_listener.py', 'compose.boot.yaml'):
+    for name in ('readiness.py', 'lte_listener.py', 'compose.boot.yaml', 'check_http_port.py'):
         shutil.copy2(source / name, target / name)
     for name in ('lte_receiver.py', 'codec.py', 'dictionary.json'):
         shutil.copy2(repo / 'ground/ember' / name, target / 'ember' / name)
@@ -57,6 +59,8 @@ def install(args):
             break
     else:
         lines.append('COMPOSE_FILE=compose.yaml:/opt/ember-ground/compose.boot.yaml')
+    lines = [line for line in lines if not line.startswith('EMBER_HTTP_BIND=')]
+    lines.append('EMBER_HTTP_BIND=0.0.0.0')
     env.write_text('\n'.join(lines) + '\n')
     # Do not alter the established static Ethernet profile.
     profiles = subprocess.check_output(['nmcli', '-g', 'NAME', 'connection', 'show'], text=True)

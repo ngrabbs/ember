@@ -11,6 +11,8 @@ command history and display buckets are independent.
 | `ember-bench` | One physical IHU serial connection | `ihu-serial-in` UDP10020; `ihu-serial-out` to the Pi host on UDP10028 | `ember_bench_displays` |
 
 See the [operator guide](README.md) for displays and commands.
+The retired `grabbs-ground` application belongs on its own host. The operational
+preparer removes its instance entry and injected timeline header from this server.
 
 ## IHU-requested UHF telemetry
 
@@ -60,9 +62,12 @@ remains `/home/ngrabbs/work/MSU_Cubesat/ember/ground/yamcs/.runtime/quickstart`.
    overlay, and operational overlay, in that order. The deployed Pi uses:
 
    ```dotenv
+   EMBER_HTTP_BIND=0.0.0.0
    COMPOSE_FILE=compose.yaml:/opt/ember-ground/compose.boot.yaml:/home/ngrabbs/work/ember-environments-20261017/ground/yamcs/compose.operational.yaml
    ```
 
+   Follow the [LAN and Tailscale setup](../pi/README.md#yamcs-over-lan-and-tailscale)
+   before starting Docker. Tailscale peers access the published HTTP port directly.
    The operational overlay keeps HTTP on Ethernet and the hotspot and
    publishes telemetry UDP10018–10020 on loopback. The serial command link
    resolves `ember-ground-host` through Docker's host gateway.
