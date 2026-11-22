@@ -86,10 +86,12 @@ def prepare(runtime, legacy_history=()):
     current = main.read_text()
     # Remove live transport instances and upstream demo from the default server.
     # Their instance definitions and persistent databases are retained untouched.
-    for name in (*LEGACY,'ember-bench'):
+    for name in (*LEGACY,'ember-bench','grabbs-ground'):
         current = re.sub(r'^  - '+re.escape(name)+r'\s*\n', '', current, flags=re.M)
     if '  - ember\n' not in current: raise ValueError('Missing ember instance')
     current=current.replace('  - ember\n','  - ember\n  - ember-bench\n',1)
+    current = re.sub(r'\n# BEGIN grabbs-ground timeline default\n.*?# END grabbs-ground timeline default\n',
+                     '\n', current, flags=re.S)
     backup = runtime / '.unified-backups' / datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     backup.mkdir(parents=True, mode=0o700)
     for file in (main, instance, *(config/('yamcs.'+name+'.yaml') for name in (*LEGACY,'ember-bench'))):

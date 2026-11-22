@@ -11,6 +11,7 @@ This layer preserves the installed Yamcs runtime, MDB and archive volumes.
 | Connection | Open Yamcs | SSH |
 |---|---|---|
 | Existing lab Ethernet | `http://192.168.1.251:8090` | `ngrabbs@192.168.1.251` |
+| Tailscale VPN | `http://ember-ground.tailf447da.ts.net:8090` | `ngrabbs@100.74.23.2` |
 | Wi-Fi `EMBER-Ground` | `http://192.168.50.1:8090` | `ngrabbs@192.168.50.1` |
 
 The hotspot password is stored privately on the deployed Pi at
@@ -24,6 +25,40 @@ USB bridge starts only for the registered console. See the
 
 Use the [demo checklist](../DEMO.md) to connect, select a receiver, and
 verify a packet.
+
+## Yamcs over LAN and Tailscale
+
+Docker publishes HTTP on `0.0.0.0:8090`. Set `EMBER_HTTP_BIND=0.0.0.0`
+in Yamcs's `.env`; the boot service uses the same setting. Authorized
+Tailscale peers connect directly to `100.74.23.2:8090` or the hostname above.
+
+A Tailscale Serve rule on 8090 competes with Docker's binding. This caused
+the November 22 outage after reboot. Docker subsequently ran a healthy
+Yamcs container with an empty network attachment and inaccessible HTTP.
+The starter now checks for a conflicting Serve rule before invoking Compose.
+
+Before deploying on a Pi with Tailscale, save its Serve configuration
+privately and remove the rule on Yamcs's port if present:
+
+```sh
+umask 077
+tailscale serve status --json > ~/tailscale-serve-before-yamcs.json
+sudo tailscale serve --tcp=8090 off
+```
+
+To recover an existing container after correcting the rule and `.env`,
+run from the deployed `ground/yamcs` directory:
+
+```sh
+docker compose up -d --no-deps --force-recreate yamcs
+docker port ember-ground-starter-yamcs-1
+curl -fsS http://192.168.1.251:8090/api/instances
+```
+
+After a reboot, repeat the HTTP check from the LAN and from a second
+Tailscale peer using `http://100.74.23.2:8090/api/instances`. Expect exactly
+`ember` and `ember-bench`, both `RUNNING`, and a published HTTP port in
+`docker port`. A healthy container alone does not verify external access.
 
 ## What runs automatically
 
