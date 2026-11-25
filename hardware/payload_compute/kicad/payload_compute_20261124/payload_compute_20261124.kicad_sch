@@ -1,0 +1,896 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "0029804a-2fe7-4dd1-a9a9-4de613175bd5")
+	(paper "B")
+	(title_block
+		(title "Option B minimal flight index")
+		(date "2026-10-06")
+		(rev "B-PROVISIONAL")
+		(company "EMBER Payload")
+	)
+	(lib_symbols)
+	(text "EMBER PAYLOAD - simplified Jetson-owned provisional design"
+		(exclude_from_sim no)
+		(at 20.32 20.32 0)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left bottom)
+		)
+		(uuid "40d10717-90ec-4809-868f-4555bd1d69d7")
+	)
+	(text "H2.45 supplies EPS-switched VBAT to both local bucks. H2.27, H2.28 and H2.46 are NC."
+		(exclude_from_sim no)
+		(at 20.32 228.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "537bf2f0-f5ab-4410-b946-fb8bd1bb0d2c")
+	)
+	(text "Jetson: native CAN A; camera CSI/I2C; switched 5 V fan."
+		(exclude_from_sim no)
+		(at 20.32 38.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "65451bf0-93cb-4ef7-83dd-041b223615b4")
+	)
+	(text "157 electrical components;7 retained mechanical anchors. No STM32 supervisor or external camera trigger/strobe."
+		(exclude_from_sim no)
+		(at 20.32 30.48 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6e877806-1c17-4963-adf2-b37a6f7528ee")
+	)
+	(text "STACK: CAN A uses H1.1 (L) and H1.3 (H). H1.2, H1.4, H1.50 and H2.47 are unused. H2.31 return policy remains a hold."
+		(exclude_from_sim no)
+		(at 20.32 236.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "70c29097-ec1c-4f6a-b08d-f4e151cfaed9")
+	)
+	(text "Provisional placement only. No schematic qualification, final placement signoff, routing approval or fabrication release."
+		(exclude_from_sim no)
+		(at 20.32 251.46 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "76324c25-42d9-4d9b-a2f2-84ebbf3a913a")
+	)
+	(text "REVIEW HOLDS: module power/I/O timing, camera BSP, fan identity, component lands, stack/cooler/flex Z-fit and silkscreen."
+		(exclude_from_sim no)
+		(at 20.32 243.84 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e7c07d72-5ab7-42aa-b3d7-beb3c2d4bfe5")
+	)
+	(sheet
+		(at 218.44 91.44)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "0155373a-2311-41ec-ab16-6cab99d398cf")
+		(property "Sheetname" "Module handshake and I/O permission"
+			(at 220.98 96.52 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p30_module_control_interfaces.kicad_sch"
+			(at 220.98 105.41 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 20.32 182.88)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "1f244158-5991-4224-8258-98ca8ca8a06b")
+		(property "Sheetname" "M2 Key E socket PCIe"
+			(at 22.86 187.96 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p40_ground_wifi_m2e.kicad_sch"
+			(at 22.86 196.85 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 218.44 182.88)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "3d3d929d-6496-4f48-967f-09eade88c9b8")
+		(property "Sheetname" "Switched 5 V fan"
+			(at 220.98 187.96 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p73_jetson_fan.kicad_sch"
+			(at 220.98 196.85 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 20.32 60.96)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "43cc76f9-a179-44dc-8075-861a3a5401f4")
+		(property "Sheetname" "Stack EPS and IHU interface"
+			(at 22.86 66.04 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p02_stack_and_bench_connectors.kicad_sch"
+			(at 22.86 74.93 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 20.32 121.92)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "5271ec26-e237-466c-97bb-b5c3986d10ab")
+		(property "Sheetname" "Jetson power control PCIe contacts"
+			(at 22.86 127 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p58_jetson_power_control_contacts.kicad_sch"
+			(at 22.86 135.89 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 218.44 121.92)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "5e662b45-0b58-4cbb-8f77-d0c860ec12d9")
+		(property "Sheetname" "Jetson UART unused USB contacts"
+			(at 220.98 127 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p57_jetson_usb_uart_contacts.kicad_sch"
+			(at 220.98 135.89 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 218.44 152.4)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "707cce53-eea0-4618-b853-4d283f856ff6")
+		(property "Sheetname" "Three camera FFC connectors"
+			(at 220.98 157.48 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p61_camera_ffc_interfaces.kicad_sch"
+			(at 220.98 166.37 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 119.38 121.92)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "886fc61d-fe03-4f9b-8d7d-cbfce2adee43")
+		(property "Sheetname" "Jetson CSI socket contacts"
+			(at 121.92 127 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p31_jetson_module_socket.kicad_sch"
+			(at 121.92 135.89 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "10")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 317.5 152.4)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "8af8aa9f-2225-452d-a178-987a58fa72f7")
+		(property "Sheetname" "Camera I2C mux isolation"
+			(at 320.04 157.48 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p38_cameras_csi_i2c.kicad_sch"
+			(at 320.04 166.37 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "11")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 317.5 121.92)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "abc4a649-2703-4584-afe7-7823cb3099db")
+		(property "Sheetname" "Module UART translation"
+			(at 320.04 127 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p35_uart_translation.kicad_sch"
+			(at 320.04 135.89 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "12")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 119.38 91.44)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "b6b3b1be-c0f8-4248-9cc4-ab93f67f9808")
+		(property "Sheetname" "Module electrical auto-on and shutdown"
+			(at 121.92 96.52 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p22_reset_run_core.kicad_sch"
+			(at 121.92 105.41 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "13")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 218.44 60.96)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "c7874ce0-3aaa-4178-82c2-f3b053ba68ca")
+		(property "Sheetname" "Single VBAT to 5V buck"
+			(at 220.98 66.04 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p25_main_power_regulation.kicad_sch"
+			(at 220.98 74.93 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "14")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 20.32 91.44)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "d498881e-6763-4d36-ad0a-ddedad61dcf3")
+		(property "Sheetname" "Main buck physical power-good interface"
+			(at 22.86 96.52 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p20_mode_watchdog.kicad_sch"
+			(at 22.86 105.41 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "16")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 317.5 91.44)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "dd59041e-bf16-429d-bf63-e559a131ca67")
+		(property "Sheetname" "Switched carrier rails discharge"
+			(at 320.04 96.52 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p34_carrier_rails_discharge.kicad_sch"
+			(at 320.04 105.41 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "17")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 119.38 152.4)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "e34be646-a30a-4d2e-8bad-f940e564e1da")
+		(property "Sheetname" "CAN A interface"
+			(at 121.92 157.48 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p18_dual_can.kicad_sch"
+			(at 121.92 166.37 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "18")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 119.38 60.96)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "e40c3344-76fc-4028-9b02-d7525cbd6fa7")
+		(property "Sheetname" "Local 3.3 V buck"
+			(at 121.92 66.04 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p74_local_3v3_buck.kicad_sch"
+			(at 121.92 74.93 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 119.38 182.88)
+		(size 88.9 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "fd2960d0-937d-4a13-9274-d019a151d38e")
+		(property "Sheetname" "WiFi permission isolation"
+			(at 121.92 187.96 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Sheetfile" "p63_wifi_permission_isolation.kicad_sch"
+			(at 121.92 196.85 0)
+			(show_name no)
+			(do_not_autoplace yes)
+			(effects
+				(font
+					(face "Arial")
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "payload_compute_20261124"
+				(path "/0029804a-2fe7-4dd1-a9a9-4de613175bd5"
+					(page "19")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

@@ -1,0 +1,1574 @@
+(kicad_symbol_lib
+  (version 20251024)
+  (generator "konnect")
+  (generator_version "10.0")
+
+  (symbol
+  "TPS3808G33DBVR"
+  (pin_names
+    (offset 1.016)
+  )
+  (exclude_from_sim no)
+  (in_bom yes)
+  (on_board yes)
+  (in_pos_files yes)
+  (duplicate_pin_numbers_are_jumpers no)
+  (property "Reference" "U"
+    (at 0 15.2400 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Value" "TPS3808G33DBVR"
+    (at 0 -15.2400 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Footprint" "EMBER_Payload:TI_DBV0006A_SOT23_6"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps3808.pdf"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Description" ""
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (symbol "TPS3808G33DBVR_0_1"
+    (rectangle
+      (start -12.7000 -12.7000)
+      (end 12.7000 12.7000)
+      (stroke
+        (width 0.254)
+        (type default)
+        (color 0 255 0 1)
+      )
+      (fill
+        (type background)
+      )
+    )
+    (pin open_collector line
+      (at 15.24 2.54 180)
+      (length 2.54)
+      (name "RESET_N"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "1"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at 12.7 -15.24 90)
+      (length 2.54)
+      (name "GND"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "2"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input inverted
+      (at -15.24 0 0)
+      (length 2.54)
+      (name "MR_N"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "3"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input line
+      (at -15.24 -5.08 0)
+      (length 2.54)
+      (name "CT"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "4"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input line
+      (at -15.24 5.08 0)
+      (length 2.54)
+      (name "SENSE"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "5"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at -5.08 15.24 270)
+      (length 2.54)
+      (name "VDD"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "6"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+  )
+  (embedded_fonts no)
+)
+
+  (symbol
+  "SN74LVC1G74DCUR"
+  (pin_names
+    (offset 1.016)
+  )
+  (exclude_from_sim no)
+  (in_bom yes)
+  (on_board yes)
+  (in_pos_files yes)
+  (duplicate_pin_numbers_are_jumpers no)
+  (property "Reference" "U"
+    (at 0 12.7000 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Value" "SN74LVC1G74DCUR"
+    (at 0 -12.7000 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Footprint" "EMBER_Payload:TI_DCU0008A_VSSOP_8"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lvc1g74.pdf"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Description" ""
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (symbol "SN74LVC1G74DCUR_0_1"
+    (rectangle
+      (start -12.7000 -10.1600)
+      (end 12.7000 10.1600)
+      (stroke
+        (width 0.254)
+        (type default)
+        (color 0 255 0 1)
+      )
+      (fill
+        (type background)
+      )
+    )
+    (pin input clock
+      (at -15.24 2.54 0)
+      (length 2.54)
+      (name "CLK"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "1"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input line
+      (at -15.24 7.62 0)
+      (length 2.54)
+      (name "D"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "2"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin output line
+      (at 15.24 -2.54 180)
+      (length 2.54)
+      (name "Q_N"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "3"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at 12.7 -12.7 90)
+      (length 2.54)
+      (name "GND"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "4"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin output line
+      (at 15.24 2.54 180)
+      (length 2.54)
+      (name "Q"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "5"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input inverted
+      (at -15.24 -2.54 0)
+      (length 2.54)
+      (name "CLR_N"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "6"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input inverted
+      (at -15.24 -7.62 0)
+      (length 2.54)
+      (name "PRE_N"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "7"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at 10.16 12.7 270)
+      (length 2.54)
+      (name "VCC"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "8"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+  )
+  (embedded_fonts no)
+)
+
+  (symbol
+  "TPS3700DDC"
+  (pin_names
+    (offset 1.016)
+  )
+  (exclude_from_sim no)
+  (in_bom yes)
+  (on_board yes)
+  (in_pos_files yes)
+  (duplicate_pin_numbers_are_jumpers no)
+  (property "Reference" "U"
+    (at 0 10.1600 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Value" "TPS3700DDCR"
+    (at 0 -10.1600 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Footprint" "EMBER_Payload:TI_DDC0006A_SOT23_THIN_6"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps3700.pdf"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Description" ""
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (symbol "TPS3700DDC_0_1"
+    (rectangle
+      (start -10.1600 -7.6200)
+      (end 10.1600 7.6200)
+      (stroke
+        (width 0.254)
+        (type default)
+        (color 0 255 0 1)
+      )
+      (fill
+        (type background)
+      )
+    )
+    (pin open_collector line
+      (at 15.24 2.54 180)
+      (length 5.08)
+      (name "OUTA"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "1"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at 0 -12.7 90)
+      (length 5.08)
+      (name "GND"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "2"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input line
+      (at -15.24 2.54 0)
+      (length 5.08)
+      (name "INA+"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "3"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input line
+      (at -15.24 -2.54 0)
+      (length 5.08)
+      (name "INB-"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "4"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at 0 12.7 270)
+      (length 5.08)
+      (name "VDD"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "5"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin open_collector line
+      (at 15.24 -2.54 180)
+      (length 5.08)
+      (name "OUTB"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "6"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+  )
+  (embedded_fonts no)
+)
+
+  (symbol
+  "TMUX1511PWR"
+  (pin_names
+    (offset 1.016)
+  )
+  (exclude_from_sim no)
+  (in_bom yes)
+  (on_board yes)
+  (in_pos_files yes)
+  (duplicate_pin_numbers_are_jumpers no)
+  (property "Reference" "U"
+    (at 0 20.3200 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Value" "TMUX1511PWR"
+    (at 0 -20.3200 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Footprint" "Package_SO:TSSOP-14_4.4x5mm_P0.65mm"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tmux1511.pdf"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Description" ""
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (symbol "TMUX1511PWR_0_1"
+    (rectangle
+      (start -12.7000 -17.7800)
+      (end 12.7000 17.7800)
+      (stroke
+        (width 0.254)
+        (type default)
+        (color 0 255 0 1)
+      )
+      (fill
+        (type background)
+      )
+    )
+    (pin input line
+      (at -15.24 12.7 0)
+      (length 2.54)
+      (name "SEL1"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "1"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin passive line
+      (at -15.24 10.16 0)
+      (length 2.54)
+      (name "S1"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "2"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input line
+      (at -15.24 5.08 0)
+      (length 2.54)
+      (name "SEL2"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "4"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin passive line
+      (at -15.24 2.54 0)
+      (length 2.54)
+      (name "S2"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "5"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input line
+      (at -15.24 -2.54 0)
+      (length 2.54)
+      (name "SEL3"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "10"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin passive line
+      (at -15.24 -5.08 0)
+      (length 2.54)
+      (name "S3"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "9"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input line
+      (at -15.24 -10.16 0)
+      (length 2.54)
+      (name "SEL4"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "13"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin passive line
+      (at -15.24 -12.7 0)
+      (length 2.54)
+      (name "S4"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "12"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin passive line
+      (at 15.24 10.16 180)
+      (length 2.54)
+      (name "D1"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "3"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin passive line
+      (at 15.24 2.54 180)
+      (length 2.54)
+      (name "D2"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "6"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin passive line
+      (at 15.24 -5.08 180)
+      (length 2.54)
+      (name "D3"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "8"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin passive line
+      (at 15.24 -12.7 180)
+      (length 2.54)
+      (name "D4"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "11"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at 0 -20.32 90)
+      (length 2.54)
+      (name "GND"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "7"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at 0 20.32 270)
+      (length 2.54)
+      (name "VDD"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "14"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+  )
+  (embedded_fonts no)
+)
+
+  (symbol
+  "SN74LXC1T45DBVR"
+  (pin_names
+    (offset 1.016)
+  )
+  (exclude_from_sim no)
+  (in_bom yes)
+  (on_board yes)
+  (in_pos_files yes)
+  (duplicate_pin_numbers_are_jumpers no)
+  (property "Reference" "U"
+    (at 0 10.1600 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Value" "SN74LXC1T45DBVR"
+    (at 0 -10.1600 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Footprint" "EMBER_Payload:TI_DBV0006A_SOT23_6"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Datasheet" "https://www.ti.com/lit/ds/symlink/sn74lxc1t45.pdf"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Description" ""
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (symbol "SN74LXC1T45DBVR_0_1"
+    (rectangle
+      (start -10.1600 -7.6200)
+      (end 10.1600 7.6200)
+      (stroke
+        (width 0.254)
+        (type default)
+        (color 0 255 0 1)
+      )
+      (fill
+        (type background)
+      )
+    )
+    (pin power_in line
+      (at -2.54 10.16 270)
+      (length 2.54)
+      (name "VCCA"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "1"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at 0 -10.16 90)
+      (length 2.54)
+      (name "GND"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "2"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin bidirectional line
+      (at -12.7 2.54 0)
+      (length 2.54)
+      (name "A"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "3"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin bidirectional line
+      (at 12.7 2.54 180)
+      (length 2.54)
+      (name "B"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "4"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input line
+      (at -12.7 -5.08 0)
+      (length 2.54)
+      (name "DIR"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "5"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at 2.54 10.16 270)
+      (length 2.54)
+      (name "VCCB"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "6"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+  )
+  (embedded_fonts no)
+)
+
+  (symbol
+  "TPS22990DMLR"
+  (pin_names
+    (offset 1.016)
+  )
+  (exclude_from_sim no)
+  (in_bom yes)
+  (on_board yes)
+  (in_pos_files yes)
+  (duplicate_pin_numbers_are_jumpers no)
+  (property "Reference" "U"
+    (at 0 15.2400 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Value" "TPS22990DMLR"
+    (at 0 -15.2400 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Footprint" "EMBER_Payload:TI_DML0010A_WSON10"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps22990.pdf"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Description" ""
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (symbol "TPS22990DMLR_0_1"
+    (rectangle
+      (start -8.8900 -12.7000)
+      (end 8.8900 12.7000)
+      (stroke
+        (width 0.254)
+        (type default)
+        (color 0 255 0 1)
+      )
+      (fill
+        (type background)
+      )
+    )
+    (pin passive line
+      (at -11.43 -7.62 0)
+      (length 2.54)
+      (name "CT"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "1"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin no_connect line
+      (at -11.43 -10.16 0)
+      (length 2.54)
+      (name "NC"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "2"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at -11.43 7.62 0)
+      (length 2.54)
+      (name "VIN"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "3"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at -11.43 5.08 0)
+      (length 2.54)
+      (name "VBIAS"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "4"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input line
+      (at -11.43 0 0)
+      (length 2.54)
+      (name "ON"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "5"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at 0 -15.24 90)
+      (length 2.54)
+      (name "GND"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "6"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin open_collector line
+      (at 11.43 -7.62 180)
+      (length 2.54)
+      (name "PG"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "7"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_out line
+      (at 11.43 7.62 180)
+      (length 2.54)
+      (name "VOUT"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "8"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_out line
+      (at 11.43 5.08 180)
+      (length 2.54)
+      (name "VOUT"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "9"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_out line
+      (at 11.43 2.54 180)
+      (length 2.54)
+      (name "VOUT"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "10"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at -11.43 10.16 0)
+      (length 2.54)
+      (name "VIN_EP"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "11"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+  )
+  (embedded_fonts no)
+)
+
+  (symbol
+  "TPS7A2018PDBVR"
+  (pin_names
+    (offset 1.016)
+  )
+  (exclude_from_sim no)
+  (in_bom yes)
+  (on_board yes)
+  (in_pos_files yes)
+  (duplicate_pin_numbers_are_jumpers no)
+  (property "Reference" "U"
+    (at 0 10.1600 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Value" "TPS7A2018PDBVR"
+    (at 0 -10.1600 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Footprint" "EMBER_Payload:TI_DBV0005A_SOT23_5"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps7a20.pdf"
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (property "Description" ""
+    (at 0 0 0)
+    (show_name no)
+    (do_not_autoplace no)
+    (hide yes)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+    )
+  )
+  (symbol "TPS7A2018PDBVR_0_1"
+    (rectangle
+      (start -7.6200 -7.6200)
+      (end 7.6200 7.6200)
+      (stroke
+        (width 0.254)
+        (type default)
+        (color 0 255 0 1)
+      )
+      (fill
+        (type background)
+      )
+    )
+    (pin power_in line
+      (at -10.16 5.08 0)
+      (length 2.54)
+      (name "IN"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "1"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_in line
+      (at 0 -10.16 90)
+      (length 2.54)
+      (name "GND"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "2"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin input line
+      (at -10.16 0 0)
+      (length 2.54)
+      (name "EN"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "3"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin no_connect line
+      (at 10.16 -5.08 180)
+      (length 2.54)
+      (name "NC"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "4"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+    (pin power_out line
+      (at 10.16 5.08 180)
+      (length 2.54)
+      (name "OUT"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+      (number "5"
+        (effects
+          (font
+            (size 1.27 1.27)
+          )
+        )
+      )
+    )
+  )
+  (embedded_fonts no)
+)
+
+)

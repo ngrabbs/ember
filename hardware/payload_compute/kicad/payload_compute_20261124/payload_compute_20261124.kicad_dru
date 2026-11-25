@@ -1,0 +1,1003 @@
+(version
+	1
+)
+
+(rule
+	"CSI 95 ohm outer geometry"
+	(condition "A.hasNetclass('CSI')")
+	(constraint track_width
+		(min 0.1501mm)
+		(opt 0.1501mm)
+		(max 0.1501mm)
+	)
+	(constraint diff_pair_gap
+		(min 0.30mm)
+		(opt 0.30mm)
+		(max 0.30mm)
+	)
+	(constraint skew
+		(max 0.15mm)
+		(within_diff_pairs)
+	)
+	(constraint length
+		(max 130mm)
+	)
+	(constraint via_count
+		(max 2)
+	)
+)
+
+(rule
+	"PCIe 85 ohm outer geometry"
+	(condition "A.hasNetclass('PCIE')")
+	(constraint track_width
+		(min 0.16mm)
+		(opt 0.16mm)
+		(max 0.16mm)
+	)
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(opt 0.15mm)
+		(max 0.15mm)
+	)
+	(constraint skew
+		(max 0.08mm)
+		(within_diff_pairs)
+	)
+	(constraint length
+		(max 100mm)
+	)
+	(constraint via_count
+		(max 2)
+	)
+)
+
+(rule
+	"High speed outer layers only"
+	(condition "(A.hasNetclass('CSI') || A.hasNetclass('PCIE')) && (A.Layer == 'In1.Cu' || A.Layer == 'In2.Cu' || A.Layer == 'In3.Cu' || A.Layer == 'In4.Cu')")
+	(constraint disallow track via)
+)
+
+(rule
+	"Uncoupled high speed spacing 4h"
+	(condition "A.Type == 'Track' && B.Type == 'Track' && (A.hasNetclass('CSI') || A.hasNetclass('PCIE')) && (B.hasNetclass('CSI') || B.hasNetclass('PCIE')) && !AB.isCoupledDiffPair()")
+	(constraint clearance
+		(min 0.40mm)
+	)
+)
+
+(rule
+	"PCIe TX RX separation 9h"
+	(condition "A.Type == 'Track' && B.Type == 'Track' && ((A.NetName == 'PCIE0_MODULE_RX_*' && (B.NetName == 'PCIE0_MODULE_TX_*' || B.NetName == '/M2 Key E socket PCIe/M2E_HOST_TX_AC_*')) || (B.NetName == 'PCIE0_MODULE_RX_*' && (A.NetName == 'PCIE0_MODULE_TX_*' || A.NetName == '/M2 Key E socket PCIe/M2E_HOST_TX_AC_*')))")
+	(constraint clearance
+		(min 0.90mm)
+	)
+)
+
+(rule
+	"Coupled pair clearance"
+	(condition "AB.isCoupledDiffPair() && (A.hasNetclass('CSI') || A.hasNetclass('PCIE'))")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_CLK_MODULE_BREAKOUT bounded connector transition"
+	(condition "A.inDiffPair('CAM1_CSI_CLK') && B.inDiffPair('CAM1_CSI_CLK') && A.enclosedByArea('CSI_CAM1_CLK_MODULE_BREAKOUT') && B.enclosedByArea('CSI_CAM1_CLK_MODULE_BREAKOUT')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.39mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_CLK_FFC_TRANSITION bounded connector transition"
+	(condition "A.inDiffPair('CAM1_CSI_CLK') && B.inDiffPair('CAM1_CSI_CLK') && A.enclosedByArea('CSI_CAM1_CLK_FFC_TRANSITION') && B.enclosedByArea('CSI_CAM1_CLK_FFC_TRANSITION')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.25mm)
+	)
+)
+
+(rule
+	"JLC component pad drilling separation"
+	(condition "A.Type != 'Via' || B.Type != 'Via'")
+	(constraint hole_to_hole
+		(min 0.45mm)
+	)
+)
+
+(rule
+	"JLC via drilling separation"
+	(condition "A.Type == 'Via' && B.Type == 'Via'")
+	(constraint hole_to_hole
+		(min 0.20mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D0_MODULE_F bounded connector transition"
+	(condition "A.inDiffPair('CAM1_CSI_D0') && B.inDiffPair('CAM1_CSI_D0') && A.enclosedByArea('CSI_CAM1_D0_MODULE_F') && B.enclosedByArea('CSI_CAM1_D0_MODULE_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D0_MODULE_B bounded connector transition"
+	(condition "A.inDiffPair('CAM1_CSI_D0') && B.inDiffPair('CAM1_CSI_D0') && A.enclosedByArea('CSI_CAM1_D0_MODULE_B') && B.enclosedByArea('CSI_CAM1_D0_MODULE_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D0_FFC_B bounded connector transition"
+	(condition "A.inDiffPair('CAM1_CSI_D0') && B.inDiffPair('CAM1_CSI_D0') && A.enclosedByArea('CSI_CAM1_D0_FFC_B') && B.enclosedByArea('CSI_CAM1_D0_FFC_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.1mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D0_FFC_F bounded connector transition"
+	(condition "A.inDiffPair('CAM1_CSI_D0') && B.inDiffPair('CAM1_CSI_D0') && A.enclosedByArea('CSI_CAM1_D0_FFC_F') && B.enclosedByArea('CSI_CAM1_D0_FFC_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 2.35mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D0_SOURCE_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM1_CSI_D0') && B.NetName == 'GND') || (B.inDiffPair('CAM1_CSI_D0') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM1_D0_SOURCE_RETURN') && B.enclosedByArea('CSI_CAM1_D0_SOURCE_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D0_TARGET_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM1_CSI_D0') && B.NetName == 'GND') || (B.inDiffPair('CAM1_CSI_D0') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM1_D0_TARGET_RETURN') && B.enclosedByArea('CSI_CAM1_D0_TARGET_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D1_MODULE_F bounded connector transition"
+	(condition "A.inDiffPair('CAM1_CSI_D1') && B.inDiffPair('CAM1_CSI_D1') && A.enclosedByArea('CSI_CAM1_D1_MODULE_F') && B.enclosedByArea('CSI_CAM1_D1_MODULE_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D1_MODULE_B bounded connector transition"
+	(condition "A.inDiffPair('CAM1_CSI_D1') && B.inDiffPair('CAM1_CSI_D1') && A.enclosedByArea('CSI_CAM1_D1_MODULE_B') && B.enclosedByArea('CSI_CAM1_D1_MODULE_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D1_FFC_B bounded connector transition"
+	(condition "A.inDiffPair('CAM1_CSI_D1') && B.inDiffPair('CAM1_CSI_D1') && A.enclosedByArea('CSI_CAM1_D1_FFC_B') && B.enclosedByArea('CSI_CAM1_D1_FFC_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.9mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D1_FFC_F bounded connector transition"
+	(condition "A.inDiffPair('CAM1_CSI_D1') && B.inDiffPair('CAM1_CSI_D1') && A.enclosedByArea('CSI_CAM1_D1_FFC_F') && B.enclosedByArea('CSI_CAM1_D1_FFC_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.9mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D1_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('CAM1_CSI_D1') && B.inDiffPair('CAM1_CSI_D1') && A.enclosedByArea('CSI_CAM1_D1_MATCH_B') && B.enclosedByArea('CSI_CAM1_D1_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.3mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D1_SOURCE_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM1_CSI_D1') && B.NetName == 'GND') || (B.inDiffPair('CAM1_CSI_D1') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM1_D1_SOURCE_RETURN') && B.enclosedByArea('CSI_CAM1_D1_SOURCE_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM1_D1_TARGET_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM1_CSI_D1') && B.NetName == 'GND') || (B.inDiffPair('CAM1_CSI_D1') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM1_D1_TARGET_RETURN') && B.enclosedByArea('CSI_CAM1_D1_TARGET_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_CLK_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_CLK') && B.inDiffPair('CAM3_CSI_CLK') && A.enclosedByArea('CSI_CAM3_CSI_CLK_MATCH_B') && B.enclosedByArea('CSI_CAM3_CSI_CLK_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.2758389823891072mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_CLK_SOURCE_F bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_CLK') && B.inDiffPair('CAM3_CSI_CLK') && A.enclosedByArea('CSI_CAM3_CSI_CLK_SOURCE_F') && B.enclosedByArea('CSI_CAM3_CSI_CLK_SOURCE_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_CLK_SOURCE_B bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_CLK') && B.inDiffPair('CAM3_CSI_CLK') && A.enclosedByArea('CSI_CAM3_CSI_CLK_SOURCE_B') && B.enclosedByArea('CSI_CAM3_CSI_CLK_SOURCE_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_CLK_TARGET_F bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_CLK') && B.inDiffPair('CAM3_CSI_CLK') && A.enclosedByArea('CSI_CAM3_CSI_CLK_TARGET_F') && B.enclosedByArea('CSI_CAM3_CSI_CLK_TARGET_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.9mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_CLK_TARGET_B bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_CLK') && B.inDiffPair('CAM3_CSI_CLK') && A.enclosedByArea('CSI_CAM3_CSI_CLK_TARGET_B') && B.enclosedByArea('CSI_CAM3_CSI_CLK_TARGET_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.1mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_CLK_SOURCE_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM3_CSI_CLK') && B.NetName == 'GND') || (B.inDiffPair('CAM3_CSI_CLK') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM3_CSI_CLK_SOURCE_RETURN') && B.enclosedByArea('CSI_CAM3_CSI_CLK_SOURCE_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_CLK_TARGET_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM3_CSI_CLK') && B.NetName == 'GND') || (B.inDiffPair('CAM3_CSI_CLK') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM3_CSI_CLK_TARGET_RETURN') && B.enclosedByArea('CSI_CAM3_CSI_CLK_TARGET_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_D0_MATCH_F bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_D0') && B.inDiffPair('CAM3_CSI_D0') && A.enclosedByArea('CSI_CAM3_CSI_D0_MATCH_F') && B.enclosedByArea('CSI_CAM3_CSI_D0_MATCH_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.2230865786510172mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_D0_SOURCE_F bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_D0') && B.inDiffPair('CAM3_CSI_D0') && A.enclosedByArea('CSI_CAM3_CSI_D0_SOURCE_F') && B.enclosedByArea('CSI_CAM3_CSI_D0_SOURCE_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.39mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_D0_TARGET_F bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_D0') && B.inDiffPair('CAM3_CSI_D0') && A.enclosedByArea('CSI_CAM3_CSI_D0_TARGET_F') && B.enclosedByArea('CSI_CAM3_CSI_D0_TARGET_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.25mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_D1_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_D1') && B.inDiffPair('CAM3_CSI_D1') && A.enclosedByArea('CSI_CAM3_CSI_D1_MATCH_B') && B.enclosedByArea('CSI_CAM3_CSI_D1_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.5394112549695116mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_D1_SOURCE_F bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_D1') && B.inDiffPair('CAM3_CSI_D1') && A.enclosedByArea('CSI_CAM3_CSI_D1_SOURCE_F') && B.enclosedByArea('CSI_CAM3_CSI_D1_SOURCE_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_D1_SOURCE_B bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_D1') && B.inDiffPair('CAM3_CSI_D1') && A.enclosedByArea('CSI_CAM3_CSI_D1_SOURCE_B') && B.enclosedByArea('CSI_CAM3_CSI_D1_SOURCE_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_D1_TARGET_F bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_D1') && B.inDiffPair('CAM3_CSI_D1') && A.enclosedByArea('CSI_CAM3_CSI_D1_TARGET_F') && B.enclosedByArea('CSI_CAM3_CSI_D1_TARGET_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.9mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_D1_TARGET_B bounded connector transition"
+	(condition "A.inDiffPair('CAM3_CSI_D1') && B.inDiffPair('CAM3_CSI_D1') && A.enclosedByArea('CSI_CAM3_CSI_D1_TARGET_B') && B.enclosedByArea('CSI_CAM3_CSI_D1_TARGET_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.1mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_D1_SOURCE_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM3_CSI_D1') && B.NetName == 'GND') || (B.inDiffPair('CAM3_CSI_D1') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM3_CSI_D1_SOURCE_RETURN') && B.enclosedByArea('CSI_CAM3_CSI_D1_SOURCE_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM3_CSI_D1_TARGET_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM3_CSI_D1') && B.NetName == 'GND') || (B.inDiffPair('CAM3_CSI_D1') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM3_CSI_D1_TARGET_RETURN') && B.enclosedByArea('CSI_CAM3_CSI_D1_TARGET_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CLK_MODULE_F bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_CLK') && B.inDiffPair('CAM2_CSI_CLK') && A.enclosedByArea('CSI_CAM2_CLK_MODULE_F') && B.enclosedByArea('CSI_CAM2_CLK_MODULE_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CLK_MODULE_B bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_CLK') && B.inDiffPair('CAM2_CSI_CLK') && A.enclosedByArea('CSI_CAM2_CLK_MODULE_B') && B.enclosedByArea('CSI_CAM2_CLK_MODULE_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CLK_MID_F bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_CLK') && B.inDiffPair('CAM2_CSI_CLK') && A.enclosedByArea('CSI_CAM2_CLK_MID_F') && B.enclosedByArea('CSI_CAM2_CLK_MID_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CLK_MID_B bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_CLK') && B.inDiffPair('CAM2_CSI_CLK') && A.enclosedByArea('CSI_CAM2_CLK_MID_B') && B.enclosedByArea('CSI_CAM2_CLK_MID_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CLK_FFC_F bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_CLK') && B.inDiffPair('CAM2_CSI_CLK') && A.enclosedByArea('CSI_CAM2_CLK_FFC_F') && B.enclosedByArea('CSI_CAM2_CLK_FFC_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.25mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CLK_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_CLK') && B.inDiffPair('CAM2_CSI_CLK') && A.enclosedByArea('CSI_CAM2_CLK_MATCH_B') && B.enclosedByArea('CSI_CAM2_CLK_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.4mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CLK_SOURCE_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM2_CSI_CLK') && B.NetName == 'GND') || (B.inDiffPair('CAM2_CSI_CLK') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM2_CLK_SOURCE_RETURN') && B.enclosedByArea('CSI_CAM2_CLK_SOURCE_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CLK_MID_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM2_CSI_CLK') && B.NetName == 'GND') || (B.inDiffPair('CAM2_CSI_CLK') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM2_CLK_MID_RETURN') && B.enclosedByArea('CSI_CAM2_CLK_MID_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D0_TOP_MATCH bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_D0') && B.inDiffPair('CAM2_CSI_D0') && A.enclosedByArea('CSI_CAM2_CSI_D0_TOP_MATCH') && B.enclosedByArea('CSI_CAM2_CSI_D0_TOP_MATCH')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.4mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D0_SOURCE_F bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_D0') && B.inDiffPair('CAM2_CSI_D0') && A.enclosedByArea('CSI_CAM2_CSI_D0_SOURCE_F') && B.enclosedByArea('CSI_CAM2_CSI_D0_SOURCE_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D0_SOURCE_B bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_D0') && B.inDiffPair('CAM2_CSI_D0') && A.enclosedByArea('CSI_CAM2_CSI_D0_SOURCE_B') && B.enclosedByArea('CSI_CAM2_CSI_D0_SOURCE_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D0_MID_F bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_D0') && B.inDiffPair('CAM2_CSI_D0') && A.enclosedByArea('CSI_CAM2_CSI_D0_MID_F') && B.enclosedByArea('CSI_CAM2_CSI_D0_MID_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D0_MID_B bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_D0') && B.inDiffPair('CAM2_CSI_D0') && A.enclosedByArea('CSI_CAM2_CSI_D0_MID_B') && B.enclosedByArea('CSI_CAM2_CSI_D0_MID_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D0_FFC_F bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_D0') && B.inDiffPair('CAM2_CSI_D0') && A.enclosedByArea('CSI_CAM2_CSI_D0_FFC_F') && B.enclosedByArea('CSI_CAM2_CSI_D0_FFC_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.1mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D0_SOURCE_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM2_CSI_D0') && B.NetName == 'GND') || (B.inDiffPair('CAM2_CSI_D0') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM2_CSI_D0_SOURCE_RETURN') && B.enclosedByArea('CSI_CAM2_CSI_D0_SOURCE_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D0_TARGET_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM2_CSI_D0') && B.NetName == 'GND') || (B.inDiffPair('CAM2_CSI_D0') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM2_CSI_D0_TARGET_RETURN') && B.enclosedByArea('CSI_CAM2_CSI_D0_TARGET_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D1_TOP_MATCH bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_D1') && B.inDiffPair('CAM2_CSI_D1') && A.enclosedByArea('CSI_CAM2_CSI_D1_TOP_MATCH') && B.enclosedByArea('CSI_CAM2_CSI_D1_TOP_MATCH')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.4mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D1_SOURCE_F bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_D1') && B.inDiffPair('CAM2_CSI_D1') && A.enclosedByArea('CSI_CAM2_CSI_D1_SOURCE_F') && B.enclosedByArea('CSI_CAM2_CSI_D1_SOURCE_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D1_SOURCE_B bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_D1') && B.inDiffPair('CAM2_CSI_D1') && A.enclosedByArea('CSI_CAM2_CSI_D1_SOURCE_B') && B.enclosedByArea('CSI_CAM2_CSI_D1_SOURCE_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.55mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D1_TARGET_F bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_D1') && B.inDiffPair('CAM2_CSI_D1') && A.enclosedByArea('CSI_CAM2_CSI_D1_TARGET_F') && B.enclosedByArea('CSI_CAM2_CSI_D1_TARGET_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.9mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D1_TARGET_B bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_D1') && B.inDiffPair('CAM2_CSI_D1') && A.enclosedByArea('CSI_CAM2_CSI_D1_TARGET_B') && B.enclosedByArea('CSI_CAM2_CSI_D1_TARGET_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.1mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D1_SOURCE_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM2_CSI_D1') && B.NetName == 'GND') || (B.inDiffPair('CAM2_CSI_D1') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM2_CSI_D1_SOURCE_RETURN') && B.enclosedByArea('CSI_CAM2_CSI_D1_SOURCE_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CSI_D1_TARGET_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('CAM2_CSI_D1') && B.NetName == 'GND') || (B.inDiffPair('CAM2_CSI_D1') && A.NetName == 'GND')) && A.enclosedByArea('CSI_CAM2_CSI_D1_TARGET_RETURN') && B.enclosedByArea('CSI_CAM2_CSI_D1_TARGET_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"CSI_CAM2_CLK_MATCH_NEW bounded connector transition"
+	(condition "A.inDiffPair('CAM2_CSI_CLK') && B.inDiffPair('CAM2_CSI_CLK') && A.enclosedByArea('CSI_CAM2_CLK_MATCH_NEW') && B.enclosedByArea('CSI_CAM2_CLK_MATCH_NEW')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.4mm)
+	)
+)
+
+(rule
+	"PCIE_RX_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_RX') && B.inDiffPair('PCIE0_MODULE_RX') && A.enclosedByArea('PCIE_RX_MATCH_B') && B.enclosedByArea('PCIE_RX_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.2893607486306955mm)
+	)
+)
+
+(rule
+	"PCIE_RX_MODULE_F bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_RX') && B.inDiffPair('PCIE0_MODULE_RX') && A.enclosedByArea('PCIE_RX_MODULE_F') && B.enclosedByArea('PCIE_RX_MODULE_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.5mm)
+	)
+)
+
+(rule
+	"PCIE_RX_MODULE_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_RX') && B.inDiffPair('PCIE0_MODULE_RX') && A.enclosedByArea('PCIE_RX_MODULE_B') && B.enclosedByArea('PCIE_RX_MODULE_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.5mm)
+	)
+)
+
+(rule
+	"PCIE_RX_SOCKET_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_RX') && B.inDiffPair('PCIE0_MODULE_RX') && A.enclosedByArea('PCIE_RX_SOCKET_B') && B.enclosedByArea('PCIE_RX_SOCKET_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.4mm)
+	)
+)
+
+(rule
+	"PCIE_RX_SOURCE_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('PCIE0_MODULE_RX') && B.NetName == 'GND') || (B.inDiffPair('PCIE0_MODULE_RX') && A.NetName == 'GND')) && A.enclosedByArea('PCIE_RX_SOURCE_RETURN') && B.enclosedByArea('PCIE_RX_SOURCE_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"PCIE_CLK_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_CLK') && B.inDiffPair('PCIE0_CLK') && A.enclosedByArea('PCIE_CLK_MATCH_B') && B.enclosedByArea('PCIE_CLK_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.6525483399593988mm)
+	)
+)
+
+(rule
+	"PCIE_CLK_MODULE_F bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_CLK') && B.inDiffPair('PCIE0_CLK') && A.enclosedByArea('PCIE_CLK_MODULE_F') && B.enclosedByArea('PCIE_CLK_MODULE_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.5mm)
+	)
+)
+
+(rule
+	"PCIE_CLK_MODULE_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_CLK') && B.inDiffPair('PCIE0_CLK') && A.enclosedByArea('PCIE_CLK_MODULE_B') && B.enclosedByArea('PCIE_CLK_MODULE_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.5mm)
+	)
+)
+
+(rule
+	"PCIE_CLK_SOCKET_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_CLK') && B.inDiffPair('PCIE0_CLK') && A.enclosedByArea('PCIE_CLK_SOCKET_B') && B.enclosedByArea('PCIE_CLK_SOCKET_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.4mm)
+	)
+)
+
+(rule
+	"PCIE_CLK_SOURCE_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('PCIE0_CLK') && B.NetName == 'GND') || (B.inDiffPair('PCIE0_CLK') && A.NetName == 'GND')) && A.enclosedByArea('PCIE_CLK_SOURCE_RETURN') && B.enclosedByArea('PCIE_CLK_SOURCE_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"PCIE_RX_REV_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_RX') && B.inDiffPair('PCIE0_MODULE_RX') && A.enclosedByArea('PCIE_RX_REV_MATCH_B') && B.enclosedByArea('PCIE_RX_REV_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.2893607486307026mm)
+	)
+)
+
+(rule
+	"PCIE_CLK_REV_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_CLK') && B.inDiffPair('PCIE0_CLK') && A.enclosedByArea('PCIE_CLK_REV_MATCH_B') && B.enclosedByArea('PCIE_CLK_REV_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.652548339959388mm)
+	)
+)
+
+(rule
+	"PCIE_CLK_REV_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_CLK') && B.inDiffPair('PCIE0_CLK') && A.enclosedByArea('PCIE_CLK_REV_MATCH_B') && B.enclosedByArea('PCIE_CLK_REV_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.6525483399593843mm)
+	)
+)
+
+(rule
+	"PCIE_CLK_REV_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_CLK') && B.inDiffPair('PCIE0_CLK') && A.enclosedByArea('PCIE_CLK_REV_MATCH_B') && B.enclosedByArea('PCIE_CLK_REV_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.652548339959388mm)
+	)
+)
+
+(rule
+	"PCIE_CLK_REV_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_CLK') && B.inDiffPair('PCIE0_CLK') && A.enclosedByArea('PCIE_CLK_REV_MATCH_B') && B.enclosedByArea('PCIE_CLK_REV_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.652548339959388mm)
+	)
+)
+
+(rule
+	"PCIE_CLK_REV_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_CLK') && B.inDiffPair('PCIE0_CLK') && A.enclosedByArea('PCIE_CLK_REV_MATCH_B') && B.enclosedByArea('PCIE_CLK_REV_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.652548339959388mm)
+	)
+)
+
+(rule
+	"PCIE_CLK_REV_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_CLK') && B.inDiffPair('PCIE0_CLK') && A.enclosedByArea('PCIE_CLK_REV_MATCH_B') && B.enclosedByArea('PCIE_CLK_REV_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.6525483399593843mm)
+	)
+)
+
+(rule
+	"PCIE_RX_REV2_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_RX') && B.inDiffPair('PCIE0_MODULE_RX') && A.enclosedByArea('PCIE_RX_REV2_MATCH_B') && B.enclosedByArea('PCIE_RX_REV2_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.2893607486307026mm)
+	)
+)
+
+(rule
+	"PCIE_RX_REV3_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_RX') && B.inDiffPair('PCIE0_MODULE_RX') && A.enclosedByArea('PCIE_RX_REV3_MATCH_B') && B.enclosedByArea('PCIE_RX_REV3_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.2893607486307026mm)
+	)
+)
+
+(rule
+	"PCIE_RX_REV4_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_RX') && B.inDiffPair('PCIE0_MODULE_RX') && A.enclosedByArea('PCIE_RX_REV4_MATCH_B') && B.enclosedByArea('PCIE_RX_REV4_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.2893607486307026mm)
+	)
+)
+
+(rule
+	"PCIE_RX_REV5_MATCH_B bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_RX') && B.inDiffPair('PCIE0_MODULE_RX') && A.enclosedByArea('PCIE_RX_REV5_MATCH_B') && B.enclosedByArea('PCIE_RX_REV5_MATCH_B')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.2893607486307026mm)
+	)
+)
+
+(rule
+	"PCIE_TX_FRONT_MATCH bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_TX') && B.inDiffPair('PCIE0_MODULE_TX') && A.enclosedByArea('PCIE_TX_FRONT_MATCH') && B.enclosedByArea('PCIE_TX_FRONT_MATCH')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.4358490183331334mm)
+	)
+)
+
+(rule
+	"PCIE_TX_BACK_MATCH bounded connector transition"
+	(condition "A.inDiffPair('/M2 Key E socket PCIe/M2E_HOST_TX_AC') && B.inDiffPair('/M2 Key E socket PCIe/M2E_HOST_TX_AC') && A.enclosedByArea('PCIE_TX_BACK_MATCH') && B.enclosedByArea('PCIE_TX_BACK_MATCH')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.8784776310850224mm)
+	)
+)
+
+(rule
+	"PCIE_TX_MODULE_F bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_TX') && B.inDiffPair('PCIE0_MODULE_TX') && A.enclosedByArea('PCIE_TX_MODULE_F') && B.enclosedByArea('PCIE_TX_MODULE_F')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.3mm)
+	)
+)
+
+(rule
+	"PCIE_TX_CAP_PRE bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_TX') && B.inDiffPair('PCIE0_MODULE_TX') && A.enclosedByArea('PCIE_TX_CAP_PRE') && B.enclosedByArea('PCIE_TX_CAP_PRE')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.3mm)
+	)
+)
+
+(rule
+	"PCIE_TX_CAP_POST bounded connector transition"
+	(condition "A.inDiffPair('/M2 Key E socket PCIe/M2E_HOST_TX_AC') && B.inDiffPair('/M2 Key E socket PCIe/M2E_HOST_TX_AC') && A.enclosedByArea('PCIE_TX_CAP_POST') && B.enclosedByArea('PCIE_TX_CAP_POST')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 1.3mm)
+	)
+)
+
+(rule
+	"PCIE_TX_SOCKET bounded connector transition"
+	(condition "A.inDiffPair('/M2 Key E socket PCIe/M2E_HOST_TX_AC') && B.inDiffPair('/M2 Key E socket PCIe/M2E_HOST_TX_AC') && A.enclosedByArea('PCIE_TX_SOCKET') && B.enclosedByArea('PCIE_TX_SOCKET')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 0.4mm)
+	)
+)
+
+(rule
+	"PCIE_TX_SOURCE_RETURN bounded ground return via"
+	(condition "A.Type == 'Via' && B.Type == 'Via' && ((A.inDiffPair('PCIE0_MODULE_TX') && B.NetName == 'GND') || (B.inDiffPair('PCIE0_MODULE_TX') && A.NetName == 'GND')) && A.enclosedByArea('PCIE_TX_SOURCE_RETURN') && B.enclosedByArea('PCIE_TX_SOURCE_RETURN')")
+	(constraint clearance
+		(min 0.15mm)
+	)
+)
+
+(rule
+	"PCIE_SOCKET_TX_RX_BREAKOUT bounded M2 contact breakout"
+	(condition "A.Type == 'Track' && B.Type == 'Track' && ((A.NetName == 'PCIE0_MODULE_RX_*' && B.NetName == '/M2 Key E socket PCIe/M2E_HOST_TX_AC_*') || (B.NetName == 'PCIE0_MODULE_RX_*' && A.NetName == '/M2 Key E socket PCIe/M2E_HOST_TX_AC_*')) && A.enclosedByArea('PCIE_SOCKET_TX_RX_BREAKOUT') && B.enclosedByArea('PCIE_SOCKET_TX_RX_BREAKOUT')")
+	(constraint clearance
+		(min 0.40mm)
+	)
+)
+
+(rule
+	"PCIE_TX_FRONT_BROAD_MATCH_0 bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_TX') && B.inDiffPair('PCIE0_MODULE_TX') && A.enclosedByArea('PCIE_TX_FRONT_BROAD_MATCH_0') && B.enclosedByArea('PCIE_TX_FRONT_BROAD_MATCH_0')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 2.229574848353438mm)
+	)
+)
+
+(rule
+	"PCIE_TX_FRONT_BROAD_MATCH_1 bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_TX') && B.inDiffPair('PCIE0_MODULE_TX') && A.enclosedByArea('PCIE_TX_FRONT_BROAD_MATCH_1') && B.enclosedByArea('PCIE_TX_FRONT_BROAD_MATCH_1')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 2.117157287525381mm)
+	)
+)
+
+(rule
+	"PCIE_TX_BACK_BROAD_MATCH_0 bounded connector transition"
+	(condition "A.inDiffPair('/M2 Key E socket PCIe/M2E_HOST_TX_AC') && B.inDiffPair('/M2 Key E socket PCIe/M2E_HOST_TX_AC') && A.enclosedByArea('PCIE_TX_BACK_BROAD_MATCH_0') && B.enclosedByArea('PCIE_TX_BACK_BROAD_MATCH_0')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 2.117157287525381mm)
+	)
+)
+
+(rule
+	"PCIE_TX_BACK_BROAD_MATCH_1 bounded connector transition"
+	(condition "A.inDiffPair('/M2 Key E socket PCIe/M2E_HOST_TX_AC') && B.inDiffPair('/M2 Key E socket PCIe/M2E_HOST_TX_AC') && A.enclosedByArea('PCIE_TX_BACK_BROAD_MATCH_1') && B.enclosedByArea('PCIE_TX_BACK_BROAD_MATCH_1')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 2.672203461105327mm)
+	)
+)
+
+(rule
+	"PCIE_TX_MODULE_F_BROAD bounded connector transition"
+	(condition "A.inDiffPair('PCIE0_MODULE_TX') && B.inDiffPair('PCIE0_MODULE_TX') && A.enclosedByArea('PCIE_TX_MODULE_F_BROAD') && B.enclosedByArea('PCIE_TX_MODULE_F_BROAD')")
+	(constraint diff_pair_gap
+		(min 0.15mm)
+		(max 2.2mm)
+	)
+)
+
+(rule "CSI CAM1 D0 bounded phase matching"
+ (condition "A.inDiffPair('CAM1_CSI_D0') && B.inDiffPair('CAM1_CSI_D0') && A.enclosedByArea('CSI_CAM1_D0_PHASE_MATCH') && B.enclosedByArea('CSI_CAM1_D0_PHASE_MATCH')")
+ (constraint diff_pair_gap (min 0.30mm) (max 2.30mm)))
+
+(rule "R62_CLK_MODULE_F exact bounded matched-pair transition"
+ (condition "A.inDiffPair('CAM1_CSI_CLK') && B.inDiffPair('CAM1_CSI_CLK') && A.enclosedByArea('R62_CLK_MODULE_F') && B.enclosedByArea('R62_CLK_MODULE_F')")
+ (constraint diff_pair_gap (min 0.3mm) (max 0.55mm)))
+
+(rule "R62_CLK_MODULE_B exact bounded matched-pair transition"
+ (condition "A.inDiffPair('CAM1_CSI_CLK') && B.inDiffPair('CAM1_CSI_CLK') && A.enclosedByArea('R62_CLK_MODULE_B') && B.enclosedByArea('R62_CLK_MODULE_B')")
+ (constraint diff_pair_gap (min 0.3mm) (max 1.0mm)))
+
+(rule "R62_CLK_CAMERA_F exact bounded matched-pair transition"
+ (condition "A.inDiffPair('CAM1_CSI_CLK') && B.inDiffPair('CAM1_CSI_CLK') && A.enclosedByArea('R62_CLK_CAMERA_F') && B.enclosedByArea('R62_CLK_CAMERA_F')")
+ (constraint diff_pair_gap (min 0.3mm) (max 0.9mm)))
+
+(rule "R62_CLK_CAMERA_B exact bounded matched-pair transition"
+ (condition "A.inDiffPair('CAM1_CSI_CLK') && B.inDiffPair('CAM1_CSI_CLK') && A.enclosedByArea('R62_CLK_CAMERA_B') && B.enclosedByArea('R62_CLK_CAMERA_B')")
+ (constraint diff_pair_gap (min 0.3mm) (max 1.0mm)))
+
+(rule "R62_CLK_PHASE_B exact bounded matched-pair transition"
+ (condition "A.inDiffPair('CAM1_CSI_CLK') && B.inDiffPair('CAM1_CSI_CLK') && A.enclosedByArea('R62_CLK_PHASE_B') && B.enclosedByArea('R62_CLK_PHASE_B')")
+ (constraint diff_pair_gap (min 0.3mm) (max 2.2mm)))
+
+(rule "R62_D1_MODULE_F exact bounded matched-pair transition"
+ (condition "A.inDiffPair('CAM1_CSI_D1') && B.inDiffPair('CAM1_CSI_D1') && A.enclosedByArea('R62_D1_MODULE_F') && B.enclosedByArea('R62_D1_MODULE_F')")
+ (constraint diff_pair_gap (min 0.3mm) (max 0.55mm)))
+
+(rule "R62_D1_MODULE_B exact bounded matched-pair transition"
+ (condition "A.inDiffPair('CAM1_CSI_D1') && B.inDiffPair('CAM1_CSI_D1') && A.enclosedByArea('R62_D1_MODULE_B') && B.enclosedByArea('R62_D1_MODULE_B')")
+ (constraint diff_pair_gap (min 0.3mm) (max 1.0mm)))
+
+(rule "R62_D1_CAMERA_F exact bounded matched-pair transition"
+ (condition "A.inDiffPair('CAM1_CSI_D1') && B.inDiffPair('CAM1_CSI_D1') && A.enclosedByArea('R62_D1_CAMERA_F') && B.enclosedByArea('R62_D1_CAMERA_F')")
+ (constraint diff_pair_gap (min 0.3mm) (max 1.1mm)))
+
+(rule "R62_D1_CAMERA_B exact bounded matched-pair transition"
+ (condition "A.inDiffPair('CAM1_CSI_D1') && B.inDiffPair('CAM1_CSI_D1') && A.enclosedByArea('R62_D1_CAMERA_B') && B.enclosedByArea('R62_D1_CAMERA_B')")
+ (constraint diff_pair_gap (min 0.3mm) (max 1.0mm)))
+
+(rule "R62_D1_PHASE1_B exact bounded matched-pair transition"
+ (condition "A.inDiffPair('CAM1_CSI_D1') && B.inDiffPair('CAM1_CSI_D1') && A.enclosedByArea('R62_D1_PHASE1_B') && B.enclosedByArea('R62_D1_PHASE1_B')")
+ (constraint diff_pair_gap (min 0.3mm) (max 1.55mm)))
+
+(rule "R62_D1_PHASE2_B exact bounded matched-pair transition"
+ (condition "A.inDiffPair('CAM1_CSI_D1') && B.inDiffPair('CAM1_CSI_D1') && A.enclosedByArea('R62_D1_PHASE2_B') && B.enclosedByArea('R62_D1_PHASE2_B')")
+ (constraint diff_pair_gap (min 0.3mm) (max 1.55mm)))
+
+(rule "R63_CAM3_D0_COUPLED exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_D0') && B.inDiffPair('CAM3_CSI_D0') && A.enclosedByArea('R63_CAM3_D0_COUPLED') && B.enclosedByArea('R63_CAM3_D0_COUPLED')")
+ (constraint diff_pair_gap (min 0.30mm) (max 0.3002mm)))
+
+(rule "R63_CAM3_CLK_COUPLED exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_CLK') && B.inDiffPair('CAM3_CSI_CLK') && A.enclosedByArea('R63_CAM3_CLK_COUPLED') && B.enclosedByArea('R63_CAM3_CLK_COUPLED')")
+ (constraint diff_pair_gap (min 0.30mm) (max 0.3002mm)))
+
+(rule "R63_CAM3_D1_COUPLED exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_D1') && B.inDiffPair('CAM3_CSI_D1') && A.enclosedByArea('R63_CAM3_D1_COUPLED') && B.enclosedByArea('R63_CAM3_D1_COUPLED')")
+ (constraint diff_pair_gap (min 0.30mm) (max 0.3002mm)))
+
+(rule "R63_CAM3_D0_module_F exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_D0') && B.inDiffPair('CAM3_CSI_D0') && A.enclosedByArea('R63_CAM3_D0_module_F') && B.enclosedByArea('R63_CAM3_D0_module_F')")
+ (constraint diff_pair_gap (min 0.30mm) (max 1.3mm)))
+
+(rule "R63_CAM3_D0_camera_F exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_D0') && B.inDiffPair('CAM3_CSI_D0') && A.enclosedByArea('R63_CAM3_D0_camera_F') && B.enclosedByArea('R63_CAM3_D0_camera_F')")
+ (constraint diff_pair_gap (min 0.30mm) (max 1.3mm)))
+
+(rule "R63_CAM3_CLK_module_F exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_CLK') && B.inDiffPair('CAM3_CSI_CLK') && A.enclosedByArea('R63_CAM3_CLK_module_F') && B.enclosedByArea('R63_CAM3_CLK_module_F')")
+ (constraint diff_pair_gap (min 0.30mm) (max 1.3mm)))
+
+(rule "R63_CAM3_CLK_module_B exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_CLK') && B.inDiffPair('CAM3_CSI_CLK') && A.enclosedByArea('R63_CAM3_CLK_module_B') && B.enclosedByArea('R63_CAM3_CLK_module_B')")
+ (constraint diff_pair_gap (min 0.30mm) (max 0.7mm)))
+
+(rule "R63_CAM3_CLK_camera_F exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_CLK') && B.inDiffPair('CAM3_CSI_CLK') && A.enclosedByArea('R63_CAM3_CLK_camera_F') && B.enclosedByArea('R63_CAM3_CLK_camera_F')")
+ (constraint diff_pair_gap (min 0.30mm) (max 1.3mm)))
+
+(rule "R63_CAM3_CLK_camera_B exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_CLK') && B.inDiffPair('CAM3_CSI_CLK') && A.enclosedByArea('R63_CAM3_CLK_camera_B') && B.enclosedByArea('R63_CAM3_CLK_camera_B')")
+ (constraint diff_pair_gap (min 0.30mm) (max 0.7mm)))
+
+(rule "R63_CAM3_D1_module_F exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_D1') && B.inDiffPair('CAM3_CSI_D1') && A.enclosedByArea('R63_CAM3_D1_module_F') && B.enclosedByArea('R63_CAM3_D1_module_F')")
+ (constraint diff_pair_gap (min 0.30mm) (max 1.3mm)))
+
+(rule "R63_CAM3_D1_module_B exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_D1') && B.inDiffPair('CAM3_CSI_D1') && A.enclosedByArea('R63_CAM3_D1_module_B') && B.enclosedByArea('R63_CAM3_D1_module_B')")
+ (constraint diff_pair_gap (min 0.30mm) (max 0.7mm)))
+
+(rule "R63_CAM3_D1_camera_F exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_D1') && B.inDiffPair('CAM3_CSI_D1') && A.enclosedByArea('R63_CAM3_D1_camera_F') && B.enclosedByArea('R63_CAM3_D1_camera_F')")
+ (constraint diff_pair_gap (min 0.30mm) (max 2.2mm)))
+
+(rule "R63_CAM3_D1_camera_B exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_D1') && B.inDiffPair('CAM3_CSI_D1') && A.enclosedByArea('R63_CAM3_D1_camera_B') && B.enclosedByArea('R63_CAM3_D1_camera_B')")
+ (constraint diff_pair_gap (min 0.30mm) (max 0.7mm)))
+
+(rule "R63_CAM3_D0_PHASE exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_D0') && B.inDiffPair('CAM3_CSI_D0') && A.enclosedByArea('R63_CAM3_D0_PHASE') && B.enclosedByArea('R63_CAM3_D0_PHASE')")
+ (constraint diff_pair_gap (min 0.30mm) (max 1.206509mm)))
+
+(rule "R63_CAM3_CLK_PHASE exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_CLK') && B.inDiffPair('CAM3_CSI_CLK') && A.enclosedByArea('R63_CAM3_CLK_PHASE') && B.enclosedByArea('R63_CAM3_CLK_PHASE')")
+ (constraint diff_pair_gap (min 0.30mm) (max 1.215285mm)))
+
+(rule "R63_CAM3_D1_PHASE exact bounded CAM3 geometry"
+ (condition "A.inDiffPair('CAM3_CSI_D1') && B.inDiffPair('CAM3_CSI_D1') && A.enclosedByArea('R63_CAM3_D1_PHASE') && B.enclosedByArea('R63_CAM3_D1_PHASE')")
+ (constraint diff_pair_gap (min 0.30mm) (max 0.773851mm)))
