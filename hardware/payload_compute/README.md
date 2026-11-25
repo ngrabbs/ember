@@ -3,14 +3,18 @@
 ## Layout
 
 - `design/`: payload design concepts and constraints
-- `kicad/`: payload board source files — the Altium project converted to KiCad 10
+- `kicad/`: KiCad projects, including the converted Altium carrier
 - `altium/`, `altium-carlos/`: local-only Altium sources — **not tracked**
 - `bringup/`: validation plans and logs
 - `releases/`: build-ready release packages
 
 ## Board source status
 
-The [new prototype project](kicad/payload_compute_rev_next/payload_compute_rev_next.kicad_pro)
+Open the [November 24 PAYLOAD compute project](kicad/payload_compute_20261124/payload_compute_20261124.kicad_pro) for the current placement and routing work. It uses the EPS-switched VBAT feed, local 5 V and 3.3 V converters, and CAN A for the Jetson shutdown request. The project includes its custom symbols, footprints, and connector STEP models.
+
+### Earlier prototype
+
+The [earlier prototype project](kicad/payload_compute_rev_next/payload_compute_rev_next.kicad_pro)
 now contains the root hierarchy, AON supply, reset/run core, three limited
 reverse-blocking bootstrap feeds, startup mode/source locks, live IHU
 permission and external watchdog/reset qualification. Raw-source and main-bus
